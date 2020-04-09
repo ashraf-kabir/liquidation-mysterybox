@@ -129,7 +129,7 @@ class Portal_builder extends Builder
     {
         foreach ($this->_portal as $portal)
         {
-            $template = file_get_contents('templates/source/portal/Portal_Controller.php');
+            $template = file_get_contents('../mkdcore/source/portal/Portal_Controller.php');
             $template = $this->inject_substitute($template, 'subclass_prefix', $this->_config['subclass_prefix']);
             $template = $this->inject_substitute($template, 'name', $portal['name']);
             $ucname = ucfirst($portal['name']);
@@ -137,30 +137,30 @@ class Portal_builder extends Builder
             $template = $this->inject_substitute($template, 'user_model', $portal['model']);
             $template = $this->inject_substitute($template, 'valid_roles', $portal['role']);
             $template = $this->inject_substitute($template, 'middleware', $this->process_middleware($portal['middleware']));
-            $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_controller.php"] = $template;
+            $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_controller.php"] = $template;
 
-            $profile_template = file_get_contents('templates/source/portal/Profile.php');
+            $profile_template = file_get_contents('../mkdcore/source/portal/Profile.php');
             $profile_template = $this->inject_substitute($profile_template, 'portal', $portal['name']);
             $profile_template = $this->inject_substitute($profile_template, 'user_model', $portal['model']);
             $profile_template = $this->inject_substitute($profile_template, 'valid_roles', $portal['role']);
             $profile_template = $this->inject_substitute($profile_template, 'middleware', $this->process_middleware($portal['middleware']));
-            $this->_render_list["src/application/views/{$ucname}/Profile.php"] = $profile_template;
+            $this->_render_list["../release/application/views/{$ucname}/Profile.php"] = $profile_template;
 
-            $credential_controller_template = file_get_contents('templates/source/portal/Credential_controller.php');
+            $credential_controller_template = file_get_contents('../mkdcore/source/portal/Credential_controller.php');
             $credential_controller_template = $this->inject_substitute($credential_controller_template, 'portal', $portal['name']);
             $credential_controller_template = $this->inject_substitute($credential_controller_template, 'uc_portal', ucfirst($portal['name']));
-            $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_profile_credential_controller.php"] = $credential_controller_template;
+            $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_profile_credential_controller.php"] = $credential_controller_template;
 
             $uc_portal = ucfirst($portal['name']);
-            $credential_view_model_template = file_get_contents('templates/source/portal/Credential_view_model.php');
+            $credential_view_model_template = file_get_contents('../mkdcore/source/portal/Credential_view_model.php');
             $credential_view_model_template = $this->inject_substitute($credential_view_model_template, 'portal', $portal['name']);
             $credential_view_model_template = $this->inject_substitute($credential_view_model_template, 'uc_portal', ucfirst($portal['name']));
-            $this->_render_list["src/application/view_models/{$uc_portal}_profile_credential_view_model.php"] = $credential_view_model_template;
+            $this->_render_list["../release/application/view_models/{$uc_portal}_profile_credential_view_model.php"] = $credential_view_model_template;
 
-            $credential_template = file_get_contents('templates/source/portal/Credential.php');
-            $this->_render_list["src/application/views/{$ucname}/Credential.php"] = $credential_template;
+            $credential_template = file_get_contents('../mkdcore/source/portal/Credential.php');
+            $this->_render_list["../release/application/views/{$ucname}/Credential.php"] = $credential_template;
 
-            $profile_controller_template = file_get_contents('templates/source/portal/Profile_controller.php');
+            $profile_controller_template = file_get_contents('../mkdcore/source/portal/Profile_controller.php');
             $profile_controller_template = $this->inject_substitute($profile_controller_template, 'portal', $portal['name']);
             $profile_controller_template = $this->inject_substitute($profile_controller_template, 'uc_portal', ucfirst($portal['name']));
             $profile_controller_template = $this->inject_substitute($profile_controller_template, 'model', $portal['model']);
@@ -168,10 +168,10 @@ class Portal_builder extends Builder
             $profile_controller_template = $this->inject_substitute($profile_controller_template, 'no_model', str_replace('_model', '', $portal['model']));
             $profile_controller_template = $this->inject_substitute($profile_controller_template, 'uc_model', ucfirst($portal['model']));
             $profile_controller_template = $this->inject_substitute($profile_controller_template, 'middleware', $this->process_middleware($portal['middleware']));
-            $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_profile_controller.php"] = $profile_controller_template;
+            $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_profile_controller.php"] = $profile_controller_template;
 
             $uc_portal = ucfirst($portal['name']);
-            $profile_view_model_template = file_get_contents('templates/source/portal/Profile_view_model.php');
+            $profile_view_model_template = file_get_contents('../mkdcore/source/portal/Profile_view_model.php');
             $profile_view_model_template = $this->inject_substitute($profile_view_model_template, 'portal', $portal['name']);
             $profile_view_model_template = $this->inject_substitute($profile_view_model_template, 'uc_portal', ucfirst($portal['name']));
             $profile_view_model_template = $this->inject_substitute($profile_view_model_template, 'uc_name', ucfirst($portal['name']));
@@ -180,28 +180,28 @@ class Portal_builder extends Builder
             $profile_view_model_template = $this->inject_substitute($profile_view_model_template, 'no_model', str_replace('_model', '', $portal['model']));
             $profile_view_model_template = $this->inject_substitute($profile_view_model_template, 'uc_model', ucfirst($portal['model']));
             $profile_view_model_template = $this->inject_substitute($profile_view_model_template, 'middleware', $this->process_middleware($portal['middleware']));
-            $this->_render_list["src/application/view_models/{$uc_portal}_profile_view_model.php"] = $profile_view_model_template;
+            $this->_render_list["../release/application/view_models/{$uc_portal}_profile_view_model.php"] = $profile_view_model_template;
 
 
 
             if(isset($portal['profile_page_fields']) && !empty($portal['profile_page_fields']))
             {
                 // overwrite view model
-                $profile_view_model_template = file_get_contents('templates/source/portal/Generic_portal_view_model.php');
+                $profile_view_model_template = file_get_contents('../mkdcore/source/portal/Generic_portal_view_model.php');
                 $profile_view_model_template = $this->inject_substitute($profile_view_model_template, 'uc_portal', ucfirst($portal['name']));
                 $profile_view_model_template = $this->inject_substitute($profile_view_model_template, 'fields', $this->generate_view_model_fields($portal['profile_page_fields']));
                 $profile_view_model_template = $this->inject_substitute($profile_view_model_template, 'methods', $this->generate_view_model_methods($portal['profile_page_fields']));
                 $profile_view_model_template = $this->inject_substitute($profile_view_model_template, 'set_model', $this->set_model_method($portal['profile_page_fields']));
-                $this->_render_list["src/application/view_models/{$uc_portal}_profile_view_model.php"] = $profile_view_model_template;
+                $this->_render_list["../release/application/view_models/{$uc_portal}_profile_view_model.php"] = $profile_view_model_template;
 
                 //overwrite profile
-                $profile_template = file_get_contents('templates/source/portal/Generic_profile.php');
+                $profile_template = file_get_contents('../mkdcore/source/portal/Generic_profile.php');
                 $profile_template = $this->inject_substitute($profile_template, 'portal', $portal['name']);
                 $profile_template = $this->inject_substitute($profile_template, 'form_controls', $this->generate_form_controls($portal['profile_page_fields']));
-                $this->_render_list["src/application/views/{$ucname}/Profile.php"] = $profile_template;
+                $this->_render_list["../release/application/views/{$ucname}/Profile.php"] = $profile_template;
 
                 // overwrite controller
-                $profile_controller_template = file_get_contents('templates/source/portal/Generic_profile_controller.php');
+                $profile_controller_template = file_get_contents('../mkdcore/source/portal/Generic_profile_controller.php');
                 $profile_controller_template = $this->inject_substitute($profile_controller_template, 'portal', $portal['name']);
                 $profile_controller_template = $this->inject_substitute($profile_controller_template, 'uc_portal', ucfirst($portal['name']));
                 $profile_controller_template = $this->inject_substitute($profile_controller_template, 'model', $portal['model']);
@@ -211,65 +211,67 @@ class Portal_builder extends Builder
                 $profile_controller_template = $this->inject_substitute($profile_controller_template, 'edit_fields', $this->generate_edit_params($portal['profile_page_fields']));
                 $profile_controller_template = $this->inject_substitute($profile_controller_template, 'input_fields', $this->generate_post_params($portal['profile_page_fields']));
                 $profile_controller_template = $this->inject_substitute($profile_controller_template, 'middleware', $this->process_middleware($portal['middleware']));
-                $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_profile_controller.php"] = $profile_controller_template;
+                $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_profile_controller.php"] = $profile_controller_template;
             }
 
             if ($portal['api_auth'])
             {
-                $api_template = file_get_contents('templates/source/api_auth/API_Controller.php');
+                $api_template = file_get_contents('../mkdcore/source/api_auth/API_Controller.php');
                 $ucname = ucfirst($portal['name']);
                 $api_template = $this->inject_substitute($api_template, 'valid_roles', $portal['role']);
                 $api_template = $this->inject_substitute($api_template, 'ucname', $ucname);
-                $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_api_auth_controller.php"] = $api_template;
+                $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_api_auth_controller.php"] = $api_template;
 
-                $token_template = file_get_contents('templates/source/api_auth/Token_service.php');
-                $this->_render_list["src/application/services/Token_service.php"] = $token_template;
+                $token_template = file_get_contents('../mkdcore/source/api_auth/Token_service.php');
+                $this->_render_list["../release/application/services/Token_service.php"] = $token_template;
 
             }
 
             if ($portal['api'])
             {
-                $portal_template = file_get_contents('templates/source/controller/portal_api_Controller.php');
+                $portal_template = file_get_contents('../mkdcore/source/controller/portal_api_Controller.php');
                 $portal_template = $this->inject_substitute($portal_template, 'ucname', $ucname);
                 $portal_template = $this->inject_substitute($portal_template, 'user_model', $portal['model']);
                 $portal_template = $this->inject_substitute($portal_template, 'valid_roles', $portal['role']);
-                $this->_render_list['src/application/controllers/' . $ucname . '/' . $ucname . '_api_controller.php'] = $portal_template;
+                $this->_render_list['../release/application/controllers/' . $ucname . '/' . $ucname . '_api_controller.php'] = $portal_template;
             }
 
             if (isset($portal['login_type']) && strlen($portal['login_type']) > 0 && in_array($portal['login_type'], $this->_login_types))
             {
-                $template = file_get_contents("templates/source/auth/{$portal['login_type']}_controller.php");
+                $template = file_get_contents("../mkdcore/source/auth/{$portal['login_type']}_controller.php");
                 $template = $this->inject_substitute($template, 'subclass_prefix', $this->_config['subclass_prefix']);
                 $template = $this->inject_substitute($template, 'name', $portal['name']);
                 $template = $this->inject_substitute($template, 'model', $portal['model']);
                 $template = $this->inject_substitute($template, 'ucname', $ucname);
                 $template = $this->inject_substitute($template, 'role', $portal['role']);
-                $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_login_controller.php"] = $template;
+                $template = $this->inject_substitute($template, 'valid_roles', $portal['role']);
+                $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_login_controller.php"] = $template;
 
                 if ($portal['api_auth'])
                 {
-                    $api_template = file_get_contents("templates/source/api_auth/login_api_controller.php");
+                    $api_template = file_get_contents("../mkdcore/source/api_auth/login_api_controller.php");
                     $api_template = $this->inject_substitute($api_template, 'subclass_prefix', $this->_config['subclass_prefix']);
                     $api_template = $this->inject_substitute($api_template, 'name', $portal['name']);
                     $api_template = $this->inject_substitute($api_template, 'model', $portal['model']);
                     $api_template = $this->inject_substitute($api_template, 'ucname', $ucname);
                     $api_template = $this->inject_substitute($api_template, 'role', $portal['role']);
-                    $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_login_api_controller.php"] = $api_template;
+                    $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_login_api_controller.php"] = $api_template;
                 }
 
-                $view_template = file_get_contents('templates/source/auth/' . $portal['login_type'] . '.php');
+                $view_template = file_get_contents('../mkdcore/source/auth/' . $portal['login_type'] . '.php');
                 $view_template = $this->inject_substitute($view_template, 'subclass_prefix', $this->_config['subclass_prefix']);
                 $view_template = $this->inject_substitute($view_template, 'name', $portal['name']);
                 $view_template = $this->inject_substitute($view_template, 'title', $this->_config['site_title']);
                 $view_template = $this->inject_substitute($view_template, 'portal', $portal['name']);
                 $view_template = $this->inject_substitute($view_template, 'ucname', $ucname);
+                $template = $this->inject_substitute($template, 'valid_roles', $portal['role']);
                 $view_template = $this->inject_substitute($view_template, 'model', $portal['model']);
 
-                $this->_render_list["src/application/views/{$ucname}/Login.php"] = $view_template;
+                $this->_render_list["../release/application/views/{$ucname}/Login.php"] = $view_template;
                 if ($portal['login_type'] == 'login')
                 {
-                    $this->_render_list["src/application/libraries/Google_service.php"] = file_get_contents('templates/source/auth/Google_service.php');
-                    $this->_render_list["src/application/libraries/Facebook_service.php"] = file_get_contents('templates/source/auth/Facebook_service.php');
+                    $this->_render_list["../release/application/libraries/Google_service.php"] = file_get_contents('../mkdcore/source/auth/Google_service.php');
+                    $this->_render_list["../release/application/libraries/Facebook_service.php"] = file_get_contents('../mkdcore/source/auth/Facebook_service.php');
                 }
             }
             if (isset($portal['register']) && strlen($portal['register']) > 0 && in_array($portal['register'], $this->_register_types))
@@ -279,26 +281,27 @@ class Portal_builder extends Builder
                     $portal['register'] = 'register';
                 }
 
-                $template = file_get_contents("templates/source/auth/{$portal['register']}_controller.php");
+                $template = file_get_contents("../mkdcore/source/auth/{$portal['register']}_controller.php");
                 $template = $this->inject_substitute($template, 'subclass_prefix', $this->_config['subclass_prefix']);
                 $template = $this->inject_substitute($template, 'name', $portal['name']);
                 $template = $this->inject_substitute($template, 'model', $portal['model']);
                 $template = $this->inject_substitute($template, 'ucname', $ucname);
+                $template = $this->inject_substitute($template, 'valid_roles', $portal['role']);
                 $template = $this->inject_substitute($template, 'role', $portal['role']);
-                $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_register_controller.php"] = $template;
+                $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_register_controller.php"] = $template;
 
                 if ($portal['api_auth'])
                 {
-                    $api_template = file_get_contents("templates/source/api_auth/register_api_controller.php");
+                    $api_template = file_get_contents("../mkdcore/source/api_auth/register_api_controller.php");
                     $api_template = $this->inject_substitute($api_template, 'subclass_prefix', $this->_config['subclass_prefix']);
                     $api_template = $this->inject_substitute($api_template, 'name', $portal['name']);
                     $api_template = $this->inject_substitute($api_template, 'model', $portal['model']);
                     $api_template = $this->inject_substitute($api_template, 'ucname', $ucname);
                     $api_template = $this->inject_substitute($api_template, 'role', $portal['role']);
-                    $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_register_api_controller.php"] = $api_template;
+                    $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_register_api_controller.php"] = $api_template;
                 }
 
-                $view_template = file_get_contents('templates/source/auth/' . $portal['register'] . '.php');
+                $view_template = file_get_contents('../mkdcore/source/auth/' . $portal['register'] . '.php');
                 $view_template = $this->inject_substitute($view_template, 'subclass_prefix', $this->_config['subclass_prefix']);
                 $view_template = $this->inject_substitute($view_template, 'name', $portal['name']);
                 $view_template = $this->inject_substitute($view_template, 'ucname', $ucname);
@@ -306,38 +309,39 @@ class Portal_builder extends Builder
                 $view_template = $this->inject_substitute($view_template, 'portal', $portal['name']);
                 $view_template = $this->inject_substitute($view_template, 'model', $portal['model']);
 
-                $this->_render_list["src/application/views/{$ucname}/Register.php"] = $view_template;
+                $this->_render_list["../release/application/views/{$ucname}/Register.php"] = $view_template;
                 if ($portal['register'] == 'register')
                 {
-                    $this->_render_list["src/application/libraries/Google_service.php"] = file_get_contents('templates/source/auth/Google_service.php');
-                    $this->_render_list["src/application/libraries/Facebook_service.php"] = file_get_contents('templates/source/auth/Facebook_service.php');
+                    $this->_render_list["../release/application/libraries/Google_service.php"] = file_get_contents('../mkdcore/source/auth/Google_service.php');
+                    $this->_render_list["../release/application/libraries/Facebook_service.php"] = file_get_contents('../mkdcore/source/auth/Facebook_service.php');
                 }
             }
 
             if (isset($portal['forgot']) && $portal['forgot'] == TRUE)
             {
-                $template = file_get_contents('templates/source/auth/forgot_controller.php');
+                $template = file_get_contents('../mkdcore/source/auth/forgot_controller.php');
                 $template = $this->inject_substitute($template, 'subclass_prefix', $this->_config['subclass_prefix']);
                 $template = $this->inject_substitute($template, 'name', $portal['name']);
                 $template = $this->inject_substitute($template, 'base_url', $this->_config['base_url']);
                 $template = $this->inject_substitute($template, 'model', $portal['model']);
                 $template = $this->inject_substitute($template, 'ucname', $ucname);
                 $template = $this->inject_substitute($template, 'role', $portal['role']);
-                $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_forgot_controller.php"] = $template;
+                $template = $this->inject_substitute($template, 'valid_roles', $portal['role']);
+                $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_forgot_controller.php"] = $template;
 
                 if ($portal['api_auth'])
                 {
-                    $api_template = file_get_contents("templates/source/api_auth/forgot_api_controller.php");
+                    $api_template = file_get_contents("../mkdcore/source/api_auth/forgot_api_controller.php");
                     $api_template = $this->inject_substitute($api_template, 'subclass_prefix', $this->_config['subclass_prefix']);
                     $api_template = $this->inject_substitute($api_template, 'name', $portal['name']);
                     $api_template = $this->inject_substitute($api_template, 'base_url', $this->_config['base_url']);
                     $api_template = $this->inject_substitute($api_template, 'model', $portal['model']);
                     $api_template = $this->inject_substitute($api_template, 'ucname', $ucname);
                     $api_template = $this->inject_substitute($api_template, 'role', $portal['role']);
-                    $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_forgot_api_controller.php"] = $api_template;
+                    $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_forgot_api_controller.php"] = $api_template;
                 }
 
-                $view_template = file_get_contents('templates/source/auth/forgot.php');
+                $view_template = file_get_contents('../mkdcore/source/auth/forgot.php');
                 $view_template = $this->inject_substitute($view_template, 'subclass_prefix', $this->_config['subclass_prefix']);
                 $view_template = $this->inject_substitute($view_template, 'name', $portal['name']);
                 $view_template = $this->inject_substitute($view_template, 'portal', $portal['name']);
@@ -345,31 +349,32 @@ class Portal_builder extends Builder
                 $view_template = $this->inject_substitute($view_template, 'title', $this->_config['site_title']);
                 $view_template = $this->inject_substitute($view_template, 'model', $portal['model']);
 
-                $this->_render_list["src/application/views/{$ucname}/Forgot.php"] = $view_template;
+                $this->_render_list["../release/application/views/{$ucname}/Forgot.php"] = $view_template;
             }
 
             if (isset($portal['reset']) && $portal['reset'] == TRUE)
             {
-                $template = file_get_contents('templates/source/auth/reset_controller.php');
+                $template = file_get_contents('../mkdcore/source/auth/reset_controller.php');
                 $template = $this->inject_substitute($template, 'subclass_prefix', $this->_config['subclass_prefix']);
                 $template = $this->inject_substitute($template, 'name', $portal['name']);
                 $template = $this->inject_substitute($template, 'model', $portal['model']);
                 $template = $this->inject_substitute($template, 'ucname', $ucname);
+                $template = $this->inject_substitute($template, 'valid_roles', $portal['role']);
                 $template = $this->inject_substitute($template, 'role', $portal['role']);
-                $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_reset_controller.php"] = $template;
+                $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_reset_controller.php"] = $template;
 
                 if ($portal['api_auth'])
                 {
-                    $api_template = file_get_contents("templates/source/api_auth/reset_api_controller.php");
+                    $api_template = file_get_contents("../mkdcore/source/api_auth/reset_api_controller.php");
                     $api_template = $this->inject_substitute($api_template, 'subclass_prefix', $this->_config['subclass_prefix']);
                     $api_template = $this->inject_substitute($api_template, 'name', $portal['name']);
                     $api_template = $this->inject_substitute($api_template, 'model', $portal['model']);
                     $api_template = $this->inject_substitute($api_template, 'ucname', $ucname);
                     $api_template = $this->inject_substitute($api_template, 'role', $portal['role']);
-                    $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_reset_api_controller.php"] = $api_template;
+                    $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_reset_api_controller.php"] = $api_template;
                 }
 
-                $view_template = file_get_contents('templates/source/auth/reset.php');
+                $view_template = file_get_contents('../mkdcore/source/auth/reset.php');
                 $view_template = $this->inject_substitute($view_template, 'subclass_prefix', $this->_config['subclass_prefix']);
                 $view_template = $this->inject_substitute($view_template, 'name', $portal['name']);
                 $view_template = $this->inject_substitute($view_template, 'portal', $portal['name']);
@@ -377,10 +382,10 @@ class Portal_builder extends Builder
                 $view_template = $this->inject_substitute($view_template, 'title', $this->_config['site_title']);
                 $view_template = $this->inject_substitute($view_template, 'model', $portal['model']);
 
-                $this->_render_list["src/application/views/{$ucname}/Reset.php"] = $view_template;
+                $this->_render_list["../release/application/views/{$ucname}/Reset.php"] = $view_template;
             }
             //build layouts
-            $layout_header_template = file_get_contents('templates/source/portal/LayoutHeader.php');
+            $layout_header_template = file_get_contents('../mkdcore/source/portal/LayoutHeader.php');
             $layout_header_template = $this->inject_substitute($layout_header_template, 'subclass_prefix', $this->_config['subclass_prefix']);
             $layout_header_template = $this->inject_substitute($layout_header_template, 'copyright', "<?php echo \$setting['copyright'];?>");
             $layout_header_template = $this->inject_substitute($layout_header_template, 'powered_by', $this->_config['powered_by']);
@@ -393,20 +398,20 @@ class Portal_builder extends Builder
             $layout_header_template = $this->inject_substitute($layout_header_template, 'model', $portal['model']);
             $layout_header_template = $this->inject_substitute($layout_header_template, 'css', $this->_generate_css($portal['css'], $portal['name']));
 
-            $this->_render_list["src/application/views/Layout/{$ucname}Header.php"] = $layout_header_template;
-            $layout_footer_template = file_get_contents('templates/source/portal/LayoutFooter.php');
+            $this->_render_list["../release/application/views/Layout/{$ucname}Header.php"] = $layout_header_template;
+            $layout_footer_template = file_get_contents('../mkdcore/source/portal/LayoutFooter.php');
             $layout_footer_template = $this->inject_substitute($layout_footer_template, 'js', $this->_generate_js($portal['js'], $portal['name']));
-            $this->_render_list["src/application/views/Layout/{$ucname}Footer.php"] = $layout_footer_template;
+            $this->_render_list["../release/application/views/Layout/{$ucname}Footer.php"] = $layout_footer_template;
 
             //build dashboard
-            $dashboard_template = file_get_contents('templates/source/portal/dashboard_controller.php');
+            $dashboard_template = file_get_contents('../mkdcore/source/portal/dashboard_controller.php');
             $dashboard_template = $this->inject_substitute($dashboard_template, 'subclass_prefix', $this->_config['subclass_prefix']);
             $dashboard_template = $this->inject_substitute($dashboard_template, 'name', $portal['name']);
             $dashboard_template = $this->inject_substitute($dashboard_template, 'portal', $portal['name']);
             $dashboard_template = $this->inject_substitute($dashboard_template, 'ucname', $ucname);
 
-            $this->_render_list["src/application/controllers/{$ucname}/{$ucname}_dashboard_controller.php"] = $dashboard_template;
-            $this->_render_list["src/application/views/{$ucname}/Dashboard.php"] = $this->inject_substitute(file_get_contents('templates/source/portal/dashboard.php'), 'qwertyui', '');
+            $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_dashboard_controller.php"] = $dashboard_template;
+            $this->_render_list["../release/application/views/{$ucname}/Dashboard.php"] = $this->inject_substitute(file_get_contents('../mkdcore/source/portal/dashboard.php'), 'qwertyui', '');
         }
 
         if ($this->_config['mode'] == 'production')

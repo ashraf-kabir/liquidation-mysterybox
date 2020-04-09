@@ -7,7 +7,7 @@ class Lang_builder extends Builder
     protected $_template;
     protected $_translations;
     protected $_lang;
-    protected $_file_path = 'src/application/language/';
+    protected $_file_path = '../release/application/language/';
 
     public function __construct($config)
     {
@@ -29,7 +29,7 @@ class Lang_builder extends Builder
 
     public function build()
     {
-        $this->_template = file_get_contents('templates/source/custom_lang.php');
+        $this->_template = file_get_contents('../mkdcore/source/custom_lang.php');
 
         foreach ($this->_translations as $key => $value)
         {

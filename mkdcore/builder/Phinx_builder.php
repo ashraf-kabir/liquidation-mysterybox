@@ -6,7 +6,7 @@ class Phinx_builder extends Builder
     protected $_config;
     protected $_template;
     protected $_lang;
-    protected $_file_path = 'src/phinx.php';
+    protected $_file_path = '../release/phinx.php';
 
     public function __construct($config, $locale)
     {
@@ -18,7 +18,7 @@ class Phinx_builder extends Builder
 
     public function build()
     {
-        $this->_template = file_get_contents('templates/source/core/phinx.php');
+        $this->_template = file_get_contents('../mkdcore/source/core/phinx.php');
         foreach ($this->_config as $key => $value)
         {
             if (!is_array($value))

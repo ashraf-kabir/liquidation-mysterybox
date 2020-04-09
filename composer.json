@@ -1,0 +1,25 @@
+{
+	"description": "Manaknight Code Builder",
+	"name": "manaknightdigital/code_builder",
+	"type": "project",
+	"version": "1.0.0",
+	"homepage": "https://manaknightdigital.com",
+	"license": "Proprietary Software licensing",
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"require": {
+		"php": ">=5.3.7",
+		"stripe/stripe-php": "^7.25",
+		"mailgun/mailgun-php": "^2.4",
+		"php-http/curl-client": "^1.7",
+		"guzzlehttp/psr7": "^1.4",
+		"firebase/php-jwt": "^5.0",
+		"google/apiclient": "^2.0",
+		"robmorgan/phinx": "^0.9.2",
+		"aws/aws-sdk-php": "^3.104",
+		"twilio/sdk": "^5.31",
+		"dompdf/dompdf": "^0.8.3"
+	},
+	"require-dev": {
+	}
+}

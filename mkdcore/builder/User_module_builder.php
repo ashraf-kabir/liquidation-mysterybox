@@ -22,10 +22,10 @@ class User_module_builder extends Builder
         $this->_models = [
         ];
         $this->_services = [
-            'src/application/services/User_service.php'
+            '../release/application/services/User_service.php'
         ];
         $this->_factory = [
-            'src/application/factories/User_factory.php'
+            '../release/application/factories/User_factory.php'
         ];
 
         $this->_template = '';
@@ -41,19 +41,19 @@ class User_module_builder extends Builder
     {
         foreach ($this->_models as $key => $value)
         {
-            $template = file_get_contents(str_replace('src/application/models/', 'templates/source/auth/', $value));
+            $template = file_get_contents(str_replace('../release/application/models/', '../mkdcore/source/auth/', $value));
             file_put_contents($value, $template);
         }
 
         foreach ($this->_services as $key => $value)
         {
-            $template = file_get_contents(str_replace('src/application/services/', 'templates/source/auth/', $value));
+            $template = file_get_contents(str_replace('../release/application/services/', '../mkdcore/source/auth/', $value));
             file_put_contents($value, $template);
         }
 
         foreach ($this->_factory as $key => $value)
         {
-            $template = file_get_contents(str_replace('src/application/factories/', 'templates/source/auth/', $value));
+            $template = file_get_contents(str_replace('../release/application/factories/', '../mkdcore/source/auth/', $value));
             file_put_contents($value, $template);
         }
     }

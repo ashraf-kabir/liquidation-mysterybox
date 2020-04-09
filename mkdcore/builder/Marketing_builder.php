@@ -70,8 +70,8 @@ class Marketing_builder extends Builder
                     }
                 }
             }
-            file_put_contents('src/application/views/Layout/GuestHeader.php', $header_template);
-            $this->_render_list['src/application/views/Layout/GuestHeader.php'] = '';
+            file_put_contents('../release/application/views/Layout/GuestHeader.php', $header_template);
+            $this->_render_list['../release/application/views/Layout/GuestHeader.php'] = '';
         }
 
         if (strlen($this->_marketing['footer']) > 0)
@@ -104,8 +104,8 @@ class Marketing_builder extends Builder
                     }
                 }
             }
-            file_put_contents('src/application/views/Layout/GuestFooter.php', $footer_template);
-            $this->_render_list['src/application/views/Layout/GuestFooter.php'] = '';
+            file_put_contents('../release/application/views/Layout/GuestFooter.php', $footer_template);
+            $this->_render_list['../release/application/views/Layout/GuestFooter.php'] = '';
         }
 
         foreach ($this->_marketing['pages'] as $key => $value)
@@ -181,7 +181,7 @@ class Marketing_builder extends Builder
         {
             foreach ($js_list as $file)
             {
-                $file = str_replace('/assets/js/', 'templates/custom/', $file);
+                $file = str_replace('/assets/js/', '../mkdcore/custom/', $file);
                 $compiled_js .= file_get_contents($file);
             }
             file_put_contents($this->_generate_asset_file_name($compiled_js_file_name), $compiled_js);
@@ -191,8 +191,8 @@ class Marketing_builder extends Builder
         foreach ($js_list as $file)
         {
             $js_html .= "\t<script src=\"{$file}\"></script>\n";
-            $template = file_get_contents(str_replace('/assets/js/', 'templates/custom/', $file));
-            file_put_contents(str_replace('/assets', 'assets', $file), $template);
+            $template = file_get_contents(str_replace('/assets/js/', '../mkdcore/custom/', $file));
+            file_put_contents('../release/' . str_replace('/assets', 'assets', $file), $template);
             $this->_render_list[$file] = '';
         }
 
@@ -218,18 +218,18 @@ class Marketing_builder extends Builder
         {
             foreach ($css_list as $file)
             {
-                $file = str_replace('/assets/css/', 'templates/custom/', $file);
+                $file = str_replace('/assets/css/', '../mkdcore/custom/', $file);
                 $compiled_css .= file_get_contents($file);
             }
-            file_put_contents($this->_generate_asset_file_name($compiled_css_file_name), $compiled_css);
+            file_put_contents('../release/' . $this->_generate_asset_file_name($compiled_css_file_name), $compiled_css);
             return "\t<link rel=\"stylesheet\" href=\"{$compiled_css_file_name}\"/>\n";
         }
 
         foreach ($css_list as $file)
         {
             $css_html .= "\t<link rel=\"stylesheet\" href=\"{$file}\"/>\n";
-            $template = file_get_contents(str_replace('/assets/css/', 'templates/custom/', $file));
-            file_put_contents(str_replace('/assets', 'assets', $file), $template);
+            $template = file_get_contents(str_replace('/assets/css/', '../mkdcore/custom/', $file));
+            file_put_contents('../release/' . str_replace('/assets', 'assets', $file), $template);
             $this->_render_list[$file] = '';
         }
 

@@ -1,0 +1,286 @@
+power_by~Manaknightdigital Inc.;
+roles~member|admin|system|info|system|event|donation|vendor|distributor;
+core;
+
+model~about|id:INT|description:TEXT;
+
+model~auction_queue|id:INT|status:TEXT|notes:TEXT|description:TEXT|expected_start_date:DATE|item_id:INT;
+mapping~auction_queue|status|xyzInactive|xyzActive;
+
+model~authorization_log|id:INT|user_id:INT|user_type:INT|amount:FLOAT|code:STR|ip:STR|user_agent:STR|admin_id:INT;
+mapping~authorization_log|user_type|xyzVendor|xyzUser|xyzDistributor;
+
+model~child_vendor|id:INT|parent_vendor_id:INT|number:STR|status:INT|money_collected:INT|money_max:INT|access_tokken:STR|qr_code:STR;
+mapping~child_vendor|status|xyzInactive|xyzActive|xyzSuspended;
+
+model~distrubtor|id:INT|company_name:STR|email:STR|password:PASSWORD|type:STR|address:STR|country:STR|state:STR|city:STR|postal_code:STR|profile_image:STR|phone_number:STR|term_condition:INT|account_manager_id:INT|total_pending_pick_up:INT|total_pending_delivery:INT|total_complete_pickup:INT|total_complete_delivery:INT|num_orders:INT|total_none_delivery:INT|money_owed:FLOAT|sales:FLOAT|commission:FLOAT|tax:FLOAT|ytd_balance:FLOAT|ytd_commission:FLOAT|commission_rate:FLOAT|tax_rate:FLOAT|next_pickup:DATE|status:INT|qr_code:STR|lat:FLOAT|long:FLOAT|role_id:INT|num_list_item:INT;
+mapping~distrubtor|status|xyzInactive|xyzActive|xyzSuspendedy|xyzBan;
+
+model~distrubtor_operation|id:INT|user_id:STR|action:STR|detail:TEXT|last_ip:STR|user_agent:STR;
+
+model~distrubtor_report|id:INT|user_id:INT|balance:FLOAT|commission:FLOAT|tax:FLOAT|money_owned:FLOAT|date:DATE;
+
+model~distrubtor_report|id:INT|user_id:INT|balance:FLOAT|commission:FLOAT|tax:FLOAT|money_owned:FLOAT|date:DATE;
+
+model~distrubtor_shop_item|id:INT|distrubtor_id:INT|item_id:INT|index:INT;
+
+model~distrubtor_transaction|id:INT|user_id:INT|item_id:INT|buyer_id:INT|amount:FLOAT|commission:FLOAT|tax:FLOAT|old_balance:FLOAT|new_balance:FLOAT|old_commisstion:FLOAT|new_commission:FLOAT|old_tax:FLOAT|new_tax:FLOAT|action:STR|order_id:STR|invoice_id:STR|code:str|notes:str;
+
+model~donation_items|id:INT|donation_user_id:INT|title:STR|description:STR|qr_code:STR|url:STR|image_id:INT|goal:INT|status:INT|expire_at:DATE;
+
+model~donation_transaction|id:INT|donation_user_id:INT|buyer_id:INT|amount:FLOAT|old_balance:FLOAT|balance:FLOAT|action:TEXT|code:STR|notes:STR;
+
+model~donation_user|id:INT|company_name:STR|email:STR|email:STR|password:PASSWORD|image:IMAGE|image_id:INT|phone_number:STR|balance:FLOAT|commission:FLOAT|commission_rate:FLOAT|status:INT|user_id:INT|role_id:INT|type:STR;
+mapping~donation_user|status|xyzInactive|xyzActive|xyzSuspendedy|xyzBan;
+
+model~event_items|id:INT|event_user_id:INT|title:STR|description:STR|qr_code:STR|image_id:INT|image:IMAGE|status:INT;
+mapping~event_items|status|xyzPending|xyzInactive|xyzActive;
+
+model~event_log|id:INT|first_name:STR|last_name:STR|sponsor:STR|phone:STR|email:STR;
+
+model~event_user|id:INT|company_name:STR|email:STR|password:PASSWORD|profile_image:IMAGE|phone_number:STR|status:INT|role_id:INT|type:STR;
+mapping~event_user|status|xyzInactive|xyzActive|xyzSuspendedy|xyzBan;
+
+model~fb_question|id:INT|question:TEXT|answer:TEXT;
+
+model~fb_report|id:INT|vendor_flash_coin:FLOAT|issued_flash_coin:FLOAT|distrubtor_flash_coin:FLOAT|member_flash_coin:FLOAT|local_vendor_flash_coin:FLOAT|refunds:FLOAT|flashbid_otp_earning:FLOAT|date:DATE;
+
+model~fb_rooms|id:INT|winner_id:INT|item_image:IMAGE|item_title:TEXT|start_timestamp:FLOAT|flash_timestamp:FLOAT|end_timestamp:FLOAT|item_id:INT|initial_bid:INT|amount:INT|bid_amount:INT|buy_at_amount:INT|last_bid_name:STR|display_name:STR|dispaly_photo:IMAGE|state:STR;
+
+model~fb_stats|id:INT|num_users:INT|num_distrubtor:INT|num_vendor:INT|num_local_vendor:INT|num_auction_lost:INT|num_auction_won:INT|num_flash_alerts:INT|num_orders:INT|coins_processed_daily:FLOAT|coins_processed_week:FLOAT|coins_processed_month:FLOAT|num_auction_closed:FLOAT;
+
+model~fb_shopes|id:INT|distrubtor_id:INT|index:INT|plan:INT;
+
+model~fb_stickers|id:INT|vendor_id:INT|col:INT|col:INT|row:INT|amount:FLOAT|allow:TEXT|used:TEXT|status:INT|description:TEXT|title:STR;
+mapping~fb_stickers|status|xyzInactive|xyzActive;
+
+model~fb_system|id:INT|total_flash_coin:FLOAT|treasury_flash_coin:FLOAT|issued_flash_coin:FLOAT|vendor_flash_coin:FLOAT|distrubtor_flash _coin:FLOAT|local_vendor_flash_coin:FLOAT|refunds:FLOAT|flashbid_earning:flashbid_otp_earning:FLOAT|refund_user_id:FLOAT|flash_otp_user_id:FLOAT;
+
+model~fb_system_transactions|id:INT|user_id:INT|ref_transaction_id:STR|item_id:INT|amount:FLOAT|old_treasury_flash_coin:FLOAT|treasury_flash_coin:FLOAT|old_issued_flash_coin:FLOAT|issued_flash_coin:FLOAT|old_vendor_flash_coin:FLOAT|vendor_flash_coin:FLOAT|old_distrubtor_flash_coin:FLOAT|distrubtor_flash_coin:FLOAT|old_member_flash_coin:FLOAT|member_flash_coin:FLOAT|old_local_vendor_flash_coin:FLOAT|local_vendor_flash_coin:FLOAT|old_refund:FLOAT|refund:FLOAT|old_flashbid_earning:FLOAT|flashbid_earning:FLOAT|old_flashbid_otp_earning:FLOAT|flashbid_otp_earning:FLOAT|action:STR|transaction_type:STR|notes:TEXT|data:TEXT|code:STR;
+
+model~fb_terms|id:INT|description:TEXT;
+
+model~fb_user_note|id:INT|user_id:INT|description:TEXT;
+
+model~fb_user_transaction|id:INT|user_id:INT|item_id:INT|order_id:STR|code:STR|action:STR|notes:STR|invoice_id:STR|amount:FLOAT|old_total:FLOAT|total:FLOAT|old_money_owned:FLOAT|money_owed:FLOAT;
+
+model~fb_vendor_report|id:INT|user_id:INT|balance:FLOAT|money_collected:FLOAT|data:DATE;
+
+model~fb_vendor_transaction|id:INT|user_id:INT|item_id:INT|buyer_id:INT|discount:FLOAT|amount:FLOAT|tax:FLOAT|old_balance:FLOAT|balance:FLOAT|old_discount:FLOAT|discount:FLOAT|new_discount:FLOAT|old_tax:FLOAT|new_tax:FLOAT|code:TEXT|action:TEXT|notes:TEXT|child_id:FLOAT;
+
+model~history|id:INT|user_id:INT|message:STR|type:INT;
+mapping~history|type|xyzAuction|xyzLottery|xyzAccount|xyzInfo|xyzOrder|xyzPolice|xyzShipped|xyzTrivia;
+
+model~info_category|id:INT|user_id:INT|name:STR|status:INT;
+mapping~info_category|status|xyzInactive|xyzActive;
+
+model~info_field|id:INT|user_id:INT|name:STR|type:STR;
+
+model~info_otp|id:INT|user_id:INT|description:TEXT|qr_code:STR|name:STR|image:IMAGE|status:INT|number:INT|seal_image:IMAGE;
+mapping~info_otp|status|xyzUnlisted|xyzActive|xyzSuspended;
+
+model~info_report_log|id:INT|user_id:INT|info_id:INT|report_id:INT|rating:INT|status:STR|history:TEXT|description:TEXT|note:TEXT|info_user_id:INT|lat:FLOAT|long:FLOAT;
+mapping~info_report_log|status|xyzNew|xyzResolved|xyzLooking Into It;
+
+model~info_stat|id:INT|info_user_id:INT|report:TEXT;
+
+model~info_report_report|id:INT|user_id:INT|data:TEXT|date:DATE;
+
+model~info_user|id:id|email:STR|password:PASSWORD|company_name:STR|phone_number:STR|address:STR|country:STR|state:STR|city:STR|postal_code:STR|warning_message:STR|category:STR|new_email_template_slug:STR|looking_email_template_slug:STR|resolve_email_template_slug:STR|data:STR|role_id:INT|type:STR|status:INT;
+mapping~info_user|status|xyzInactive|xyzActive|xyzSuspendedy|xyzBan;
+
+model~invoice|id:INT|user_id:INT|item_id:INT|vendor_id:INT|amount:FLOAT|commission:FLOAT|tax:FLOAT|total:INT|delivery:INT|type:INT|title:STR|description:TEXT|slug:STR|order_id:STR|user_phone_number:STR|vendor_phone_number:STR|user_address:STR|vendor_address:STR|user_country:STR|vendor_country:STR|user_state:STR|vendor_state:STR|user_city:STR|vendor_state:STR|user_city:STR|vendor_city:STR|user_postal_code:STR|vendor_postal_code:STR|vendor_comapny:STR|user_first_name:STR|user_last_name:STR|user_email:STR|vendor_email:STR|status:INT;
+mapping~invoice|delivery|xyzShip|xyzPickUp|xyzNone;
+mapping~invoice|status|xyzUnpaid|xyzPaid;
+mapping~invoice|type|xyzDistrubtor|xyzVendor|xyzflashbid|xyzCheckout;
+
+model~items|id:INT|initial_bid:INT|item_worth:INT|final_bid:INT|bid_amount:INT|stock:INT|ticket_amount:INT|ticket_total:INT|ticket_sold:INT|winner_id:INT|room_id:INT|buy_at_amount:INT|title:STR|image:IMAGE|image_id:INT|secondary_image:IMAGE|secondary_image_id:INT|winner_code:STR|winner_instruction:STR|qr_code:STR|market_value:STR|data:TEXT|description:TEXT|vendor_id:INT|delivery:INT|status:INT|type:INT|size:INT|long:FLOAT:lat:FLOAT|geographic_need:INT;
+mapping~items|status|xyzLost|xyzDraft|xyzActive|xyzFlash|xyzQueue|xyzComplete|xyzClaimed|xyzUnlisted|xyzOut Of Stock|xyzInactive;
+mapping~items|size|xyzBig|xyzSmall;
+mapping~items|type|xyzAuction|xyzLottery|xyzOTP|xyzTraditional auction|xyzTrivia|xyzParticipation lottery;
+mapping~items|geographic_need|xyzYes|xyzNo;
+
+model~item_bid|id:INT|user_id:INT|item_id:INT|room_id:INT|amount:FLOAT;
+
+model~item_user|id:INT|user_id:INT|item_id:INT;
+
+model~normal_auction_item_bid|id:INT|user_id:INT|item_id:INT|amount:FLOAT;
+
+model~order|id:INT|user_id:INT|item_id:INT|distrubtor_id:INT|slug:STR|invoice_id:STR|amount:FLOAT|commission:FLOAT|tax:FLOAT|total:FLOAT|delivery_type:INT|note:TEXT|history:TEXT|description:FLOAT|status:INT;
+mapping~order|status|xyzNew|xyzRefund|xyzExchange|xyzLost|xyzDelivered|xyzShipped|xyzComplete;
+mapping~order|delivery_type|xyzPickUp|xyzShip|xyzNone;
+
+model~order_note|id:INT|order_id:INT|description:TEXT;
+
+model~other_items|id:INT|vendor_id:INT|description:TEXT|instructions:TEXT|qr_code:STRING|data:TEXT|title:STR|image:IMAGE|stock:INT|num_orders:INT|amount:FLOAT|commission:INT|tax:INT|discount:INT|type:STR|delivery:STR|ref_type:STR;
+mapping~other_items|type|xyzRemote OTP|xyzCheck OTP;
+mapping~other_items|status|xyzDraft|xyzActive|xyzUnlisted|xyzOut Of Stock;
+mapping~other_items|ref_type|xyzPickUp|xyzDelivery|xyzCheckouts|xyzNone;
+mapping~other_items|delivery|xyzPickUp|xyzDelivery|xyzCheckouts|xyzNone;
+
+model~vendor|id:INT|vendor_id:INT|email:STR|password:PASSWORD|type:STR|address:STR|country:STR|state:STR|city:STR|postal_code:STR|profile_image:IMAGE|money_collected:FLOAT|discount:FLOAT|balance:FLOAT|ytd_money_collected:FLOAT|ytd_discount:FLOAT|discount_rate:FLOAT|term_condition:INT|account_manager_id:INT|phone_number:STR|data:TEXT|status:INT|qr_code:TEXT|resaller_enable:INT;
+mapping~vendor|status|xyzInactive|xyzActive|xyzSuspendedy|xyzBan;
+
+model~polls|id:INT|vote:INT|total:INT|prize_amount:INT|type:INT|amount:INT|title:STR|description:TEXT|image:IMAGE|image_id:INT|qr_code:STR|question:TEXT|item_id:INT|secondary_image:IMAGE|secondary_image_id:INT|item_id:INT|status:INT|size:INT;
+mapping~polls|type|xyzMoney|xyzLottery;
+mapping~polls|status|xyzInactive|xyzActive;
+mapping~polls|size|xyzSmall|xyzBig;
+
+model~vendor_operation|id:INT|user_id:INT|action:STR|detail:TEXT|last_ip:STR|user_agent:STR;
+
+model~triva|id:INT|participant:INT|total:INT|prize_amount_1:INT|prize_amount_2:INT|prize_amount_3:INT|type:INT|winner_id_1:INT|winner_id_2:INT|winner_id_3:INT|claim_1:INT|claim_2:INT|claim_3:INT|trivia_room_id:INT|title:STR|description:STR|image:IMAGE|image_id:INT|secondary_image:IMAGE|secondary_image_id:INT|winner_code_1:STR|winner_code_2:STR|winner_code_3:STR|winner_instructions_1:STR|winner_instructions_2:STR|winner_instructions_3:STR|qr_code:STR|questions:STR|vendor_id_1:INT|vendor_id_2:INT|vendor_id_3:INT|status:INT|size:INT|second_between_question:INT;
+mapping~trivia|size|xyzSmall|xyzBig;
+mapping~triviatatus|xyzDraft|xyzActive|xyzFlash|xyzQueue|xyzComplete|xyzClaimed;
+mapping~trivia|type|xyzMoney|xyzPrize;
+
+model~occupation|id:INT|name:STR;
+
+model~poll_bid|id:INT|user_id:INT|poll_id:INT|answer:STR;
+
+
+portal~admin|user_model|login_only;
+portal~system|user_model|login_only;
+portal~vendor|vendor_model|login_only;
+portal~member|user_model|login_only;
+portal~distributor|distrubtor_model|login_only;
+portal~info|info_user_model|login_only;
+portal~event|event_user_model|login_only;
+portal~donation|donation_user_model|login_only;
+
+
+menu~admin|xyzDashboard|/dashboard/0?order_by=id&direction=DESC;
+menu~admin|xyzUsers|/users/0?order_by=id&direction=DESC;
+menu~admin|xyzDistributors|/distributors/0?order_by=id&direction=DESC;
+menu~admin|xyzVendors|vendors/0?order_by=id&direction=DESC;
+menu~admin|xyzFlash Bid Store|/flashbid_store/0?order_by=id&direction=DESC;
+menu~admin|xyzAdd OTP|/otp_item/add;
+menu~admin|Report(User Report::/report/users,Report 1::/reports/2,Report 2::/reports/,Report 2::/reports/2);
+menu~admin|xyzAdd Normal Auction|/normal_auction/add;
+menu~admin|xyzAdd Real Time Auction|/real_time_auction/add;
+menu~admin|xyzAdd Lottery|/lottery/add;
+menu~admin|xyzAdd Trivia|/trivia/add;
+menu~admin|xyzAdd Nomination Lottery|/nomination_lottery;
+menu~admin|xyzPolls|/polls/0?order_by=id&direction=DESC;
+menu~admin|xyzOccupation|/occupation/0?order_by=id&direction=DESC;
+menu~admin|xyzDonation User|/donation_users/0?order_by=id&direction=DESC;
+menu~admin|xyzDonation Items|/donation_items/0?order_by=id&direction=DESC;
+menu~admin|xyzDistributor Shops|/distributor_shops/0?order_by=id&direction=DESC;
+menu~admin|xyzDistributor Shop Items|/distributor_shop_items/0?order_by=id&direction=DESC;
+menu~admin|xyzDistributor Regular Items|/distributor_regular_items/0?order_by=id&direction=DESC;
+menu~admin|xyzEvent Users|/event_user/0?order_by=id&direction=DESC;
+menu~admin|xyzEvent Items|/event_items/0?order_by=id&direction=DES;
+menu~admin|xyzReports|/dashboard;
+menu~admin|xyzOrders|/orders/0?order_by=id&direction=DESC;
+menu~admin|xyzInvoices|/invoices/0?order_by=id&direction=DESC;
+menu~admin|xyzInfo Categories|/info_categories/0?order_by=id&direction=DESC;
+menu~admin|yzInfo Users|/nfo_users/0?order_by=id&direction=DESC;
+menu~admin|xyzProfile|/profile;
+menu~admin|xyzLogout|/logout;
+
+menu~vendor|xyzDashboard|/dashboard;
+menu~vendor|xyzUsers|/users/0?order_by=id&direction=DESC;
+menu~vendor|xyzReseller Vendors|/dashboard;
+menu~vendor|xyzReport|/vendor_report/0?order_by=id&direction=DESC;
+menu~vendor|xyzReseller Reports|/dashboard;
+menu~vendor|xyzTransactions|/vendor_transactions/0?order_by=id&direction=DESC;
+menu~vendor|Profile|/profile;
+menu~vendor|Logout|/logout;
+
+menu~system|xyzDashboard|/dashboard;
+menu~system|xyzUsers|/users/0?order_by=id&direction=DESC;
+menu~system|xyzStickers|/stickers/0?order_by=id&direction=DESC;
+menu~system|xyzSettings|/settings;
+menu~system|xyzReports|/dashboard;
+menu~system|xyzTransactions|/transactions/0?order_by=id&direction=DESC;
+menu~system|xyzAuthorization Log|/authorization_log/0?order_by=id&direction=DESC;
+menu~system|Profile|/profile;
+menu~system|Logout|/logout;
+
+menu~member|xyzProfile|/profile;
+menu~member|xyzLogout|/logout;
+
+
+menu~distributor|xyzDashboard|/dashboard;
+menu~distributor|xyzItems|/distributor_items/0?order_by=id&direction=DESC;
+menu~distributor|xyzShop|/distributor_shop_items/0?order_by=id&direction=DESC;
+menu~distributor|xyzItem Prizes|/prizes/0?order_by=id&direction=DESC;
+menu~distributor|xyzOrders|/orders/0?order_by=id&direction=DESC;
+menu~distributor|xyzInvoices|/invoices/0?order_by=id&direction=DESC;
+menu~distributor|xyzReports|/distributor_report/0?order_by=id&direction=DESC;
+menu~distributor|xyzTransactions|/distributor_transactions/0?order_by=id&direction=DESC;
+menu~distributor|Profile|/profile;
+menu~distributor|Logout|/logout;
+
+menu~info|xyzDashboard|/dashboard;
+menu~info|xyzInfo|/info_otp/0?order_by=id&direction=DESC;
+menu~info|xyzReport|/report/0?order_by=id&direction=DESC;
+menu~info|xyzAnalytics|/dashboard;
+menu~info|xyzProfile|/profile;
+menu~info|xyzLogout|/logout;
+
+menu~event|xyzDashboard|/dashboard;
+menu~event|xyzEvent Users|/event_user/0?order_by=id&direction=DESC;
+menu~event|xyzEvent Items|/event_items/0?order_by=id&direction=DESC;
+menu~event|xyzReport|/dashboard;
+menu~event|xyzProfile|/profile;
+menu~event|xyzLogout|/logout;
+
+menu~donation|xyzDashboard|/dashboard;
+menu~donation|xyzDonation Users|/donation_users/0?order_by=id&direction=DESC;
+menu~donation|xyzDonation Items|/donation_items/0?order_by=id&direction=DESC;
+menu~donation|xyzReport|/report/0?order_by=id&direction=DESC;
+menu~donation|xyzProfile|/profile;
+menu~donation|xyzLogout|/logout;
+
+
+
+controller~user|Users|/users|admin;
+list~user|admin|id,email,first_name,last_name,role_id,status,postal_code,city,government_id;
+filter~user|admin|id,email,first_name,last_name,role_id,status,postal_code,city,government_id;
+header~user|admin|id,email,first_name,last_name,role_id,status;
+edit~user|admin|id,email,first_name,last_name,role_id,status,government_id,address,country,state,occupation_id,city;
+add~user|admin|email,first_name,last_name,password,phone,role_id,image,government_id,address,country,state,city,postal_code;
+view~user|admin|email,first_name,last_name,password,phone,role_id,image,government_id,address,country,state,city,postal_code;
+row~user|admin|id=integer,image=image,complex=email:first_name:last_name:role_id:phone,status=integer;
+
+controller~history|History|/history|admin;
+list~history|admin|type,user_id;
+filter~history|admin|type,user_id;
+header~history|admin;
+edit~history|admin;
+add~history|admin;
+view~history|admin;
+row~history|admin|id=integer,message=string;
+
+controller~occupation|Occupation|/occupation|admin;
+list~occupation|admin|id,name;
+filter~occupation|admin|id,name;
+header~occupation|admin|ID,Name;
+edit~occupation|admin|name;
+add~occupation|admin|name;
+view~occupation|admin|id,name;
+row~occupation|admin|id=integer,name=string;
+
+controller~distrubtor|Distributors|/distributors|admin;
+list~distrubtor|admin|id,company_name,email,phone_number,sales,commission,next_pickup,status;
+filter~distrubtor|admin|id,email,company_name,phone,status,account_manager_id;
+header~distrubtor|admin|ID,Company Name,Distributor Details,Sales,Commission Rate,Next Pick Up,Status;
+edit~distrubtor|admin|email,company_name,password,phone_number,status;
+add~distrubtor|admin|email,company_name,password,phone_number,status;
+view~distrubtor|admin|id,email,company_name,password,phone_number,status;
+row~distrubtor|admin|id=integer,company_name=string,complex=email:phone_number,sales=currency|commission=currency|next_pickup=date|status=integer;
+
+controller~fb_user_note|User Notes|/user_notes|admin;
+list~fb_user_note|admin|type,user_id,description;
+filter~fb_user_note|admin|type,user_id;
+header~fb_user_note|admin|type,user,description;
+edit~fb_user_note|admin|type,user_id,description;
+add~fb_user_note|admin|type,user_id,description;
+view~fb_user_note|admin|type,user_id,description;
+row~fb_user_note|admin|type=integer,user_is=string,description=string;
+
+package~analytics|payment|cache|pdf|voice
+
+
+
+

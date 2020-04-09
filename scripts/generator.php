@@ -2,8 +2,8 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-include_once './templates/builder/App_builder.php';
-include_once './templates/builder/Preschema_builder.php';
+include_once '../mkdcore/builder/App_builder.php';
+include_once '../mkdcore/builder/Preschema_builder.php';
 
 echo '<hr/>';
 echo '<h1>SAAS Deployment</h1>';
@@ -53,10 +53,4 @@ if ($action == 'rebuild') {
     $builder->destroy();
     $builder = new App_builder($raw_configuration);
     $builder->build();
-}
-
-if ($action == 'crud') {
-    $raw_configuration = file_get_contents('crud.json');
-    $builder = new App_builder($raw_configuration);
-    $builder->destroy();
 }

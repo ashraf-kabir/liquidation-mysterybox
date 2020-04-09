@@ -130,7 +130,7 @@ class Preschema_builder extends Builder{
             for($a = 1; $a < count( $model_array); $a ++)
             {
                 $field =  explode(':', $model_array[$a]);
-                $template = file_get_contents('templates/source/preschema/model_field.php');
+                $template = file_get_contents('../mkdcore/source/preschema/model_field.php');
                 $template = $this->inject_substitute($template, 'name', $field[0]);
                 $template = $this->inject_substitute($template, 'field_details', $this->_get_field_details(trim($field[1]),  $this->_translate_string($field[0]) ));
                 $model_fields[] = "\n\t\t" . $template ;
@@ -150,13 +150,13 @@ class Preschema_builder extends Builder{
                         $map_code ++;
                     }
                     // inject to the template file
-                    $template = file_get_contents('templates/source/preschema/model_mapping.php');
+                    $template = file_get_contents('../mkdcore/source/preschema/model_mapping.php');
                     $template = $this->inject_substitute($template, 'field', $mapping_array[1]);
                     $template = $this->inject_substitute($template, 'mapping', $this->_array_to_string($map_array, "\n\t\t"));
                     $model_mapping[] =  "\n\t\t" . $template;
                 }
             }
-            $template = file_get_contents('templates/source/preschema/model.php');
+            $template = file_get_contents('../mkdcore/source/preschema/model.php');
             $template = $this->inject_substitute($template, 'name', $model_array[0]);
             $template = $this->inject_substitute($template, 'fields', $this->_array_to_string($model_fields));
             $template = $this->inject_substitute($template, 'mapping',$this->_array_to_string($model_mapping ));
@@ -181,7 +181,7 @@ class Preschema_builder extends Builder{
                     $field =  explode('::', $menu_item_array[1]);
                     if(count($field) === 1) // no sub_menu
                     {
-                        $template = file_get_contents('templates/source/preschema/menu_item.php');
+                        $template = file_get_contents('../mkdcore/source/preschema/menu_item.php');
                         $template = $this->inject_substitute($template, 'menu_label', $this->_translate_string($menu_item_array[1]) );
                         $template = $this->inject_substitute($template, 'menu_link',$menu_item_array[2] );
                         $portal_menu[] =   "\n\t\t\t" .  $template;
@@ -198,13 +198,13 @@ class Preschema_builder extends Builder{
                         {
                             $nav_label = explode('::', str_replace(",", '', $sub_menu_array[$y]))[0];
                             $nav_link = explode('::', str_replace(",", '', $sub_menu_array[$y]))[1];
-                            $menu_template = file_get_contents('templates/source/preschema/menu_item.php');
+                            $menu_template = file_get_contents('../mkdcore/source/preschema/menu_item.php');
                             $menu_template = $this->inject_substitute($menu_template, 'menu_label',  $this->_translate_string($nav_label) );
                             $menu_template = $this->inject_substitute($menu_template, 'menu_link', $nav_link  );
                             $all_sub_menu_items[] = "\n\t\t\t\t" . $menu_template;
                         }
                         //now add the menu to
-                        $template = file_get_contents('templates/source/preschema/sub_menu.php');
+                        $template = file_get_contents('../mkdcore/source/preschema/sub_menu.php');
                         $template = $this->inject_substitute($template, 'menu_label', $this->_translate_string($nav_label) );
                         $template = $this->inject_substitute($template, 'menu_links', $this->_array_to_string( $all_sub_menu_items, "\n\t\t\t") );
                         //die( $template);
@@ -213,7 +213,7 @@ class Preschema_builder extends Builder{
                 }
             }
             //now build the portal
-            $template = file_get_contents('templates/source/preschema/portal.php');
+            $template = file_get_contents('../mkdcore/source/preschema/portal.php');
             $template = $this->inject_substitute($template, 'name', $portal_array[0] );
             $template = $this->inject_substitute($template, 'model', $portal_array[1] );
             $template = $this->inject_substitute($template, 'login', $portal_array[2] );
@@ -234,7 +234,7 @@ class Preschema_builder extends Builder{
         for($i = 0; $i < count($this->_entities['portals']); $i ++ )
         {
             $portal_array = explode('|', $this->_entities['portals'][$i]);
-            $template = file_get_contents('templates/source/preschema/portal_operation.php');
+            $template = file_get_contents('../mkdcore/source/preschema/portal_operation.php');
             $template = $this->inject_substitute($template, 'model',str_replace("_model", "", $portal_array[1] ));
             $template = $this->inject_substitute($template, 'portal_name', strtolower(trim($portal_array[0]). '_operation') );
             $this->_models[] = $template;
@@ -248,7 +248,7 @@ class Preschema_builder extends Builder{
         for($i = 0; $i < count($roles_array); $i ++)
         {
             $role_id = $i + 1;
-            $template = file_get_contents('templates/source/preschema/roles.php');
+            $template = file_get_contents('../mkdcore/source/preschema/roles.php');
             $template = $this->inject_substitute($template, 'name', $roles_array[$i] );
             $template = $this->inject_substitute($template, 'id',  $role_id);
             $this->_roles[] =  "\n\t\t\t" . $template;
@@ -291,7 +291,7 @@ class Preschema_builder extends Builder{
                      if(!empty($fields))
                      {
                         $fields = '"' . str_replace(",", '","', $fields) . '"';
-                        $template =  file_get_contents('templates/source/preschema/controller_fields.php');
+                        $template =  file_get_contents('../mkdcore/source/preschema/controller_fields.php');
                         $template = $this->inject_substitute($template, 'field_name', "add_fields" );
                         $template = $this->inject_substitute($template, 'fields', $fields );
                         $add_fields =  $template;
@@ -314,7 +314,7 @@ class Preschema_builder extends Builder{
                      if(!empty($fields))
                      {
                         $fields = '"' . str_replace(",", '","', $fields) . '"';
-                        $template =  file_get_contents('templates/source/preschema/controller_fields.php');
+                        $template =  file_get_contents('../mkdcore/source/preschema/controller_fields.php');
                         $template = $this->inject_substitute($template, 'field_name', "listing_fields_api" );
                         $template = $this->inject_substitute($template, 'fields',$fields);
                         $listing_fields =  $template;
@@ -337,7 +337,7 @@ class Preschema_builder extends Builder{
                      if(!empty($fields))
                      {
                         $fields = '"' . str_replace(",", '","', $fields) . '"';
-                        $template =  file_get_contents('templates/source/preschema/controller_fields.php');
+                        $template =  file_get_contents('../mkdcore/source/preschema/controller_fields.php');
                         $template = $this->inject_substitute($template, 'field_name', "edit_fields" );
                         $template = $this->inject_substitute($template, 'fields',$fields);
                         $edit_fields =  $template;
@@ -359,7 +359,7 @@ class Preschema_builder extends Builder{
                      if(!empty($fields))
                      {
                         $fields = '"' . str_replace(",", '","', $fields) . '"';
-                        $template =  file_get_contents('templates/source/preschema/controller_fields.php');
+                        $template =  file_get_contents('../mkdcore/source/preschema/controller_fields.php');
                         $template = $this->inject_substitute($template, 'field_name', "listing_headers" );
                         $template = $this->inject_substitute($template, 'fields', $fields);
                         $header_fields =  $template;
@@ -382,7 +382,7 @@ class Preschema_builder extends Builder{
                      if(!empty($fields))
                      {
                         $fields = '"' . str_replace(",", '","', $fields) . '"';
-                        $template =  file_get_contents('templates/source/preschema/controller_fields.php');
+                        $template =  file_get_contents('../mkdcore/source/preschema/controller_fields.php');
                         $template = $this->inject_substitute($template, 'field_name', "filter_fields" );
                         $template = $this->inject_substitute($template, 'fields',$fields);
                         $filter_fields =  $template;
@@ -406,7 +406,7 @@ class Preschema_builder extends Builder{
                      if(!empty($fields))
                      {
                         $fields = '"' . str_replace(",", '","', $fields) . '"';
-                        $template =  file_get_contents('templates/source/preschema/controller_fields.php');
+                        $template =  file_get_contents('../mkdcore/source/preschema/controller_fields.php');
                         $template = $this->inject_substitute($template, 'field_name', "view_fields" );
                         $template = $this->inject_substitute($template, 'fields',$fields);
                         $view_fields =  $template;
@@ -431,7 +431,7 @@ class Preschema_builder extends Builder{
                      {
                         $fields = '"' . str_replace(",", '","', $fields) . '"';
                         $fields = str_replace("=", '|', $fields);
-                        $template =  file_get_contents('templates/source/preschema/controller_fields.php');
+                        $template =  file_get_contents('../mkdcore/source/preschema/controller_fields.php');
                         $template = $this->inject_substitute($template, 'field_name', "listing_rows" );
                         $template = $this->inject_substitute($template, 'fields',$fields);
                         $row_fields =  $template;
@@ -439,12 +439,12 @@ class Preschema_builder extends Builder{
                      else
                      {
                         $row_fields = '"listing_rows" : [],';
-                     }      
+                     }
                 }
            }
 
            //now build the controller
-           $template =  file_get_contents('templates/source/preschema/controller.php');
+           $template =  file_get_contents('../mkdcore/source/preschema/controller.php');
            $template = $this->inject_substitute($template, 'route', $route );
            $template = $this->inject_substitute($template, 'name', strtolower(str_replace([' ','xyz'],['_', ''], $page_name)));
            $template = $this->inject_substitute($template, 'page_name', $page_name );
@@ -465,7 +465,7 @@ class Preschema_builder extends Builder{
 
     public function _build_configuration_file()
     {
-        $template =  file_get_contents('templates/source/preschema/configuration.php');
+        $template =  file_get_contents('../mkdcore/source/preschema/configuration.php');
         $template = $this->inject_substitute($template, 'models', implode(', ',$this->_models) );
         $template = $this->inject_substitute($template, 'portals', implode(', ',$this->_portals) );
         $template = $this->inject_substitute($template, 'controllers', implode(', ',$this->_controllers) );
@@ -484,7 +484,7 @@ class Preschema_builder extends Builder{
                 $this->transform_list($this->_config[$i], $i);
             }
         }
-        $default_translations = file_get_contents('templates/source/preschema/default_translations.json');
+        $default_translations = file_get_contents('../mkdcore/source/preschema/default_translations.json');
 
         $translations_values  = (array) json_decode( $default_translations);
 

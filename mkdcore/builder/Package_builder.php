@@ -63,24 +63,24 @@ class Package_builder extends Builder
                 {
                     continue;
                 }
-                
+
                 switch ($package_type)
                 {
                     case 'pdf':
-                        $template = file_get_contents('templates/source/pdf/Pdf_service.php');
+                        $template = file_get_contents('../mkdcore/source/pdf/Pdf_service.php');
                         $template = $this->inject_substitute($template, 'subclass_prefix', $this->_config['subclass_prefix']);
-                        file_put_contents('src/application/libraries/Pdf_service.php', $template);
+                        file_put_contents('../release/application/libraries/Pdf_service.php', $template);
                         break;
                     case 'voice':
-                        $template = file_get_contents('templates/source/voice/Voice_service.php');
+                        $template = file_get_contents('../mkdcore/source/voice/Voice_service.php');
                         $template = $this->inject_substitute($template, 'subclass_prefix', $this->_config['subclass_prefix']);
-                        file_put_contents('src/application/libraries/Voice_service.php', $template);
+                        file_put_contents('../release/application/libraries/Voice_service.php', $template);
 
-                        $template = file_get_contents('templates/source/voice/Voice_controller.php');
+                        $template = file_get_contents('../mkdcore/source/voice/Voice_controller.php');
                         $template = $this->inject_substitute($template, 'subclass_prefix', $this->_config['subclass_prefix']);
-                        file_put_contents('src/application/controllers/Guest/Voice_controller.php', $template);
-                    case 'payment':       
-                        $template = file_get_contents('templates/source/payment/stripe_client.js.php');
+                        file_put_contents('../release/application/controllers/Guest/Voice_controller.php', $template);
+                    case 'payment':
+                        $template = file_get_contents('../mkdcore/source/payment/stripe_client.js.php');
                         $template = $this->inject_substitute($template, 'stripe_publish_key', $this->_config['stripe_publish_key']);
                         file_put_contents('assets/js/stripe_client.js', $template);
                     break;
@@ -95,9 +95,9 @@ class Package_builder extends Builder
     public function destroy()
     {
         $destroy_list = [
-            'src/application/libraries/Pdf_service.php',
-            'src/application/libraries/Voice_service.php',
-            'src/application/controllers/Guest/Voice_controller.php'
+            '../release/application/libraries/Pdf_service.php',
+            '../release/application/libraries/Voice_service.php',
+            '../release/application/controllers/Guest/Voice_controller.php'
         ];
 
         foreach ($destroy_list as $key => $value)

@@ -31,8 +31,8 @@ class Cronjob_builder extends Builder
     {
         foreach ($this->_cronjob as $key => $value)
         {
-            $template = file_get_contents("templates/source/cronjob/$key");
-            file_put_contents("src/application/controllers/Cli/$value", $template);
+            $template = file_get_contents("../mkdcore/source/cronjob/$key");
+            file_put_contents("../release/application/controllers/Cli/$value", $template);
         }
     }
 
@@ -40,9 +40,9 @@ class Cronjob_builder extends Builder
     {
         foreach ($this->_cronjob as $key => $value)
         {
-            if (file_exists("src/application/controllers/Cli/$value"))
+            if (file_exists("../release/application/controllers/Cli/$value"))
             {
-                unlink("src/application/controllers/Cli/$value");
+                unlink("../release/application/controllers/Cli/$value");
             }
         }
     }

@@ -14,6 +14,8 @@ class {{{ucname}}}_social_login_controller extends {{{ucname}}}_controller
 {
 	protected $_redirect = '/{{{name}}}/dashboard';
 
+    public $_valid_roles = [{{{valid_roles}}}];
+
     public function google()
     {
         $this->load->model('{{{model}}}');

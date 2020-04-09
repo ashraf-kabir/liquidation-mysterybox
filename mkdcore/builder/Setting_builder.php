@@ -48,20 +48,20 @@ class Setting_builder extends Builder
         // 7. Write in cache config after
         $portal = 'admin';
         $ucportal = ucfirst('admin');
-        $template = file_get_contents('templates/source/setting/Setting_controller.php');
+        $template = file_get_contents('../mkdcore/source/setting/Setting_controller.php');
         $template = $this->inject_substitute($template, 'portal', $portal);
         $template = $this->inject_substitute($template, 'ucportal', $ucportal);
-        $this->_render_list["src/application/controllers/{$ucportal}/{$ucportal}_setting_controller.php"] = $template;
-        $view_template = file_get_contents('templates/source/setting/Setting_view.php');
+        $this->_render_list["../release/application/controllers/{$ucportal}/{$ucportal}_setting_controller.php"] = $template;
+        $view_template = file_get_contents('../mkdcore/source/setting/Setting_view.php');
         $view_template = $this->inject_substitute($view_template, 'portal', $portal);
         $view_template = $this->inject_substitute($view_template, 'ucportal', $ucportal);
         $view_template = $this->inject_substitute($view_template, 'rows', $this->_generate_rows($this->_setting_model));
-        $this->_render_list["src/application/views/{$ucportal}/Setting.php"] = $view_template;
-        $js_template = file_get_contents('templates/source/setting/setting.js');
-        $this->_render_list["assets/js/setting.js"] = $js_template;
-        $cache_template = file_get_contents('templates/source/setting/Setting_cache.php');
+        $this->_render_list["../release/application/views/{$ucportal}/Setting.php"] = $view_template;
+        $js_template = file_get_contents('../mkdcore/source/setting/setting.js');
+        $this->_render_list["../release/assets/js/setting.js"] = $js_template;
+        $cache_template = file_get_contents('../mkdcore/source/setting/Setting_cache.php');
         $cache_template = $this->inject_substitute($cache_template, 'row', $this->_generate_cache_rows($this->_setting_model));
-        $this->_render_list["src/application/config/setting.php"] = $cache_template;
+        $this->_render_list["../release/application/config/setting.php"] = $cache_template;
     }
 
     public function inject_template ()

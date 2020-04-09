@@ -53,7 +53,7 @@ class App_builder extends Builder
     {
         foreach($this->_modular_packages as $package)
         {
-            $package_config = json_decode(file_get_contents("templates/source/{$package['name']}/configuration.json"), TRUE);
+            $package_config = json_decode(file_get_contents("../mkdcore/source/{$package['name']}/configuration.json"), TRUE);
             $config_items = array_keys($package_config);
 
             for($i = 0; $i < count( $config_items); $i ++ )
@@ -69,8 +69,8 @@ class App_builder extends Builder
                 if(isset($package_config['menus'][$this->_config['portals'][$i]['name']]))
                 {
                     $menu_1 = array_slice($this->_config['portals'][$i]['menu'], 0, 1, true);
-                    $menu_2 = array_slice($this->_config['portals'][$i]['menu'], 1, count($this->_config['portals'][$i]['menu']) - 1, true);    
-                    $this->_config['portals'][$i]['menu'] = array_merge($menu_1, $package_config['menus'][$this->_config['portals'][$i]['name']], $menu_2);   
+                    $menu_2 = array_slice($this->_config['portals'][$i]['menu'], 1, count($this->_config['portals'][$i]['menu']) - 1, true);
+                    $this->_config['portals'][$i]['menu'] = array_merge($menu_1, $package_config['menus'][$this->_config['portals'][$i]['name']], $menu_2);
                 }
             }
         }
@@ -102,7 +102,7 @@ class App_builder extends Builder
         {
             $local_config = json_decode(file_get_contents("translations.json"), TRUE);
             $this->_config['translations'] = $local_config['translations'];
-        } 
+        }
 
         if(file_exists("env.json"))
         {
@@ -112,7 +112,7 @@ class App_builder extends Builder
         }
 
         $this->init_modular_packages();
- 
+
 
         $this->_routes = $this->_config['routes'];
         $this->_translations = $this->_config['translations'];

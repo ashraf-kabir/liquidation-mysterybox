@@ -6,7 +6,7 @@ class Database_builder extends Builder
     protected $_config;
     protected $_template;
     protected $_lang;
-    protected $_file_path = 'src/application/config/database.php';
+    protected $_file_path = '../release/application/config/database.php';
 
     public function __construct($config, $locale)
     {
@@ -18,7 +18,7 @@ class Database_builder extends Builder
 
     public function build()
     {
-        $this->_template = file_get_contents('templates/source/core/database.php');
+        $this->_template = file_get_contents('../mkdcore/source/core/database.php');
         foreach ($this->_config as $key => $value)
         {
             if (!is_array($value))

@@ -14,6 +14,8 @@ class {{{ucname}}}_login_controller extends {{{subclass_prefix}}}Controller
 {
 	protected $_redirect = '/{{{name}}}/dashboard';
 
+    public $_valid_roles = [{{{valid_roles}}}];
+
     public function __construct()
     {
         parent::__construct();

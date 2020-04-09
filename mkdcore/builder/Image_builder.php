@@ -8,13 +8,12 @@ class Image_builder extends Builder
     protected $_template;
     protected $_file_path = '';
     protected $_render_list = [
-        'assets/js/core.js' => 'templates/source/core/core.js',
-        'assets/js/media.js' => 'templates/source/image/media.js',
-        'assets/js/mkd-image-gallery.js' => 'templates/source/image/mkd-image-gallery.js',
-        'src/application/controllers/Guest/Image_controller.php' => 'templates/source/image/Image_controller.php',
-        'src/application/view_models/Image_asset_paginate_view_model.php' => 'templates/source/image/Image_asset_paginate_view_model.php',
-        'src/application/libraries/Csv_import_service.php' => 'templates/source/image/Csv_import_service.php',
-        'uploads/placeholder.jpg' => 'templates/source/image/placeholder.jpg'
+        '../release/assets/js/core.js' => '../mkdcore/source/core/core.js',
+        '../release/assets/js/media.js' => '../mkdcore/source/image/media.js',
+        '../release/assets/js/mkd-image-gallery.js' => '../mkdcore/source/image/mkd-image-gallery.js',
+        '../release/application/controllers/Guest/Image_controller.php' => '../mkdcore/source/image/Image_controller.php',
+        '../release/application/view_models/Image_asset_paginate_view_model.php' => '../mkdcore/source/image/Image_asset_paginate_view_model.php',
+        '../release/application/libraries/Csv_import_service.php' => '../mkdcore/source/image/Csv_import_service.php'
     ];
 
     public function __construct($config, $locale)

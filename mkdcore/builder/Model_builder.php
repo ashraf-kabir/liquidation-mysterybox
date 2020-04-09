@@ -30,7 +30,7 @@ class Model_builder extends Builder
 
     public function build()
     {
-        $this->_template = file_get_contents('templates/source/model/Model.php');
+        $this->_template = file_get_contents('../mkdcore/source/model/Model.php');
 
         foreach ($this->_models as $model_key => $value)
         {
@@ -222,13 +222,13 @@ class Model_builder extends Builder
                         $migration = $migration . "->addIndex([{$unique_fields}], ['unique' => true])\n\t\t";
                     }
                     $migration = $migration . '->create();';
-                    $migration_template = file_get_contents('templates/source/model/Migration_file.php');
+                    $migration_template = file_get_contents('../mkdcore/source/model/Migration_file.php');
                     $migration_template = $this->inject_substitute($migration_template, 'upper_case_model', $this->to_camel_case($upper_case_migration_model));
                     $migration_template = $this->inject_substitute($migration_template, 'model', $model);
                     $migration_template = $this->inject_substitute($migration_template, 'migration', $migration);
                     $this->_migration_template[($this->_config['migration_number'] + $model_key) . '_' . $model . '.php'] = $migration_template;
 
-                    $migration_template_window = file_get_contents('templates/source/model/Migration_file_window.php');
+                    $migration_template_window = file_get_contents('../mkdcore/source/model/Migration_file_window.php');
                     $migration_template_window = $this->inject_substitute($migration_template_window, 'upper_case_model', $this->to_camel_case($upper_case_migration_model));
                     $migration_template_window = $this->inject_substitute($migration_template_window, 'model', $model);
                     $migration_template_window = $this->inject_substitute($migration_template_window, 'migration', '[' . implode(",\n", $migration_windows) . ']');
@@ -238,8 +238,8 @@ class Model_builder extends Builder
                     if (!empty($value['seed']))
                     {
                         $seed = '';
-                        $seed_template = file_get_contents('templates/source/model/Seed_file.php');
-                        $seed_template_window = file_get_contents('templates/source/model/Seed_file_window.php');
+                        $seed_template = file_get_contents('../mkdcore/source/model/Seed_file.php');
+                        $seed_template_window = file_get_contents('../mkdcore/source/model/Seed_file_window.php');
                         $seed_template = $this->inject_substitute($seed_template, 'upper_case_model', $this->to_camel_case($upper_case_migration_model));
                         $seed_template = $this->inject_substitute($seed_template, 'model', $model);
                         $seed_template_window = $this->inject_substitute($seed_template_window, 'upper_case_model', $this->to_camel_case($upper_case_migration_model));
@@ -306,7 +306,7 @@ class Model_builder extends Builder
                 $model_template = $this->inject_substitute($model_template, 'mapping', '');
             }
 
-            $this->_model_template['src/application/models/' . $upper_case_model . '.php'] = $model_template;
+            $this->_model_template['../release/application/models/' . $upper_case_model . '.php'] = $model_template;
         }
 
         return $this->_template;
@@ -372,19 +372,19 @@ class Model_builder extends Builder
 
         foreach ($this->_migration_template as $key => $value)
         {
-            file_put_contents('src/db/migrations/' . $key, $value);
+            file_put_contents('../release/db/migrations/' . $key, $value);
         }
         foreach ($this->_migration_template_window as $key => $value)
         {
-            file_put_contents('src/db/windows/' . $key, $value);
+            file_put_contents('../release/db/windows/' . $key, $value);
         }
         foreach ($this->_seed_template as $key => $value)
         {
-            file_put_contents('src/db/seeds/' . $key, $value);
+            file_put_contents('../release/db/seeds/' . $key, $value);
         }
         foreach ($this->_seed_template_window as $key => $value)
         {
-            file_put_contents('src/db/windows/' . $key, $value);
+            file_put_contents('../release/db/windows/' . $key, $value);
         }
     }
 
@@ -393,25 +393,25 @@ class Model_builder extends Builder
         foreach ($this->_models as $value)
         {
             $upper_case_model = ucfirst($value['name']) . '_model' . '.php';
-            $file_name = 'src/application/models/' . $upper_case_model;
+            $file_name = '../release/application/models/' . $upper_case_model;
             if (file_exists($file_name))
             {
                 unlink($file_name);
             }
         }
 
-        $files = glob('src/db/migrations/*');
+        $files = glob('../release/db/migrations/*');
         foreach ($files as $file) {
-            (!is_dir($file) && $file != 'src/db/migrations/index.html') ? unlink($file) : null;
+            (!is_dir($file) && $file != '../release/db/migrations/index.html') ? unlink($file) : null;
         }
 
-        $files = glob('src/db/seeds/*');
+        $files = glob('../release/db/seeds/*');
         foreach ($files as $file) {
-            (!is_dir($file) && $file != 'src/db/seeds/index.html') ? unlink($file) : null;
+            (!is_dir($file) && $file != '../release/db/seeds/index.html') ? unlink($file) : null;
         }
-        $files = glob('src/db/windows/*');
+        $files = glob('../release/db/windows/*');
         foreach ($files as $file) {
-            (!is_dir($file) && $file != 'src/db/windows/index.html') ? unlink($file) : null;
+            (!is_dir($file) && $file != '../release/db/windows/index.html') ? unlink($file) : null;
         }
     }
 

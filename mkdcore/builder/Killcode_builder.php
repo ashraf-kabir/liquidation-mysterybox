@@ -6,7 +6,7 @@ class Killcode_builder extends Builder
     protected $_config;
     protected $_template;
     protected $_lang;
-    protected $_file_path = 'src/system/core/IocContainer.php';
+    protected $_file_path = '../release/system/core/IocContainer.php';
 
     public function __construct($config, $locale)
     {
@@ -20,7 +20,7 @@ class Killcode_builder extends Builder
     {
         if ($this->_config['has_license_key'])
         {
-            $this->_template = file_get_contents('templates/source/license/Kill_code.php');
+            $this->_template = file_get_contents('../mkdcore/source/license/Kill_code.php');
         }
         else
         {

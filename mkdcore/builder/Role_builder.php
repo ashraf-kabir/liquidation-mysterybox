@@ -30,14 +30,14 @@ class Role_builder extends Builder
     {
         foreach ($this->_roles as $role)
         {
-            if (!file_exists('src/application/controllers/' . ucfirst($role['name'])))
+            if (!file_exists('../release/application/controllers/' . ucfirst($role['name'])))
             {
-                mkdir('src/application/controllers/' . ucfirst($role['name']));
+                mkdir('../release/application/controllers/' . ucfirst($role['name']));
             }
 
-            if (!file_exists('src/application/views/' . ucfirst($role['name'])))
+            if (!file_exists('../release/application/views/' . ucfirst($role['name'])))
             {
-                mkdir('src/application/views/' . ucfirst($role['name']));
+                mkdir('../release/application/views/' . ucfirst($role['name']));
             }
         }
     }
@@ -46,14 +46,14 @@ class Role_builder extends Builder
     {
         foreach ($this->_roles as $role)
         {
-            if (file_exists('src/application/controllers/' . ucfirst($role['name'])))
+            if (file_exists('../release/application/controllers/' . ucfirst($role['name'])))
             {
-                $this->_remove_dir('src/application/controllers/' . ucfirst($role['name']));
+                $this->_remove_dir('../release/application/controllers/' . ucfirst($role['name']));
             }
 
-            if (file_exists('src/application/views/' . ucfirst($role['name'])))
+            if (file_exists('../release/application/views/' . ucfirst($role['name'])))
             {
-                $this->_remove_dir('src/application/views/' . ucfirst($role['name']));
+                $this->_remove_dir('../release/application/views/' . ucfirst($role['name']));
             }
         }
     }

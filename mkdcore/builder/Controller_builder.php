@@ -19,9 +19,9 @@ class Controller_builder extends Builder
         $this->_config = $config;
         $this->_template = '';
         $this->_locale = $locale;
-        if(file_exists("assets/js/autocomplete.js"))
+        if(file_exists("../release/assets/js/autocomplete.js"))
         {
-            unlink("assets/js/autocomplete.js");
+            unlink("../release/assets/js/autocomplete.js");
         }
     }
 
@@ -249,7 +249,7 @@ class Controller_builder extends Builder
         $template = $this->inject_substitute($template, 'model', $controller['model']);
         $template = $this->inject_substitute($template, 'portal', $portal);
         $template = $this->inject_substitute($template, 'uc_name', $uc_name);
-        $this->_render_list['src/application/controllers/' . $uc_portal . '/' . ((strpos($controller['controller'], '.php') !== FALSE) ? $controller['controller'] : ($controller['controller'] . '.php'))] = $template;
+        $this->_render_list['../release/application/controllers/' . $uc_portal . '/' . ((strpos($controller['controller'], '.php') !== FALSE) ? $controller['controller'] : ($controller['controller'] . '.php'))] = $template;
     }
 
     private function setup_override_layout($controller, $type)
@@ -264,7 +264,7 @@ class Controller_builder extends Builder
         $template = $this->inject_substitute($template, 'model', $controller['model']);
         $template = $this->inject_substitute($template, 'portal', $portal);
         $template = $this->inject_substitute($template, 'uc_name', $uc_name);
-        $this->_render_list['src/application/views/' . $uc_portal . '/' . ucfirst($controller['model']) . ucfirst($type) . '.php'] = $template;
+        $this->_render_list['../release/application/views/' . $uc_portal . '/' . ucfirst($controller['model']) . ucfirst($type) . '.php'] = $template;
     }
 
     private function setup_override_layout_view_model($controller, $type)
@@ -279,8 +279,7 @@ class Controller_builder extends Builder
         $template = $this->inject_substitute($template, 'model', $controller['model']);
         $template = $this->inject_substitute($template, 'portal', $portal);
         $template = $this->inject_substitute($template, 'uc_name', $uc_name);
-        error_log('src/application/views/' . $uc_portal . '/' . ucfirst($controller['model']) . '_' . $controller['portal']  . '_' . $type . '_view_model.php');
-        $this->_render_list['src/application/view_models/' . ucfirst($controller['model']) . '_' . $controller['portal']  . '_' . $type . '_view_model.php'] = $template;
+        $this->_render_list['../release/application/view_models/' . ucfirst($controller['model']) . '_' . $controller['portal']  . '_' . $type . '_view_model.php'] = $template;
     }
 
     private function setup_override_list_view_model($controller, $type)
@@ -303,7 +302,7 @@ class Controller_builder extends Builder
         {
             $path =  $controller['portal']  . '_list_view_model.php';
         }
-        $this->_render_list['src/application/view_models/' . ucfirst($controller['model'])  . $path] = $template;
+        $this->_render_list['../release/application/view_models/' . ucfirst($controller['model'])  . $path] = $template;
     }
 
     private function setup_override_list($controller)
@@ -318,7 +317,7 @@ class Controller_builder extends Builder
         $template = $this->inject_substitute($template, 'model', $controller['model']);
         $template = $this->inject_substitute($template, 'portal', $portal);
         $template = $this->inject_substitute($template, 'uc_name', $uc_name);
-        $this->_render_list['src/application/views/' . $uc_portal . '/' . ucfirst($controller['model']) . '.php'] = $template;
+        $this->_render_list['../release/application/views/' . $uc_portal . '/' . ucfirst($controller['model']) . '.php'] = $template;
     }
 
     private function setup_crud($controller)
@@ -327,7 +326,7 @@ class Controller_builder extends Builder
         $portal = $controller['portal'];
         $uc_name = ucfirst($controller['name']);
 
-        $template = file_get_contents('templates/source/controller/controller.php');
+        $template = file_get_contents('../mkdcore/source/controller/controller.php');
         $template = $this->inject_substitute($template, 'controller_name', str_replace('.php', '', $controller['controller']));
         $template = $this->inject_substitute($template, 'uc_portal', $uc_portal);
         $template = $this->inject_substitute($template, 'page_name', $controller['page_name']);
@@ -369,7 +368,7 @@ class Controller_builder extends Builder
 
         if (isset($controller['autocomplete']) && strlen($controller['autocomplete']) > 0)
         {
-            $autocomplete_str = file_get_contents('templates/source/controller/controller_autocomplete.php');
+            $autocomplete_str = file_get_contents('../mkdcore/source/controller/controller_autocomplete.php');
             $autocomplete_str = $this->inject_substitute($autocomplete_str, 'model', $controller['model']);
             $autocomplete_str = $this->inject_substitute($autocomplete_str, 'uc_portal', $uc_portal);
             $autocomplete_str = $this->inject_substitute($autocomplete_str, 'portal', $portal);
@@ -387,7 +386,7 @@ class Controller_builder extends Builder
 
         if ($controller['is_add'])
         {
-            $add_str = file_get_contents('templates/source/controller/controller_add.php');
+            $add_str = file_get_contents('../mkdcore/source/controller/controller_add.php');
             $add_str = $this->inject_substitute($add_str, 'model', $controller['model']);
             $add_str = $this->inject_substitute($add_str, 'uc_portal', $uc_portal);
             $add_str = $this->inject_substitute($add_str, 'portal', $portal);
@@ -437,12 +436,12 @@ class Controller_builder extends Builder
             }
 
             $template = $this->inject_substitute($template, 'add', $add_str);
-            $add_view_model_str = file_get_contents('templates/source/controller/Add_view_model.php');
+            $add_view_model_str = file_get_contents('../mkdcore/source/controller/Add_view_model.php');
             $add_view_model_str = $this->inject_substitute($add_view_model_str, 'uc_name', $uc_name);
             $add_view_model_str = $this->inject_substitute($add_view_model_str, 'portal', $portal);
             $add_view_model_str = $this->inject_substitute($add_view_model_str, 'mapping', $this->output_view_model_mapping($this->make_mapping_fields($controller)));
-            $this->_render_list['src/application/view_models/' . $uc_name . '_' . $portal . '_add_view_model.php'] = $add_view_model_str;
-            $add_view_str = file_get_contents('templates/source/controller/Add_view.php');
+            $this->_render_list['../release/application/view_models/' . $uc_name . '_' . $portal . '_add_view_model.php'] = $add_view_model_str;
+            $add_view_str = file_get_contents('../mkdcore/source/controller/Add_view.php');
             $add_view_str = $this->inject_substitute($add_view_str, 'input', $this->output_list_input_add($controller));
             $add_view_str = $this->inject_substitute($add_view_str, 'portal', $portal);
             $add_view_str = $this->inject_substitute($add_view_str, 'route', $route);
@@ -465,7 +464,7 @@ class Controller_builder extends Builder
                 }
 
             }
-            $this->_render_list['src/application/views/' . $uc_portal . '/' . $uc_name . 'Add.php'] = $add_view_str;
+            $this->_render_list['../release/application/views/' . $uc_portal . '/' . $uc_name . 'Add.php'] = $add_view_str;
 
         }
         else
@@ -476,7 +475,7 @@ class Controller_builder extends Builder
 
         if ($controller['is_edit'])
         {
-            $edit_str = file_get_contents('templates/source/controller/controller_edit.php');
+            $edit_str = file_get_contents('../mkdcore/source/controller/controller_edit.php');
             $edit_str = $this->inject_substitute($edit_str, 'model', $controller['model']);
             $edit_str = $this->inject_substitute($edit_str, 'uc_portal', $uc_portal);
             $edit_str = $this->inject_substitute($edit_str, 'portal', $portal);
@@ -547,15 +546,15 @@ class Controller_builder extends Builder
 
 
             $template = $this->inject_substitute($template, 'edit', $edit_str);
-            $edit_view_model_str = file_get_contents('templates/source/controller/Edit_view_model.php');
+            $edit_view_model_str = file_get_contents('../mkdcore/source/controller/Edit_view_model.php');
             $edit_view_model_str = $this->inject_substitute($edit_view_model_str, 'uc_name', $uc_name);
             $edit_view_model_str = $this->inject_substitute($edit_view_model_str, 'portal', $portal);
             $edit_view_model_str = $this->inject_substitute($edit_view_model_str, 'setter_getter_edit', $this->output_setter_getter($controller['edit_fields']));
             $edit_view_model_str = $this->inject_substitute($edit_view_model_str, 'set_model', $this->output_set_model($controller['edit_fields']));
             $edit_view_model_str = $this->inject_substitute($edit_view_model_str, 'define_field', $this->output_define_field_edit($controller['edit_fields']));
             $edit_view_model_str = $this->inject_substitute($edit_view_model_str, 'mapping', $this->output_view_model_mapping($this->make_mapping_fields($controller)));
-            $this->_render_list['src/application/view_models/' . $uc_name . '_' . $portal . '_edit_view_model.php'] = $edit_view_model_str;
-            $edit_view_str = file_get_contents('templates/source/controller/Edit_view.php');
+            $this->_render_list['../release/application/view_models/' . $uc_name . '_' . $portal . '_edit_view_model.php'] = $edit_view_model_str;
+            $edit_view_str = file_get_contents('../mkdcore/source/controller/Edit_view.php');
             $edit_view_str = $this->inject_substitute($edit_view_str, 'input', $this->output_list_input_edit($controller));
             $edit_view_str = $this->inject_substitute($edit_view_str, 'portal', $portal);
             $edit_view_str = $this->inject_substitute($edit_view_str, 'route', $route);
@@ -568,7 +567,7 @@ class Controller_builder extends Builder
             {
                 $edit_view_str = $this->inject_substitute($edit_view_str, 'custom_view_edit', '');
             }
-            $this->_render_list['src/application/views/' . $uc_portal . '/' . $uc_name . 'Edit.php'] = $edit_view_str;
+            $this->_render_list['../release/application/views/' . $uc_portal . '/' . $uc_name . 'Edit.php'] = $edit_view_str;
         }
         else
         {
@@ -578,7 +577,7 @@ class Controller_builder extends Builder
 
         if ($controller['is_view'])
         {
-            $view_str = file_get_contents('templates/source/controller/controller_view.php');
+            $view_str = file_get_contents('../mkdcore/source/controller/controller_view.php');
             $view_str = $this->inject_substitute($view_str, 'model', $controller['model']);
             $view_str = $this->inject_substitute($view_str, 'uc_name_no_underscore', str_replace('_', ' ', $uc_name));
             $view_str = $this->inject_substitute($view_str, 'all_records', $this->view_resource($controller['all_records'], $controller['active_only']));
@@ -615,7 +614,7 @@ class Controller_builder extends Builder
             }
 
             $template = $this->inject_substitute($template, 'view', $view_str);
-            $view_view_model_str = file_get_contents('templates/source/controller/View_view_model.php');
+            $view_view_model_str = file_get_contents('../mkdcore/source/controller/View_view_model.php');
             $view_view_model_str = $this->inject_substitute($view_view_model_str, 'uc_name', $uc_name);
             $view_view_model_str = $this->inject_substitute($view_view_model_str, 'portal', $portal);
             $view_view_model_str = $this->inject_substitute($view_view_model_str, 'to_json', $this->output_to_json($controller['view_fields']));
@@ -623,8 +622,8 @@ class Controller_builder extends Builder
             $view_view_model_str = $this->inject_substitute($view_view_model_str, 'set_model', $this->output_set_model($controller['view_fields']));
             $view_view_model_str = $this->inject_substitute($view_view_model_str, 'define_field', $this->output_define_field_edit($controller['view_fields']));
             $view_view_model_str = $this->inject_substitute($view_view_model_str, 'mapping', $this->output_view_model_mapping($this->make_mapping_fields($controller)));
-            $this->_render_list['src/application/view_models/' . $uc_name . '_' . $portal . '_view_view_model.php'] = $view_view_model_str;
-            $view_view_str = file_get_contents('templates/source/controller/View_view.php');
+            $this->_render_list['../release/application/view_models/' . $uc_name . '_' . $portal . '_view_view_model.php'] = $view_view_model_str;
+            $view_view_str = file_get_contents('../mkdcore/source/controller/View_view.php');
             $view_view_str = $this->inject_substitute($view_view_str, 'input', $this->output_list_input_view($controller));
             $view_view_str = $this->inject_substitute($view_view_str, 'portal', $portal);
             $view_view_str = $this->inject_substitute($view_view_str, 'route', $route);
@@ -636,7 +635,7 @@ class Controller_builder extends Builder
             {
                 $view_view_str = $this->inject_substitute($view_view_str, 'custom_view_view', '');
             }
-            $this->_render_list['src/application/views/' . $uc_portal . '/' . $uc_name . 'View.php'] = $view_view_str;
+            $this->_render_list['../release/application/views/' . $uc_portal . '/' . $uc_name . 'View.php'] = $view_view_str;
         }
         else
         {
@@ -646,7 +645,7 @@ class Controller_builder extends Builder
 
         if ($controller['is_real_delete'])
         {
-            $delete_str = file_get_contents('templates/source/controller/controller_real_delete.php');
+            $delete_str = file_get_contents('../mkdcore/source/controller/controller_real_delete.php');
             $delete_str = $this->inject_substitute($delete_str, 'model', $controller['model']);
             $delete_str = $this->inject_substitute($delete_str, 'uc_portal', $uc_portal);
             $delete_str = $this->inject_substitute($delete_str, 'page_name', $controller['page_name']);
@@ -670,7 +669,7 @@ class Controller_builder extends Builder
 
         if ($controller['is_delete'])
         {
-            $delete_str = file_get_contents('templates/source/controller/controller_delete.php');
+            $delete_str = file_get_contents('../mkdcore/source/controller/controller_delete.php');
             $delete_str = $this->inject_substitute($delete_str, 'model', $controller['model']);
             $delete_str = $this->inject_substitute($delete_str, 'uc_portal', $uc_portal);
             $delete_str = $this->inject_substitute($delete_str, 'page_name', $controller['page_name']);
@@ -698,7 +697,7 @@ class Controller_builder extends Builder
             {
                 if ($controller['is_filter'])
                 {
-                    $list_str = file_get_contents('templates/source/controller/controller_list_paginate_filter.php');
+                    $list_str = file_get_contents('../mkdcore/source/controller/controller_list_paginate_filter.php');
                     $list_str = $this->inject_substitute($list_str, 'model', $controller['model']);
                     $list_str = $this->inject_substitute($list_str, 'uc_portal', $uc_portal);
                     $list_str = $this->inject_substitute($list_str, 'portal', $portal);
@@ -736,7 +735,7 @@ class Controller_builder extends Builder
                     }
 
                     $template = $this->inject_substitute($template, 'listing', $list_str);
-                    $list_view_str = file_get_contents('templates/source/controller/List_paginate_filter_view.php');
+                    $list_view_str = file_get_contents('../mkdcore/source/controller/List_paginate_filter_view.php');
                     if (strlen($controller['custom_view_list']) > 0)
                     {
                         $list_view_str = $this->inject_substitute($list_view_str, 'row', $controller['custom_view_list']);
@@ -779,11 +778,11 @@ class Controller_builder extends Builder
                     $list_view_str = $this->inject_substitute($list_view_str, 'route', $route);
                     $list_view_str = $this->inject_substitute($list_view_str, 'url', 'a');
                     $list_view_str = $this->inject_substitute($list_view_str, 'filter', $this->output_list_filter($controller));
-                    $this->_render_list['src/application/views/' . $uc_portal . '/' . $uc_name . '.php'] = $list_view_str;
+                    $this->_render_list['../release/application/views/' . $uc_portal . '/' . $uc_name . '.php'] = $list_view_str;
                 }
                 else
                 {
-                    $list_str = file_get_contents('templates/source/controller/controller_list_paginate.php');
+                    $list_str = file_get_contents('../mkdcore/source/controller/controller_list_paginate.php');
                     $list_str = $this->inject_substitute($list_str, 'model', $controller['model']);
                     $list_str = $this->inject_substitute($list_str, 'uc_portal', $uc_portal);
                     $list_str = $this->inject_substitute($list_str, 'portal', $portal);
@@ -833,7 +832,7 @@ class Controller_builder extends Builder
                     }
 
                     $template = $this->inject_substitute($template, 'listing', $list_str);
-                    $list_view_str = file_get_contents('templates/source/controller/List_paginate_view.php');
+                    $list_view_str = file_get_contents('../mkdcore/source/controller/List_paginate_view.php');
                     $list_view_str = $this->inject_substitute($list_view_str, 'name', str_replace(' ', '', $controller['name']));
                     $list_view_str = $this->inject_substitute($list_view_str, 'row', $this->output_list_rows_raw($controller['listing_rows'], $controller, $this->make_mapping_fields($controller)));
                     if ($controller['is_add'])
@@ -854,9 +853,9 @@ class Controller_builder extends Builder
                         $list_view_str = $this->inject_substitute($list_view_str, 'import', '');
                     }
 
-                    $this->_render_list['src/application/views/' . $uc_portal . '/' . $uc_name . '.php'] = $list_view_str;
+                    $this->_render_list['../release/application/views/' . $uc_portal . '/' . $uc_name . '.php'] = $list_view_str;
                 }
-                $list_view_model_str = file_get_contents('templates/source/controller/List_paginate_view_model.php');
+                $list_view_model_str = file_get_contents('../mkdcore/source/controller/List_paginate_view_model.php');
                 $list_view_model_str = $this->inject_substitute($list_view_model_str, 'uc_name', $uc_name);
                 $list_view_model_str = $this->inject_substitute($list_view_model_str, 'portal', $portal);
                 $list_view_model_str = $this->inject_substitute($list_view_model_str, 'to_json', $this->output_list_to_json($controller['listing_fields_api'], $this->make_mapping_fields($controller)));
@@ -864,11 +863,11 @@ class Controller_builder extends Builder
                 $list_view_model_str = $this->inject_substitute($list_view_model_str, 'field_column', $this->output_view_model_field_column($controller['listing_rows']));
                 $list_view_model_str = $this->inject_substitute($list_view_model_str, 'mapping', $this->output_view_model_mapping($this->make_mapping_fields($controller)));
                 $list_view_model_str = $this->inject_substitute($list_view_model_str, 'filter_fields', $this->output_filter_field($controller['filter_fields']));
-                $this->_render_list['src/application/view_models/' . $uc_name . '_' . $portal . '_list_paginate_view_model.php'] = $list_view_model_str;
+                $this->_render_list['../release/application/view_models/' . $uc_name . '_' . $portal . '_list_paginate_view_model.php'] = $list_view_model_str;
             }
             else
             {
-                $list_str = file_get_contents('templates/source/controller/controller_list.php');
+                $list_str = file_get_contents('../mkdcore/source/controller/controller_list.php');
                 $list_str = $this->inject_substitute($list_str, 'model', $controller['model']);
                 $list_str = $this->inject_substitute($list_str, 'uc_portal', $uc_portal);
                 $list_str = $this->inject_substitute($list_str, 'portal', $portal);
@@ -907,14 +906,14 @@ class Controller_builder extends Builder
                     }
                 }
                 $template = $this->inject_substitute($template, 'listing', $list_str);
-                $list_view_model_str = file_get_contents('templates/source/controller/List_view_model.php');
+                $list_view_model_str = file_get_contents('../mkdcore/source/controller/List_view_model.php');
                 $list_view_model_str = $this->inject_substitute($list_view_model_str, 'uc_name', $uc_name);
                 $list_view_model_str = $this->inject_substitute($list_view_model_str, 'portal', $portal);
                 $list_view_model_str = $this->inject_substitute($list_view_model_str, 'to_json', $this->output_list_to_json_single($controller['listing_fields_api'], $this->make_mapping_fields($controller)));
                 $list_view_model_str = $this->inject_substitute($list_view_model_str, 'mapping', $this->output_view_model_mapping($this->make_mapping_fields($controller)));
                 $list_view_model_str = $this->inject_substitute($list_view_model_str, 'column', $this->output_view_model_column_raw($controller['listing_headers']));
-                $this->_render_list['src/application/view_models/' . $uc_name . '_' . $portal . '_list_view_model.php'] = $list_view_model_str;
-                $list_view_str = file_get_contents('templates/source/controller/List_view.php');
+                $this->_render_list['../release/application/view_models/' . $uc_name . '_' . $portal . '_list_view_model.php'] = $list_view_model_str;
+                $list_view_str = file_get_contents('../mkdcore/source/controller/List_view.php');
                 $list_view_str = $this->inject_substitute($list_view_str, 'name', str_replace(' ', '', $controller['name']));
                 $list_view_str = $this->inject_substitute($list_view_str, 'row', $this->output_list_rows_raw($controller['listing_rows'], $controller, $this->make_mapping_fields($controller)));
 
@@ -936,7 +935,7 @@ class Controller_builder extends Builder
                     $list_view_str = $this->inject_substitute($list_view_str, 'import', '');
                 }
 
-                $this->_render_list['src/application/views/' . $uc_portal . '/' . $uc_name . '.php'] = $list_view_str;
+                $this->_render_list['../release/application/views/' . $uc_portal . '/' . $uc_name . '.php'] = $list_view_str;
             }
         }
         else
@@ -965,14 +964,14 @@ class Controller_builder extends Builder
         {
             $template = $this->inject_substitute($template, 'autocomplete_methods', $this->get_autocomplete_controller_methods($this->_autocomplete_fields));
             $js_template = $this->generate_autocomplete_js($controller, $this->_autocomplete_fields);
-            file_put_contents('assets/js/autocomplete.js', $js_template, FILE_APPEND);
+            file_put_contents('../release/assets/js/autocomplete.js', $js_template, FILE_APPEND);
             $this->_autocomplete_fields = [];
         }
         else
         {
             $template = $this->inject_substitute($template, 'autocomplete_methods', '');
         }
-        $this->_render_list['src/application/controllers/' . $uc_portal . '/' . ((strpos($controller['controller'], '.php') !== FALSE) ? $controller['controller'] : ($controller['controller'] . '.php'))] = $template;
+        $this->_render_list['../release/application/controllers/' . $uc_portal . '/' . ((strpos($controller['controller'], '.php') !== FALSE) ? $controller['controller'] : ($controller['controller'] . '.php'))] = $template;
     }
 
     private function setup_crud_api($controller)
@@ -983,7 +982,7 @@ class Controller_builder extends Builder
 
         $api_controller_name = str_replace('_controller', '_api_controller', $controller['controller']);
 
-        $template = file_get_contents('templates/source/controller/api_controller.php');
+        $template = file_get_contents('../mkdcore/source/controller/api_controller.php');
         $template = $this->inject_substitute($template, 'uc_portal', $uc_portal);
         $template = $this->inject_substitute($template, 'api_controller', str_replace('.php', '', $api_controller_name));
         $template = $this->inject_substitute($template, 'page_name', $controller['page_name']);
@@ -1003,7 +1002,7 @@ class Controller_builder extends Builder
 
         if ($controller['is_add'])
         {
-            $add_str = file_get_contents('templates/source/controller/controller_api_add.php');
+            $add_str = file_get_contents('../mkdcore/source/controller/controller_api_add.php');
             $add_str = $this->inject_substitute($add_str, 'model', $controller['model']);
             $add_str = $this->inject_substitute($add_str, 'uc_portal', $uc_portal);
             $add_str = $this->inject_substitute($add_str, 'portal', $portal);
@@ -1056,7 +1055,7 @@ class Controller_builder extends Builder
 
         if ($controller['is_edit'])
         {
-            $edit_str = file_get_contents('templates/source/controller/controller_api_edit.php');
+            $edit_str = file_get_contents('../mkdcore/source/controller/controller_api_edit.php');
             $edit_str = $this->inject_substitute($edit_str, 'model', $controller['model']);
             $edit_str = $this->inject_substitute($edit_str, 'uc_portal', $uc_portal);
             $edit_str = $this->inject_substitute($edit_str, 'portal', $portal);
@@ -1110,7 +1109,7 @@ class Controller_builder extends Builder
 
         if ($controller['is_view'])
         {
-            $view_str = file_get_contents('templates/source/controller/controller_api_view.php');
+            $view_str = file_get_contents('../mkdcore/source/controller/controller_api_view.php');
             $view_str = $this->inject_substitute($view_str, 'model', $controller['model']);
             $view_str = $this->inject_substitute($view_str, 'all_records', $this->view_resource($controller['all_records'], $controller['active_only']));
             $view_str = $this->inject_substitute($view_str, 'uc_portal', $uc_portal);
@@ -1154,7 +1153,7 @@ class Controller_builder extends Builder
 
         if ($controller['is_real_delete'])
         {
-            $delete_str = file_get_contents('templates/source/controller/controller_api_real_delete.php');
+            $delete_str = file_get_contents('../mkdcore/source/controller/controller_api_real_delete.php');
             $delete_str = $this->inject_substitute($delete_str, 'model', $controller['model']);
             $delete_str = $this->inject_substitute($delete_str, 'uc_portal', $uc_portal);
             $delete_str = $this->inject_substitute($delete_str, 'portal', $portal);
@@ -1177,7 +1176,7 @@ class Controller_builder extends Builder
 
         if ($controller['is_delete'])
         {
-            $delete_str = file_get_contents('templates/source/controller/controller_api_delete.php');
+            $delete_str = file_get_contents('../mkdcore/source/controller/controller_api_delete.php');
             $delete_str = $this->inject_substitute($delete_str, 'model', $controller['model']);
             $delete_str = $this->inject_substitute($delete_str, 'uc_portal', $uc_portal);
             $delete_str = $this->inject_substitute($delete_str, 'portal', $portal);
@@ -1204,7 +1203,7 @@ class Controller_builder extends Builder
             {
                 if ($controller['is_filter'])
                 {
-                    $list_str = file_get_contents('templates/source/controller/controller_api_list_paginate_filter.php');
+                    $list_str = file_get_contents('../mkdcore/source/controller/controller_api_list_paginate_filter.php');
                     $list_str = $this->inject_substitute($list_str, 'model', $controller['model']);
                     $list_str = $this->inject_substitute($list_str, 'uc_portal', $uc_portal);
                     $list_str = $this->inject_substitute($list_str, 'portal', $portal);
@@ -1232,7 +1231,7 @@ class Controller_builder extends Builder
                 }
                 else
                 {
-                    $list_str = file_get_contents('templates/source/controller/controller_api_list_paginate.php');
+                    $list_str = file_get_contents('../mkdcore/source/controller/controller_api_list_paginate.php');
                     $list_str = $this->inject_substitute($list_str, 'model', $controller['model']);
                     $list_str = $this->inject_substitute($list_str, 'uc_portal', $uc_portal);
                     $list_str = $this->inject_substitute($list_str, 'portal', $portal);
@@ -1270,7 +1269,7 @@ class Controller_builder extends Builder
             }
             else
             {
-                $list_str = file_get_contents('templates/source/controller/controller_api_list.php');
+                $list_str = file_get_contents('../mkdcore/source/controller/controller_api_list.php');
                 $list_str = $this->inject_substitute($list_str, 'model', $controller['model']);
                 $list_str = $this->inject_substitute($list_str, 'uc_portal', $uc_portal);
                 $list_str = $this->inject_substitute($list_str, 'portal', $portal);
@@ -1311,7 +1310,7 @@ class Controller_builder extends Builder
             $template = $this->inject_substitute($template, 'route', $controller['route']);
         }
         $api_controller_name = str_replace('.php', '', $api_controller_name);
-        $this->_render_list['src/application/controllers/' . $uc_portal . '/' . $api_controller_name . '.php'] = $template;
+        $this->_render_list['../release/application/controllers/' . $uc_portal . '/' . $api_controller_name . '.php'] = $template;
     }
 
     public function inject_template ()
@@ -2759,7 +2758,7 @@ class Controller_builder extends Builder
         {
             //admin_add_content_autocomplete display_field
             $url = '/'. $controller['portal'].'/'.  $controller['name'] . '/search_' . $fields[$i]['field_name'] . '_' . $fields[$i]['method_type'] . '_autocomplete?search_text=';
-            $template = file_get_contents('templates/source/autocomplete/autocomplete_js.php');
+            $template = file_get_contents('../mkdcore/source/autocomplete/autocomplete_js.php');
             $template = $this->inject_substitute( $template, 'search_field', $controller['portal'].'_'.$controller['name'] .'_' .  $fields[$i]['method_type'] .'_'. $fields[$i]['field_name']);
             $template = $this->inject_substitute( $template, 'url',  $url);
             $template = $this->inject_substitute( $template, 'field_label_field', $fields[$i]['field_label_field'] );

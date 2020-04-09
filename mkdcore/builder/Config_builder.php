@@ -7,7 +7,7 @@ class Config_builder extends Builder
     protected $_dynamic_config;
     protected $_template;
     protected $_lang;
-    protected $_file_path = 'src/application/config/config.php';
+    protected $_file_path = '../release/application/config/config.php';
 
     public function __construct($config, $locale)
     {
@@ -33,7 +33,7 @@ class Config_builder extends Builder
 
     public function build()
     {
-        $this->_template = file_get_contents('templates/source/core/config.php');
+        $this->_template = file_get_contents('../mkdcore/source/core/config.php');
 
         if (strlen($this->_lang) > 0)
         {

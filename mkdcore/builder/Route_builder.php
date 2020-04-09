@@ -6,7 +6,7 @@ class Route_builder extends Builder
     protected $_config;
     protected $_render_list = [];
     protected $_routes = [];
-    protected $_file_path = 'src/application/config/routes.php';
+    protected $_file_path = '../release/application/config/routes.php';
 
     public function __construct($config, $locale)
     {
@@ -22,7 +22,7 @@ class Route_builder extends Builder
 
     public function build()
     {
-        $this->_template = file_get_contents('templates/source/core/routes.php');
+        $this->_template = file_get_contents('../mkdcore/source/core/routes.php');
         $result = '';
 
         foreach ($this->_routes as $key => $value)

@@ -54,14 +54,14 @@ class Report_builder extends Builder
             $name = strtolower($value['name']);
             $filename = $value['filename'];
             $route = $value['route'];
-            $template = file_get_contents('templates/source/report/Report_service.php');
+            $template = file_get_contents('../mkdcore/source/report/Report_service.php');
             $template = $this->inject_substitute($template, 'ucname', $ucname);
             $template = $this->inject_substitute($template, 'query', $value['query']);
             $template = $this->inject_substitute($template, 'result', $value['result']);
             $template = $this->inject_substitute($template, 'post', $value['post']);
-            $this->_render_list["src/application/services/{$ucname}_report_service.php"] = $template;
+            $this->_render_list["../release/application/services/{$ucname}_report_service.php"] = $template;
 
-            $controller_template = file_get_contents('templates/source/report/Report_controller.php');
+            $controller_template = file_get_contents('../mkdcore/source/report/Report_controller.php');
             $controller_template = $this->inject_substitute($controller_template, 'uc_portal', $ucportal);
             $controller_template = $this->inject_substitute($controller_template, 'portal', $portal);
             $controller_template = $this->inject_substitute($controller_template, 'name', $name);
@@ -75,27 +75,27 @@ class Report_builder extends Builder
             $controller_template = $this->inject_substitute($controller_template, 'process', $value['parameter']);
 
             if ($value['display'] == 'csv') {
-                $view_template = file_get_contents('templates/source/report/Report_form.php');
+                $view_template = file_get_contents('../mkdcore/source/report/Report_form.php');
                 $view_template = $this->inject_substitute($view_template, 'page_name', $value['page_name']);
                 $view_template = $this->inject_substitute($view_template, 'filter', $this->output_filter($value['filter_field']));
-                $this->_render_list["src/application/views/{$ucportal}/{$ucname}Report.php"] = $view_template;
+                $this->_render_list["../release/application/views/{$ucportal}/{$ucname}Report.php"] = $view_template;
                 $controller_template = $this->inject_substitute($controller_template, 'display', $this->render_display($value, $filename));
 
             }
             if ($value['display'] == 'table') {
-                $table_view_template = file_get_contents('templates/source/report/Filter_report_form.php');
+                $table_view_template = file_get_contents('../mkdcore/source/report/Filter_report_form.php');
                 $table_view_template = $this->inject_substitute($table_view_template, 'page_name', $value['page_name']);
                 $table_view_template = $this->inject_substitute($table_view_template, 'filter', $this->output_filter($value['filter_field']));
                 $table_view_template = $this->inject_substitute($table_view_template, 'table_header', $this->output_table_header($value['header']));
                 $table_view_template = $this->inject_substitute($table_view_template, 'row_data', $this->output_table_row($value['field']));
                 $filter_field_url = $this->output_filter_url($value['filter_field']);
                 $table_view_template = $this->inject_substitute($table_view_template, 'add', "<a class=\"btn btn-primary btn-sm\" href=\"/{$portal}{$route}?export=csv&$filter_field_url\"><i class=\"fas fa-cloud-download-alt\"></i></a>");
-                $this->_render_list["src/application/views/{$ucportal}/{$ucname}Report.php"] = $table_view_template;
+                $this->_render_list["../release/application/views/{$ucportal}/{$ucname}Report.php"] = $table_view_template;
 
                 $controller_template = $this->inject_substitute($controller_template, 'display', $this->render_display($value, $filename));
             }
 
-            $this->_render_list["src/application/controllers/{$ucportal}/{$ucportal}_{$name}_report_controller.php"] = $controller_template;
+            $this->_render_list["../release/application/controllers/{$ucportal}/{$ucportal}_{$name}_report_controller.php"] = $controller_template;
         }
     }
 
