@@ -1,4 +1,4 @@
-# Manaknight Platform PHP SAAS Generator
+# Manaknight Code builder
 
 # New Project Setup
 1.git clone <repo>
@@ -22,6 +22,40 @@
 9.To see admin panel go to [http://localhost:9000/admin/login](http://localhost:9000/admin/login) . Login is admin@manaknight.com/a123456
 
 10.To see member panel go to [http://localhost:9000/member/login](http://localhost:9000/member/login) . Login is member@manaknight.com/a123456
+
+
+# Deployment Steps
+
+```
+# New project
+# update composer json
+composer install # at root folder
+
+# Update configuration.json. Remember to do path ../release and ../mkdcore
+./build.sh # This will copy all files to start project and clean out old files
+
+# Start a builder server (server to build project with generator)
+cd scripts;
+php -S localhost:9001
+
+# Start a project server (server to run application)
+cd release;
+php -S localhost:9000
+
+# Deploying to Server
+# On Server run
+cd scripts;
+sudo ./pullCode.sh
+
+# Build project files
+sudo ./backupRelease.sh;
+sudo ./initialize.sh;
+sudo ./build.sh;
+
+# Take this file and change path to htdocs copyToProd.dist.sh
+sudo ./copyToProd.sh
+
+```
 
 # Configuration Sections
 Below I'll explain the meaning of each field
@@ -166,8 +200,8 @@ Information needed to build portal.
     "name": <string> - name of portal. Lowercase. One word
     "role": <string> - which role can access this portal
     "model": <string> - which model can access portal. Usually it is user_model unless otherwise.
-    "login_type": <'login', 'login_only', 'login_no_social', 
-    
+    "login_type": <'login', 'login_only', 'login_no_social',
+
     'login_full_function'> - one of these
       login - regular login to portal(reset, forgot, login, register) no social
       login_only - only login function with social login
@@ -259,9 +293,9 @@ Information needed to build a controller
     "add_fields": [<string>] - add field in add form
     "edit_fields": [<string>] - add field in edit form
     "view_fields": [<string>] - add field in view page
-    "dynamic_mapping_add" : {},- similar to dynamic mapping inject data in the controller add method instead of the constructor 
-    "dynamic_mapping_edit" : {}, - similar to dynamic mapping inject data in the controller edit method instead of the constructor 
-    "dynamic_mapping_view" : {},- similar to dynamic mapping inject data in the controller view  method instead of the constructor 
+    "dynamic_mapping_add" : {},- similar to dynamic mapping inject data in the controller add method instead of the constructor
+    "dynamic_mapping_edit" : {}, - similar to dynamic mapping inject data in the controller edit method instead of the constructor
+    "dynamic_mapping_view" : {},- similar to dynamic mapping inject data in the controller view  method instead of the constructor
     "dynamic_mapping":
     ```
     {
@@ -357,8 +391,8 @@ This is the place to make generic reporting pages.
 
 You can use pipes to specify  how  data will be rendered or the type of input type you will get i.e form controls if you dont put a pipe the code builder will use datatype specified on the model
 
-1. Auto complete pipe 
-can be used for add, edit and filter fields 
+1. Auto complete pipe
+can be used for add, edit and filter fields
 for example:
 "email|autocomplete:table_name:field_search:field_label_field:field_value_field"
 1. email the field

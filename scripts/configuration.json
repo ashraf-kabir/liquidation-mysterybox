@@ -13,14 +13,6 @@
 		{
 			"name": "admin",
 			"id": 2
-		},
-		{
-			"name": "system",
-			"id": 3
-		},
-		{
-			"name": "sale",
-			"id": 4
 		}
 	],
 	"models": [{
@@ -71,9 +63,7 @@
 			"unique": ["name"],
 			"seed": [
 				{"name": "member"},
-				{"name": "admin"},
-				{"name": "system"},
-				{"name": "sale"}
+				{"name": "admin"}
 			]
 		},
 		{
@@ -123,7 +113,7 @@
 			"mapping": {
 					"verify": { "0": "xyzNot verified", "1": "xyzVerified"},
 					"status": {"0": "xyzInactive", "1": "Active", "2": "xyzSuspend"},
-					"role_id": {"1": "xyzMember", "2": "xyzAdmin", "3": "xyzSystem"}
+					"role_id": {"1": "xyzMember", "2": "xyzAdmin"}
 			},
 			"pre": "$data['status'] = 1;\n",
 			"post": "",
@@ -157,9 +147,14 @@
 				["expire_at", "date", [], "xyzExpire At" , "", ""]
 		],
 		"join": [
+			{
+				"name": "credential",
+				"field": "credential_id"
+		}
 		],
 		"method": "\n\tpublic function get_user_by_credential_id($credential_id)\n\t{\n\t\t$this->db->where('credential_id', $credential_id);\n\t\treturn $this->db->get($this->_table)->row();\n\t}\n",
 		"mapping": {
+			"status": {"0": "xyzInactive", "1": "Active", "2": "xyzSuspend"}
 		},
 		"pre": "$data['image'] = 'https://i.imgur.com/AzJ7DRw.png';\n\t\t$data['refer'] = uniqid();\n\t\t$data['status'] = 1;\n\t\t$data['verify'] = 0;\n\t\t$data['stripe_id'] = '';\n\n\t\tif(!isset($data['profile_id']))\n\t\t{\n\t\t\t$data['profile_id'] = 0;\n\t\t}\n\n\t\tif(!isset($data['type']))\n\t\t{\n\t\t\t$data['type'] = 'n';\n\t\t}\n\t\tif (strpos($data['phone'], '1') != 0)\n\t\t{\n\t\t\t$data['phone'] = '1' + $data['phone'];\n\t\t}\n",
 		"post": "if(isset($data['password']) && strlen($data['password']) < 1)\n\t\t{\n\t\t\tunset($data['password']);\n\t\t}\n\n\t\tif(isset($data['image']) && strlen($data['image']) < 1)\n\t\t{\n\t\t\tunset($data['image']);\n\t\t}\n",
@@ -388,55 +383,17 @@
 				"Profile": "/profile",
 				"Logout": "/logout"
 			}
-		},
-		{
-			"name": "system",
-			"role": "system",
-			"model": "user_model",
-			"login_type": "login_no_social",
-			"forgot": false,
-			"reset": false,
-			"register": false,
-			"api_auth": false,
-			"api": false,
-			"middleware": ["auth", "acl"],
-			"js": ["/assets/js/media.js","/assets/js/core.js","/assets/js/setting.js","/assets/js/mkd-image-gallery.js"],
-			"css": ["/assets/css/style.css"],
-			"menu": {
-				"Dashboard": "/dashboard",
-				"Profile": "/profile",
-				"Logout": "/logout"
-			}
-		}, {
-			"name": "sale",
-			"role": "sale",
-			"model": "user_model",
-			"login_type": "login_only",
-			"forgot": false,
-			"reset": false,
-			"register": false,
-			"api_auth": true,
-			"api": true,
-			"profile_page_fields": [],
-			"middleware": ["auth", "acl"],
-			"js": ["/assets/js/media.js","/assets/js/core.js","/assets/js/jquery.easy-autocomplete.min.js","/assets/js/setting.js","/assets/js/mkd-image-gallery.js","/assets/js/autocomplete.js"],
-			"css": ["/assets/css/style.css", "/assets/css/easy-autocomplete.min.css"],
-			"menu": {
-				"Dashboard": "/dashboard",
-				"CRM": "/crm",
-				"Profile": "/profile",
-				"Logout": "/logout"
-			}
 		}
 	],
-	"controllers": [{
+	"controllers": [
+		{
 			"route": "/users",
 			"name": "user",
 			"page_name": "Users",
 			"model": "user",
 			"controller": "Admin_user_controller.php",
 			"api_controller": "Admin_api_user_controller.php",
-			"activity_log": false,
+			"activity_log":false,
 			"override": "",
 			"override_add": "",
 			"override_edit": "",
@@ -449,17 +406,17 @@
 			"api": true,
 			"frontend": false,
 			"paginate": true,
-			"paginate_join": "",
+			"paginate_join": "get_credential_paginated",
 			"portal": "admin",
 			"is_crud": true,
-			"method_edit_pre": "",
+			"method_edit_pre":"",
 			"is_add": true,
 			"is_edit": true,
 			"is_delete": false,
 			"is_real_delete": false,
 			"is_list": true,
 			"is_view": true,
-			"import": true,
+			"import": false,
 			"export": false,
 			"is_filter": true,
 			"all_records": true,
@@ -478,19 +435,81 @@
 			"custom_view_edit": "",
 			"custom_view_list": "",
 			"custom_view_view": "",
-			"listing_fields_api": ["id","email","first_name","last_name","role_id","status"],
+			"listing_fields_api": ["id", "email","first_name","last_name"],
 			"listing_headers": ["ID", "Photo", "Personal Information", "Status"],
-			"listing_rows": ["id|integer","image|image","complex|email:first_name:last_name:role_id:phone","status|integer"],
-			"listing_actions": ["Approve|/users/approve/|($data->status == 0)?TRUE:FALSE"],
-			"filter_fields": ["id","email","first_name","last_name","role_id","status"],
-			"add_fields": ["email","first_name|drop_down:users:(first_name,last_name):id","last_name","password","phone","role_id","image"],
-			"edit_fields": ["email","first_name","last_name","password","phone","role_id","image","status"],
-			"view_fields": ["id","email","first_name","last_name","phone","role_id","refer","verify","status"],
+			"listing_rows": ["id|integer", "image|image","complex|email:first_name:last_name:phone", "status|integer"],
+			"listing_actions": ["xyzCredentials|/admin/credentials/edit/{$data->credential_id}|(1==1)?TRUE:FALSE"],
+			"filter_fields": ["id", "email","first_name","last_name"],
+			"add_fields": ["email", "first_name","last_name",  "phone", "image"],
+			"edit_fields": ["email", "first_name","last_name", "phone",  "image"],
+			"view_fields": ["id","email", "first_name","last_name", "phone"],
 			"autocomplete": "",
 			"dynamic_mapping": {},
-			"dynamic_mapping_add": {},
-			"load_libraries": ["$this->load->model('admin_operation_model');"]
-		},
+			"dynamic_mapping_add" : {},
+			"load_libraries": ["\n\t\t$this->load->model('admin_operation_model');\n\t\t$this->load->model('credential_model');"]
+	},
+	{
+			"route": "/credentials",
+			"name": "user_credentials",
+			"page_name": "Users",
+			"model": "credential",
+			"controller": "Admin_credential_controller.php",
+			"api_controller": "Admin_api_credential_controller.php",
+			"activity_log":false,
+			"override": "",
+			"override_add": "",
+			"override_edit": "",
+			"override_view": "",
+			"override_list": "",
+			"override_add_view_model": "",
+			"override_edit_view_model": "",
+			"override_view_view_model": "",
+			"override_list_view_model": "",
+			"api": true,
+			"frontend": false,
+			"paginate": true,
+			"paginate_join": "",
+			"portal": "admin",
+			"is_crud": true,
+			"method_edit_pre":"",
+			"is_add": true,
+			"is_edit": true,
+			"is_delete": false,
+			"is_real_delete": false,
+			"is_list": true,
+			"is_view": true,
+			"import": false,
+			"export": false,
+			"is_filter": true,
+			"all_records": true,
+			"active_only": false,
+			"method": "",
+			"method_add": "\"password\" => str_replace('$2y$', '$2b$', password_hash($password, PASSWORD_BCRYPT)),",
+			"method_edit": "\"password\" => str_replace('$2y$', '$2b$', password_hash($password, PASSWORD_BCRYPT)),",
+			"method_list": "",
+			"method_view": "",
+			"method_add_success": "error_log('a');",
+			"method_edit_success": "",
+			"method_list_success": "",
+			"method_view_success": "",
+			"method_delete_success": "",
+			"custom_view_add": "",
+			"custom_view_edit": "",
+			"custom_view_list": "",
+			"custom_view_view": "",
+			"listing_fields_api": ["id", "email","role_id","status"],
+			"listing_headers": ["xyzID", "xyzEmail", "xyzRole", "xyzStatus"],
+			"listing_rows": ["id|integer", "email|string","role_id|integer", "status|integer"],
+			"listing_actions": [],
+			"filter_fields": ["id", "role", "status"],
+			"add_fields": ["email",  "password", "role_id", "status"],
+			"edit_fields": ["email",  "password", "status"],
+			"view_fields": ["id","email", "role_id", "status"],
+			"autocomplete": "",
+			"dynamic_mapping": {},
+			"dynamic_mapping_add" : {},
+			"load_libraries": ["\n\t\t$this->load->model('admin_operation_model');"]
+	},
 		{
 			"route": "/emails",
 			"name": "email",
