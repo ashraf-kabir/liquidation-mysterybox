@@ -1,0 +1,15 @@
+.scene-item{
+	background-color: #f3f3f3;
+	width: 100%;
+	min-height: 95px;
+	padding: 2%;
+}
+.scene-item h4{
+ float: left;
+}
+
+.scene-item img{
+	width: 25%;
+	float: left;
+	padding: 1%;
+}
