@@ -1018,5 +1018,20 @@
 		"* 23 * * * php index.php cli backup_code_cronjob_controller index",
 		"* 23 * * * php index.php cli backup_db_cronjob_controller index",
 		"30 23 * * * php index.php cli token_cronjob_controller index"
-	]
+	],
+	"graphql": {
+		"role": "user",
+		"ignore_models": [
+				"black_list_token",
+				"token",
+				"setting",
+				"sms",
+				"email",
+				"role",
+				"admin_operation",
+				"member_operation"
+		],
+		"ignore_id_field": [
+		]
+	}
 }
