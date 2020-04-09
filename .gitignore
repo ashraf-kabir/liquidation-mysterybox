@@ -4,11 +4,18 @@ src/system
 # src/application
 .vscode
 release/*
+release_old
 !release/.gitkeep
 !release/index.html
 scripts/copyToProd.sh
 scripts/env.json
 preschema_output/*.json
+vendor
+
+src/
+templates/
+uploads/
+assets/
 
 src/composer.lock
 src/application/controllers/*.php
