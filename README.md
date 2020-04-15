@@ -45,11 +45,19 @@ php -S localhost:9000
 # Deploying to Server
 # On Server run
 cd scripts;
+echo "pull";
 sudo ./pullCode.sh;
+echo "composer";
 sudo ./initialize.sh;
+echo "build";
 sudo ./build.sh;
+echo "generate";
 sudo ./generate.sh;
+sudo rm -rf /var/www/devbluegable.manaknightdigital.com/htdocs/*;
+echo "copy";
 sudo ./copyToProd.sh;
+echo "done";
+
 
 
 # Take this file and change path to htdocs copyToProd.dist.sh
