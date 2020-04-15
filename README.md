@@ -49,6 +49,7 @@ sudo ./pullCode.sh;
 sudo ./initialize.sh;
 sudo ./build.sh;
 sudo ./generate.sh;
+sudo ./copyToProd.sh;
 
 
 # Take this file and change path to htdocs copyToProd.dist.sh
