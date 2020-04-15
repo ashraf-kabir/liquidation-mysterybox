@@ -45,12 +45,11 @@ php -S localhost:9000
 # Deploying to Server
 # On Server run
 cd scripts;
-sudo ./pullCode.sh
-
-# Build project files
-sudo ./backupRelease.sh;
+sudo ./pullCode.sh;
 sudo ./initialize.sh;
 sudo ./build.sh;
+sudo ./generate.sh;
+
 
 # Take this file and change path to htdocs copyToProd.dist.sh
 sudo ./copyToProd.sh

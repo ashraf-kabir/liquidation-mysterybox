@@ -1,10 +1,12 @@
-cd release;
+cd ../release;
 rm -rf *;
 cd ../;
+chown -R www-data:www-data mkdcore;
+chmod -R 775 mkdcore;
 cp -R mkdcore/initialize/* release;
 cp -R vendor release;
 cp -R composer.json release;
 cp -R composer.lock release;
 cd release;
-chmod 775 *;
-chmod 777 uploads;
+chown -R www-data:www-data *;
+chmod -R 775 *;
