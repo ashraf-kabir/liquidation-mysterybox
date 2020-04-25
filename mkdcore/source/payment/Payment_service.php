@@ -148,6 +148,22 @@ class Payment_service{
 
     }
 
+
+    /**
+     * Retrieve the Customer from Stripe.
+     * 
+     * @param string $customer_id
+     * @return \Stripe\Customer
+     */
+
+     public function update_customer_payment_method($customer_id, $source)
+     {
+        return Customer::update($customer_id, [
+            'source' => $source,
+        ]);
+     }
+ 
+
     /**
      * Retrieve the Customer from Stripe.
      * 
@@ -345,6 +361,9 @@ class Payment_service{
         $result = $this->stripe_master($stripe_type, $args);
         return $result;
     }
+
+
+    
 
      /**
      * Create card by customer ID and token.

@@ -40,7 +40,7 @@ if ($layout_clean_mode) {
     </div><br>
 	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12"><br>
         <div class="card">
-            <h5 class="card-header"><?php echo $view_model->get_heading();?> Details</h5>
+            <h5 class="card-header">Refund Details</h5>
                 <div class="card-body">
 					<table class='table'>
 						<thead>

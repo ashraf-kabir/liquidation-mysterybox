@@ -105,11 +105,11 @@ class Admin_stripe_coupons_controller extends Admin_controller
         $amount_type = $this->input->post('amount_type');
         $duration_in_months = $this->input->post('duration_in_months');
         $duration = $this->input->post('duration');
-        $coupon_type = $this->input->post('coupon_type');
+        $coupon_type = 1;
         
         $coupon_params = [
             'duration' =>  $this->_data['view_model']->duration_mapping()[$this->input->post('duration')],
-            'currency' => $this->config->item('stripe_currency') ?? 'USD',
+            'currency' => $this->config->item('stripe_currency') ?? 'CAD',
             'name' => $name,
             'max_redemptions' => $usage_limit
         ];
@@ -130,7 +130,7 @@ class Admin_stripe_coupons_controller extends Admin_controller
         }
 
         // create stripe token
-        if(((int) $coupon_type ) === 1)
+        if(((int) $coupon_type ) == 1)
         {
             try
             {
@@ -154,7 +154,11 @@ class Admin_stripe_coupons_controller extends Admin_controller
                     'stripe_id' => 	$coupon['id'] ?? "xyzCustom_coupon",
                     'name' => $name,
                     'current_usage' => 0,
-                    'coupon_type' => 1	
+                    'coupon_type' => 1,
+                    'duration' =>  $duration,
+                    'currency' => $this->config->item('stripe_currency') ?? 'CAD',
+                    'name' => $name,
+                    'max_redemptions' => $usage_limit	
                 ]);
     
                 if($result)
@@ -167,29 +171,6 @@ class Admin_stripe_coupons_controller extends Admin_controller
             }
         }
          
-        if(((int) $coupon_type ) === 0)
-        {
-            $result = $this->stripe_coupons_model->create([
-                'slug' => $slug,
-                'status' => 1,
-                'usage_limit' => $usage_limit,
-                'amount' => $amount,
-                'amount_type' => $amount_type,
-                'stripe_id' => "xyzCustom_coupon",
-                'current_usage' => 0,
-                'name' => $name,
-                'coupon_type' => $coupon_type	
-            ]);
-
-            if($result)
-            {
-                return $this->redirect('/admin/stripe_coupons/0', 'refresh');
-            }
-            
-            $this->_data['error'] = 'Error';
-            return $this->render('Admin/Stripe_couponsAdd', $this->_data);
-        }
-        
         $this->_data['error'] = 'Error';
         return $this->render('Admin/Stripe_couponsAdd', $this->_data);
 	}

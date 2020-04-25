@@ -82,7 +82,7 @@ class Package_builder extends Builder
                     case 'payment':
                         $template = file_get_contents('../mkdcore/source/payment/stripe_client.js.php');
                         $template = $this->inject_substitute($template, 'stripe_publish_key', $this->_config['stripe_publish_key']);
-                        file_put_contents('assets/js/stripe_client.js', $template);
+                        file_put_contents('../release/assets/js/stripe_client.js', $template);
                     break;
                     default:
                         # code...

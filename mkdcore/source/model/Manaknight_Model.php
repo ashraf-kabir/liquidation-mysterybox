@@ -461,6 +461,18 @@ class {{{subclass_prefix}}}Model extends CI_Model
 
                 if (!is_null($value))
                 {
+                    if(is_numeric($value))
+                    {
+                        $this->db->where($key, $value);
+                        continue;   
+                    }
+
+                    if(is_string($value))
+                    {
+                        $this->db->like($key, $value);
+                        continue;    
+                    }
+
                     $this->db->where($key, $value);
                 }
             }
@@ -507,6 +519,18 @@ class {{{subclass_prefix}}}Model extends CI_Model
 
                 if ($value !== NULL)
                 {
+                    if(is_numeric($value))
+                    {
+                        $this->db->where($field, $value);
+                        continue;   
+                    }
+
+                    if(is_string($value))
+                    {
+                        $this->db->like($field, $value);
+                        continue;    
+                    }
+
                     $this->db->where($field, $value);
 				}
             }

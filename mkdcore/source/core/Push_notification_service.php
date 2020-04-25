@@ -56,6 +56,28 @@ class Push_notification_service
      * @param string $message
      * @param string $image
      */
+
+    private function _send_request($fields)
+    {
+        $headers = [
+            'Content-Type:application/json', 'project_id:' . $this->_project_id,
+            'Authorization:key=' . $this->_server_key,
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->_url);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+        curl_exec($ch);
+        curl_close($ch);
+
+        return $ch;
+    }
+
+
+
     public function send($device_type, $device_id, $title, $message, $image = '')
     {
         $fields = [
@@ -84,6 +106,26 @@ class Push_notification_service
             ];
         }
 
+        if($device_id == 'IOS')
+        {
+            $notification  =[
+                'data' => [
+                    'title' =>$title , 
+                    'text' => $message, 
+                    'sound' => 'default',
+                    'badge' => '1'
+                ],
+            ];
+           
+            $fields = [
+                'registration_ids' => [
+                    $device_id
+                 ],
+                'notification' => $notification, 
+                'priority' => 'high'
+            ];
+        }
+
         $headers = [
             'Content-Type:application/json', 'project_id:' . $this->_project_id,
             'Authorization:key=' . $this->_server_key,
@@ -99,5 +141,58 @@ class Push_notification_service
         curl_close($ch);
 
         return $ch;
+    }
+
+
+    public function send_muiltiple($devices, $title, $message, $image = '')
+    {
+        $ios_ids = [];
+        $android_ids = [];
+
+        foreach($devices as $device)
+        {
+            if($device['type'] == 'ANDROID')
+            {
+                $android_ids[] = $device['device_id'];   
+            }
+
+            if($device['type'] == 'IOS')
+            {
+                $ios_ids[] = $device['device_id'];
+            }
+        }
+
+        if(count($android_ids) > 0)
+        {
+            $fields = [
+                'registration_ids' => $android_ids,
+                'data' => [
+                    'title' => $title,
+                    'message' => $message,
+                    'image' => $image,
+                ],
+            ];
+            $this->_send_request($fields);
+        }
+
+        if(count($ios_ids) > 0)
+        {
+            $notification  =[
+                'data' => [
+                    'title' =>$title , 
+                    'text' => $message, 
+                    'sound' => 'default',
+                    'badge' => '1'
+                ],
+            ];
+           
+            $fields = [
+                'registration_ids' => $ios_ids,
+                'notification' => $notification, 
+                'priority' => 'high'
+            ];
+            
+            $this->_send_request($fields);
+        }
     }
 }

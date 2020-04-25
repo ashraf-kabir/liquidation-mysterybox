@@ -39,11 +39,13 @@ class Admin_stripe_invoices_controller extends Admin_controller
         $this->_data['view_model'] = new Stripe_invoices_admin_list_paginate_view_model($this->stripe_subscriptions_invoices_model,$this->pagination,'/admin/stripe_invoices/0');
         $this->_data['view_model']->set_heading('Invoices');
         $this->_data['view_model']->set_status(($this->input->get('status', TRUE) != NULL) ? $this->input->get('status', TRUE) : NULL);
-		$this->_data['view_model']->set_payment_attempted(($this->input->get('payment_attempted', TRUE) != NULL) ? $this->input->get('payment_attempted', TRUE) : NULL);
+        $this->_data['view_model']->set_payment_attempted(($this->input->get('payment_attempted', TRUE) != NULL) ? $this->input->get('payment_attempted', TRUE) : NULL);
+        $this->_data['view_model']->set_refunded(($this->input->get('refunded', TRUE) != NULL) ? $this->input->get('refunded', TRUE) : NULL);
 		
         $where = [
             'status' => $this->_data['view_model']->get_status(),
-			'payment_attempted' => $this->_data['view_model']->get_payment_attempted(),
+            'payment_attempted' => $this->_data['view_model']->get_payment_attempted(),
+            'refunded ' => $this->_data['view_model']->get_refunded()
 			
         ];
 

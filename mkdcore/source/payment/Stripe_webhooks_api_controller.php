@@ -23,6 +23,10 @@ class Stripe_webhooks_api_controller extends CI_Controller{
         $this->load->database();
     }
 
+    /**
+     * handle stripe events
+     * @see https://stripe.com/docs/api/events/types
+     */
     public function index()
     {
         $payload = @file_get_contents('php://input');
@@ -78,8 +82,32 @@ class Stripe_webhooks_api_controller extends CI_Controller{
                 $this->handle_invoice_payment_failed($args);
             break;
 
+            case 'customer.source.expiring':
+                http_response_code(200);
+            break;
+
+            case 'customer.subscription.deleted':
+                http_response_code(200);
+            break;
+
+            case 'subscription_schedule.aborted':
+                $this->handle_subscription_schedule_aborted($args);
+            break;
+            
+            case 'subscription_schedule.canceled':
+                $this->handle_subscription_schedule_canceled($args);
+            break;
+
+            case 'subscription_schedule.completed':
+                $this->handle_subscription_schedule_completed($args);
+            break;
+
+            case 'subscription_schedule.expiring':
+                $this->handle_subscription_schedule_expiring($args);
+            break;
+
             default:
-                http_response_code(400);
+                http_response_code(200);
             exit();
         }
     }
@@ -97,6 +125,52 @@ class Stripe_webhooks_api_controller extends CI_Controller{
         http_response_code(200);
         exit();
     } 
+    
+    /**
+     * Occurs whenever a subscription schedule is canceled due to the underlying 
+     * subscription being canceled because of delinquency.
+     * @see https://stripe.com/docs/api/events/types
+    */
+    private function handle_subscription_schedule_aborted($args)
+    {
+        echo json_encode($args);
+        http_response_code(200);
+        exit();
+    }
+
+    /**
+     * Occurs whenever a subscription schedule is canceled.
+     * @see https://stripe.com/docs/api/events/types
+     */
+    private function handle_subscription_schedule_canceled($args)
+    {
+       echo json_encode($args);
+       http_response_code(200);
+       exit();
+
+    } 
+
+    /**
+     * Occurs whenever a new subscription schedule is completed.
+     * @see https://stripe.com/docs/api/events/types
+     */
+    private function handle_subscription_schedule_completed($args)
+    {
+        file_put_contents('log3.log', print_r($args,true));
+        http_response_code(200);
+        exit();
+    }
+    
+    /**
+     * Occurs 7 days before a subscription schedule will expire.
+     * @see https://stripe.com/docs/api/events/types
+     */
+    private function handle_subscription_schedule_expiring($args)
+    {
+        echo json_encode($args);
+        http_response_code(200);
+        exit();
+    }
 
     private function handle_invoice_created($args)
     {
@@ -237,6 +311,7 @@ class Stripe_webhooks_api_controller extends CI_Controller{
         
         $this->load->model('stripe_subscriptions_invoices_model');
         $this->load->model('stripe_refunds_model');
+        $this->load->model('stripe_subscriptions_model');
         
         if(isset($args['id']))
         {
@@ -257,6 +332,7 @@ class Stripe_webhooks_api_controller extends CI_Controller{
             if($result)
             {
                 $this->stripe_subscriptions_invoices_model->edit(['refunded' => 1],  $invoice_obj->id ?? 0 );
+                $this->stripe_subscriptions_model->update_by_stripe_id($invoice_obj->stripe_subscriptions_id ?? "", ['status' => 7]);
                 echo json_encode(["success" => true, "message" => "invoice refund captured"]);
                 http_response_code(200);
                 exit(); 
