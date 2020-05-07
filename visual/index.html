@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Code Builder</title>
+  <link href="https://unpkg.com/basscss@8.0.2/css/basscss.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+</head>
+<body x-data="globalState()">
+  <h1 class="center">Visual Code builder</h1>
+  <div class="bg-black">
+    <button class="btn bg-blue white" @click="resetDefault()">Reset Default</button>
+    <button class="btn bg-blue white" @click="state.roles = true; form.roleId = config.roles.length;">Roles</button>
+  </div>
+  <br/>
+  <!-- https://basscss.com/#basscss-layout
+       https://github.com/alpinejs/alpine#x-data
+   -->
+  <div class="clearfix border-top border-bottom">
+    <div class="col col-6 ">
+      &nbsp;
+      <template x-if="state.roles == true">
+        <template
+          x-for="(role, index) in config.roles"
+          :key="role.id"
+        >
+        <div class="border mb1 mt1 p1 mr1">
+          <span x-text="role.id"></span>
+          <span x-text="role.name"></span>
+          <button class="border-none" @click="removeRole(role.id)">x</button>
+        </div>
+        </template>
+        <template class="border mb1 mt1 p1 mr1" x-if="state.roleAdd == true">
+          <input type="number" x-model="form.roleId" placeholder="1"/>
+          <input type="text" x-model="form.role" placeholder="role" @keydown.enter="addRole(form.roleId, form.role);"/>
+          <button @click="addRole(form.roleId, form.role);">Save</button>
+        </template>
+        <button class="block mt1" @click="state.roleAdd = true">Add Role</button>
+      </template>
+    </div>
+
+
+    <div class="col col-6 border-left" >
+      <pre id="result" x-html="JSON.stringify(config, undefined, 4)" @click="copyToClipboard()">
+
+      </pre>
+    </div>
+  </div>
+
+  <div x-data="dropdown()">
+    <button x-on:click="open">Open</button>
+
+    <div x-show="isOpen()" x-on:click.away="close">
+        // Dropdown
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@2.3.3/dist/alpine.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
