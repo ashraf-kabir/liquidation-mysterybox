@@ -11,7 +11,14 @@
   <h1 class="center">Visual Code builder</h1>
   <div class="bg-black">
     <button class="btn bg-blue white" @click="resetDefault()">Reset Default</button>
-    <button class="btn bg-blue white" @click="state.roles = true; form.roleId = config.roles.length;">Roles</button>
+    <button class="btn bg-blue white" @click="resetState('role'); form.roleId = config.roles.length;">Roles</button>
+    <button class="btn bg-blue white" @click="resetState('model')">Models</button>
+    <button class="btn bg-blue white" @click="resetDefault()">Controllers</button>
+    <button class="btn bg-blue white" @click="resetDefault()">Packages</button>
+    <button class="btn bg-blue white" @click="resetDefault()">Config</button>
+    <button class="btn bg-blue white" @click="resetState('copy')">Copy</button>
+    <button class="btn bg-blue white" @click="resetDefault()">Translations</button>
+    <button class="btn bg-blue white" @click="resetDefault()">Graphql</button>
   </div>
   <br/>
   <!-- https://basscss.com/#basscss-layout
@@ -20,7 +27,8 @@
   <div class="clearfix border-top border-bottom">
     <div class="col col-6 ">
       &nbsp;
-      <template x-if="state.roles == true">
+      <template x-if="state.currentState == 'role'">
+        <div>
         <template
           x-for="(role, index) in config.roles"
           :key="role.id"
@@ -32,12 +40,60 @@
         </div>
         </template>
         <template class="border mb1 mt1 p1 mr1" x-if="state.roleAdd == true">
-          <input type="number" x-model="form.roleId" placeholder="1"/>
-          <input type="text" x-model="form.role" placeholder="role" @keydown.enter="addRole(form.roleId, form.role);"/>
-          <button @click="addRole(form.roleId, form.role);">Save</button>
+          <div>
+            <input type="number" x-model="form.roleId" placeholder="1"/>
+            <input type="text" x-model="form.role" placeholder="role" @keydown.enter="addRole(form.roleId, form.role);"/>
+            <button @click="addRole(form.roleId, form.role);">Save</button>
+          </div>
         </template>
         <button class="block mt1" @click="state.roleAdd = true">Add Role</button>
+        </div>
       </template>
+      <!-- copy -->
+      <template x-if="state.currentState == 'copy'">
+        <div>
+        <template
+          x-for="(row, index) in getCopyState()"
+          :key="row.value"
+        >
+        <div class="border mb1 mt1 p1 mr1">
+          <div x-text="row.key"></div>
+          <div x-text="row.value"></div>
+          <button class="border-none" @click="removeCopy(row.key)">x</button>
+        </div>
+        </template>
+        <template class="border mb1 mt1 p1 mr1" x-if="state.copyAdd === true">
+          <div>
+            <input type="text" x-model="form.copyKey" placeholder="key"/>
+            <input type="text" x-model="form.copyValue" placeholder="value" @keydown.enter="addCopy(form.copyKey, form.copyValue);"/>
+            <button @click="addCopy(form.copyKey, form.copyValue);">Save</button>
+          </div>
+        </template>
+        <button class="block mt1" @click="state.copyAdd = true">Add Copy</button>
+        </div>
+      </template>
+      <!-- models -->
+      <template x-if="state.currentState == 'model'">
+        <div>
+          <template
+            x-for="(model, index) in config.models"
+            :key="model.name"
+          >
+          <div class="border mb1 mt1 p1 mr1">
+            <span x-text="model.name"></span>
+            <button class="border-none" @click="removeModel(model.name)">x</button>
+          </div>
+          </template>
+          <template class="border mb1 mt1 p1 mr1" x-if="state.modelAdd == true">
+            <div>
+              <input type="text" x-model="form.model" placeholder="model" @keydown.enter="addModel(form.model);"/>
+              <button @click="addModel(form.model);">Save</button>
+            </div>
+          </template>
+          <button class="block mt1" @click="state.modelAdd = true">Add Model</button>
+        </div>
+      </template>
+      <!-- models -->
     </div>
 
 
