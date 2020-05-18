@@ -1,5 +1,6 @@
 <?php
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2020*/
+include_once 'Builder.php';
 class GraphQL_builder extends Builder
 {
     protected $_config;

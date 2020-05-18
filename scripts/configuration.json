@@ -1014,6 +1014,9 @@
 	"copy": {
 		"../mkdcore/custom/style.css": "../release/assets/css/style.css"
 	},
+	"reverse_copy": {
+		"../release/application/config/constants.php" : "../mkdcore/custom/generated/constants.php"
+	},
 	"cron": [
 		"* 23 * * * php index.php cli backup_code_cronjob_controller index",
 		"* 23 * * * php index.php cli backup_db_cronjob_controller index",
