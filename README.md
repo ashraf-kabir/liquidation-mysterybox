@@ -504,3 +504,31 @@ production and local development configurations. You need to add env.json to .gi
     }
 }
 ```
+
+## Reverse Copy
+If you want to copy files from project back into custom, add file path to reverse_copy.
+
+Put Release file name as key, Custom folder file path as value
+
+Then run ./reverseCopy.sh in scripts folder
+
+## DRAFT MODE
+Sometimes you want to edit raw php files in project and copy them back into custom.
+
+I made this easy for you.
+
+In the php files inside release, add the keyword DRAFTMODE.
+
+Then in script folder, run ./draft.sh
+
+This script does 2 things:
+
+1.It copy all files with DRAFTMODE into mkdcore/custom/generated folder.
+
+2.It removes DRAFTMODE from the file in mkdcore/custom/generated folder.
+
+3.It prints the lines you need to copy into copy object.
+```
+I.E.
+"../mkdcore/custom/generated/release_application_controllers_Guest_Home_controller.php": "../release/application/controllers/Guest/Home_controller.php",
+```
