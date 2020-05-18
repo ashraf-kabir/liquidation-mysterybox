@@ -14,10 +14,18 @@
     <button class="btn bg-blue white" @click="resetState('role'); form.roleId = config.roles.length;">Roles</button>
     <button class="btn bg-blue white" @click="resetState('model')">Models</button>
     <button class="btn bg-blue white" @click="resetDefault()">Controllers</button>
+    <button class="btn bg-blue white" @click="resetDefault()">Portals</button>
     <button class="btn bg-blue white" @click="resetDefault()">Packages</button>
+    <button class="btn bg-blue white" @click="resetDefault()">Marketing</button>
     <button class="btn bg-blue white" @click="resetDefault()">Config</button>
+  </div>
+  <div class="bg-black mt1">
     <button class="btn bg-blue white" @click="resetState('copy')">Copy</button>
     <button class="btn bg-blue white" @click="resetDefault()">Translations</button>
+    <button class="btn bg-blue white" @click="resetDefault()">Cron</button>
+    <button class="btn bg-blue white" @click="resetState('database')">Database</button>
+    <button class="btn bg-blue white" @click="resetState('route')">Routes</button>
+    <button class="btn bg-blue white" @click="resetDefault()">Reporting</button>
     <button class="btn bg-blue white" @click="resetDefault()">Graphql</button>
   </div>
   <br/>
@@ -36,7 +44,8 @@
         <div class="border mb1 mt1 p1 mr1">
           <span x-text="role.id"></span>
           <span x-text="role.name"></span>
-          <button class="border-none" @click="removeRole(role.id)">x</button>
+          <button class="border-none" @click="editRoleShow(role.id)">Edit</button>
+          <button class="border-none" @click="removeRole(role.id)">Delete</button>
         </div>
         </template>
         <template class="border mb1 mt1 p1 mr1" x-if="state.roleAdd == true">
@@ -44,6 +53,13 @@
             <input type="number" x-model="form.roleId" placeholder="1"/>
             <input type="text" x-model="form.role" placeholder="role" @keydown.enter="addRole(form.roleId, form.role);"/>
             <button @click="addRole(form.roleId, form.role);">Save</button>
+          </div>
+        </template>
+        <template class="border mb1 mt1 p1 mr1" x-if="state.roleEdit === true">
+          <div>
+            <input type="number" x-model="form.roleEditKey" placeholder="key"/>
+            <input type="text" x-model="form.roleEditValue" placeholder="value" @keydown.enter="editRole(form.roleEditKeyOld, form.roleEditKey, form.roleEditValue);"/>
+            <button @click="editRole(form.roleEditKeyOld, form.roleEditKey, form.roleEditValue);">Save</button>
           </div>
         </template>
         <button class="block mt1" @click="state.roleAdd = true">Add Role</button>
@@ -59,7 +75,8 @@
         <div class="border mb1 mt1 p1 mr1">
           <div x-text="row.key"></div>
           <div x-text="row.value"></div>
-          <button class="border-none" @click="removeCopy(row.key)">x</button>
+          <button class="border-none" @click="editCopyShow(row.key)">Edit</button>
+          <button class="border-none" @click="removeCopy(row.key)">Delete</button>
         </div>
         </template>
         <template class="border mb1 mt1 p1 mr1" x-if="state.copyAdd === true">
@@ -69,9 +86,82 @@
             <button @click="addCopy(form.copyKey, form.copyValue);">Save</button>
           </div>
         </template>
+        <template class="border mb1 mt1 p1 mr1" x-if="state.copyEdit === true">
+          <div>
+            <input type="text" x-model="form.copyEditKey" placeholder="key"/>
+            <input type="text" x-model="form.copyEditValue" placeholder="value" @keydown.enter="editCopy(form.copyEditKeyOld, form.copyEditKey, form.copyEditValue);"/>
+            <button @click="editCopy(form.copyEditKeyOld, form.copyEditKey, form.copyEditValue);">Save</button>
+          </div>
+        </template>
         <button class="block mt1" @click="state.copyAdd = true">Add Copy</button>
         </div>
       </template>
+      <!-- copy end -->
+      <!-- route -->
+      <template x-if="state.currentState == 'route'">
+        <div>
+        <template
+          x-for="(row, index) in getRouteState()"
+          :key="row.value"
+        >
+        <div class="border mb1 mt1 p1 mr1">
+          <div x-text="row.key"></div>
+          <div x-text="row.value"></div>
+          <button class="border-none" @click="editRouteShow(row.key)">Edit</button>
+          <button class="border-none" @click="removeRoute(row.key)">Delete</button>
+        </div>
+        </template>
+        <template class="border mb1 mt1 p1 mr1" x-if="state.routeAdd === true">
+          <div>
+            <input type="text" x-model="form.routeKey" placeholder="key"/>
+            <input type="text" x-model="form.routeValue" placeholder="value" @keydown.enter="addRoute(form.routeKey, form.routeValue);"/>
+            <button @click="addRoute(form.routeKey, form.routeValue);">Save</button>
+          </div>
+        </template>
+        <template class="border mb1 mt1 p1 mr1" x-if="state.routeEdit === true">
+          <div>
+            <input type="text" x-model="form.routeEditKey" placeholder="key"/>
+            <input type="text" x-model="form.routeEditValue" placeholder="value" @keydown.enter="editRoute(form.routeEditKeyOld, form.routeEditKey, form.routeEditValue);"/>
+            <button @click="editRoute(form.routeEditKeyOld, form.routeEditKey, form.routeEditValue);">Save</button>
+          </div>
+        </template>
+
+        <button class="block mt1" @click="state.routeAdd = true">Add Route</button>
+        </div>
+      </template>
+      <!-- route end -->
+      <!-- database -->
+      <template x-if="state.currentState == 'database'">
+        <div>
+        <template
+          x-for="(row, index) in getDatabaseState()"
+          :key="row.value"
+        >
+        <div class="border mb1 mt1 p1 mr1">
+          <div x-text="row.key"></div>
+          <div x-text="row.value"></div>
+          <button class="border-none" @click="editDatabaseShow(row.key)">Edit</button>
+          <button class="border-none" @click="removeDatabase(row.key)">Delete</button>
+        </div>
+        </template>
+        <template class="border mb1 mt1 p1 mr1" x-if="state.databaseAdd === true">
+          <div>
+            <input type="text" x-model="form.databaseKey" placeholder="key"/>
+            <input type="text" x-model="form.databaseValue" placeholder="value" @keydown.enter="addDatabase(form.databaseKey, form.databaseValue);"/>
+            <button @click="addDatabase(form.databaseKey, form.databaseValue);">Save</button>
+          </div>
+        </template>
+        <template class="border mb1 mt1 p1 mr1" x-if="state.databaseEdit === true">
+          <div>
+            <input type="text" x-model="form.databaseEditKey" placeholder="key"/>
+            <input type="text" x-model="form.databaseEditValue" placeholder="value" @keydown.enter="addDatabase(form.databaseEditKey, form.databaseEditValue);"/>
+            <button @click="editDatabase(form.databaseEditKey, form.databaseEditValue);">Save</button>
+          </div>
+        </template>
+        <button class="block mt1" @click="state.databaseAdd = true">Add Key Value</button>
+        </div>
+      </template>
+      <!-- database end -->
       <!-- models -->
       <template x-if="state.currentState == 'model'">
         <div>
@@ -81,7 +171,8 @@
           >
           <div class="border mb1 mt1 p1 mr1">
             <span x-text="model.name"></span>
-            <button class="border-none" @click="removeModel(model.name)">x</button>
+            <button class="border-none" @click="editModelShow(row.key)">Edit</button>
+            <button class="border-none" @click="removeModel(model.name)">Delete</button>
           </div>
           </template>
           <template class="border mb1 mt1 p1 mr1" x-if="state.modelAdd == true">
@@ -93,7 +184,7 @@
           <button class="block mt1" @click="state.modelAdd = true">Add Model</button>
         </div>
       </template>
-      <!-- models -->
+      <!-- models end -->
     </div>
 
 
