@@ -34,10 +34,18 @@ class Draft_builder extends Builder
     {
         $this->init();
         echo "Copy these lines into copy object please\n";
+        $flipped_translation = array_flip($this->_translate);
+        
         foreach ($this->_render_list as $path => $template)
         {
             $content = file_get_contents($template);
-            file_put_contents($path, str_replace('DRAFTMODE', '', $content));
+            foreach($flipped_translation as $key => $value){
+                if($value !== 'xyz' && strpos($path, '_controllers_') === FALSE){
+                    $content = str_replace('>'.$key, '>'.$value, $content);
+                }
+            }
+            $content = str_replace('DRAFTMODE', '', $content);
+            file_put_contents($path, $content);
             echo "\"$path\": \"$template\",\n";
         }
     }
