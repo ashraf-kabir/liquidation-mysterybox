@@ -789,8 +789,11 @@
 	},
 	"translations": {
 		"xyzSettings": "Settings",
+		"xyzUse your Facebook account" : "Use your Facebook account",
+		"xyzUse your Google account" : "Use your Google account",
 		"xyzConfiguration": "Configuration",
 		"xyzEmail": "Email",
+		"xyzLogin" : "Login",
 		"xyzFirst Name": "First Name",
 		"xyzLast Name": "Last Name",
 		"xyzPassword": "Password",

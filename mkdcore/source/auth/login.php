@@ -27,7 +27,7 @@
             <div class="col-lg-3 col-md-3 col-sm-1 col-xs-1"></div>
             <div class="col-lg-6 col-md-6 col-sm-10 col-xs-10 p-5 auth-wrap">
                 <div class='sign-up-text'>
-                    <h1>Login</h1>
+                    <h1>xyzLogin</h1>
                 </div>
                 <div class="form-container p-5">
                      <?php echo form_open();?>
