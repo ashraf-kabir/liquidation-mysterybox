@@ -1018,6 +1018,8 @@
 	},
 	"copy": {
 		"../mkdcore/custom/style.css": "../release/assets/css/style.css",
+		"../mkdcore/custom/styles.css": "../release/assets/css/styles.css",
+		"../mkdcore/custom/app.js": "../release/assets/js/app.js",
 		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css"
 	},
 	"reverse_copy": {
