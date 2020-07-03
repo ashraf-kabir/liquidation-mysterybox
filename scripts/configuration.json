@@ -793,6 +793,8 @@
 		"xyzUse your Google account" : "Use your Google account",
 		"xyzConfiguration": "Configuration",
 		"xyzEmail": "Email",
+		"xyzReset" : "Reset",
+		"xyzConfirm Password" : "Confirm Password",
 		"xyzLogin" : "Login",
 		"xyzFirst Name": "First Name",
 		"xyzLast Name": "Last Name",
