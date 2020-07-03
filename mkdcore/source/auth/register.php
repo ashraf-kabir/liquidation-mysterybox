@@ -30,7 +30,7 @@
                     <h1>xyzRegister</h1>
                 </div>
                 <div class="form-container p-5">
-                    <?php echo form_open('/{{{portal}}}/forgot');?>
+                    <?php echo form_open('/{{{portal}}}/register');?>
                         <?php if (strlen($error) > 0) : ?>
                             <div class="row">
                                 <div class="col-md-12">
@@ -76,7 +76,7 @@
                         </div>
                         <div class="form-group">
                             <label class='required' for="password">xyzRepeat Password</label>
-                            <input type="password" class="form-control site-input" placeholder="xyzRepeat Password" name="confirm_password" required="true">
+                            <input type="password" class="form-control site-input"  name="confirm_password" required="true">
                         </div>
 
                         <div class="form-group">
