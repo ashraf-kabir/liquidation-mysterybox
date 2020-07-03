@@ -18,28 +18,28 @@
 <body>
 <div class="wrapper">
         <!-- Sidebar  -->
-        <?php if (!$layout_clean_mode) { ?>
+    <?php if (!$layout_clean_mode) { ?>
         <nav id="sidebar">
             <div class="sidebar-header">
                 <h3>{{{company}}}</h3>
             </div>
 
             <ul class="list-unstyled components">
-{{{menu}}}
+                {{{menu}}}
             </ul>
             <span class="copyright">{{{copyright}}}</span>
             <span class="copyright">{{{powered_by}}}</span>
         </nav>
-        <?php } ?>
-        <div id="content">
-            <?php if (!$layout_clean_mode) { ?>
-            <nav>
-                <div class="row">
-                    <div class="container-fluid">
-                        <button type="button" id="sidebarCollapse" class="btn btn-dark">
-                            <span>☰</span>
-                        </button>
-                    </div>
+    <?php } ?>
+    <div id="content">
+    <?php if (!$layout_clean_mode) { ?>
+        <nav>
+            <div class="row">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-dark">
+                        <span>☰</span>
+                    </button>
                 </div>
-            </nav>
-            <?php } ?>
+            </div>
+        </nav>
+    <?php } ?>

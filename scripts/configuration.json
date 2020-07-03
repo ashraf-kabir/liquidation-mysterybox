@@ -1012,7 +1012,8 @@
 		"Token_cronjob_controller.php": "Token_cronjob_controller.php"
 	},
 	"copy": {
-		"../mkdcore/custom/style.css": "../release/assets/css/style.css"
+		"../mkdcore/custom/style.css": "../release/assets/css/style.css",
+		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css"
 	},
 	"reverse_copy": {
 		"../release/application/config/constants.php" : "../mkdcore/custom/generated/constants.php"

@@ -1,0 +1,195 @@
+
+/******FOOTER *****************/
+.auth-footer{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #545D74;
+}
+.nav-link a{
+    color:  #FBFDFF !important;
+}
+.footer-right{
+    text-align: right;
+}
+
+.theme{
+    background-color: #0C143F !important;
+}
+
+.required:before {
+    content:"* ";
+    color: red;
+}
+
+.auth-footer-content{
+    border-top : 1px solid #ccc;
+}
+.sign-up-text{
+    text-align: center;
+}
+
+.sign-up-text p{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.01em;
+    color: #545D74;
+}
+
+.sign-up-text h1{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 44px;
+    letter-spacing: -0.01em;
+    color: #0C143F;
+}
+
+.form-container{
+    width: 100%;
+    border: 1px solid #ccc;
+    height: auto;
+}
+
+.btn-accent-light{
+    background-color: #2A42DD !important;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 2px;
+    min-height: 46px;
+    padding: 12px 24px;
+}
+
+.btn-accent-light-outline{
+    border: 1.5px solid #2A42DD !important;
+    color: #2A42DD ;
+    background-color: #fff;
+  
+    font-weight: 700;
+	padding: 12px 24px;
+}
+
+.btn-accent-light-outline:hover{
+    color:#2A42DD ;
+}
+.btn-accent-light:hover{
+    color:#f3f3f3;
+}
+
+.form-container p, .form-container label{
+    color: #545D74;
+}
+
+.ln-text{
+    text-align: center;
+    width: 100%;
+}
+
+.ln-text span{
+    display: flex;
+    flex-direction: row;
+    color: #545D74;
+}
+
+.site-input{
+    border : 1px solid #0C143F !important;
+}
+
+.ln-text span:after,
+.ln-text span:before{
+    content: "";
+    flex: 1 1;
+    border-bottom: 1px solid  #ccc;
+    margin: auto;
+}
+
+.ln-text span:before {
+    margin-right: 10px
+  }
+
+.ln-text span:after {
+    margin-left: 10px
+}
+
+body{
+    background-color: #FBFDFF;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.feedback{
+    padding: 2%;
+    text-align: center;
+    font-style: normal;
+    color: red;
+    border: 1px solid red;
+}
+
+.auth-footer-link{
+    color: #545D74;
+}
+
+.auth-footer-mb-nav{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.auth-footer-link:hover{
+    text-decoration: none;
+}
+
+/**********PROFILE DETAILS****************************/
+.profile-tab{
+    background-color: #2A42DD !important;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 0px;
+}
+
+
+/***********PROFILE TAB STEP 2*******************************/
+
+#affiliate-options{
+    max-width: 100%;
+    justify-content: space-between;
+    padding-left: 2%;
+    padding-right: 2%; 
+}
+
+.affiliation-item:hover{
+    cursor: pointer;
+    background-color: #f3f3f3;
+}
+
+/*
+*@overide
+*/
+.ms-container{
+    margin: auto !important;
+    justify-self: self-start !important;
+}
+
+/****************PAYMENT DETAILS********************************************************/
+
+.subscription-details{
+    border: 2px solid  #0C143F ;
+    width: 100%;
+    min-height: 100px;
+    text-align: center;
+}
+
+
+
+@media (max-width: 768px) {
+    .auth-wrap, .form-container{
+        padding: 4% !important;
+    }
+
+   .footer-right{
+     text-align: left;
+    }
+}
