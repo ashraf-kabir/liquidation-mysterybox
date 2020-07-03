@@ -43,3 +43,6 @@
             </div>
         </nav>
     <?php } ?>
+    <?php if(isset($page_section)):?>
+        <?php  $this->load->view($page_section); ?>
+    <?php endif;?>

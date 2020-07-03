@@ -54,8 +54,8 @@ class {{{ucname}}}_controller extends {{{subclass_prefix}}}Controller
 
     protected function _render($template, $data)
     {
+        $data['page_section'] = $template;
         $this->load->view('Layout/{{{ucname}}}Header', $data);
-        $this->load->view($template, $data);
         $this->load->view('Layout/{{{ucname}}}Footer');
     }
 }
