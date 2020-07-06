@@ -52,8 +52,8 @@ if ($layout_clean_mode) {
         <div class="card">
                 <div class="card-body">
                 <?= form_open() ?>
-{{{input}}}
-{{{custom_view_add}}}
+                    {{{input}}}
+                    {{{custom_view_add}}}
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary text-white mr-4 my-4" value="xyzSubmit">
                 </div>
