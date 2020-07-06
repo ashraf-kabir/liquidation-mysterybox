@@ -61,6 +61,13 @@ class GraphQL_builder extends Builder
         $default_resolve_add_template = file_get_contents('../mkdcore/source/graphql/resolver_add.php');
         $default_resolve_relation_template = file_get_contents('../mkdcore/source/graphql/resolver_relation.php');
         $default_model_index_template = file_get_contents('../mkdcore/source/graphql/model_index.php');
+        $default_app_js_template = file_get_contents('../mkdcore/source/graphql/app.js');
+        $default_lambda_js_template = file_get_contents('../mkdcore/source/graphql/lambda.js');
+        $default_server_js_template = file_get_contents('../mkdcore/source/graphql/server.js');
+        $default_config_js_template = file_get_contents('../mkdcore/source/graphql/config.js');
+        $default_package_json_template = file_get_contents('../mkdcore/source/graphql/package.json');
+        $default_claudia_json_template = file_get_contents('../mkdcore/source/graphql/claudia.json');
+        $default_README_md_template = file_get_contents('../mkdcore/source/graphql/README.md');
 
         $this->_render_list['../graphql/src/models/index.js'] = $default_model_index_template;
 
@@ -133,6 +140,13 @@ class GraphQL_builder extends Builder
 
         $this->_render_list['../graphql/src/types/schema.graphql'] = implode("\n", $schema_list) . $this->schema_query_all($query_list) . $this->schema_mutation_all($mutation_list);
         $this->_render_list['../graphql/src/resolvers/index.js'] = $resolve_index_template;
+        $this->_render_list['../graphql/app.js'] = $default_app_js_template;
+        $this->_render_list['../graphql/lambda.js'] = $default_lambda_js_template;
+        $this->_render_list['../graphql/server.js'] = $default_server_js_template;
+        $this->_render_list['../graphql/src/config.js'] = $default_config_js_template;
+        $this->_render_list['../graphql/package.json'] = $default_package_json_template;
+        $this->_render_list['../graphql/claudia.json'] = $default_claudia_json_template;
+        $this->_render_list['../graphql/README.md'] = $default_README_md_template;
     }
 
     public function generate_model_association ($fields, $upper_case_model, $ignore_id_field_list)
@@ -564,7 +578,39 @@ DOC;
     public function build()
     {
         $this->init();
-
+        if (!file_exists('../graphql/src')) {
+            mkdir('../graphql/src', 0775, true);
+        }
+        if (!file_exists('../graphql/src/models')) {
+            mkdir('../graphql/src/models', 0775, true);
+        }
+        if (!file_exists('../graphql/src/resolvers')) {
+            mkdir('../graphql/src/resolvers', 0775, true);
+        }
+        if (!file_exists('../graphql/src/resolvers/all')) {
+            mkdir('../graphql/src/resolvers/all', 0775, true);
+        }
+        if (!file_exists('../graphql/src/resolvers/single')) {
+            mkdir('../graphql/src/resolvers/single', 0775, true);
+        }
+        if (!file_exists('../graphql/src/resolvers/create')) {
+            mkdir('../graphql/src/resolvers/create', 0775, true);
+        }
+        if (!file_exists('../graphql/src/resolvers/update')) {
+            mkdir('../graphql/src/resolvers/update', 0775, true);
+        }
+        if (!file_exists('../graphql/src/resolvers/delete')) {
+            mkdir('../graphql/src/resolvers/delete', 0775, true);
+        }
+        if (!file_exists('../graphql/src/resolvers/single')) {
+            mkdir('../graphql/src/resolvers/single', 0775, true);
+        }
+        if (!file_exists('../graphql/src/types')) {
+            mkdir('../graphql/src/types', 0775, true);
+        }
+        if (!file_exists('../graphql/src/resolvers/relation')) {
+            mkdir('../graphql/src/resolvers/relation', 0775, true);
+        }
         foreach ($this->_render_list as $path => $template) {
             file_put_contents($path, $template);
         }
