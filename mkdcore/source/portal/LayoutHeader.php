@@ -23,9 +23,9 @@
         <a class="navbar-brand" href="#">
             <h3>{{{company}}}</h3>
         </a>
-        <a href="#">
+        <a href="/{{{portal}}}/logout">
           <div class="logout d-flex align-items-center">
-            <img src="../src/assets/supplier/logout.svg " alt="" class="mr-2" />
+            <img src="/assets/image/logout.svg " alt="" class="mr-2" />
             <p class="paragraphText mb-0 mr-2">Logout</p>
           </div>
         </a>
