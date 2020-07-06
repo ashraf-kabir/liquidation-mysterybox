@@ -135,8 +135,6 @@
 				["email", "string", [{"limit":255}], "xyzEmail" , "trim|required|valid_email|is_unique[user.email]", "trim|required|valid_email"],
 				["first_name", "string", [{"limit":255}], "xyzFirst Name" , "", ""],
 				["last_name", "string", [{"limit":255}], "xyzLast Name" , "", ""],
-				["company_name", "string", [{"limit":255}], "xyzCompany Name" , "", ""],
-				["company_type","integer",[], "xyzCompany Type" , "", ""],
 				["phone", "string", [{"limit":50}], "xyzPhone #" , "", ""],
 				["image", "image|250|250|500|500", [], "xyzImage" , "", ""],
 				["image_id", "integer", [], "xyzImage ID" , "", ""],
