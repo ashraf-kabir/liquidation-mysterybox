@@ -14,25 +14,26 @@
     <!-- Our Custom CSS -->
     {{{css}}}
 </head>
-
 <body>
 <div class="wrapper">
         <!-- Sidebar  -->
     <?php if (!$layout_clean_mode) { ?>
-        <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3>{{{company}}}</h3>
-            </div>
-
-            <ul class="list-unstyled components">
-                {{{menu}}}
-            </ul>
-            <span class="copyright">{{{copyright}}}</span>
-            <span class="copyright">{{{powered_by}}}</span>
-        </nav>
+        
+        <nav class="navbar navbar-light px-4">
+        <a class="navbar-brand" href="#">
+            <h3>{{{company}}}</h3>
+        </a>
+        <a href="#">
+          <div class="logout d-flex align-items-center">
+            <img src="../src/assets/supplier/logout.svg " alt="" class="mr-2" />
+            <p class="paragraphText mb-0 mr-2">Logout</p>
+          </div>
+        </a>
+      </nav>
+     
     <?php } ?>
-    <div id="content">
-    <?php if (!$layout_clean_mode) { ?>
+    
+  <!--  <?php if (!$layout_clean_mode) { ?>
         <nav>
             <div class="row">
                 <div class="container-fluid">
@@ -42,7 +43,32 @@
                 </div>
             </div>
         </nav>
+          <nav id="sidebar" class='px-4'>
+          <ul class="list-unstyled components">
+              {{{menu}}}
+          </ul>
+      </nav>
+    
+        -->
+        <section class="content-wrapper">
+        <div class="category row">
+          <img
+            src="../src/assets/supplier/collapse-category.svg"
+            class="category-expand-img bg-dark"
+            alt=""
+          />
+          <div class="categoryList col-2 p-0">
+            <div class="list-group pl-3">
+              <div class="collapse-category d-flex justify-content-end p-4">
+                <img src="../src/assets/supplier/collapse-category.svg" class="category-collapse-img" alt=""/>
+              </div>
+             {{{menu}}}
+           </div>
+        </div> 
+         
     <?php } ?>
-    <?php if(isset($page_section)):?>
-        <?php  $this->load->view($page_section); ?>
-    <?php endif;?>
+    <section class="d-flex flex-column col categoryContent mx-md-4 mt-2 px-md-4 p-0">
+        <?php if(isset($page_section)):?>
+            <?php  $this->load->view($page_section); ?>
+        <?php endif;?>
+    </section>

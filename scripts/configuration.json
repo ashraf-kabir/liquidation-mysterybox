@@ -345,8 +345,8 @@
 			"api": true,
 			"profile_page_fields": [],
 			"middleware": ["auth", "acl"],
-			"js": ["/assets/js/media.js","/assets/js/core.js","/assets/js/jquery.easy-autocomplete.min.js","/assets/js/setting.js","/assets/js/mkd-image-gallery.js","/assets/js/autocomplete.js"],
-			"css": ["/assets/css/style.css", "/assets/css/easy-autocomplete.min.css"],
+			"js": ["/assets/js/media.js","/assets/js/core.js","/assets/js/jquery.easy-autocomplete.min.js","/assets/js/setting.js","/assets/js/mkd-image-gallery.js","/assets/js/autocomplete.js", "app.js"],
+			"css": ["/assets/css/styles.css", "/assets/css/easy-autocomplete.min.css"],
 			"menu": {
 				"Dashboard": "/dashboard",
 				"Reports": {

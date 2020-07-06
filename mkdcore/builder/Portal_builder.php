@@ -475,7 +475,7 @@ class Portal_builder extends Builder
         foreach ($portal['menu'] as $key => $value) {
             if (is_string($value))
             {
-                $menu_html .= "\t\t\t<li><a href='/{$portal['name']}{$value}' class='<?php echo (\$page_name == '{$key}') ? 'active': '';?>'>{$key}</a></li>\n";
+                $menu_html .= "\t\t\t<li><a href='/{$portal['name']}{$value}' class='<?php echo (\$page_name == '{$key}') ? 'list-group-item list-group-item-action d-flex align-items-center p-4 border-0 c-active': 'list-group-item list-group-item-action d-flex align-items-center p-4 border-0';?>'><p class='paragraphText mb-0 text-white d-none d-md-block'>{$key}</p></a></li>\n";
             }
             else
             {
@@ -499,7 +499,7 @@ class Portal_builder extends Builder
                 $condition_str = implode(' || ', $condition);
                 $id = md5(uniqid());
                 $menu_html .= "class='<?php echo ($condition_str) ? \"active\" :\"\";?>' >\n";
-                $menu_html .= "\t\t\t\t<a href='#{$id}' data-toggle='collapse' aria-expanded='false' class='dropdown-toggle'>{$key}</a>\n";
+                $menu_html .= "\t\t\t\t<a href='#{$id}' data-toggle='collapse' aria-expanded='false' class='dropdown-toggle list-group-item list-group-item-action d-flex align-items-center p-4 border-0 '><p class='paragraphText mb-0 text-white d-none d-md-block'>{$key}<p></a>\n";
                 $menu_html .= "\t\t\t\t\t<ul class='collapse list-unstyled <?php echo ($condition_str) ? \"show\" :\"\";?>' id='{$id}'>\n";
 
                 foreach ($value as $sub_level_key => $sub_level_value)

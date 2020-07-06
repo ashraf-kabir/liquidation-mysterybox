@@ -8559,3 +8559,37 @@ a.text-background:hover, a.text-background:focus {
     border-color: #dee2e6; } }
 
 /*# sourceMappingURL=styles.css.map */
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background: #151515;
+  color: #fff;
+  transition: all 0.3s;
+  -webkit-box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.75); }
+  #sidebar .sidebar-header {
+    padding: 20px;
+    background: #2c549c; }
+  #sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #fff; }
+  #sidebar ul p {
+    color: #fff;
+    padding: 10px; }
+  #sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block; }
+    #sidebar ul li a:hover {
+      color: #151515;
+      background: #fff; }
+  #sidebar ul li.active > a {
+    color: #fff;
+    background: #151515; }
+  #sidebar a.active {
+    color: black;
+    background-color: #fff; }
+
+#sidebar.active {
+  margin-left: -250px; }
