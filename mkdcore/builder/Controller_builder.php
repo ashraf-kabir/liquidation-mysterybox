@@ -2586,7 +2586,7 @@ class Controller_builder extends Builder
         "\t" .
         '    <button class="mkd-upload-btn">xyzImport</button>' .
         "\t" .
-        '    <input type="file" name="file_import" id="file_import" onchange="onFileImport(event, \'' . $model . '\')" accept=".csv"/>' .
+        '    <input type="file"  name="file_import" id="file_import" onchange="onFileImport(event, \'' . $model . '\')" accept=".csv"/>' .
         '</div>&nbsp;';
     }
 

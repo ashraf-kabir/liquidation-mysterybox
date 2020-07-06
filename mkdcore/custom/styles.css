@@ -8559,37 +8559,54 @@ a.text-background:hover, a.text-background:focus {
     border-color: #dee2e6; } }
 
 /*# sourceMappingURL=styles.css.map */
-#sidebar {
-  min-width: 250px;
-  max-width: 250px;
-  background: #151515;
-  color: #fff;
-  transition: all 0.3s;
-  -webkit-box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.75); }
-  #sidebar .sidebar-header {
-    padding: 20px;
-    background: #2c549c; }
-  #sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #fff; }
-  #sidebar ul p {
-    color: #fff;
-    padding: 10px; }
-  #sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
-    display: block; }
-    #sidebar ul li a:hover {
-      color: #151515;
-      background: #fff; }
-  #sidebar ul li.active > a {
-    color: #fff;
-    background: #151515; }
-  #sidebar a.active {
-    color: black;
-    background-color: #fff; }
+.mkd-upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  margin: 100px auto; }
+  .mkd-upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0; }
+  .mkd-upload-btn-wrapper .mkd-upload-btn {
+    border: 2px solid gray;
+    color: gray;
+    background-color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold; }
 
-#sidebar.active {
-  margin-left: -250px; }
+.mkd-upload-form-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block; }
+  .mkd-upload-form-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0; }
+  .mkd-upload-form-btn-wrapper .mkd-upload-btn {
+    border: 2px solid gray;
+    color: gray;
+    background-color: white;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: bold; }
+
+#mkd-media-upload-container, #mkd-media-crop-container {
+  display: none; }
+
+.mkd-media-panel-2, .mkd-media-panel-3 {
+  display: none;
+  text-align: right; }
+
+#mkd-crop-upload-container-wrapper {
+  margin: 0 auto; }
+
+  .mkd-image-container {
+    max-width: 100px; }
