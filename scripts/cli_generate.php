@@ -3,6 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include_once '../mkdcore/builder/App_builder.php';
+include_once '../mkdcore/builder/GraphQL_builder.php';
 include_once '../mkdcore/builder/Preschema_builder.php';
 
 $action = !empty($_GET['action']) ? $_GET['action'] : '';
@@ -20,4 +21,5 @@ if (file_exists('env.json')) {
 }
 
 $builder = new App_builder($raw_configuration);
+// $builder = new GraphQL_builder($raw_configuration);
 $builder->build();

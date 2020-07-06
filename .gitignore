@@ -53,4 +53,10 @@ src/application/config/setting.php
 assets/js/*
 assets/css/*
 preschema_output/*.json
-
+graphql/app.js
+graphql/server.js
+graphql/lambda.js
+graphql/claudia.json
+graphql/package.json
+graphql/README.md
+graphql/package-lock.json
