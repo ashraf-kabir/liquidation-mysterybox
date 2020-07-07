@@ -78,8 +78,9 @@ class Push_notification_service
 
 
 
-    public function send($device_type, $device_id, $title, $message, $image = '')
+    public function send($device_type, $device_id, $title, $message, $image = '', $data = [])
     {
+        $payload = [];
         $fields = [
             'registration_ids' => [
                 $device_id
@@ -87,7 +88,7 @@ class Push_notification_service
 
             'notification' => [
                 'title' => $title,
-                'body' => $message,
+                'body' => $message
             ],
         ];
 
@@ -102,34 +103,47 @@ class Push_notification_service
                     'title' => $title,
                     'message' => $message,
                     'image' => $image,
+                    "channelId" => "default",
+                    "data" => $data
                 ],
+                
+                'notification' =>  [
+                    'title' => $title,
+                    'body' => $message
+                ]
             ];
+
+           if(!empty($data) && is_array($data))
+            {
+                $fields['data'] = array_merge(  $fields['data'], $data);
+            }
         }
 
-        if($device_id == 'IOS')
+        if($device_type == 'IOS')
         {
             $notification  =[
-                'data' => [
-                    'title' =>$title , 
-                    'text' => $message, 
-                    'sound' => 'default',
-                    'badge' => '1'
-                ],
+                'title' =>$title , 
+                'text' => $message, 
+                'sound' => 'default',
+                'badge' => '0'
             ];
-           
+
             $fields = [
-                'registration_ids' => [
-                    $device_id
-                 ],
+                'to' => $device_id,
                 'notification' => $notification, 
-                'priority' => 'high'
+                'priority' => 'high',
+                'data' => $data
             ];
+
         }
 
         $headers = [
             'Content-Type:application/json', 'project_id:' . $this->_project_id,
             'Authorization:key=' . $this->_server_key,
         ];
+
+        $payload['headers'] = $headers;
+        $payload['fields'] = $fields;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->_url);
@@ -139,12 +153,11 @@ class Push_notification_service
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
         curl_exec($ch);
         curl_close($ch);
-
         return $ch;
-    }
-
-
-    public function send_muiltiple($devices, $title, $message, $image = '')
+    } 
+    
+    
+    public function send_multiple($devices, $title, $message, $image = '', $data = [])
     {
         $ios_ids = [];
         $android_ids = [];
@@ -170,26 +183,37 @@ class Push_notification_service
                     'title' => $title,
                     'message' => $message,
                     'image' => $image,
+                    "channelId" => "default",
+                    "data" => $data
                 ],
+                'notification' =>  [
+                    'title' => $title,
+                    'body' => $message
+                ]
             ];
+
+            if(!empty($data) && is_array($data))
+            {
+                $fields['data'] = array_merge($fields['data'], $data);
+            }
+
             $this->_send_request($fields);
         }
 
         if(count($ios_ids) > 0)
         {
             $notification  =[
-                'data' => [
-                    'title' =>$title , 
-                    'text' => $message, 
-                    'sound' => 'default',
-                    'badge' => '1'
-                ],
+                'title' =>$title , 
+                'text' => $message, 
+                'sound' => 'default',
+                'badge' => '0'
             ];
-           
+
             $fields = [
-                'registration_ids' => $ios_ids,
+                'to' => $ios_ids,
                 'notification' => $notification, 
-                'priority' => 'high'
+                'priority' => 'high',
+                'data' => $data
             ];
             
             $this->_send_request($fields);
