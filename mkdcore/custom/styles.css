@@ -8610,3 +8610,6 @@ a.text-background:hover, a.text-background:focus {
 
   .mkd-image-container {
     max-width: 100px; }
+  .link-item{
+    list-style: none;
+  }
