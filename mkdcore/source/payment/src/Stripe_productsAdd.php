@@ -50,11 +50,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="card-body">
                 <?= form_open() ?>
 				<div class="form-group">
-					<label for="Product Name">Product Name </label>
+					<label for="Product Name">xyzProduct Name </label>
 					<input type="text" class="form-control" id="form_name" name="name" value="<?php echo set_value('name'); ?>"/>
 				</div>
 				<div class="form-group">
-                    <label for="Product Type">Product Type </label>
+                    <label for="Product Type">xyzProduct Type </label>
                     <input type="text" name='type' value='service' readonly="true" class="form-control" >
 				</div>
                 <div class="form-group">

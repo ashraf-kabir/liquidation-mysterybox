@@ -874,6 +874,9 @@
 	"translations": {
 		"xyzSettings": "Settings",
 		"xyzSave Data" : "Save Data",
+		"xyzContact Form Blacklist" : "Contact Form Blacklist",
+		"xyzWord Black list" : "Words Black list",
+		"xyzWords" : "Words",
 		"xyzUse your Facebook account" : "Use your Facebook account",
 		"xyzUse your Google account" : "Use your Google account",
 		"xyzConfiguration": "Configuration",
