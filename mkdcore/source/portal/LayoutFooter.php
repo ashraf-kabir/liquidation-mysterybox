@@ -51,6 +51,30 @@
     </div>
   </div>
 </div>
+<div class="modal fade " id="mkd-csv-import" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-xl" role="document" style='min-height:50vh;'>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">xyzImport CSV</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="/v1/api/file/csv_import/" id='import-csv'>
+              <input type="file" class='d-none' id='csv-file'  accept=".csv">
+              <a href="#" class='btn btn-primary'>xyzChoose file</a>
+          </form>
+          <table class='table d-none'>
+              <thead id='csv-table-head'></thead>
+              <tbody id='csv-table-body'></tbody>
+          </table>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
 <?php } ?>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" crossorigin="anonymous"></script>

@@ -2582,12 +2582,13 @@ class Controller_builder extends Builder
 
     protected function import($model)
     {
-        return '&nbsp;<div class="mkd-upload-form-btn-wrapper">' .
+       /* return '&nbsp;<div class="mkd-upload-form-btn-wrapper">' .
         "\t" .
         '    <button class="mkd-upload-btn">xyzImport</button>' .
         "\t" .
         '    <input type="file"  name="file_import" id="file_import" onchange="onFileImport(event, \'' . $model . '\')" accept=".csv"/>' .
-        '</div>&nbsp;';
+        '</div>&nbsp;';*/
+        return "&nbsp;<div class='mkd-upload-form-btn-wrapper'> <button data-toggle='modal' data-model='{$model}' data-target='#mkd-csv-import' class='mkd-upload-btn'>xyzImport</button></div>";
     }
 
     protected function export($controller)
