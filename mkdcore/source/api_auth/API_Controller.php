@@ -294,13 +294,30 @@ class {{{ucname}}}_api_auth_controller extends CI_Controller
      * @param string $to
      * @return void
      */
-	protected function _send_push_notification($device_type, $device_id, $title, $message, $image)
+    protected function _send_push_notification($device_type, $device_id, $title, $message, $image, $data = [])
     {
         $this->load->library('push_notification_service');
         $this->push_notification_service->init();
-        return $this->push_notification_service->send($device_type, $device_id, $title, $message, $image);
+        return $this->push_notification_service->send($device_type, $device_id, $title, $message, $image, $data);
     }
 
+    /**
+     * Function to send Push notification to many devices
+     *
+     * @param array $devices
+     * @param string $title
+     * @param string $message  
+     * @param string $image
+     * @param array $data
+     * @return void
+     */
+	protected function _send_broadcast_push_notification($devices, $title, $message, $image, $data = [])
+    {
+        $this->load->library('push_notification_service');
+        $this->push_notification_service->init();
+        return $this->push_notification_service->send_muiltiple($devices, $title, $message, $image, $data);
+    }
+    
     protected function _middleware()
     {
         return [];
