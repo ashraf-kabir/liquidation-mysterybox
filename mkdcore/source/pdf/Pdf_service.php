@@ -8,15 +8,21 @@
  * @license Proprietary Software licensing
  * @author Ryan Wong
  */
+use Dompdf\Adapter\CPDF;      
+use Dompdf\Dompdf;
+use Dompdf\Exception;
+
+
 class Pdf_service
 {
   private $_adapter = null;
 
   public function init($paper='A4', $orientation='portrait')
   {
-    $this->_adapter = new Dompdf\DOMPDF();
+    $this->_adapter = new DOMPDF();
     $this->_adapter->set_paper($paper, $orientation);
   }
+
 
   /**
    * Create PDF function
@@ -43,4 +49,3 @@ class Pdf_service
     }
   }
 }
-
