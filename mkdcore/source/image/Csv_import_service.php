@@ -56,10 +56,12 @@ class Csv_import_service
         {
             $field_list[] = "`$field->name`";
         }
+       
 
         $field_list_str = implode(',', $field_list);
         $insert_query = "{$insert_query_template_start}{$field_list_str} {$insert_query_template_middle} ";
 
+      
         while (($getData = fgetcsv($file, 1000000, ';')) !== FALSE)
         {
             $valid = TRUE;
@@ -76,7 +78,6 @@ class Csv_import_service
                     'message' => 'Missing ID on Line ' . $line_num
                 ];
             }
-
             if (!$getData)
             {
                 // error_log('LINE FAILED ON: ' . $line_num);

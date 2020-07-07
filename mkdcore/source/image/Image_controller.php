@@ -354,7 +354,6 @@ class Image_controller extends CI_Controller
         }
 
         // error_log($query_result['message']);
-
         $import_result = $this->csv_import_service->import($query_result['message']);
 
         if ($import_result)
@@ -370,6 +369,61 @@ class Image_controller extends CI_Controller
         ->set_status_header(403)
         ->set_output(json_encode([
             'message' => 'xyzGenerating SQL worked but insert error to the database'
+        ]));
+    }
+
+    public function preview_csv()
+    {
+        $this->load->library('mime_service');
+        $this->load->library('csv_import_service');
+
+        if  ($this->csv_import_service->csv_file_exist($_FILES))
+        {
+            return $this->output->set_content_type('application/json')
+                ->set_status_header(403)
+                ->set_output(json_encode([
+                    'message' => 'xyzUpload CSV File missing'
+                ]));
+        }
+
+        $file = $_FILES['file'];
+        $size = $file['size'];
+        $path = $file['tmp_name'];
+        $type = $file['type'];
+        $extension = $this->mime_service->get_extension($type);
+
+        if ($size > $this->config->item('upload_byte_size_limit'))
+        {
+            return $this->output->set_content_type('application/json')
+            ->set_status_header(403)
+            ->set_output(json_encode([
+                'message' => 'xyzUpload file size too big'
+            ]));
+        }
+
+        if ($extension !== '.csv')
+        {
+            return $this->output->set_content_type('application/json')
+            ->set_status_header(403)
+            ->set_output(json_encode([
+                'message' => 'xyzNot CSV File'
+            ]));
+        }
+
+        $file = fopen($path, 'r');
+        $data = [];
+        while (($line = fgetcsv($file)) !== FALSE) 
+        {
+           $data[] = $line;
+        }
+        fclose($file);
+        
+        return $this->output->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode([
+                'message' => 'xyzFile loaded',
+                'data' => $data,
+                'preview' => TRUE
         ]));
     }
 

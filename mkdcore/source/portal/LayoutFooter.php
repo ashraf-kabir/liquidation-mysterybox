@@ -61,16 +61,17 @@
         </button>
       </div>
       <div class="modal-body">
-          <form action="/v1/api/file/csv_import/" id='import-csv'>
-              <input type="file" class='d-none' id='csv-file'  accept=".csv">
-              <a href="#" class='btn btn-primary'>xyzChoose file</a>
+          <form action="/v1/api/preview_csv/" enctype='multipart/form-data' id='import-csv'>
+              <input type="file" name='file' class='d-none' id='csv-file'  accept=".csv">
+              <a href="#" class='btn btn-primary' id='btn-choose-csv'>xyzChoose file</a>
           </form>
-          <table class='table d-none'>
+          <table id='csv-table' class='table-responsive d-none table-bordered'>
               <thead id='csv-table-head'></thead>
               <tbody id='csv-table-body'></tbody>
           </table>
       </div>
       <div class="modal-footer">
+          <a href="#" id='btn-save-csv' class='btn btn-primary d-none' >xyzSave Data</a>
       </div>
     </div>
   </div>

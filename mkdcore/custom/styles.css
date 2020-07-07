@@ -8616,3 +8616,9 @@ a.text-background:hover, a.text-background:focus {
   #collapse-nav:hover{
     cursor: pointer;
   }
+  /******CSV IMPORT TABLE***************/
+  #csv-table{
+    height: 50vh;
+    overflow:scroll;
+    max-width: 100%;
+  }

@@ -767,7 +767,8 @@
 	},
 	"libraries": [],
 	"routes": {
-		"migrate": "Migrate"
+		"migrate": "Migrate",
+		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv"
 	},
 	"marketing": {
 		"pages": {
@@ -786,6 +787,7 @@
 	},
 	"translations": {
 		"xyzSettings": "Settings",
+		"xyzSave Data" : "Save Data",
 		"xyzUse your Facebook account" : "Use your Facebook account",
 		"xyzUse your Google account" : "Use your Google account",
 		"xyzConfiguration": "Configuration",
