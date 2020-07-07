@@ -4,8 +4,6 @@ if ($layout_clean_mode) {
     echo '<style>#content{padding:0px !important;}</style>';
 }
 ?>
-<br>
-<div class="clear"></div>
 <?php if (strlen($error) > 0) : ?>
     <div class="row">
         <div class="col-md-12">
@@ -25,7 +23,6 @@ if ($layout_clean_mode) {
     </div>
 <?php endif; ?>
 <div class="tab-content" id="nav-tabContent">
-              <!-- Bread Crumb -->
     <div aria-label="breadcrumb">
         <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
         <li class="breadcrumb-item active" aria-current="page">
@@ -40,35 +37,32 @@ if ($layout_clean_mode) {
 <h1 class="primaryHeading text-center text-md-left">
   <?php echo $view_model->get_heading();?>
 </h1>
-<div class="row">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="card"  id="{{{name}}}_listing">
-            <h5 class="card-header">
-                <div class="float-left"><?php echo $view_model->get_heading();?></div>
-                <div class="float-right">{{{add}}}</div>
-                <div class="float-right">{{{import}}}</div>
-            </h5>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover table-condensed table-striped">
-                        <thead>
-                        <?php foreach ($view_model->get_column() as $data) {
-                            echo "<th>{$data}</th>";
-                        } ?>
-                        </thead>
-                        <tbody>
-                        <?php foreach ($view_model->get_list() as $data) { ?>
-                            <?php
-                            echo '<tr>';
-{{{row}}}
-                            echo '</tr>';
-                            ?>
-                        <?php } ?>
-                        </tbody>
-                    </table>
-                    <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="add-part d-flex justify-content-md-end  my-4">
+    {{{add}}}
 </div>
+
+<section class="table-placeholder bg-white mb-5 p-1" style='height:auto;'> 
+    <div class="row">
+        <div class="col p-2">
+            <div class="float-right mr-4">{{{import}}}</div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <table class="table table-mh br w-100">
+        <thead>
+            <?php foreach ($view_model->get_column() as $data) {
+                echo "<th>{$data}</th>";
+            } ?>
+        </thead>
+        <tbody>
+            <?php foreach ($view_model->get_list() as $data) { ?>
+                <?php
+                    echo '<tr>';
+                        {{{row}}}
+                    echo '</tr>';
+                ?>
+            <?php } ?>
+        </tbody>
+    </table>
+    <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
+</section>

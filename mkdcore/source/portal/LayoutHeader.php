@@ -53,14 +53,14 @@
         <section class="content-wrapper">
         <div class="category row">
           <img
-            src="../src/assets/supplier/collapse-category.svg"
+            src="/assets/image/collapse-category.svg"
             class="category-expand-img bg-dark"
             alt=""
           />
           <div class="categoryList col-2 p-0">
-            <div class="list-group pl-3">
+            <div class="list-group pl-3" id="collapse-nav">
               <div class="collapse-category d-flex justify-content-end p-4">
-                <img src="../src/assets/supplier/collapse-category.svg" class="category-collapse-img" alt=""/>
+                <img src="/assets/image/collapse-category.svg" class="category-collapse-img" alt=""/>
               </div>
              {{{menu}}}
            </div>

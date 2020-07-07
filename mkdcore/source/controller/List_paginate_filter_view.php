@@ -29,9 +29,12 @@ if ($layout_clean_mode) {
               <!-- Bread Crumb -->
     <div aria-label="breadcrumb">
         <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
-          <li class="breadcrumb-item active" aria-current="page">
-            xyzDashboard
-          </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="/{{{portal}}}/dashboard" class="breadcrumb-link">xyzDashboard</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                <?php echo $view_model->get_heading();?>
+            </li>
         </ol>
     </div>
 </div>
@@ -61,13 +64,11 @@ if ($layout_clean_mode) {
         </div>
     </div>
 </section>
+
 <div class="add-part d-flex justify-content-md-end  my-4">
-    <a target="_blank" href="/corporate/job/add">
-        <button class="btn btn-primary paragraphText text-white float-right">
-          xyzAdd
-        </button>
-    </a>
+    {{{add}}}
 </div>
+
   <section class="table-placeholder bg-white mb-5 p-1" style='height:auto;'> 
     <div class="row">
         <div class="col p-2">

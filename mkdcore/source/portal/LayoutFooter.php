@@ -1,7 +1,6 @@
     </div>
 </div>
 <?php if (!$layout_clean_mode) { ?>
-<div id="snackbar">xyzSaved</div>
 <div class="modal fade" id="mkd-media-gallery" tabindex="-1" role="dialog" aria-labelledby="media-gallery" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
