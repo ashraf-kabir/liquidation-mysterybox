@@ -345,7 +345,7 @@
 			"api": true,
 			"profile_page_fields": [],
 			"middleware": ["auth", "acl"],
-			"js": ["/assets/js/media.js","/assets/js/core.js","/assets/js/jquery.easy-autocomplete.min.js","/assets/js/setting.js","/assets/js/mkd-image-gallery.js","/assets/js/autocomplete.js", "app.js"],
+			"js": ["/assets/js/media.js","/assets/js/core.js","/assets/js/jquery.easy-autocomplete.min.js","/assets/js/setting.js","/assets/js/mkd-image-gallery.js","/assets/js/autocomplete.js", "/assets/js/app.js"],
 			"css": ["/assets/css/styles.css", "/assets/css/easy-autocomplete.min.css"],
 			"menu": {
 				"Dashboard": "/dashboard",
@@ -1016,6 +1016,7 @@
 	"copy": {
 		"../mkdcore/custom/style.css": "../release/assets/css/style.css",
 		"../mkdcore/custom/logout.svg" : "../release/assets/image/logout.svg",
+		"../mkdcore/custom/collapse-category.svg" : "../release/assets/image/collapse-category.svg",
 		"../mkdcore/custom/styles.css": "../release/assets/css/styles.css",
 		"../mkdcore/custom/app.js": "../release/assets/js/app.js",
 		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css"

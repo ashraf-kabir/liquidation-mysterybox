@@ -8613,3 +8613,6 @@ a.text-background:hover, a.text-background:focus {
   .link-item{
     list-style: none;
   }
+  #collapse-nav:hover{
+    cursor: pointer;
+  }
