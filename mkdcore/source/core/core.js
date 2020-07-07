@@ -79,7 +79,6 @@ $(document).ready(function() {
      var formData = new FormData(this);
      var url = $(this).attr('action');
      $(this).addClass('d-none');
-     alert(url);
      $.ajax({
          url: url,
          type: 'POST',

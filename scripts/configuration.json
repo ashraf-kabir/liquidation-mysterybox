@@ -854,14 +854,17 @@
 	"libraries": [],
 	"routes": {
 		"migrate": "Migrate",
-		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv"
+		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv",
+		"contact" :"Guest/Home_controller/contact"
 	},
 	"marketing": {
 		"pages": {
-			"../mkdcore/custom/About_controller.php": "../release/application/controllers/Guest/About_controller.php"
+			"../mkdcore/custom/About_controller.php": "../release/application/controllers/Guest/About_controller.php",
+			"../mkdcore/custom/Home_controller.php": "../release/application/controllers/Guest/Home_controller.php"
 		},
 		"views": {
-			"../mkdcore/custom/About.php": "../release/application/views/Guest/About.php"
+			"../mkdcore/custom/About.php": "../release/application/views/Guest/About.php",
+			"../mkdcore/custom/Contact.php": "../release/application/views/Guest/Contact.php"
 		},
 		"routes": {
 			"about": "Guest/About_controller"
@@ -1045,7 +1048,7 @@
 			"mailtype": "html",
 			"charset": "utf-8"
 		},
-		"csrf_exclude_uris": ["v1/api.*+","member/login","member/forgot","member/reset/.*","member/register","admin/login","admin/forgot","admin/reset/.*","admin/register","sale/login","sale/forgot","sale/reset/.*","sale/register"],
+		"csrf_exclude_uris": ["v1/api.*+","member/login","member/forgot","member/reset/.*","member/register","admin/login","admin/forgot","admin/reset/.*","admin/register","sale/login","sale/forgot","sale/reset/.*","sale/register", "contact"],
 		"encryption_key": "1n4uUX6d1Us3quFXKA7ZmqFIaQVC5MtgXlV9ho8F",
 		"subclass_prefix": "Manaknight_",
 		"migration_number": 9377770345344,
