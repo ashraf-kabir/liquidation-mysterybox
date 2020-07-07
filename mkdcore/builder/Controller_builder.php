@@ -2568,7 +2568,7 @@ class Controller_builder extends Builder
 
     protected function output_add_button ($controller)
     {
-        return "<a class=\"btn btn-primary btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/add\"><i class=\"fas fa-plus-circle\"></i></a>";
+        return "<a class=\"btn btn-primary paragraphText text-white float-right\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/add\">xyzAdd</a>";
     }
 
     protected function view_resource($all_records, $active_only)
