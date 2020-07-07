@@ -2,21 +2,21 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
 ?>
-<div class="row">
-	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-		<div class="page-header">
-			<h2 class="pageheader-title"><?php echo $view_model->get_heading();?> </h2>
-			<div class="page-breadcrumb">
-				<nav aria-label="breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item"><a href="/member/dashboard" class="breadcrumb-link">Dashboard</a></li>
-						<li class="breadcrumb-item"><a href="/member/stripe_cards/0" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a></li>
-						<li class="breadcrumb-item active" aria-current="page">Add</li>
-					</ol>
-				</nav>
-			</div>
-		</div>
-	</div>
+<div class="tab-content" id="nav-tabContent">
+              <!-- Bread Crumb -->
+    <div aria-label="breadcrumb">
+        <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="/member/dashboard" class="breadcrumb-link">xyzDashboard</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="/member/stripe_cards/0" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>
+            </li>
+           <li class="breadcrumb-item active" aria-current="page">
+             xyzAdd
+           </li>
+        </ol>
+    </div>
 </div>
 <div class="row">
     <?php if (validation_errors()) : ?>
@@ -41,11 +41,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     <?php endif; ?>
 </div>
-<div class="row">
+<h1 class="primaryHeading mb-4 text-center text-md-left">
+    Add <?php echo $view_model->get_heading();?>
+</h1>
+<div class="row mb-5">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
-            <h5 class="card-header">Add <?php echo $view_model->get_heading();?></h5>
-                <div class="card-body">
+            <div class="card-body">
                 <?= form_open( "", array('id' => 'payment-form', 'class'=>'billable-class' )) ?>
 				<div class="form-group">
 					<label for="Is Default Card">Is Default Card </label>
