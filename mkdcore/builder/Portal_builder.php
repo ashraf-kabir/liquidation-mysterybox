@@ -504,7 +504,7 @@ class Portal_builder extends Builder
 
                 foreach ($value as $sub_level_key => $sub_level_value)
                 {
-                    $menu_html .= "\t\t\t\t\t\t<li class='link-item'><a href='/{$portal['name']}{$sub_level_value}' class='list-group-item list-group-item-action d-flex align-items-center p-4 border-0 <?php echo (\$page_name == '{$sub_level_key}') ? 'c-active': '';?>'><p class='paragraphText mb-0 text-white d-none d-md-block'>{$sub_level_key}</p></a></li>\n";
+                    $menu_html .= "\t\t\t\t\t\t<li class='link-item'><a href='/{$portal['name']}{$sub_level_value}' class='list-group-item list-group-item-action d-flex align-items-center p-4 border-0 <?php echo (\$page_name == '{$sub_level_key}') ? 'ci-active': '';?>'><p class='pl-3 paragraphText mb-0 text-white d-none d-md-block'>{$sub_level_key}</p></a></li>\n";
                 }
                 $menu_html .= "\t\t\t\t\t</ul>\n";
                 $menu_html .= "\t\t\t</li>\n";
