@@ -58,7 +58,8 @@
                 ["billing_details","text",[], "xyzBilling Details", "", ""],
                 ["currency","string", [{"limit":55}], "xyzCurrency", "" , ""],
                 ["customer", "text",[], "xyzCustomer", "", ""],
-                ["customer_id", "integer",[], "xyzCustomer ID", "", ""],
+                ["user_id", "integer",[], "xyzCustomer ID", "", ""],
+                ["role_id", "integer",[], "xyzRole ID", "", ""],
                 ["description", "string", [{"limit":255}], "xyzDescription", "" , ""],
                 ["payment_method", "string", [{"limit":255}], "xyzPayment Method", "" , ""],
                 ["refunded","boolean",[], "xyzRefunded", "", ""],
@@ -90,7 +91,8 @@
                 ["stripe_payment_method_id","string", [{"limit":55}], "xyzPayment Method ID", "" , ""],
                 ["stripe_card_id","string", [{"limit":55}], "xyzStripe Card ID", "", ""],
                 ["is_default", "integer",[], "xyzIs Default Card", "required", "required"],
-                ["user_id","integer",[], "xyzUser ID", "", ""]
+                ["user_id","integer",[], "xyzUser ID", "", ""],
+                ["role_id","integer",[], "xyzRole ID", "", ""]
             ],
             "method": "\n\n\tpublic function filter($where)\n\t{\n\t\t$this->db->where($where);\n\t\treturn $this->db->get($this->_table)->result();\n\t}\n\n\tpublic function delete_cards($where)\n\t{\n\t\t$this->db->where($where);\n\t\treturn $this->db->delete($this->_table);\n\t}\n",
             "join": [],
@@ -168,6 +170,7 @@
                 ["current_period_start", "date", [], "xyzCurrent Period Start Date", "required" , "required"],
                 ["current_period_end", "date", [], "xyzCurrent Period End", "", ""],
                 ["user_id", "integer",[], "xyzUser ID", "required", "required"],
+                ["role_id", "integer",[], "xyzUser ID", "required", "required"],
                 ["status", "integer", [], "xyzStatus", "required" , "required"],
                 ["order_id", "integer",[], "xyzOrder ID", "", ""],
                 ["stripe_id", "string", [{"limit":255}], "xyzStripe ID", "", ""],
@@ -220,6 +223,7 @@
                 ["stripe_id", "string", [{"limit":255}], "xyzStripe Subscription ID", "required", "" ],
                 ["subscriptions_id","integer",[], "xyzSubscription ID", "", ""],
                 ["user_id", "integer", [], "xyzUser ID", "" , ""],
+                ["role_id", "integer",[], "xyzUser ID", "", ""],
                 ["stripe_subscriptions_id", "string", [{"limit":255}], "xyzStripe Customer ID", "" , ""],
                 ["stripe_customer_id", "string", [{"limit":255}], "xyzStripe Customer ID", "" , ""],
                 ["stripe_charge_id", "string", [{"limit":255}], "xyzStripe Charge ID", "" , ""],
@@ -322,6 +326,7 @@
                 ["currency", "string", [{"limit":15}], "xyzCurrency", "required" , "required"],
                 ["description","text",[], "xyzDescription", "required", "required"],
                 ["user_id","integer",[], "xyzUser ID", "required", "required"],
+                ["role_id","integer",[], "xyzRole ID", "required", "required"],
                 ["user_card_id", "integer",[], "xyzUser Card ID", "", ""],
                 ["plan_id", "integer",[], "xyzPlan ID", "", ""],
                 ["coupon_id","integer",[], "xyzCoupon ID", "", ""]
@@ -403,7 +408,8 @@
                 ["stripe_invoice_id", "string", [{"limit":255}], "xyzStripe Invoice ID", "" , ""],
                 ["invoice_id", "integer", [], "xyzInvoice", "required" , "required"],
                 ["receipt_url", "string", [{"limit":255}], "xyzStripe Invoice ID", "" , ""],
-                ["user_id", "integer", [], "xyzInvoice", "required" , "required"],
+                ["user_id", "integer", [], "xyzUser", "required" , "required"],
+                ["role_id", "integer", [], "xyzRole", "required" , "required"],
                 ["amount", "float", [], "xyzInvoice", "required" , "required"],
                 ["reason", "string", [{"limit":255}], "xyzReason", "" , ""],
                 ["status", "string", [{"limit":255}], "xyzReason", "" , ""]
