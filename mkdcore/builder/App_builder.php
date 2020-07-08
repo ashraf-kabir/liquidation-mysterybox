@@ -49,6 +49,7 @@ class App_builder extends Builder
      * function simply copies content of configuration.json in the package folder
      * we need to maintain a strong naming conversion is source directory must match name defined in configuration.json
      */
+   
     private function init_modular_packages()
     {
         foreach($this->_modular_packages as $package)

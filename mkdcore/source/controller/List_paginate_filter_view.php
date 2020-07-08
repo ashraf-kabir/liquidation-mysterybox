@@ -52,7 +52,7 @@ if ($layout_clean_mode) {
                     <div style="width:100%;height:10px;display:block;float:none;"></div>
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                            <div class="form-group">
-                                <input type="submit" name="submit" class="btn btn-outline-primary w-100 mt-4 form-button text-primary bg-white" value="xyzSearch">
+                                <input type="submit" name="submit" class="btn btn-primary" value="xyzSearch">
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@ if ($layout_clean_mode) {
         <div class="clearfix"></div>
     </div>
     <table class="table table-mh br w-100">
-        <thead>
+        <thead class='thead-light'>
         <?php
         $order_by = $view_model->get_order_by();
         $direction = $view_model->get_sort();

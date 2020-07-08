@@ -49,7 +49,7 @@ if ($layout_clean_mode) {
         <div class="clearfix"></div>
     </div>
     <table class="table table-mh br w-100">
-        <thead>
+        <thead class='thead-light'>
             <?php foreach ($view_model->get_column() as $data) {
                 echo "<th>{$data}</th>";
             } ?>
