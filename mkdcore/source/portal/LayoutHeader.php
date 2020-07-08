@@ -33,24 +33,8 @@
      
     <?php } ?>
     
-  <!--  <?php if (!$layout_clean_mode) { ?>
-        <nav>
-            <div class="row">
-                <div class="container-fluid">
-                    <button type="button" id="sidebarCollapse" class="btn btn-dark">
-                        <span>☰</span>
-                    </button>
-                </div>
-            </div>
-        </nav>
-          <nav id="sidebar" class='px-4'>
-          <ul class="list-unstyled components">
-              {{{menu}}}
-          </ul>
-      </nav>
-    
-        -->
-        <section class="content-wrapper">
+  <?php if (!$layout_clean_mode) { ?>
+      <section class="content-wrapper">
         <div class="category row">
           <img
             src="/assets/image/collapse-category.svg"

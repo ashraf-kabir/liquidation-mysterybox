@@ -60,7 +60,7 @@ class App_builder extends Builder
             {
                 if(isset( $this->_config[$config_items[$i]]))
                 {
-                    $this->_config[$config_items[$i]] = array_merge($this->_config[$config_items[$i]], $package_config[$config_items[$i]]);
+                    $this->_config[$config_items[$i]] = array_merge($package_config[$config_items[$i]], $this->_config[$config_items[$i]]);
                 }
             }
             //build the menus
