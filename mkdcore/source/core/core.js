@@ -113,4 +113,10 @@ $(document).ready(function() {
      $('#import-csv').trigger('submit');
   });
 
+  $('.modal-image').click(function(){
+    var src = $(this).attr('src');
+    $('#modal-image-slot').attr('src', src);
+    $('#modal-image-show').modal('show');
+  });
+
 });
