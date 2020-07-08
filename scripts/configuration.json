@@ -393,8 +393,8 @@
 			"api_auth": true,
 			"middleware": ["affilate", "auth", "acl", "maintenance"],
 			"api": false,
-			"js": ["/assets/js/media.js","/assets/js/core.js","/assets/js/setting.js","/assets/js/mkd-image-gallery.js"],
-			"css": ["/assets/css/style.css"],
+			"js": ["/assets/js/media.js","/assets/js/core.js","/assets/js/setting.js","/assets/js/mkd-image-gallery.js", "/assets/js/app.js"],
+			"css": ["/assets/css/styles.css"],
 			"menu": {
 				"Dashboard": "/dashboard",
 				"Profile": "/profile",
