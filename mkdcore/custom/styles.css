@@ -8625,3 +8625,6 @@ a.text-background:hover, a.text-background:focus {
     overflow:scroll;
     max-width: 100%;
   }
+  .modal-image:hover{
+    cursor: pointer;
+  }

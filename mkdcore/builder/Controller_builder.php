@@ -2306,7 +2306,7 @@ class Controller_builder extends Builder
                         switch ($complex_field_type)
                         {
                             case 'image':
-                                $result .= "\t\t\t\t\t\t\techo \"<td><div class='mkd-image-container'><img class='img-fluid' src='{\$data->{$complex_field_name}}' onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\" /></div></td>\";\n";
+                                $result .= "\t\t\t\t\t\t\techo \"<td><div class='mkd-image-container show-image' data-src='{$data->{$field_name}}' data-toggle='modal' data-target='#imageModal' ><img class='img-fluid' src='{\$data->{$complex_field_name}}' onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\" /></div></td>\";\n";
                                 break;
                             case 'imagefile':
                                 $result .= "\t\t\t\t\t\t\techo \"<td>\" . \$view_model->image_or_file(\$data->{$field_name}) . \"</td>\";\n";
@@ -2387,7 +2387,7 @@ class Controller_builder extends Builder
                         $result .= "\t\t\t\t\t\t\techo \"<td>$\" . number_format(\$data->{$field_name}, 2) . \"</td>\";\n";
                         break;
                     case 'image':
-                        $result .= "\t\t\t\t\t\t\techo \"<td><div class='mkd-image-container'><img class='img-fluid' src='{\$data->{$field_name}}' onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/></div></td>\";\n";
+                        $result .= "\t\t\t\t\t\t\techo \"<td><div class='mkd-image-container'><img class='img-fluid modal-image' src='{\$data->{$field_name}}' onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/></div></td>\";\n";
                         break;
                     case 'imagefile':
                         $result .= "\t\t\t\t\t\t\techo \"<td>\" . \$view_model->image_or_file(\$data->{$field_name}) . \"</td>\";\n";
