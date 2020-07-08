@@ -33,7 +33,7 @@
 <h1 class="primaryHeading text-center text-md-left">
   <?php echo $view_model->get_heading();?>
 </h1>
-<div class="row">
+<div class="row mb-5">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card"   id="{{{name}}}_listing">
            

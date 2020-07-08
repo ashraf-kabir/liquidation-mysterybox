@@ -21,9 +21,6 @@ if ($layout_clean_mode) {
         </li>
     </ol>
 </div>
-<h1 class="primaryHeading mb-4 text-center text-md-left">
-    xyzAdd <?php echo $view_model->get_heading();?>
-</h1>
 <div class="row">
     <?php if (validation_errors()) : ?>
         <div class="col-md-12">
@@ -47,10 +44,13 @@ if ($layout_clean_mode) {
         </div>
     <?php endif; ?>
 </div>
-<div class="row">
+<div class="row mb-5">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
-                <div class="card-body">
+            <div class="card-body">
+                <h1 class="primaryHeading mb-4 text-center text-md-left">
+                    xyzAdd <?php echo $view_model->get_heading();?>
+                </h1>
                 <?= form_open() ?>
                     {{{input}}}
                     {{{custom_view_add}}}

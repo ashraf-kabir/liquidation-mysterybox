@@ -38,9 +38,6 @@ if ($layout_clean_mode) {
         </ol>
     </div>
 </div>
-<h1 class="primaryHeading text-center text-md-left">
-  <?php echo $view_model->get_heading();?>
-</h1>
 <section>
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
