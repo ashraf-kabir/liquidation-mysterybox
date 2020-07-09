@@ -12,8 +12,6 @@
   color: #34393f; }
 :root .form-button {
   padding: 10.5px 2px; }
-:root .form-group {
-  margin: 3rem 0; }
 :root .fg-alt {
   margin: 2rem 0; }
 :root .addAdditionalBusinessAddressForm,
@@ -2067,8 +2065,6 @@ select.form-control[size], select.form-control[multiple] {
 textarea.form-control {
   height: auto; }
 
-.form-group {
-  margin-bottom: 1rem; }
 
 .form-text {
   display: block;
