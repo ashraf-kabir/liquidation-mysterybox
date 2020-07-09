@@ -358,6 +358,7 @@
 			"role": "admin",
 			"model": "user_model",
 			"login_type": "login_only",
+			"stripe_type" : "stripe_admin",
 			"forgot": false,
 			"reset": false,
 			"register": false,
@@ -387,6 +388,7 @@
 			"role": "member",
 			"model": "user_model",
 			"login_type": "login",
+			"stripe_type" : "stripe_member",
 			"forgot": true,
 			"reset": true,
 			"register": "register",
@@ -843,9 +845,10 @@
 	"packages": {
 		"analytics": false,
 		"payment": {
-            "is_active" : true,
-            "portal" : "admin",
-            "user_portal" : "member"
+			"is_active" : true,
+			"type" : "free_trial_subscription",
+			"portal" : "member",
+			"admin_portal" : ""
         },
 		"cache": false,
 		"pdf": false,
@@ -876,6 +879,7 @@
 	},
 	"translations": {
 		"xyzSettings": "Settings",
+		"xyzCredentials" : "Credentials",
 		"xyzSave Data" : "Save Data",
 		"xyzContact Form Blacklist" : "Contact Form Blacklist",
 		"xyzWord Black list" : "Words Black list",
