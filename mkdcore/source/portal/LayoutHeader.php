@@ -34,7 +34,7 @@
     <?php } ?>
     
   <?php if (!$layout_clean_mode) { ?>
-      <section class="content-wrapper">
+      <section class="content-wrapper ">
         <div class="category row">
           <img
             src="/assets/image/collapse-category.svg"
@@ -49,10 +49,18 @@
              {{{menu}}}
            </div>
         </div> 
-         
+  <!--
+        <nav id="sidebar category row">
+            <ul class="list-unstyled components">
+                {{{menu}}}
+            </ul>
+            <span class="copyright">{{{copyright}}}</span>
+            <span class="copyright">{{{powered_by}}}</span>
+        </nav>-->
     <?php } ?>
     <section class="d-flex flex-column col categoryContent mx-md-4 mt-2 px-md-4 p-0">
         <?php if(isset($page_section)):?>
             <?php  $this->load->view($page_section); ?>
         <?php endif;?>
     </section>
+        </section>

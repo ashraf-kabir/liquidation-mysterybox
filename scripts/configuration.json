@@ -461,7 +461,7 @@
 			"filter_fields": ["id", "email","first_name","last_name"],
 			"add_fields": ["email", "first_name","last_name",  "phone", "image"],
 			"edit_fields": ["email", "first_name","last_name", "phone",  "image"],
-			"view_fields": ["id","email", "first_name","last_name", "phone"],
+			"view_fields": ["id","email", "first_name","last_name", "image","phone"],
 			"autocomplete": "",
 			"dynamic_mapping": {},
 			"dynamic_mapping_add" : {},
