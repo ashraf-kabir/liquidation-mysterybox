@@ -1858,7 +1858,7 @@ class Controller_builder extends Builder
             {
                 $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12 \">\n";
                 $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                $result .= "\t\t\t\t\t<select id=\"form_{$field[0]}\" name=\"{$field[0]}\" class=\"form-control\">\n";
+                $result .= "\t\t\t\t\t<select id=\"form_{$field[0]}\" name=\"{$field[0]}\" class=\"form-control data-input\">\n";
                 $result .= "\t\t\t\t\t\t<?php foreach (\$view_model->{$mapping_function}() as \$key => \$value) {\n";
                 $result .= "\t\t\t\t\t\t\techo \"<option value='{\$key}'> {\$value} </option>\";\n";
                 $result .= "\t\t\t\t\t\t}?>\n";
@@ -1869,7 +1869,7 @@ class Controller_builder extends Builder
             {
                 $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                 $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                $result .= "\t\t\t\t\t<select id=\"form_{$field[0]}\" name=\"{$field[0]}\" class=\"form-control\">\n";
+                $result .= "\t\t\t\t\t<select id=\"form_{$field[0]}\" name=\"{$field[0]}\" class=\"form-control data-input\">\n";
                 $result .= "\t\t\t\t\t\t<?php foreach (\${$dynamic_mapping_function} as \$key => \$value) {\n";
                 $result .= "\t\t\t\t\t\t\techo \"<option value='{\$key}'> {\$value} </option>\";\n";
                 $result .= "\t\t\t\t\t\t}?>\n";
@@ -1881,7 +1881,7 @@ class Controller_builder extends Builder
                 $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                 $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" class=\"form-control\" id=\"{$controller['portal']}_{$controller['name']}_add_{$field[0]}_autocomplete_value_field\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\"/>\n";
-                $result .= "\t\t\t\t\t<input style='width:100%;' type=\"text\" class=\"form-control\" id=\"{$controller['portal']}_{$controller['name']}_add_{$field[0]}_autocomplete\"  />\n";
+                $result .= "\t\t\t\t\t<input style='width:100%;' type=\"text\" class=\"form-control data-input\" id=\"{$controller['portal']}_{$controller['name']}_add_{$field[0]}_autocomplete\"  />\n";
                 $result .= "\t\t\t\t</div>\n";
             }
             /*elseif (!empty(array_column($drop_down_fields, 'field_name')) && in_array($field[0], array_column($drop_down_fields,'field_name')))
@@ -1905,56 +1905,56 @@ class Controller_builder extends Builder
                     case 'string':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12 \">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"text\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'password':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"password\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"password\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'boolean':
                         $result .= "\t\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t\t<label class=\"custom-control custom-checkbox\">\n";
-                        $result .= "\t\t\t\t\t\t\t<input type=\"checkbox\" checked=\"\" class=\"custom-control-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"1\"/><span class=\"custom-control-label\">{$field[3]}</span>\n";
+                        $result .= "\t\t\t\t\t\t\t<input type=\"checkbox\" checked=\"\" class=\"custom-control-input data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"1\"/><span class=\"custom-control-label\">{$field[3]}</span>\n";
                         $result .= "\t\t\t\t\t\t</label>\n";
                         $result .= "\t\t\t\t\t</div>\n";
                         break;
                     case 'date':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"date\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"date\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'datetime':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"datetime\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"datetime\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'text':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-9 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<textarea id='form_{$field[0]}' name='{$field[0]}' class='form-control' rows='5'><?php echo set_value('{$field[0]}'); ?></textarea>\n";
+                        $result .= "\t\t\t\t\t<textarea id='form_{$field[0]}' name='{$field[0]}' class='form-control data-input' rows='5'><?php echo set_value('{$field[0]}'); ?></textarea>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'email':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12 \">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"email\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"email\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'integer':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12 \">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\" onkeypress=\"return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"text\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\" onkeypress=\"return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'float':
                         $result .= "\t\t\t\t<div class=\"form-group  col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\" onkeypress=\"return mkd_is_number(event,this)\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"text\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\" onkeypress=\"return mkd_is_number(event,this)\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
 
@@ -2011,9 +2011,9 @@ class Controller_builder extends Builder
                 $boundary_width = $parts[3];
                 $boundary_height = $parts[4];
 
-                $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
+                $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12 mb-4\">\n";
                 $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                $result .= "\t\t\t\t\t<img id=\"output_{$field[0]}\" src=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\" onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/>\n";
+                $result .= "\t\t\t\t\t<img class='edit-preview-image d-block' id=\"output_{$field[0]}\" src=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\" onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/>\n";
                 $result .= "\t\t\t\t\t<br/><div class=\"btn btn-info btn-sm mkd-choose-image\" data-image-url=\"{$field[0]}\" data-image-id=\"{$field[0]}_id\" data-image-preview=\"output_{$field[0]}\" data-view-width=\"{$width}\" data-view-height=\"{$height}\" data-boundary-width=\"{$boundary_width}\" data-boundary-height=\"{$boundary_height}\">xyzChoose Image</div>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}_id\" name=\"{$field[0]}_id\" value=\"<?php echo set_value('{$field[0]}_id', \$this->_data['view_model']->get_{$field[0]}_id());?>\"/>\n";
@@ -2039,7 +2039,7 @@ class Controller_builder extends Builder
             {
                 $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                 $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                $result .= "\t\t\t\t\t<select id=\"form_{$field[0]}\" name=\"{$field[0]}\" class=\"form-control\">\n";
+                $result .= "\t\t\t\t\t<select id=\"form_{$field[0]}\" name=\"{$field[0]}\" class=\"form-control data-input\">\n";
                 $result .= "\t\t\t\t\t\t<?php foreach (\$view_model->{$mapping_function}() as \$key => \$value) {\n";
                 $result .= "\t\t\t\t\t\t\techo \"<option value='{\$key}' \" . ((\$view_model->get_{$field[0]}() == \$key && \$view_model->get_{$field[0]}() != '') ? 'selected' : '') . \"> {\$value} </option>\";\n";
                 $result .= "\t\t\t\t\t\t}?>\n";
@@ -2050,7 +2050,7 @@ class Controller_builder extends Builder
             {
                 $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                 $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                $result .= "\t\t\t\t\t<select id=\"form_{$field[0]}\" name=\"{$field[0]}\" class=\"form-control\">\n";
+                $result .= "\t\t\t\t\t<select id=\"form_{$field[0]}\" name=\"{$field[0]}\" class=\"form-control data-input\">\n";
                 $result .= "\t\t\t\t\t\t<?php foreach (\${$dynamic_mapping_function} as \$key => \$value) {\n";
                 $result .= "\t\t\t\t\t\t\techo \"<option value='{\$key}' \" . ((\$view_model->get_{$field[0]}() == \$key && \$view_model->get_{$field[0]}() != '') ? 'selected' : '') . \"> {\$value} </option>\";\n";
                 $result .= "\t\t\t\t\t\t}?>\n";
@@ -2062,7 +2062,7 @@ class Controller_builder extends Builder
                 $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                 $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
                 $result .= "\t\t\t\t\t<input hidden=\"text\" class=\"form-control\" id=\"{$controller['portal']}_{$controller['name']}_edit_{$field[0]}_autocomplete_value_field\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}()); ?>\"/>\n";
-                $result .= "\t\t\t\t\t<input style='width:100%;' type=\"text\" class=\"form-control\" id=\"{$controller['portal']}_{$controller['name']}_edit_{$field[0]}_autocomplete\"  />\n";
+                $result .= "\t\t\t\t\t<input style='width:100%;' type=\"text\" class=\"form-control data-input\" id=\"{$controller['portal']}_{$controller['name']}_edit_{$field[0]}_autocomplete\"  />\n";
                 $result .= "\t\t\t\t</div>\n";
             }
             else
@@ -2071,13 +2071,13 @@ class Controller_builder extends Builder
                     case 'string':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"text\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'password':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"password\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"password\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'boolean':
@@ -2090,37 +2090,37 @@ class Controller_builder extends Builder
                     case 'date':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"date\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"date\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'datetime':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"datetime\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"datetime\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'text':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-9 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<textarea id='form_{$field[0]}' name='{$field[0]}' class='form-control' rows='5'><?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?></textarea>\n";
+                        $result .= "\t\t\t\t\t<textarea id='form_{$field[0]}' name='{$field[0]}' class='data-input form-control' rows='5'><?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?></textarea>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'email':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"email\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"email\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'integer':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\" onkeypress=\"return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"text\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\" onkeypress=\"return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'float':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\" onkeypress=\"return mkd_is_number(event,this)\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"text\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\" onkeypress=\"return mkd_is_number(event,this)\"/>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
 
@@ -2161,13 +2161,15 @@ class Controller_builder extends Builder
 
             if ($has_mapping)
             {
-                $result .= "\t\t\t\t\t\t<h6>{$field[3]}:&nbsp; <?php echo \$view_model->{$mapping_function}()[\$view_model->get_{$field[0]}()];?></h6>\n";
+                /*$result .= "\t\t\t\t\t\t<h6>{$field[3]}:&nbsp; <?php echo \$view_model->{$mapping_function}()[\$view_model->get_{$field[0]}()];?></h6>\n";*/
+                $result .= "\n\t\t\t\t<div class='row'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t{$field[3]}\n\t\t\t\t\t</div>\n\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<?php echo \$view_model->{$mapping_function}()[\$view_model->get_{$field[0]}()];?>\n\t\t\t\t\t</div>\n\\t\t\t\t\t</div>\n\t\t\t\t";
             }
             else
             {
                 if (strpos($field[1], 'image') !== FALSE)
                 {
-                    $result .= "\t\t\t\t\t\t<h6>{$field[3]}:&nbsp; <img class=\"img-fluid\" src=\"<?php echo \$view_model->get_{$field[0]}();?>\" onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/></h6>\n";
+                    /*$result .= "\t\t\t\t\t\t<h6>{$field[3]}:&nbsp; <img class=\"img-fluid\" src=\"<?php echo \$view_model->get_{$field[0]}();?>\" onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/></h6>\n";*/
+                    $result .= "\n\t\t\t\t<div class='row'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<span class='d-block'>{$field[3]}</span>\n\t\t\t\t\t\t<img class=\"img-fluid d-block mb-3 mt-3 view-image\" src=\"<?php echo \$view_model->get_{$field[0]}();?>\" onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/>\n\t\t\t\t</div>\n\t\t\t\t</div>\n";
                 }
                 else
                 {
@@ -2175,11 +2177,13 @@ class Controller_builder extends Builder
                     $field_type = $original_fields[$key];
                     if (strstr($field_type, '|'))
                     {
-                        $result .= $this->field_type_display($field_type, "\t\t\t\t\t\t<h6>{$field[3]}:&nbsp; <?php echo ", ";?></h6>\n" , "\$view_model->get_{$field[0]}()");
+                       /* $result .= $this->field_type_display($field_type, "\t\t\t\t\t\t<h6>{$field[3]}:&nbsp; <?php echo ", ";?></h6>\n" , "\$view_model->get_{$field[0]}()");*/
+                       $result .= $this->field_type($field_type, "\n\t\t\t\t<div class='row'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t{$field[3]}\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<?php echo" . "$view_model->get_{$field[0]}()" .";?>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n");
                     }
                     else
                     {
-                        $result .= "\t\t\t\t\t\t<h6>{$field[3]}:&nbsp; <?php echo \$view_model->get_{$field[0]}();?></h6>\n";
+                        /*$result .= "\t\t\t\t\t\t<h6>{$field[3]}:&nbsp; <?php echo \$view_model->get_{$field[0]}();?></h6>\n";*/
+                        $result .= "\n\t\t\t\t<div class='row'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t{$field[3]}\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<?php echo \$view_model->get_{$field[0]}();?>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n";
                     }
                 }
             }
