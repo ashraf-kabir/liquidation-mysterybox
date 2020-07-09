@@ -54,7 +54,7 @@ if ($layout_clean_mode) {
                 <?= form_open() ?>
                     {{{input}}}
                     {{{custom_view_add}}}
-                <div class="form-group">
+                <div class="form-group  col-md-6 col-sm-12">
                     <input type="submit" class="btn btn-primary text-white mr-4 my-4" value="xyzSubmit">
                 </div>
                 </form>
