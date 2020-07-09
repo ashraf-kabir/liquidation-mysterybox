@@ -43,7 +43,7 @@
                     <table class="table table-hover table-condensed table-striped">
                         <thead class='thead-light'>
                         <?php foreach ($view_model->get_column() as $data) {
-                            echo "<th>{$data}</th>";
+                            echo "<th text-left>{$data}</th>";
                         } ?>
                         </thead>
                         <tbody>

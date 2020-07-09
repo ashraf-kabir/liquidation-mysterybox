@@ -89,7 +89,7 @@ if ($layout_clean_mode) {
             $data_field = $field_column[$key];
             if (strlen($order_by) < 1 || $data_field == '')
             {
-                echo "<th scope='col' class='paragraphText text-center'>{$data}</th>";
+                echo "<th scope='col' class='paragraphText text-left'>{$data}</th>";
             }
             else
             {
@@ -97,16 +97,16 @@ if ($layout_clean_mode) {
                 {
                     if ($direction == 'ASC')
                     {
-                        echo "<th scope='col' class='paragraphText text-center'><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=DESC'>{$data} <i class='fas fa-sort-up' style='vertical-align: -0.35em;'></i></a></th>";
+                        echo "<th scope='col' class='paragraphText text-left'><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=DESC'>{$data} <i class='fas fa-sort-up' style='vertical-align: -0.35em;'></i></a></th>";
                     }
                     else
                     {
-                        echo "<th scope='col' class='paragraphText text-center' ><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=ASC'>{$data} <i class='fas fa-sort-down' style='margin-bottom:3px;'></i></a></th>";
+                        echo "<th scope='col' class='paragraphText text-left' ><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=ASC'>{$data} <i class='fas fa-sort-down' style='margin-bottom:3px;'></i></a></th>";
                     }
                 }
                 else
                 {
-                    echo "<th  scope='col' class='paragraphText text-center'><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=ASC'>{$data} <i class='fas fa-sort-down'  style='margin-bottom:3px;color:#e2e2e2;'></i></a></th>";
+                    echo "<th  scope='col' class='paragraphText text-left'><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=ASC'>{$data} <i class='fas fa-sort-down'  style='margin-bottom:3px;color:#e2e2e2;'></i></a></th>";
                 }
             }
         } ?>

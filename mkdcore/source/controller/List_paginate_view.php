@@ -51,7 +51,7 @@ if ($layout_clean_mode) {
     <table class="table table-mh br w-100">
         <thead class='thead-light'>
             <?php foreach ($view_model->get_column() as $data) {
-                echo "<th>{$data}</th>";
+                echo "<th class='text-left'>{$data}</th>";
             } ?>
         </thead>
         <tbody>
