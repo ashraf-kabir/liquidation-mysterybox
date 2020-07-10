@@ -22,6 +22,7 @@ class Member_stripe_invoices_controller extends Member_controller
 	public function index($page)
 	{
         $this->load->library('pagination');
+        $this->load->model('stripe_plans_model');
         include_once __DIR__ . '/../../view_models/Stripe_invoices_member_list_paginate_view_model.php';
         $session = $this->get_session();
         $format = $this->input->get('format', TRUE) ?? 'view';
@@ -46,7 +47,11 @@ class Member_stripe_invoices_controller extends Member_controller
         $this->_data['view_model']->set_sort($direction);
         $this->_data['view_model']->set_sort_base_url('/member/stripe_invoices/0');
         $this->_data['view_model']->set_page($page);
-		$this->_data['view_model']->set_list($this->stripe_subscriptions_invoices_model->get_paginated($this->_data['view_model']->get_page(),$this->_data['view_model']->get_per_page(),$where,$order_by,$direction));
+        
+        $results = $this->stripe_subscriptions_invoices_model->get_paginated($this->_data['view_model']->get_page(),$this->_data['view_model']->get_per_page(),$where,$order_by,$direction);
+
+
+		$this->_data['view_model']->set_list($results);
 
         if ($format != 'view')
         {
@@ -57,10 +62,6 @@ class Member_stripe_invoices_controller extends Member_controller
 
         return $this->render('Member/Stripe_invoices', $this->_data);
 	}
-
-
-
-
 
 	public function view($id)
 	{

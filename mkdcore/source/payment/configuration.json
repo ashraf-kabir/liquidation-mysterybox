@@ -1267,6 +1267,8 @@
         "xyzIs Default Card" : "Is Default Card",
         "xyzTransaction" : "Transaction",
         "xyzReason" : "Reason",
+        "xyzPer" : "Per",
+        "xyzSubscribe" : "Subscribe",
         "xyzInvoice URL" : "Invoice URL",
         "xyzPDF Invoice" : "PDF Invoice",
         "xyzInvoices" : "Invoices",
@@ -1328,6 +1330,7 @@
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_files_controller.php" : "../release/application/controllers/Admin/Admin_stripe_files_controller.php",
         "../mkdcore/source/payment/src/Admin/views/Stripe_filesAdd.php" : "../release/application/views/Admin/Stripe_filesAdd.php",
         "../mkdcore/source/payment/src/Member/controllers/Member_stripe_invoices_controller.php" : "../release/application/controllers/Member/Member_stripe_invoices_controller.php",
-        "../mkdcore/source/payment/src/Member/controllers/Member_stripe_subscriptions_controller.php" : "../release/application/controllers/Member/Member_stripe_subscriptions_controller.php"
+        "../mkdcore/source/payment/src/Member/controllers/Member_stripe_subscriptions_controller.php" : "../release/application/controllers/Member/Member_stripe_subscriptions_controller.php",
+        "../mkdcore/source/payment/src/Member/views/Stripe_subscriptions.php" : "../release/application/views/Member/Stripe_subscriptions.php"
      }
 }

@@ -22,6 +22,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
 	public function index($page)
 	{
         $this->load->library('pagination');
+        $this->load->model('stripe_plans_model');
         include_once __DIR__ . '/../../view_models/Stripe_subscriptions_member_list_paginate_view_model.php';
         $format = $this->input->get('format', TRUE) ?? 'view';
         $order_by = $this->input->get('order_by', TRUE) ?? '';
@@ -40,7 +41,20 @@ class Member_stripe_subscriptions_controller extends Member_controller
         $this->_data['view_model']->set_order_by($order_by);
         $this->_data['view_model']->set_sort($direction);
         $this->_data['view_model']->set_sort_base_url('/member/stripe_subscriptions/0');
-		$this->_data['view_model']->set_list($this->stripe_subscriptions_model->get_paginated( $this->_data['view_model']->get_page(),$this->_data['view_model']->get_per_page(),$where,$order_by,$direction));
+        $this->_data['view_data']['interval_mapping'] = $this->stripe_plans_model->subscription_interval_mapping();
+        $this->_data['view_data']['plans'] = $this->stripe_plans_model->get_all();
+
+        $results = $this->stripe_subscriptions_model->get_paginated( $this->_data['view_model']->get_page(),$this->_data['view_model']->get_per_page(),$where,$order_by,$direction);
+        $this->_data['view_data']['user_plans'] = array_column($results, 'plan_id');
+
+        foreach($results as $result)
+        {
+            $plan = $this->stripe_plans_model->get($result->plan_id ?? 0);
+            $result->{"plan_name"} = $plan->display_name ?? '';
+            $result->{"plan_interval"} = $this->stripe_plans_model->subscription_interval_mapping()[$plan->interval] ?? '';
+        }
+
+		$this->_data['view_model']->set_list($results);
 
         if ($format != 'view')
         {
