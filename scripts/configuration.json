@@ -846,9 +846,10 @@
 		"analytics": false,
 		"payment": {
 			"is_active" : true,
-			"type" : "free_trial_subscription",
-			"portal" : "member",
-			"admin_portal" : ""
+			"type" : "subscription",
+			"user_portal" : "member",
+			"admin_portal" : "admin",
+			"dynamic_templates" : true
         },
 		"cache": false,
 		"pdf": false,

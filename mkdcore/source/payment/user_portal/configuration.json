@@ -1,44 +1,14 @@
 {
      "menus" : {
-         "admin" : {
-             "xyzPayments" : {
-                "xyzDisputes" : "/stripe_disputes",
-                "xyzInvoices" : "/stripe_invoices/0?order_by=id&direction=DESC",
-                "xyzSubscriptions" : "/stripe_subscriptions/0?order_by=id&direction=DESC",
-                "xyzProducts" : "/stripe_products/0?order_by=id&direction=DESC",
-                "xyzPlans" : "/stripe_plans/0?order_by=id&direction=DESC",
-                "xyzCoupons" : "/stripe_coupons/0?order_by=id&direction=DESC"
-             }
-         },
-         "member" : {
-             "xyzPayments" : {
-                 "xyzCards" : "/stripe_cards"
+         "{{{portal}}}" : {
+             "xyzBilling" : {
+                 "xyzCards" : "/stripe_cards",
+                 "xyzSubscriptions" : "/stripe_subscriptions",
+                 "xyzSubscription Plan" : "/stripe_plans"
              }
          }
      },
      "routes": {
-         "v1/api/member/payment/user" : "Member/Payment_api_controller/new_user_payment",
-         "v1/api/member/payment" : "Member/Payment_api_controller/payment",
-         "v1/api/member/payment/mobile" : "Member/Payment_api_controller/mobile_payment",
-         "v1/api/member/payment/user/mobile" : "Member/Payment_api_controller/user_mobile_payment",
-         "v1/api/member/subscription" : "Member/Subscription_api_controller/subscribe_user",
-         "v1/api/member/subscription/user" : "Member/Subscription_api_controller/user_subscription",
-         "v1/api/member/subscription/mobile": "Member/Subscription_api_controller/mobile_user_subscription",
-         "v1/api/member/subscription/user/mobile" : "Member/Subscription_api_controller/mobile_subscription",
-         "v1/api/payment/user" : "Admin/Admin_payment_api_controller/new_user_payment",
-         "v1/api/payment" : "Admin/Admin_payment_api_controller/payment",
-         "v1/api/payment/mobile" : "Admin/Admin_payment_api_controller/mobile_payment",
-         "v1/api/payment/user/mobile" : "Admin/Admin_payment_api_controller/user_mobile_payment",
-         "admin/stripe_subscriptions/cancel/(:num)" : "Admin/Admin_stripe_subscriptions_controller/cancel/$1",
-         "member/payment/user" : "Member/Payment_controller/new_user_payment",
-         "member/payment" : "Member/Payment_controller/payment",
-         "member/payment/mobile" : "Member/Payment_controller/mobile_payment",
-         "member/payment/user/mobile" : "Member/Payment_controller/user_mobile_payment",
-         "member/payment/test": "Member/Payment_controller/index",
-         "member/subscription/test": "Member/Subscription_api_controller/index",
-         "admin/stripe_payment_orders/refund/(:num)" : "Admin/Admin_stripe_payment_orders_controller/refund/$1",
-         "admin/stripe_invoices/refund/(:any)" : "Admin/Admin_stripe_invoices_controller/refund_invoice/$1",
-         "v1/api/stripe_events" : "Guest/Stripe_webhooks_api_controller/index"
      },
     "models" : [],
     "controllers" : [
@@ -102,11 +72,11 @@
         }
     ],
      "translations": {
+         "xyzSubscription Plans" : "Subscription Plans"
      },
      "copy": {
         "../mkdcore/source/payment/src/Member_api_controller.php" : "../release/application/controllers/{{{portal}}}/{{{portal}}}_api_controller.php",
         "../mkdcore/source/payment/src/Stripe_cardsAdd.php" : "../release/application/views/{{{portal}}}/Stripe_cardsAdd.php",
-        "../mkdcore/source/payment/src/{{{portal}}}_stripe_cards_controller.php" : "../release/application/controllers/{{{portal}}}/{{{portal}}}_stripe_cards_controller.php",
-    
+        "../mkdcore/source/payment/src/{{{portal}}}_stripe_cards_controller.php" : "../release/application/controllers/{{{portal}}}/{{{portal}}}_stripe_cards_controller.php" 
      }
 }

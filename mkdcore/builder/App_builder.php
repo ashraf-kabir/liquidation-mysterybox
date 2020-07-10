@@ -54,7 +54,22 @@ class App_builder extends Builder
     {
         foreach($this->_modular_packages as $package)
         {
+        
             $package_config = json_decode(file_get_contents("../mkdcore/source/{$package['name']}/configuration.json"), TRUE);
+
+            /*if(isset($package['settings']['dynamic_templates']) && $package['settings']['dynamic_templates'] == TRUE)
+            {
+               /**
+                * 1 get template
+                * 2 substitute values
+                * 3 create array
+                * 4 merger with package config array
+                * 5 copy template files into project ? can do this in the controller
+
+                $template = file_get_contents("../mkdcore/source/{$package['name']}/menu_item.php");
+                $template = $this->inject_substitute($template, 'portal', $package['settings']['user_portal'] );
+            }*/ 
+
             $config_items = array_keys($package_config);
 
             for($i = 0; $i < count( $config_items); $i ++ )
