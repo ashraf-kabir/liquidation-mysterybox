@@ -8673,3 +8673,7 @@ a.text-background:hover, a.text-background:focus {
 .view-image{
   max-width: 200px;
 }
+.underline{
+  text-decoration: underline;
+  text-underline-offset: 0.1em;
+}

@@ -22,7 +22,7 @@ if ($layout_clean_mode) {
 </div>
 <div class="row mb-5">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="card">
+        <div class="card pb-5" style='border-bottom:1px solid #ccc;'>
             <div class="card-body">
                 <h1 class="primaryHeading2 text-center text-md-left">
                     <?php echo $view_model->get_heading();?> xyzView
