@@ -41,7 +41,7 @@ if ($layout_clean_mode) {
     <div class="row">
         <?php foreach( $this->_data['view_data']['plans'] as $plan):?>
             <div class="col pl-0">
-                <div class="card">
+                <div class="card <?php if (in_array($plan->id, $this->_data['view_data']['user_plans'])){ echo "border border-warning"; } ?>">
                     <div class="card-body">
                         <h4><?php echo $plan->display_name; ?></h4>
                         <p>
