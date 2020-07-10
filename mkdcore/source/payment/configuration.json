@@ -1326,6 +1326,8 @@
         "../mkdcore/source/payment/Stripe_webhooks_api_controller.php" :  "../release/application/controllers/Guest/Stripe_webhooks_api_controller.php",
         "../mkdcore/source/payment/src/Admin/views/Stripe_invoicesView.php" : "../release/application/views/Admin/Stripe_invoicesView.php",
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_files_controller.php" : "../release/application/controllers/Admin/Admin_stripe_files_controller.php",
-        "../mkdcore/source/payment/src/Admin/views/Stripe_filesAdd.php" : "../release/application/views/Admin/Stripe_filesAdd.php"
+        "../mkdcore/source/payment/src/Admin/views/Stripe_filesAdd.php" : "../release/application/views/Admin/Stripe_filesAdd.php",
+        "../mkdcore/source/payment/src/Member/controllers/Member_stripe_invoices_controller.php" : "../release/application/controllers/Member/Member_stripe_invoices_controller.php",
+        "../mkdcore/source/payment/src/Member/controllers/Member_stripe_subscriptions_controller.php" : "../release/application/controllers/Member/Member_stripe_subscriptions_controller.php"
      }
 }
