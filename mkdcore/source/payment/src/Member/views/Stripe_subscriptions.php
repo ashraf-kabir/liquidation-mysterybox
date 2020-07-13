@@ -49,7 +49,7 @@ if ($layout_clean_mode) {
                             $<?php echo number_format($plan->amount, 2)?> xyzPer <?php echo ucfirst( $this->_data['view_data']['interval_mapping'][$plan->subscription_interval])?>
                         </p>
                         <?php if(in_array($plan->id,$this->_data['view_data']['user_plans'])):?>
-                            <a href="#" class='btn btn-link text-danger'>xyzCancel</a>
+                            <a href="/member/cancel_subscription" class='btn btn-link text-danger'>xyzCancel</a>
                         <?php else:?>
                             <a href="/member/change_plan/<?php echo $plan->id;?>" class='btn btn-primary'>xyzSubscribe</a>
                         <?php endif;?>

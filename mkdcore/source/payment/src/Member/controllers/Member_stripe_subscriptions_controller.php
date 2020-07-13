@@ -216,4 +216,51 @@ class Member_stripe_subscriptions_controller extends Member_controller
             }
         }
     }
+
+
+    public function cancel_subscription()
+    {
+        $this->load->model('user_model');
+        $session = $this->get_session();
+        $user_id = $session['user_id'];
+        $role_id = $session['role'];   
+        $user_obj = $this->user_model->get($user_id);
+       
+        $subscription = $this->stripe_subscriptions_model->get_by_fields([
+            'user_id' => $user_id,
+            'role_id' => $role_id
+        ]);
+        
+        if(empty($subscription))
+        {
+            $this->error('xyzSubscription not found');
+            return $this->redirect('/member/stripe_subscriptions/0');
+        }
+
+        if($subscription->status == 5)
+        {   
+           $this->error('xyzSubscription already canceled');
+           return $this->redirect('/member/stripe_subscriptions/0');
+        }
+
+        try
+        {
+            $stripe_subscription = $this->payment_service->cancel_subscription($subscription->stripe_id, FALSE, []);
+            
+            if(isset($stripe_subscription['id']))
+            {
+                $params = [
+                    'cancel_at_period_end' => 1
+                ];
+                $this->stripe_subscriptions_model->edit($params,$subscription->id);
+                $this->success('xyzSubscription canceled');
+                return $this->redirect('/member/stripe_subscriptions/0');
+            }
+        }
+        catch(Exception $e)
+        {
+            $this->error('xyzError canceling subscription');
+            return $this->redirect('/member/stripe_subscriptions/0');
+        }
+    }
 }
