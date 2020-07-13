@@ -17,6 +17,54 @@ class Member_stripe_subscriptions_controller extends Member_controller
     public function __construct()
     {
         parent::__construct();
+        $stripe_config = [
+            'stripe_api_version' => ($this->config->item('stripe_api_version') ?? ''),
+            'stripe_publish_key' => ($this->config->item('stripe_publish_key') ?? ''),
+            'stripe_secret_key' => ($this->config->item('stripe_secret_key') ?? '')
+        ];
+        $this->load->library('payment_service', $stripe_config);  
+    }
+
+    private function subscribe($subscription_array, $coupon_id = 0, $plan_id = 0, $user_id = 0, $role_id = 0,  $order_id = 0)
+    {
+        $this->load->model('stripe_subscriptions_model');
+        $subscriptions_array = $subscription_array;
+        
+        try
+        {
+            $subscription_result = $this->payment_service->create_subscription( $subscriptions_array);
+            $status = $subscription_result['status'] ?? '';
+            $stripe_subscription = [
+                'stripe_id' =>  $subscription_result['id'] ?? "",
+                'plan' =>  json_encode($subscription_result['plan'] ?? ""),
+                'cancel_at_period_end' =>  $subscription_result['cancel_at_period_end'] ?? "",
+                'current_period_start' =>  $subscription_result['current_period_start'] ?? "",
+                'user_id' => $user_id ?? 0,
+                'role_id' => $role_id,
+                'plan_id' => $plan_id,
+                'order_id' =>  $order_id ?? 0,
+                'coupon_id' =>  $coupon_id ?? 0,
+                'stripe_customer_id' => $subscription_result['customer'] ?? "",
+                'subscription_interval' =>  $subscription_result['interval'] ?? "",
+                'interval_count' =>  $subscription_result['interval_count'] ?? "",      
+                'trial_period_days' =>  $subscription_result['trial_period_days'] ?? "",
+                'trial_end' =>  $subscription_result['trial_end'] ?? "",
+                'trial_start' =>  $subscription_result['trial_start'] ?? "",
+                'status' => $subscription_result['status'] ?? ""
+            ];
+
+            $this->stripe_subscriptions_model->create($stripe_subscription);
+
+            if($status == 'active')
+            {
+                return TRUE;
+            }
+            return FALSE;
+        }
+        catch(Exception $e)
+        {
+           throw new Exception($e);
+        }
     }
 
 	public function index($page)
@@ -51,7 +99,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
         {
             $plan = $this->stripe_plans_model->get($result->plan_id ?? 0);
             $result->{"plan_name"} = $plan->display_name ?? '';
-            $result->{"plan_interval"} = $this->stripe_plans_model->subscription_interval_mapping()[$plan->interval] ?? '';
+            $result->{"plan_interval"} = $this->stripe_plans_model->subscription_interval_mapping()[$plan->subscription_interval] ?? '';
         }
 
 		$this->_data['view_model']->set_list($results);
@@ -62,7 +110,6 @@ class Member_stripe_subscriptions_controller extends Member_controller
                 ->set_status_header(200)
                 ->set_output(json_encode($this->_data['view_model']->to_json()));
         }
-
         return $this->render('Member/Stripe_subscriptions', $this->_data);
 	}
 
@@ -71,9 +118,10 @@ class Member_stripe_subscriptions_controller extends Member_controller
 
         /**
          * 1. check user stripe ID
-         * 2 check user current
+         * 2 check user current subscription
          * 3 if no plan exists create a new subscription
          * 4. if plan exist and is equal to current plan do nothing
+         * 5. if plan exist and different to current update the subscription
          */
 
          $this->load->model('user_model');
@@ -83,6 +131,13 @@ class Member_stripe_subscriptions_controller extends Member_controller
          $role_id = $session['role'];
 
          $user_obj = $this->user_model->get($user_id);
+         $plan_obj = $this->stripe_plans_model->get($plan_id);
+
+         if(empty($plan_obj))
+         {
+            $this->error('Invalid Plan');
+            return $this->redirect('/member/stripe_subscriptions/0');  
+         }
 
          if(empty($user_obj->stripe_id))
          {
@@ -90,6 +145,43 @@ class Member_stripe_subscriptions_controller extends Member_controller
             $this->error( $error_message);
             return $this->redirect('/member/stripe_subscriptions/0');
          }
+
+         $current_subscription = $this->stripe_subscriptions_model->get_by_fields([
+             'user_id' => $user_id,
+             'role_id' => $role_id
+         ]);
+
+         /**
+          * User does not have a active subscription
+          * status 5 <subscription canceled>
+          * @see stripe_subscription mapping stripe_subscription_model
+          */
+         if(empty($current_subscription) || $current_subscription->status == 5)
+         {
+            try
+            {
+                $params = [
+                    'customer' => $user_obj->stripe_id,
+                    'items' => ['plan' => $plan_obj->stripe_id]
+                ];
+
+                $stripe_subscription = $this->subscribe($params, 0, $plan_obj->id , $user_id , $role_id, 0);
+
+                if($stripe_subscription)
+                {
+                    $this->success('xyzNew subscription created');
+                    return $this->redirect('/member/stripe_subscriptions/0');
+                }
+
+            }
+            catch(Exception $e)
+            {
+                $this->success('xyzError creating subscription');
+                return $this->redirect('/member/stripe_subscriptions/0');
+            }
+         }
+
+
     }
 
 

@@ -184,6 +184,7 @@ class Stripe_webhooks_api_controller extends CI_Controller{
                 'subscriptions_id' => $subscription_obj->id ?? 0,
                 'stripe_id' => $args['id'],
                 'user_id' => $subscription_obj->user_id ?? 0,
+                'role_id' =>  $subscription_obj->role_id ?? 0,
                 'stripe_subscriptions_id' => $args['subscription'] ?? " ",
                 'stripe_customer_id' => $args['customer'] ?? "",
                 'stripe_charge_id' => ( $args['charge'] == NULL ? "" : $args['charge']),
