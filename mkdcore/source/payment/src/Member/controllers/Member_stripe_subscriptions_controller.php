@@ -131,6 +131,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
          $session = $this->get_session();
          $user_id = $session['user_id'];
          $role_id = $session['role'];
+         $prorate = $this->config->item('prorate_stripe_subscription');
 
          $user_obj = $this->user_model->get($user_id);
          $plan_obj = $this->stripe_plans_model->get($plan_id);
@@ -194,7 +195,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
             {
                 try
                 {
-                    $subscription_result = $this->payment_service->update_subscription_plan($current_subscription->stripe_id, $plan_obj->stripe_id);
+                    $subscription_result = $this->payment_service->update_subscription_plan($current_subscription->stripe_id, $plan_obj->stripe_id,  $prorate);
                     
                     if(isset($subscription_result['id']))
                     {
@@ -212,7 +213,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
                 }
                 catch(Exception $e)
                 {
-                    $this->error('xyzError updating subscription plan');
+                    $this->error('xyzError updating subscription plan' . $e->getMessage() );
                     return $this->redirect('/member/stripe_subscriptions/0');
                 }
             }
