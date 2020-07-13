@@ -66,6 +66,31 @@ class Member_stripe_subscriptions_controller extends Member_controller
         return $this->render('Member/Stripe_subscriptions', $this->_data);
 	}
 
+    public function change_plan($plan_id)
+    {
+
+        /**
+         * 1. check user stripe ID
+         * 2 check user current
+         * 3 if no plan exists create a new subscription
+         * 4. if plan exist and is equal to current plan do nothing
+         */
+
+         $this->load->model('user_model');
+         $this->load->model('stripe_plans_model');
+         $session = $this->get_session();
+         $user_id = $session['user_id'];
+         $role_id = $session['role'];
+
+         $user_obj = $this->user_model->get($user_id);
+
+         if(empty($user_obj->stripe_id))
+         {
+            $error_message = "xyzPayment Method not found <a href='/member/stripe_cards/add' class='float-right'>xyzAdd Payment method</a>";
+            $this->error( $error_message);
+            return $this->redirect('/member/stripe_subscriptions/0');
+         }
+    }
 
 
 

@@ -4,6 +4,22 @@ if ($layout_clean_mode) {
     echo '<style>#content{padding:0px !important;}</style>';
 }
 ?>
+
+<div class="tab-content" id="nav-tabContent">
+    <div aria-label="breadcrumb">
+        <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
+        <li class="breadcrumb-item active" aria-current="page">
+            <a href="/member/dashboard" class="breadcrumb-link">xyzDashboard</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            <?php echo $view_model->get_heading();?>
+        </li>
+        </ol>
+    </div>
+</div>
+<h1 class="primaryHeading text-center text-md-left">
+  <?php echo $view_model->get_heading();?>
+</h1>
 <?php if (strlen($error) > 0) : ?>
     <div class="row">
         <div class="col-md-12">
@@ -22,26 +38,11 @@ if ($layout_clean_mode) {
         </div>
     </div>
 <?php endif; ?>
-<div class="tab-content" id="nav-tabContent">
-    <div aria-label="breadcrumb">
-        <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
-        <li class="breadcrumb-item active" aria-current="page">
-            <a href="/member/dashboard" class="breadcrumb-link">xyzDashboard</a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">
-            <?php echo $view_model->get_heading();?>
-        </li>
-        </ol>
-    </div>
-</div>
-<h1 class="primaryHeading text-center text-md-left">
-  <?php echo $view_model->get_heading();?>
-</h1>
 <section class='p-3'>
     <div class="row">
         <?php foreach( $this->_data['view_data']['plans'] as $plan):?>
-            <div class="col pl-0">
-                <div class="card <?php if (in_array($plan->id, $this->_data['view_data']['user_plans'])){ echo "border border-warning"; } ?>">
+            <div class="col p-0">
+                <div class="card m-1 <?php if (in_array($plan->id, $this->_data['view_data']['user_plans'])){ echo "border border-warning"; } ?>">
                     <div class="card-body">
                         <h4><?php echo $plan->display_name; ?></h4>
                         <p>
@@ -50,7 +51,7 @@ if ($layout_clean_mode) {
                         <?php if(in_array($plan->id,$this->_data['view_data']['user_plans'])):?>
                             <a href="#" class='btn btn-link text-danger'>xyzCancel</a>
                         <?php else:?>
-                            <a href="#" class='btn btn-primary'>xyzSubscribe</a>
+                            <a href="/member/change_plan/<?php echo $plan->id;?>" class='btn btn-primary'>xyzSubscribe</a>
                         <?php endif;?>
                     </div>
                 </div>
