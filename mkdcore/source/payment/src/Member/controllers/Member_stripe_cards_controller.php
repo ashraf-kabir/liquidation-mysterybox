@@ -47,7 +47,8 @@ class Member_stripe_cards_controller extends Member_controller
 			'card_brand' => $this->_data['view_model']->get_card_brand(),
 			'card_name' => $this->_data['view_model']->get_card_name(),
 			'is_default' => $this->_data['view_model']->get_is_default(),
-			'user_id' => $session['user_id'],
+            'user_id' => $session['user_id'],
+            'role_id' => $session['role']
         ];
 
         $this->_data['view_model']->set_total_rows($this->stripe_cards_model->count($where));
@@ -78,7 +79,9 @@ class Member_stripe_cards_controller extends Member_controller
         $this->_data['view_model'] = new Stripe_cards_member_add_view_model($this->stripe_cards_model);
         $this->_data['view_model']->set_heading('Cards');
         $user_obj = $this->user_model->get($this->session->userdata('user_id'));
-
+        $session = $this->get_session();
+        $user_id = $session['user_id'];
+        $role_id = $session['role'];
         
 		if ($this->form_validation->run() === FALSE)
 		{
@@ -87,6 +90,48 @@ class Member_stripe_cards_controller extends Member_controller
 
         $is_default = $this->input->post('is_default');
         $source = $this->input->post('stripeToken');
+        $card_name = $this->input->post('card_name');
+        /**
+         * if stipe customer does not exist create it heres
+         */
+        if(empty($user_obj->stripe_id))
+        {
+            try
+            {
+                $stripe_client = $this->payment_service->create_customer(['email' => $user_obj->email , 'source' => $source ]);
+                
+                if(isset($stripe_client['id']))
+                {
+                    $this->user_model->edit(['stripe_id' => $stripe_client['id']], $user_id);
+                    $card = $stripe_client['sources']['data'][0] ?? [];
+                    if(!empty($card))
+                    {
+                        $card_params = [
+                            'card_last' => $card['last4'] ?? " ",
+                            'card_brand' =>  $card['brand'] ?? " ",
+                            'card_exp_month' =>  $card['exp_month'] ?? " ",
+                            'exp_year' => $card['exp_year'] ?? " ",
+                            'card_name' =>  $card_name  ?? ( $card['brand'] ?? " "),
+                            'stripe_card_customer' =>  $card['customer'],
+                            'stripe_card_id' => $card['id'],
+                            'is_default' => 1,
+                            'user_id' => $user_obj->id,
+                            'role_id' => $role_id
+                        ];
+                            
+                        $this->stripe_cards_model->create($card_params);
+                    }
+                    $this->success('xyzCard created');
+                    return $this->redirect('/member/stripe_cards/0', 'refresh'); 
+                }
+            }
+            catch(Exception $e)
+            {
+                $this->_data['error'] = 'Error creating card';
+                return $this->render('Member/Stripe_cardsAdd', $this->_data);
+            }
+        }
+        
         try
         {
             $card_params = [
@@ -116,11 +161,12 @@ class Member_stripe_cards_controller extends Member_controller
                 'card_brand' => $stripe_card['brand'] ?? " ",
                 'card_exp_month' => $stripe_card['exp_month'] ?? " ",
                 'exp_year' =>$stripe_card['exp_year'] ?? " ",
-                'card_name' => $stripe_card['name'] ?? " ",
+                'card_name' =>  $card_name  ?? ( $card['brand'] ?? " "),
                 'stripe_card_customer' => $stripe_card['customer'],
                 'stripe_card_id' =>$stripe_card['id'],
                 'is_default' => $is_default,
-                'user_id' => $user_obj->id
+                'user_id' => $user_obj->id,
+                'role_id' => $role_id
             ];
             
             $result = $this->stripe_cards_model->create($card_params);

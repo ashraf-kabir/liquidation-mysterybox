@@ -50,16 +50,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="card-body">
                 <?= form_open( "", array('id' => 'payment-form', 'class'=>'billable-class' )) ?>
 				<div class="form-group">
-					<label for="Is Default Card">Is Default Card </label>
+					<label for="Is Default Card">xyzIs Default Card </label>
 					<select id="form_is_default" name="is_default" class="form-control">
 						<?php foreach ($view_model->is_default_mapping() as $key => $value) {
 							echo "<option value='{$key}'> {$value} </option>";
 						}?>
 					</select>
 				</div>
+                <div class="form-group">
+                    <label for="card name">xyzCard Name</label>
+                    <input type="text" name='card_name' class='form-control'>
+                </div>
                 <div class="form-group" style='width:100%;' >
                     <label for="card-element">
-                        Credit or debit card
+                        xyzCredit or debit card
                     </label>
                     <div id="card-element" class="form-control"></div>
                     <div id="card-errors" role="alert"></div>              

@@ -40,7 +40,8 @@
          "member/subscription/test": "Member/Subscription_api_controller/index",
          "admin/stripe_payment_orders/refund/(:num)" : "Admin/Admin_stripe_payment_orders_controller/refund/$1",
          "admin/stripe_invoices/refund/(:any)" : "Admin/Admin_stripe_invoices_controller/refund_invoice/$1",
-         "v1/api/stripe_events" : "Guest/Stripe_webhooks_api_controller/index"
+         "v1/api/stripe_events" : "Guest/Stripe_webhooks_api_controller/index",
+         "member/change_plan/(:num)" : "Member/Member_stripe_subscriptions_controller/change_plan/$1"
      },
      "models" : [
         {
@@ -1211,9 +1212,11 @@
     ],
      "translations": {
         "xyzTransaction Type" : "Transaction Type",
+        "xyzCredit or debit card" : "Credit or debit card",
         "xyzBalance Transaction" : "Balance Transaction",
         "xyzBilling Details" : "Billing Details",
         "xyzPayments" : "Payments",
+        "xyzCard created" : "",
         "xyzCurrent Period Start" : "Current Period Start",
         "xyzCoupon Code" : "Coupon Code",
         "xyzRefund Success" : "Refund Success",
@@ -1276,6 +1279,7 @@
         "xyzInterval" : "Interval",
         "xyzCurrent Period End Date" : "Current Period End Date",
         "xyzPlan" : "Plan",
+        "xyzPayment Method not found" : "Payment Method not found",
         "xyzCurrent Period Start Date" : "Current Period Start Date",
         "xyzOrder ID" : "Order ID",
         "xyzCoupon ID" : "Coupon ID",
