@@ -50,7 +50,7 @@ if ($layout_clean_mode) {
                         </p>
                         <?php if(in_array($plan->id,$this->_data['view_data']['user_plans'])):?>
                            <?php if(!empty($this->_data['view_data']['current_subscription']) && $this->_data['view_data']['current_subscription']->cancel_at_period_end == 1):?>
-                                <a href="/member/cancel_subscription" class='btn btn-link text-success'>xyzUndo Cancel</a>
+                                <a href="/member/reactivate_subscription" class='btn btn-link text-success'>xyzReactivate Subscription</a>
                            <?php else:?>
                                 <a href="/member/cancel_subscription" class='btn btn-link text-danger'>xyzCancel</a>
                            <?php endif;?>
