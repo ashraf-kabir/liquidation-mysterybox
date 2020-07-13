@@ -38,7 +38,8 @@ class Member_stripe_subscriptions_controller extends Member_controller
                 'stripe_id' =>  $subscription_result['id'] ?? "",
                 'plan' =>  json_encode($subscription_result['plan'] ?? ""),
                 'cancel_at_period_end' =>  $subscription_result['cancel_at_period_end'] ?? "",
-                'current_period_start' =>  $subscription_result['current_period_start'] ?? "",
+                'current_period_start' =>  date('Y-m-d', $subscription_result['current_period_start']) ?? "",
+                'current_period_end' =>  date('Y-m-d', $subscription_result['current_period_end']),
                 'user_id' => $user_id ?? 0,
                 'role_id' => $role_id,
                 'plan_id' => $plan_id,
@@ -179,22 +180,40 @@ class Member_stripe_subscriptions_controller extends Member_controller
                 $this->success('xyzError creating subscription');
                 return $this->redirect('/member/stripe_subscriptions/0');
             }
-         }
+        }
 
+        /**
+         * user has a subscription but want to change plan
+         *  status 5 <subscription canceled>
+          * @see stripe_subscription mapping stripe_subscription_model
+         */
+        if(!empty($current_subscription) && $current_subscription->status != 5 )
+        {
+            if($plan_id != $current_subscription->plan_Id)
+            {
+                try
+                {
+                    $subscription_result = $this->payment_service->update_subscription_plan($current_subscription->stripe_id, $plan_obj->stripe_id);
+                    
+                    if(isset($subscription_result['id']))
+                    {
+                        $update_params = [
+                            'current_period_end' => date('Y-m-d', $subscription_result['current_period_start']),
+                            'current_period_start' => date('Y-m-d', $subscription_result['current_period_end']),
+                            'plan_id' => $plan_obj->id,
+                        ];
 
+                        $this->stripe_subscriptions_model->edit($update_params,$current_subscription->id);
+                        $this->success('xyzSubscription plan updated');
+                        return $this->redirect('/member/stripe_subscriptions/0');
+                    }
+                }
+                catch(Exception $e)
+                {
+                    $this->error('xyzError updating subscription plan');
+                    return $this->redirect('/member/stripe_subscriptions/0');
+                }
+            }
+        }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

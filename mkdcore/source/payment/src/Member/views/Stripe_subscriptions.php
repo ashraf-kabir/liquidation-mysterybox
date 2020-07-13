@@ -79,6 +79,7 @@ if ($layout_clean_mode) {
                     echo '<tr>';
                         	echo "<td>{$data->id}</td>";
 							echo'<td>' . $data->plan_name . "<br/>" . $data->plan_interval . "<br/>" . '</td>';
+							echo "<td>" . ucfirst($view_model->cancel_at_period_end_mapping()[$data->cancel_at_period_end]) ."</td>";
 							echo "<td>" . date('F d Y', strtotime($data->current_period_start)) . "</td>";
 							echo "<td>" . date('F d Y', strtotime($data->current_period_end)) . "</td>";
 							echo "<td>" . ucfirst($view_model->status_mapping()[$data->status]) ."</td>";

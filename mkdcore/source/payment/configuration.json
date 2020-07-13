@@ -1198,7 +1198,7 @@
             "custom_view_view": "",
             "listing_fields_api": ["id", "plan_id", "cancel_at_period_end", "current_period_start", "current_period_end", "status"],
             "listing_headers": ["xyzID", "xyzPlan", "xyzCancel At Period End", "xyzCurrent Period Start", "xyzCurrent Period End", "xyzStatus"],
-            "listing_rows": ["id|integer", "complex|plan_name:plan_interval", "current_period_start|date", "current_period_end|date", "status|integer"],
+            "listing_rows": ["id|integer", "complex|plan_name:plan_interval", "cancel_at_period_end|integer",  "current_period_start|date", "current_period_end|date", "status|integer"],
             "listing_actions": [],
             "filter_fields": [],
             "add_fields": [],
@@ -1212,6 +1212,8 @@
     ],
      "translations": {
         "xyzTransaction Type" : "Transaction Type",
+        "xyzSubscription plan updated" : "Subscription plan updated",
+        "xyzNew subscription created" : "New subscription created",
         "xyzCredit or debit card" : "Credit or debit card",
         "xyzBalance Transaction" : "Balance Transaction",
         "xyzBilling Details" : "Billing Details",
@@ -1322,6 +1324,7 @@
         "../mkdcore/source/payment/src/Admin/views/Stripe_payment_ordersRefund.php" : "../release/application/views/Admin/Stripe_payment_ordersRefund.php",
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_payment_orders_controller.php" : "../release/application/controllers/Admin/Admin_stripe_payment_orders_controller.php",
         "../mkdcore/source/payment/src/Member/views/Stripe_cardsAdd.php" : "../release/application/views/Member/Stripe_cardsAdd.php",
+        "../mkdcore/source/payment/src/Member/views/Stripe_subscriptions.php" : "../release/application/views/Member/Stripe_subscriptions.php",
         "../mkdcore/source/payment/src/Member/controllers/Member_stripe_cards_controller.php" : "../release/application/controllers/Member/Member_stripe_cards_controller.php",
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_subscriptions_controller.php" : "../release/application/controllers/Admin/Admin_stripe_subscriptions_controller.php",
         "../mkdcore/source/payment/src/Admin/views/StripeSubscriptionCancel.php" : "../release/application/views/Admin/StripeSubscriptionCancel.php",
@@ -1334,7 +1337,6 @@
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_files_controller.php" : "../release/application/controllers/Admin/Admin_stripe_files_controller.php",
         "../mkdcore/source/payment/src/Admin/views/Stripe_filesAdd.php" : "../release/application/views/Admin/Stripe_filesAdd.php",
         "../mkdcore/source/payment/src/Member/controllers/Member_stripe_invoices_controller.php" : "../release/application/controllers/Member/Member_stripe_invoices_controller.php",
-        "../mkdcore/source/payment/src/Member/controllers/Member_stripe_subscriptions_controller.php" : "../release/application/controllers/Member/Member_stripe_subscriptions_controller.php",
-        "../mkdcore/source/payment/src/Member/views/Stripe_subscriptions.php" : "../release/application/views/Member/Stripe_subscriptions.php"
+        "../mkdcore/source/payment/src/Member/controllers/Member_stripe_subscriptions_controller.php" : "../release/application/controllers/Member/Member_stripe_subscriptions_controller.php"
      }
 }
