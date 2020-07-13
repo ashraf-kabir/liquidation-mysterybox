@@ -92,6 +92,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
         $this->_data['view_model']->set_sort_base_url('/member/stripe_subscriptions/0');
         $this->_data['view_data']['interval_mapping'] = $this->stripe_plans_model->subscription_interval_mapping();
         $this->_data['view_data']['plans'] = $this->stripe_plans_model->get_all();
+        $this->_data['view_data']['current_subscription'] = $this->stripe_subscriptions_model->get_by_fields(['user_id' => $session['user_id'],'role_id' => $session['role']  ]); 
 
         $results = $this->stripe_subscriptions_model->get_paginated( $this->_data['view_model']->get_page(),$this->_data['view_model']->get_per_page(),$where,$order_by,$direction);
         $this->_data['view_data']['user_plans'] = array_column($results, 'plan_id');

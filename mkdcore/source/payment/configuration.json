@@ -41,7 +41,8 @@
          "admin/stripe_payment_orders/refund/(:num)" : "Admin/Admin_stripe_payment_orders_controller/refund/$1",
          "admin/stripe_invoices/refund/(:any)" : "Admin/Admin_stripe_invoices_controller/refund_invoice/$1",
          "v1/api/stripe_events" : "Guest/Stripe_webhooks_api_controller/index",
-         "member/change_plan/(:num)" : "Member/Member_stripe_subscriptions_controller/change_plan/$1"
+         "member/change_plan/(:num)" : "Member/Member_stripe_subscriptions_controller/change_plan/$1",
+         "member/cancel_subscription" : "Member/Member_stripe_subscriptions_controller/cancel_subscription"
      },
      "models" : [
         {
@@ -1212,6 +1213,7 @@
     ],
      "translations": {
         "xyzTransaction Type" : "Transaction Type",
+        "xyzUndo Cancel" : "Undo Cancel",
         "xyzSubscription plan updated" : "Subscription plan updated",
         "xyzNew subscription created" : "New subscription created",
         "xyzCredit or debit card" : "Credit or debit card",
