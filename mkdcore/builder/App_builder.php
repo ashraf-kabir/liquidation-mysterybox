@@ -88,6 +88,11 @@ class App_builder extends Builder
                     $menu_2 = array_slice($this->_config['portals'][$i]['menu'], 1, count($this->_config['portals'][$i]['menu']) - 1, true);
                     $this->_config['portals'][$i]['menu'] = array_merge($menu_1, $package_config['menus'][$this->_config['portals'][$i]['name']], $menu_2);
                 }
+
+                if(isset($package_config['js'][ $this->_config['portals'][$i]['name'] ]))
+                {
+                    $this->_config['portals'][$i]['js'] = array_merge($this->_config['portals'][$i]['js'], $package_config['js'][ $this->_config['portals'][$i]['name'] ]);
+                }
             }
         }
     }

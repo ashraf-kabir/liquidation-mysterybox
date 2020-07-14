@@ -18,6 +18,9 @@
              }
          }
      },
+     "js" : {
+        "member" : ["/assets/js/stripe_client.js"]
+     },
      "routes": {
          "v1/api/member/payment/user" : "Member/Payment_api_controller/new_user_payment",
          "v1/api/member/payment" : "Member/Payment_api_controller/payment",
@@ -1215,6 +1218,8 @@
      "translations": {
         "xyzTransaction Type" : "Transaction Type",
         "xyzDowngrade" : "Downgrade",
+        "xyzSelect Card" : "Select Card",
+        "xyzProcced" : "Procced",
         "xyzUpgrade" : "Upgrade",
         "xyzSubscription required to access page" : "Subscription required to access page",
         "xyzSubscription reactivated" : "Subscription reactivated",
