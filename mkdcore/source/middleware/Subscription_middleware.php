@@ -35,11 +35,12 @@ class Subscription_middleware
                 'role_id' => $role_id
             ]);
             
-            $portal = $this->_controller->uri->segment(2);
+            $portal = $this->_controller->uri->segment(1);
 
             if(empty($user_sub))
             {
-                return $this->_controller->redirect("/{$portal}/stripe_subscriptions", 'refresh');
+                $this->_controller->error('xyzSubscription required to access page');
+                return $this->_controller->redirect("/{$portal}/stripe_subscriptions/0", 'refresh');
             }
 
             /**
@@ -48,14 +49,15 @@ class Subscription_middleware
              */
             if($user_sub->status == 5)
             {
-                return $this->_controller->redirect("/{$portal}/stripe_subscriptions", 'refresh');
+                $this->_controller->error('xyzSubscription required to access page');
+                return $this->_controller->redirect("/{$portal}/stripe_subscriptions/0", 'refresh');
             }
 
             return FALSE;
     
         }
-
-        return $this->_controller->redirect("/{$portal}/stripe_subscriptions", 'refresh');
+        $this->_controller->error('xyzSubscription required to access page');
+        return $this->_controller->redirect("/{$portal}/stripe_subscriptions/0", 'refresh');
     }
 
 }

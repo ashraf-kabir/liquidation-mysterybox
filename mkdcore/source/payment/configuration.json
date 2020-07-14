@@ -14,7 +14,7 @@
              "xyzBilling" : {
                  "xyzCards" : "/stripe_cards/0?order_by=id&direction=DESC",
                  "xyzInvoices" : "/stripe_invoices/0?order_by=id&direction=DESC",
-                 "xyzSubscriptions" : "//stripe_subscriptions/0?order_by=id&direction=DESC"
+                 "xyzSubscriptions" : "/stripe_subscriptions/0?order_by=id&direction=DESC"
              }
          }
      },
@@ -1216,6 +1216,7 @@
         "xyzTransaction Type" : "Transaction Type",
         "xyzDowngrade" : "Downgrade",
         "xyzUpgrade" : "Upgrade",
+        "xyzSubscription required to access page" : "Subscription required to access page",
         "xyzSubscription reactivated" : "Subscription reactivated",
         "xyzSubscription canceled" : "Subscription canceled",
         "xyzReactivate Subscription" : "Reactivate Subscription",

@@ -23,17 +23,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
             'stripe_secret_key' => ($this->config->item('stripe_secret_key') ?? '')
         ];
         $this->load->library('payment_service', $stripe_config);
-        $this->_run_middlewares(); 
     }
-
-
-    protected function _middleware()
-    {
-        return [
-            'subscription'
-        ];
-    }
-
 
     private function subscribe($subscription_array, $coupon_id = 0, $plan_id = 0, $user_id = 0, $role_id = 0,  $order_id = 0)
     {
