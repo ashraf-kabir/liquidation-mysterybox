@@ -18,23 +18,26 @@ class {{{controller_name}}} extends {{{uc_portal}}}_controller
     {
         parent::__construct();
         {{{load_libraries}}}
-{{{dynamic_mapping_load}}}
+        {{{dynamic_mapping_load}}}
+        {{{middleware}}}
     }
 
-{{{listing}}}
+    {{{middleware_list}}}
 
-{{{add}}}
+    {{{listing}}}
 
-{{{edit}}}
+    {{{add}}}
 
-{{{view}}}
+    {{{edit}}}
 
-{{{delete}}}
-{{{dynamic_mapping}}}
-{{{autocomplete}}}
-{{{method}}}
-{{{dynamic_mapping_add}}}
-{{{dynamic_mapping_edit}}}
-{{{dynamic_mapping_view}}}
-{{{autocomplete_methods}}}
+    {{{view}}}
+
+    {{{delete}}}
+    {{{dynamic_mapping}}}
+    {{{autocomplete}}}
+    {{{method}}}
+    {{{dynamic_mapping_add}}}
+    {{{dynamic_mapping_edit}}}
+    {{{dynamic_mapping_view}}}
+    {{{autocomplete_methods}}}
 }

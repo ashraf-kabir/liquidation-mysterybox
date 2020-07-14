@@ -365,6 +365,19 @@ class Controller_builder extends Builder
             $template = $this->inject_substitute($template, 'load_libraries', '');
         }
 
+        if(isset($controller['middleware']) && count($controller['middleware']) > 0)
+        {
+            $middleware_str =  file_get_contents('../mkdcore/source/controller/controller_middleware.php');
+            $list = "'" . implode ( "', '", $controller['middleware'] ) . "'";
+            $middleware_str = $this->inject_substitute($middleware_str, 'middleware', $list);
+            $template = $this->inject_substitute($template, 'middleware_list', $middleware_str);
+            $template = $this->inject_substitute($template, 'middleware', '$this->_run_middlewares();');
+        }
+        else
+        {
+            $template = $this->inject_substitute($template, 'middleware_list', '');
+            $template = $this->inject_substitute($template, 'middleware', '');
+        }
 
         if (isset($controller['autocomplete']) && strlen($controller['autocomplete']) > 0)
         {
