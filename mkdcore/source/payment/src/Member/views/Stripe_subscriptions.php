@@ -41,7 +41,7 @@ if ($layout_clean_mode) {
 <section class='p-3'>
     <div class="row">
         <?php foreach( $this->_data['view_data']['plans'] as $plan):?>
-            <div class="col p-0">
+            <div class="col col-4 p-0">
                 <div class="card m-1 <?php if ( !empty($this->_data['view_data']['current_subscription']->plan_id) && $plan->id == $this->_data['view_data']['current_subscription']->plan_id ?? "" ){ echo "border  border-secondary"; } ?>">
                     <div class="card-body">
                         <h4><?php echo $plan->display_name; ?></h4>
@@ -50,15 +50,15 @@ if ($layout_clean_mode) {
                         </p>
                         <?php if(!empty( $this->_data['view_data']['current_subscription']) && $plan->id == $this->_data['view_data']['current_subscription']->plan_id ):?>
                            <?php if(!empty($this->_data['view_data']['current_subscription']) && $this->_data['view_data']['current_subscription']->cancel_at_period_end == 1):?>
-                                <a href="/member/reactivate_subscription" class='btn btn-link text-success'>xyzReactivate Subscription</a>
+                                <a href="/member/reactivate_subscription" class='btn-link text-success pb-'>xyzReactivate Subscription</a>
                            <?php else:?>
-                                <a href="/member/cancel_subscription" class='btn btn-link text-danger'>xyzCancel</a>
+                                <a href="/member/cancel_subscription" class='btn-link text-danger pb-'>xyzCancel</a>
                            <?php endif;?>
                         <?php else:?>
                             <?php if(!empty($this->_data['view_data']['current_plan'])):?>
-                                <a href="/member/change_plan/<?php echo $plan->id;?>" class='btn btn-primary'><?php echo ($this->_data['view_data']['current_plan']->amount > $plan->amount ? "xyzDowngrade" : "xyzUpgrade"  ); ?></a>
+                                <a href="/member/change_plan/<?php echo $plan->id;?>" class='btn btn-primary change-plan'><?php echo ($this->_data['view_data']['current_plan']->amount > $plan->amount ? "xyzDowngrade" : "xyzUpgrade"  ); ?></a>
                             <?php else:?>
-                                <a href="/member/change_plan/<?php echo $plan->id;?>" class='btn btn-primary'>xyzSubscribe</a>
+                                <a href="/member/change_plan/<?php echo $plan->id;?>" class='btn btn-primary change-plan'>xyzSubscribe</a>
                             <?php endif;?>
                         <?php endif;?>
                     </div>
@@ -99,3 +99,43 @@ if ($layout_clean_mode) {
     </table>
     <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
 </section>
+<!-- Modal -->
+<div class="modal fade" id="chooseCardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">xyzChoose Card</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <table class='table'>
+             <thead class='thead-light'>
+                <tr>
+                    <th>xyzLast 4 Digits</th>
+                    <th>xyzBrand</th>
+                    <th>xyzCard Name</th>
+                    <th>xyzActive Card</th>
+                    <th>xyzSelect Card</th>
+                </tr>
+             </thead>
+             <tbody>
+                <?php foreach($this->_data['view_data']['cards'] as $card):?>
+                    <tr>
+                        <td><?php echo $card->card_last;?></td>
+                        <td><?php echo $card->card_brand;?></td>
+                        <td><?php echo $card->card_name;?></td>
+                        <td><?php echo ($card->is_default == 1 ? 'xyzYes' : 'xyzNo');?></td>
+                        <td><a href='#' data-id='<?php echo $card->id;?>' class='btn btn-primary btn-sm btn-select-card'>xyzChoose</a></td>
+                    </tr>
+                <?php endforeach;?>   
+             </tbody>
+          </table>
+          <a href='#' id='btn-change-plan' class="btn btn-primary btn-block" >
+             xyzProcced
+         </a>
+      </div>
+    </div>
+  </div>
+</div>

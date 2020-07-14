@@ -19,7 +19,7 @@
          }
      },
      "js" : {
-        "member" : ["/assets/js/stripe_client.js"]
+        "member" : ["https://js.stripe.com/v3/","/assets/js/stripe_client.js"]
      },
      "routes": {
          "v1/api/member/payment/user" : "Member/Payment_api_controller/new_user_payment",
