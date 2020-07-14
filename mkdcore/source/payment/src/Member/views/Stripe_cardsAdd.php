@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="card">
             <div class="card-body">
                 <?= form_open( "", array('id' => 'payment-form', 'class'=>'billable-class' )) ?>
-				<div class="form-group">
+				<div class="form-group col-md-6 col-sm-12">
 					<label for="Is Default Card">xyzIs Default Card </label>
 					<select id="form_is_default" name="is_default" class="form-control">
 						<?php foreach ($view_model->is_default_mapping() as $key => $value) {
@@ -57,11 +57,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						}?>
 					</select>
 				</div>
-                <div class="form-group">
+                <div class="form-group col-md-6 col-sm-12">
                     <label for="card name">xyzCard Name</label>
                     <input type="text" name='card_name' class='form-control'>
                 </div>
-                <div class="form-group" style='width:100%;' >
+                <div class="form-group col-md-6 col-sm-12" style='width:100%;' >
                     <label for="card-element">
                         xyzCredit or debit card
                     </label>
@@ -69,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div id="card-errors" role="alert"></div>              
                 </div>
 
-                <div class="form-group">
+                <div class="form-group col-md-6 col-sm-12">
                     <input type="submit" class="btn btn-primary" value="Submit">
                 </div>
                 </form>
@@ -77,6 +77,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://js.stripe.com/v3/"></script>
-<script src="/assets/js/stripe_client.js"></script>

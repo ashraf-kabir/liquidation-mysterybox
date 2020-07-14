@@ -489,7 +489,7 @@ class Portal_builder extends Builder
                  * 6. Save values
                  * 7. Save last Step
                  */
-                $menu_html .= "\t\t\t<li ";
+                $menu_html .= "\t\t\t<li";
                 $value_keys = array_keys($value);
                 $condition = [];
                 foreach ($value_keys as $single_value_key)
@@ -500,11 +500,11 @@ class Portal_builder extends Builder
                 $id = md5(uniqid());
                 $menu_html .= "class='<?php echo ($condition_str) ? \"active link-item\" :\" link-item\";?>' >\n";
                 $menu_html .= "\t\t\t\t<li class='link-item'><a href='#{$id}' data-toggle='collapse' aria-expanded='false' class='dropdown-toggle list-group-item list-group-item-action d-flex align-items-center p-4 border-0 '><p class='paragraphText mb-0 text-white d-none d-md-block'>{$key}</p></a></li>\n";
-                $menu_html .= "\t\t\t\t\t<ul class='collapse list-unstyled <?php echo ($condition_str) ? \"show\" :\"\";?>' id='{$id}'>\n";
+                $menu_html .= "\t\t\t\t\t<ul class='sub-menu-items collapse list-unstyled <?php echo ($condition_str) ? \"show\" :\"\";?>' id='{$id}'>\n";
 
                 foreach ($value as $sub_level_key => $sub_level_value)
                 {
-                    $menu_html .= "\t\t\t\t\t\t<li class='link-item'><a href='/{$portal['name']}{$sub_level_value}' class='list-group-item list-group-item-action d-flex align-items-center p-4 border-0 <?php echo (\$page_name == '{$sub_level_key}') ? 'ci-active': '';?>'><p class='pl-3 paragraphText mb-0 text-white d-none d-md-block'>{$sub_level_key}</p></a></li>\n";
+                    $menu_html .= "\t\t\t\t\t\t<li class='sub-menu-item link-item'><a href='/{$portal['name']}{$sub_level_value}' class='list-group-item list-group-item-action d-flex align-items-center p-4 border-0 <?php echo (\$page_name == '{$sub_level_key}') ? 'ci-active': '';?>'><p class='pl-3 paragraphText mb-0  text-white d-none d-md-block'>{$sub_level_key}</p></a></li>\n";
                 }
                 $menu_html .= "\t\t\t\t\t</ul>\n";
                 $menu_html .= "\t\t\t</li>\n";
