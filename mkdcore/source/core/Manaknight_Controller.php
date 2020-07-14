@@ -318,7 +318,8 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
             'affilate' => new Affilate_middleware($this, $this->config),
             'auth' => new Auth_middleware($this, $this->config),
             'acl' => new Acl_middleware($this, $this->config),
-            'maintenance' => new Maintenance_middleware($this, $this->config)
+            'maintenance' => new Maintenance_middleware($this, $this->config),
+            'subscription' => new Subscription_middleware($this, $this->config)
         ];
 
         foreach ($this->_middleware() as $middleware_key)
