@@ -5563,7 +5563,7 @@ button.bg-customGrey:focus {
   background-color: #ababab !important; }
 
 .bg-background {
-  background-color: #e5e5e5 !important; }
+  background-color:  #E9ECEF !important; }
 
 a.bg-background:hover, a.bg-background:focus,
 button.bg-background:hover,
@@ -8676,6 +8676,7 @@ a.text-background:hover, a.text-background:focus {
 .link-underline{
   text-decoration: underline;
 }
+
 body{
   background-color: #E9ECEF !important;
 }

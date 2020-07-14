@@ -42,20 +42,24 @@ if ($layout_clean_mode) {
     <div class="row">
         <?php foreach( $this->_data['view_data']['plans'] as $plan):?>
             <div class="col p-0">
-                <div class="card m-1 <?php if (in_array($plan->id, $this->_data['view_data']['user_plans'])){ echo "border border-warning"; } ?>">
+                <div class="card m-1 <?php if ( !empty($this->_data['view_data']['current_subscription']->plan_id) && $plan->id == $this->_data['view_data']['current_subscription']->plan_id ?? "" ){ echo "border  border-secondary"; } ?>">
                     <div class="card-body">
                         <h4><?php echo $plan->display_name; ?></h4>
                         <p>
                             $<?php echo number_format($plan->amount, 2)?> xyzPer <?php echo ucfirst( $this->_data['view_data']['interval_mapping'][$plan->subscription_interval])?>
                         </p>
-                        <?php if(in_array($plan->id,$this->_data['view_data']['user_plans'])):?>
+                        <?php if(!empty( $this->_data['view_data']['current_subscription']) && $plan->id == $this->_data['view_data']['current_subscription']->plan_id ):?>
                            <?php if(!empty($this->_data['view_data']['current_subscription']) && $this->_data['view_data']['current_subscription']->cancel_at_period_end == 1):?>
                                 <a href="/member/reactivate_subscription" class='btn btn-link text-success'>xyzReactivate Subscription</a>
                            <?php else:?>
                                 <a href="/member/cancel_subscription" class='btn btn-link text-danger'>xyzCancel</a>
                            <?php endif;?>
                         <?php else:?>
-                            <a href="/member/change_plan/<?php echo $plan->id;?>" class='btn btn-primary'>xyzSubscribe</a>
+                            <?php if(!empty($this->_data['view_data']['current_plan'])):?>
+                                <a href="/member/change_plan/<?php echo $plan->id;?>" class='btn btn-primary'><?php echo ($this->_data['view_data']['current_plan']->amount > $plan->amount ? "xyzDowngrade" : "xyzUpgrade"  ); ?></a>
+                            <?php else:?>
+                                <a href="/member/change_plan/<?php echo $plan->id;?>" class='btn btn-primary'>xyzSubscribe</a>
+                            <?php endif;?>
                         <?php endif;?>
                     </div>
                 </div>
@@ -83,9 +87,8 @@ if ($layout_clean_mode) {
                     echo '<tr>';
                         	echo "<td>{$data->id}</td>";
 							echo'<td>' . $data->plan_name . "<br/>" . $data->plan_interval . "<br/>" . '</td>';
-							echo "<td>" . ucfirst($view_model->cancel_at_period_end_mapping()[$data->cancel_at_period_end]) ."</td>";
-							echo "<td>" . date('F d Y', strtotime($data->current_period_start)) . "</td>";
-							echo "<td>" . date('F d Y', strtotime($data->current_period_end)) . "</td>";
+                            echo "<td>" . date('F d Y', strtotime($data->current_period_end)) . "</td>";
+                            echo "<td>" . date('F d Y', strtotime($data->current_period_start)) . "</td>";
 							echo "<td>" . ucfirst($view_model->status_mapping()[$data->status]) ."</td>";
 							echo '<td>';
 							echo '</td>';

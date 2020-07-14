@@ -22,8 +22,18 @@ class Member_stripe_subscriptions_controller extends Member_controller
             'stripe_publish_key' => ($this->config->item('stripe_publish_key') ?? ''),
             'stripe_secret_key' => ($this->config->item('stripe_secret_key') ?? '')
         ];
-        $this->load->library('payment_service', $stripe_config);  
+        $this->load->library('payment_service', $stripe_config);
+        $this->_run_middlewares(); 
     }
+
+
+    protected function _middleware()
+    {
+        return [
+            'subscription'
+        ];
+    }
+
 
     private function subscribe($subscription_array, $coupon_id = 0, $plan_id = 0, $user_id = 0, $role_id = 0,  $order_id = 0)
     {
@@ -95,7 +105,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
         $this->_data['view_data']['current_subscription'] = $this->stripe_subscriptions_model->get_by_fields(['user_id' => $session['user_id'],'role_id' => $session['role']  ]); 
 
         $results = $this->stripe_subscriptions_model->get_paginated( $this->_data['view_model']->get_page(),$this->_data['view_model']->get_per_page(),$where,$order_by,$direction);
-        $this->_data['view_data']['user_plans'] = array_column($results, 'plan_id');
+        $this->_data['view_data']['current_plan'] = $this->stripe_plans_model->get($this->_data['view_data']['current_subscription']->plan_id ?? 0);
 
         foreach($results as $result)
         {
@@ -112,6 +122,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
                 ->set_status_header(200)
                 ->set_output(json_encode($this->_data['view_model']->to_json()));
         }
+       
         return $this->render('Member/Stripe_subscriptions', $this->_data);
 	}
 
