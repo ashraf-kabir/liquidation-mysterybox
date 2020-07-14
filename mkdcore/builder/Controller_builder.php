@@ -2162,7 +2162,7 @@ class Controller_builder extends Builder
             if ($has_mapping)
             {
                 /*$result .= "\t\t\t\t\t\t<h6>{$field[3]}:&nbsp; <?php echo \$view_model->{$mapping_function}()[\$view_model->get_{$field[0]}()];?></h6>\n";*/
-                $result .= "\n\t\t\t\t<div class='row'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t{$field[3]}\n\t\t\t\t\t</div>\n\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<?php echo \$view_model->{$mapping_function}()[\$view_model->get_{$field[0]}()];?>\n\t\t\t\t\t</div>\n\\t\t\t\t\t</div>\n\t\t\t\t";
+                $result .= "\n\t\t\t\t<div class='row'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t{$field[3]}\n\t\t\t\t\t</div>\n\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<?php echo \$view_model->{$mapping_function}()[\$view_model->get_{$field[0]}()];?>\n\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t";
             }
             else
             {
