@@ -42,7 +42,8 @@ class Skeleton_builder extends Builder
             '../release/application/middlewares/Maintenance_middleware.php',
             '../release/application/middlewares/Token_middleware.php',
             '../release/application/middlewares/Token_acl_middleware.php',
-            '../release/application/middlewares/Affilate_middleware.php'
+            '../release/application/middlewares/Affilate_middleware.php',
+            '../release/application/middlewares/Subscription_middleware.php'
         ];
 
         $this->_controllers = [
