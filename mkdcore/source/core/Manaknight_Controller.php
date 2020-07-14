@@ -4,6 +4,7 @@ include_once __DIR__ . '/../middlewares/Auth_middleware.php';
 include_once __DIR__ . '/../middlewares/Acl_middleware.php';
 include_once __DIR__ . '/../middlewares/Maintenance_middleware.php';
 include_once __DIR__ . '/../middlewares/Affilate_middleware.php';
+include_once __DIR__ . '/../middlewares/Subscription_middleware.php';
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
 /**
  * Abstract Controller
