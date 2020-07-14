@@ -72,6 +72,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
 	{
         $this->load->library('pagination');
         $this->load->model('stripe_plans_model');
+        $this->load->model('stripe_cards_model');
         include_once __DIR__ . '/../../view_models/Stripe_subscriptions_member_list_paginate_view_model.php';
         $format = $this->input->get('format', TRUE) ?? 'view';
         $order_by = $this->input->get('order_by', TRUE) ?? '';
@@ -93,7 +94,10 @@ class Member_stripe_subscriptions_controller extends Member_controller
         $this->_data['view_data']['interval_mapping'] = $this->stripe_plans_model->subscription_interval_mapping();
         $this->_data['view_data']['plans'] = $this->stripe_plans_model->get_all();
         $this->_data['view_data']['current_subscription'] = $this->stripe_subscriptions_model->get_by_fields(['user_id' => $session['user_id'],'role_id' => $session['role']  ]); 
-
+        $this->_data['view_data']['cards'] = $this->stripe_cards_model->get_all([
+            'user_id' => $session['user_id'],
+            'role_id' => $session['role']
+        ]);
         $results = $this->stripe_subscriptions_model->get_paginated( $this->_data['view_model']->get_page(),$this->_data['view_model']->get_per_page(),$where,$order_by,$direction);
         $this->_data['view_data']['current_plan'] = $this->stripe_plans_model->get($this->_data['view_data']['current_subscription']->plan_id ?? 0);
 
@@ -129,13 +133,17 @@ class Member_stripe_subscriptions_controller extends Member_controller
 
          $this->load->model('user_model');
          $this->load->model('stripe_plans_model');
+         $this->load->model('stripe_cards_model');
          $session = $this->get_session();
          $user_id = $session['user_id'];
          $role_id = $session['role'];
          $prorate = $this->config->item('prorate_stripe_subscription');
+         $card_id = $this->input->get('card') ?? 0;
 
          $user_obj = $this->user_model->get($user_id);
          $plan_obj = $this->stripe_plans_model->get($plan_id);
+         $card_obj = $this->stripe_cards_model->get($card_id);
+         $source_changed = FALSE;
 
          if(empty($plan_obj))
          {
@@ -196,7 +204,15 @@ class Member_stripe_subscriptions_controller extends Member_controller
             {
                 try
                 {
-                    $subscription_result = $this->payment_service->update_subscription_plan($current_subscription->stripe_id, $plan_obj->stripe_id,  $prorate);
+                   if(!empty($card_obj) && $card_obj->is_default !== 1)
+                   {
+                        $subscription_result = $this->payment_service->update_subscription_plan($current_subscription->stripe_id, $plan_obj->stripe_id, $prorate, $card_obj->stripe_card_id);
+                        $source_changed = TRUE;
+                   }
+                   else
+                   {
+                       $subscription_result = $this->payment_service->update_subscription_plan($current_subscription->stripe_id, $plan_obj->stripe_id, $prorate);
+                   }
                     
                     if(isset($subscription_result['id']))
                     {
@@ -208,6 +224,11 @@ class Member_stripe_subscriptions_controller extends Member_controller
                         ];
 
                         $this->stripe_subscriptions_model->edit($update_params,$current_subscription->id);
+                        
+                        if($source_changed)
+                        {
+                            $this->stripe_cards_model->update_default_card($user_id, $role_id, $card_id);
+                        }
                         $this->success('xyzSubscription plan updated');
                         return $this->redirect('/member/stripe_subscriptions/0');
                     }
@@ -220,6 +241,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
             }
         }
     }
+
 
 
     public function cancel_subscription()

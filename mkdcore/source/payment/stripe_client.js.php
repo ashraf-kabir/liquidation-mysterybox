@@ -37,7 +37,6 @@ $(document).ready(function(){
     $('.change-plan').click(function(e){
       e.preventDefault();
       var url = $(this).attr('href');
-      alert(url);
       $('#btn-change-plan').attr('href', url);
       $('#chooseCardModal').modal('show');
     });

@@ -858,13 +858,18 @@ class Payment_service{
      * @param array $update_data
      * @return \Stripe\Subscription|boolean
      */
-    public function update_subscription($subscription_id, $update_data)
+    public function update_subscription($subscription_id, $update_data, $default_source = '')
     {
         $stripe_type = 'subscription_update';
         $args = [
             'subscription_id' => $subscription_id,
             'data' => $update_data
         ];
+
+        if(!empty($default_source))
+        {
+            $args['default_source'] = $default_source;
+        }
         $result = $this->stripe_master($stripe_type, $args);
         return $result;
     }
@@ -877,7 +882,7 @@ class Payment_service{
      * @param boolean $prorate
      * @return \Stripe\Subscription|boolean
      */
-    public function update_subscription_plan($subscription_id, $plan_id, $prorate = FALSE)
+    public function update_subscription_plan($subscription_id, $plan_id, $prorate = FALSE,$default_source = '' )
     {
         $subscription = $this->retrieve_subscription($subscription_id);
         if (!$subscription)
@@ -943,6 +948,11 @@ class Payment_service{
             {
                 return FALSE;
             }
+        }
+        // update payment method
+        if(!empty($default_source))
+        {
+            $args['default_source'] = $default_source;
         }
         //EOF immediately send invoice if $prorate is not FALSE
         return $result;

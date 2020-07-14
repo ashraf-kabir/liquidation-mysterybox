@@ -102,7 +102,7 @@
                 ["user_id","integer",[], "xyzUser ID", "", ""],
                 ["role_id","integer",[], "xyzRole ID", "", ""]
             ],
-            "method": "\n\n\tpublic function filter($where)\n\t{\n\t\t$this->db->where($where);\n\t\treturn $this->db->get($this->_table)->result();\n\t}\n\n\tpublic function delete_cards($where)\n\t{\n\t\t$this->db->where($where);\n\t\treturn $this->db->delete($this->_table);\n\t}\n",
+            "method": "\n\n\tpublic function filter($where)\n\t{\n\t\t$this->db->where($where);\n\t\treturn $this->db->get($this->_table)->result();\n\t}\n\n\tpublic function delete_cards($where)\n\t{\n\t\t$this->db->where($where);\n\t\treturn $this->db->delete($this->_table);\n\t}\n\n\tpublic function update_default_card($user_id, $role_id, $card_id)\n\t{\n\t\t$this->db->where([\n\t\t\t'role_id' => $role_id,\n\t\t\t'user_id' => $user_id\n\t\t]);\n\t\t$this->db->update($this->_table, ['is_default' => 0]);\n\t\t$this->db->where('id' , $card_id);\n\t\treturn $this->db->update($this->_table, ['is_default' => 1]);\n\t}\n",
             "join": [],
             "mapping": {
                 "is_default" : {
