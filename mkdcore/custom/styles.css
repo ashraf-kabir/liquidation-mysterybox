@@ -8673,7 +8673,9 @@ a.text-background:hover, a.text-background:focus {
 .view-image{
   max-width: 200px;
 }
-.underline{
+.link-underline{
   text-decoration: underline;
-  text-underline-offset: 0.1em;
+}
+body{
+  background-color: #E9ECEF !important;
 }

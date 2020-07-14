@@ -2447,11 +2447,11 @@ class Controller_builder extends Builder
             {
                 if ($has_join)
                 {
-                    $result .= "\t\t\t\t\t\t\techo '<a class=\"btn btn-link  underline btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/edit/' . \$data->a_id . '\">xyzEdit</a>';\n";
+                    $result .= "\t\t\t\t\t\t\techo '<a class=\"btn btn-link  link-underline btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/edit/' . \$data->a_id . '\">xyzEdit</a>';\n";
                 }
                 else
                 {
-                    $result .= "\t\t\t\t\t\t\techo '<a class=\"btn btn-link  underline  btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/edit/' . \$data->id . '\">xyzEdit</a>';\n";
+                    $result .= "\t\t\t\t\t\t\techo '<a class=\"btn btn-link  link-underline  btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/edit/' . \$data->id . '\">xyzEdit</a>';\n";
                 }
             }
 
@@ -2459,11 +2459,11 @@ class Controller_builder extends Builder
             {
                 if ($has_join)
                 {
-                $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  underline btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/view/' . \$data->a_id . '\">xyzView</a>';\n";
+                $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  link-underline btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/view/' . \$data->a_id . '\">xyzView</a>';\n";
                 }
                 else
                 {
-                    $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  underline btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/view/' . \$data->id . '\">xyzView</a>';\n";
+                    $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  link-underline btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/view/' . \$data->id . '\">xyzView</a>';\n";
                 }
             }
 
@@ -2471,11 +2471,11 @@ class Controller_builder extends Builder
             {
                 if ($has_join)
                 {
-                $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  underline text-danger btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/delete/' . \$data->a_id . '\">xyzRemove</a>';\n";
+                $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  link-underline text-danger btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/delete/' . \$data->a_id . '\">xyzRemove</a>';\n";
                 }
                 else
                 {
-                    $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  underline text-danger btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/delete/' . \$data->id . '\">xyzRemove</a>';\n";
+                    $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  link-underline text-danger btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/delete/' . \$data->id . '\">xyzRemove</a>';\n";
                 }
             }
 
@@ -2494,7 +2494,7 @@ class Controller_builder extends Builder
             $route = $parts[1];
             $condition = $parts[2];
             $result .= "\t\t\t\t\t\t\t\$condition = {$condition};\n";
-            $result .= "\t\t\t\t\t\t\techo (\$condition) ? \"{$nbsp} <a class='btn btn-link underline btn-sm' target='_blank' href='{$route}'>{$label}</a>\" : '';\n";
+            $result .= "\t\t\t\t\t\t\techo (\$condition) ? \"{$nbsp} <a class='btn btn-link link-underline btn-sm' target='_blank' href='{$route}'>{$label}</a>\" : '';\n";
         }
         $result .= "\t\t\t\t\t\t\techo '</td>';";
         return $result;
