@@ -21,6 +21,13 @@
             </div>
         </div>
     </nav>
+    <div class="row p-4">
+      <div class="col-3">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#subscriptionModal">
+          xyzSubscribe
+        </button>
+      </div>
+    </div>
     <?php if(isset($page)):?>
         <?php $this->load->view($page);?>
     <?php endif;?>
@@ -46,6 +53,49 @@
        </div>
     </footer>
 
+<!-- Modal -->
+<div class="modal fade" id="subscriptionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">xyzSubscribe</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="/subscribe" class='billable-class' id='payment-form' >
+              <div class="form-group">
+                  <label for="email">xyzEmail</label>
+                  <input type="email" name='email' id='subscription-form-email' class='form-control'>
+              </div>
+              <div class="form-group">
+                  <label for="plan">xyzPlans</label>
+                  <select name="plan" class='form-control' id='plan_id'>
+                      <?php foreach($this->_plans as $plan):?>
+                          <option value="<?php echo $plan->id; ?>"><?php echo $plan->display_name .' : $'. number_format($plan->amount, 2);  ?> xyzPer <?php echo ucfirst( $this->_interval_mapping[$plan->subscription_interval]) ?></option>
+                      <?php endforeach;?>
+                    </select>
+              </div>
+              <div class="form-group">
+                  <label for="card name">xyzCard Name</label>
+                  <input type="text" name='card_name' class='form-control'>
+              </div>
+              <div class="form-group" style='width:100%;' >
+                  <label for="card-element">
+                      xyzCredit or debit card
+                  </label>
+                  <div id="card-element" class="form-control"></div>
+                  <div id="card-errors" role="alert"></div>
+              </div>
+              <div class="form-group">
+                  <input type="submit" class='btn btn-primary btn-block' value='xyzSubscribe'>
+              </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
 <script src="https://js.stripe.com/v3/"></script>

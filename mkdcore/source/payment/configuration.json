@@ -46,7 +46,9 @@
          "v1/api/stripe_events" : "Guest/Stripe_webhooks_api_controller/index",
          "member/change_plan/(:num)" : "Member/Member_stripe_subscriptions_controller/change_plan/$1",
          "member/cancel_subscription" : "Member/Member_stripe_subscriptions_controller/cancel_subscription",
-         "member/reactivate_subscription" : "Member/Member_stripe_subscriptions_controller/reactivate_subscription"
+         "member/reactivate_subscription" : "Member/Member_stripe_subscriptions_controller/reactivate_subscription",
+         "payments" : "Guest/Stripe_payments_controller/index",
+         "save_payment_email" : "Guest/Stripe_payments_controller/save_email"
      },
      "models" : [
         {
@@ -471,7 +473,7 @@
             "count": ""
         },
         {
-            "name": "stripe_pending_subscription",
+            "name": "stripe_pending_email",
             "timestamp": true,
             "migration": true,
             "unique": [],
@@ -1369,6 +1371,8 @@
         "../mkdcore/source/payment/src/Admin/views/Stripe_filesAdd.php" : "../release/application/views/Admin/Stripe_filesAdd.php",
         "../mkdcore/source/payment/src/Member/controllers/Member_stripe_invoices_controller.php" : "../release/application/controllers/Member/Member_stripe_invoices_controller.php",
         "../mkdcore/source/payment/src/Member/controllers/Member_stripe_subscriptions_controller.php" : "../release/application/controllers/Member/Member_stripe_subscriptions_controller.php",
-        "../mkdcore/source/payment/src/Member/controllers/Member_stripe_subscriptions_api_controller.php" : "../release/application/controllers/Member/Member_stripe_subscriptions_api_controller.php"
+        "../mkdcore/source/payment/src/Member/controllers/Member_stripe_subscriptions_api_controller.php" : "../release/application/controllers/Member/Member_stripe_subscriptions_api_controller.php",
+        "../mkdcore/source/payment/src/Guest/views/Layout.php" : "../release/application/views/Guest/Layout.php",
+        "../mkdcore/source/payment/src/Guest/controllers/Stripe_payments_controller.php" : "../release/application/controllers/Guest/Stripe_payments_controller.php"
      }
 }

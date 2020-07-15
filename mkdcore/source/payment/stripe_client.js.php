@@ -40,21 +40,41 @@ $(document).ready(function(){
       $('#btn-change-plan').attr('href', url);
       $('#chooseCardModal').modal('show');
     });
+    
+    $('.btn-select-card').click(function(e){
+      e.preventDefault();
+      var card_id = $(this).data('id');
+      var url =  $('#btn-change-plan').attr('href').split("?")[0];
+      var url = url + '?card=' + card_id;
+      $('#btn-change-plan').attr('href', url);
+      $(".btn-select-card").each(function(){
+        $(this).html('Choose');
+      });
+      $(this).html('Selected');
+   });
+ 
+   $('#subscription-form-email').blur(function(e){
+      var email = $(this).val();
+      $(this).removeClass('border border-danger');
+      if(isValidEmailAddress(email)){
+          $.ajax({ 
+            type: 'GET', 
+            url: '/save_payment_email', 
+            data: { email: email }, 
+            dataType: 'json',
+            success: function (data) { 
+              console.log(data);
+              $(this).removeClass('border border-danger');
+            }
+          });
+       }else{
+        $(this).addClass('border border-danger');
+      }
+   });
+
+  
   });
     
-  $('.btn-select-card').click(function(e){
-     e.preventDefault();
-     var card_id = $(this).data('id');
-     var url =  $('#btn-change-plan').attr('href').split("?")[0];
-     var url = url + '?card=' + card_id;
-     $('#btn-change-plan').attr('href', url);
-     $(".btn-select-card").each(function(){
-       $(this).html('Choose');
-     });
-     $(this).html('Selected');
-  });
-
-
   function stripeTokenHandler(token) {
       // Insert the token ID into the form so it gets submitted to the server
       var form = document.getElementById('payment-form');
@@ -67,3 +87,7 @@ $(document).ready(function(){
       form.submit();
   }
     
+  function isValidEmailAddress(emailAddress) {
+    var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+    return pattern.test(emailAddress);
+  };
