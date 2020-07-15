@@ -12,7 +12,7 @@ $(document).ready(function(){
       
       // Create an instance of the card Element.
     if(document.getElementById('payment-form')){
-        var card = elements.create('card', {style: style, hidePostalCode: false});
+        var card = elements.create('card', {style: style, hidePostalCode: true});
 
         // Add an instance of the card Element into the `card-element` <div>.
         card.mount(document.getElementById('card-element'));
