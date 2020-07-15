@@ -469,7 +469,26 @@
             "pre": "",
             "post": "",
             "count": ""
+        },
+        {
+            "name": "stripe_pending_subscription",
+            "timestamp": true,
+            "migration": true,
+            "unique": [],
+            "seed": [
+            ],
+            "field": [
+                ["id", "integer",[], "ID", "", ""],
+                ["email", "string", [{"limit":255}], "xyzEmail", "" , ""]
+            ],
+            "method": "",
+            "join": [],
+            "mapping": {},
+            "pre": "",
+            "post": "",
+            "count": ""
         }
+
     ],
 
     "controllers" : [
@@ -1332,7 +1351,6 @@
         "../mkdcore/source/payment/subscriptions.php" : "../release/application/views/Admin/subscriptions.php",
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_plans_controller.php" : "../release/application/controllers/Admin/Admin_stripe_plans_controller.php",
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_products_controller.php" : "../release/application/controllers/Admin/Admin_stripe_products_controller.php",
-        "../mkdcore/source/payment/src/Member/controllers/Member_api_controller.php" : "../release/application/controllers/Member/Member_api_controller.php",
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_coupons_controller.php" : "../release/application/controllers/Admin/Admin_stripe_coupons_controller.php",
         "../mkdcore/source/payment/src/Admin/views/Stripe_payment_ordersRefund.php" : "../release/application/views/Admin/Stripe_payment_ordersRefund.php",
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_payment_orders_controller.php" : "../release/application/controllers/Admin/Admin_stripe_payment_orders_controller.php",
@@ -1350,6 +1368,7 @@
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_files_controller.php" : "../release/application/controllers/Admin/Admin_stripe_files_controller.php",
         "../mkdcore/source/payment/src/Admin/views/Stripe_filesAdd.php" : "../release/application/views/Admin/Stripe_filesAdd.php",
         "../mkdcore/source/payment/src/Member/controllers/Member_stripe_invoices_controller.php" : "../release/application/controllers/Member/Member_stripe_invoices_controller.php",
-        "../mkdcore/source/payment/src/Member/controllers/Member_stripe_subscriptions_controller.php" : "../release/application/controllers/Member/Member_stripe_subscriptions_controller.php"
+        "../mkdcore/source/payment/src/Member/controllers/Member_stripe_subscriptions_controller.php" : "../release/application/controllers/Member/Member_stripe_subscriptions_controller.php",
+        "../mkdcore/source/payment/src/Member/controllers/Member_stripe_subscriptions_api_controller.php" : "../release/application/controllers/Member/Member_stripe_subscriptions_api_controller.php"
      }
 }
