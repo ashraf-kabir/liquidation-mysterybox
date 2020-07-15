@@ -173,6 +173,24 @@ class Member_stripe_cards_controller extends Member_controller
 
             if ($result)
             {
+                if($is_default == 1)
+                {
+                    try
+                    {
+                        $customer = $this->payment_service->update_customer_payment_method( $stripe_card['id'] ,$stripe_card['customer']);
+                    }
+                    catch(Exception $e)
+                    {
+                        $this->error('xyzError updating default payment method ' . $e->getMessage() );
+                    }
+
+                    if(isset($customer['id']))
+                    {
+                        $this->stripe_cards_model->update_default_card( $user_obj->id, $role_id, $model->id);
+                    }
+
+                }
+                $this->success('xyzCard created');
                 return $this->redirect('/member/stripe_cards/0', 'refresh');
             }
         }
@@ -184,6 +202,7 @@ class Member_stripe_cards_controller extends Member_controller
 	public function edit($id)
 	{
         $model = $this->stripe_cards_model->get($id);
+        $this->load->model('user_model');
 
 		if (!$model)
 		{
@@ -203,17 +222,43 @@ class Member_stripe_cards_controller extends Member_controller
 		{
 			return $this->render('Member/Stripe_cardsEdit', $this->_data);
         }
-
+        
+        $session = $this->get_session();
+        $user_id = $session['user_id'];
+        $role_id = $session['role'];
         $is_default = $this->input->post('is_default');
-		
-        $result = $this->stripe_cards_model->edit([
-            'is_default' => $is_default,
-			
-        ], $id);
+        
+        if($is_default == 1 && $model->is_default != $is_default)
+        {
+            try
+            {
+                $customer = $this->payment_service->update_customer_payment_method( $model->stripe_card_customer, $model->stripe_card_id);
+            }
+            catch(Exception $e)
+            {
+                $this->_data['error'] = 'xyzError updating payment method ' . $e->getMessage();
+                return $this->render('Member/Stripe_cardsEdit', $this->_data);
+            }
 
-        if ($result)
-        {   
-            return $this->redirect('/member/stripe_cards/0', 'refresh');
+            if(isset($customer['id']))
+            {
+                $result =  $this->stripe_cards_model->update_default_card($user_id, $role_id, $model->id);
+                
+                if ($result)
+                {   
+                    $this->success('xyzCard updated');
+                }
+
+                return $this->redirect('/member/stripe_cards/0', 'refresh');
+            }
+        }
+        else
+        {
+            $result = $this->stripe_cards_model->edit(['is_default' => $is_default], $model->id);
+            if($result)
+            {
+                return $this->redirect('/member/stripe_cards/0', 'refresh');
+            }
         }
 
         $this->_data['error'] = 'Error';

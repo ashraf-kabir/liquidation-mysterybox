@@ -159,7 +159,7 @@ class Payment_service{
      public function update_customer_payment_method($customer_id, $source)
      {
         return Customer::update($customer_id, [
-            'source' => $source,
+            'default_source' => $source,
         ]);
      }
  
