@@ -21,13 +21,7 @@
             </div>
         </div>
     </nav>
-    <div class="row p-4">
-      <div class="col-3">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#subscriptionModal">
-          xyzSubscribe
-        </button>
-      </div>
-    </div>
+   
     <?php if(isset($page)):?>
         <?php $this->load->view($page);?>
     <?php endif;?>
