@@ -20,7 +20,8 @@ class Guest_contact_form_controller extends CI_Controller
 
         $data = [
             'title' => 'Contact Us',
-            'page' => 'HelpCenter'
+            'error' => '',
+            'success' => ''
         ];
 
         if ($this->form_validation->run() === FALSE)
@@ -49,6 +50,5 @@ class Guest_contact_form_controller extends CI_Controller
             $this->load->view('Guest/Contact', $data);
             return;
         }  
-        die('email sending');
     }
 }

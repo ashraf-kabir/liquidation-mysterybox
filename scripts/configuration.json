@@ -216,7 +216,8 @@
 				{"slug": "reset-password","subject": "Reset your password","tag": "email,reset_token,link","html": "Hi {{{email}}},<br/>You have requested to reset your password. Please click the link below to reset it.<br/><a href=\"{{{link}}}/{{{reset_token}}}\">Link</a>. <br/>Thanks,<br/> Admin"},
 				{"slug": "register","subject": "Register","tag": "email","html": "Hi {{{email}}},<br/>Thanks for registering on our platform. <br/>Thanks,<br/> Admin"},
 				{"slug": "confirm-password","subject": "Confirm your account","tag": "email,confirm_token,link","html": "Hi {{{email}}},<br/>Please click the link below to confirm your account.<br/><a href=\"{{{link}}}/{{{confirm_token}}}\">Link</a>Thanks,<br/> Admin"},
-				{"slug": "verify","subject": "verify account with konfor","tag": "code","html": "Your verification # is {{{code}}}"}
+				{"slug": "verify","subject": "verify account with konfor","tag": "code","html": "Your verification # is {{{code}}}"},
+				{"slug": "contact","subject": "contact form message","tag": "name,email,message","html": "Sent by {{{name}}} {{{email}}}<br>  # is {{{message}}}"}
 			]
 		},
 		{
@@ -358,8 +359,6 @@
 				"Images": "/image",
 				"Users": "/users/0",
 				"Settings": "/settings",
-				"Contact": "/contact",
-				"CRM": "/crm",
 				"Profile": "/profile"
 			}
 		},
@@ -845,8 +844,7 @@
 	"libraries": [],
 	"routes": {
 		"migrate": "Migrate",
-		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv",
-		"contact" :"Guest/Home_controller/contact"
+		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv"
 	},
 	"marketing": {
 		"pages": {

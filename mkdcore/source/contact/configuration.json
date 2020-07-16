@@ -98,7 +98,11 @@
    ],
     "translations": {
         "xyzContact Form" : "Contact Form",
-        "xyzBlackList Words" : "BlackList Words" 
+        "xyzBlackList Words" : "BlackList Words",
+        "xyzYour Email" : "Your Email", 
+        "xyzYour Name" : "Your Name",
+        "xyzContact Us" : "Contact Us",
+        "xyzSend Message" : "Send Message"
     },
     "copy": {
         "../mkdcore/source/contact/src/Guest/controllers/Guest_contact_form_controller.php" : "../release/application/controllers/Guest/Guest_contact_form_controller.php",
