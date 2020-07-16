@@ -1041,7 +1041,7 @@
 		"subclass_prefix": "Manaknight_",
 		"migration_number": 9377770345344,
 		"language": "english",
-		"base_url": "http://localhost:9000",
+		"base_url": "https://code.manaknightdigital.com",
 		"site_title": "Manaknight Saas",
 		"company": "Manaknight Inc.",
 		"image_upload": "s3",
