@@ -14,7 +14,7 @@ vendor
 
 src/
 templates/
-
+~
 src/composer.lock
 src/application/controllers/*.php
 src/application/controllers/**/*.php

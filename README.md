@@ -505,6 +505,19 @@ production and local development configurations. You need to add env.json to .gi
 }
 ```
 
+```
+## Stripe Module
+
+You can activate stripe module in pag
+
+```
+ {
+    
+       
+   
+}
+```
+
 ## Reverse Copy
 If you want to copy files from project back into custom, add file path to reverse_copy.
 
