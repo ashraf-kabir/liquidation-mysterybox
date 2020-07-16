@@ -7,7 +7,8 @@
                 "xyzSubscriptions" : "/stripe_subscriptions/0?order_by=id&direction=DESC",
                 "xyzService Products" : "/stripe_service_products/0?order_by=id&direction=DESC",
                 "xyzPlans" : "/stripe_plans/0?order_by=id&direction=DESC",
-                "xyzCoupons" : "/stripe_coupons/0?order_by=id&direction=DESC"
+                "xyzCoupons" : "/stripe_coupons/0?order_by=id&direction=DESC",
+                "xyzPhysical Products" : "/payments_products/0?order_by=id&direction=DESC"
              }
          },
          "member" : {
@@ -539,27 +540,6 @@
                 ["product_id", "integer", [], "xyzProduct ID", "required" , "required"],
                 ["key", "integer", [], "xyzKey", "required" , "required"],
                 ["value", "text", [], "xyzValue", "required" , "required"]
-            ],
-            "method": "",
-            "join": [],
-            "mapping": {
-            },
-            "pre": "",
-            "post": "",
-            "count": ""
-        },
-        {
-            "name": "payment_cart",
-            "timestamp": true,
-            "migration": true,
-            "unique": [],
-            "seed": [
-            ],
-            "field": [
-                ["id", "integer",[], "ID", "", ""],
-                ["user_ud", "integer", [], "xyzUser ID", "required" , "required"],
-                ["data", "text", [], "xyzData", "required" , "required"],
-                ["status", "integer", [], "xyzStatus", "required" , "required"]
             ],
             "method": "",
             "join": [],
@@ -1197,12 +1177,12 @@
             "load_libraries": []
         },
         {
-            "route": "/stripe_cards",
-            "name": "stripe_cards",
-            "page_name": "xyzCards",
-            "model": "stripe_cards",
-            "controller": "Member_stripe_cards_controller.php",
-            "api_controller": "Member_api_stripe_cards_controller.php",
+            "route": "/payments_products",
+            "name": "payment_products",
+            "page_name": "xyzPhysical Products",
+            "model":"payment_products",
+            "controller": "Admin_payment_products_controller.php",
+            "api_controller": "Admin_api_payment_products_controller.php",
             "activity_log":false,
             "override_add": "",
             "override_edit": "",
@@ -1212,7 +1192,7 @@
             "frontend": false,
             "paginate": true,
             "paginate_join": "",
-            "portal": "member",
+            "portal": "admin",
             "is_crud": true,
             "method_edit_pre":"",
             "is_add": true,
@@ -1223,8 +1203,8 @@
             "is_view": true,
             "import": false,
             "export": false,
-            "is_filter": false,
-            "all_records": false,
+            "is_filter": true,
+            "all_records": true,
             "active_only": false,
             "method": "",
             "method_add": "",
@@ -1240,14 +1220,14 @@
             "custom_view_edit": "",
             "custom_view_list": "",
             "custom_view_view": "",
-            "listing_fields_api": ["id", "card_last", "card_brand", "card_exp_month", "exp_year", "card_name", "is_default"],
-            "listing_headers": ["xyzID", "xyzLast 4 Digits", "xyzBrand", "xyzExpiry Month", "xyzExpiry Year", "xyzCard Name", "xyzDefault Card"],
-            "listing_rows": ["id|integer", "card_last|string", "card_brand|string", "card_exp_month|string", "exp_year|string", "card_name|string", "is_default|integer" ],
+            "listing_fields_api": ["id", "name", "description", "price", "quantity"],
+            "listing_headers": ["ID", "xyzName", "xyzDescription", "xyzPrice", "xyzQuantity"],
+            "listing_rows": ["id|integer", "name|string", "description|string", "price|currency", "quantity|integer"],
             "listing_actions": [],
-            "filter_fields": ["card_last","card_brand", "card_name", "is_default"],
-            "add_fields": ["is_default"],
-            "edit_fields": [ "is_default"],
-            "view_fields": ["id", "card_last", "card_brand", "card_exp_month", "exp_year", "card_name", "is_default", "stripe_card_id","stripe_card_customer"],
+            "filter_fields": ["name"],
+            "add_fields": [ "name", "description", "price", "currency", "quantity", "variation_id", "is_parent" ],
+            "edit_fields": ["name", "description", "price", "currency", "quantity", "variation_id", "is_parent"],
+            "view_fields": ["name", "description", "price", "currency", "quantity", "variation_id", "is_parent"],
             "autocomplete": "",
             "dynamic_mapping":{},
             "dynamic_mapping_add" : {},
@@ -1593,7 +1573,8 @@
         "xyzCancel Subscription" : "Cancel Subscription",
         "xyzCancel" : "Cancel",
         "xyzUser Created" : "User Created",
-        "xyzType" : "Type"
+        "xyzType" : "Type",
+        "xyzPhysical Products" : "Physical Products"
      },
      "copy": {
         "../mkdcore/source/payment/Payment_service.php" : "../release/application/libraries/Payment_service.php",
