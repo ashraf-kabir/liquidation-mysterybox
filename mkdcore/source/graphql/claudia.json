@@ -1,0 +1,7 @@
+{
+  "lambda": {
+    "role": "graphql_user-executor",
+    "name": "graphql_project",
+    "region": "us-east-2"
+  }
+}
