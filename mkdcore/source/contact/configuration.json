@@ -1,0 +1,107 @@
+{
+    "menus" : {
+        "admin" : {
+            "xyzContact Form" : {
+               "xyzBlackList Words" : "/contact_form_blacklist"
+            }
+        }
+    },
+    "routes": {
+        "contact" : "Guest/Guest_contact_form_controller"
+    },
+    "models" : [
+        {
+			"name": "contact_form_blacklist",
+			"timestamp": false,
+			"migration": true,
+			"unique": [],
+			"seed": [
+				{"words" : "yyy,zzz"}
+			],
+			"field": [
+				["id", "integer", [], "ID", "", ""],
+				["words", "text", [], "xyzWord Black list", "", "required"]
+			],
+			"method": "",
+			"join": [],
+			"mapping": {},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"override": ""
+		}
+    ],
+
+   "controllers" : [ 
+        {
+            "route": "/contact_form_blacklist",
+            "name": "blackListWords",
+            "page_name": "xyzBlackList Words",
+            "model": "contact_form_blacklist",
+            "controller": "Admin_contact_blacklist_controller.php",
+            "api_controller": "Admin_api_sms_controller.php",
+            "activity_log": false,
+            "override": "",
+            "override_add": "",
+            "override_edit": "",
+            "override_view": "",
+            "override_list": "",
+            "override_add_view_model": "",
+            "override_edit_view_model": "",
+            "override_view_view_model": "",
+            "override_list_view_model": "",
+            "api": false,
+            "frontend": false,
+            "paginate": false,
+            "paginate_join": "",
+            "portal": "admin",
+            "is_crud": true,
+            "method_edit_pre": "",
+            "is_add": false,
+            "is_edit": true,
+            "is_delete": false,
+            "is_real_delete": false,
+            "is_list": true,
+            "is_view": false,
+            "import": false,
+            "export": false,
+            "is_filter": false,
+            "all_records": true,
+            "active_only": false,
+            "method": "",
+            "method_add": "",
+            "method_edit": "",
+            "method_list": "",
+            "method_view": "",
+            "method_add_success": "",
+            "method_edit_success": "",
+            "method_list_success": "",
+            "method_view_success": "",
+            "method_delete_success": "",
+            "custom_view_add": "",
+            "custom_view_edit": "",
+            "custom_view_list": "",
+            "custom_view_view": "",
+            "listing_fields_api": ["id", "words"],
+            "listing_headers": ["ID", "xyzWords"],
+            "listing_rows": ["id|integer", "words|string"],
+            "listing_actions": [],
+            "filter_fields": [],
+            "add_fields": [],
+            "edit_fields": ["words"],
+            "view_fields": ["words"],
+            "autocomplete": "",
+            "dynamic_mapping": {},
+            "dynamic_mapping_add": {},
+            "load_libraries": []
+        }
+   ],
+    "translations": {
+        "xyzContact Form" : "Contact Form",
+        "xyzBlackList Words" : "BlackList Words" 
+    },
+    "copy": {
+        "../mkdcore/source/contact/src/Guest/controllers/Guest_contact_form_controller.php" : "../release/application/controllers/Guest/Guest_contact_form_controller.php",
+        "../mkdcore/source/contact/src/Guest/views/Contact.php" : "../release/application/views/Guest/Contact.php"
+    }
+}

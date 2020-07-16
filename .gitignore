@@ -11,10 +11,11 @@ scripts/copyToProd.sh
 scripts/env.json
 preschema_output/*.json
 vendor
-
+~/
 src/
 templates/
 !mkdcore/source/payment/src
+!mkdcore/source/contact/src
 src/composer.lock
 src/application/controllers/*.php
 src/application/controllers/**/*.php

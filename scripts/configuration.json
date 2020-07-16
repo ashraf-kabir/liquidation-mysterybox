@@ -331,26 +331,6 @@
 			"post": "",
 			"count": "",
 			"override": ""
-		},
-		{
-			"name": "contact_form_blacklist",
-			"timestamp": false,
-			"migration": true,
-			"unique": [],
-			"seed": [
-				{"words" : "remove,this"}
-			],
-			"field": [
-				["id", "integer", [], "ID", "", ""],
-				["words", "text", [], "xyzWord Black list", "", "required"]
-			],
-			"method": "",
-			"join": [],
-			"mapping": {},
-			"pre": "",
-			"post": "",
-			"count": "",
-			"override": ""
 		}
 	],
 	"portals": [{
@@ -654,68 +634,6 @@
 			"load_libraries": []
 		},
 		{
-			"route": "/contact_form_blacklist",
-			"name": "blackListWords",
-			"page_name": "xyzContact Form Blacklist",
-			"model": "contact_form_blacklist",
-			"controller": "Admin_contact_blacklist_controller.php",
-			"api_controller": "Admin_api_sms_controller.php",
-			"activity_log": false,
-			"override": "",
-			"override_add": "",
-			"override_edit": "",
-			"override_view": "",
-			"override_list": "",
-			"override_add_view_model": "",
-			"override_edit_view_model": "",
-			"override_view_view_model": "",
-			"override_list_view_model": "",
-			"api": false,
-			"frontend": false,
-			"paginate": false,
-			"paginate_join": "",
-			"portal": "admin",
-			"is_crud": true,
-			"method_edit_pre": "",
-			"is_add": false,
-			"is_edit": true,
-			"is_delete": false,
-			"is_real_delete": false,
-			"is_list": true,
-			"is_view": true,
-			"import": false,
-			"export": false,
-			"is_filter": false,
-			"all_records": true,
-			"active_only": false,
-			"method": "",
-			"method_add": "",
-			"method_edit": "",
-			"method_list": "",
-			"method_view": "",
-			"method_add_success": "",
-			"method_edit_success": "",
-			"method_list_success": "",
-			"method_view_success": "",
-			"method_delete_success": "",
-			"custom_view_add": "",
-			"custom_view_edit": "",
-			"custom_view_list": "",
-			"custom_view_view": "",
-			"listing_fields_api": ["id", "words"],
-			"listing_headers": ["ID", "xyzWords"],
-			"listing_rows": ["id|integer", "words|string"],
-			"listing_actions": [],
-			"filter_fields": [],
-			"add_fields": [],
-			"edit_fields": ["words"],
-			"view_fields": ["words"],
-			"autocomplete": "",
-			"dynamic_mapping": {},
-			"dynamic_mapping_add": {},
-			"load_libraries": []
-		},
-		{
 			"route": "/image",
 			"name": "image",
 			"page_name": "Images",
@@ -916,6 +834,9 @@
 			"user_portal" : "member",
 			"admin_portal" : "admin",
 			"dynamic_templates" : true
+		},
+		"contact": {
+			"is_active" : true
         },
 		"cache": false,
 		"pdf": false,
@@ -929,12 +850,10 @@
 	},
 	"marketing": {
 		"pages": {
-			"../mkdcore/custom/About_controller.php": "../release/application/controllers/Guest/About_controller.php",
-			"../mkdcore/custom/Home_controller.php": "../release/application/controllers/Guest/Home_controller.php"
+			"../mkdcore/custom/About_controller.php": "../release/application/controllers/Guest/About_controller.php"
 		},
 		"views": {
-			"../mkdcore/custom/About.php": "../release/application/views/Guest/About.php",
-			"../mkdcore/custom/Contact.php": "../release/application/views/Guest/Contact.php"
+			"../mkdcore/custom/About.php": "../release/application/views/Guest/About.php"
 		},
 		"routes": {
 			"about": "Guest/About_controller"
