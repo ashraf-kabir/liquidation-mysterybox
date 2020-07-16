@@ -13,7 +13,9 @@ class Guest_contact_form_controller extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('mail_service');
         $this->load->model('contact_form_blacklist_model');
-
+        $this->load->model('email_model');
+        $this->load->library('mail_service');
+        $this->mail_service->set_adapter('smtp');
         $this->form_validation->set_rules('name', 'Name', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('message', 'Message', 'required');
@@ -43,12 +45,24 @@ class Guest_contact_form_controller extends CI_Controller
         $blacklist = $this->contact_form_blacklist_model->get(1);
         $message_words = explode(' ', $message);
         $blacklist_words =  explode(',',$blacklist->words);
+        $from_email = $this->config->item('from_email');
+        $domain = explode("@", $from_email)[1];
       
         if(!empty($honey_pot) || !empty(array_intersect($message_words, $blacklist_words)))
         {
-            $data['contact_email_sent_success'] = TRUE;
+            $data['success'] = 'Message Sent';
             $this->load->view('Guest/Contact', $data);
             return;
         }  
+
+        $template = $this->email_model->get_template('contact', [
+            'message' => $message,
+            'name' => $name,
+            'email' => $email
+        ]);
+         $this->mail_service->send('no-reply' . $domain , $from_email , $template->subject, $template->html);
+         $data['success'] = 'Message Sent';
+         $this->load->view('Guest/Contact', $data);
+         return;
     }
 }

@@ -217,7 +217,7 @@
 				{"slug": "register","subject": "Register","tag": "email","html": "Hi {{{email}}},<br/>Thanks for registering on our platform. <br/>Thanks,<br/> Admin"},
 				{"slug": "confirm-password","subject": "Confirm your account","tag": "email,confirm_token,link","html": "Hi {{{email}}},<br/>Please click the link below to confirm your account.<br/><a href=\"{{{link}}}/{{{confirm_token}}}\">Link</a>Thanks,<br/> Admin"},
 				{"slug": "verify","subject": "verify account with konfor","tag": "code","html": "Your verification # is {{{code}}}"},
-				{"slug": "contact","subject": "contact form message","tag": "name,email,message","html": "Sent by {{{name}}} {{{email}}}<br>  # is {{{message}}}"}
+				{"slug": "contact","subject": "contact form message","tag": "name,email,message","html": "Sent by {{{name}}} {{{email}}}<br>  {{{message}}}"}
 			]
 		},
 		{
@@ -561,9 +561,9 @@
 			"listing_headers": ["Slug", "Subject", "Tags"],
 			"listing_rows": ["slug|string", "subject|string", "tag|string"],
 			"listing_actions": [],
-			"filter_fields": ["subject|autocomplete:email:email_text:email_slug:email_id"],
-			"add_fields": ["slug","subject|autocomplete:email:email_text:email_slug:email_id","tag","html"],
-			"edit_fields": ["subject|autocomplete:email:slug:email_slug:slug","html","tag"],
+			"filter_fields": ["subject"],
+			"add_fields": ["slug","subject","tag","html"],
+			"edit_fields": ["subject","html","tag"],
 			"view_fields": ["id", "slug", "subject", "tag", "html"],
 			"autocomplete": "",
 			"dynamic_mapping": {},
