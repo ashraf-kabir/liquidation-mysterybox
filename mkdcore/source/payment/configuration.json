@@ -1574,7 +1574,11 @@
         "xyzCancel" : "Cancel",
         "xyzUser Created" : "User Created",
         "xyzType" : "Type",
-        "xyzPhysical Products" : "Physical Products"
+        "xyzPhysical Products" : "Physical Products",
+        "xyzPrice" : "Price",
+        "xyzQuantity" : "Quantity",
+        "xyzVariation" : "Variation",
+        "xyzIs Parent" : "Is Parent"
      },
      "copy": {
         "../mkdcore/source/payment/Payment_service.php" : "../release/application/libraries/Payment_service.php",

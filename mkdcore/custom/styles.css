@@ -8664,9 +8664,6 @@ a.text-background:hover, a.text-background:focus {
 
 #sidebar.active {
   margin-left: -250px; }
-.data-input{
-   max-width: 250px;
-  }
 .edit-preview-image{
   width: 15px;
 }
