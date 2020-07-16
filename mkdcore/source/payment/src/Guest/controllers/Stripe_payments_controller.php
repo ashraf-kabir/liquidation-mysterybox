@@ -77,6 +77,10 @@ class Stripe_payments_controller extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('user_model');
         $this->load->model('credential_model');
+        $this->load->model('stripe_cards_model');
+        $this->load->model('stripe_plans_model');
+        $this->load->model('stripe_pending_email_model');
+
         $data['title'] = 'xyzSubscribe';
         $data['site_title'] = 'Konfor';
         $data['page'] = 'Guest/Subscribe';
@@ -97,6 +101,14 @@ class Stripe_payments_controller extends CI_Controller
         $card_name = $this->input->post('card_name');
         $source = $this->input->post('stripeToken');
         $email = $this->input->post('email');
+        $plan_obj = $this->stripe_plans_model->get($plan_id);
+
+        if(empty($plan_obj))
+        {
+            $data['error'] = 'xyzInvalid Plan';
+            $this->load->view('Guest/Layout', $data);
+            return;
+        }
 
         $credential_params = [
             'email' => $email,
@@ -107,11 +119,74 @@ class Stripe_payments_controller extends CI_Controller
             'password' => str_replace('$2y$', '$2b$', password_hash(uniqid(), PASSWORD_BCRYPT))
         ];
 
-        $credential_id = $this->credential_model->create($params);
+        $credential_id = $this->credential_model->create($credential_params);
         
-        
+        $user_params = [
+            "email" => $email,
+            'first_name' => '',
+            'last_name' => '',
+            'phone' => '',
+            'credential_id' => $credential_id
+        ];
+
+        $user_id = $this->user_model->create( $user_params);
+        $role_id = 1;
+       
+        try
+        {
+            $stripe_client = $this->payment_service->create_customer(['email' => $email, 'source' => $source]);
+
+            if(isset($stripe_client['id']))
+            {
+                $this->user_model->edit(['stripe_id' => $stripe_client['id']],$user_id);
+                $card = $stripe_client['sources']['data'][0] ?? [];
+                if(!empty($card))
+                {
+                    $card_params = [
+                        'card_last' => $card['last4'] ?? " ",
+                        'card_brand' =>  $card['brand'] ?? " ",
+                        'card_exp_month' =>  $card['exp_month'] ?? " ",
+                        'exp_year' => $card['exp_year'] ?? " ",
+                        'card_name' =>  $card_name  ?? ( $card['brand'] ?? " "),
+                        'stripe_card_customer' =>  $card['customer'],
+                        'stripe_card_id' => $card['id'],
+                        'is_default' => 1,
+                        'user_id' => $user_id
+                    ];
+                        
+                    $this->stripe_cards_model->create($card_params);
+                } 
+            }
+
+            $params = [
+                'customer' => $stripe_client['id'],
+                'items' => ['plan' => $plan_obj->stripe_id]
+            ];
+
+            $stripe_subscription = $this->subscribe($params, 0, $plan_obj->id , $user_id , $role_id, 0);
+
+            if($stripe_subscription)
+            {
+                $data['success'] = 'Subscription check your email to complete registration';
+                $this->stripe_pending_email_model->remove($email);
+                $this->load->view('Guest/Layout', $data);
+                return;     
+            }
+
+            $data['error'] = 'Error creating subscription';
+            $this->load->view('Guest/Layout', $data);
+            return;
+
+        }
+        catch(Exception $e)
+        {
+            $data['error'] = $e->getMessage();
+            $this->load->view('Guest/Layout', $data);
+            return;
+        }
 
         $this->load->view('Guest/Layout', $data);
+        return;
     }
 
     public function checkout()

@@ -485,7 +485,7 @@
                 ["id", "integer",[], "ID", "", ""],
                 ["email", "string", [{"limit":255}], "xyzEmail", "" , ""]
             ],
-            "method": "",
+            "method": "    \n\tpublic function remove($email)\n\t{\n\t\t$this->db->where('email', $email);\n\t\treturn $this->db->delete();\n\t}\n",
             "join": [],
             "mapping": {},
             "pre": "",
