@@ -60,7 +60,7 @@ class Guest_contact_form_controller extends CI_Controller
             'name' => $name,
             'email' => $email
         ]);
-         $this->mail_service->send('no-reply' . $domain , $from_email , $template->subject, $template->html);
+         $this->mail_service->send('no-reply@' . $domain , $from_email , $template->subject, $template->html);
          $data['success'] = 'Message Sent';
          $this->load->view('Guest/Contact', $data);
          return;
