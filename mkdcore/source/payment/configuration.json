@@ -5,7 +5,7 @@
                 "xyzDisputes" : "/stripe_disputes",
                 "xyzInvoices" : "/stripe_invoices/0?order_by=id&direction=DESC",
                 "xyzSubscriptions" : "/stripe_subscriptions/0?order_by=id&direction=DESC",
-                "xyzProducts" : "/stripe_products/0?order_by=id&direction=DESC",
+                "xyzService Products" : "/stripe_service_products/0?order_by=id&direction=DESC",
                 "xyzPlans" : "/stripe_plans/0?order_by=id&direction=DESC",
                 "xyzCoupons" : "/stripe_coupons/0?order_by=id&direction=DESC"
              }
@@ -490,6 +490,251 @@
             "pre": "",
             "post": "",
             "count": ""
+        },
+        {
+            "name": "payment_products",
+            "timestamp": true,
+            "migration": true,
+            "unique": [],
+            "seed": [
+            ],
+            "field": [
+                ["id", "integer",[], "ID", "", ""],
+                ["name", "string", [{"limit":255}], "xyzName", "required" , "required"],
+                ["description", "text", [], "xyzDescription", "required" , "required"],
+                ["price", "float", [], "xyzPrice", "required" , "required"],
+                ["currency", "integer", [], "xyzCurrency", "required" , "required"],
+                ["quantity", "integer", [], "xyzQuantity", "required" , "required"],
+                ["variation_id", "integer", [], "xyzVariation", "required" , "required"],
+                ["is_parent", "integer", [], "xyzIs Parent", "required" , "required"],
+                ["status", "integer", [], "xyzStatus", "" , ""]
+            ],
+            "method": "",
+            "join": [],
+            "mapping": {
+                "is_parent" : {
+                    "0" : "xyzNo",
+                    "1" : "xyzYes"
+                },
+                "currency" : {
+                    "0" : "USD",
+                    "1" : "CAD",
+                    "2" : "EUR",
+                    "3" : "GBP"
+                }
+            },
+            "pre": "",
+            "post": "",
+            "count": ""
+        },
+        {
+            "name": "payment_product_meta",
+            "timestamp": true,
+            "migration": true,
+            "unique": [],
+            "seed": [
+            ],
+            "field": [
+                ["id", "integer",[], "ID", "", ""],
+                ["product_id", "integer", [], "xyzProduct ID", "required" , "required"],
+                ["key", "integer", [], "xyzKey", "required" , "required"],
+                ["value", "text", [], "xyzValue", "required" , "required"]
+            ],
+            "method": "",
+            "join": [],
+            "mapping": {
+            },
+            "pre": "",
+            "post": "",
+            "count": ""
+        },
+        {
+            "name": "payment_cart",
+            "timestamp": true,
+            "migration": true,
+            "unique": [],
+            "seed": [
+            ],
+            "field": [
+                ["id", "integer",[], "ID", "", ""],
+                ["user_ud", "integer", [], "xyzUser ID", "required" , "required"],
+                ["data", "text", [], "xyzData", "required" , "required"],
+                ["status", "integer", [], "xyzStatus", "required" , "required"]
+            ],
+            "method": "",
+            "join": [],
+            "mapping": {
+            },
+            "pre": "",
+            "post": "",
+            "count": ""
+        },
+        {
+            "name": "payment_cart",
+            "timestamp": true,
+            "migration": true,
+            "unique": [],
+            "seed": [
+            ],
+            "field": [
+                ["id", "integer",[], "ID", "", ""],
+                ["user_ud", "integer", [], "xyzUser ID", "required" , "required"],
+                ["data", "text", [], "xyzData", "required" , "required"],
+                ["status", "integer", [], "xyzStatus", "required" , "required"]
+            ],
+            "method": "",
+            "join": [],
+            "mapping": {
+            },
+            "pre": "",
+            "post": "",
+            "count": ""
+        },
+        {
+            "name": "payment_order",
+            "timestamp": true,
+            "migration": true,
+            "unique": [],
+            "seed": [
+            ],
+            "field": [
+                ["id", "integer",[], "ID", "", ""],
+                ["user_id", "integer", [], "xyzUser ID", "required" , "required"],
+                ["name",  "string", [{"limit":255}], "xyzData", "required" , "required"],
+                ["shipping_address", "text", [], "xyzShipping Address", "required" , "required"],
+                ["billing_address", "text", [], "xyzBilling Address", "required" , "required"],
+                ["cart_id", "integer", [], "xyzCart ID", "required" , "required"],
+                ["subtotal", "float", [], "xyzSubtotal", "required" , "required"],
+                ["payment_method", "integer", [], "xyzPayment Method", "required" , "required"],
+                ["tax", "float", [], "xyzTax", "required" , "required"],
+                ["total", "float", [], "xyzTotal", "required" , "required"],
+                ["email", "string", [{"limit":255}], "xyzEmail", "required" , "required"],
+                ["data", "text", [], "xyzData", "required" , "required"],
+                ["status", "integer", [], "xyzStatus", "required" , "required"],
+                ["coupon","string", [{"limit":255}], "xyzCoupon", "required" , "required"],
+                ["discount","float", [], "xyzDiscount", "required" , "required"],
+                ["IP","string", [{"limit":255}], "xyzIP", "required" , "required"],
+                ["user_agent","float", [], "xyzUser Agent", "required" , "required"]
+            ],
+            "method": "",
+            "join": [],
+            "mapping": {
+            },
+            "pre": "",
+            "post": "",
+            "count": ""
+        },
+        {
+            "name": "payment_invoice",
+            "timestamp": true,
+            "migration": true,
+            "unique": [],
+            "seed": [
+            ],
+            "field": [
+                ["id", "integer",[], "ID", "", ""],
+                ["type", "integer", [], "xyzType", "required" , "required"],
+                ["payment_method",  "string", [{"limit":255}], "xyzPayment_method", "required" , "required"],
+                ["shipping_address", "text", [], "xyzShipping Address", "required" , "required"],
+                ["shipping_fee", "float", [], "xyzShipping Fee", "required" , "required"]
+            ],
+            "method": "",
+            "join": [],
+            "mapping": {
+            },
+            "pre": "",
+            "post": "",
+            "count": ""
+        },
+        {
+            "name": "coupon_log",
+            "timestamp": true,
+            "migration": true,
+            "unique": [],
+            "seed": [
+            ],
+            "field": [
+                ["id", "integer",[], "ID", "", ""],
+                ["user_id", "integer", [], "xyzUser ID", "required" , "required"],
+                ["IP", "string", [{"limit":255}], "xyzIP", "required" , "required"],
+                ["order_id", "string", [], "xyzOrder ID", "required" , "required"],
+                ["coupon_id", "string", [], "xyzOrder ID", "required" , "required"]
+            ],
+            "method": "",
+            "join": [],
+            "mapping": {
+            },
+            "pre": "",
+            "post": "",
+            "count": ""
+        },
+        {
+            "name": "payment_coupon_log",
+            "timestamp": true,
+            "migration": true,
+            "unique": [],
+            "seed": [
+            ],
+            "field": [
+                ["id", "integer",[], "ID", "", ""],
+                ["user_id", "integer", [], "xyzUser ID", "required" , "required"],
+                ["IP", "string", [{"limit":255}], "xyzIP", "required" , "required"],
+                ["order_id", "string", [], "xyzOrder ID", "required" , "required"],
+                ["coupon_id", "string", [], "xyzOrder ID", "required" , "required"]
+            ],
+            "method": "",
+            "join": [],
+            "mapping": {
+            },
+            "pre": "",
+            "post": "",
+            "count": ""
+        },
+        {
+            "name": "coupon_subscription_log",
+            "timestamp": true,
+            "migration": true,
+            "unique": [],
+            "seed": [
+            ],
+            "field": [
+                ["id", "integer",[], "ID", "", ""],
+                ["user_id", "integer", [], "xyzUser ID", "required" , "required"],
+                ["IP", "string", [{"limit":255}], "xyzIP", "required" , "required"],
+                ["subscription_id", "string", [], "xyzSubscription ID", "required" , "required"],
+                ["coupon_id", "string", [], "xyzCoupon ID", "required" , "required"]
+            ],
+            "method": "",
+            "join": [],
+            "mapping": {
+            },
+            "pre": "",
+            "post": "",
+            "count": ""
+        },
+        {
+            "name": "payment_affiliate_log",
+            "timestamp": true,
+            "migration": true,
+            "unique": [],
+            "seed": [
+            ],
+            "field": [
+                ["id", "integer",[], "ID", "", ""],
+                ["user_id", "integer", [], "xyzUser ID", "required" , "required"],
+                ["IP", "string", [{"limit":255}], "xyzIP", "required" , "required"],
+                ["order_id", "string", [], "xyzSubscription ID", "required" , "required"],
+                ["total", "float", [], "xyzTotal", "required" , "required"],
+                ["status", "integer", [], "xyzStatus", "required" , "required"],
+                ["refer_user_id", "integer", [], "xyzRefer user ID", "required" , "required"]
+            ],
+            "method": "",
+            "join": [],
+            "mapping": {
+            },
+            "pre": "",
+            "post": "",
+            "count": ""
         }
 
     ],
@@ -724,12 +969,12 @@
             "load_libraries": []
         },
          {
-            "route": "/stripe_products",
-            "name": "stripe_products",
-            "page_name": "xyzProducts",
+            "route": "/stripe_service_products",
+            "name": "stripe_service_products",
+            "page_name": "xyzService Products",
             "model": "stripe_products",
-            "controller": "Admin_stripe_products_controller.php",
-            "api_controller": "Admin_api_stripe_products_controller.php",
+            "controller": "Admin_stripe_service_products_controller.php",
+            "api_controller": "Admin_api_stripe_service_products_controller.php",
             "activity_log":false,
             "override_add": "",
             "override_edit": "",
@@ -1327,6 +1572,7 @@
         "xyzStripe Customer ID" : "Stripe Customer ID",
         "xyzSubscription Interval" : "Subscription Interval",
         "xyzInterval Count" : "Interval Count",
+        "xyzService Products" : "Service Products",
         "xyzTrial Period Days" :  "Trial Period Days",
         "xyzDisplay Name" : "Display Name",
         "xyzTrial End" : "Trial End",
@@ -1346,14 +1592,15 @@
         "xyzCurrent Usage" : "Current Usage",
         "xyzCancel Subscription" : "Cancel Subscription",
         "xyzCancel" : "Cancel",
-        "xyzUser Created" : "User Created"
+        "xyzUser Created" : "User Created",
+        "xyzType" : "Type"
      },
      "copy": {
         "../mkdcore/source/payment/Payment_service.php" : "../release/application/libraries/Payment_service.php",
         "../mkdcore/source/payment/payments.php" : "../release/application/views/Admin/payments.php",
         "../mkdcore/source/payment/subscriptions.php" : "../release/application/views/Admin/subscriptions.php",
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_plans_controller.php" : "../release/application/controllers/Admin/Admin_stripe_plans_controller.php",
-        "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_products_controller.php" : "../release/application/controllers/Admin/Admin_stripe_products_controller.php",
+        "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_service_products_controller.php" : "../release/application/controllers/Admin/Admin_stripe_service_products_controller.php",
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_coupons_controller.php" : "../release/application/controllers/Admin/Admin_stripe_coupons_controller.php",
         "../mkdcore/source/payment/src/Admin/views/Stripe_payment_ordersRefund.php" : "../release/application/views/Admin/Stripe_payment_ordersRefund.php",
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_payment_orders_controller.php" : "../release/application/controllers/Admin/Admin_stripe_payment_orders_controller.php",
@@ -1362,7 +1609,7 @@
         "../mkdcore/source/payment/src/Member/controllers/Member_stripe_cards_controller.php" : "../release/application/controllers/Member/Member_stripe_cards_controller.php",
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_subscriptions_controller.php" : "../release/application/controllers/Admin/Admin_stripe_subscriptions_controller.php",
         "../mkdcore/source/payment/src/Admin/views/StripeSubscriptionCancel.php" : "../release/application/views/Admin/StripeSubscriptionCancel.php",
-        "../mkdcore/source/payment/src/Admin/views/Stripe_productsAdd.php": "../release/application/views/Admin/Stripe_productsAdd.php",
+        "../mkdcore/source/payment/src/Admin/views/Stripe_service_productsAdd.php": "../release/application/views/Admin/Stripe_service_productsAdd.php",
         "../mkdcore/source/payment/src/Admin/views/Stripe_plansAdd.php" : "../release/application/views/Admin/Stripe_plansAdd.php",
         "../mkdcore/source/payment/src/Admin/controllers/Admin_stripe_invoices_controller.php" : "../release/application/controllers/Admin/Admin_stripe_invoices_controller.php",
         "../mkdcore/source/payment/src/Admin/views/Stripe_invoiceRefund.php" : "../release/application/views/Admin/Stripe_invoiceRefund.php",
