@@ -55,6 +55,7 @@ class Portal_builder extends Builder
             $this->_routes["{$portal['name']}/dashboard"] = "{$ucname}/{$ucname}_dashboard_controller";
             $this->_routes["{$portal['name']}/profile"] = "{$ucname}/{$ucname}_profile_controller";
             $this->_routes["{$portal['name']}/credential"] = "{$ucname}/{$ucname}_profile_credential_controller";
+            $this->_routes["{$portal['name']}/update_credentials"] = "{$ucname}/{$ucname}_profile_controller/update_credentials";
 
             if (isset($portal['login_type']) && strlen($portal['login_type']) > 0 && in_array($portal['login_type'], $this->_login_types))
             {

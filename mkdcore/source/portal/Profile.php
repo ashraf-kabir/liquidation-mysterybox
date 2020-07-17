@@ -35,16 +35,13 @@
         </div>
     <?php endif; ?>
 </div>
-<h1 class="primaryHeading text-center text-md-left">
-   xyzProfile
-</h1>
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
             <div class="card-body">
-                <h1 class="primaryHeading2 text-center text-md-left">
+                 <h1 class="primaryHeading mb-4 text-center text-md-left">
                     xyzEdit Profile
-                 </h1>
+                </h1>
                 <?= form_open() ?>
 				<div class="form-group">
 					<label for="First Name">xyzFirst Name </label>
@@ -61,7 +58,30 @@
             </div>
         </div>
     </div>
-</div><br>
-<iframe style='width:100%; min-height:400px; overflow:scroll;' src="<?php echo "/{{{portal}}}/credential?layout_clean_mode=1"; ?>" frameborder="0" class='d-iframe'>
- </iframe>
+</div>
+
+<div class="row mt-5 mb-5">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-body">
+                 <h1 class="primaryHeading mb-4 text-center text-md-left">
+                    xyzEdit Credentials
+                </h1>
+                <?= form_open('/{{{portal}}}/update_credentials') ?>
+				<div class="form-group">
+					<label for="First Name">Email</label>
+					<input type="email" class="form-control" id="form_first_name" name="email" value="<?php echo set_value('email', $this->_data['view_model']->get_email());?>"/>
+				</div>
+                <div class="form-group">
+					<label for="Password">Password</label>
+					<input type="password" class="form-control" id="form_password" name="password" />
+				</div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
