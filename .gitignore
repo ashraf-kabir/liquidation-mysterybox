@@ -14,12 +14,8 @@ vendor
 ~/
 src/
 templates/
-<<<<<<< HEAD
 !mkdcore/source/payment/src
 !mkdcore/source/contact/src
-=======
-~
->>>>>>> 2f8ffba7aadd7aa7eb0384da5357f4b1d87f2a07
 src/composer.lock
 src/application/controllers/*.php
 src/application/controllers/**/*.php
