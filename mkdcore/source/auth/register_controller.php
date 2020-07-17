@@ -45,7 +45,7 @@ class {{{ucname}}}_register_controller extends {{{subclass_prefix}}}Controller
 
         $service = new User_service($this->credential_model, $this->{{{model}}});
         $service->set_refer_log_model($this->refer_log_model);
-        $this->form_validation->set_rules('email', 'xyzEmail', 'trim|required|valid_email|is_unique[user.email]');
+        $this->form_validation->set_rules('email', 'xyzEmail', 'trim|required|valid_email|is_unique[credential.email]');
         $this->form_validation->set_rules('password', 'xyzPassword', 'trim|required');
         $this->form_validation->set_rules('confirm_password', 'xyzConfirm Password', 'trim|required|matches[password]');
         $this->form_validation->set_rules('first_name', 'xyzFirst Name', 'trim|required');

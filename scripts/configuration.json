@@ -129,10 +129,9 @@
 		"name": "user",
 		"timestamp": true,
 		"migration": true,
-		"unique": ["email"],
+		"unique": ["credential_id"],
 		"field": [
 				["id", "integer",[], "ID", "", ""],
-				["email", "string", [{"limit":255}], "xyzEmail" , "trim|required|valid_email|is_unique[user.email]", "trim|required|valid_email"],
 				["first_name", "string", [{"limit":255}], "xyzFirst Name" , "", ""],
 				["last_name", "string", [{"limit":255}], "xyzLast Name" , "", ""],
 				["phone", "string", [{"limit":50}], "xyzPhone #" , "", ""],
@@ -141,8 +140,7 @@
 				["credential_id", "integer", [], "xyzCredential ID" , "", ""],
 				["refer", "string", [{"limit":50}], "xyzRefer Code" , "", ""],
 				["profile_id", "integer",[], "xyzProfile", "", ""],
-				["stripe_id", "string", [{"limit":255}], "xyzStripe Id" , "", ""],
-				["expire_at", "date", [], "xyzExpire At" , "", ""]
+				["stripe_id", "string", [{"limit":255}], "xyzStripe Id" , "", ""]
 		],
 		"join": [
 			{
@@ -159,8 +157,8 @@
 		"count": "",
 		"override": "",
 		"seed":[
-				{"email": "admin@manaknight.com", "first_name": "Admin", "last_name": "Admin","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "admin","profile_id": 0,"credential_id" : 1, "stripe_id": "", "expire_at" : "2020-02-17"},
-				{"email": "member@manaknight.com","first_name": "Member",  "last_name": "Member","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "member","profile_id": 0,"credential_id" : 2, "stripe_id": "",   "expire_at" : "2020-03-17" }
+				{"first_name": "Admin", "last_name": "Admin","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "admin","profile_id": 0,"credential_id" : 1, "stripe_id": "", "expire_at" : "2020-02-17"},
+				{"first_name": "Member",  "last_name": "Member","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "member","profile_id": 0,"credential_id" : 2, "stripe_id": "",   "expire_at" : "2020-03-17" }
 		]
 },
 		{
