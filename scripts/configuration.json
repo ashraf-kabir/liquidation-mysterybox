@@ -157,10 +157,10 @@
 		"count": "",
 		"override": "",
 		"seed":[
-				{"first_name": "Admin", "last_name": "Admin","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "admin","profile_id": 0,"credential_id" : 1, "stripe_id": "", "expire_at" : "2020-02-17"},
-				{"first_name": "Member",  "last_name": "Member","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "member","profile_id": 0,"credential_id" : 2, "stripe_id": "",   "expire_at" : "2020-03-17" }
+			{"first_name": "Admin", "last_name": "Admin","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "admin","profile_id": 0,"credential_id" : 1, "stripe_id": "", "expire_at" : "2020-02-17"},
+			{"first_name": "Member",  "last_name": "Member","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "member","profile_id": 0,"credential_id" : 2, "stripe_id": "",   "expire_at" : "2020-03-17" }
 		]
-},
+        },
 		{
 			"name": "token",
 			"timestamp": false,
@@ -191,8 +191,8 @@
 			"unique": [],
 			"seed": [],
 			"override": ""
-	},
-		{
+	   },
+	   {
 			"name": "email",
 			"timestamp": true,
 			"migration": true,
@@ -434,7 +434,7 @@
 			"listing_fields_api": ["id", "email","first_name","last_name"],
 			"listing_headers": ["ID", "Photo", "Personal Information", "Status"],
 			"listing_rows": ["id|integer", "image|image","complex|email:first_name:last_name:phone", "status|integer"],
-			"listing_actions": ["xyzCredentials|/admin/credentials/edit/{$data->credential_id}|(1==1)?TRUE:FALSE"],
+			"listing_actions": [],
 			"filter_fields": ["id", "email","first_name","last_name"],
 			"add_fields": ["email", "first_name","last_name",  "phone", "image"],
 			"edit_fields": ["email", "first_name","last_name", "phone",  "image"],
@@ -1100,7 +1100,10 @@
 		"../mkdcore/custom/collapse-category.svg" : "../release/assets/image/collapse-category.svg",
 		"../mkdcore/custom/styles.css": "../release/assets/css/styles.css",
 		"../mkdcore/custom/app.js": "../release/assets/js/app.js",
-		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css"
+		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css",
+		"../mkdcore/custom/Admin/controllers/Admin_user_controller.php" : "../release/application/controllers/Admin/Admin_user_controller.php",
+		"../mkdcore/custom/Admin/views/UserAdd.php" : "../release/application/views/Admin/UserAdd.php",
+		"../mkdcore/custom/Admin/views/UserEdit.php" : "../release/application/views/Admin/UserEdit.php"
 	},
 	"reverse_copy": {
 		"../release/application/config/constants.php" : "../mkdcore/custom/generated/constants.php"
