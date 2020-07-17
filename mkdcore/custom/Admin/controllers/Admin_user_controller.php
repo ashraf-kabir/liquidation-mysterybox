@@ -18,10 +18,8 @@ class Admin_user_controller extends Admin_controller
     public function __construct()
     {
         parent::__construct();
-        
 		$this->load->model('admin_operation_model');
-		$this->load->model('credential_model');   
-        
+		$this->load->model('credential_model');        
     }
 
     public function index($page)
@@ -124,7 +122,7 @@ class Admin_user_controller extends Admin_controller
         return $this->render('Admin/UserAdd', $this->_data);
 	}
 
-    	public function edit($id)
+    public function edit($id)
 	{
         $model = $this->user_model->get($id);
 
@@ -134,13 +132,30 @@ class Admin_user_controller extends Admin_controller
 			return redirect('/admin/users/0');
         }
 
+        $custom_validation = [
+            ['role_id', 'xyzRole', 'required']
+        ];
+
+        $custom_validation = array_merge($custom_validation, $this->user_model->get_all_validation_rule());
+        $credential_obj = $this->credential_model->get($model->credential_id);
+
+        $model->{'email'} = $credential_obj->email;
+        $model->{'role_id'} = $credential_obj->role_id;
+        $model->{'status'} =  $credential_obj->status;
+        
+        if($this->input->post('email') != $model->email)
+        {
+            $custom_validation[] = ['email', 'xyzEmail', 'trim|required|valid_email|is_unique[credential.email]'];
+        }
+
         include_once __DIR__ . '/../../view_models/User_admin_edit_view_model.php';
         $this->form_validation = $this->user_model->set_form_validation(
-        $this->form_validation, $this->user_model->get_all_edit_validation_rule());
+        $this->form_validation,  $custom_validation);
         $this->_data['view_model'] = new User_admin_edit_view_model($this->user_model);
         $this->_data['view_model']->set_model($model);
         $this->_data['view_model']->set_heading('Users');
-        
+        $this->_data['view_data']['roles'] = $this->credential_model->role_id_mapping();
+        $this->_data['view_data']['status'] = $this->credential_model->status_mapping();
         
 		if ($this->form_validation->run() === FALSE)
 		{
@@ -148,26 +163,40 @@ class Admin_user_controller extends Admin_controller
         }
 
         $email = $this->input->post('email');
+        $status = $this->input->post('status');
+        $role_id = $this->input->post('role_id');
+        $password = $this->input->post('password');
 		$first_name = $this->input->post('first_name');
 		$last_name = $this->input->post('last_name');
 		$phone = $this->input->post('phone');
 		$image = $this->input->post('image');
-		$image_id = $this->input->post('image_id');
-		
-        $result = $this->user_model->edit([
+        $image_id = $this->input->post('image_id');
+        
+        $credential_params = [
             'email' => $email,
+            'role_id' => $role_id,
+            'status' => $status
+        ];
+
+        if(strlen($password) > 2)
+        {
+            $credential_params['password'] = str_replace('$2y$', '$2b$', password_hash($password, PASSWORD_BCRYPT));
+        }
+		
+        $params = [
 			'first_name' => $first_name,
 			'last_name' => $last_name,
 			'phone' => $phone,
 			'image' => $image,
 			'image_id' => $image_id,
-			"password" => str_replace('$2y$', '$2b$', password_hash($password, PASSWORD_BCRYPT)),
-        ], $id);
+        ];
 
-        if ($result)
+        $credential_result = $this->credential_model->edit($credential_params,  $credential_obj->id);
+        $result = $this->user_model->edit($params, $model->id);
+        
+        if ($result && $credential_result)
         {
-            
-            
+            $this->success('xyzSaved');
             return $this->redirect('/admin/users/0', 'refresh');
         }
 

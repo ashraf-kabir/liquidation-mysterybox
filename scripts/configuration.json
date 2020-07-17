@@ -437,7 +437,7 @@
 			"listing_actions": [],
 			"filter_fields": ["id", "email","first_name","last_name"],
 			"add_fields": ["email", "first_name","last_name",  "phone", "image"],
-			"edit_fields": ["email", "first_name","last_name", "phone",  "image"],
+			"edit_fields": ["email", "first_name","last_name", "phone",  "image", "role_id", "status"],
 			"view_fields": ["id","email", "first_name","last_name", "image","phone"],
 			"autocomplete": "",
 			"dynamic_mapping": {},
