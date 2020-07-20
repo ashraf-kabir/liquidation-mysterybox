@@ -39,9 +39,9 @@
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
             <div class="card-body">
-                 <h1 class="primaryHeading mb-4 text-center text-md-left">
+                 <h5 class="primaryHeading2 mb-4 text-md-left">
                     xyzEdit Profile
-                </h1>
+                </h5>
                 <?= form_open() ?>
 				<div class="form-group">
 					<label for="First Name">xyzFirst Name </label>
@@ -64,9 +64,9 @@
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
             <div class="card-body">
-                 <h1 class="primaryHeading mb-4 text-center text-md-left">
+                 <h5 class="primaryHeading2 mb-4 text-md-left">
                     xyzEdit Credentials
-                </h1>
+                </h5>
                 <?= form_open('/{{{portal}}}/update_credentials') ?>
 				<div class="form-group">
 					<label for="First Name">Email</label>

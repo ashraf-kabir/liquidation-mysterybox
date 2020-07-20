@@ -47,34 +47,34 @@ if ($layout_clean_mode) {
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
             <div class="card-body">
-                <h1 class="primaryHeading mb-4 text-center text-md-left">
+                <h5 class="primaryHeading2 mb-4 text-md-left">
                     Edit <?php echo $view_model->get_heading();?>
-                </h1>
+                </h5>
                 <?= form_open() ?>
-                <div class="form-group col-md-6 col-sm-12">
+                <div class="form-group col-md-5 col-sm-12">
 					<label for="First Name">Email </label>
 					<input type="email" class="form-control data-input" id="form_first_name" name="email" value="<?php echo set_value('email', $this->_data['view_model']->get_email());?>"/>
 				</div>
-                <div class="form-group col-md-6 col-sm-12">
+                <div class="form-group col-md-5 col-sm-12">
 					<label for="First Name">First Name </label>
 					<input type="text" class="form-control data-input" id="form_first_name" name="first_name" value="<?php echo set_value('first_name', $this->_data['view_model']->get_first_name());?>"/>
 				</div>
-				<div class="form-group col-md-6 col-sm-12">
+				<div class="form-group col-md-5 col-sm-12">
 					<label for="Last Name">Last Name </label>
 					<input type="text" class="form-control data-input" id="form_last_name" name="last_name" value="<?php echo set_value('last_name', $this->_data['view_model']->get_last_name());?>"/>
 				</div>
-				<div class="form-group col-md-6 col-sm-12">
+				<div class="form-group col-md-5 col-sm-12">
 					<label for="Phone #">Phone # </label>
 					<input type="text" class="form-control data-input" id="form_phone" name="phone" value="<?php echo set_value('phone', $this->_data['view_model']->get_phone());?>"/>
 				</div>
-				<div class="form-group col-md-6 col-sm-12 mb-4">
+				<div class="form-group col-md-5 col-sm-12 mb-4">
 					<label for="Image">Image </label>
 					<img class='edit-preview-image d-block' id="output_image" src="<?php echo set_value('image', $this->_data['view_model']->get_image());?>" onerror=\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\"/>
 					<br/><div class="btn btn-info btn-sm mkd-choose-image" data-image-url="image" data-image-id="image_id" data-image-preview="output_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
 					<input type="hidden" id="image" name="image" value="<?php echo set_value('image', $this->_data['view_model']->get_image());?>"/>
 					<input type="hidden" id="image_id" name="image_id" value="<?php echo set_value('image_id', $this->_data['view_model']->get_image_id());?>"/>
 				</div>
-                <div class="form-group col-md-6 col-sm-12">
+                <div class="form-group col-md-5 col-sm-12">
                     <label for="Image">xyzRole  </label>
                     <select id="form_mobile_support" name="role_id" class="form-control data-input">
 						<?php foreach ($this->_data['view_data']['roles'] as $key => $value) {
@@ -82,7 +82,7 @@ if ($layout_clean_mode) {
 						}?>
 					</select>
                 </div>
-                <div class="form-group col-md-6 col-sm-12">
+                <div class="form-group col-md-5 col-sm-12">
                     <label for="Image">xyzStatus  </label>
                     <select id="form_mobile_support" name="status" class="form-control data-input">
 						<?php foreach ($this->_data['view_data']['status'] as $key => $value) {
@@ -91,12 +91,12 @@ if ($layout_clean_mode) {
 					</select>
                 </div>
 
-                <div class="form-group col-md-6 col-sm-12">
+                <div class="form-group col-md-5 col-sm-12">
 					<label for="Phone #">Password</label>
 					<input type="password" class="form-control data-input" id="password" name="password" />
 				</div>
-                    
-                <div class="form-group col-md-6 col-sm-12">
+
+                <div class="form-group col-md-5 col-sm-12">
                     <input type="submit" class="btn btn-primary ext-white mr-4 my-4" value="Submit">
                 </div>
                 </form>

@@ -40,7 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <?= form_open('', ['method' => 'get']) ?>
                     <div class="row">
 {{{filter}}}
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="xyzSearch">
                         </div>

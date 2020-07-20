@@ -212,7 +212,7 @@ class Report_builder extends Builder
         {
             switch ($field[1]) {
                 case 'string':
-                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12\">\n";
+                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12\">\n";
                     $result .= "\t\t\t\t\t\t\t<div class=\"form-group\">\n";
                     $result .= "\t\t\t\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
                     $result .= "\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo (\$this->_data['{$field[0]}'] != NULL) ? \$this->_data['{$field[0]}'] : '';?>\"/>\n";
@@ -220,7 +220,7 @@ class Report_builder extends Builder
                     $result .= "\t\t\t\t\t\t</div>\n";
                     break;
                 case 'boolean':
-                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12\">\n";
+                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12\">\n";
                     $result .= "\t\t\t\t\t\t\t<div class=\"form-group\">\n";
                     $result .= "\t\t\t\t\t\t\t\t<label class=\"custom-control custom-checkbox\">\n";
                     $result .= "\t\t\t\t\t\t\t\t\t<input type=\"checkbox\" checked=\"<?php echo (\$this->_data['{$field[0]}'] != NULL) ? \$this->_data['{$field[0]}'] : '';?>\" class=\"custom-control-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"1\"/><span class=\"custom-control-label\">{$field[3]}</span>\n";
@@ -229,7 +229,7 @@ class Report_builder extends Builder
                     $result .= "\t\t\t\t\t\t</div>\n";
                     break;
                 case 'date':
-                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12\">\n";
+                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12\">\n";
                     $result .= "\t\t\t\t\t\t\t<div class=\"form-group\">\n";
                     $result .= "\t\t\t\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
                     $result .= "\t\t\t\t\t\t\t\t<input type=\"date\" class=\"form-control\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo (\$this->_data['{$field[0]}'] != NULL) ? \$this->_data['{$field[0]}'] : '';?>\"/>\n";
@@ -237,7 +237,7 @@ class Report_builder extends Builder
                     $result .= "\t\t\t\t\t\t</div>\n";
                     break;
                 case 'datetime':
-                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12\">\n";
+                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12\">\n";
                     $result .= "\t\t\t\t\t\t\t<div class=\"form-group\">\n";
                     $result .= "\t\t\t\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
                     $result .= "\t\t\t\t\t\t\t\t<input type=\"datetime\" class=\"form-control\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo (\$this->_data['{$field[0]}'] != NULL) ? \$this->_data['{$field[0]}'] : '';?>\"/>\n";
@@ -245,7 +245,7 @@ class Report_builder extends Builder
                     $result .= "\t\t\t\t\t\t</div>\n";
                     break;
                 case 'text':
-                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12\">\n";
+                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12\">\n";
                     $result .= "\t\t\t\t\t\t\t<div class=\"form-group\">\n";
                     $result .= "\t\t\t\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
                     $result .= "\t\t\t\t\t\t\t\t<textarea id='{$field[0]}' name='{$field[0]}' class='form-control' rows='5'><?php echo (\$this->_data['{$field[0]}'] != NULL) ? \$this->_data['{$field[0]}'] : '';?></textarea>\n";
@@ -253,7 +253,7 @@ class Report_builder extends Builder
                     $result .= "\t\t\t\t\t\t</div>\n";
                     break;
                 case 'email':
-                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12\">\n";
+                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12\">\n";
                     $result .= "\t\t\t\t\t\t\t<div class=\"form-group\">\n";
                     $result .= "\t\t\t\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
                     $result .= "\t\t\t\t\t\t\t\t<input type=\"email\" class=\"form-control\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo (\$this->_data['{$field[0]}'] != NULL) ? \$this->_data['{$field[0]}'] : '';?>\"/>\n";
@@ -261,7 +261,7 @@ class Report_builder extends Builder
                     $result .= "\t\t\t\t\t\t</div>\n";
                     break;
                 case 'integer':
-                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12\">\n";
+                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12\">\n";
                     $result .= "\t\t\t\t\t\t\t<div class=\"form-group\">\n";
                     $result .= "\t\t\t\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
                     $result .= "\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo (\$this->_data['{$field[0]}'] != NULL) ? \$this->_data['{$field[0]}'] : '';?>\" onkeypress=\"return event.charCode >= 48 && event.charCode <= 57\"/>\n";
@@ -269,7 +269,7 @@ class Report_builder extends Builder
                     $result .= "\t\t\t\t\t\t</div>\n";
                     break;
                 case 'float':
-                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12\">\n";
+                    $result .= "\t\t\t\t\t\t<div class=\"col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12\">\n";
                     $result .= "\t\t\t\t\t\t\t<div class=\"form-group\">\n";
                     $result .= "\t\t\t\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
                     $result .= "\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo (\$this->_data['{$field[0]}'] != NULL) ? \$this->_data['{$field[0]}'] : '';?>\" onkeypress=\"return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 110))\"/>\n";

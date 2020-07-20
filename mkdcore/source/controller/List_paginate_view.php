@@ -25,23 +25,23 @@ if ($layout_clean_mode) {
 <div class="tab-content" id="nav-tabContent">
     <div aria-label="breadcrumb">
         <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
-        <li class="breadcrumb-item active" aria-current="page">
+        <!-- <li class="breadcrumb-item active" aria-current="page">
             <a href="/{{{portal}}}/dashboard" class="breadcrumb-link">xyzDashboard</a>
-        </li>
+        </li> -->
         <li class="breadcrumb-item active" aria-current="page">
             <?php echo $view_model->get_heading();?>
         </li>
         </ol>
     </div>
 </div>
-<h1 class="primaryHeading text-center text-md-left">
+<h5 class="primaryHeading2 text-md-left">
   <?php echo $view_model->get_heading();?>
-</h1>
+</h5>
 <div class="add-part d-flex justify-content-md-end  my-4">
     {{{add}}}
 </div>
 
-<section class="table-placeholder bg-white mb-5 p-3" style='height:auto;'> 
+<section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4" style='height:auto;'>
     <div class="row">
         <div class="col p-2">
             <div class="float-right mr-4">{{{import}}}</div>

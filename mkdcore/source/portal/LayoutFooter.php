@@ -77,15 +77,15 @@
   </div>
 </div>
 <div class="modal fade" id="modal-image-show" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
+  <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body justify-content-center p1">
-          <center><img style='max-width:100%;' id='modal-image-slot' src="" alt=""></center>
+      <div class="modal-body justify-content-center p1 text-center">
+          <img id='modal-image-slot' src="" alt="">
       </div>
     </div>
   </div>

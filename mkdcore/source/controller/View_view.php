@@ -9,9 +9,9 @@ if ($layout_clean_mode) {
               <!-- Bread Crumb -->
 <div aria-label="breadcrumb">
     <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
-        <li class="breadcrumb-item active" aria-current="page">
+        <!-- <li class="breadcrumb-item active" aria-current="page">
             <a href="/{{{portal}}}/dashboard" class="breadcrumb-link">xyzDashboard</a>
-        </li>
+        </li> -->
         <li class="breadcrumb-item active" aria-current="page">
             <a href="/{{{portal}}}{{{route}}}" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>
         </li>
@@ -24,9 +24,9 @@ if ($layout_clean_mode) {
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card pb-5" style='border-bottom:1px solid #ccc;'>
             <div class="card-body">
-                <h1 class="primaryHeading2 text-center text-md-left">
-                    <?php echo $view_model->get_heading();?> xyzView
-                </h1>
+                <h5 class="primaryHeading2 text-md-left">
+                    <?php echo $view_model->get_heading();?> xyzDetails
+                </h5>
                 {{{input}}}{{{custom_view_view}}}
             </div>
         </div>
