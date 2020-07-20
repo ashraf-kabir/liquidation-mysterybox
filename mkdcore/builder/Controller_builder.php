@@ -2175,14 +2175,14 @@ class Controller_builder extends Builder
             if ($has_mapping)
             {
                 /*$result .= "\t\t\t\t\t\t<h6>{$field[3]}:&nbsp; <?php echo \$view_model->{$mapping_function}()[\$view_model->get_{$field[0]}()];?></h6>\n";*/
-                $result .= "\n\t\t\t\t<div class='row'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t{$field[3]}\n\t\t\t\t\t</div>\n\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<?php echo \$view_model->{$mapping_function}()[\$view_model->get_{$field[0]}()];?>\n\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t";
+                $result .= "\n\t\t\t\t<div class='row mb-4'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t{$field[3]}\n\t\t\t\t\t</div>\n\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<?php echo \$view_model->{$mapping_function}()[\$view_model->get_{$field[0]}()];?>\n\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t";
             }
             else
             {
                 if (strpos($field[1], 'image') !== FALSE)
                 {
                     /*$result .= "\t\t\t\t\t\t<h6>{$field[3]}:&nbsp; <img class=\"img-fluid\" src=\"<?php echo \$view_model->get_{$field[0]}();?>\" onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/></h6>\n";*/
-                    $result .= "\n\t\t\t\t<div class='row'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<span class='d-block'>{$field[3]}</span>\n\t\t\t\t\t\t<img class=\"img-fluid d-block mb-3 mt-3 view-image\" src=\"<?php echo \$view_model->get_{$field[0]}();?>\" onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/>\n\t\t\t\t</div>\n\t\t\t\t</div>\n";
+                    $result .= "\n\t\t\t\t<div class='row mb-4'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<span class='d-block'>{$field[3]}</span>\n\t\t\t\t\t\t<img class=\"img-fluid d-block mb-3 mt-3 view-image\" src=\"<?php echo \$view_model->get_{$field[0]}();?>\" onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/>\n\t\t\t\t</div>\n\t\t\t\t</div>\n";
                 }
                 else
                 {
@@ -2191,12 +2191,12 @@ class Controller_builder extends Builder
                     if (strstr($field_type, '|'))
                     {
                        /* $result .= $this->field_type_display($field_type, "\t\t\t\t\t\t<h6>{$field[3]}:&nbsp; <?php echo ", ";?></h6>\n" , "\$view_model->get_{$field[0]}()");*/
-                       $result .= $this->field_type($field_type, "\n\t\t\t\t<div class='row'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t{$field[3]}\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<?php echo" . "$view_model->get_{$field[0]}()" .";?>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n");
+                       $result .= $this->field_type($field_type, "\n\t\t\t\t<div class='row mb-4'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t{$field[3]}\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<?php echo" . "$view_model->get_{$field[0]}()" .";?>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n");
                     }
                     else
                     {
                         /*$result .= "\t\t\t\t\t\t<h6>{$field[3]}:&nbsp; <?php echo \$view_model->get_{$field[0]}();?></h6>\n";*/
-                        $result .= "\n\t\t\t\t<div class='row'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t{$field[3]}\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<?php echo \$view_model->get_{$field[0]}();?>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n";
+                        $result .= "\n\t\t\t\t<div class='row mb-4'>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t{$field[3]}\n\t\t\t\t\t</div>\n\t\t\t\t\t<div class='col'>\n\t\t\t\t\t\t<?php echo \$view_model->get_{$field[0]}();?>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n";
                     }
                 }
             }
