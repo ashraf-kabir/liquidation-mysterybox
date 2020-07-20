@@ -221,10 +221,13 @@
     position: relative; }
     .wrapper .content-wrapper .category .category-expand-img {
       position: absolute;
-      top: 1rem;
+      top: 0;
       left: 1rem;
       transform: rotate(180deg);
-      transition: transform 300ms ease-in-out; }
+      transition: transform 300ms ease-in-out;
+      width: 25px;
+      height: 25px;
+      padding: 5px; }
     .wrapper .content-wrapper .category .categoryList {
       background-color: black;
       transition: transform 300ms ease-in-out; }
