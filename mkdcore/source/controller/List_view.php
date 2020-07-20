@@ -24,9 +24,9 @@
               <!-- Bread Crumb -->
     <div aria-label="breadcrumb">
         <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
-          <li class="breadcrumb-item active" aria-current="page">
-            xyzDashboard
-          </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            <?php echo $view_model->get_heading();?>
+        </li>
         </ol>
     </div>
 </div>
@@ -36,7 +36,7 @@
 <div class="row mb-5">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card"   id="{{{name}}}_listing">
-           
+
             <div class="card-body">
 
                 <div class="table-responsive">
