@@ -988,7 +988,8 @@
 		"xyzMember": "Member",
 		"xyzRemove": "Remove",
 		"xyzCreated At": "Created At",
-		"xyzUpdated At": "Updated At"
+		"xyzUpdated At": "Updated At",
+		"xyzDetails": "Details"
 	},
 	"reporting": [{
 		"name": "Num_users",

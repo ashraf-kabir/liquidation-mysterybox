@@ -25,7 +25,7 @@ if ($layout_clean_mode) {
         <div class="card pb-5" style='border-bottom:1px solid #ccc;'>
             <div class="card-body">
                 <h5 class="primaryHeading2 text-md-left">
-                    <?php echo $view_model->get_heading();?> xyzView
+                    <?php echo $view_model->get_heading();?> xyzDetails
                 </h5>
                 {{{input}}}{{{custom_view_view}}}
             </div>
