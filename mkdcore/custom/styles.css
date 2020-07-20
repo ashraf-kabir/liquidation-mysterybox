@@ -1664,6 +1664,9 @@ pre {
   .table thead th {
     vertical-align: bottom;
     border-bottom: 2px solid #dee2e6; }
+  .table thead th:first-child, .table thead th:last-child {
+      border-left: 1px solid #dee2e6;
+  }
   .table tbody + tbody {
     border-top: 2px solid #dee2e6; }
 
