@@ -34,9 +34,9 @@ if ($layout_clean_mode) {
         </ol>
     </div>
 </div>
-<h1 class="primaryHeading text-md-left">
+<h5 class="primaryHeading2 text-md-left">
   <?php echo $view_model->get_heading();?>
-</h1>
+</h5>
 <div class="add-part d-flex justify-content-md-end  my-4">
     {{{add}}}
 </div>

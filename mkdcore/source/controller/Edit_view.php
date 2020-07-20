@@ -47,9 +47,9 @@ if ($layout_clean_mode) {
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
             <div class="card-body">
-                <h1 class="primaryHeading mb-4 text-center text-md-left pl-3">
+                <h5 class="primaryHeading2 mb-4 text-md-left pl-3">
                     xyzEdit <?php echo $view_model->get_heading();?>
-                </h1>
+                </h5>
                 <?= form_open() ?>
                     {{{input}}}
                     {{{custom_view_edit}}}

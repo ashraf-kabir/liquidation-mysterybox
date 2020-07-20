@@ -43,9 +43,9 @@ if ($layout_clean_mode) {
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card" id="{{{name}}}_filter_listing">
             <div class="card-body">
-              <h1 class="primaryHeading2 text-md-left">
+              <h5 class="primaryHeading2 text-md-left">
                     <?php echo $view_model->get_heading();?> xyzSearch
-              </h1>
+              </h5>
                 <?= form_open('/{{{portal}}}{{{route}}}', ['method' => 'get']) ?>
                     <div class="row">
                     {{{filter}}}

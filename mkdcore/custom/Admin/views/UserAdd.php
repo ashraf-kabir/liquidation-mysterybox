@@ -48,9 +48,9 @@ if ($layout_clean_mode) {
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
             <div class="card-body">
-                <h1 class="primaryHeading mb-4 text-center text-md-left">
+                <h5 class="primaryHeading2 mb-4 text-md-left">
                     Add <?php echo $view_model->get_heading();?>
-                </h1>
+                </h5>
                 <?= form_open() ?>
                 <div class="form-group col-md-6 col-sm-12 ">
 					<label for="Email">xyzEmail</label>
@@ -83,7 +83,7 @@ if ($layout_clean_mode) {
 						}?>
 					</select>
                 </div>
-               
+
                 <div class="form-group col-md-6 col-sm-12 ">
 					<label for="Email">xyzPassword</label>
 					<input type="password" class="form-control data-input" id="form_first_name" name="password" />

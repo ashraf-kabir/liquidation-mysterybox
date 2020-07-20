@@ -30,9 +30,9 @@
         </ol>
     </div>
 </div>
-<h1 class="primaryHeading text-md-left">
+<h5 class="primaryHeading2 text-md-left">
   <?php echo $view_model->get_heading();?>
-</h1>
+</h5>
 <div class="row mb-5">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card"   id="{{{name}}}_listing">

@@ -47,9 +47,9 @@ if ($layout_clean_mode) {
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
             <div class="card-body">
-                <h1 class="primaryHeading mb-4 text-center text-md-left">
+                <h5 class="primaryHeading2 mb-4 text-md-left">
                     Edit <?php echo $view_model->get_heading();?>
-                </h1>
+                </h5>
                 <?= form_open() ?>
                 <div class="form-group col-md-6 col-sm-12">
 					<label for="First Name">Email </label>
@@ -95,7 +95,7 @@ if ($layout_clean_mode) {
 					<label for="Phone #">Password</label>
 					<input type="password" class="form-control data-input" id="password" name="password" />
 				</div>
-                    
+
                 <div class="form-group col-md-6 col-sm-12">
                     <input type="submit" class="btn btn-primary ext-white mr-4 my-4" value="Submit">
                 </div>

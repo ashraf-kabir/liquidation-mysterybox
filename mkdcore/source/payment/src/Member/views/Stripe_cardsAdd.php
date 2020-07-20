@@ -41,9 +41,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     <?php endif; ?>
 </div>
-<h1 class="primaryHeading mb-4 text-center text-md-left">
+<h5 class="primaryHeading2 mb-4 text-md-left">
     Add <?php echo $view_model->get_heading();?>
-</h1>
+</h5>
 <div class="row mb-5">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
@@ -66,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         xyzCredit or debit card
                     </label>
                     <div id="card-element" class="form-control"></div>
-                    <div id="card-errors" role="alert"></div>              
+                    <div id="card-errors" role="alert"></div>
                 </div>
 
                 <div class="form-group col-md-6 col-sm-12">
@@ -78,4 +78,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 </div>
 
-  
+

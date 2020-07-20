@@ -17,9 +17,9 @@ if ($layout_clean_mode) {
         </ol>
     </div>
 </div>
-<h1 class="primaryHeading text-center text-md-left">
+<h5 class="primaryHeading2 text-md-left">
   <?php echo $view_model->get_heading();?>
-</h1>
+</h5>
 <?php if (strlen($error) > 0) : ?>
     <div class="row">
         <div class="col-md-12">
@@ -68,7 +68,7 @@ if ($layout_clean_mode) {
     </div>
 </section>
 
-<section class="table-placeholder bg-white mb-5 p-1" style='height:auto;'> 
+<section class="table-placeholder bg-white mb-5 p-1" style='height:auto;'>
     <div class="row">
         <div class="col p-2">
             <div class="float-right mr-4"></div>
@@ -129,7 +129,7 @@ if ($layout_clean_mode) {
                         <td><?php echo ($card->is_default == 1 ? 'xyzYes' : 'xyzNo');?></td>
                         <td><a href='#' data-id='<?php echo $card->id;?>' class='btn btn-primary btn-sm btn-select-card'>xyzChoose</a></td>
                     </tr>
-                <?php endforeach;?>   
+                <?php endforeach;?>
              </tbody>
           </table>
           <a href='#' id='btn-change-plan' class="btn btn-primary btn-block" >

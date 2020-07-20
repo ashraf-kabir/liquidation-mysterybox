@@ -18,9 +18,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </ol>
     </div>
 </div>
-<h1 class="primaryHeading mb-4 text-center text-md-left">
+<h5 class="primaryHeading2 mb-4 text-md-left">
     xyzAdd <?php echo $view_model->get_heading();?>
-</h1>
+</h5>
 <div class="row">
     <?php if (validation_errors()) : ?>
         <div class="col-md-12">
