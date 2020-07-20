@@ -8620,6 +8620,9 @@ a.text-background:hover, a.text-background:focus {
   .link-item{
     list-style: none;
   }
+  .list-group-item:hover {
+    background-color: rgba(196, 196, 196, 0.25) !important;
+  }
   #collapse-nav:hover{
     cursor: pointer;
   }
