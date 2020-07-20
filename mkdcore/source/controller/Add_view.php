@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-/*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
+/*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2020*/
 if ($layout_clean_mode) {
     echo '<style>#content{padding:0px !important;}</style>';
 }
@@ -10,9 +10,9 @@ if ($layout_clean_mode) {
               <!-- Bread Crumb -->
 <div aria-label="breadcrumb">
     <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
-        <li class="breadcrumb-item active" aria-current="page">
+        <!-- <li class="breadcrumb-item active" aria-current="page">
             <a href="/{{{portal}}}/dashboard" class="breadcrumb-link">xyzDashboard</a>
-        </li>
+        </li> -->
         <li class="breadcrumb-item active" aria-current="page">
             <a href="/{{{portal}}}{{{route}}}" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>
         </li>
@@ -48,7 +48,7 @@ if ($layout_clean_mode) {
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
             <div class="card-body">
-                <h1 class="primaryHeading mb-4 text-center text-md-left">
+                <h1 class="primaryHeading mb-4 text-center text-md-left pl-3">
                     xyzAdd <?php echo $view_model->get_heading();?>
                 </h1>
                 <?= form_open() ?>

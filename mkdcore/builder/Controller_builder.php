@@ -1947,7 +1947,7 @@ class Controller_builder extends Builder
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'text':
-                        $result .= "\t\t\t\t<div class=\"form-group col-md-9 col-sm-12\">\n";
+                        $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
                         $result .= "\t\t\t\t\t<textarea id='form_{$field[0]}' name='{$field[0]}' class='form-control data-input' rows='5'><?php echo set_value('{$field[0]}'); ?></textarea>\n";
                         $result .= "\t\t\t\t</div>\n";
@@ -2113,7 +2113,7 @@ class Controller_builder extends Builder
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'text':
-                        $result .= "\t\t\t\t<div class=\"form-group col-md-9 col-sm-12\">\n";
+                        $result .= "\t\t\t\t<div class=\"form-group col-md-6 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
                         $result .= "\t\t\t\t\t<textarea id='form_{$field[0]}' name='{$field[0]}' class='data-input form-control' rows='5'><?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?></textarea>\n";
                         $result .= "\t\t\t\t</div>\n";
