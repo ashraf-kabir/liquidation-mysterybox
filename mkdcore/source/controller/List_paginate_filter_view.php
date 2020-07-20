@@ -66,7 +66,7 @@ if ($layout_clean_mode) {
     {{{add}}}
 </div>
 
-  <section class="table-placeholder bg-white mb-5 p-3" style='height:auto;'>
+  <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4" style='height:auto;'>
     <div class="row">
         <div class="col p-2">
             <div class="float-right mr-4">{{{import}}}</div>
