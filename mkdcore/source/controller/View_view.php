@@ -8,10 +8,7 @@ if ($layout_clean_mode) {
 <div class="tab-content" id="nav-tabContent">
               <!-- Bread Crumb -->
 <div aria-label="breadcrumb">
-    <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
-        <!-- <li class="breadcrumb-item active" aria-current="page">
-            <a href="/{{{portal}}}/dashboard" class="breadcrumb-link">xyzDashboard</a>
-        </li> -->
+    <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start" style="background-color: inherit;">
         <li class="breadcrumb-item active" aria-current="page">
             <a href="/{{{portal}}}{{{route}}}" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>
         </li>

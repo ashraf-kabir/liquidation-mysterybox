@@ -25,19 +25,7 @@ if ($layout_clean_mode) {
         </div>
     </div>
 <?php endif; ?>
-<div class="tab-content" id="nav-tabContent">
-              <!-- Bread Crumb -->
-    <div aria-label="breadcrumb">
-        <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
-            <!-- <li class="breadcrumb-item active" aria-current="page">
-                <a href="/{{{portal}}}/dashboard" class="breadcrumb-link">xyzDashboard</a>
-            </li> -->
-            <li class="breadcrumb-item active" aria-current="page">
-                <?php echo $view_model->get_heading();?>
-            </li>
-        </ol>
-    </div>
-</div>
+
 <section>
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -111,7 +99,7 @@ if ($layout_clean_mode) {
             }
         } ?>
         </thead>
-        <tbody>
+        <tbody class="tbody-light">
             <?php foreach ($view_model->get_list() as $data) { ?>
                 <?php
                     echo '<tr>';

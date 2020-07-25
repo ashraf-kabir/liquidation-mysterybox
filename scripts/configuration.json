@@ -356,8 +356,9 @@
 				},
 				"Images": "/image",
 				"Users": "/users/0",
-				"Settings": "/settings",
-				"Profile": "/profile"
+				"Change Password": "/me",
+				"Profile": "/profile",
+				"Logout": "/logout"
 			}
 		},
 		{
@@ -412,8 +413,8 @@
 			"is_real_delete": false,
 			"is_list": true,
 			"is_view": true,
-			"import": true,
-			"export": true,
+			"import": false,
+			"export": false,
 			"is_filter": true,
 			"all_records": true,
 			"active_only": false,
@@ -434,10 +435,10 @@
 			"listing_fields_api": ["id", "email","first_name","last_name"],
 			"listing_headers": ["ID", "Photo", "Personal Information", "Status"],
 			"listing_rows": ["id|integer", "image|image","complex|email:first_name:last_name:phone", "status|integer"],
-			"listing_actions": [],
+			"listing_actions": ["Credential|/admin/credentials/edit/{$data->credential_id}|(1==1)?TRUE:FALSE"],
 			"filter_fields": ["id", "email","first_name","last_name"],
 			"add_fields": ["email", "first_name","last_name",  "phone", "image"],
-			"edit_fields": ["email", "first_name","last_name", "phone",  "image", "role_id", "status"],
+			"edit_fields": ["email", "first_name","last_name", "phone",  "image"],
 			"view_fields": ["id","email", "first_name","last_name", "image","phone"],
 			"autocomplete": "",
 			"dynamic_mapping": {},
@@ -447,7 +448,7 @@
 	{
 			"route": "/credentials",
 			"name": "user_credentials",
-			"page_name": "Users",
+			"page_name": "Credential",
 			"model": "credential",
 			"controller": "Admin_credential_controller.php",
 			"api_controller": "Admin_api_credential_controller.php",
@@ -484,8 +485,8 @@
 			"method_edit": "\"password\" => str_replace('$2y$', '$2b$', password_hash($password, PASSWORD_BCRYPT)),",
 			"method_list": "",
 			"method_view": "",
-			"method_add_success": "error_log('a');",
-			"method_edit_success": "",
+			"method_add_success": "return $this->redirect('/admin/users/0', 'refresh');",
+			"method_edit_success": "return $this->redirect('/admin/users/0', 'refresh');",
 			"method_list_success": "",
 			"method_view_success": "",
 			"method_delete_success": "",
@@ -989,7 +990,7 @@
 		"xyzRemove": "Remove",
 		"xyzCreated At": "Created At",
 		"xyzUpdated At": "Updated At",
-		"xyzDetails": "Details"
+		"xyzChange Password": "Change Password"
 	},
 	"reporting": [{
 		"name": "Num_users",
@@ -1096,15 +1097,11 @@
 		"Token_cronjob_controller.php": "Token_cronjob_controller.php"
 	},
 	"copy": {
-		"../mkdcore/custom/style.css": "../release/assets/css/style.css",
 		"../mkdcore/custom/logout.svg" : "../release/assets/image/logout.svg",
 		"../mkdcore/custom/collapse-category.svg" : "../release/assets/image/collapse-category.svg",
 		"../mkdcore/custom/styles.css": "../release/assets/css/styles.css",
 		"../mkdcore/custom/app.js": "../release/assets/js/app.js",
-		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css",
-		"../mkdcore/custom/Admin/controllers/Admin_user_controller.php" : "../release/application/controllers/Admin/Admin_user_controller.php",
-		"../mkdcore/custom/Admin/views/UserAdd.php" : "../release/application/views/Admin/UserAdd.php",
-		"../mkdcore/custom/Admin/views/UserEdit.php" : "../release/application/views/Admin/UserEdit.php"
+		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css"
 	},
 	"reverse_copy": {
 		"../release/application/config/constants.php" : "../mkdcore/custom/generated/constants.php"

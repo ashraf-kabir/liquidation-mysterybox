@@ -20,16 +20,7 @@
         </div>
     </div>
 <?php endif; ?>
-<div class="tab-content" id="nav-tabContent">
-              <!-- Bread Crumb -->
-    <div aria-label="breadcrumb">
-        <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
-        <li class="breadcrumb-item active" aria-current="page">
-            <?php echo $view_model->get_heading();?>
-        </li>
-        </ol>
-    </div>
-</div>
+
 <h5 class="primaryHeading2 text-md-left">
   <?php echo $view_model->get_heading();?>
 </h5>
@@ -46,7 +37,7 @@
                             echo "<th text-left>{$data}</th>";
                         } ?>
                         </thead>
-                        <tbody>
+                        <tbody class="tbody-light">
                         <?php foreach ($view_model->get_list() as $data) { ?>
                             <?php
                             echo '<tr>';

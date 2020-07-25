@@ -5,22 +5,6 @@ if ($layout_clean_mode) {
     echo '<style>#content{padding:0px !important;}</style>';
 }
 ?>
-
-<div class="tab-content" id="nav-tabContent">
-              <!-- Bread Crumb -->
-<div aria-label="breadcrumb">
-    <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
-        <!-- <li class="breadcrumb-item active" aria-current="page">
-            <a href="/{{{portal}}}/dashboard" class="breadcrumb-link">xyzDashboard</a>
-        </li> -->
-        <li class="breadcrumb-item active" aria-current="page">
-            <a href="/{{{portal}}}{{{route}}}" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">
-            xyzAdd
-        </li>
-    </ol>
-</div>
 <br/>
 <div class="row">
     <?php if (validation_errors()) : ?>
@@ -45,18 +29,26 @@ if ($layout_clean_mode) {
         </div>
     <?php endif; ?>
 </div>
+<br/>
 <div class="row mb-5">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
             <div class="card-body">
                 <h5 class="primaryHeading2 mb-4 text-md-left pl-3">
-                    xyzAdd <?php echo $view_model->get_heading();?>
+                    xyzChange Password
                 </h5>
                 <?= form_open() ?>
-                    {{{input}}}
-                    {{{custom_view_add}}}
-                <div class="form-group  col-md-6 col-sm-12">
-                    <input type="submit" class="btn btn-primary text-white mr-4 my-4" value="xyzSubmit">
+                    				<div class="form-group col-md-5 col-sm-12">
+					<label for="Email">xyzEmail </label>
+					<input type="text" class="form-control data-input" id="form_email" name="email" value="<?php echo set_value('email', $this->_data['email']);?>"/>
+				</div>
+				<div class="form-group col-md-5 col-sm-12">
+					<label for="Password">Password </label>
+					<input type="password" class="form-control data-input" id="form_password" name="password" value=""/>
+				</div>
+
+                <div class="form-group col-md-5 col-sm-12">
+                    <input type="submit" class="btn btn-primary ext-white mr-4 my-4" value="xyzSubmit">
                 </div>
                 </form>
             </div>

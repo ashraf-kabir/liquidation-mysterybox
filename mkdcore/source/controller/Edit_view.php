@@ -20,6 +20,7 @@ if ($layout_clean_mode) {
         </li>
     </ol>
 </div>
+<br/>
 <div class="row">
     <?php if (validation_errors()) : ?>
         <div class="col-md-12">

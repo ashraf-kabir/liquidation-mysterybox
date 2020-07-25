@@ -54,6 +54,7 @@ class Portal_builder extends Builder
             $ucname = ucfirst($portal['name']);
             $this->_routes["{$portal['name']}/dashboard"] = "{$ucname}/{$ucname}_dashboard_controller";
             $this->_routes["{$portal['name']}/profile"] = "{$ucname}/{$ucname}_profile_controller";
+            $this->_routes["{$portal['name']}/me"] = "{$ucname}/{$ucname}_me_controller/me";
             $this->_routes["{$portal['name']}/credential"] = "{$ucname}/{$ucname}_profile_credential_controller";
             $this->_routes["{$portal['name']}/update_credentials"] = "{$ucname}/{$ucname}_profile_controller/update_credentials";
 
@@ -170,6 +171,18 @@ class Portal_builder extends Builder
             $profile_controller_template = $this->inject_substitute($profile_controller_template, 'uc_model', ucfirst($portal['model']));
             $profile_controller_template = $this->inject_substitute($profile_controller_template, 'middleware', $this->process_middleware($portal['middleware']));
             $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_profile_controller.php"] = $profile_controller_template;
+
+            $me_controller_template = file_get_contents('../mkdcore/source/portal/Portal_credential_controller.php');
+            $me_view_template = file_get_contents('../mkdcore/source/portal/me.php');
+            $me_controller_template = $this->inject_substitute($me_controller_template, 'portal', $portal['name']);
+            $me_controller_template = $this->inject_substitute($me_controller_template, 'uc_portal', ucfirst($portal['name']));
+            $me_controller_template = $this->inject_substitute($me_controller_template, 'model', $portal['model']);
+            $me_controller_template = $this->inject_substitute($me_controller_template, 'uc_no_model', ucfirst(str_replace('_model', '', $portal['model'])));
+            $me_controller_template = $this->inject_substitute($me_controller_template, 'no_model', str_replace('_model', '', $portal['model']));
+            $me_controller_template = $this->inject_substitute($me_controller_template, 'uc_model', ucfirst($portal['model']));
+            $me_controller_template = $this->inject_substitute($me_controller_template, 'middleware', $this->process_middleware($portal['middleware']));
+            $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_me_controller.php"] = $me_controller_template;
+            $this->_render_list["../release/application/views/{$ucname}/me.php"] = $this->inject_substitute($me_view_template, 'abc', '');
 
             $uc_portal = ucfirst($portal['name']);
             $profile_view_model_template = file_get_contents('../mkdcore/source/portal/Profile_view_model.php');
@@ -476,7 +489,7 @@ class Portal_builder extends Builder
         foreach ($portal['menu'] as $key => $value) {
             if (is_string($value))
             {
-                $menu_html .= "\t\t\t<li class='link-item'><a href='/{$portal['name']}{$value}' class='<?php echo (\$page_name == '{$key}') ? 'list-group-item list-group-item-action d-flex align-items-center p-4 border-0 c-active': 'list-group-item list-group-item-action d-flex align-items-center p-4 border-0';?>'><p class='paragraphText mb-0 text-white d-none d-md-block'>{$key}</p></a></li>\n";
+                $menu_html .= "\t\t\t<li><a href='/{$portal['name']}{$value}' class='<?php echo (\$page_name == '{$key}') ? 'active': '';?>'>{$key}</a></li>\n";
             }
             else
             {
@@ -490,7 +503,7 @@ class Portal_builder extends Builder
                  * 6. Save values
                  * 7. Save last Step
                  */
-                $menu_html .= "\t\t\t<li";
+                $menu_html .= "\t\t\t<li ";
                 $value_keys = array_keys($value);
                 $condition = [];
                 foreach ($value_keys as $single_value_key)
@@ -499,13 +512,13 @@ class Portal_builder extends Builder
                 }
                 $condition_str = implode(' || ', $condition);
                 $id = md5(uniqid());
-                $menu_html .= "class='<?php echo ($condition_str) ? \"active link-item\" :\" link-item\";?>' >\n";
-                $menu_html .= "\t\t\t\t<li class='link-item'><a href='#{$id}' data-toggle='collapse' aria-expanded='false' class='dropdown-toggle list-group-item list-group-item-action d-flex align-items-center p-4 border-0 '><p class='paragraphText mb-0 text-white d-none d-md-block'>{$key}</p></a></li>\n";
-                $menu_html .= "\t\t\t\t\t<ul class='sub-menu-items collapse list-unstyled <?php echo ($condition_str) ? \"show\" :\"\";?>' id='{$id}'>\n";
+                $menu_html .= "class='<?php echo ($condition_str) ? \"active\" :\"\";?>' >\n";
+                $menu_html .= "\t\t\t\t<a href='#{$id}' data-toggle='collapse' aria-expanded='false' class='dropdown-toggle'>{$key}</a>\n";
+                $menu_html .= "\t\t\t\t\t<ul class='collapse list-unstyled <?php echo ($condition_str) ? \"show\" :\"\";?>' id='{$id}'>\n";
 
                 foreach ($value as $sub_level_key => $sub_level_value)
                 {
-                    $menu_html .= "\t\t\t\t\t\t<li class='sub-menu-item link-item'><a href='/{$portal['name']}{$sub_level_value}' class='list-group-item list-group-item-action d-flex align-items-center p-4 border-0 <?php echo (\$page_name == '{$sub_level_key}') ? 'ci-active': '';?>'><p class='pl-3 paragraphText mb-0  text-white d-none d-md-block'>{$sub_level_key}</p></a></li>\n";
+                    $menu_html .= "\t\t\t\t\t\t<li><a href='/{$portal['name']}{$sub_level_value}' class='<?php echo (\$page_name == '{$sub_level_key}') ? 'active': '';?>'>{$sub_level_key}</a></li>\n";
                 }
                 $menu_html .= "\t\t\t\t\t</ul>\n";
                 $menu_html .= "\t\t\t</li>\n";

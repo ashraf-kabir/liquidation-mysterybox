@@ -14,53 +14,32 @@
     <!-- Our Custom CSS -->
     {{{css}}}
 </head>
+
 <body>
 <div class="wrapper">
         <!-- Sidebar  -->
-    <?php if (!$layout_clean_mode) { ?>
-        
-        <nav class="navbar navbar-light px-4">
-        <a class="navbar-brand" href="#">
-            <h3>{{{company}}}</h3>
-        </a>
-        <a href="/{{{portal}}}/logout">
-          <div class="logout d-flex align-items-center">
-            <img src="/assets/image/logout.svg " alt="" class="mr-2" />
-            <p class="paragraphText mb-0 mr-2">Logout</p>
-          </div>
-        </a>
-      </nav>
-     
-    <?php } ?>
-    
-  <?php if (!$layout_clean_mode) { ?>
-      <section class="content-wrapper ">
-        <div class="category row">
-          <img
-            src="/assets/image/collapse-category.svg"
-            class="category-expand-img bg-dark"
-            alt=""
-          />
-          <div class="categoryList col-2 p-0">
-            <div class="list-group pl-3" id="collapse-nav">
-              <div class="collapse-category d-flex justify-content-end p-4">
-                <img src="/assets/image/collapse-category.svg" class="category-collapse-img" alt=""/>
-              </div>
-             {{{menu}}}
-           </div>
-        </div> 
-  <!--
-        <nav id="sidebar category row">
+        <?php if (!$layout_clean_mode) { ?>
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>{{{company}}}</h3>
+            </div>
+
             <ul class="list-unstyled components">
-                {{{menu}}}
+{{{menu}}}
             </ul>
             <span class="copyright">{{{copyright}}}</span>
             <span class="copyright">{{{powered_by}}}</span>
-        </nav>-->
-    <?php } ?>
-    <section class="d-flex flex-column col categoryContent mx-md-4 mt-2 px-md-4 p-0">
-        <?php if(isset($page_section)):?>
-            <?php  $this->load->view($page_section); ?>
-        <?php endif;?>
-    </section>
-        </section>
+        </nav>
+        <?php } ?>
+        <div id="content">
+            <?php if (!$layout_clean_mode) { ?>
+            <nav>
+                <div class="row">
+                    <div class="container-fluid">
+                        <button type="button" id="sidebarCollapse" class="btn btn-dark">
+                            <span>☰</span>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+            <?php } ?>

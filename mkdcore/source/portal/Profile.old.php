@@ -1,6 +1,17 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-
-<br/>
+<div class="tab-content" id="nav-tabContent">
+              <!-- Bread Crumb -->
+    <div aria-label="breadcrumb">
+        <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
+            <li class="breadcrumb-item active" aria-current="page">
+                <a href="/{{{portal}}}/dashboard" class="breadcrumb-link">xyzDashboard</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                xyzProfile
+            </li>
+        </ol>
+    </div>
+</div>
 <div class="row">
     <?php if (validation_errors()) : ?>
         <div class="col-md-12">
@@ -39,6 +50,31 @@
 				<div class="form-group">
 					<label for="Last Name">xyzLast Name </label>
 					<input type="text" class="form-control" id="form_last_name" name="last_name" value="<?php echo set_value('last_name', $this->_data['view_model']->get_last_name());?>"/>
+				</div>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5 mb-5">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="card">
+            <div class="card-body">
+                 <h5 class="primaryHeading2 mb-4 text-md-left">
+                    xyzEdit Credentials
+                </h5>
+                <?= form_open('/{{{portal}}}/update_credentials') ?>
+				<div class="form-group">
+					<label for="First Name">Email</label>
+					<input type="email" class="form-control" id="form_first_name" name="email" value="<?php echo set_value('email', $this->_data['view_model']->get_email());?>"/>
+				</div>
+                <div class="form-group">
+					<label for="Password">Password</label>
+					<input type="password" class="form-control" id="form_password" name="password" />
 				</div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-primary" value="Submit">
