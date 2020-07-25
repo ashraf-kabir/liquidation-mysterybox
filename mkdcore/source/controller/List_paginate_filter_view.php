@@ -54,13 +54,14 @@ if ($layout_clean_mode) {
     {{{add}}}
 </div>
 
-  <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4" style='height:auto;'>
+  <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4 pt-4" style='height:auto;'>
     <div class="row">
         <div class="col p-2">
             <div class="float-right mr-4">{{{import}}}</div>
         </div>
         <div class="clearfix"></div>
     </div>
+    <div class="table-responsive">
     <table class="table br w-100">
         <thead class='thead-light'>
         <?php
@@ -110,4 +111,5 @@ if ($layout_clean_mode) {
         </tbody>
     </table>
      <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
+    </div>
    </section>
