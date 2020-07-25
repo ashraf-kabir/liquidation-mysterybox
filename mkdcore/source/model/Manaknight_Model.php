@@ -210,8 +210,14 @@ class {{{subclass_prefix}}}Model extends CI_Model
 	{
         if ($this->_use_timestamps)
         {
-            $data[$this->_created_field] = date('Y-m-j');
-            $data[$this->_updated_field] = date('Y-m-j H:i:s');
+            if (!isset($data[$this->_created_field]))
+            {
+                $data[$this->_created_field] = date('Y-m-j');
+            }
+            if (!isset($data[$this->_updated_field]))
+            {
+                $data[$this->_updated_field] = date('Y-m-j H:i:s');
+            }
         }
 
         $data = $this->_pre_create_processing($data);
@@ -256,7 +262,10 @@ class {{{subclass_prefix}}}Model extends CI_Model
 	{
         if ($this->_use_timestamps)
         {
-            $data[$this->_updated_field] = date('Y-m-j H:i:s');
+            if (!isset($data[$this->_updated_field]))
+            {
+                $data[$this->_updated_field] = date('Y-m-j H:i:s');
+            }
         }
 
         $data = $this->_post_edit_processing($data);
@@ -464,13 +473,13 @@ class {{{subclass_prefix}}}Model extends CI_Model
                     if(is_numeric($value))
                     {
                         $this->db->where($key, $value);
-                        continue;   
+                        continue;
                     }
 
                     if(is_string($value))
                     {
                         $this->db->like($key, $value);
-                        continue;    
+                        continue;
                     }
 
                     $this->db->where($key, $value);
@@ -522,13 +531,13 @@ class {{{subclass_prefix}}}Model extends CI_Model
                     if(is_numeric($value))
                     {
                         $this->db->where($field, $value);
-                        continue;   
+                        continue;
                     }
 
                     if(is_string($value))
                     {
                         $this->db->like($field, $value);
-                        continue;    
+                        continue;
                     }
 
                     $this->db->where($field, $value);
