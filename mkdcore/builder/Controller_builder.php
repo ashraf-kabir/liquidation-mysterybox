@@ -719,14 +719,16 @@ class Controller_builder extends Builder
                     $list_str = $this->inject_substitute($list_str, 'name', $controller['name']);
                     $list_str = $this->inject_substitute($list_str, 'list_paginate_filter_post', $this->output_paginate_filter_post($controller['filter_fields']));
                     $list_str = $this->inject_substitute($list_str, 'list_paginate_filter_where', $this->output_paginate_filter_where($controller['filter_fields'], $controller['all_records'], $controller['active_only']));
-
+                    $list_view_str = file_get_contents('../mkdcore/source/controller/List_paginate_filter_view.php');
                     if ($controller['is_add'])
                     {
                         $list_str = $this->inject_substitute($list_str, 'add', $this->output_add_button($controller));
+                        $list_view_str = $this->inject_substitute($list_view_str, 'add_class', 'add-part d-flex justify-content-md-end  my-4');
                     }
                     else
                     {
                         $list_str = $this->inject_substitute($list_str, 'add', '');
+                        $list_view_str = $this->inject_substitute($list_view_str, 'add_class', 'd-none');
                     }
 
                     if (strlen($controller['method_list']) > 0)
@@ -748,7 +750,7 @@ class Controller_builder extends Builder
                     }
 
                     $template = $this->inject_substitute($template, 'listing', $list_str);
-                    $list_view_str = file_get_contents('../mkdcore/source/controller/List_paginate_filter_view.php');
+
                     if (strlen($controller['custom_view_list']) > 0)
                     {
                         $list_view_str = $this->inject_substitute($list_view_str, 'row', $controller['custom_view_list']);
@@ -761,19 +763,23 @@ class Controller_builder extends Builder
                     if ($controller['is_add'])
                     {
                         $list_view_str = $this->inject_substitute($list_view_str, 'add', $this->output_add_button($controller));
+                        $list_view_str = $this->inject_substitute($list_view_str, 'add_class', 'add-part d-flex justify-content-md-end  my-4');
                     }
                     else
                     {
                         $list_view_str = $this->inject_substitute($list_view_str, 'add', '');
+                        $list_view_str = $this->inject_substitute($list_view_str, 'add_class', 'd-none');
                     }
 
                     if ($controller['import'])
                     {
                         $list_view_str = $this->inject_substitute($list_view_str, 'import', $this->import($controller['model']));
+                        $list_view_str = $this->inject_substitute($list_view_str, 'import_class', '');
                     }
                     else
                     {
                         $list_view_str = $this->inject_substitute($list_view_str, 'import', '');
+                        $list_view_str = $this->inject_substitute($list_view_str, 'import_class', '');
                     }
                      //check autocomplete fields
                     if(!empty($this->get_autocomplete_fields($controller, 'filter_fields')))
@@ -851,19 +857,23 @@ class Controller_builder extends Builder
                     if ($controller['is_add'])
                     {
                         $list_view_str = $this->inject_substitute($list_view_str, 'add', $this->output_add_button($controller));
+                        $list_view_str = $this->inject_substitute($list_view_str, 'add_class', 'add-part d-flex justify-content-md-end  my-4');
                     }
                     else
                     {
                         $list_view_str = $this->inject_substitute($list_view_str, 'add', '');
+                        $list_view_str = $this->inject_substitute($list_view_str, 'add_class', 'd-none');
                     }
 
                     if ($controller['import'])
                     {
                         $list_view_str = $this->inject_substitute($list_view_str, 'import', $this->import($controller['model']));
+                        $list_view_str = $this->inject_substitute($list_view_str, 'import_class', '');
                     }
                     else
                     {
                         $list_view_str = $this->inject_substitute($list_view_str, 'import', '');
+                        $list_view_str = $this->inject_substitute($list_view_str, 'import_class', 'd-none');
                     }
 
                     $this->_render_list['../release/application/views/' . $uc_portal . '/' . $uc_name . '.php'] = $list_view_str;
@@ -933,18 +943,22 @@ class Controller_builder extends Builder
                 if ($controller['is_add'])
                 {
                     $list_view_str = $this->inject_substitute($list_view_str, 'add', $this->output_add_button($controller));
+                    $list_view_str = $this->inject_substitute($list_view_str, 'add_class', 'add-part d-flex justify-content-md-end  my-4');
                 }
                 else
                 {
+                    $list_view_str = $this->inject_substitute($list_view_str, 'add_class', 'd-none');
                     $list_view_str = $this->inject_substitute($list_view_str, 'add', '');
                 }
 
                 if ($controller['import'])
                 {
                     $list_view_str = $this->inject_substitute($list_view_str, 'import', $this->import($controller['model']));
+                    $list_view_str = $this->inject_substitute($list_view_str, 'import_class', '');
                 }
                 else
                 {
+                    $list_view_str = $this->inject_substitute($list_view_str, 'import_class', 'd-none');
                     $list_view_str = $this->inject_substitute($list_view_str, 'import', '');
                 }
 

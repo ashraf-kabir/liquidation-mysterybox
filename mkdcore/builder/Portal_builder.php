@@ -173,7 +173,7 @@ class Portal_builder extends Builder
             $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_profile_controller.php"] = $profile_controller_template;
 
             $me_controller_template = file_get_contents('../mkdcore/source/portal/Portal_credential_controller.php');
-            $me_view_template = file_get_contents('../mkdcore/source/portal/me.php');
+            $me_view_template = file_get_contents('../mkdcore/source/portal/Mes.php');
             $me_controller_template = $this->inject_substitute($me_controller_template, 'portal', $portal['name']);
             $me_controller_template = $this->inject_substitute($me_controller_template, 'uc_portal', ucfirst($portal['name']));
             $me_controller_template = $this->inject_substitute($me_controller_template, 'model', $portal['model']);
@@ -182,7 +182,7 @@ class Portal_builder extends Builder
             $me_controller_template = $this->inject_substitute($me_controller_template, 'uc_model', ucfirst($portal['model']));
             $me_controller_template = $this->inject_substitute($me_controller_template, 'middleware', $this->process_middleware($portal['middleware']));
             $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_me_controller.php"] = $me_controller_template;
-            $this->_render_list["../release/application/views/{$ucname}/me.php"] = $this->inject_substitute($me_view_template, 'abc', '');
+            $this->_render_list["../release/application/views/{$ucname}/Mes.php"] = $this->inject_substitute($me_view_template, 'abc', '');
 
             $uc_portal = ucfirst($portal['name']);
             $profile_view_model_template = file_get_contents('../mkdcore/source/portal/Profile_view_model.php');

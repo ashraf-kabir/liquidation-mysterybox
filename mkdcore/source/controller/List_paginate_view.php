@@ -23,15 +23,15 @@ if ($layout_clean_mode) {
     </div>
 <?php endif; ?>
 
-<h5 class="primaryHeading2 text-md-left">
+<h5 class="primaryHeading2 text-md-left mt-2">
   <?php echo $view_model->get_heading();?>
 </h5>
-<div class="add-part d-flex justify-content-md-end  my-4">
+<div class="{{{add_class}}}">
     {{{add}}}
 </div>
 
 <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4" style='height:auto;'>
-    <div class="row">
+    <div class="row {{{import_class}}}">
         <div class="col p-2">
             <div class="float-right mr-4">{{{import}}}</div>
         </div>

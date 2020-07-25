@@ -153,7 +153,7 @@
 			"status": {"0": "xyzInactive", "1": "Active", "2": "xyzSuspend"}
 		},
 		"pre": "$data['image'] = 'https://i.imgur.com/AzJ7DRw.png';\n\t\t$data['refer'] = uniqid();\n\t\t$data['status'] = 1;\n\t\t$data['verify'] = 0;\n\t\t$data['stripe_id'] = '';\n\n\t\tif(!isset($data['profile_id']))\n\t\t{\n\t\t\t$data['profile_id'] = 0;\n\t\t}\n\n\t\tif(!isset($data['type']))\n\t\t{\n\t\t\t$data['type'] = 'n';\n\t\t}\n\t\tif (strpos($data['phone'], '1') != 0)\n\t\t{\n\t\t\t$data['phone'] = '1' + $data['phone'];\n\t\t}\n",
-		"post": "if(isset($data['password']) && strlen($data['password']) < 1)\n\t\t{\n\t\t\tunset($data['password']);\n\t\t}\n\n\t\tif(isset($data['image']) && strlen($data['image']) < 1)\n\t\t{\n\t\t\tunset($data['image']);\n\t\t}\n",
+		"post": "\n\n\t\tif(isset($data['image']) && strlen($data['image']) < 1)\n\t\t{\n\t\t\tunset($data['image']);\n\t\t}\n",
 		"count": "",
 		"override": "",
 		"seed":[

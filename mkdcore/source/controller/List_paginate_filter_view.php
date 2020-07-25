@@ -50,7 +50,7 @@ if ($layout_clean_mode) {
     </div>
 </section>
 
-<div class="add-part d-flex justify-content-md-end  my-4">
+<div class="{{{add_class}}}">
     {{{add}}}
 </div>
 

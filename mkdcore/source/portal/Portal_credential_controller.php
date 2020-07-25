@@ -31,16 +31,22 @@ class {{{uc_portal}}}_me_controller extends {{{uc_portal}}}_controller
 
 		if ($this->form_validation->run() === FALSE)
 		{
-			return $this->render('{{{uc_portal}}}/me', $this->_data);
+			return $this->render('{{{uc_portal}}}/Mes', $this->_data);
         }
 
         $email = $this->input->post('email');
 		$password = $this->input->post('password');
 
-        $result = $this->credential_model->edit([
+        $payload = [
             'email' => $email,
-			"password" => str_replace('$2y$', '$2b$', password_hash($password, PASSWORD_BCRYPT)),
-        ], $session['user_id']);
+        ];
+
+        if (strlen($password) > 1)
+        {
+            $payload['password'] = str_replace('$2y$', '$2b$', password_hash($password, PASSWORD_BCRYPT));
+        }
+
+        $result = $this->credential_model->edit($payload, $session['user_id']);
 
         if ($result)
         {
@@ -49,6 +55,6 @@ class {{{uc_portal}}}_me_controller extends {{{uc_portal}}}_controller
         }
 
         $this->_data['error'] = 'xyzError';
-        return $this->render('{{{uc_portal}}}/me', $this->_data);
+        return $this->render('{{{uc_portal}}}/Mes', $this->_data);
 	}
 }
