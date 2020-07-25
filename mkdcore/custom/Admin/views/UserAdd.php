@@ -88,7 +88,7 @@ if ($layout_clean_mode) {
 					<label for="Email">xyzPassword</label>
 					<input type="password" class="form-control data-input" id="form_first_name" name="password" />
 				</div>
-                <div class="form-group  col-md-6 col-sm-12">
+                <div class="form-group  col-md-5 col-sm-12">
                     <input type="submit" class="btn btn-primary text-white mr-4 my-4" value="Submit">
                 </div>
                 </form>
