@@ -1872,7 +1872,7 @@ class Controller_builder extends Builder
                 $result .= "\t\t\t\t<div class=\"form-group col-md-5 col-sm-12 \">\n";
                 $result .= "\t\t\t\t\t<div class=\"mkd-upload-form-btn-wrapper\">\n";
                 $result .= "\t\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]}</label>\n";
-                $result .= "\t\t\t\t\t\t<button class=\"mkd-upload-btn btn btn-primary\">xyzUpload a file</button>\n";
+                $result .= "\t\t\t\t\t\t<button class=\"mkd-upload-btn btn btn-primary d-block\">xyzUpload a file</button>\n";
                 $result .= "\t\t\t\t\t\t<input type=\"file\" name=\"{$field[0]}_upload\" id=\"{$field[0]}_upload\" onchange=\"onFileUploaded(event, '{$field[0]}')\" accept=\".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf,.md,.txt,.rtf,.xls,.xlsx,.xml,.json,.html,.mp3,.mp4,.csv,.bmp,.mpeg,.ppt,.pptx,.svg,.wav,.webm,.weba,.woff,.tiff\"/>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}\" name=\"{$field[0]}\"/>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}_id\" name=\"{$field[0]}_id\"/>\n";
@@ -2053,7 +2053,7 @@ class Controller_builder extends Builder
                 $result .= "\t\t\t\t<div class=\"form-group col-md-5 col-sm-12\">\n";
                 $result .= "\t\t\t\t\t<div class=\"mkd-upload-form-btn-wrapper\">\n";
                 $result .= "\t\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                $result .= "\t\t\t\t\t\t<button class=\"mkd-upload-btn btn btn-primary\">xyzUpload a file</button>\n";
+                $result .= "\t\t\t\t\t\t<button class=\"mkd-upload-btn btn btn-primary d-block\">xyzUpload a file</button>\n";
                 $result .= "\t\t\t\t\t\t<input type=\"file\" name=\"{$field[0]}_upload\" id=\"{$field[0]}_upload\" onchange=\"onFileUploaded(event, '{$field[0]}')\" accept=\".gif,.jpg,.jpeg,.png,.doc,.docx,.pdf,.md,.txt,.rtf,.xls,.xlsx,.xml,.json,.html,.mp3,.mp4,.csv,.bmp,.mpeg,.ppt,.pptx,.svg,.wav,.webm,.weba,.woff,.tiff\"/>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}_id\" name=\"{$field[0]}_id\" value=\"<?php echo set_value('{$field[0]}_id', \$this->_data['view_model']->get_{$field[0]}_id());?>\"/>\n";
@@ -2619,7 +2619,7 @@ class Controller_builder extends Builder
         "\t" .
         '    <input type="file"  name="file_import" id="file_import" onchange="onFileImport(event, \'' . $model . '\')" accept=".csv"/>' .
         '</div>&nbsp;';*/
-        return "&nbsp;<div  class='mkd-upload-form-btn-wrapper'> <button id='btn-csv-upload-dialog' data-toggle='modal' data-model='{$model}' data-target='#mkd-csv-import' class='mkd-upload-btn  btn btn-primary'>xyzImport</button></div>";
+        return "&nbsp;<div  class='mkd-upload-form-btn-wrapper'> <button id='btn-csv-upload-dialog' data-toggle='modal' data-model='{$model}' data-target='#mkd-csv-import' class='mkd-upload-btn  btn btn-primary d-block'>xyzImport</button></div>";
     }
 
     protected function export($controller)

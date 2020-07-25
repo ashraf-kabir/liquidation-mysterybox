@@ -61,7 +61,7 @@ if ($layout_clean_mode) {
 				<div class="form-group">
 					<div class="mkd-upload-form-btn-wrapper">
 						<label for="xyzlocal_copy">xyzlocal_copy</label>
-						<button class="mkd-upload-btn btn btn-primary">Upload A File</button>
+						<button class="mkd-upload-btn btn btn-primary d-block">Upload A File</button>
 						<input type="file" name="local_file" id="local_file_upload" >
 					    <input type="hidden" id="local_file" name="local_file"/>
 					    <input type="hidden" id="local_file_id" name="local_file_id"/>
