@@ -538,6 +538,7 @@ $config['platform_name'] = '{{{platform_name}}}';
 
 $config['from_email'] = '{{{from_email}}}';
 $config['image_upload'] = '{{{image_upload}}}';
+$config['file_upload'] = '{{{file_upload}}}';
 $config['upload_byte_size_limit'] = {{{upload_byte_size_limit}}};
 $config['email_smtp'] = [
     'protocol' => 'smtp',
