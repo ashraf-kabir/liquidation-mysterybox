@@ -891,4 +891,9 @@ class {{{subclass_prefix}}}Model extends CI_Model
     {
         return preg_replace("/[^a-zA-Z\_]/", "", $text );
     }
+
+    public function batch_update($params)
+	{
+		return $this->db->update_batch($this->_table, $params, 'id');
+	}
 }

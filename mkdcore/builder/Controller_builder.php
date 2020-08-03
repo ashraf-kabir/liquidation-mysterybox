@@ -2417,6 +2417,9 @@ class Controller_builder extends Builder
                     case 'currency':
                         $result .= "\t\t\t\t\t\t\techo \"<td>$\" . number_format(\$data->{$field_name}, 2) . \"</td>\";\n";
                         break;
+                    case 'percent':
+                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . number_format(\$data->{$field_name}, 2) . \"%</td>\";\n";
+                        break;
                     case 'image':
                         $result .= "\t\t\t\t\t\t\techo \"<td><div class='mkd-image-container'><img class='img-fluid modal-image' src='{\$data->{$field_name}}' onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/></div></td>\";\n";
                         break;
