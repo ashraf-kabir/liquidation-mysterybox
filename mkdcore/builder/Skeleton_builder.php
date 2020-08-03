@@ -29,6 +29,7 @@ class Skeleton_builder extends Builder
             '../release/application/libraries/Mime_service.php',
             '../release/application/libraries/Mail_service.php',
             '../release/application/libraries/Sms_service.php',
+            '../release/application/libraries/Twillo_service.php',
             '../release/application/libraries/Cache_service.php',
             '../release/application/libraries/Push_notification_service.php',
             '../release/application/libraries/View_helper.php'

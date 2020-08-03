@@ -990,7 +990,17 @@
 		"xyzRemove": "Remove",
 		"xyzCreated At": "Created At",
 		"xyzUpdated At": "Updated At",
-		"xyzChange Password": "Change Password"
+		"xyzChange Password": "Change Password",
+		"xyzSorry we cannot verify your phone right right. Please contact support": "Sorry we cannot verify your phone right right. Please contact support",
+		"xyzCode" : "Code",
+		"xyzInvalid Code": "Invalid Code",
+		"xyzVerification Sent": "Verification Sent",
+		"xyzVerification Code": "Verification Code",
+		"xyzResend Verification Code": "Resend Verification Code",
+		"xyzError Sending Code": "Error Sending Code",
+		"xyzLogin to your portal": "Login to your portal",
+		"xyzVerify your Number": "Verify your Number",
+		"xyzChange your password": "Change your password"
 	},
 	"reporting": [{
 		"name": "Num_users",
@@ -1036,7 +1046,7 @@
 			"mailtype": "html",
 			"charset": "utf-8"
 		},
-		"csrf_exclude_uris": ["v1/api.*+","member/login","member/forgot","member/reset/.*","member/register","admin/login","admin/forgot","admin/reset/.*","admin/register","sale/login","sale/forgot","sale/reset/.*","sale/register", "contact", "subscribe"],
+		"csrf_exclude_uris": ["v1/api.*+","member/login","member/forgot","member/reset/.*","member/register","admin/login","admin/forgot","admin/reset/.*","admin/register","sale/login","sale/forgot","sale/reset/.*","sale/register", "contact", "subscribe", "member/sent_verification"],
 		"encryption_key": "1n4uUX6d1Us3quFXKA7ZmqFIaQVC5MtgXlV9ho8F",
 		"subclass_prefix": "Manaknight_",
 		"migration_number": 9377770345344,
@@ -1064,7 +1074,8 @@
 			"aws_region": "us-east-2",
 			"aws_key": "AKIAJD27VH2ITMIWT4IQ",
 			"aws_secret": "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",
-			"aws_bucket": "com.konfor.images"
+			"aws_bucket": "com.konfor.images",
+			"twilio_verification_service" : ""
 		}
 	},
 	"database": {

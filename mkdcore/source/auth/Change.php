@@ -16,6 +16,9 @@
             height: auto;
             margin: 50px auto;
         }
+        .btn-primary {
+            background-color: #2C5ED6;
+        }
         @media (max-width: 500px) {
             h1 {
                 font-size: 24px;
@@ -29,9 +32,9 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-3">
         <div class="container">
-            <a   class="navbar-brand" href="#">
-            {{{title}}}
-            <!-- <img style="height:35px" src="/assets/image/logo.png"/> -->
+            <a  class="navbar-brand" href="#">
+                {{{title}}}
+                <!-- <img style="height:35px" src="/assets/image/logo.png"/> -->
             </a>
             <div class="collapse navbar-collapse" id="navbarNav">
             </div>
@@ -39,7 +42,7 @@
     </nav>
     <div class="">
         <div class='text-center'>
-            <h1>xyzLogin</h1>
+            <h1>xyzChange your password</h1>
         </div>
         <div class="form-container p-5">
                 <?php echo form_open();?>
@@ -70,25 +73,20 @@
                         </div>
                     </div>
                 <?php endif; ?>
-                <div class="form-group">
-                    <label class='required' for="Email">xyzEmail</label>
-                    <input type="email" class="form-control site-input" id="email" name="email"  required="true" />
-                </div>
                 <div class="form-group text-container">
                     <label class='required' for="xyzPassword">xyzPassword </label>
                     <input type="password" class="form-control site-input" id="password" name="password"  required="true" >
                 </div>
                 <div class="form-group">
-                    <input type="submit" name='btn-login' class="btn btn-primary btn-block" value="Login">
+                    <input type="submit" name='btn-login' class="btn btn-primary btn-block" value="xyzSubmit">
                 </div>
             </form>
     </div>
 </div>
 <div class='text-center'>&copy; <?php echo date("yy"); ?> {{{title}}}. All Right Reserved.</div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <!-- Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2020 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<!-- Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2020 -->
 </body>
 </html>
 

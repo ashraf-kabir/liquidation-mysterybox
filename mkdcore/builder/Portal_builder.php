@@ -282,6 +282,29 @@ class Portal_builder extends Builder
                 $view_template = $this->inject_substitute($view_template, 'model', $portal['model']);
 
                 $this->_render_list["../release/application/views/{$ucname}/Login.php"] = $view_template;
+
+                $view_template = file_get_contents('../mkdcore/source/auth/SmsAuth.php');
+                $view_template = $this->inject_substitute($view_template, 'subclass_prefix', $this->_config['subclass_prefix']);
+                $view_template = $this->inject_substitute($view_template, 'name', $portal['name']);
+                $view_template = $this->inject_substitute($view_template, 'title', $this->_config['site_title']);
+                $view_template = $this->inject_substitute($view_template, 'portal', $portal['name']);
+                $view_template = $this->inject_substitute($view_template, 'ucname', $ucname);
+                $template = $this->inject_substitute($template, 'valid_roles', $portal['role']);
+                $view_template = $this->inject_substitute($view_template, 'model', $portal['model']);
+
+                $this->_render_list["../release/application/views/{$ucname}/SmsAuth.php"] = $view_template;
+
+                $view_template = file_get_contents('../mkdcore/source/auth/Change.php');
+                $view_template = $this->inject_substitute($view_template, 'subclass_prefix', $this->_config['subclass_prefix']);
+                $view_template = $this->inject_substitute($view_template, 'name', $portal['name']);
+                $view_template = $this->inject_substitute($view_template, 'title', $this->_config['site_title']);
+                $view_template = $this->inject_substitute($view_template, 'portal', $portal['name']);
+                $view_template = $this->inject_substitute($view_template, 'ucname', $ucname);
+                $template = $this->inject_substitute($template, 'valid_roles', $portal['role']);
+                $view_template = $this->inject_substitute($view_template, 'model', $portal['model']);
+
+                $this->_render_list["../release/application/views/{$ucname}/Change.php"] = $view_template;
+
                 if ($portal['login_type'] == 'login')
                 {
                     $this->_render_list["../release/application/libraries/Google_service.php"] = file_get_contents('../mkdcore/source/auth/Google_service.php');

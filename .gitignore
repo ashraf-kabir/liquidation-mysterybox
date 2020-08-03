@@ -61,3 +61,7 @@ graphql/claudia.json
 graphql/package.json
 graphql/README.md
 graphql/package-lock.json
+notes/
+scripts/database.php
+scripts/config.php
+scripts/notes.txt
