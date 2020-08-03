@@ -122,47 +122,48 @@ a {
   font-size: 6px;
   display: block; }
 
-#sidebar {
-  min-width: 240px;
-  max-width: 240px;
-  background: #151515;
-  color: #fff;
-  transition: all 0.3s;
-  -webkit-box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.75); }
-  #sidebar .sidebar-header {
-    padding: 20px;
-    background: #2c549c; }
-  #sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #fff; }
-  #sidebar ul p {
+  #sidebar {
+    min-width: 240px;
+    max-width: 240px;
+    background: #151515;
     color: #fff;
-    padding: 10px; }
-  #sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
-    display: block; }
-    #sidebar ul li a:hover {
-      color: #151515;
-      background: #fff !important; }
-  #sidebar ul li.active > a {
+    z-index: 2;
+    transition: all 0.3s;
+    -webkit-box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.75); }
+    #sidebar .sidebar-header {
+      padding: 20px;
+      background: #2C5ED6; }
+    #sidebar ul.components {
+      padding: 0px 0px 20px 0px;
+   }
+    #sidebar ul p {
+      color: #fff;
+      padding: 10px; }
+    #sidebar ul li a {
+      padding: 10px;
+      font-size: 1.1em;
+      display: block; }
+      #sidebar ul li a:hover {
+        color: #151515;
+        background: #fff !important; }
+    #sidebar ul li.active > a {
+      color: #fff;
+      background: #151515; }
+    #sidebar a.active {
+      color: black;
+      background-color: #fff; }
+
+  #sidebar.active {
+    margin-left: -250px; }
+
+  a[aria-expanded="true"] {
     color: #fff;
     background: #151515; }
-  #sidebar a.active {
-    color: black;
-    background-color: #fff; }
 
-#sidebar.active {
-  margin-left: -250px; }
-
-a[aria-expanded="true"] {
-  color: #fff;
-  background: #151515; }
-
-a[data-toggle="collapse"] {
-  position: relative; }
+  a[data-toggle="collapse"] {
+    position: relative; }
 
 .dropdown-toggle::after {
   display: block;
@@ -178,7 +179,7 @@ ul ul a {
 
 #content {
   width: 100%;
-  padding: 20px;
+  padding: 0px;
   min-height: 100vh;
   transition: all 0.3s; }
 
@@ -541,4 +542,19 @@ ul ul a {
 
 .breadcrumb-link {
   color: #2c549c;
+}
+
+.navigation-row {
+  background-color: white;
+  padding: 20px 20px 20px 10px;
+}
+
+
+.text-underline {
+  text-decoration: underline !important;
+}
+
+.btn-light {
+  background-color: white;
+  border: none;
 }

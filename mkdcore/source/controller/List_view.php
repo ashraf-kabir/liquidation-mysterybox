@@ -1,10 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-/*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
+/*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2020*/
 ?>
+<div class="tab-content mx-4" id="nav-tabContent">
 <div class="clear"></div>
 <?php if (strlen($error) > 0) : ?>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 mt-4">
             <div class="alert alert-danger" role="alert">
                 <?php echo $error; ?>
             </div>
@@ -51,4 +52,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

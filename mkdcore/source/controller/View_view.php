@@ -5,7 +5,7 @@ if ($layout_clean_mode) {
 	echo '<style>#content{padding:0px !important;}</style>';
 }
 ?>
-<div class="tab-content" id="nav-tabContent">
+<div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
 <div aria-label="breadcrumb">
     <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start" style="background-color: inherit;">

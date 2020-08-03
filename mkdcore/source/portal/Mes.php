@@ -6,29 +6,34 @@ if ($layout_clean_mode) {
 }
 ?>
 <br/>
-<div class="row">
-    <?php if (validation_errors()) : ?>
+<div class="tab-content m-4" id="nav-tabContent">
+<?php if (validation_errors()) : ?>
+    <div class="row">
         <div class="col-md-12">
             <div class="alert alert-danger" role="alert">
                 <?= validation_errors() ?>
             </div>
         </div>
+    </div>
     <?php endif; ?>
     <?php if (strlen($error) > 0) : ?>
+        <div class="row">
         <div class="col-md-12">
             <div class="alert alert-danger" role="alert">
                 <?php echo $error; ?>
             </div>
         </div>
+        </div>
     <?php endif; ?>
     <?php if (strlen($success) > 0) : ?>
+        <div class="row">
         <div class="col-md-12">
             <div class="alert alert-success" role="success">
                 <?php echo $success; ?>
             </div>
         </div>
+        </div>
     <?php endif; ?>
-</div>
 <br/>
 <div class="row mb-5">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -54,4 +59,5 @@ if ($layout_clean_mode) {
             </div>
         </div>
     </div>
+</div>
 </div>

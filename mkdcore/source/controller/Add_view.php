@@ -6,7 +6,7 @@ if ($layout_clean_mode) {
 }
 ?>
 
-<div class="tab-content" id="nav-tabContent">
+<div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
 <div aria-label="breadcrumb">
     <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
@@ -22,26 +22,31 @@ if ($layout_clean_mode) {
     </ol>
 </div>
 <br/>
-<div class="row">
-    <?php if (validation_errors()) : ?>
+<?php if (validation_errors()) : ?>
+    <div class="row">
         <div class="col-md-12">
             <div class="alert alert-danger" role="alert">
                 <?= validation_errors() ?>
             </div>
         </div>
+        </div>
     <?php endif; ?>
     <?php if (strlen($error) > 0) : ?>
+        <div class="row">
         <div class="col-md-12">
             <div class="alert alert-danger" role="alert">
                 <?php echo $error; ?>
             </div>
         </div>
+        </div>
     <?php endif; ?>
     <?php if (strlen($success) > 0) : ?>
+        <div class="row">
         <div class="col-md-12">
             <div class="alert alert-success" role="success">
                 <?php echo $success; ?>
             </div>
+        </div>
         </div>
     <?php endif; ?>
 </div>

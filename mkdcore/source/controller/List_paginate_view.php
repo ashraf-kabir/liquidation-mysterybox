@@ -1,9 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
-if ($layout_clean_mode) {
-    echo '<style>#content{padding:0px !important;}</style>';
-}
+
 ?>
+<div class="tab-content mx-4" id="nav-tabContent">
 <?php if (strlen($error) > 0) : ?>
     <div class="row">
         <div class="col-md-12">
@@ -23,12 +22,10 @@ if ($layout_clean_mode) {
     </div>
 <?php endif; ?>
 
-<h5 class="primaryHeading2 text-md-left mt-2">
+<h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
   <?php echo $view_model->get_heading();?>
+  <span class="{{{add_class}}}">{{{add}}}</span>
 </h5>
-<div class="{{{add_class}}}">
-    {{{add}}}
-</div>
 
 <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4 pt-4" style='height:auto;'>
     <div class="row {{{import_class}}}">
@@ -57,3 +54,10 @@ if ($layout_clean_mode) {
     <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
     </div>
 </section>
+</div>
+<?php
+if ($layout_clean_mode) {
+    echo '<style>#content{padding:0px !important;}</style>';
+    echo '<style>#tab-content{padding:0px !important;margin:0px !important;}</style>';
+}
+?>

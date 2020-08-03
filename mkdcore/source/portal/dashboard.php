@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<div class="tab-content mx-4" id="nav-tabContent">
 <h2>xyzDashboard</h2>
 <br>
 <div class="clear"></div>
@@ -20,3 +21,4 @@
         </div>
     </div>
 <?php endif; ?>
+</div>
