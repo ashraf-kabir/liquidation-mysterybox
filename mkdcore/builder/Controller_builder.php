@@ -2406,43 +2406,43 @@ class Controller_builder extends Builder
                 switch ($field_type)
                 {
                     case 'date':
-                    $result .= "\t\t\t\t\t\t\techo \"<td>\" . date('F d Y', strtotime(\$data->{$field_name})) . \"</td>\";\n";
+                    $result .= "\t\t\t\t\t\t\techo \"<td>\" . date('F d Y', strtotime(\$data->$field_name)) . \"</td>\";\n";
                     break;
                     case 'datetime':
-                    $result .= "\t\t\t\t\t\t\techo \"<td>\" . date('F d Y h:i A', strtotime({\$data->{$field_name}})) . \"</td>\";\n";
+                    $result .= "\t\t\t\t\t\t\techo \"<td>\" . date('F d Y h:i A', strtotime(\$data->$field_name)) . \"</td>\";\n";
                     break;
                     case 'timeago':
-                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . \$view_model->timeago({\$data->{$field_name}}) . \"</td>\";\n";
+                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . \$view_model->timeago(\$data->$field_name) . \"</td>\";\n";
                         break;
                     case 'currency':
-                        $result .= "\t\t\t\t\t\t\techo \"<td>$\" . number_format(\$data->{$field_name}, 2) . \"</td>\";\n";
+                        $result .= "\t\t\t\t\t\t\techo \"<td>$\" . number_format(\$data->$field_name, 2) . \"</td>\";\n";
                         break;
                     case 'percent':
-                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . number_format(\$data->{$field_name}, 2) . \"%</td>\";\n";
+                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . number_format(\$data->$field_name, 2) . \"%</td>\";\n";
                         break;
                     case 'image':
-                        $result .= "\t\t\t\t\t\t\techo \"<td><div class='mkd-image-container'><img class='img-fluid modal-image' src='{\$data->{$field_name}}' onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/></div></td>\";\n";
+                        $result .= "\t\t\t\t\t\t\techo \"<td><div class='mkd-image-container'><img class='img-fluid modal-image' src='\$data->$field_name' onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/></div></td>\";\n";
                         break;
                     case 'imagefile':
-                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . \$view_model->image_or_file(\$data->{$field_name}) . \"</td>\";\n";
+                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . \$view_model->image_or_file(\$data->$field_name) . \"</td>\";\n";
                         break;
                     case 'boolean':
-                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . ((\$data->{$field_name} == 1) ? \"xyzYes\" : \"xyzNo\") . \"</td>\";\n";
+                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . ((\$data->$field_name == 1) ? \"xyzYes\" : \"xyzNo\") . \"</td>\";\n";
                         break;
                     case 'uppercase':
-                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . strtoupper(\$data->{$field_name}) . \"</td>\";\n";
+                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . strtoupper(\$data->$field_name) . \"</td>\";\n";
                         break;
                     case 'lowercase':
-                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . strtolower(\$data->{$field_name}) . \"</td>\";\n";
+                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . strtolower(\$data->$field_name) . \"</td>\";\n";
                         break;
                     case 'uppercasefirst':
-                            $result .= "\t\t\t\t\t\t\techo \"<td>\" . ucfirst(\$data->{$field_name}) . \"</td>\";\n";
+                            $result .= "\t\t\t\t\t\t\techo \"<td>\" . ucfirst(\$data->$field_name) . \"</td>\";\n";
                         break;
                     case 'url':
-                            $result .= "\t\t\t\t\t\t\techo \"<td><a  class='btn-link' target='_blank' href='\$data->{$field_name}'>xyzView</a></td>\";\n";
+                            $result .= "\t\t\t\t\t\t\techo \"<td><a  class='btn-link' target='_blank' href='\$data->$field_name'>xyzView</a></td>\";\n";
                         break;
                     case 'json':
-                        $result .= "\t\t\t\t\t\t\techo \"<td>$\" . json_encode(json_decode(\$data->{$field_name}, TRUE), JSON_PRETTY_PRINT) . \"</td>\";\n";
+                        $result .= "\t\t\t\t\t\t\techo \"<td>$\" . json_encode(json_decode(\$data->$field_name, TRUE), JSON_PRETTY_PRINT) . \"</td>\";\n";
                         break;
                     case 'integer':
                     case 'float':
