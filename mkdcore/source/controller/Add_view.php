@@ -49,7 +49,7 @@ if ($layout_clean_mode) {
         </div>
         </div>
     <?php endif; ?>
-</div>
+
 <div class="row mb-5">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
@@ -67,4 +67,5 @@ if ($layout_clean_mode) {
             </div>
         </div>
     </div>
+</div>
 </div>
