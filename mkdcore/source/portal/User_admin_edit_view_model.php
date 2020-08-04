@@ -10,12 +10,10 @@
  */
 class User_admin_edit_view_model
 {
-    protected $_entity;
+	protected $_entity;
 	protected $_id;
-	protected $_email;
 	protected $_first_name;
 	protected $_last_name;
-	protected $_password;
 	protected $_phone;
 	protected $_role_id;
 	protected $_image;
@@ -56,16 +54,14 @@ class User_admin_edit_view_model
 
     public function set_model ($model)
     {
-        $this->_model = $model;
-		$this->_id = $model->id;
-		$this->_email = $model->email;
-		$this->_first_name = $model->first_name;
-		$this->_last_name = $model->last_name;
-		$this->_password = $model->password;
-		$this->_phone = $model->phone;
-		$this->_role_id = $model->role_id;
-		$this->_image = $model->image;
-		$this->_status = $model->status;
+			$this->_model = $model;
+			$this->_id = $model->id;
+			$this->_first_name = $model->first_name;
+			$this->_last_name = $model->last_name;
+			$this->_phone = $model->phone;
+			$this->_role_id = $model->role_id;
+			$this->_image = $model->image;
+			$this->_status = $model->status;
 
     }
 
@@ -87,16 +83,6 @@ class User_admin_edit_view_model
 
 	}
 
-	public function get_email ()
-	{
-		return $this->_email;
-	}
-
-	public function set_email ($email)
-	{
-		$this->_email = $email;
-	}
-
 	public function get_first_name ()
 	{
 		return $this->_first_name;
@@ -115,16 +101,6 @@ class User_admin_edit_view_model
 	public function set_last_name ($last_name)
 	{
 		$this->_last_name = $last_name;
-	}
-
-	public function get_password ()
-	{
-		return $this->_password;
-	}
-
-	public function set_password ($password)
-	{
-		$this->_password = $password;
 	}
 
 	public function get_phone ()

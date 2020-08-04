@@ -12,7 +12,6 @@ class {{{uc_portal}}}_profile_view_model
 {
     protected $_entity;
     protected $_id;
-	protected $_email;
 	protected $_first_name;
     protected $_last_name;
     protected $_credential_id;
@@ -52,32 +51,20 @@ class {{{uc_portal}}}_profile_view_model
     {
         $this->_model = $model;
         $this->_id = $model->id;
-		$this->_email = $model->email;
 		$this->_first_name = $model->first_name;
         $this->_last_name = $model->last_name;
         $this->_credential_id = $model->credential_id;
     }
 
-	public function get_email ()
-	{
-		return $this->_email;
-    }
-    
     public function get_credential_id ()
 	{
 		return $this->_credential_id;
     }
-    
+
     public function set_credential_id($credential_id)
     {
         $this->_credential_id = $credential_id;
     }
-    
-
-	public function set_email ($email)
-	{
-		$this->_email = $email;
-	}
 
 	public function get_first_name ()
 	{
