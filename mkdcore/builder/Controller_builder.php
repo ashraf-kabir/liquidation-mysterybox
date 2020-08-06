@@ -714,11 +714,36 @@ class Controller_builder extends Builder
                     $list_str = $this->inject_substitute($list_str, 'model', $controller['model']);
                     $list_str = $this->inject_substitute($list_str, 'uc_portal', $uc_portal);
                     $list_str = $this->inject_substitute($list_str, 'portal', $portal);
+
                     $list_str = $this->inject_substitute($list_str, 'uc_name', $uc_name);
                     $list_str = $this->inject_substitute($list_str, 'page_name', $controller['page_name']);
                     $list_str = $this->inject_substitute($list_str, 'name', $controller['name']);
                     $list_str = $this->inject_substitute($list_str, 'list_paginate_filter_post', $this->output_paginate_filter_post($controller['filter_fields']));
                     $list_str = $this->inject_substitute($list_str, 'list_paginate_filter_where', $this->output_paginate_filter_where($controller['filter_fields'], $controller['all_records'], $controller['active_only']));
+
+                    if (!$controller['all_records'])
+                    {
+                        if ($controller['active_only'])
+                        {
+                            $list_str = $this->inject_substitute($list_str, 'all_records', "'user_id' => \$session['user_id'], 'status' => 1");
+                        }
+                        else
+                        {
+                            $list_str = $this->inject_substitute($list_str, 'all_records', "'user_id' => \$session['user_id']");
+                        }
+                    }
+                    else
+                    {
+                        if ($controller['active_only'])
+                        {
+                            $list_str = $this->inject_substitute($list_str, 'all_records', "'status' => 1");
+                        }
+                        else
+                        {
+                            $list_str = $this->inject_substitute($list_str, 'all_records', '');
+                        }
+                    }
+
                     $list_view_str = file_get_contents('../mkdcore/source/controller/List_paginate_filter_view.php');
                     if ($controller['is_add'])
                     {
@@ -1760,7 +1785,15 @@ class Controller_builder extends Builder
                         $result .= "\t\t\t\t\t\t<div class=\"col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12\">\n";
                         $result .= "\t\t\t\t\t\t\t<div class=\"form-group\">\n";
                         $result .= "\t\t\t\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t\t\t\t<input type=\"datetime\" class=\"form-control\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo \$this->_data['view_model']->get_{$field[0]}();?>\"/>\n";
+                        $result .= "\t\t\t\t\t\t\t\t<input type=\"datetime-local\" class=\"form-control\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo \$this->_data['view_model']->get_{$field[0]}();?>\"/>\n";
+                        $result .= "\t\t\t\t\t\t\t</div>\n";
+                        $result .= "\t\t\t\t\t\t</div>\n";
+                        break;
+                    case 'time':
+                        $result .= "\t\t\t\t\t\t<div class=\"col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12\">\n";
+                        $result .= "\t\t\t\t\t\t\t<div class=\"form-group\">\n";
+                        $result .= "\t\t\t\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
+                        $result .= "\t\t\t\t\t\t\t\t<input type=\"time\" class=\"form-control\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo \$this->_data['view_model']->get_{$field[0]}();?>\"/>\n";
                         $result .= "\t\t\t\t\t\t\t</div>\n";
                         $result .= "\t\t\t\t\t\t</div>\n";
                         break;
@@ -1957,7 +1990,17 @@ class Controller_builder extends Builder
                     case 'datetime':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-5 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"datetime\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"datetime-local\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}'); ?>\"/>\n";
+                        $result .= "\t\t\t\t</div>\n";
+                        break;
+                    case 'time':
+                        $result .= "\t\t\t\t<div class=\"form-group col-md-5 col-sm-12\">\n";
+                        $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
+                        $result .= "\t\t\t\t\t<select id=\"form_{$field[3]}\" name=\"{$field[0]}\" class=\"form-control data-input\">\n";
+                        $result .= "\t\t\t\t\t\t<?php foreach (\$view_model->time_default_mapping() as \$key => \$value) {\n";
+                        $result .= "\t\t\t\t\t\t\techo \"<option value='{\$key}'> {\$value} </option>\";\n";
+                        $result .= "\t\t\t\t\t\t}?>\n";
+                        $result .= "\t\t\t\t\t</select>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'text':
@@ -2123,7 +2166,17 @@ class Controller_builder extends Builder
                     case 'datetime':
                         $result .= "\t\t\t\t<div class=\"form-group col-md-5 col-sm-12\">\n";
                         $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
-                        $result .= "\t\t\t\t\t<input type=\"datetime\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
+                        $result .= "\t\t\t\t\t<input type=\"datetime-local\" class=\"form-control data-input\" id=\"form_{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
+                        $result .= "\t\t\t\t</div>\n";
+                        break;
+                    case 'time':
+                        $result .= "\t\t\t\t<div class=\"form-group col-md-5 col-sm-12\">\n";
+                        $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
+                        $result .= "\t\t\t\t\t<select id=\"form_{$field[3]}\" name=\"{$field[0]}\" class=\"form-control data-input\">\n";
+                        $result .= "\t\t\t\t\t\t<?php foreach (\$view_model->time_default_mapping() as \$key => \$value) {\n";
+                        $result .= "\t\t\t\t\t\t\techo \"<option value='{\$key}' \" . ((\$view_model->get_{$field[0]}() == \$key && \$view_model->get_{$field[0]}() != '') ? 'selected' : '') . \"> {\$value} </option>\";\n";
+                        $result .= "\t\t\t\t\t\t}?>\n";
+                        $result .= "\t\t\t\t\t</select>\n";
                         $result .= "\t\t\t\t</div>\n";
                         break;
                     case 'text':
@@ -2345,6 +2398,9 @@ class Controller_builder extends Builder
                             case 'boolean':
                                 $result .= "\t\t\t\t\t\t\techo \"<td>\" . ((\$data->{$complex_field_name} == 1) ? \"xyzYes\" : \"xyzNo\") . \"</td>\";\n";
                                 break;
+                            case 'time':
+                                $result .= "\t\t\t\t\t\t\techo \"<td>{\$view_model->time_default_mapping()[\$data->{$complex_field_name}]}</td>\";\n";
+                                break;
                             case 'integer':
                             case 'string':
                             case 'text':
@@ -2393,7 +2449,6 @@ class Controller_builder extends Builder
             else if ($this->startsWith($field_type, 'link'))
             {
                 $field_list = explode(':', $field_type);
-                error_log(print_r($field_list, true));
                 if (count($field_list) != 2) {
                     $result .= "\t\t\t\t\t\t\techo \"<td>ERROR</td>\";\n";
                 } else {
@@ -2413,6 +2468,9 @@ class Controller_builder extends Builder
                     break;
                     case 'timeago':
                         $result .= "\t\t\t\t\t\t\techo \"<td>\" . \$view_model->timeago(\$data->$field_name) . \"</td>\";\n";
+                        break;
+                    case 'time':
+                        $result .= "\t\t\t\t\t\t\techo \"<td>\" . \$view_model->time_default_mapping()[\$data->$field_name] . \"</td>\";\n";
                         break;
                     case 'currency':
                         $result .= "\t\t\t\t\t\t\techo \"<td>$\" . number_format(\$data->$field_name, 2) . \"</td>\";\n";
@@ -2830,6 +2888,9 @@ class Controller_builder extends Builder
                 break;
             case 'timeago':
                 $result = $surroundingLeft . "\$view_model->timeago($surround_middle) " . $surroundingRight;
+                break;
+            case 'time':
+                $result = $surroundingLeft . "\$view_model->time_default_mapping()[$surround_middle] " . $surroundingRight;
                 break;
             case 'datetime':
                 $result = $surroundingLeft . "date('F d Y h:i A', strtotime($surround_middle)) " . $surroundingRight;

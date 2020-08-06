@@ -50,9 +50,13 @@ class Model_builder extends Builder
                 $model_template = $this->inject_substitute($model_template, 'timestamp', 'FALSE');
             }
 
-            if (isset($value['method']) && strlen($value['method']) > 0)
+            if (isset($value['method']) && is_string($value['method']) && strlen($value['method']) > 0)
             {
                 $model_template = $this->inject_substitute($model_template, 'method', $value['method']);
+            }
+            if (isset($value['method']) && is_array($value['method']))
+            {
+                $model_template = $this->inject_substitute($model_template, 'method', implode("\n",$value['method']));
             }
             else
             {
@@ -120,6 +124,11 @@ class Model_builder extends Builder
                         if ($type == 'password')
                         {
                             $type = 'string';
+                        }
+
+                        if ($type == 'time')
+                        {
+                            $type = 'integer';
                         }
 
                         if (strpos($type, 'image') !== FALSE)

@@ -15,6 +15,7 @@
         {{{list_paginate_filter_post}}}
         $where = [
             {{{list_paginate_filter_where}}}
+            {{{all_records}}}
         ];
 
         $this->_data['view_model']->set_total_rows($this->{{{model}}}_model->count($where));

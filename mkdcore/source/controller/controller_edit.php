@@ -1,7 +1,7 @@
 	public function edit($id)
 	{
         $model = $this->{{{model}}}_model->get($id);
-
+        $session = $this->get_session();
 		if (!$model)
 		{
 			$this->error('xyzError');

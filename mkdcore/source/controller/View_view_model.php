@@ -72,5 +72,20 @@ class {{{uc_name}}}_{{{portal}}}_view_view_model
              return $diff . ' ' . $strTime[$i] . '(s) ago ';
         }
     }
+
+    public function time_default_mapping ()
+    {
+        $results = [];
+        for ($i=0; $i < 24; $i++)
+        {
+            for ($j=0; $j < 60; $j++)
+            {
+                $hour = ($i < 10) ? '0' . $i : $i;
+                $min = ($j < 10) ? '0' . $j : $j;
+                $results[($i * 60) + $j] = "$hour:$min";
+            }
+        }
+        return $results;
+    }
 {{{mapping}}}{{{setter_getter_edit}}}{{{to_json}}}
 }
