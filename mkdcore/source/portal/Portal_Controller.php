@@ -59,4 +59,82 @@ class {{{ucname}}}_controller extends {{{subclass_prefix}}}Controller
         $this->load->view($template, $data);
         $this->load->view('Layout/{{{ucname}}}Footer');
     }
+
+    /**
+     * User token invalid
+     *
+     * @return string
+     */
+    public function unauthorize_error_message()
+    {
+        return $this->output->set_content_type('application/json')
+        ->set_status_header(401)
+        ->set_output(json_encode([
+            'code' => 401,
+            'success' => FALSE,
+            'message' => 'xyzinvalid credentials'
+        ]));
+    }
+
+    /**
+     * User Role invalid
+     *
+     * @return string
+     */
+    public function unauthorize_resource_error_message()
+    {
+        return $this->output->set_content_type('application/json')
+            ->set_status_header(406)
+            ->set_output(json_encode([
+                'code' => 406,
+                'success' => FALSE,
+                'message' => 'cannot access resource'
+            ]));
+    }
+
+    /**
+     * Success API Call
+     *
+     * @return string
+     */
+    public function success($success)
+    {
+        $success['code'] = 200;
+        $success['success'] = TRUE;
+        return $this->output->set_content_type('application/json')
+            ->set_status_header(200)
+            ->set_output(json_encode($success));
+    }
+
+    /**
+     * Invalid form input
+     *
+     * @return string
+     */
+    protected function _render_validation_error ()
+	{
+        $data = [];
+        $data['code'] = 403;
+        $data['success'] = FALSE;
+        $data['error'] = $this->form_validation->error_array();
+        return $this->output->set_content_type('application/json')
+            ->set_status_header(403)
+            ->set_output(json_encode($data));
+    }
+
+    /**
+     * Render Custom Error
+     *
+     * @return string
+     */
+    protected function _render_custom_error ($errors)
+	{
+        $data = [];
+        $data['code'] = 403;
+        $data['success'] = FALSE;
+        $data['error'] = $errors;
+        return $this->output->set_content_type('application/json')
+            ->set_status_header(403)
+            ->set_output(json_encode($data));
+    }
 }
