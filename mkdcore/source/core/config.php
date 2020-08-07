@@ -380,10 +380,10 @@ $config['encryption_key'] = '{{{encryption_key}}}';
 $config['sess_save_path'] = sys_get_temp_dir();
 $config['sess_driver'] = 'files';
 $config['sess_cookie_name'] = 'session';
-$config['sess_expiration'] = 7200;
+$config['sess_expiration'] = 14400;
 // $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;
-$config['sess_time_to_update'] = 300;
+$config['sess_time_to_update'] = 900;
 $config['sess_regenerate_destroy'] = FALSE;
 
 /*
@@ -542,6 +542,7 @@ $config['file_upload'] = '{{{file_upload}}}';
 $config['upload_byte_size_limit'] = {{{upload_byte_size_limit}}};
 $config['email_smtp'] = [
     'protocol' => 'smtp',
+    'smtp_name' => '{{{smtp_name}}}',
     'smtp_host' => '{{{smtp_host}}}',
     'smtp_port' => {{{smtp_port}}},
     'smtp_user' => '{{{smtp_user}}}',

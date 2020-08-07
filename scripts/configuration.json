@@ -1037,6 +1037,7 @@
 		"powered_by": "Powered By <a href=\"https://manaknightdigital.com\" target=\"__blank\">Manaknightdigital Inc.</a>",
 		"email_smtp": {
 			"protocol": "smtp",
+			"smtp_name": "Support",
 			"smtp_host": "smtp.mailtrap.io",
 			"smtp_port": 2525,
 			"smtp_user": "7e8f296dd6a493",

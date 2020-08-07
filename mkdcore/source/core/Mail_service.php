@@ -35,6 +35,13 @@ class Mail_service
     public $_platform_name = '';
 
     /**
+     * From name.
+     *
+     * @var string
+     */
+    public $_from_name = '';
+
+    /**
      * CI.
      *
      * @var mixed
@@ -72,7 +79,7 @@ class Mail_service
                 {
                     throw new Exception('Email not setup');
                 }
-
+                $this->_from_name = $settings['smtp_name'];
                 $this->_adapter = $this->_ci->email->initialize($settings);
                 break;
         }
@@ -122,7 +129,7 @@ class Mail_service
             default:
                 $this->_ci->load->library('encryption');
                 $this->_adapter->to($to);
-                $this->_adapter->from($from);
+                $this->_adapter->from($from, $this->_from_name);
                 $this->_adapter->subject($subject);
                 $this->_adapter->message($html);
                 $result = $this->_adapter->send();
