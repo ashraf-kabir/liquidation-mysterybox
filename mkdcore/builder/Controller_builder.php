@@ -1516,7 +1516,7 @@ class Controller_builder extends Builder
             $field = explode("|", $field);
             $field= $field[0];
             $result .= "\n\tpublic function get_{$field} ()\n\t{\n\t\treturn \$this->_{$field};\n\t}\n\n";
-            $result .= "\tpublic function set_{$field} (\${$field})\n\t{\n\t\t\$this->_{$field} = \${$field};\n\t}\n";
+            $result .= "\tpublic function set_{$field} (\${$field})\n\t{\n\t\t\$this->_{$field} = \${$field};\n\t}\n\n\tpublic \$_{$field} = NULL;\n";
         }
         return $result;
     }
