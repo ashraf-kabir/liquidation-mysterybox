@@ -26,6 +26,15 @@
             $order_by,
             $direction));{{{method_list}}}
 
+        if ($format == 'csv')
+        {
+            header('Content-Type: text/csv');
+            header('Content-Disposition: attachment; filename="export.csv"');
+
+            echo $this->_data['view_model']->to_csv();
+            exit();
+        }
+
         if ($format != 'view')
         {
             return $this->output->set_content_type('application/json')

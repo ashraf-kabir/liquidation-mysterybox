@@ -745,6 +745,15 @@ class Controller_builder extends Builder
                     }
 
                     $list_view_str = file_get_contents('../mkdcore/source/controller/List_paginate_filter_view.php');
+                    if ($controller['export'])
+                    {
+                        $list_view_str = $this->inject_substitute($list_view_str, 'export', $this->output_export_button($controller));
+                        $list_view_str = $this->inject_substitute($list_view_str, 'add_class', 'add-part d-flex justify-content-md-end  ');
+                    }
+                    else
+                    {
+                        $list_view_str = $this->inject_substitute($list_view_str, 'export', '');
+                    }
                     if ($controller['is_add'])
                     {
                         $list_str = $this->inject_substitute($list_str, 'add', $this->output_add_button($controller));
@@ -879,6 +888,17 @@ class Controller_builder extends Builder
                     $list_view_str = file_get_contents('../mkdcore/source/controller/List_paginate_view.php');
                     $list_view_str = $this->inject_substitute($list_view_str, 'name', str_replace(' ', '', $controller['name']));
                     $list_view_str = $this->inject_substitute($list_view_str, 'row', $this->output_list_rows_raw($controller['listing_rows'], $controller, $this->make_mapping_fields($controller)));
+
+                    if ($controller['export'])
+                    {
+                        $list_view_str = $this->inject_substitute($list_view_str, 'export', $this->output_export_button($controller));
+                        $list_view_str = $this->inject_substitute($list_view_str, 'add_class', 'add-part d-flex justify-content-md-end  ');
+                    }
+                    else
+                    {
+                        $list_view_str = $this->inject_substitute($list_view_str, 'export', '');
+                    }
+
                     if ($controller['is_add'])
                     {
                         $list_view_str = $this->inject_substitute($list_view_str, 'add', $this->output_add_button($controller));
@@ -964,6 +984,16 @@ class Controller_builder extends Builder
                 $list_view_str = file_get_contents('../mkdcore/source/controller/List_view.php');
                 $list_view_str = $this->inject_substitute($list_view_str, 'name', str_replace(' ', '', $controller['name']));
                 $list_view_str = $this->inject_substitute($list_view_str, 'row', $this->output_list_rows_raw($controller['listing_rows'], $controller, $this->make_mapping_fields($controller)));
+
+                if ($controller['export'])
+                {
+                    $list_view_str = $this->inject_substitute($list_view_str, 'export', $this->output_export_button($controller));
+                    $list_view_str = $this->inject_substitute($list_view_str, 'add_class', 'add-part d-flex justify-content-md-end  ');
+                }
+                else
+                {
+                    $list_view_str = $this->inject_substitute($list_view_str, 'export', '');
+                }
 
                 if ($controller['is_add'])
                 {
@@ -1563,6 +1593,48 @@ class Controller_builder extends Builder
         $result .= "\t\t\t'num_item' => \$this->get_total_rows(),\n";
         $result .= "\t\t\t'item' => \$clean_list\n";
         $result .= "\t\t];\n\t";
+        $result .= "}\n";
+        $result .= $this->output_list_to_csv ($listing_fields, $mapping);
+        return $result;
+    }
+
+    protected function output_list_to_csv ($listing_fields, $mapping)
+    {
+        $result = "\n\tpublic function to_csv ()\n\t{\n";
+        $result .= "\t\t\$list = \$this->get_list();\n\n";
+        $result .= "\t\t\$clean_list = [];\n\n";
+        $result .= "\t\tforeach (\$list as \$key => \$value)\n";
+        $result .= "\t\t{\n";
+
+        foreach ($mapping as $mapping_key => $mapping_value)
+        {
+            $result .= "\t\t\t\$list[\$key]->{$mapping_key} = \$this->{$mapping_key}_mapping()[\$value->{$mapping_key}];\n";
+        }
+        $result .= "\t\t\t\$clean_list_entry = [];\n";
+
+        foreach ($listing_fields as $list_key)
+        {
+            $result .= "\t\t\t\$clean_list_entry['{$list_key}'] = \$list[\$key]->{$list_key};\n";
+        }
+
+        $result .= "\t\t\t\$clean_list[] = \$clean_list_entry;\n";
+
+        $result .= "\t\t}\n\n";
+        $result .= "\t\t\$csv = implode(\",\", \$this->get_column()) . \"\\n\";\n";
+        $result .= "\t\t\$fields = array_filter(\$this->get_field_column());\n";
+        $result .= "\t\tforeach(\$clean_list as \$row)\n";
+        $result .= "\t\t{\n";
+        $result .= "\t\t\t\$row_csv = [];\n";
+        $result .= "\t\t\tforeach(\$row as \$key =>\$column)\n";
+        $result .= "\t\t\t{\n";
+        $result .= "\t\t\tif (in_array(\$key, \$fields))\n";
+        $result .= "\t\t\t{\n";
+        $result .= "\t\t\t\t\$row_csv[] = '\"' . \$column . '\"';\n";
+        $result .= "\t\t\t}\n";
+        $result .= "\t\t\t}\n";
+        $result .= "\t\t\t\$csv = \$csv . implode(',', \$row_csv) . \"\\n\";\n";
+        $result .= "\t\t}\n";
+        $result .= "\t\treturn \$csv;\n";
         $result .= "}\n";
 
         return $result;
@@ -2661,6 +2733,11 @@ class Controller_builder extends Builder
     protected function output_add_button ($controller)
     {
         return "<a class=\"btn btn-primary btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/add\"><i class=\"fas fa-plus-circle\"></i></a>";
+    }
+
+    protected function output_export_button ($controller)
+    {
+        return "<a class=\"btn btn-info btn-sm ml-2\" onclick='mkd_export_table(window.location.href);return false;'><i class=\"fas fa-file-download\" style=\"color:white;\"></i></a>";
     }
 
     protected function view_resource($all_records, $active_only)

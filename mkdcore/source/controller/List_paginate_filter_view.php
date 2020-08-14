@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
   <?php echo $view_model->get_heading();?>
-  <span class="{{{add_class}}}">{{{add}}}</span>
+  <span class="{{{add_class}}}">{{{add}}}{{{export}}}</span>
 </h5>
 
   <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4 pt-4" style='height:auto;'>
