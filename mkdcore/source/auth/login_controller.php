@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 include_once __DIR__ . '/../../services/User_service.php';
-include_once __DIR__ . '/../../services/Twillo_service.php';
+include_once __DIR__ . '/../../libraries/Twillo_service.php';
 include_once '{{{ucname}}}_controller.php';
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
 /**
