@@ -233,51 +233,9 @@ menu~donation|xyzProfile|/profile;
 menu~donation|xyzLogout|/logout;
 
 
+simple_controller~admin|history|occupation;
+simple_controller~member|fb_user_note;
 
-controller~user|Users|/users|admin;
-list~user|admin|id,email,first_name,last_name,role_id,status,postal_code,city,government_id;
-filter~user|admin|id,email,first_name,last_name,role_id,status,postal_code,city,government_id;
-header~user|admin|id,email,first_name,last_name,role_id,status;
-edit~user|admin|id,email,first_name,last_name,role_id,status,government_id,address,country,state,occupation_id,city;
-add~user|admin|email,first_name,last_name,password,phone,role_id,image,government_id,address,country,state,city,postal_code;
-view~user|admin|email,first_name,last_name,password,phone,role_id,image,government_id,address,country,state,city,postal_code;
-row~user|admin|id=integer,image=image,complex=email:first_name:last_name:role_id:phone,status=integer;
-
-controller~history|History|/history|admin;
-list~history|admin|type,user_id;
-filter~history|admin|type,user_id;
-header~history|admin;
-edit~history|admin;
-add~history|admin;
-view~history|admin;
-row~history|admin|id=integer,message=string;
-
-controller~occupation|Occupation|/occupation|admin;
-list~occupation|admin|id,name;
-filter~occupation|admin|id,name;
-header~occupation|admin|ID,Name;
-edit~occupation|admin|name;
-add~occupation|admin|name;
-view~occupation|admin|id,name;
-row~occupation|admin|id=integer,name=string;
-
-controller~distrubtor|Distributors|/distributors|admin;
-list~distrubtor|admin|id,company_name,email,phone_number,sales,commission,next_pickup,status;
-filter~distrubtor|admin|id,email,company_name,phone,status,account_manager_id;
-header~distrubtor|admin|ID,Company Name,Distributor Details,Sales,Commission Rate,Next Pick Up,Status;
-edit~distrubtor|admin|email,company_name,password,phone_number,status;
-add~distrubtor|admin|email,company_name,password,phone_number,status;
-view~distrubtor|admin|id,email,company_name,password,phone_number,status;
-row~distrubtor|admin|id=integer,company_name=string,complex=email:phone_number,sales=currency|commission=currency|next_pickup=date|status=integer;
-
-controller~fb_user_note|User Notes|/user_notes|admin;
-list~fb_user_note|admin|type,user_id,description;
-filter~fb_user_note|admin|type,user_id;
-header~fb_user_note|admin|type,user,description;
-edit~fb_user_note|admin|type,user_id,description;
-add~fb_user_note|admin|type,user_id,description;
-view~fb_user_note|admin|type,user_id,description;
-row~fb_user_note|admin|type=integer,user_is=string,description=string;
 
 package~analytics|payment|cache|pdf|voice
 

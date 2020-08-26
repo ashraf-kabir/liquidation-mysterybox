@@ -24,6 +24,7 @@ class Preschema_builder extends Builder{
         'models' => [],
         'mappings' => [],
         'controllers'=> [],
+        'simple_controller'=> [],
         'translations' => [],
         'menus'=> [],
         'filter_fields'=> [],
@@ -87,6 +88,59 @@ class Preschema_builder extends Builder{
 
             case  'FLOAT':
                 $return_str = '"float", [], "' .  $label . '", "required|float", "required|float" ';
+            break;
+       }
+
+       return $return_str;
+    }
+
+    private function _get_field_pipe($type, $label)
+    {
+       $return_str =  '=string';
+
+       if($label === 'xyzid')
+       {
+            return '=integer';
+       }
+
+       switch ($type)
+       {
+            case  'STR':
+                $return_str =  '=string';
+            break;
+            case  'EMAIL':
+                $return_str =  '=string';
+            break;
+            case  'INT':
+                $return_str =  '=integer';
+            break;
+
+            case  'DATE':
+                $return_str = '=date';
+            break;
+
+            case  'DATETIME':
+                $return_str = '=datetime';
+            break;
+
+            case  'TEXT':
+                $return_str = '=text';
+            break;
+
+            case  'IMAGE':
+                $return_str =  '=image';
+            break;
+
+            case  'PASSWORD':
+                $return_str =   '=password';
+            break;
+
+            case  'FILE':
+                $return_str =  '=file';
+            break;
+
+            case  'FLOAT':
+                $return_str = '=float';
             break;
        }
 
@@ -255,6 +309,15 @@ class Preschema_builder extends Builder{
         }
     }
 
+    private function get_model_index($model, $rows)
+    {
+        foreach ($rows as $key => $value) {
+            if (startsWith($value, $model . '|')) {
+                return $key;
+            }
+        }
+        return -1;
+    }
     /**
      *  controller
      *  index 0  model,
@@ -279,10 +342,11 @@ class Preschema_builder extends Builder{
            $header_fields = '';
            $row_fields  = '';
            $view_fields = '';
-
+            // error_log($model . ' ' . $i);
+            // error_log(print_r($this->_entities['add_fields'], true));
            for($a = 0; $a < count($this->_entities['add_fields']); $a++)
            {
-                $field_array = explode('|', $this->_entities['add_fields'][$i]);
+                $field_array = explode('|', $this->_entities['add_fields'][$this->get_model_index($model,$this->_entities['add_fields'])]);
                 if($field_array[0] === $model && $field_array[1] === $portal)
                 {
 
@@ -306,7 +370,7 @@ class Preschema_builder extends Builder{
 
            for($a = 0; $a < count($this->_entities['listing_fields']); $a++)
            {
-                $field_array = explode('|', $this->_entities['listing_fields'][$i]);
+                $field_array = explode('|', $this->get_model_index($model,$this->_entities['listing_fields']));
                 if($field_array[0] === $model && $field_array[1] === $portal)
                 {
                      $fields = $field_array[2]  ?? '';
@@ -329,7 +393,7 @@ class Preschema_builder extends Builder{
 
            for($a = 0; $a < count($this->_entities['edit_fields']); $a++)
            {
-                $field_array = explode('|', $this->_entities['edit_fields'][$i]);
+                $field_array = explode('|', $this->get_model_index($model,$this->_entities['edit_fields']));
                 if($field_array[0] === $model && $field_array[1] === $portal)
                 {
                      $fields = $field_array[2]  ?? '';
@@ -352,7 +416,7 @@ class Preschema_builder extends Builder{
 
            for($a = 0; $a < count($this->_entities['listing_headers']); $a++)
            {
-                $field_array = explode('|', $this->_entities['listing_headers'][$i]);
+                $field_array = explode('|', $this->get_model_index($model,$this->_entities['listing_headers']));
                 if($field_array[0] === $model && $field_array[1] === $portal)
                 {
                      $fields = $field_array[2] ?? '';
@@ -374,7 +438,7 @@ class Preschema_builder extends Builder{
 
            for($a = 0; $a < count($this->_entities['filter_fields']); $a++)
            {
-                $field_array = explode('|', $this->_entities['filter_fields'][$i]);
+                $field_array = explode('|', $this->get_model_index($model,$this->_entities['filter_fields']));
                 if($field_array[0] === $model && $field_array[1] === $portal)
                 {
                      $fields = $field_array[2] ?? '';
@@ -397,7 +461,7 @@ class Preschema_builder extends Builder{
 
            for($a = 0; $a < count($this->_entities['view_fields']); $a++)
            {
-                $field_array = explode('|', $this->_entities['view_fields'][$i]);
+                $field_array = explode('|', $this->get_model_index($model,$this->_entities['view_fields']));
                 if($field_array[0] === $model && $field_array[1] === $portal)
                 {
 
@@ -421,7 +485,7 @@ class Preschema_builder extends Builder{
 
            for($a = 0; $a < count($this->_entities['rows']); $a++)
            {
-                $field_array = explode('|', $this->_entities['rows'][$i]);
+                $field_array = explode('|', $this->get_model_index($model,$this->_entities['rows']));
                 if($field_array[0] === $model && $field_array[1] === $portal)
                 {
 
@@ -463,6 +527,63 @@ class Preschema_builder extends Builder{
         }
     }
 
+    /**
+     *  controller
+     *  index 0  portal,
+     *  index 1 model
+     *  index 2 model
+     *  index 3 portal
+     */
+    private function _build_simple_controllers()
+    {
+        $controllers = [];
+        for($i =0; $i < count($this->_entities['simple_controller']); $i ++  )
+        {
+            $controller_array = explode('|', $this->_entities['simple_controller'][$i]);
+            $portal = $controller_array[0];
+            array_shift($controller_array);
+            // error_log(print_r($controller_array, true));
+            foreach ($controller_array as $key => $model)
+            {
+                $uc_model = ucfirst($model);
+                $this->_entities['controllers'][] = "$model|$uc_model|/$model|$portal";
+                // error_log(print_r("$model|$uc_model|/$model|$portal", true));
+                for($j = 0; $j < count($this->_entities['models']); $j++)
+                {
+                    $model_array = explode('|', $this->_entities['models'][$j]);
+                    // error_log(print_r($model . ' ' . $model_array[0], true));
+                    if ($model == $model_array[0]) {
+                        $model_fields = [];
+                        $model_header = [];
+                        $model_pipes = [];
+                        for($a = 1; $a < count( $model_array); $a ++)
+                        {
+                            $field =  explode(':', $model_array[$a]);
+                            $model_pipes[] = $field[0] . $this->_get_field_pipe(trim($field[1]),  $this->_translate_string($field[0]));
+                            $model_fields[] = $field[0];
+                            $model_header[] = $this->_translate_string($field[0]);
+                        }
+                        $this->_entities['listing_fields'][] = "$model|$portal|" . implode(',', $model_fields);
+                        $this->_entities['filter_fields'][] = "$model|$portal|" . implode(',', $model_fields);
+                        $this->_entities['listing_headers'][] = "$model|$portal|" . implode(',', $model_header);
+                        $this->_entities['add_fields'][] = "$model|$portal|" . implode(',', $model_fields);
+                        $this->_entities['edit_fields'][] = "$model|$portal|" . implode(',', $model_fields);
+                        $this->_entities['view_fields'][] = "$model|$portal|" . implode(',', $model_fields);
+                        $this->_entities['rows'][] = "$model|$portal|" . implode(',', $model_pipes);
+                        // error_log( "$model|$portal|" . implode(',', $model_fields));
+                        // error_log( "$model|$portal|" . implode(',', $model_fields));
+                        // error_log( "$model|$portal|" . implode(',', $model_header));
+                        // error_log( "$model|$portal|" . implode(',', $model_fields));
+                        // error_log( "$model|$portal|" . implode(',', $model_fields));
+                        // error_log( "$model|$portal|" . implode(',', $model_fields));
+                        // error_log( "$model|$portal|" . implode(',', $model_pipes));
+                    }
+                }
+            }
+        }
+
+    }
+
     public function _build_configuration_file()
     {
         $template =  file_get_contents('../mkdcore/source/preschema/configuration.php');
@@ -472,7 +593,7 @@ class Preschema_builder extends Builder{
         $template = $this->inject_substitute($template, 'translations', implode(',',$this->_translations));
         $template = $this->inject_substitute($template, 'roles', implode(',',$this->_roles));
         $template = $this->inject_substitute($template, 'csrf_exclude', implode(',',$this->_csrf_exclude_uris));
-        file_put_contents(getcwd() .'/preschema_output/configuration_'. time() .'_.json', $template);
+        file_put_contents('../preschema_output/configuration_'. time() .'_.json', $template);
     }
 
     public function init()
@@ -515,6 +636,9 @@ class Preschema_builder extends Builder{
 
             case 'controller':
                 $this->_entities['controllers'][] = $config_obj[1];
+            break;
+            case 'simple_controller':
+                $this->_entities['simple_controller'][] = $config_obj[1];
             break;
 
             case 'menu':
@@ -561,7 +685,14 @@ class Preschema_builder extends Builder{
         $this->_build_models();
         $this->_build_roles();
         $this->_build_portals();
+        $this->_build_simple_controllers();
         $this->_build_controllers();
         $this->_build_configuration_file();
     }
+}
+
+function startsWith ($string, $startString)
+{
+    $len = strlen($startString);
+    return (substr($string, 0, $len) === $startString);
 }
