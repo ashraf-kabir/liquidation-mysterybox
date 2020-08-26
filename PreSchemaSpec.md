@@ -72,3 +72,12 @@ package - if in list add as true
 ```
 package~analytics|payment|cache|pdf|voice
 ```
+
+simple_controller helps us type way less. All it does is it mark the portal(index 1), then everything after are models it will generate.
+
+We will generate all fields into every section and you will have to remove field you dont want yourself.
+
+Reason we made this was no one using controller tag above.
+```
+simple_controller~admin|history|occupation;
+```
