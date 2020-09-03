@@ -22,7 +22,7 @@ class {{{uc_portal}}}_me_controller extends {{{uc_portal}}}_controller
     public function me()
 	{
         $session = $this->get_session();
-        $model = $this->credential_model->get($session['user_id']);
+        $model = $this->credential_model->get($session['credential_id']);
         $this->_data['email'] = $model->email;
         $this->_data['password'] = '';
 
@@ -46,7 +46,7 @@ class {{{uc_portal}}}_me_controller extends {{{uc_portal}}}_controller
             $payload['password'] = str_replace('$2y$', '$2b$', password_hash($password, PASSWORD_BCRYPT));
         }
 
-        $result = $this->credential_model->edit($payload, $session['user_id']);
+        $result = $this->credential_model->edit($payload, $session['credential_id']);
 
         if ($result)
         {
