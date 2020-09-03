@@ -778,6 +778,17 @@ class {{{subclass_prefix}}}Model extends CI_Model
     }
 
     /**
+     * escapeLikeString data
+     *
+     * @param mixed $data
+     * @return mixed
+     */
+    public function escapeLikeString ($data)
+    {
+        return $this->db->escapeLikeString($data);
+    }
+
+    /**
      * Get Last ID in table
      *
      * @return integer
