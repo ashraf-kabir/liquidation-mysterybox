@@ -55,7 +55,16 @@ class {{{ucname}}}_login_controller extends {{{subclass_prefix}}}Controller
         if ($authenticated_user)
         {
             delete_cookie('redirect');
-            $this->set_session('user_id', (int) $authenticated_user->id);
+            $user_obj = $this->{{{model}}}->get_user_by_credential_id($authenticated_user->id);
+
+            if(empty( $user_obj))
+            {
+                $this->error('xyzWrong email or password.');
+                return $this->redirect('{{{name}}}/login');
+            }
+
+            $this->set_session('credential_id', (int) $authenticated_user->id);
+            $this->set_session('user_id', (int) $user_obj->id);
             $this->set_session('email', (string) $authenticated_user->email);
             $this->set_session('role', (string) $authenticated_user->role_id);
             return $this->redirect($redirect);
@@ -119,10 +128,7 @@ class {{{ucname}}}_login_controller extends {{{subclass_prefix}}}Controller
 
         $this->_data['phone'] = $_SESSION['user']->phone;
 
-        if (strstr($this->_data['phone'], '+1') == false)
-        {
-            $this->_data['phone'] = '+1' . $_SESSION['user']->phone;
-        }
+        $this->_data['phone'] = '+' . $_SESSION['user']->phone;
 
         if (!isset($_POST['btn-login']) || $_POST['btn-login'] !== 'Login')
         {
