@@ -342,7 +342,7 @@ class Preschema_builder extends Builder{
            $header_fields = '';
            $row_fields  = '';
            $view_fields = '';
-            // error_log($model . ' ' . $i);
+            error_log($model . ' ' . $i);
             // error_log(print_r($this->_entities['add_fields'], true));
            for($a = 0; $a < count($this->_entities['add_fields']); $a++)
            {
@@ -370,7 +370,7 @@ class Preschema_builder extends Builder{
 
            for($a = 0; $a < count($this->_entities['listing_fields']); $a++)
            {
-                $field_array = explode('|', $this->get_model_index($model,$this->_entities['listing_fields']));
+                $field_array = explode('|', $this->_entities['listing_fields'][$this->get_model_index($model,$this->_entities['listing_fields'])]);
                 if($field_array[0] === $model && $field_array[1] === $portal)
                 {
                      $fields = $field_array[2]  ?? '';
@@ -393,7 +393,7 @@ class Preschema_builder extends Builder{
 
            for($a = 0; $a < count($this->_entities['edit_fields']); $a++)
            {
-                $field_array = explode('|', $this->get_model_index($model,$this->_entities['edit_fields']));
+                $field_array = explode('|', $this->_entities['edit_fields'][$this->get_model_index($model,$this->_entities['edit_fields'])]);
                 if($field_array[0] === $model && $field_array[1] === $portal)
                 {
                      $fields = $field_array[2]  ?? '';
@@ -416,7 +416,7 @@ class Preschema_builder extends Builder{
 
            for($a = 0; $a < count($this->_entities['listing_headers']); $a++)
            {
-                $field_array = explode('|', $this->get_model_index($model,$this->_entities['listing_headers']));
+                $field_array = explode('|', $this->_entities['listing_headers'][$this->get_model_index($model,$this->_entities['listing_headers'])]);
                 if($field_array[0] === $model && $field_array[1] === $portal)
                 {
                      $fields = $field_array[2] ?? '';
@@ -438,7 +438,7 @@ class Preschema_builder extends Builder{
 
            for($a = 0; $a < count($this->_entities['filter_fields']); $a++)
            {
-                $field_array = explode('|', $this->get_model_index($model,$this->_entities['filter_fields']));
+                $field_array = explode('|', $this->_entities['filter_fields'][$this->get_model_index($model,$this->_entities['filter_fields'])]);
                 if($field_array[0] === $model && $field_array[1] === $portal)
                 {
                      $fields = $field_array[2] ?? '';
@@ -461,7 +461,7 @@ class Preschema_builder extends Builder{
 
            for($a = 0; $a < count($this->_entities['view_fields']); $a++)
            {
-                $field_array = explode('|', $this->get_model_index($model,$this->_entities['view_fields']));
+                $field_array = explode('|', $this->_entities['view_fields'][$this->get_model_index($model,$this->_entities['view_fields'])]);
                 if($field_array[0] === $model && $field_array[1] === $portal)
                 {
 
@@ -485,7 +485,7 @@ class Preschema_builder extends Builder{
 
            for($a = 0; $a < count($this->_entities['rows']); $a++)
            {
-                $field_array = explode('|', $this->get_model_index($model,$this->_entities['rows']));
+                $field_array = explode('|', $this->_entities['rows'][$this->get_model_index($model,$this->_entities['rows'])]);
                 if($field_array[0] === $model && $field_array[1] === $portal)
                 {
 
