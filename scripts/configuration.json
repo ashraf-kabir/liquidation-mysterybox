@@ -157,8 +157,8 @@
 		"count": "",
 		"override": "",
 		"seed":[
-			{"first_name": "Admin", "last_name": "Admin","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "admin","profile_id": 0,"credential_id" : 1, "stripe_id": "", "expire_at" : "2020-02-17"},
-			{"first_name": "Member",  "last_name": "Member","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "member","profile_id": 0,"credential_id" : 2, "stripe_id": "",   "expire_at" : "2020-03-17" }
+			{"first_name": "Admin", "last_name": "Admin","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "admin","profile_id": 0,"credential_id" : 1, "stripe_id": ""},
+			{"first_name": "Member",  "last_name": "Member","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "member","profile_id": 0,"credential_id" : 2, "stripe_id": ""}
 		]
         },
 		{
