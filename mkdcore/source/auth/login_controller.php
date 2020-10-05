@@ -33,7 +33,7 @@ class {{{ucname}}}_login_controller extends {{{subclass_prefix}}}Controller
         // $this->facebook_service->init();
         $this->_data['google_auth_url'] = $this->google_service->make_auth_url();
 		// $this->_data['facebook_auth_url'] = $this->facebook_service->make_auth_url();
-
+        $this->_data['portal'] = '{{{name}}}';
         $service = new User_service($this->credential_model, $this->{{{model}}});
 
         $this->form_validation->set_rules('email', 'xyzEmail', 'trim|required|valid_email');

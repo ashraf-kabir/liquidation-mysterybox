@@ -31,7 +31,7 @@ class {{{ucname}}}_login_controller extends {{{subclass_prefix}}}Controller
 
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required');
-
+        $this->_data['portal'] = '{{{name}}}';
         if ($this->form_validation->run() === FALSE)
         {
             echo $this->load->view('{{{ucname}}}/Login', $this->_data, TRUE);

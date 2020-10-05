@@ -86,7 +86,7 @@
                     <input type="submit" name='btn-login' class="btn btn-primary btn-block" value="xyzLogin">
                 </div>
                 <div class="form-group mt-3 d-flex justify-content-center">
-                    <a href="/admin/forgot" id="mkd-forgot-password-link">xyzForgot password?</a>
+                    <a href="/<?php echo $portal;?>/forgot" id="mkd-forgot-password-link">xyzForgot password?</a>
                 </div>
             </form>
         </div>
