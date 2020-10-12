@@ -8,6 +8,8 @@
  * @author Ryan Wong
  *
  */
+use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
+
 class Csv_import_service
 {
     protected $_model;
@@ -179,4 +181,40 @@ class Csv_import_service
     {
         return $this->_model->raw_no_error_query($query);
     }
+
+
+    public function _get_file_data($file)
+    {
+        
+        try
+        {
+            $reader = ReaderEntityFactory::createReaderFromFile( $file );
+            $reader->open($file);
+            $payload = [];
+    
+            foreach ($reader->getSheetIterator() as $sheet) 
+            {
+                foreach($sheet->getRowIterator() as $row)
+                {
+                  
+                    $cells = $row->getCells();
+                    $temp = [];
+                    for($i = 0; $i < count($cells); $i ++)
+                    {
+                      $temp[]  =  $cells[$i]->getValue();
+                    }
+
+                    $payload[] = $temp;
+                
+                }
+            }
+    
+            return $payload;
+        }
+        catch(Exception $e)
+        {
+            return [];
+        }
+    }
+
 }

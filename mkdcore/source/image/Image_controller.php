@@ -377,20 +377,11 @@ class Image_controller extends CI_Controller
         $this->load->library('mime_service');
         $this->load->library('csv_import_service');
 
-        if  ($this->csv_import_service->csv_file_exist($_FILES))
-        {
-            return $this->output->set_content_type('application/json')
-                ->set_status_header(403)
-                ->set_output(json_encode([
-                    'message' => 'xyzUpload CSV File missing'
-                ]));
-        }
-
         $file = $_FILES['file'];
         $size = $file['size'];
         $path = $file['tmp_name'];
         $type = $file['type'];
-        $extension = $this->mime_service->get_extension($type);
+        $save_as = FCPATH . 'uploads/' . $file["name"];
 
         if ($size > $this->config->item('upload_byte_size_limit'))
         {
@@ -401,30 +392,20 @@ class Image_controller extends CI_Controller
             ]));
         }
 
-        if ($extension !== '.csv')
+        if (move_uploaded_file($path, $save_as)) 
         {
+            $data =  $this->csv_import_service->_get_file_data( $save_as );
             return $this->output->set_content_type('application/json')
-            ->set_status_header(403)
-            ->set_output(json_encode([
-                'message' => 'xyzNot CSV File'
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'message' => 'xyzFile loaded',
+                    'data' => $data,
+                    'preview' => TRUE
             ]));
         }
 
-        $file = fopen($path, 'r');
-        $data = [];
-        while (($line = fgetcsv($file)) !== FALSE) 
-        {
-           $data[] = $line;
-        }
-        fclose($file);
+
         
-        return $this->output->set_content_type('application/json')
-            ->set_status_header(200)
-            ->set_output(json_encode([
-                'message' => 'xyzFile loaded',
-                'data' => $data,
-                'preview' => TRUE
-        ]));
     }
 
     /**
