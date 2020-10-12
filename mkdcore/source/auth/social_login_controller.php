@@ -53,7 +53,7 @@ class {{{ucname}}}_social_login_controller extends {{{subclass_prefix}}}controll
 
         if (!$exist)
         {
-            $user_id = $service->register_social($email, $this->{{{model}}}->get_mapping()->GOOGLE_LOGIN_TYPE,{{{role}}});
+            $user_id = $service->register_social($email, 'g',{{{role}}});
 
             if ($user_id)
             {
@@ -80,20 +80,21 @@ class {{{ucname}}}_social_login_controller extends {{{subclass_prefix}}}controll
     public function facebook()
     {
         $this->load->model('{{{model}}}');
+        $this->load->model('credential_model');
         $this->load->library('facebook_service');
-        $this->google_service->init();
+        $this->facebook_service->init();
 
         $code = $this->input->get('code');
-        $service = new User_service($this->{{{model}}});
-
+        $service = new User_service($this->credential_model, $this->{{{model}}});
 
         if (!$code || strlen($code) < 1)
         {
             $this->error('xyzSorry, facebook cannot find your email.');
             return $this->redirect('/{{{name}}}/login');
         }
-
+      
         $authentication_result = $this->facebook_service->authenticate_oauth_login_code($code);
+
         if (!$authentication_result)
         {
             $this->error('xyzSorry, facebook cannot find your email.');
@@ -107,13 +108,13 @@ class {{{ucname}}}_social_login_controller extends {{{subclass_prefix}}}controll
             return $this->redirect('/{{{name}}}/login');
         }
 
-        $exist = $this->{{{model}}}->get_by_fields([
+        $exist = $this->credential_model->get_by_fields([
             'email' => $email
         ]);
 
         if (!$exist)
         {
-            $user_id = $service->register_social($email, $this->{{{model}}}->get_mapping()->FACEBOOK_LOGIN_TYPE,{{{role}}});
+            $user_id = $service->register_social($email, 'f',{{{role}}});
 
             if (!$user_id)
             {

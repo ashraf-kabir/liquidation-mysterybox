@@ -37,11 +37,11 @@ class {{{ucname}}}_register_controller extends {{{subclass_prefix}}}Controller
         $this->load->helper('cookie');
         $this->load->library('google_service');
         $this->load->model('credential_model');
-        // $this->load->library('facebook_service');
+        $this->load->library('facebook_service');
         $this->google_service->init();
-        // $this->facebook_service->init();
+        $this->facebook_service->init();
         $this->_data['google_auth_url'] = $this->google_service->make_auth_url();
-		// $this->_data['facebook_auth_url'] = $this->facebook_service->make_auth_url();
+        $this->_data['facebook_auth_url'] = $this->facebook_service->make_auth_url();
 
         $service = new User_service($this->credential_model, $this->{{{model}}});
         $service->set_refer_log_model($this->refer_log_model);

@@ -387,7 +387,7 @@ class User_service
 	 * @param mixed $email
 	 * @return int the user id
 	 */
-	private function is_google_user($user)
+	public function is_google_user($user)
 	{
 		return ($user->type == $this->_model->get_mapping()::GOOGLE_LOGIN_TYPE) && ($user->status == $this->_model->get_mapping()::ACTIVE);
 	}
@@ -411,8 +411,8 @@ class User_service
 	 * @param mixed $email
 	 * @return int the user id
 	 */
-	private function is_facebook_user($user)
+	public function is_facebook_user($user)
 	{
-		return ($user->type == $this->_model->get_mapping()::FACEBOOK_LOGIN_TYPE) && ($user->status == $this->_model->get_mapping()::ACTIVE);
+		return ($user->type == 'f') && ($user->status == $this->_model->get_mapping()::ACTIVE);
 	}
 }

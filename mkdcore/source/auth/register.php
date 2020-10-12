@@ -93,7 +93,7 @@
                         </a>
                     </div>
                     <div class="form-group mt-3">
-                        <a href="<?php echo '$facebook_auth_url';?>" class="btn btn-accent-light-outline btn-sign-up btn-block" >
+                        <a href="<?php echo $facebook_auth_url;?>" class="btn btn-accent-light-outline btn-sign-up btn-block" >
                             <i class="fa fa-facebook" aria-hidden="true"></i>&nbsp;
                             xyzUse your Facebook account
                         </a>

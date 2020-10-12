@@ -113,7 +113,8 @@
 			"mapping": {
 					"verify": { "0": "xyzNot verified", "1": "xyzVerified"},
 					"status": {"0": "xyzInactive", "1": "Active", "2": "xyzSuspend"},
-					"role_id": {"1": "xyzMember", "2": "xyzAdmin"}
+					"role_id": {"1": "xyzMember", "2": "xyzAdmin"},
+					"type": {"n": "Normal", "f": "Facebook", "g" : "Google"}
 			},
 			"pre": "$data['status'] = 1;\n",
 			"post": "",
