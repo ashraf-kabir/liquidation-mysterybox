@@ -60,12 +60,12 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style='max-height: 300px; overflow-y:scroll;'>
           <form action="/v1/api/preview_csv/" enctype='multipart/form-data' id='import-csv'>
-              <input type="file" name='file' class='d-none' id='csv-file'  accept=".csv">
+              <input type="file" name='file' class='d-none' id='csv-file'  accept=".csv,.xlsx,.xlsm,.xls">
               <a href="#" class='btn btn-primary' id='btn-choose-csv'>xyzChoose file</a>
           </form>
-          <table id='csv-table' class='table-responsive d-none table-bordered'>
+          <table id='csv-table' class='table-responsive d-none table-bordered' style='width:100%;'>
               <thead id='csv-table-head'></thead>
               <tbody id='csv-table-body'></tbody>
           </table>
