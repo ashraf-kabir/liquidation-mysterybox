@@ -307,6 +307,15 @@ class Portal_builder extends Builder
 
                 if ($portal['login_type'] == 'login')
                 {
+                    
+                    $social_controller_template = file_get_contents('../mkdcore/source/auth/social_login_controller.php');
+                    $social_controller_template = $this->inject_substitute( $social_controller_template, 'name', $portal['name']);
+                    $social_controller_template = $this->inject_substitute( $social_controller_template, 'ucname', ucfirst($portal['name']));
+                    $social_controller_template = $this->inject_substitute( $social_controller_template, 'valid_roles',  $portal['role']);
+                    $social_controller_template = $this->inject_substitute( $social_controller_template, 'role',  $portal['role']);
+                    $social_controller_template = $this->inject_substitute( $social_controller_template, 'model',  $portal['model']);
+                    $social_controller_template = $this->inject_substitute( $social_controller_template, 'subclass_prefix',  $this->_config['subclass_prefix']);
+                    $this->_render_list["../release/application/controllers/{$ucname}/{$ucname}_social_login_controller.php"] = $social_controller_template ;  
                     $this->_render_list["../release/application/libraries/Google_service.php"] = file_get_contents('../mkdcore/source/auth/Google_service.php');
                     $this->_render_list["../release/application/libraries/Facebook_service.php"] = file_get_contents('../mkdcore/source/auth/Facebook_service.php');
                 }
