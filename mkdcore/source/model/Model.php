@@ -76,4 +76,5 @@ class {{{upper_case_model}}} extends {{{subclass_prefix}}}Model
 {{{mapping}}}
 {{{method}}}
 {{{join}}}
+{{{import_fields}}}
 }

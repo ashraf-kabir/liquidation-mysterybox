@@ -315,6 +315,16 @@ class Model_builder extends Builder
                 $model_template = $this->inject_substitute($model_template, 'mapping', '');
             }
 
+            if(!empty($value['import_fields']))
+            {
+                $model_template = $this->inject_substitute($model_template, 'import_fields', $this->output_import_fields($value['import_fields']));
+                
+            }
+            else
+            {
+                $model_template = $this->inject_substitute($model_template, 'import_fields', '');
+            }
+
             $this->_model_template['../release/application/models/' . $upper_case_model . '.php'] = $model_template;
         }
 
@@ -344,6 +354,29 @@ class Model_builder extends Builder
         }
         return $underscores . $camel;
     }
+
+    protected function output_import_fields($fields)
+    {
+        $result = "\n\tpublic function get_import_fields()\n\t{\n\t\t";
+        $result .= "return [\n\t\t\t";
+        $last_index = count($fields) - 1;
+        for($i = 0; $i < count($fields); $i++)
+        {
+            if($i == $last_index)
+            {
+                $result .= "'" . $fields[$i] . "'";
+            }
+            else
+            {
+                $result .= "'" . $fields[$i] . "'". ",\n\t\t\t";
+            }
+        }
+        $result .= "\n\t\t];\n\t";
+        $result .= "}\n";
+
+        return $result;
+    }
+
 
     protected function output_view_model_mapping ($mappings)
     {

@@ -324,6 +324,7 @@
 				["file_id", "integer", [], "File ID", "", ""]
 			],
 			"method": "",
+			"import_fields" : ["file", "file_id"],
 			"join": [],
 			"mapping": {},
 			"pre": "",
