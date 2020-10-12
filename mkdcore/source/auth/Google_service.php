@@ -86,7 +86,24 @@ class Google_service
         return $this->_adapter;
     }
 
-    public function get_me ($code)
+    private function _get_client()
+    {
+        
+        $client = new Google_Client();
+        $client->setApplicationName($this->_ci->config->item('application_name'));
+        $client->setScopes(Google_Service_Gmail::GMAIL_READONLY);
+        $client->setScopes('email');
+        $client->addScope('profile');
+        $this->_adapter->setClientId($this->_ci->config->item('google_client_id'));
+        $this->_adapter->setClientSecret($this->_ci->config->item('google_client_secret'));
+        $this->_adapter->setRedirectUri($this->_ci->config->item('google_redirect_uri'));
+        $client->setAccessType('online'); // default: offlines
+        $client->setPrompt('select_account consent');
+        return $client;
+        
+    }
+
+   /* public function _get_me ($code)
     {
         $this->_adapter->addScope(Google_Service_Plus::PLUS_ME);
         $response = $this->_adapter->fetchAccessTokenWithAuthCode($code);
@@ -98,6 +115,24 @@ class Google_service
         }
 
         return FALSE;
+    }*/
+
+    public function get_me($code)
+    {
+        $google_client = $this->_get_client();
+        $token = $google_client->fetchAccessTokenWithAuthCode($code);
+        var_dump($token);
+
+        exit();
+        if(isset($token['access_token']))
+        {
+            $google_client->setAccessToken($token['access_token']);
+            $google_service = new Google_Service_Oauth2($google_client);
+            $client->authenticate($code)
+            return $google_service->userinfo->get();
+        }
+        
+        return false;
     }
 
     public function get_email ($body) {
@@ -110,3 +145,4 @@ class Google_service
         return '';
     }
 }
+
