@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-include_once '../services/User_service.php';
+include_once __DIR__ . '/../../services/User_service.php';
 include_once '{{{ucname}}}_controller.php';
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
 /**
@@ -10,11 +10,13 @@ include_once '{{{ucname}}}_controller.php';
  * @author Ryan Wong
  *
  */
-class {{{ucname}}}_social_login_controller extends {{{ucname}}}_controller
+class {{{ucname}}}_social_login_controller extends {{{subclass_prefix}}}controller
 {
 	protected $_redirect = '/{{{name}}}/dashboard';
 
     public $_valid_roles = [{{{valid_roles}}}];
+
+
 
     public function google()
     {
@@ -28,12 +30,15 @@ class {{{ucname}}}_social_login_controller extends {{{ucname}}}_controller
         $code = $response->getStatusCode();
         $body = $response->getBody();
         $service = new User_service($this->credential_model, $this->{{{model}}});
-
+        
         if ($code != 200)
         {
             $this->error('xyzSorry, google cannot find your email.');
             return $this->redirect('/{{{name}}}/login');
         }
+
+
+
 
         $email = $this->google_service->get_email($body);
         if (strlen($email) < 1)
