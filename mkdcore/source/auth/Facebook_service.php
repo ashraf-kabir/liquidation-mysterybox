@@ -102,5 +102,60 @@ class Facebook_service
         return $facebook_helper->getLoginUrl($this->_redirect_uri, $facebook_permissions);
     }
 
+    public function authenticate_oauth_login_code ($code)
+    {
+        try 
+        {
+            // Get the \Facebook\GraphNodes\GraphUser object for the current user.
+            // If you provided a 'default_access_token', the '{access-token}' is optional.
+            $fb_client = $this->_get_adapter();
+            $helper =  $fb_client->getRedirectLoginHelper(); 
+            $access_token = $helper->getAccessToken();
+            $response = $fb_client->get('/me?fields=id,name,email',  $access_token);
+            $me = $response->getGraphUser();
+            $this->_email = $me['email'] ?? '';
+            $this->_username = $me['name'] ?? '';
+
+            if(!empty($me))
+            {
+                return TRUE;
+            }
+        } 
+        catch(\Facebook\Exceptions\FacebookResponseException $e) 
+        {
+            // When Graph returns an error
+            echo 'Graph returned an error: ' . $e->getMessage();
+            return FALSE;
+        } 
+        catch(\Facebook\Exceptions\FacebookSDKException $e)
+        {
+            // When validation fails or other local issues
+            echo 'Facebook SDK returned an error: ' . $e->getMessage();
+            return FALSE;
+        }
+
+        return FALSE;
+    }
+
+    /**
+     * Get Email from Google Plus Account
+     *
+     * @return string
+     */
+    public function get_email ()
+    {
+        return $this->_email;
+    }
+
+    /**
+     * Get Username
+     *
+     * @return string
+     */
+    public function get_username ()
+    {
+        return $this->_username;
+    }
+
 
 }
