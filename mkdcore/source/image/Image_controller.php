@@ -310,20 +310,22 @@ class Image_controller extends CI_Controller
 
         $this->csv_import_service->set_model($this->$model_name, $model);
 
-        if  ($this->csv_import_service->csv_file_exist($_FILES))
+       /* if  ($this->csv_import_service->csv_file_exist($_FILES))
         {
             return $this->output->set_content_type('application/json')
                 ->set_status_header(403)
                 ->set_output(json_encode([
                     'message' => 'xyzUpload CSV File missing'
                 ]));
-        }
+        }*/
 
         $file = $_FILES['file'];
         $size = $file['size'];
         $path = $file['tmp_name'];
         $type = $file['type'];
         $extension = $this->mime_service->get_extension($type);
+        //$extension = ucfirst(str_replace('.', '', $this->mime_service->get_extension($type)));
+        $save_as = FCPATH . 'uploads/' . $file["name"];
 
         if ($size > $this->config->item('upload_byte_size_limit'))
         {
@@ -334,35 +336,31 @@ class Image_controller extends CI_Controller
             ]));
         }
 
-        if ($extension !== '.csv')
+
+        $save_as = FCPATH . 'uploads/temp' . $extension;
+
+        if ($size > $this->config->item('upload_byte_size_limit'))
         {
             return $this->output->set_content_type('application/json')
             ->set_status_header(403)
             ->set_output(json_encode([
-                'message' => 'xyzNot CSV File'
+                'message' => 'xyzUpload file size too big'
             ]));
         }
-
-        $file = fopen($path, 'r');
-        $query_result = $this->csv_import_service->make_query($file);
-
-        if (!$query_result['status'])
+       
+        if (move_uploaded_file($path, $save_as)) 
         {
-            return $this->output->set_content_type('application/json')
-            ->set_status_header(403)
-            ->set_output(json_encode($query_result));
-        }
+            $data =  $this->csv_import_service->_import_data( $save_as );
 
-        // error_log($query_result['message']);
-        $import_result = $this->csv_import_service->import($query_result['message']);
-
-        if ($import_result)
-        {
-            return $this->output->set_content_type('application/json')
-            ->set_status_header(200)
-            ->set_output(json_encode([
-                'status' => TRUE
-            ]));
+            if($data)
+            {
+                unlink($save_as);
+                return $this->output->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'status' => TRUE
+                ]));
+            }
         }
 
         return $this->output->set_content_type('application/json')

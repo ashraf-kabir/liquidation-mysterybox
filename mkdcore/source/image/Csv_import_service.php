@@ -183,6 +183,51 @@ class Csv_import_service
     }
 
 
+    public function _import_data($file)
+    {
+        try
+        {
+            $reader = ReaderEntityFactory::createReaderFromFile( $file );
+            $reader->open($file);
+            $import_fields = $this->_model->get_import_fields();
+        
+            if(empty($import_fields))
+            {
+                return false;
+            }
+            $payload = [];
+    
+            foreach ($reader->getSheetIterator() as $sheet) 
+            {
+                foreach($sheet->getRowIterator() as $row)
+                {
+                  
+                    $cells = $row->getCells();
+                    $temp = [];
+                    for($i = 0; $i < count($cells); $i ++)
+                    {
+                      $temp[ $import_fields[$i] ]  =  $cells[$i]->getValue();
+                    }
+
+                    $payload[] = $temp;
+                
+                }
+            }
+    
+            if(!empty($payload))
+            {
+                return $this->_model->batch_insert($payload);
+            }
+
+            return FALSE;
+        }
+        catch(Exception $e)
+        {
+            return FALSE;
+        }
+    }
+
+
     public function _get_file_data($file)
     {
         
