@@ -78,7 +78,7 @@ class Google_service
      */
     public function make_auth_url()
     {
-        return $this->_adapter->createAuthUrl();
+        return $this->_get_client()->createAuthUrl();
     }
 
     public function get_adapter()
