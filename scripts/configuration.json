@@ -1086,9 +1086,9 @@
 		"port": 3306,
 		"dsn": "",
 		"hostname": "localhost",
-		"username": "codemanaknigQyRW",
-		"password": "XcDMY4kgpjNC6qLJ3aWwOmZt",
-		"database": "code_manaknightdigital_com_NvmeGW7H",
+		"username": "codebuildermeRHL",
+		"password": "J3rzlL6SnUAbiyFD9WOTZ7Be",
+		"database": "codebuilder_manaknightdigital_co_U52dWDzb",
 		"dbdriver": "mysqli",
 		"dbprefix": "",
 		"pconnect": false,
@@ -1116,7 +1116,8 @@
 		"../mkdcore/custom/styles.css": "../release/assets/css/styles.css",
 		"../mkdcore/custom/app.js": "../release/assets/js/app.js",
 		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css",
-		"../mkdcore/custom/client_secret_489293567915-mc1cajloece7c2dociepf1mhpac68drn.apps.googleusercontent.com.json" : "../release/application/libraries/client_secret_489293567915-mc1cajloece7c2dociepf1mhpac68drn.apps.googleusercontent.com.json"
+		"./mysql.php" : "../release/mysql.php"
+		
 	},
 	"reverse_copy": {
 		"../release/application/config/constants.php" : "../mkdcore/custom/generated/constants.php"
