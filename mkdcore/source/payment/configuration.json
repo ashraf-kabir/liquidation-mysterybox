@@ -1578,7 +1578,9 @@
         "xyzPrice" : "Price",
         "xyzQuantity" : "Quantity",
         "xyzVariation" : "Variation",
-        "xyzIs Parent" : "Is Parent"
+        "xyzIs Parent" : "Is Parent",
+        "xyzlocal_copy" : "Local Copy",
+        "xyzStripe Files" : "Stripe Files"
      },
      "copy": {
         "../mkdcore/source/payment/Payment_service.php" : "../release/application/libraries/Payment_service.php",

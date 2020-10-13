@@ -35,7 +35,7 @@ class Admin_stripe_payment_orders_controller extends Admin_controller
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
 
         $this->_data['view_model'] = new Stripe_payment_orders_admin_list_paginate_view_model($this->stripe_payments_model,$this->pagination,'/admin/stripe_payment_orders/0');
-        $this->_data['view_model']->set_heading('Payment Orders');
+        $this->_data['view_model']->set_heading('xyzPayment Orders');
         $this->_data['view_model']->set_created_at(($this->input->get('created_at', TRUE) != NULL) ? $this->input->get('created_at', TRUE) : NULL);
 		$this->_data['view_model']->set_stripe_id(($this->input->get('stripe_id', TRUE) != NULL) ? $this->input->get('stripe_id', TRUE) : NULL);
 		
@@ -80,7 +80,7 @@ class Admin_stripe_payment_orders_controller extends Admin_controller
         include_once __DIR__ . '/../../view_models/Stripe_payment_orders_admin_view_view_model.php';
         $this->load->library('form_validation'); 
         $this->_data['view_model'] = new Stripe_payment_orders_admin_view_view_model($this->stripe_payments_model);
-		$this->_data['view_model']->set_heading('Payment Order Refund');
+		$this->_data['view_model']->set_heading('xyzPayment Order Refund');
         $this->_data['view_model']->set_model($model);
         
         $this->form_validation->set_rules('amount', 'xyzAmount', 'required');
@@ -159,14 +159,14 @@ class Admin_stripe_payment_orders_controller extends Admin_controller
 
 		if (!$model)
 		{
-			$this->error('Error');
+			$this->error('xyzError');
 			return redirect('/admin/stripe_payment_orders/0');
 		}
 
 
         include_once __DIR__ . '/../../view_models/Stripe_payment_orders_admin_view_view_model.php';
 		$this->_data['view_model'] = new Stripe_payment_orders_admin_view_view_model($this->stripe_payments_model);
-		$this->_data['view_model']->set_heading('Payment Order');
+		$this->_data['view_model']->set_heading('xyzPayment Order');
         $this->_data['view_model']->set_model($model);
         
 		return $this->render('Admin/Stripe_payment_ordersView', $this->_data);

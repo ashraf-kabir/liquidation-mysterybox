@@ -5,21 +5,7 @@ if ($layout_clean_mode) {
 }
 ?>
 
-<div class="tab-content" id="nav-tabContent">
-    <div aria-label="breadcrumb">
-        <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
-        <li class="breadcrumb-item active" aria-current="page">
-            <a href="/member/dashboard" class="breadcrumb-link">xyzDashboard</a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">
-            <?php echo $view_model->get_heading();?>
-        </li>
-        </ol>
-    </div>
-</div>
-<h5 class="primaryHeading2 text-md-left">
-  <?php echo $view_model->get_heading();?>
-</h5>
+<div class="tab-content mx-4" id="nav-tabContent">
 <?php if (strlen($error) > 0) : ?>
     <div class="row">
         <div class="col-md-12">
@@ -38,6 +24,11 @@ if ($layout_clean_mode) {
         </div>
     </div>
 <?php endif; ?>
+
+<h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
+  <?php echo $view_model->get_heading();?>
+</h5>
+
 <section class='p-3'>
     <div class="row">
         <?php foreach( $this->_data['view_data']['plans'] as $plan):?>

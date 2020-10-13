@@ -2,22 +2,21 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
 ?>
-<div class="tab-content" id="nav-tabContent">
-              <!-- Bread Crumb -->
+<div class="tab-content mx-4" id="nav-tabContent">          <!-- Bread Crumb -->
     <div aria-label="breadcrumb">
         <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
-            <li class="breadcrumb-item active" aria-current="page">
-                <a href="/member/dashboard" class="breadcrumb-link">xyzDashboard</a>
-            </li>
+            <!-- <li class="breadcrumb-item active" aria-current="page">
+                <a href="/admin/dashboard" class="breadcrumb-link">Dashboard</a>
+            </li> -->
             <li class="breadcrumb-item active" aria-current="page">
                 <a href="/member/stripe_cards/0" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>
             </li>
-           <li class="breadcrumb-item active" aria-current="page">
-             xyzAdd
-           </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                xyzAdd
+            </li>
         </ol>
     </div>
-</div>
+<br/>
 <div class="row">
     <?php if (validation_errors()) : ?>
         <div class="col-md-12">
@@ -41,13 +40,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     <?php endif; ?>
 </div>
-<h5 class="primaryHeading2 mb-4 text-md-left">
-    Add <?php echo $view_model->get_heading();?>
-</h5>
+
 <div class="row mb-5">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card">
             <div class="card-body">
+            <h5 class="primaryHeading2 mb-4 text-md-left">
+                xyzAdd <?php echo $view_model->get_heading();?>
+            </h5>
                 <?= form_open( "", array('id' => 'payment-form', 'class'=>'billable-class' )) ?>
 				<div class="form-group col-md-5 col-sm-12">
 					<label for="Is Default Card">xyzIs Default Card </label>
