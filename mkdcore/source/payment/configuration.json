@@ -392,7 +392,9 @@
                 ["amount", "float",[], "xyzAmount", "required", ""],
                 ["subscription_interval", "integer", [], "xyzInterval", "required" , ""],
                 ["display_name", "string", [{"limit":255}], "xyzDisplay Name", "required" , "required"],
-                ["product_id","integer",[], "xyzProduct ID", "", ""]
+                ["product_id","integer",[], "xyzProduct ID", "", ""],
+                ["status","integer",[], "xyzStatus", "", ""],
+                ["type","integer",[], "xyzStatus", "", ""]
             ],
             "method": "\n\tpublic function get_mappings_key($value, $field)\n\t{\n\t\t$field .= '_mapping';\n\t\t$mapping = $this->$field();\n\t\treturn array_search($value, $mapping);\n\t}\n",
             "join": [],
@@ -402,6 +404,48 @@
                     "1" : "week",
                     "2" : "month",
                     "3" : "year"
+                },
+                "status" : {
+                    "0" : "xyzInactive",
+                    "1" : "xyzActive"
+                },
+                "type" : {
+                    "0" : "xyzStripe",
+                    "1" : "xyzFree",
+                    "2" : "xyzLife Time"
+                }
+            },
+            "pre": "",
+            "post": "",
+            "count": ""
+        },
+        {
+            "name": "payment_subscription_log",
+            "timestamp": true,
+            "migration": true,
+            "unique": [],
+            "seed": [
+
+            ],
+            "field": [
+                ["id", "integer",[], "ID", "", ""],
+                ["user_id", "integer",[], "xyzUser ID", "", ""],
+                ["role_id", "integer",[], "xyzRole", "", ""],
+                ["plan_id", "integer",[], "xyzPlan", "", ""],
+                ["type", "integer",[], "xyzType", "", ""],
+                ["status", "integer",[], "xyzStatus", "", ""]  
+            ],
+            "method": "",
+            "join": [],
+            "mapping": {
+                "status" : {
+                    "0" : "xyzInactive",
+                    "1" : "xyzActive"
+                },
+                "type" : {
+                    "0" : "xyzStripe",
+                    "1" : "xyzFree",
+                    "2" : "xyzLife Time"
                 }
             },
             "pre": "",
