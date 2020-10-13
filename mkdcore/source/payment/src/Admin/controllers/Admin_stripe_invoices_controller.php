@@ -12,7 +12,7 @@ include_once 'Admin_controller.php';
 class Admin_stripe_invoices_controller extends Admin_controller
 {
     protected $_model_file = 'stripe_subscriptions_invoices_model';
-    public $_page_name = 'Invoices';
+    public $_page_name = 'xyzInvoices';
 
     public function __construct()
     {
@@ -37,7 +37,7 @@ class Admin_stripe_invoices_controller extends Admin_controller
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
 
         $this->_data['view_model'] = new Stripe_invoices_admin_list_paginate_view_model($this->stripe_subscriptions_invoices_model,$this->pagination,'/admin/stripe_invoices/0');
-        $this->_data['view_model']->set_heading('Invoices');
+        $this->_data['view_model']->set_heading('xyzInvoices');
         $this->_data['view_model']->set_status(($this->input->get('status', TRUE) != NULL) ? $this->input->get('status', TRUE) : NULL);
         $this->_data['view_model']->set_payment_attempted(($this->input->get('payment_attempted', TRUE) != NULL) ? $this->input->get('payment_attempted', TRUE) : NULL);
         $this->_data['view_model']->set_refunded(($this->input->get('refunded', TRUE) != NULL) ? $this->input->get('refunded', TRUE) : NULL);
@@ -83,7 +83,7 @@ class Admin_stripe_invoices_controller extends Admin_controller
         include_once __DIR__ . '/../../view_models/Stripe_invoices_admin_view_view_model.php';
         $this->load->library('form_validation'); 
 		$this->_data['view_model'] = new Stripe_invoices_admin_view_view_model($this->stripe_subscriptions_invoices_model);
-		$this->_data['view_model']->set_heading('Invoices');
+		$this->_data['view_model']->set_heading('xyzInvoices');
         $this->_data['view_model']->set_model($model);
 
         $this->form_validation->set_rules('amount', 'xyzAmount', 'required');
@@ -145,7 +145,7 @@ class Admin_stripe_invoices_controller extends Admin_controller
         $refunds = $this->stripe_refunds_model->filter(['invoice_id' => $id]);
         $user_obj = $this->user_model->get($model->user_id);
         $this->_data['view_model'] = new Stripe_invoices_admin_view_view_model($this->stripe_subscriptions_invoices_model);
-        $this->_data['view_model']->set_heading('Invoices');
+        $this->_data['view_model']->set_heading('xyzInvoices');
         $this->_data['view_data']['refunds'] =  $refunds;
         $this->_data['view_model']->set_model($model);
         

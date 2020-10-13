@@ -12,7 +12,7 @@ include_once 'Admin_controller.php';
 class Admin_stripe_files_controller extends Admin_controller
 {
     protected $_model_file = 'stripe_files_model';
-    public $_page_name = 'Stripe Files';
+    public $_page_name = 'xyzStripe Files';
 
     public function __construct()
     {
@@ -35,7 +35,7 @@ class Admin_stripe_files_controller extends Admin_controller
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
 
         $this->_data['view_model'] = new Stripe_files_admin_list_paginate_view_model($this->stripe_files_model,$this->pagination,'/admin/stripe_files/0');
-        $this->_data['view_model']->set_heading('Stripe Files');
+        $this->_data['view_model']->set_heading('xyzStripe Files');
         $this->_data['view_model']->set_created_at(($this->input->get('created_at', TRUE) != NULL) ? $this->input->get('created_at', TRUE) : NULL);
 		$this->_data['view_model']->set_stripe_id(($this->input->get('stripe_id', TRUE) != NULL) ? $this->input->get('stripe_id', TRUE) : NULL);
 		
@@ -69,7 +69,7 @@ class Admin_stripe_files_controller extends Admin_controller
         $this->form_validation = $this->stripe_files_model->set_form_validation(
         $this->form_validation, $this->stripe_files_model->get_all_validation_rule());
         $this->_data['view_model'] = new Stripe_files_admin_add_view_model($this->stripe_files_model);
-        $this->_data['view_model']->set_heading('Stripe Files');
+        $this->_data['view_model']->set_heading('xyzStripe Files');
         
         
 		if ($this->form_validation->run() === FALSE)
@@ -84,7 +84,7 @@ class Admin_stripe_files_controller extends Admin_controller
 
         if(empty($file))
         {
-            $this->_data['error'] = 'Error Uploading File';
+            $this->_data['error'] = 'xyzError Uploading File';
             return $this->render('Admin/Stripe_filesAdd', $this->_data);
         }
 
@@ -127,7 +127,7 @@ class Admin_stripe_files_controller extends Admin_controller
     
         }
 
-        $this->_data['error'] = 'Error';
+        $this->_data['error'] = 'xyzError';
         return $this->render('Admin/Stripe_filesAdd', $this->_data);
 	}
 
@@ -146,7 +146,7 @@ class Admin_stripe_files_controller extends Admin_controller
         $this->form_validation, $this->stripe_files_model->get_all_edit_validation_rule());
         $this->_data['view_model'] = new Stripe_files_admin_edit_view_model($this->stripe_files_model);
         $this->_data['view_model']->set_model($model);
-        $this->_data['view_model']->set_heading('Stripe Files');
+        $this->_data['view_model']->set_heading('xyzStripe Files');
         
         
 		if ($this->form_validation->run() === FALSE)
@@ -170,7 +170,7 @@ class Admin_stripe_files_controller extends Admin_controller
             return $this->redirect('/admin/stripe_files/0', 'refresh');
         }
 
-        $this->_data['error'] = 'Error';
+        $this->_data['error'] = 'xyzError';
         return $this->render('Admin/Stripe_filesEdit', $this->_data);
 	}
 
@@ -187,7 +187,7 @@ class Admin_stripe_files_controller extends Admin_controller
 
         include_once __DIR__ . '/../../view_models/Stripe_files_admin_view_view_model.php';
 		$this->_data['view_model'] = new Stripe_files_admin_view_view_model($this->stripe_files_model);
-		$this->_data['view_model']->set_heading('Stripe Files');
+		$this->_data['view_model']->set_heading('xyzStripe Files');
         $this->_data['view_model']->set_model($model);
         
 		return $this->render('Admin/Stripe_filesView', $this->_data);

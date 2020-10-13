@@ -12,7 +12,7 @@ include_once 'Admin_controller.php';
 class Admin_stripe_coupons_controller extends Admin_controller
 {
     protected $_model_file = 'stripe_coupons_model';
-    public $_page_name = 'Coupons';
+    public $_page_name = 'xyzCoupons';
 
     public function __construct()
     {
@@ -49,7 +49,7 @@ class Admin_stripe_coupons_controller extends Admin_controller
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
 
         $this->_data['view_model'] = new Stripe_coupons_admin_list_paginate_view_model($this->stripe_coupons_model,$this->pagination,'/admin/stripe_coupons/0');
-        $this->_data['view_model']->set_heading('Coupons');
+        $this->_data['view_model']->set_heading('xyzCoupons');
         $this->_data['view_model']->set_status(($this->input->get('status', TRUE) != NULL) ? $this->input->get('status', TRUE) : NULL);
 		$this->_data['view_model']->set_slug(($this->input->get('slug', TRUE) != NULL) ? $this->input->get('slug', TRUE) : NULL);
 		$this->_data['view_model']->set_amount(($this->input->get('amount', TRUE) != NULL) ? $this->input->get('amount', TRUE) : NULL);
@@ -87,7 +87,7 @@ class Admin_stripe_coupons_controller extends Admin_controller
         $this->form_validation = $this->stripe_coupons_model->set_form_validation(
         $this->form_validation, $this->stripe_coupons_model->get_all_validation_rule());
         $this->_data['view_model'] = new Stripe_coupons_admin_add_view_model($this->stripe_coupons_model);
-        $this->_data['view_model']->set_heading('Coupons');
+        $this->_data['view_model']->set_heading('xyzCoupons');
         
         
 		if ($this->form_validation->run() === FALSE)
@@ -166,12 +166,12 @@ class Admin_stripe_coupons_controller extends Admin_controller
                     return $this->redirect('/admin/stripe_coupons/0?order_by=id&direction=DESC&coupon_type=1', 'refresh');
                 }
                 
-                $this->_data['error'] = 'Error';
+                $this->_data['error'] = 'xyzError';
                 return $this->render('Admin/Stripe_couponsAdd', $this->_data);
             }
         }
          
-        $this->_data['error'] = 'Error';
+        $this->_data['error'] = 'xyzError';
         return $this->render('Admin/Stripe_couponsAdd', $this->_data);
 	}
 
@@ -183,13 +183,13 @@ class Admin_stripe_coupons_controller extends Admin_controller
 
 		if (!$model)
 		{
-			$this->error('Error');
+			$this->error('xyzError');
 			return redirect('/admin/stripe_coupons/0');
 		}
 
         include_once __DIR__ . '/../../view_models/Stripe_coupons_admin_view_view_model.php';
 		$this->_data['view_model'] = new Stripe_coupons_admin_view_view_model($this->stripe_coupons_model);
-		$this->_data['view_model']->set_heading('Coupons');
+		$this->_data['view_model']->set_heading('xyzCoupons');
         $this->_data['view_model']->set_model($model);
         
 		return $this->render('Admin/Stripe_couponsView', $this->_data);
@@ -201,7 +201,7 @@ class Admin_stripe_coupons_controller extends Admin_controller
 
 		if (!$model)
 		{
-			$this->error('Error');
+			$this->error('xyzError');
 			return redirect('/admin/stripe_coupons/0');
         }
 
@@ -232,7 +232,7 @@ class Admin_stripe_coupons_controller extends Admin_controller
             return $this->redirect('/admin/stripe_coupons/0', 'refresh');
         }
 
-        $this->_data['error'] = 'Error';
+        $this->_data['error'] = 'xyzError';
         return $this->render('Admin/Stripe_couponsEdit', $this->_data);
 	}
 
@@ -243,7 +243,7 @@ class Admin_stripe_coupons_controller extends Admin_controller
 
 		if (!$model)
 		{
-			$this->error('Error');
+			$this->error('xyzError');
 			return redirect('/admin/stripe_coupons/0?order_by=id&direction=DESC&coupon_type=1');
         }
 
@@ -255,7 +255,7 @@ class Admin_stripe_coupons_controller extends Admin_controller
             return $this->redirect('/admin/stripe_coupons/0?order_by=id&direction=DESC&coupon_type=1', 'refresh');
         }
 
-        $this->error('Error');
+        $this->error('xyzError');
         return redirect('/admin/stripe_coupons/0?order_by=id&direction=DESC&coupon_type=1');
 	}
 

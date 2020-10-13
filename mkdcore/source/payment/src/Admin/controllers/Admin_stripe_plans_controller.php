@@ -12,7 +12,7 @@ include_once 'Admin_controller.php';
 class Admin_stripe_plans_controller extends Admin_controller
 {
     protected $_model_file = 'stripe_plans_model';
-    public $_page_name = 'Plans';
+    public $_page_name = 'xyzPlans';
 
     public function __construct()
     {
@@ -35,7 +35,7 @@ class Admin_stripe_plans_controller extends Admin_controller
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
 
         $this->_data['view_model'] = new Stripe_plans_admin_list_paginate_view_model($this->stripe_plans_model,$this->pagination,'/admin/stripe_plans/0');
-        $this->_data['view_model']->set_heading('Plans');
+        $this->_data['view_model']->set_heading('xyzPlans');
         $this->_data['view_model']->set_amount(($this->input->get('amount', TRUE) != NULL) ? $this->input->get('amount', TRUE) : NULL);
 		$this->_data['view_model']->set_display_name(($this->input->get('display_name', TRUE) != NULL) ? $this->input->get('display_name', TRUE) : NULL);
 		
@@ -72,7 +72,7 @@ class Admin_stripe_plans_controller extends Admin_controller
         $this->form_validation = $this->stripe_plans_model->set_form_validation(
         $this->form_validation, $this->stripe_plans_model->get_all_validation_rule());
         $this->_data['view_model'] = new Stripe_plans_admin_add_view_model($this->stripe_plans_model);
-        $this->_data['view_model']->set_heading('Plans');
+        $this->_data['view_model']->set_heading('xyzPlans');
         $this->_data['products'] = $this->stripe_products_model->get_all();
         
 		if ($this->form_validation->run() === FALSE)
@@ -118,7 +118,7 @@ class Admin_stripe_plans_controller extends Admin_controller
                 return $this->redirect('/admin/stripe_plans/0', 'refresh');
             }
     
-            $this->_data['error'] = 'Error';
+            $this->_data['error'] = 'xyzError';
             return $this->render('Admin/Stripe_plansAdd', $this->_data);
         }
         $this->_data['error'] = 'xyzError creating Stripe plan';
@@ -131,7 +131,7 @@ class Admin_stripe_plans_controller extends Admin_controller
 
 		if (!$model)
 		{
-			$this->error('Error');
+			$this->error('xyzError');
 			return redirect('/admin/stripe_plans/0');
         }
 
@@ -180,12 +180,12 @@ class Admin_stripe_plans_controller extends Admin_controller
     
             if ($result)
             { 
-                $this->success('Plan Activated');
+                $this->success('xyzPlan Activated');
                 return $this->redirect('/admin/stripe_plans/0', 'refresh');
             }
         }
        
-        $this->_data['error'] = 'Error';
+        $this->_data['error'] = 'xyzError';
         return $this->render('Admin/Stripe_plansEdit', $this->_data);
 	}
 
@@ -195,7 +195,7 @@ class Admin_stripe_plans_controller extends Admin_controller
 
 		if (!$model)
 		{
-			$this->error('Error');
+			$this->error('xyzError');
 			return redirect('/admin/stripe_plans/0');
 		}
 
