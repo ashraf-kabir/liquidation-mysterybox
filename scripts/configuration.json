@@ -842,10 +842,6 @@
 		"voice": false
 	},
 	"libraries": [],
-	"routes": {
-		"migrate": "Migrate",
-		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv"
-	},
 	"marketing": {
 		"pages": {
 			"../mkdcore/custom/About_controller.php": "../release/application/controllers/Guest/About_controller.php"
@@ -1119,8 +1115,11 @@
 		"./mysql.php" : "../release/mysql.php"
 		
 	},
+	"routes": {
+		"migrate": "Migrate",
+		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv"
+	},
 	"reverse_copy": {
-		"../release/application/config/constants.php" : "../mkdcore/custom/generated/constants.php"
 	},
 	"cron": [
 		"* 23 * * * php index.php cli backup_code_cronjob_controller index",
