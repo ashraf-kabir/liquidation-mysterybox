@@ -58,28 +58,28 @@ if ($layout_clean_mode) {
                     Add <?php echo $view_model->get_heading();?>
                 </h5>
                 <?= form_open() ?>
-                    				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Interval">Interval </label>
+                <div class="form-group col-md-5 col-sm-12 ">
+					<label for="Interval">xyzInterval </label>
 					<select id="form_subscription_interval" name="subscription_interval" class="form-control data-input">
 						<?php foreach ($view_model->subscription_interval_mapping() as $key => $value) {
-							echo "<option value='{$key}'> {$value} </option>";
+							echo "<option " . ( $key != 4 ? 'disabled ' : ''   )  .  " value='{$key}'> {$value} </option>";
 						}?>
 					</select>
 				</div>
 				<div class="form-group  col-md-5 col-sm-12">
-					<label for="Amount">Amount </label>
+					<label for="Amount">xyzAmount </label>
 					<input type="text" class="form-control data-input" id="form_amount" name="amount" value="<?php echo set_value('amount'); ?>" onkeypress="return mkd_is_number(event,this)"/>
 				</div>
 				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Type">Type </label>
+					<label for="Type">xyzType </label>
 					<select id="form_type" name="type" class="form-control data-input">
 						<?php foreach ($view_model->type_mapping() as $key => $value) {
-							echo "<option value='{$key}'> {$value} </option>";
+							echo "<option   ".   ( $key == 0 ? 'disabled ' : ''   )   ." value='{$key}'> {$value} </option>";
 						}?>
 					</select>
 				</div>
 				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Status">Status </label>
+					<label for="Status">xyzStatus </label>
 					<select id="form_status" name="status" class="form-control data-input">
 						<?php foreach ($view_model->status_mapping() as $key => $value) {
 							echo "<option value='{$key}'> {$value} </option>";
@@ -87,12 +87,15 @@ if ($layout_clean_mode) {
 					</select>
 				</div>
 				<div class="form-group col-md-5 col-sm-12">
-					<label for="Product ID">Product ID </label>
-					<input type="hidden" class="form-control" id="admin_paymentCustomPlans_add_product_id_autocomplete_value_field" name="product_id" value="<?php echo set_value('product_id'); ?>"/>
-					<input style='width:100%;' type="text" class="form-control data-input" id="admin_paymentCustomPlans_add_product_id_autocomplete"  />
+					<label for="Product ID">xyzProduct ID </label>
+                    <select name="product_id"  class="form-control"  value="<?php echo set_value('product_id'); ?>">
+                        <?php foreach($products as $product):?>
+                            <option value='<?php echo $product->id?>'><?php echo $product->name;?></option>
+                        <?php endforeach;?>
+                    </select>
 				</div>
 				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Display Name">Display Name </label>
+					<label for="Display Name">xyzDisplay Name </label>
 					<input type="text" class="form-control data-input" id="form_display_name" name="display_name" value="<?php echo set_value('display_name'); ?>"/>
 				</div>
 

@@ -12,7 +12,7 @@ include_once 'Admin_controller.php';
 class Admin_stripe_products_controller extends Admin_controller
 {
     protected $_model_file = 'stripe_products_model';
-    public $_page_name = 'Products';
+    public $_page_name = 'xyzProducts';
 
     public function __construct()
     {
@@ -35,11 +35,8 @@ class Admin_stripe_products_controller extends Admin_controller
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
         $session = $this->get_session();
         $where = [];
-        $this->_data['view_model'] = new Stripe_products_admin_list_paginate_view_model(
-            $this->stripe_products_model,
-            $this->pagination,
-            '/admin/stripe_products/0');
-        $this->_data['view_model']->set_heading('Products');
+        $this->_data['view_model'] = new Stripe_products_admin_list_paginate_view_model($this->stripe_products_model,$this->pagination,'/admin/stripe_products/0');
+        $this->_data['view_model']->set_heading('xyzProducts');
         $this->_data['view_model']->set_total_rows($this->stripe_products_model->count($where));
 
         $this->_data['view_model']->set_per_page(25);
@@ -47,12 +44,7 @@ class Admin_stripe_products_controller extends Admin_controller
         $this->_data['view_model']->set_order_by($order_by);
         $this->_data['view_model']->set_sort($direction);
         $this->_data['view_model']->set_sort_base_url('/admin/stripe_products/0');
-		$this->_data['view_model']->set_list($this->stripe_products_model->get_paginated(
-            $this->_data['view_model']->get_page(),
-            $this->_data['view_model']->get_per_page(),
-            $where,
-            $order_by,
-            $direction));
+		$this->_data['view_model']->set_list($this->stripe_products_model->get_paginated($this->_data['view_model']->get_page(),$this->_data['view_model']->get_per_page(),$where,$order_by,$direction));
 
         if ($format != 'view')
         {
@@ -70,7 +62,7 @@ class Admin_stripe_products_controller extends Admin_controller
         $this->form_validation = $this->stripe_products_model->set_form_validation(
         $this->form_validation, $this->stripe_products_model->get_all_validation_rule());
         $this->_data['view_model'] = new Stripe_products_admin_add_view_model($this->stripe_products_model);
-        $this->_data['view_model']->set_heading('Products');
+        $this->_data['view_model']->set_heading('xyzProducts');
         
 		if ($this->form_validation->run() === FALSE)
 		{
@@ -105,7 +97,8 @@ class Admin_stripe_products_controller extends Admin_controller
             if ($result)
             {   
                 $this->success('xyzProduct Added');
-                return $this->redirect('/admin/stripe_products/0', 'refresh');
+                die('added');
+               // return $this->redirect('/admin/stripe_products/0', 'refresh');
             }
     
             $this->_data['error'] = 'xyzError';

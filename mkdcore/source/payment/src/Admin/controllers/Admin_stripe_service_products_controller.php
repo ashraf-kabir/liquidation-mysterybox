@@ -12,7 +12,7 @@ include_once 'Admin_controller.php';
 class Admin_stripe_service_products_controller extends Admin_controller
 {
     protected $_model_file = 'stripe_products_model';
-    public $_page_name = 'Service Products';
+    public $_page_name = 'xyzService Products';
 
     public function __construct()
     {
@@ -24,8 +24,6 @@ class Admin_stripe_service_products_controller extends Admin_controller
         ];
         $this->load->library('payment_service', $stripe_config);   
     }
-
-    
 
     public function index($page)
 	{
@@ -40,7 +38,7 @@ class Admin_stripe_service_products_controller extends Admin_controller
             $this->stripe_products_model,
             $this->pagination,
             '/admin/stripe_service_products/0');
-        $this->_data['view_model']->set_heading('Service Products');
+        $this->_data['view_model']->set_heading('xyzService Products');
         $this->_data['view_model']->set_total_rows($this->stripe_products_model->count($where));
 
         $this->_data['view_model']->set_per_page(25);
@@ -65,13 +63,13 @@ class Admin_stripe_service_products_controller extends Admin_controller
         return $this->render('Admin/Stripe_service_products', $this->_data);
 	}
 
-    	public function add()
+    public function add()
 	{
         include_once __DIR__ . '/../../view_models/Stripe_service_products_admin_add_view_model.php';
         $this->form_validation = $this->stripe_products_model->set_form_validation(
         $this->form_validation, $this->stripe_products_model->get_all_validation_rule());
         $this->_data['view_model'] = new Stripe_service_products_admin_add_view_model($this->stripe_products_model);
-        $this->_data['view_model']->set_heading('Service Products');
+        $this->_data['view_model']->set_heading('xyzService Products');
         
         
 		if ($this->form_validation->run() === FALSE)
@@ -102,6 +100,7 @@ class Admin_stripe_service_products_controller extends Admin_controller
                 if ($result)
                 {   
                     $this->success('xyzProduct Added');
+                    exit();
                     return $this->redirect('/admin/stripe_service_products/0', 'refresh');
                 }
             
@@ -115,7 +114,7 @@ class Admin_stripe_service_products_controller extends Admin_controller
             return $this->render('Admin/Stripe_service_productsAdd', $this->_data);
         }
         
-        $this->_data['error'] = 'Error';
+        $this->_data['error'] = 'xyzError';
         return $this->render('Admin/Stripe_service_productsAdd', $this->_data);
 	}
 
@@ -125,7 +124,7 @@ class Admin_stripe_service_products_controller extends Admin_controller
 
 		if (!$model)
 		{
-			$this->error('Error');
+			$this->error('xyzError');
 			return redirect('/admin/stripe_service_products/0');
         }
 
@@ -134,7 +133,7 @@ class Admin_stripe_service_products_controller extends Admin_controller
         $this->form_validation, $this->stripe_products_model->get_all_edit_validation_rule());
         $this->_data['view_model'] = new Stripe_service_products_admin_edit_view_model($this->stripe_products_model);
         $this->_data['view_model']->set_model($model);
-        $this->_data['view_model']->set_heading('Service Products');
+        $this->_data['view_model']->set_heading('xyzService Products');
         
         
 		if ($this->form_validation->run() === FALSE)
@@ -168,14 +167,14 @@ class Admin_stripe_service_products_controller extends Admin_controller
 
 		if (!$model)
 		{
-			$this->error('Error');
+			$this->error('xyzError');
 			return redirect('/admin/stripe_service_products/0');
 		}
 
 
         include_once __DIR__ . '/../../view_models/Stripe_service_products_admin_view_view_model.php';
 		$this->_data['view_model'] = new Stripe_service_products_admin_view_view_model($this->stripe_products_model);
-		$this->_data['view_model']->set_heading('Service Products');
+		$this->_data['view_model']->set_heading('xyzService Products');
         $this->_data['view_model']->set_model($model);
         
 		return $this->render('Admin/Stripe_service_productsView', $this->_data);
