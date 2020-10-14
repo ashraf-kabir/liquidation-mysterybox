@@ -18,6 +18,7 @@ class Subscriptions_service{
     private $_ci = NULL;
     private $_user_id;
     private $_role_id;
+    private $_prorate;
     private $_currency;
 
 
@@ -28,6 +29,38 @@ class Subscriptions_service{
         $this->_ci = &get_instance();
         $this->_currency = $this->_ci->config->item('stripe_currency');
     }
+
+
+    public function set_user_model($user_model)
+    {
+        $this->_user_model = $user_model;
+    }
+
+    public function set_user_id($user_id)
+    {
+        $this->_user_id = $user_id;
+    }
+
+    public function set_role_id($role_id)
+    {
+        $this->_role_id = $role_id;
+    }
+
+    public function set_plan_model($plan_model)
+    {
+        $this->_plan_model = $plan_model;
+    }
+
+    public function set_stripe_subscription_model($stripe_subscription_model)
+    {
+        $this->_stripe_subscription_model = $stripe_subscription_model;
+    }
+
+    public function set_subscription_log_model($subscription_log_model)
+    {
+        $this->_subscription_log_model = $stripe_subscription_model;
+    }
+
 
     /**
      * @param array $subscription_array
@@ -146,7 +179,7 @@ class Subscriptions_service{
     }
 
 
-    public function _lifetime_subscription($user_obj, $role_id, $plan_obj, $source = '')
+    public function _lifetime_subscription($user_obj, $role_id, $plan_obj, $source = '', $update_existing = FALSE)
     {
         /**
          * create payment amount
@@ -157,9 +190,18 @@ class Subscriptions_service{
         $args = [
             'amount' => $plan_obj->amount,
             'currency' =>  $this->_currency,
-            'description' => "{$plan_obj->display_name} subscription",
-            'source' => $source
+            'description' => "{$plan_obj->display_name} subscription"
         ];
+
+        if(!empty($user_obj->stripe_id))
+        {
+            $args['customer'] = $user_obj->stripe_id;
+        }
+
+        if(!empty($source))
+        {
+            $args['source'] = $source;
+        }
 
         try
         {
@@ -191,10 +233,15 @@ class Subscriptions_service{
                     'status' => ($stripe_payment['status'] == 'succeeded' ? 1 : 0 )
                 ];
 
-                return $this->_subscription_log_model->create( $log_params);
-
+                if($update_existing == FALSE)
+                {
+                    return $this->_subscription_log_model->create( $log_params);
+                }
+                
+                return TRUE;
             }
 
+            return FALSE;
         }
         catch(Exception $e)
         {
@@ -202,35 +249,71 @@ class Subscriptions_service{
         }
     }
 
-
-    public function set_user_model($user_model)
+    
+    public function _change_stripe_plan($current_subscription, $user_obj, $plan_obj, $source = '', $coupon_id=0)
     {
-        $this->_user_model = $user_model;
-    }
+        try
+        {
+             /**
+               * User does not have a active subscription
+               * status 5 <subscription canceled>
+               * @see stripe_subscription mapping stripe_subscription_model
+             */
+             if(empty($current_subscription) || $current_subscription->status == 5)
+             {
+                 $params = [
+                     'customer' => $user_obj->stripe_id,
+                     'items' => ['plan' => $plan_obj->stripe_id]
+                 ];
+ 
+                 return $this->_stripe_subscription($params, 0 , $plan_obj->id, $user_obj->id, $this->_role_id);
+             }
+ 
+             /**
+               * user has a subscription but want to change plan
+               *  status 5 <subscription canceled>
+               * @see stripe_subscription mapping stripe_subscription_model
+             */
+             if(!empty($current_subscription) && $current_subscription->status != 5 )
+             {
+                if($plan_obj->id != $current_subscription->plan_Id)
+                {
+                    if(!empty($card_obj) && $card_obj->is_default !== 1)
+                    {
+                         $subscription_result = $this->_payment_service->update_subscription_plan($current_subscription->stripe_id, $plan_obj->stripe_id, $this->_prorate, $card_obj->stripe_card_id);
+                         $source_changed = TRUE;
+                    }
+                    else
+                    {
+                        $subscription_result = $this->_payment_service->update_subscription_plan($current_subscription->stripe_id, $plan_obj->stripe_id, $this->_prorate);
+                    }
+                    if(isset($subscription_result['id']))
+                    {
+                        $update_params = [
+                            'current_period_end' => date('Y-m-d', $subscription_result['current_period_start']),
+                            'current_period_start' => date('Y-m-d', $subscription_result['current_period_end']),
+                            'plan_id' => $plan_obj->id,
+                            'cancel_at_period_end' => 0
+                        ];
+                        $this->_stripe_subscription_model->edit($update_params,$current_subscription->id);
+                        
+                        if($source_changed)
+                        {
+                            $this->_stripe_cards_model->update_default_card($user_id, $role_id, $card_id);
+                        }
+    
+                        return TRUE;
+                    }
+                }                 
+             }
 
-    public function set_user_id($user_id)
-    {
-        $this->_user_id = $user_id;
-    }
-
-    public function set_role_id($role_id)
-    {
-        $this->_role_id = $role_id;
-    }
-
-    public function set_plan_model($plan_model)
-    {
-        $this->_plan_model = $plan_model;
-    }
-
-    public function set_stripe_subscription_model($stripe_subscription_model)
-    {
-        $this->_stripe_subscription_model = $stripe_subscription_model;
-    }
-
-    public function set_subscription_log_model($subscription_log_model)
-    {
-        $this->_subscription_log_model = $stripe_subscription_model;
+            return FALSE;
+        }
+        catch(Exception $e)
+        {
+            return FALSE;
+            throw new Exception($e);
+        }
     }
 
     /**
@@ -297,6 +380,118 @@ class Subscriptions_service{
         {
             throw new Exception($e);
         }
+    }
+
+
+    /**
+     * This assumes the plans are using the same product ID
+     */
+    public function change_plan( $user_obj,  $plan_obj, $current_plan,  $card_obj )
+    {
+
+        $current_subscription = $this->_stripe_subscription_model->get_by_fields([
+            'user_id' => $this->_user_id,
+            'role_id' => $this->_role_id
+        ]);
+
+        $result = FALSE;
+
+        //both plans are stripe plans 
+        if($plan_obj->type == 0 && $current_plan->type == 0)
+        {
+            $result = $this->_change_stripe_plan($user_obj, $plan_obj, $source, 0);
+            
+        }
+        // current plan is stripe changing to non stripe plan cancel it first
+    
+        if( $current_plan->type == 0 && $plan_obj->type > 0)
+        {
+            try
+            {
+                $stripe_subscription = $this->_payment_service->cancel_subscription($current_subscription->stripe_id, TRUE, []);
+                
+                if(isset($stripe_subscription['id']))
+                {
+                    //cancel the subscription  force prorate           
+                    $params = [
+                        'status' => 5
+                    ];
+                    $this->_stripe_subscription_model->edit($params,$current_subscription->id);
+                }
+
+                return FALSE;
+            }
+            catch(Exception $e)
+            {
+                throw new Exception($e);
+                return FALSE;
+            }
+        }
+        
+        if( $plan_obj->type > 0) 
+        {
+            //free plan 
+            if($plan_obj->type == 1)
+            {
+                $result = $this->_free_subscription($user_obj->id, $this->_role_id, $plan_obj);
+            }
+
+            //lifetime plan
+            if($plan_obj->type == 2)
+            {
+                $source = '';
+                
+                if(!empty($card_obj))
+                {
+                    $source = $card_obj->stripe_id;
+                }
+
+                $result = $this->_lifetime_subscription($user_obj, $this->_role_id , $plan_obj, $source );
+            }
+        }
+
+
+        if($result == TRUE)
+        {
+            //now update the subscription log table
+
+            $subscription_log = $this->_subscription_log_model->get_by_fields([
+                'user_id' => $this->_user_id,
+                'role_id' => $this->_role_id
+            ]);
+
+            if(!empty($subscription_log))
+            {
+                $params = [
+                    'plan_id' => $plan_obj->id,
+                    'type' => $plan_obj->type,
+                    'status' => 1
+                ];
+
+                $this->_subscription_log_model->edit($params, $subscription_log->id);
+                return TRUE;
+            }
+            else
+            {
+                $params = [
+                    'user_id' => $this->user_id,
+                    'role_id' => $this->role_id,
+                    'plan_id' => $plan_obj->id,
+                    'type' =>  $plan_obj->type,
+                    'status' => 1
+                ];
+                $this->_subscription_log_model->create($params);
+                return TRUE;
+            }           
+        }
+
+        return FALSE;
+    }
+
+
+    public function check_subscription()
+    {
+
     }
 
 }
