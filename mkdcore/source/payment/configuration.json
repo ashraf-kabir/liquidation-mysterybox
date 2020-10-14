@@ -384,7 +384,6 @@
             "migration": true,
             "unique": [],
             "seed": [
-
             ],
             "field": [
                 ["id", "integer",[], "ID", "", ""],
@@ -404,7 +403,8 @@
                     "0" : "day",
                     "1" : "week",
                     "2" : "month",
-                    "3" : "year"
+                    "3" : "year",
+                    "4" : "forever"
                 },
                 "status" : {
                     "0" : "xyzInactive",
@@ -1112,8 +1112,8 @@
             "name": "paymentCustomPlans",
             "page_name": "xyzCustom Plans",
             "model": "stripe_plans",
-            "controller": "Admin_payment_custom_controller.php",
-            "api_controller": "Admin_api_payment_custom_controller.php",
+            "controller": "Admin_payment_custom_plans_controller.php",
+            "api_controller": "Admin_api_payment_custom_plans_controller.php",
             "activity_log":false,
             "override_add": "",
             "override_edit": "",
@@ -1157,7 +1157,7 @@
             "listing_actions": [],
             "filter_fields": ["display_name" , "amount"],
             "add_fields": ["subscription_interval","amount", "type", "status", "product_id|autocomplete:stripe_products:name:name:id", "display_name"],
-            "edit_fields": ["display_name",  "type", "status"],
+            "edit_fields": ["display_name", "status"],
             "view_fields": ["id", "amount", "stripe_id", "subscription_interval","display_name"],
             "autocomplete": "",
             "dynamic_mapping":{},
@@ -1715,6 +1715,9 @@
         "../mkdcore/source/payment/src/Guest/views/Layout.php" : "../release/application/views/Guest/Layout.php",
         "../mkdcore/source/payment/src/Guest/controllers/Stripe_payments_controller.php" : "../release/application/controllers/Guest/Stripe_payments_controller.php",
         "../mkdcore/source/payment/src/Guest/views/Subscribe.php" : "../release/application/views/Guest/Subscribe.php",
-        "../mkdcore/source/payment/Subscriptions_service.php" : "../release/application/libraries/Subscriptions_service.php"
+        "../mkdcore/source/payment/Subscriptions_service.php" : "../release/application/libraries/Subscriptions_service.php",
+        "../mkdcore/source/payment/src/Admin/controllers/Admin_payment_custom_plans_controller.php" : "../release/application/controllers/Admin/Admin_payment_custom_plans_controller.php",
+        "../mkdcore/source/payment/src/Admin/views/PaymentCustomPlansEdit.php" : "../release/application/views/Admin/PaymentCustomPlansEdit.php",
+        "../mkdcore/source/payment/src/Admin/views/PaymentCustomPlansAdd.php" : "../release/application/views/Admin/PaymentCustomPlansAdd.php"
      }
 }

@@ -30,7 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				    	<label for="Interval">xyzInterval </label>
 				    	<select id="form_subscription_interval" name="subscription_interval" class="form-control">
 				    		<?php foreach ($view_model->subscription_interval_mapping() as $key => $value) {
-				    			echo "<option value='{$key}'> {$value} </option>";
+				    			echo "<option " . ( $key == 4 ? 'disabled' : ''   )    .    " value='{$key}'> {$value} </option>";
 				    		}?>
 				    	</select>
 				    </div>
@@ -39,7 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				    	<input type="text" class="form-control" id="form_amount" name="amount" value="<?php echo set_value('amount'); ?>" onkeypress="return mkd_is_number(event,this)"/>
 				    </div>
 				    <div class="form-group">
-				    	<label for="Product ID">xyxProduct ID </label>
+				    	<label for="Product ID">xyzProduct ID </label>
 				    	<select class="form-control" name='product_id'>
 				    		<?php foreach($this->_data['products'] as $product): ?>
 				    			<option value="<?php echo $product->id;  ?>"><?php echo $product->name; ?></option>

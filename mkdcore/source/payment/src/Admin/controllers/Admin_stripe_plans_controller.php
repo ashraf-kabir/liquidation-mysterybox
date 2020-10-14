@@ -111,7 +111,8 @@ class Admin_stripe_plans_controller extends Admin_controller
                 'stripe_id' =>$stripe_plan['id'],
                 'stripe_product_id' =>  $product_obj->stripe_id,
                 'display_name' => $display_name,
-                'product_id' => $product_id       
+                'product_id' => $product_id,
+                'type' => 0       
             ]);
             if ($result)
             {
