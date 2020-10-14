@@ -96,9 +96,8 @@ class Admin_stripe_products_controller extends Admin_controller
     
             if ($result)
             {   
-                $this->success('xyzProduct Added');
-                die('added');
-               // return $this->redirect('/admin/stripe_products/0', 'refresh');
+                //$this->success('xyzProduct Added');
+                return $this->redirect('/admin/stripe_products/0', 'refresh');
             }
     
             $this->_data['error'] = 'xyzError';

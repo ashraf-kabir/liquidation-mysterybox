@@ -74,15 +74,16 @@ class Admin_payment_custom_plans_controller extends Admin_controller
         return $this->render('Admin/PaymentCustomPlans', $this->_data);
 	}
 
-    	public function add()
+    public function add()
 	{
         include_once __DIR__ . '/../../view_models/PaymentCustomPlans_admin_add_view_model.php';
         $session = $this->get_session();
+        $this->load->model('stripe_products_model');
         $this->form_validation = $this->stripe_plans_model->set_form_validation(
         $this->form_validation, $this->stripe_plans_model->get_all_validation_rule());
         $this->_data['view_model'] = new PaymentCustomPlans_admin_add_view_model($this->stripe_plans_model);
         $this->_data['view_model']->set_heading('Custom Plans');
-        
+        $this->_data['products'] = $this->stripe_products_model->get_all();
 
 		if ($this->form_validation->run() === FALSE)
 		{
@@ -117,7 +118,7 @@ class Admin_payment_custom_plans_controller extends Admin_controller
         return $this->render('Admin/PaymentCustomPlansAdd', $this->_data);
 	}
 
-    	public function edit($id)
+    public function edit($id)
 	{
         $model = $this->stripe_plans_model->get($id);
         $session = $this->get_session();
@@ -146,7 +147,7 @@ class Admin_payment_custom_plans_controller extends Admin_controller
 		
         $result = $this->stripe_plans_model->edit([
             'display_name' => $display_name,
-			'type' => $type,
+			'type' => $model->type,
 			'status' => $status,
 			
         ], $id);
