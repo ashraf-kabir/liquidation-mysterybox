@@ -41,7 +41,8 @@ class Admin_stripe_plans_controller extends Admin_controller
 		
         $where = [
             'amount' => $this->_data['view_model']->get_amount(),
-			'display_name' => $this->_data['view_model']->get_display_name(),
+            'display_name' => $this->_data['view_model']->get_display_name(),
+            'type' => 0
 			
         ];
 
