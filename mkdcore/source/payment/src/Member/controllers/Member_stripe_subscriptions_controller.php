@@ -97,6 +97,8 @@ class Member_stripe_subscriptions_controller extends Member_controller
          $this->load->model('stripe_cards_model');
          $this->load->model('stripe_subscriptions_model');
          $this->load->model('payment_subscription_log_model');
+         $this->load->model('stripe_payments_model');
+
          $session = $this->get_session();
          $user_id = $session['user_id'];
          $role_id = $session['role'];
@@ -114,7 +116,8 @@ class Member_stripe_subscriptions_controller extends Member_controller
             return $this->redirect('/member/stripe_subscriptions/0');  
          }
 
-         if(empty($user_obj->stripe_id) && $plan_obj->type == 0)
+         //plan type 2 and 0 will need a stripe ID or card
+         if(empty($user_obj->stripe_id) && in_array( $plan_obj->type , [0,2]))
          {
             $error_message = "xyzPayment Method not found <a href='/member/stripe_cards/add' class='float-right'>xyzAdd Payment method</a>";
             $this->error( $error_message);
@@ -127,29 +130,38 @@ class Member_stripe_subscriptions_controller extends Member_controller
          $this->subscriptions_service->set_subscription_log_model($this->payment_subscription_log_model);
          $this->subscriptions_service->set_card_model($this->stripe_cards_model);
          $this->subscriptions_service->set_payment_service($this->payment_service);
+         $this->subscriptions_service->set_stripe_payment_model($this->stripe_payments_model);
 
          $this->subscriptions_service->init($user_id, $role_id);
 
          $user_subscription_log = $this->payment_subscription_log_model->get_last($user_id, $role_id);
 
+         $source = '';
+                
+         if(!empty($card_obj))
+         {
+             $source = $card_obj->stripe_card_id;
+         }
+         else
+         {
+             $card_obj = $this->stripe_cards_model->get_by_fields([
+                 'user_id' => $user_id,
+                 'role_id' => $role_id,
+                 'is_default' => 1
+             ]);
+
+             $source = $card_obj->stripe_card_id ?? '';
+         }
+         
         try
         {
-            if(empty($user_log))
+            if(empty($user_subscription_log))
             {
                 /**
                  * need to create complety new subscription
                  * we have already check stripeod on line 156 
                  * customer stripe id or card stripe can be used as a source
                 */
-
-                $source = $user_obj->stripe_id;
-                
-                if(!empty($card_obj))
-                {
-                    //overwrite default source if user select card
-                    $source = $card_obj->stripe_id;
-                }
-                
                 $result = $this->subscriptions_service->create_subscription($user_obj, $plan_obj, $source, 0);
 
                 if($result)
@@ -160,12 +172,20 @@ class Member_stripe_subscriptions_controller extends Member_controller
 
             }
    
-            $current_plan = $this->stripe_plan_model->get($user_log->plan_id);
-
+            $current_plan = $this->stripe_plans_model->get($user_subscription_log->plan_id);
+            
             if(!empty($current_plan))
             {
-                $result =  $this->subscriptions_service->change_plan($user_obj, $plan_obj, $current_plan,  $card_obj);
-                
+                //free plan 
+                if($current_plan == 1)
+                {   
+                    $result = $this->subscriptions_service->create_subscription($user_obj, $plan_obj, $source, 0);
+                }
+                else
+                {
+                    $result =  $this->subscriptions_service->change_plan($user_obj, $plan_obj, $current_plan,  $card_obj);
+                }
+               
                 if($result)
                 {
                     $this->success('xyzSubscription created');
@@ -173,12 +193,12 @@ class Member_stripe_subscriptions_controller extends Member_controller
                 }
             }
 
-            $this->success('xyzError creating subscription');
+            $this->error('xyzError creating subscription');
             return $this->redirect('/member/stripe_subscriptions/0');
         }
         catch(Exception $e)
         {
-            $this->success('xyzError creating subscription');
+            $this->error($e->getMessage());
             return $this->redirect('/member/stripe_subscriptions/0');
         }    
     }
