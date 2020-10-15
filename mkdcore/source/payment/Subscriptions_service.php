@@ -21,6 +21,7 @@ class Subscriptions_service{
     private $_role_id;
     private $_prorate;
     private $_currency;
+    private $_stripe_payments_model;
 
 
     public function init($user_id = 0, $role_id = 0)
@@ -35,6 +36,11 @@ class Subscriptions_service{
     public function set_user_model($user_model)
     {
         $this->_user_model = $user_model;
+    }
+
+    public function set_stripe_payment_model($payments_model)
+    {
+        $this->_stripe_payments_model = $payments_model;
     }
 
     public function set_user_id($user_id)
@@ -71,7 +77,6 @@ class Subscriptions_service{
     {
         $this->_payment_service = $payment_service;
     }
-
 
     /**
      * @param array $subscription_array
@@ -110,28 +115,39 @@ class Subscriptions_service{
             ];
 
             $this->_stripe_subscription_model->create($stripe_subscription);
-            $log_params = [
-                'user_id' => $user_id,
-                'role_id' => $role_id,
-                'plan_id' => $plan_id,
-                'type' => 0
-            ];
-
-            if($status == 'active')
-            {
-                $log_params['status'] = 1;
-                $this->_subscription_log_model->create( $log_params);
-                return TRUE;
-            }
            
-            $log_params['status'] = 0;
-            $this->_subscription_log_model->create( $log_params);
+            $log_status = ( $status == 'active' ? 0 : 1);
+            $log = $this->_subscription_log_model->get_last( $this->_user_id, $this->_role_id);
+
+            if(empty($log))
+            {
+                $log_params = [
+                    'user_id' => $this->_user_id,
+                    'role_id' => $this->_role_id,
+                    'plan_id' => $plan_obj->id,
+                    'type' => 0,
+                    'status' => $log_status 
+                ];
+
+                return $this->_subscription_log_model->create( $log_params);
+            }
+            else
+            {
+                $log_params = [
+                    'plan_id' => $plan_obj->id,
+                    'type' => 2,
+                    'status' => $log_status 
+                ];
+
+                return $this->_subscription_log_model->edit( $log_params, $log->id);
+            }
+
             return FALSE;
         }
         
         catch(Exception $e)
         {
-           throw new Exception($e);
+           throw new Exception($e->getMessage());
         }
     }
 
@@ -185,7 +201,7 @@ class Subscriptions_service{
         }
         catch(Exception $e)
         {
-            throw new Exception($e);
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -236,19 +252,31 @@ class Subscriptions_service{
     
                 $this->_stripe_payments_model->create($stripe_payment);
 
-                $log_params = [
-                    'user_id' => $user_id,
-                    'role_id' => $role_id,
-                    'plan_id' => $plan_obj->id,
-                    'type' => 2,
-                    'status' => ($stripe_payment['status'] == 'succeeded' ? 1 : 0 )
-                ];
+                $log = $this->_subscription_log_model->get_last( $this->_user_id, $this->_role_id);
 
-                if($update_existing == FALSE)
+                if(empty($log))
                 {
+                    $log_params = [
+                        'user_id' => $this->_user_id,
+                        'role_id' => $this->_role_id,
+                        'plan_id' => $plan_obj->id,
+                        'type' => 2,
+                        'status' => ($stripe_payment['status'] == 'succeeded' ? 1 : 0 )
+                    ];
+
                     return $this->_subscription_log_model->create( $log_params);
                 }
-                
+                else
+                {
+                    $log_params = [
+                        'plan_id' => $plan_obj->id,
+                        'type' => 2,
+                        'status' => ($stripe_payment['status'] == 'succeeded' ? 1 : 0 )
+                    ];
+
+                    return $this->_subscription_log_model->edit( $log_params, $log->id);
+                }
+    
                 return TRUE;
             }
 
@@ -256,7 +284,7 @@ class Subscriptions_service{
         }
         catch(Exception $e)
         {
-            throw new Exception($e);
+            throw new Exception('exception ' .  $e->getMessage());
         }
     }
 
@@ -337,7 +365,8 @@ class Subscriptions_service{
     {   
         /**
          * type 0 = stripe plan source needed / customer stripe ID
-         */
+        */
+
         if($plan_obj->type == 0  )
         {
             if($source == '' && $user_obj->stripe_id == '' )
