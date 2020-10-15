@@ -436,7 +436,7 @@
                 ["type", "integer",[], "xyzType", "", ""],
                 ["status", "integer",[], "xyzStatus", "", ""]  
             ],
-            "method": "",
+            "method": "\n\tpublic function get_last($user_id, $role_id)\n\t{\n\t\t$this->db->where('user_id', $user_id);\n\t\t$this->db->where('role_id', $role_id);\n\t\t$this->db->limit(1);\n\t\t$this->db->order_by('id', 'DESC');\n\t\treturn $this->db->get($this->_table)->row();\n\t}\n",
             "join": [],
             "mapping": {
                 "status" : {

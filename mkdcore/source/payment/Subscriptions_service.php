@@ -15,6 +15,7 @@ class Subscriptions_service{
     private $_stripe_subscription_model;
     private $_payment_service;
     private $_subscription_log_model;
+    private $_card_model;
     private $_ci = NULL;
     private $_user_id;
     private $_role_id;
@@ -58,7 +59,17 @@ class Subscriptions_service{
 
     public function set_subscription_log_model($subscription_log_model)
     {
-        $this->_subscription_log_model = $stripe_subscription_model;
+        $this->_subscription_log_model = $subscription_log_model;
+    }
+
+    public function set_card_model($card_model)
+    {
+        $this->_card_model = $card_model;
+    }
+
+    public function set_payment_service($payment_service)
+    {
+        $this->_payment_service = $payment_service;
     }
 
 
