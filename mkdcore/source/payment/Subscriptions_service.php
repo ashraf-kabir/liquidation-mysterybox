@@ -154,15 +154,32 @@ class Subscriptions_service{
 
     public function _free_subscription($user_id, $role_id, $plan_obj)
     {
-        $log_params = [
-            'user_id' => $user_id,
-            'role_id' => $role_id,
-            'plan_id' => $plan_obj->id,
-            'type' => 1,
-            'status' => 1
-        ];
 
-        return $this->_subscription_log_model->create( $log_params);
+        $log = $this->_subscription_log_model->get_last( $this->_user_id, $this->_role_id);
+
+        if(empty($log))
+        {
+            $log_params = [
+                'user_id' => $this->_user_id,
+                'role_id' => $this->_role_id,
+                'plan_id' => $plan_obj->id,
+                'type' => 1,
+                'status' => 1 
+            ];
+        
+            return $this->_subscription_log_model->create( $log_params);
+        }
+        else
+        {
+            $log_params = [
+                'plan_id' => $plan_obj->id,
+                'type' => 1,
+                'status' => 1
+            ];
+        
+            return $this->_subscription_log_model->edit( $log_params, $log->id);
+        }
+       
     }
 
 

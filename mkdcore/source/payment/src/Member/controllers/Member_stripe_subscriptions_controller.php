@@ -30,6 +30,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
         $this->load->library('pagination');
         $this->load->model('stripe_plans_model');
         $this->load->model('stripe_cards_model');
+        $this->load->model('stripe_subscriptions_model');
         $this->load->model('payment_subscription_log_model');
         include_once __DIR__ . '/../../view_models/Stripe_subscriptions_member_list_paginate_view_model.php';
         $format = $this->input->get('format', TRUE) ?? 'view';
@@ -49,16 +50,17 @@ class Member_stripe_subscriptions_controller extends Member_controller
         $this->_data['view_model']->set_order_by($order_by);
         $this->_data['view_model']->set_sort($direction);
         $this->_data['view_model']->set_sort_base_url('/member/stripe_subscriptions/0');
-        $this->_data['view_data']['interval_mapping'] = $this->stripe_plans_model->subscription_interval_mapping();
-        $this->_data['view_data']['plans'] = $this->stripe_plans_model->get_all();
-        $this->_data['view_data']['current_subscription'] =  $this->payment_subscription_log_model->get_last(  $session['user_id'] , $session['role']);
+        $this->_data['interval_mapping'] = $this->stripe_plans_model->subscription_interval_mapping();
+        $this->_data['plans'] = $this->stripe_plans_model->get_all();
+        $this->_data['current_subscription'] =  $this->payment_subscription_log_model->get_last(  $session['user_id'] , $session['role']);
+        $this->_data['current_stripe_subscription'] =  $this->stripe_subscriptions_model->get_last_subscription($session['user_id']);
         $this->_data['view_data']['cards'] = $this->stripe_cards_model->get_all([
             'user_id' => $session['user_id'],
             'role_id' => $session['role']
         ]);
         
         $results = $this->stripe_subscriptions_model->get_paginated( $this->_data['view_model']->get_page(),$this->_data['view_model']->get_per_page(),$where,$order_by,$direction);
-        $this->_data['view_data']['current_plan'] = $this->stripe_plans_model->get($this->_data['view_data']['current_subscription']->plan_id ?? 0);
+        $this->_data['current_plan'] = $this->stripe_plans_model->get($this->_data['current_subscription']->plan_id ?? 0);
 
 
         foreach($results as $result)
@@ -152,7 +154,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
 
              $source = $card_obj->stripe_card_id ?? '';
          }
-         
+
         try
         {
             if(empty($user_subscription_log))

@@ -5,6 +5,7 @@
                 "xyzDisputes" : "/stripe_disputes",
                 "xyzInvoices" : "/stripe_invoices/0?order_by=id&direction=DESC",
                 "xyzSubscriptions" : "/stripe_subscriptions/0?order_by=id&direction=DESC",
+                "xyzPayments" : "/stripe_payment_orders/0?order_by=id&direction=DESC",
                 "xyzService Products" : "/stripe_service_products/0?order_by=id&direction=DESC",
                 "xyzPlans" : "/stripe_plans/0?order_by=id&direction=DESC",
                 "xyzCustom Plans" : "/payment_custom_plans/0?order_by=id&direction=DESC",
@@ -530,7 +531,7 @@
                 ["id", "integer",[], "ID", "", ""],
                 ["email", "string", [{"limit":255}], "xyzEmail", "" , ""]
             ],
-            "method": "    \n\tpublic function remove($email)\n\t{\n\t\t$this->db->where('email', $email);\n\t\treturn $this->db->delete();\n\t}\n",
+            "method": "\n\tpublic function remove($email)\n\t{\n\t\t$this->db->where('email', $email);\n\t\treturn $this->db->delete();\n\t}\n",
             "join": [],
             "mapping": {},
             "pre": "",
@@ -567,6 +568,10 @@
                     "1" : "CAD",
                     "2" : "EUR",
                     "3" : "GBP"
+                },
+                "status" : {
+                    "0" : "xyzInactive",
+                    "1" : "xyzActive"
                 }
             },
             "pre": "",
@@ -809,9 +814,9 @@
             "custom_view_edit": "",
             "custom_view_list": "",
             "custom_view_view": "",
-            "listing_fields_api": ["stripe_id", "object", "amount", "balance_transaction", "billing_details", "currency", "customer", "description", "payment_method", "refunded", "status", "created_at"],
-            "listing_headers": ["xyzStripe ID", "xyzTransaction Type", "xyzAmount", "xyzBalance Transaction", "xyzBilling Details", "xyzCurrency", "xyzDescription", "xyzPayment Method", "xyzRefunded", "xyzStatus", "xyzDate Created"],
-            "listing_rows": ["stripe_id|string", "object|string", "amount|currency", "balance_transaction|string", "billing_details|string", "currency|string", "description|string", "payment_method|string", "refunded|string", "status|string", "created_at|date" ],
+            "listing_fields_api": [ "object", "amount", "balance_transaction", "currency", "customer", "description", "refunded", "status", "created_at"],
+            "listing_headers": [ "xyzTransaction Type", "xyzAmount",  "xyzBilling Details", "xyzCurrency", "xyzDescription", "xyzRefunded", "xyzStatus", "xyzDate Created"],
+            "listing_rows": [ "object|string", "amount|currency", "balance_transaction|string","currency|string", "description|string", "refunded|string", "status|string", "created_at|date" ],
             "listing_actions": ["Refund|/admin/stripe_payment_orders/refund/{$data->id}|TRUE"],
             "filter_fields": ["created_at","stripe_id"],
             "add_fields": [],
@@ -982,7 +987,7 @@
             "custom_view_view": "",
             "listing_fields_api": ["id", "cancel_at_period_end", "status", "current_period_start",  "current_period_end", "subscription_interval", "collection_method"],
             "listing_headers": ["xyzID", "xyzUser", "xyzCancel At Period End", "xyzStatus", "xyzCurrent Period Start Date", "xyzCurrent Period End Date", "xyzInterval", "xyzCollection Method"],
-            "listing_rows": ["id|integer","complex|first_name:last_name:phone:email", "cancel_at_period_end|integer", "status|integer","current_period_start|date",  "current_period_end|date",  "subscription_interval|uppercasefirst", "collection_method|uppercasefirst" ],
+            "listing_rows": ["id|integer","complex|first_name:last_name:phone", "cancel_at_period_end|integer", "status|integer","current_period_start|date",  "current_period_end|date",  "subscription_interval|uppercasefirst", "collection_method|uppercasefirst" ],
             "listing_actions": ["xyzCancel Subscription|/admin/stripe_subscriptions/cancel/{$data->id}|(1 == 1)?TRUE:FALSE"],
             "filter_fields": ["created_at","id"],
             "add_fields": [],
@@ -1682,6 +1687,7 @@
         "xyzVariation" : "Variation",
         "xyzIs Parent" : "Is Parent",
         "xyzlocal_copy" : "Local Copy",
+        "xyzSubscription created" : "xyzSubscription created",
         "xyzStripe Files" : "Stripe Files",
         "xyzStripe" : "Stripe",
         "xyzFree" : "Free",
@@ -1718,6 +1724,7 @@
         "../mkdcore/source/payment/Subscriptions_service.php" : "../release/application/libraries/Subscriptions_service.php",
         "../mkdcore/source/payment/src/Admin/controllers/Admin_payment_custom_plans_controller.php" : "../release/application/controllers/Admin/Admin_payment_custom_plans_controller.php",
         "../mkdcore/source/payment/src/Admin/views/PaymentCustomPlansEdit.php" : "../release/application/views/Admin/PaymentCustomPlansEdit.php",
-        "../mkdcore/source/payment/src/Admin/views/PaymentCustomPlansAdd.php" : "../release/application/views/Admin/PaymentCustomPlansAdd.php"
+        "../mkdcore/source/payment/src/Admin/views/PaymentCustomPlansAdd.php" : "../release/application/views/Admin/PaymentCustomPlansAdd.php",
+        "../mkdcore/source/payment/src/Guest/controllers/Payment_product_controller.php" : "../release/application/controllers/Guest/Payment_product_controller.php"
      }
 }

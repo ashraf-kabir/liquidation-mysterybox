@@ -31,23 +31,27 @@ if ($layout_clean_mode) {
 
 <section class='p-3'>
     <div class="row">
-        <?php foreach( $this->_data['view_data']['plans'] as $plan):?>
+        <?php foreach( $plans as $plan):?>
             <div class="col col-4 p-0">
-                <div class="card m-1 <?php if ( !empty($this->_data['view_data']['current_subscription']->plan_id) && $plan->id == $this->_data['view_data']['current_subscription']->plan_id ?? "" ){ echo "border  border-secondary"; } ?>">
-                    <div class="card-body">
+                <div class="card m-1 <?php if ( !empty($current_subscription->plan_id) && $plan->id == $current_subscription->plan_id ?? "" ){ echo "border  border-secondary"; } ?>">
+                    <div class="card-body" style='min-height:100px;'>
                         <h4><?php echo $plan->display_name; ?></h4>
                         <p>
-                            $<?php echo number_format($plan->amount, 2)?> xyzPer <?php echo ucfirst( $this->_data['view_data']['interval_mapping'][$plan->subscription_interval])?>
+                            $<?php echo number_format($plan->amount, 2)?> xyzPer <?php echo ucfirst( $interval_mapping[$plan->subscription_interval])?>
                         </p>
-                        <?php if(!empty( $this->_data['view_data']['current_subscription']) && $plan->id == $this->_data['view_data']['current_subscription']->plan_id ):?>
-                           <?php if(!empty($this->_data['view_data']['current_subscription']) && $this->_data['view_data']['current_subscription']->status == 0):?>
+                        <?php if(!empty( $current_subscription) && $plan->id == $current_subscription->plan_id ):?>
+                           <?php if(!empty($current_subscription) && $current_stripe_subscription->cancel_at_period_end == 1):?>
                                 <a href="/member/reactivate_subscription" class='btn-link text-success pb-'>xyzReactivate Subscription</a>
                            <?php else:?>
                                 <a href="/member/cancel_subscription" class='btn-link text-danger pb-'>xyzCancel</a>
                            <?php endif;?>
                         <?php else:?>
-                            <?php if(!empty($this->_data['view_data']['current_plan'])):?>
-                                <a href="/member/change_plan/<?php echo $plan->id;?>" class='btn btn-primary change-plan'><?php echo ($this->_data['view_data']['current_plan']->amount > $plan->amount ? "xyzDowngrade" : "xyzUpgrade"  ); ?></a>
+                            <?php if(!empty($current_plan)):?>
+                                <?php if($current_plan->type == 2):?>
+                                  <?php echo ( $current_plan->id == $plan->id ?  '<a class="btn-link text-muted"href="#">Active</a>' : '<a class="btn-link text-muted"href="#">Downgrade</a>');  ?>
+                                <?php else:?>
+                                    <a href="/member/change_plan/<?php echo $plan->id;?>" class='btn btn-primary change-plan  <?php echo (in_array($plan->type, [1,2]) ? 'd-none' : '' ) ?> '><?php echo ($current_plan->amount > $plan->amount ? 'xyzDowngrade' : 'xyzUpgrade' )?></a>
+                                <?php endif?>
                             <?php else:?>
                                 <a href="/member/change_plan/<?php echo $plan->id;?>" class='btn btn-primary change-plan'>xyzSubscribe</a>
                             <?php endif;?>
