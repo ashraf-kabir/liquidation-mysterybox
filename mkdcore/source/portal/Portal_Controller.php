@@ -97,7 +97,7 @@ class {{{ucname}}}_controller extends {{{subclass_prefix}}}Controller
      *
      * @return string
      */
-    public function success($success)
+    public function success2($success)
     {
         $success['code'] = 200;
         $success['success'] = TRUE;
