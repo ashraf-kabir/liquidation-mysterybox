@@ -40,7 +40,7 @@ if ($layout_clean_mode) {
                             $<?php echo number_format($plan->amount, 2)?> xyzPer <?php echo ucfirst( $interval_mapping[$plan->subscription_interval])?>
                         </p>
                         <?php if(!empty( $current_subscription) && $plan->id == $current_subscription->plan_id ):?>
-                           <?php if(!empty($current_subscription) && $current_stripe_subscription->cancel_at_period_end == 1):?>
+                           <?php if(!empty( $current_stripe_subscription) && $current_stripe_subscription->cancel_at_period_end == 1):?>
                                 <a href="/member/reactivate_subscription" class='btn-link text-success pb-'>xyzReactivate Subscription</a>
                            <?php else:?>
                                 <a href="/member/cancel_subscription" class='btn-link text-danger pb-'>xyzCancel</a>
