@@ -40,7 +40,7 @@ if ($layout_clean_mode) {
                             $<?php echo number_format($plan->amount, 2)?> xyzPer <?php echo ucfirst( $this->_data['view_data']['interval_mapping'][$plan->subscription_interval])?>
                         </p>
                         <?php if(!empty( $this->_data['view_data']['current_subscription']) && $plan->id == $this->_data['view_data']['current_subscription']->plan_id ):?>
-                           <?php if(!empty($this->_data['view_data']['current_subscription']) && $this->_data['view_data']['current_subscription']->cancel_at_period_end == 1):?>
+                           <?php if(!empty($this->_data['view_data']['current_subscription']) && $this->_data['view_data']['current_subscription']->status == 0):?>
                                 <a href="/member/reactivate_subscription" class='btn-link text-success pb-'>xyzReactivate Subscription</a>
                            <?php else:?>
                                 <a href="/member/cancel_subscription" class='btn-link text-danger pb-'>xyzCancel</a>

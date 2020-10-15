@@ -25,54 +25,12 @@ class Member_stripe_subscriptions_controller extends Member_controller
         $this->load->library('payment_service', $stripe_config);
     }
 
-    private function subscribe($subscription_array, $coupon_id = 0, $plan_id = 0, $user_id = 0, $role_id = 0,  $order_id = 0)
-    {
-        $this->load->model('stripe_subscriptions_model');
-        $subscriptions_array = $subscription_array;
-        
-        try
-        {
-            $subscription_result = $this->payment_service->create_subscription( $subscriptions_array);
-            $status = $subscription_result['status'] ?? '';
-            $stripe_subscription = [
-                'stripe_id' =>  $subscription_result['id'] ?? "",
-                'plan' =>  json_encode($subscription_result['plan'] ?? ""),
-                'cancel_at_period_end' =>  $subscription_result['cancel_at_period_end'] ?? "",
-                'current_period_start' =>  date('Y-m-d', $subscription_result['current_period_start']) ?? "",
-                'current_period_end' =>  date('Y-m-d', $subscription_result['current_period_end']),
-                'user_id' => $user_id ?? 0,
-                'role_id' => $role_id,
-                'plan_id' => $plan_id,
-                'order_id' =>  $order_id ?? 0,
-                'coupon_id' =>  $coupon_id ?? 0,
-                'stripe_customer_id' => $subscription_result['customer'] ?? "",
-                'subscription_interval' =>  $subscription_result['interval'] ?? "",
-                'interval_count' =>  $subscription_result['interval_count'] ?? "",      
-                'trial_period_days' =>  $subscription_result['trial_period_days'] ?? "",
-                'trial_end' =>  $subscription_result['trial_end'] ?? "",
-                'trial_start' =>  $subscription_result['trial_start'] ?? "",
-                'status' => $subscription_result['status'] ?? ""
-            ];
-
-            $this->stripe_subscriptions_model->create($stripe_subscription);
-
-            if($status == 'active')
-            {
-                return TRUE;
-            }
-            return FALSE;
-        }
-        catch(Exception $e)
-        {
-           throw new Exception($e);
-        }
-    }
-
 	public function index($page)
 	{
         $this->load->library('pagination');
         $this->load->model('stripe_plans_model');
         $this->load->model('stripe_cards_model');
+        $this->load->model('payment_subscription_log_model');
         include_once __DIR__ . '/../../view_models/Stripe_subscriptions_member_list_paginate_view_model.php';
         $format = $this->input->get('format', TRUE) ?? 'view';
         $order_by = $this->input->get('order_by', TRUE) ?? '';
@@ -93,13 +51,15 @@ class Member_stripe_subscriptions_controller extends Member_controller
         $this->_data['view_model']->set_sort_base_url('/member/stripe_subscriptions/0');
         $this->_data['view_data']['interval_mapping'] = $this->stripe_plans_model->subscription_interval_mapping();
         $this->_data['view_data']['plans'] = $this->stripe_plans_model->get_all();
-        $this->_data['view_data']['current_subscription'] = $this->stripe_subscriptions_model->get_by_fields(['user_id' => $session['user_id'],'role_id' => $session['role']  ]); 
+        $this->_data['view_data']['current_subscription'] =  $this->payment_subscription_log_model->get_last(  $session['user_id'] , $session['role']);
         $this->_data['view_data']['cards'] = $this->stripe_cards_model->get_all([
             'user_id' => $session['user_id'],
             'role_id' => $session['role']
         ]);
+        
         $results = $this->stripe_subscriptions_model->get_paginated( $this->_data['view_model']->get_page(),$this->_data['view_model']->get_per_page(),$where,$order_by,$direction);
         $this->_data['view_data']['current_plan'] = $this->stripe_plans_model->get($this->_data['view_data']['current_subscription']->plan_id ?? 0);
+
 
         foreach($results as $result)
         {
@@ -222,11 +182,6 @@ class Member_stripe_subscriptions_controller extends Member_controller
             return $this->redirect('/member/stripe_subscriptions/0');
         }    
     }
-
-
-
-    
-
 
     public function cancel_subscription()
     {
