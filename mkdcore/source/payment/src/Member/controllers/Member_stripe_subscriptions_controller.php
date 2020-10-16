@@ -179,7 +179,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
             if(!empty($current_plan))
             {
                 //free plan 
-                if($current_plan == 1)
+                if($current_plan->type == 1)
                 {   
                     $result = $this->subscriptions_service->create_subscription($user_obj, $plan_obj, $source, 0);
                 }

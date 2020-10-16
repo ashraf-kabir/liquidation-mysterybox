@@ -89,7 +89,7 @@ class Subscriptions_service{
     private function _stripe_subscription($subscription_array, $coupon_id = 0, $plan_id = 0, $user_id = 0, $role_id = 0,  $order_id = 0)
     {
         $subscriptions_array = $subscription_array; 
-        
+    
         try
         {
             $subscription_result = $this->_payment_service->create_subscription( $subscriptions_array);
@@ -124,7 +124,7 @@ class Subscriptions_service{
                 $log_params = [
                     'user_id' => $this->_user_id,
                     'role_id' => $this->_role_id,
-                    'plan_id' => $plan_obj->id,
+                    'plan_id' => $plan_id,
                     'type' => 0,
                     'status' => $log_status 
                 ];
@@ -134,7 +134,7 @@ class Subscriptions_service{
             else
             {
                 $log_params = [
-                    'plan_id' => $plan_obj->id,
+                    'plan_id' =>  $plan_id,
                     'type' => 2,
                     'status' => $log_status 
                 ];
@@ -306,8 +306,9 @@ class Subscriptions_service{
     }
 
     
-    public function _change_stripe_plan($current_subscription, $user_obj, $plan_obj, $source = '', $coupon_id=0)
+    public function _change_stripe_plan($current_subscription, $user_obj, $plan_obj, $card_obj, $coupon_id=0)
     {
+        
         try
         {
              /**
@@ -332,9 +333,9 @@ class Subscriptions_service{
              */
              if(!empty($current_subscription) && $current_subscription->status != 5 )
              {
-                if($plan_obj->id != $current_subscription->plan_Id)
+                if($plan_obj->id != $current_subscription->plan_id)
                 {
-                    if(!empty($card_obj) && $card_obj->is_default !== 1)
+                    if(!empty($card_obj) && is_object($card_obj) && $card_obj->is_default !== 1)
                     {
                          $subscription_result = $this->_payment_service->update_subscription_plan($current_subscription->stripe_id, $plan_obj->stripe_id, $this->_prorate, $card_obj->stripe_card_id);
                          $source_changed = TRUE;
@@ -355,7 +356,7 @@ class Subscriptions_service{
                         
                         if($source_changed)
                         {
-                            $this->_stripe_cards_model->update_default_card($user_id, $role_id, $card_id);
+                            $this->_card_model->update_default_card($user_id, $role_id, $card_id);
                         }
     
                         return TRUE;
@@ -367,8 +368,8 @@ class Subscriptions_service{
         }
         catch(Exception $e)
         {
-            return FALSE;
             throw new Exception($e);
+            return FALSE;
         }
     }
 
@@ -456,8 +457,7 @@ class Subscriptions_service{
         //both plans are stripe plans 
         if($plan_obj->type == 0 && $current_plan->type == 0)
         {
-            $result = $this->_change_stripe_plan($user_obj, $plan_obj, $source, 0);
-            
+            $result = $this->_change_stripe_plan( $current_subscription, $user_obj,  $plan_obj, $card_obj, 0);   
         }
         // current plan is stripe changing to non stripe plan cancel it first
     
