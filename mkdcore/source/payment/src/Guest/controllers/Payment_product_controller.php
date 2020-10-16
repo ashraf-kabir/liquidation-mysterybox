@@ -2,15 +2,12 @@
 
 class Payment_product_controller extends CI_Controller
 {
-    public $_plans = [];
-    public $_interval_mapping = [];
+    public $_products = [];
     
     public function __construct()
     {
         parent::__construct();
         $this->load->database();
-        
-        $this->_interval_mapping = $this->stripe_plans_model->subscription_interval_mapping();
 
         $stripe_config = [
             'stripe_api_version' => ($this->config->item('stripe_api_version') ?? ''),
@@ -18,7 +15,6 @@ class Payment_product_controller extends CI_Controller
             'stripe_secret_key' => ($this->config->item('stripe_secret_key') ?? '')
         ];
         $this->load->library('payment_service', $stripe_config); 
-
     }
 
     public function index()
@@ -28,7 +24,6 @@ class Payment_product_controller extends CI_Controller
             'status' => 1
         ]);
         $this->load->view('Guest/Products');
-
     }
 
 

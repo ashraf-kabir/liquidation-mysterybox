@@ -52,7 +52,8 @@
          "member/reactivate_subscription" : "Member/Member_stripe_subscriptions_controller/reactivate_subscription",
          "payments" : "Guest/Stripe_payments_controller/index",
          "save_payment_email" : "Guest/Stripe_payments_controller/save_email",
-         "subscribe" : "Guest/Stripe_payments_controller/subscribe"
+         "subscribe" : "Guest/Stripe_payments_controller/subscribe",
+         "products" : "Guest/Payment_product_controller/index"
      },
      "models" : [
         {
@@ -1733,6 +1734,7 @@
         "../mkdcore/source/payment/src/Admin/controllers/Admin_payment_custom_plans_controller.php" : "../release/application/controllers/Admin/Admin_payment_custom_plans_controller.php",
         "../mkdcore/source/payment/src/Admin/views/PaymentCustomPlansEdit.php" : "../release/application/views/Admin/PaymentCustomPlansEdit.php",
         "../mkdcore/source/payment/src/Admin/views/PaymentCustomPlansAdd.php" : "../release/application/views/Admin/PaymentCustomPlansAdd.php",
-        "../mkdcore/source/payment/src/Guest/controllers/Payment_product_controller.php" : "../release/application/controllers/Guest/Payment_product_controller.php"
+        "../mkdcore/source/payment/src/Guest/controllers/Payment_product_controller.php" : "../release/application/controllers/Guest/Payment_product_controller.php",
+        "../mkdcore/source/payment/src/Guest/views/Products.php" : "../release/application/views/Guest/Products.php"
      }
 }
