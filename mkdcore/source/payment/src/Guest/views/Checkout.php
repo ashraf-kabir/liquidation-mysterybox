@@ -18,22 +18,20 @@
     </nav>
     <main>
         <section class='p-4'>
-            <div class="row">
-                <?php foreach($products as $product):?>
-                    <div class="col-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5><?php echo $product->name; ?></h5>
-                                <p>
-                                    <?php echo substr($product->description, 0, 100) . '...'; ?>
-                                </p>
-                                <small><h5>$ <?php echo number_format($product->price,2)?></h5></small><br>
-                                <a class='btn btn-sm btn-primary' href="/checkout/<?php echo $product->id?>">xyzBuy</a>
-                            </div>
+           <div class="row">
+                <div class="col-7">
+                    <div class="card">
+                        <div class="card-body">
+                            
                         </div>
                     </div>
-               <?php endforeach;?>
-            </div>
+                </div>
+
+                <div class="col-5">
+                checkout
+                </div>
+
+           </div>
         </section>
     </main>
     <!-- Optional JavaScript -->
