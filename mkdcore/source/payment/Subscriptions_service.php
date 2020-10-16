@@ -317,7 +317,7 @@ class Subscriptions_service{
                 $stripe_payment = [
                     'stripe_id' => $payment_result['id'] ?? "",
                     'object' =>  $payment_result['object'] ?? "",
-                    'amount' =>  $payment_result['amount'] ?? "",
+                    'amount' => ($payment_result['amount']  /100 ) ?? "",
                     'balance_transaction' =>  $payment_result['balance_transaction'] ?? "",
                     'billing_details' =>  $payment_result['billing_details'] ?? "",
                     'currency' =>  $payment_result['currency'] ?? "",
