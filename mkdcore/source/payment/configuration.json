@@ -561,6 +561,8 @@
                 ["quantity", "integer", [], "xyzQuantity", "required" , "required"],
                 ["variation_id", "integer", [], "xyzVariation", "required" , "required"],
                 ["is_parent", "integer", [], "xyzIs Parent", "required" , "required"],
+                ["image", "file", [], "xyzImage", "" , ""],
+                ["image_id", "integer", [], "xyzImage ID", "" , ""],
                 ["status", "integer", [], "xyzStatus", "" , ""]
             ],
             "method": "",
@@ -1339,8 +1341,8 @@
             "listing_rows": ["id|integer", "name|string", "description|string", "price|currency", "quantity|integer"],
             "listing_actions": [],
             "filter_fields": ["name"],
-            "add_fields": [ "name", "description", "price", "currency", "quantity", "variation_id", "is_parent" ],
-            "edit_fields": ["name", "description", "price", "currency", "quantity", "variation_id", "is_parent"],
+            "add_fields": [ "name", "image", "description", "price", "currency", "quantity", "variation_id", "is_parent" ],
+            "edit_fields": ["name", "image", "description", "price", "currency", "quantity", "variation_id", "is_parent"],
             "view_fields": ["name", "description", "price", "currency", "quantity", "variation_id", "is_parent"],
             "autocomplete": "",
             "dynamic_mapping":{},
@@ -1700,7 +1702,8 @@
         "xyzFree" : "Free",
         "xyzLife Time" : "Life Time",
         "xyzCheckout" : "Checkout",
-        "xyzOther" : "Other"
+        "xyzOther" : "Other",
+        "xyzBuy" : "Buy"
      },
      "copy": {
         "../mkdcore/source/payment/Payment_service.php" : "../release/application/libraries/Payment_service.php",

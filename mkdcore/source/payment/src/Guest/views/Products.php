@@ -16,6 +16,26 @@
             Shop
         </a>
     </nav>
+    <main>
+        <section class='p-4'>
+            <div class="row">
+                <?php foreach($products as $product):?>
+                    <div class="col-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5><?php echo $product->name; ?></h5>
+                                <p>
+                                    <?php echo substr($product->description, 0, 100) . '...'; ?>
+                                </p>
+                                <small><h5>$ <?php echo number_format($product->price,2)?></h5></small><br>
+                                <a class='btn btn-sm btn-primary' href="/checkout">xyzBuy</a>
+                            </div>
+                        </div>
+                    </div>
+               <?php endforeach;?>
+            </div>
+        </section>
+    </main>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

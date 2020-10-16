@@ -20,10 +20,11 @@ class Payment_product_controller extends CI_Controller
     public function index()
     {
         $this->load->model('payment_products_model');
-        $data['product'] = $this->payment_products_model->get_all([
+        $data['products'] = $this->payment_products_model->get_all([
             'status' => 1
         ]);
-        $this->load->view('Guest/Products');
+    
+        $this->load->view('Guest/Products', $data);
     }
 
 

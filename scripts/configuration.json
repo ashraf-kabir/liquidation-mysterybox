@@ -346,7 +346,15 @@
 			"api": true,
 			"profile_page_fields": [],
 			"middleware": ["auth", "acl"],
-			"js": ["/assets/js/vendor.js", "/assets/js/core.js", "/assets/js/app.js"],
+			"js": [
+
+				"/assets/js/media.js",
+				"/assets/js/core.js",
+				"/assets/js/setting.js",
+				"/assets/js/mkd-image-gallery.js",
+				"/assets/js/app.js",
+				"/assets/js/admin.js"
+			],
 			"css": ["/assets/css/styles.css", "/assets/css/easy-autocomplete.min.css"],
 			"menu": {
 				"Dashboard": "/dashboard",
