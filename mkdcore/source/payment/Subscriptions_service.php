@@ -647,6 +647,41 @@ class Subscriptions_service{
         }
     }
 
+    /**
+     * will work if the subscription hasnt been completely canceled if canceled you need to create a new subscription 
+     */
+    public function undo_cancel_subscription($subscription, $subscription_log)
+    {
+        if(empty($subscription))
+        {
+            return FALSE;
+        }
+        
+        try
+        {
+            $stripe_subscription = $this->_payment_service->reactivate_subscription($subscription->stripe_id, FALSE, []);
+            
+            if(isset($stripe_subscription['id']))
+            {
+                $params = [
+                    'cancel_at_period_end' => 0
+                ];
+                
+                $this->stripe_subscriptions_model->edit($params,$subscription->id);
+                $this->_subscription_log_model->edit(['status' => 1],$subscription_log->id );
+                return TRUE;
+            }
+
+            return FALSE;
+        }
+        catch(Exception $e)
+        {
+           throw new Exception($e);
+           return FALSE;
+        }
+    }
+
+
     public function check_subscription($subscription_log_obj)
     {
         $params = [
