@@ -19,7 +19,7 @@ class Subscriptions_service{
     private $_ci = NULL;
     private $_user_id;
     private $_role_id;
-    private $_prorate;
+    private $_prorate = FALSE;
     private $_currency;
     private $_sync_subscription = FALSE;
     private $_stripe_payments_model;
@@ -31,6 +31,7 @@ class Subscriptions_service{
         $this->_role_id = $role_id;
         $this->_ci = &get_instance();
         $this->_currency = $this->_ci->config->item('stripe_currency');
+        $this->_prorate = $this->_ci->config->item('prorate_stripe_subscription');
         $this->_sync_subscription = $this->_ci->config->item('auto_sync_stripe_subscription');
     }
 
@@ -605,9 +606,45 @@ class Subscriptions_service{
         return FALSE;
     }
 
-    public function cancel_subscription($subscription_log_obj)
+    public function cancel_subscription($subscription, $subscription_log)
     {
-      
+        
+        if(empty($subscription))
+        {
+            return FALSE;
+        }
+
+        try
+        {
+            $stripe_subscription = $this->_payment_service->cancel_subscription($subscription->stripe_id, $this->_prorate, []);
+            
+            if(isset($stripe_subscription['id']))
+            {
+                $status = $this->_stripe_subscription_model->get_mappings_key($stripe_subscription['status'], 'status') ?? 10000;
+
+                if(in_array($status, [0,1,2,3,4,5,6,7]))
+                {
+                    $update_params['status'] =  $status;
+                }
+
+                $this->_stripe_subscription_model->edit($update_params,$subscription->id);
+
+                if($status == 5)
+                {
+                    $this->_subscription_log_model->edit(['status' => 0],$subscription_log->id );
+                }
+
+                return TRUE;
+            }
+            
+            return FALSE;
+
+        }
+        catch(Exception $e)
+        {
+            throw new Exception($e);
+            return FALSE;
+        }
     }
 
     public function check_subscription($subscription_log_obj)
