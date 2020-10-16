@@ -77,11 +77,16 @@
                 ["description", "string", [{"limit":255}], "xyzDescription", "" , ""],
                 ["payment_method", "string", [{"limit":255}], "xyzPayment Method", "" , ""],
                 ["refunded","boolean",[], "xyzRefunded", "", ""],
+                ["type","integer",[], "xyzType", "", ""],
                 ["status", "string", [{"limit":100}], "xyzStatus", "" , ""]
             ],
             "method": "\n\tpublic function get_mappings_key($value, $field)\n\t{\n\t\t$field .= '_mapping';\n\t\t$mapping = $this->$field();\n\t\treturn array_search($value, $mapping);\n\t}\n",
             "join": [],
             "mapping": {
+                "type" : {
+                    "0" : "xyzCheckout",
+                    "1" : "xyzOther"
+                }
             },
             "pre": "",
             "post": "",
@@ -395,6 +400,7 @@
                 ["display_name", "string", [{"limit":255}], "xyzDisplay Name", "required" , "required"],
                 ["product_id","integer",[], "xyzProduct ID", "", ""],
                 ["status","integer",[], "xyzStatus", "", ""],
+                ["trial_period_days", "integer",[], "xyzTrial Period Days", "", ""],
                 ["type","integer",[], "xyzType", "", ""]
             ],
             "method": "\n\tpublic function get_mappings_key($value, $field)\n\t{\n\t\t$field .= '_mapping';\n\t\t$mapping = $this->$field();\n\t\treturn array_search($value, $mapping);\n\t}\n",
@@ -1105,7 +1111,7 @@
             "listing_actions": [],
             "filter_fields": ["display_name" , "amount"],
             "add_fields": ["subscription_interval","amount", "product_id|autocomplete:stripe_products:name:name:id", "display_name"],
-            "edit_fields": ["display_name", "status"],
+            "edit_fields": ["display_name", "status", "trial_period_days"],
             "view_fields": ["id", "amount", "stripe_id", "subscription_interval","display_name"],
             "autocomplete": "",
             "dynamic_mapping":{},
@@ -1691,7 +1697,9 @@
         "xyzStripe Files" : "Stripe Files",
         "xyzStripe" : "Stripe",
         "xyzFree" : "Free",
-        "xyzLife Time" : "Life Time"
+        "xyzLife Time" : "Life Time",
+        "xyzCheckout" : "Checkout",
+        "xyzOther" : "Other"
      },
      "copy": {
         "../mkdcore/source/payment/Payment_service.php" : "../release/application/libraries/Payment_service.php",
