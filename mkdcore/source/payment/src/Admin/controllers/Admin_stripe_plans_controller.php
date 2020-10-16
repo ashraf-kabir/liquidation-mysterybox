@@ -94,7 +94,7 @@ class Admin_stripe_plans_controller extends Admin_controller
             'interval' =>  $this->_data['view_model']->subscription_interval_mapping()[$subscription_interval], 
             'product' =>  $product_obj->stripe_id,
             'nickname' => $display_name,
-            'amount' => $amount 
+            'amount' => $amount
         ];
 
         if( $trial_period_days > 0)
@@ -121,7 +121,8 @@ class Admin_stripe_plans_controller extends Admin_controller
                 'stripe_product_id' =>  $product_obj->stripe_id,
                 'display_name' => $display_name,
                 'product_id' => $product_id,
-                'type' => 0       
+                'type' => 0,
+                'trial_period_days' => $trial_period_days       
             ]);
             if ($result)
             {
