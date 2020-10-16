@@ -6,18 +6,15 @@ if ($layout_clean_mode) {
 }
 ?>
 
-<div class="tab-content" id="nav-tabContent">
+<div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
 <div aria-label="breadcrumb">
-    <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
-        <li class="breadcrumb-item active" aria-current="page">
-            <a href="/admin/dashboard" class="breadcrumb-link">Dashboard</a>
-        </li>
+    <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start" style="background-color: inherit;">
         <li class="breadcrumb-item active" aria-current="page">
             <a href="/admin/users/0" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
-            Add
+            xyzAdd
         </li>
     </ol>
 </div>

@@ -447,7 +447,7 @@
 			"listing_actions": ["Credential|/admin/credentials/edit/{$data->credential_id}|(1==1)?TRUE:FALSE"],
 			"filter_fields": ["id", "email","first_name","last_name"],
 			"add_fields": ["email", "first_name","last_name",  "phone", "image"],
-			"edit_fields": ["email", "first_name","last_name", "phone",  "image"],
+			"edit_fields": ["email", "first_name","last_name", "phone", "role_id",  "status", "image"],
 			"view_fields": ["id","email", "first_name","last_name", "image","phone"],
 			"autocomplete": "",
 			"dynamic_mapping": {},
@@ -1142,6 +1142,9 @@
 		"../mkdcore/custom/styles.css": "../release/assets/css/styles.css",
 		"../mkdcore/custom/app.js": "../release/assets/js/app.js",
 		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css",
+		"../mkdcore/custom/Admin/controllers/Admin_user_controller.php" : "../release/application/controllers/Admin/Admin_user_controller.php",
+		"../mkdcore/custom/Admin/views/UserAdd.php" : "../release/application/views/Admin/UserAdd.php",
+		"../mkdcore/custom/Admin/views/UserEdit.php" : "../release/application/views/Admin/UserEdit.php",
 		"./mysql.php" : "../release/mysql.php"
 		
 	},
