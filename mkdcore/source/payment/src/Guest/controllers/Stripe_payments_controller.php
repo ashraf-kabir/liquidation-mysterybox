@@ -10,7 +10,7 @@ class Stripe_payments_controller extends CI_Controller
         parent::__construct();
         $this->load->database();
         $this->load->model('stripe_plans_model');
-        $this->_plans = $this->stripe_plans_model->get_all();
+        $this->_plans = $this->stripe_plans_model->get_all(['status' => 1]);
         $this->_interval_mapping = $this->stripe_plans_model->subscription_interval_mapping();
 
         $stripe_config = [

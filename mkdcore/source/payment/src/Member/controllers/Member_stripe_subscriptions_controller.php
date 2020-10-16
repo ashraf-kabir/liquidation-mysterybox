@@ -208,6 +208,9 @@ class Member_stripe_subscriptions_controller extends Member_controller
     public function cancel_subscription()
     {
         $this->load->model('user_model');
+        $this->load->model('payment_subscription_log_model');
+        $this->load->model('stripe_subscriptions_model');
+        $this->load->library('subscriptions_service');
         $session = $this->get_session();
         $user_id = $session['user_id'];
         $role_id = $session['role'];   
@@ -217,7 +220,9 @@ class Member_stripe_subscriptions_controller extends Member_controller
             'user_id' => $user_id,
             'role_id' => $role_id
         ]);
-        
+
+        $user_subscription_log = $this->payment_subscription_log_model->get_last($user_id, $role_id);
+
         if(empty($subscription))
         {
             $this->error('xyzSubscription not found');
@@ -230,19 +235,24 @@ class Member_stripe_subscriptions_controller extends Member_controller
            return $this->redirect('/member/stripe_subscriptions/0');
         }
 
+        $this->subscriptions_service->set_stripe_subscription_model($this->stripe_subscriptions_model);
+        $this->subscriptions_service->set_subscription_log_model($this->payment_subscription_log_model);
+        $this->subscriptions_service->set_payment_service($this->payment_service);
+        $this->subscriptions_service->init($user_id, $role_id);
+
         try
         {
-            $stripe_subscription = $this->payment_service->cancel_subscription($subscription->stripe_id, FALSE, []);
+            $result = $this->subscriptions_service->cancel_subscription($subscription, $user_subscription_log);
             
-            if(isset($stripe_subscription['id']))
+            if($result)
             {
-                $params = [
-                    'cancel_at_period_end' => 1
-                ];
-                $this->stripe_subscriptions_model->edit($params,$subscription->id);
                 $this->success('xyzSubscription canceled');
                 return $this->redirect('/member/stripe_subscriptions/0');
             }
+
+            $this->error('xyzError cancelling');
+            return $this->redirect('/member/stripe_subscriptions/0');
+
         }
         catch(Exception $e)
         {
