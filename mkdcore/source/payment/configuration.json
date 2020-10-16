@@ -1706,7 +1706,8 @@
         "xyzLife Time" : "Life Time",
         "xyzCheckout" : "Checkout",
         "xyzOther" : "Other",
-        "xyzBuy" : "Buy"
+        "xyzBuy" : "Buy",
+        "xyzPayment Order" : "xPayment Order"
      },
      "copy": {
         "../mkdcore/source/payment/Payment_service.php" : "../release/application/libraries/Payment_service.php",
