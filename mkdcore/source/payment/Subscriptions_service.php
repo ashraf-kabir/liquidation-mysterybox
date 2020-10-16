@@ -377,6 +377,8 @@ class Subscriptions_service{
                * status 5 <subscription canceled>
                * @see stripe_subscription mapping stripe_subscription_model
              */
+
+             $source_changed = FALSE;
              if(empty($current_subscription) || $current_subscription->status == 5)
              {
                  $params = [

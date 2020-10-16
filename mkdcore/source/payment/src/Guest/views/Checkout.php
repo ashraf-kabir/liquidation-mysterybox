@@ -17,6 +17,35 @@
         </a>
     </nav>
     <main>
+        <section>
+        <?php if (strlen($error) > 0) : ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $error; ?>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+        <?php if (validation_errors()) : ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger" role="alert">
+                        <?= validation_errors() ?>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+        <?php if (strlen($success) > 0) : ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success" role="alert">
+                        <?php echo $success; ?>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+        </section>
         <section class='p-4'>
            <div class="row">
                 <div class="col-7">
@@ -35,18 +64,18 @@
                 <div class="col-5">
                     <div class="card">
                         <div class="card-body">
-                            <form action="/subscribe" method='POST' class='billable-class' id='payment-form' >
+                            <form  method='POST' class='billable-class' id='payment-form' >
                                 <div class="form-group">
                                     <label for="email">xyzEmail</label>
-                                    <input type="email" name='email' id='subscription-form-email' class='form-control'>
+                                    <input type="email" name='email' value="<?php echo set_value('email'); ?>" id='subscription-form-email' class='form-control'>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">xyzOrder Quantity</label>
-                                    <input type="email" name='email' id='subscription-form-email' class='form-control'>
+                                    <input type="number" name='quantity'  value="<?php echo set_value('quantity'); ?>" id='subscription-form-email' class='form-control'>
                                 </div>
                                 <div class="form-group">
                                     <label for="card name">xyzCard Name</label>
-                                    <input type="text" name='card_name' class='form-control'>
+                                    <input type="text" name='card_name'  value="<?php echo set_value('card_name'); ?>" class='form-control'>
                                 </div>
                                 <div class="form-group" style='width:100%;' >
                                     <label for="card-element">
@@ -56,7 +85,8 @@
                                     <div id="card-errors" role="alert"></div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" class='btn  btn-accent-light btn-block' value='xyzSubscribe'>
+                                     <input type="hidden" name='product_id' value='<?php echo $product->id; ?>'>
+                                    <input type="submit" class='btn  btn-primary btn-block' value='xyzCheckout'>
                                 </div>
                             </form>  
                         </div>

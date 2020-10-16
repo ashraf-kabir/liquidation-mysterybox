@@ -29,7 +29,73 @@ class Payment_product_controller extends CI_Controller
 
     public function checkout($product)
     {
+        $this->load->model('stripe_payments_model');
         $data['product'] = $this->payment_products_model->get($product);
+        $data['error'] = '';
+        $data['success'] = '';
+
+        $this->form_validation->set_rules('quantity', 'xyzQuantity', 'required');
+        $this->form_validation->set_rules('stripeToken', 'Card', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+
+        if ($this->form_validation->run() === FALSE)
+		{
+            $this->load->view('Guest/Checkout', $data);
+            return;
+        }
+
+        $email = $this->input->post('email');
+        $source = $this->input->post('stripeToken');
+        $quantity = $this->input->post('quantity');
+        $amount =  $data['product']->price *   $quantity;
+
+        
+        $args = [
+            'amount' => $amount,
+            'currency' =>  $this->config->item('stripe_currency'),
+            'description' => "{$data['product']->name} * {$quantity } checkout customer",
+            'receipt_email' => $email,
+            'source' => $source
+        ];
+
+        try
+        {
+            $payment_result = $this->payment_service->create_charge($args);
+        }
+        catch(Exception $e)
+        {
+            $data['error'] = $e->getMessage();           
+            $this->load->view('Guest/Checkout', $data);    
+        }
+
+        if(isset($payment_result['id']))
+        {
+            $stripe_payment = [
+                'stripe_id' => $payment_result['id'] ?? "",
+                'object' =>  $payment_result['object'] ?? "",
+                'amount' =>  $payment_result['amount'] ?? "",
+                'balance_transaction' =>  $payment_result['balance_transaction'] ?? "",
+                'billing_details' =>  $payment_result['billing_details'] ?? "",
+                'currency' =>  $payment_result['currency'] ?? "",
+                'customer' =>  $payment_result['customer'] ?? "",
+                'description' =>  $payment_result['description'] ?? "",
+                'payment_method' =>  $payment_result['payment_method'] ?? "",
+                'refunded' =>  $payment_result['refunded'] ?? "",
+                'status' => $payment_result['status'] ?? ""
+            ];
+
+            
+            $result = $this->stripe_payments_model->create($stripe_payment);
+
+            if($result)
+            {
+                redirect('/thank_you', 'refresh');
+                return;
+            }
+
+            $data['error'] = 'xyxError creating payment';
+        }
+
         $this->load->view('Guest/Checkout', $data);
     }
 
