@@ -51,7 +51,7 @@ class Member_stripe_subscriptions_controller extends Member_controller
         $this->_data['view_model']->set_sort($direction);
         $this->_data['view_model']->set_sort_base_url('/member/stripe_subscriptions/0');
         $this->_data['interval_mapping'] = $this->stripe_plans_model->subscription_interval_mapping();
-        $this->_data['plans'] = $this->stripe_plans_model->get_all();
+        $this->_data['plans'] = $this->stripe_plans_model->get_all(['status' => 1]); //show only actice plans
         $this->_data['current_subscription'] =  $this->payment_subscription_log_model->get_last(  $session['user_id'] , $session['role']);
         $this->_data['current_stripe_subscription'] =  $this->stripe_subscriptions_model->get_last_subscription($session['user_id']);
         $this->_data['view_data']['cards'] = $this->stripe_cards_model->get_all([

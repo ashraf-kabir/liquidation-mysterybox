@@ -122,6 +122,7 @@ class Admin_stripe_plans_controller extends Admin_controller
                 'display_name' => $display_name,
                 'product_id' => $product_id,
                 'type' => 0,
+                'status' => 1,
                 'trial_period_days' => $trial_period_days       
             ]);
             if ($result)
@@ -163,10 +164,11 @@ class Admin_stripe_plans_controller extends Admin_controller
         $subscription_interval = $this->input->post('subscription_interval');
 		$amount = $this->input->post('amount');
 		$stripe_id = $this->input->post('stripe_id');
-		$display_name = $this->input->post('display_name');
+        $display_name = $this->input->post('display_name');
+        $status = $this->input->post('status');
         
         $plan_params = [
-            'nickname' => $display_name,
+            'nickname' => $display_name
         ];
 
         try
@@ -183,10 +185,8 @@ class Admin_stripe_plans_controller extends Admin_controller
         if(isset($stripe_plan['id']))
         {
             $result = $this->stripe_plans_model->edit([
-                'subscription_interval' => $subscription_interval,
-                'amount' => $amount,
-                'stripe_id' => $stripe_id,
                 'display_name' => $display_name,
+                'status' => $status
                 
             ], $id);
     
