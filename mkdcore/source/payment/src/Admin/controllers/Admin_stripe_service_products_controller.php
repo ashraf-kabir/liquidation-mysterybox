@@ -100,7 +100,6 @@ class Admin_stripe_service_products_controller extends Admin_controller
                 if ($result)
                 {   
                     $this->success('xyzProduct Added');
-                    exit();
                     return $this->redirect('/admin/stripe_service_products/0', 'refresh');
                 }
             

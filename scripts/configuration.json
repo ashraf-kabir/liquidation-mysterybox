@@ -1066,6 +1066,7 @@
 			"application_name": "",
 			"prorate_stripe_subscription" : true,
 			"stripe_currency" : "usd",
+			"trial_stripe_subscription" : false,
 			"auto_sync_stripe_subscription": false,
 			"facebook_client_id": "831409087667722",
 			"facebook_client_secret": "2bdb8d40c451aa3c654a48afa915c1ab",

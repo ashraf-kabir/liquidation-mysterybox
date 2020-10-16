@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     xyzAdd <?php echo $view_model->get_heading();?>
                 </h5>
                 <?= form_open() ?>
-				    <div class="form-group">
+				    <div class="form-group col-md-5 col-sm-12 ">
 				    	<label for="Interval">xyzInterval </label>
 				    	<select id="form_subscription_interval" name="subscription_interval" class="form-control">
 				    		<?php foreach ($view_model->subscription_interval_mapping() as $key => $value) {
@@ -34,11 +34,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				    		}?>
 				    	</select>
 				    </div>
-				    <div class="form-group">
+				    <div class="form-group col-md-5 col-sm-12 ">
 				    	<label for="Amount">xyzAmount </label>
 				    	<input type="text" class="form-control" id="form_amount" name="amount" value="<?php echo set_value('amount'); ?>" onkeypress="return mkd_is_number(event,this)"/>
 				    </div>
-				    <div class="form-group">
+				    <div class="form-group col-md-5 col-sm-12 ">
 				    	<label for="Product ID">xyzProduct ID </label>
 				    	<select class="form-control" name='product_id'>
 				    		<?php foreach($this->_data['products'] as $product): ?>
@@ -46,11 +46,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				    		<?php endforeach;?>
 				    	</select>
 				    </div>
-				    <div class="form-group">
+
+                    <div class="form-group col-md-5 col-sm-12 ">
+				    	<label for="Trial Period Days">xyzTrial Period Days </label>
+				    	<input type="number" class="form-control data-input" id="form_trial_period_days" name="trial_period_days" value="<?php echo set_value('trial_period_days'); ?>"/>
+				    </div>
+
+				    <div class="form-group col-md-5 col-sm-12 ">
 				    	<label for="Display Name">xyzDisplay Name </label>
 				    	<input type="text" class="form-control" id="form_display_name" name="display_name" value="<?php echo set_value('display_name'); ?>"/>
 				    </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-5 col-sm-12 p ">
                         <input type="submit" class="btn btn-primary" value="Submit">
                     </div>
                 </form>

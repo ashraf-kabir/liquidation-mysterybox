@@ -85,7 +85,10 @@ class Admin_stripe_plans_controller extends Admin_controller
 		$amount = $this->input->post('amount');
 		$product_id = $this->input->post('product_id');
         $display_name = $this->input->post('display_name');
+        $trial_period_days = $this->input->post('trial_period_days') ?? 0;
         $product_obj = $this->stripe_products_model->get($product_id);
+
+
         $plan_params = [
             'currency' =>  $this->config->item('stripe_default_currency') ?? 'CAD',
             'interval' =>  $this->_data['view_model']->subscription_interval_mapping()[$subscription_interval], 
@@ -93,6 +96,12 @@ class Admin_stripe_plans_controller extends Admin_controller
             'nickname' => $display_name,
             'amount' => $amount 
         ];
+
+        if( $trial_period_days > 0)
+        {
+            $plan_params['trial_period_days'] =  $trial_period_days; 
+        }
+
         try
         {
             $stripe_plan = $this->payment_service->create_plan($plan_params);
