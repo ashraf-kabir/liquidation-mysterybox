@@ -621,10 +621,14 @@ class Subscriptions_service{
             if(isset($stripe_subscription['id']))
             {
                 $status = $this->_stripe_subscription_model->get_mappings_key($stripe_subscription['status'], 'status') ?? 10000;
-
+            
                 if(in_array($status, [0,1,2,3,4,5,6,7]))
                 {
                     $update_params['status'] =  $status;
+                }
+                if($this->_prorate == FALSE)
+                {
+                    $update_params['cancel_at_period_end'] =  1;   
                 }
 
                 $this->_stripe_subscription_model->edit($update_params,$subscription->id);
