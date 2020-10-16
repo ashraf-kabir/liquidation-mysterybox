@@ -29,7 +29,7 @@ class Payment_product_controller extends CI_Controller
 
     public function checkout($product)
     {
-        $data['products'] = $this->payment_products_model->get($product);
+        $data['product'] = $this->payment_products_model->get($product);
         $this->load->view('Guest/Checkout', $data);
     }
 

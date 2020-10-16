@@ -55,6 +55,7 @@
          "subscribe" : "Guest/Stripe_payments_controller/subscribe",
          "products" : "Guest/Payment_product_controller/index",
          "checkout/(:num)" : "Guest/Payment_product_controller/checkout/$1"
+         
      },
      "models" : [
         {
@@ -1677,6 +1678,7 @@
         "xyzBilling" : "Billing",
         "xyzCollection Method" : "Collection Method",
         "xyzOrders" : "Orders",
+        "xyzOrder Quantity" : "Order Quantity",
         "xyzDisputes" : "Disputes",
         "xyzTrial Start" : "Trial Start",
         "xyzSubscriptions" :  "Subscriptions",
