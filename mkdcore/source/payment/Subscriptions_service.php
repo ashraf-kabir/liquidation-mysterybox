@@ -21,6 +21,7 @@ class Subscriptions_service{
     private $_role_id;
     private $_prorate;
     private $_currency;
+    private $_sync_subscription = FALSE;
     private $_stripe_payments_model;
 
 
@@ -30,6 +31,7 @@ class Subscriptions_service{
         $this->_role_id = $role_id;
         $this->_ci = &get_instance();
         $this->_currency = $this->_ci->config->item('stripe_currency');
+        $this->_sync_subscription = $this->_ci->config->item('auto_sync_stripe_subscription');
     }
 
 
@@ -149,6 +151,64 @@ class Subscriptions_service{
         {
            throw new Exception($e->getMessage());
         }
+    }
+
+    private function _get_subscription($user_id, $role_id)
+    {
+        $subscription = $this->_stripe_subscription_model->get_last_subscription($user_id, $role_id);
+
+        if(empty($subscription))
+        {
+            return NULL;
+        }
+        
+        if( $this->_sync_subscription == FALSE)
+        {
+            return $subscription;
+        }
+
+        $sub_end_date  = strtotime($subscription->current_period_end);
+        $today = date_create("now");
+        $last_update = date_create($subscription->updated_at);
+        $diff = date_diff($today,$last_update);
+
+        /**
+         * 1 End Date is 0 date
+         * 2 Updated at greater than today
+         */
+
+        if($sub_end_date == 0 || $diff->format("%a") > 1 )
+        {
+            try
+            {
+                $updated_subscription = $this->_payment_service->retrieve_subscription($subscription->stripe_id);
+            }
+            catch(Exception $e)
+            {
+               throw new Exception($e);
+            }
+            
+            if(isset($updated_subscription['id']))
+            {
+                $update_params = [
+                    'current_period_end' => date('Y-m-d', $updated_subscription['current_period_end']),
+                    'current_period_start' => date('Y-m-d',$updated_subscription['current_period_start'])
+                ];
+
+                $status = $this->_stripe_subscription_model->get_mappings_key($updated_subscription['status'], 'status') ?? 10000;
+
+                if(in_array($status, [0,1,2,3,4,5,6,7]))
+                {
+                    $update_params['status'] =  $status;
+                }
+                
+                $this->_stripe_subscription_model->edit($update_params,$subscription->id);
+            }
+
+            return $this->_stripe_subscription_model->get($subscription->id);
+        }
+
+        return $subscription;
     }
 
 
@@ -545,10 +605,63 @@ class Subscriptions_service{
         return FALSE;
     }
 
-
-    public function check_subscription()
+    public function cancel_subscription($subscription_log_obj)
     {
+      
+    }
 
+    public function check_subscription($subscription_log_obj)
+    {
+        $params = [
+            'is_stripe' => FALSE,
+            'is_life_time' => FALSE,
+            'is_free' => FALSE,
+            'status' => 0,
+            'is_active' => FALSE,
+            'stripe_status' => NULL,
+            'subscription_exists' =>  FALSE,
+            'cancel_at_end_of_period' => FALSE
+        ];
+        
+        if(empty($subscription_log_obj))
+        {   
+            return $params;
+        }
+        // check free or lifetime subscription
+        if($subscription_log_obj->type == 2 || $subscription_log_obj->type == 1)
+        {
+            $params['status'] =  $subscription_log_obj->status;
+            $params['is_active'] =  ($subscription_log_obj->status == 1 ? TRUE :FALSE);
+            $params['subscription_exists'] = TRUE;
+            
+            if($subscription_log_obj->type == 2)
+            {
+                $params['is_life_time'] = TRUE;
+            }
+
+            if($subscription_log_obj->type == 2)
+            {
+                $params['is_free'] = TRUE;
+            }
+        }
+
+        //user is using stripe
+        if($subscription_log_obj->type == 0)
+        {
+            $subscription = $this->_get_subscription($subscription_log_obj->user_id_, $subscription_log->role_id);
+
+            if(!empty($subscription))
+            {
+                $params['status'] =  $subscription_log_obj->status;
+                $params['is_stripe'] = TRUE;
+                $params['is_active'] =  ($subscription_log_obj->status == 1 ? TRUE :FALSE);
+                $params['subscription_exists'] = TRUE;  
+                $params['stripe_status'] = $subscription->status;
+                $params['cancel_at_end_of_period'] =  ($subscription->cancel_at_period_end == 1 ? TRUE :FALSE);
+            }
+        }
+
+        return $params;
     }
 
 }

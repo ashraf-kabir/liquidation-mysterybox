@@ -198,7 +198,7 @@
                 ["trial_end", "date",[], "xyzTrial End", "", ""],
                 ["trial_start","date",[], "xyzTrial Start", "", ""]
             ],
-            "method": "\n\tpublic function get_mappings_key($value, $field)\n\t{\n\t\t$field .= '_mapping';\n\t\t$mapping = $this->$field();\n\t\treturn array_search($value, $mapping);\n\t}\n\n\tpublic function get_last_subscription($user_id)\n\t{\n\t\t$sql = 'SELECT * FROM stripe_subscriptions WHERE user_id =  '. $user_id .' ORDER BY id DESC LIMIT 1';\n\t\treturn $this->db->query($sql)->row();\n\t}\n  \n\tpublic function update_by_stripe_id($stripe_id, $data)\n\t{\n\t\t$this->db->where('stripe_id' ,$stripe_id );\n\t\treturn $this->db->update($this->_table , $data);\n\t}\n",
+            "method": "\n\tpublic function get_mappings_key($value, $field)\n\t{\n\t\t$field .= '_mapping';\n\t\t$mapping = $this->$field();\n\t\treturn array_search($value, $mapping);\n\t}\n\n\tpublic function get_last_subscription($user_id, $role_id = 0)\n\t{\n\t\t$this->db->where('user_id', $user_id);\n\n\t\tif($role_id > 0)\n\t\t{\n\t\t\t$this->db->where('role_id', $role_id);\n\t\t}\n\n\t\t$this->db->order_by('id', 'DESC');\n\t\t$this->db->limit(1);\n\t\treturn $this->db->get($this->_table)->row();\n\t}\n\n\tpublic function update_by_stripe_id($stripe_id, $data)\n\t{\n\t\t$this->db->where('stripe_id' ,$stripe_id );\n\t\treturn $this->db->update($this->_table , $data);\n\t}\n",
             "join": [
                  {
                     "name": "user",
