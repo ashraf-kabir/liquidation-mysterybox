@@ -66,6 +66,7 @@ class Payment_product_controller extends CI_Controller
         {
             $data['error'] = $e->getMessage();           
             $this->load->view('Guest/Checkout', $data);    
+            return;
         }
 
         if(isset($payment_result['id']))
@@ -83,7 +84,6 @@ class Payment_product_controller extends CI_Controller
                 'refunded' =>  $payment_result['refunded'] ?? "",
                 'status' => $payment_result['status'] ?? ""
             ];
-
             
             $result = $this->stripe_payments_model->create($stripe_payment);
 
@@ -97,6 +97,12 @@ class Payment_product_controller extends CI_Controller
         }
 
         $this->load->view('Guest/Checkout', $data);
+    }
+
+
+    public function thank_you()
+    {
+        $this->load->view('Guest/ThankYou');
     }
 
 }
