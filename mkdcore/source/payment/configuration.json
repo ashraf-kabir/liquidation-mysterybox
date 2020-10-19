@@ -54,7 +54,8 @@
          "save_payment_email" : "Guest/Stripe_payments_controller/save_email",
          "subscribe" : "Guest/Stripe_payments_controller/subscribe",
          "products" : "Guest/Payment_product_controller/index",
-         "checkout/(:num)" : "Guest/Payment_product_controller/checkout/$1"
+         "checkout/(:num)" : "Guest/Payment_product_controller/checkout/$1",
+         "thank_you" : "Guest/Payment_product_controller/thank_you"
          
      },
      "models" : [
@@ -1707,7 +1708,9 @@
         "xyzCheckout" : "Checkout",
         "xyzOther" : "Other",
         "xyzBuy" : "Buy",
-        "xyzPayment Order" : "xPayment Order"
+        "xyzPayment Order" : "Payment Order",
+        "xyzThank you" : "Thank you",
+        "xyzShop" : "Shop"
      },
      "copy": {
         "../mkdcore/source/payment/Payment_service.php" : "../release/application/libraries/Payment_service.php",
@@ -1743,6 +1746,7 @@
         "../mkdcore/source/payment/src/Admin/views/PaymentCustomPlansAdd.php" : "../release/application/views/Admin/PaymentCustomPlansAdd.php",
         "../mkdcore/source/payment/src/Guest/controllers/Payment_product_controller.php" : "../release/application/controllers/Guest/Payment_product_controller.php",
         "../mkdcore/source/payment/src/Guest/views/Products.php" : "../release/application/views/Guest/Products.php",
-        "../mkdcore/source/payment/src/Guest/views/Checkout.php" : "../release/application/views/Guest/Checkout.php"
+        "../mkdcore/source/payment/src/Guest/views/Checkout.php" : "../release/application/views/Guest/Checkout.php",
+        "../mkdcore/source/payment/src/Guest/views/ThankYou.php" : "../release/application/views/Guest/ThankYou.php"
      }
 }

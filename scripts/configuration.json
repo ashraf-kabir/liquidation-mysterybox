@@ -1036,8 +1036,8 @@
 		"twilio_phone_number": "",
 		"twilio_sid": "",
 		"twilio_token": "",
-		"stripe_publish_key": "pk_test_xI5ilWvoSHnR6uF2UV7WTwre00UcjJb9OM",
-		"stripe_secret_key": "sk_test_cLHqRfAOuHVxD65avzGvsjZQ00b468oTj9",
+		"stripe_publish_key": "pk_test_51HILPKHTzTBkVfvyxLxh4wYxX0ziE94zeYOUekuDFhk6XPqDnfWmFO8hgpjAMGPaqRmMXtKtqwItCSShHLmx3zaX00ygr8e9kG",
+		"stripe_secret_key": "sk_test_51HILPKHTzTBkVfvy2Rq0XKXJmUhIuZJJ0BR79q0pPcVqMd1yz9P7wAlb1Ii2NhwRKmZzD6hV4BalEl29TaTozcQa00So5k1Ub0",
 		"copyright": "Copyright © 2019 Manaknightdigital Inc. All rights reserved.",
 		"powered_by": "Powered By <a href=\"https://manaknightdigital.com\" target=\"__blank\">Manaknightdigital Inc.</a>",
 		"email_smtp": {

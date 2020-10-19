@@ -114,11 +114,9 @@ class Google_service
         {
             $google_client->setAccessToken($token['access_token']);
             $google_service = new Google_Service_Oauth2($google_client);
-
             //$google_service = new Google_Service_Gmail($google_client);
             return $google_service->userinfo->get();
-            //$client->authenticate($code);
-            return $google_service->userinfo->get();
+         
         }
         
         return false;
