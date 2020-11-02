@@ -25,11 +25,17 @@
 
 # Mac Setup
 1.composer install
+
 2.cd scripts;
+
 3.sudo ./initialize.sh
+
 4.sudo ./build.sh
+
 5.sudo ./generate.sh
+
 6.cd ../release;
+
 7.php -S localhost:9000
 
 # Deployment Steps
