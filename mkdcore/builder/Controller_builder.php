@@ -410,13 +410,20 @@ class Controller_builder extends Builder
             $add_str = $this->inject_substitute($add_str, 'model_array_value', $this->output_model_array_value($controller['add_fields']));
             $add_str = $this->inject_substitute($add_str, 'name', $controller['name']);
 
-            if (strlen($controller['method_add']) > 0)
+            if (isset($controller['method_add']) && is_string($controller['method_add']) && strlen($controller['method_add']) > 0)
             {
                 $add_str = $this->inject_substitute($add_str, 'method_add', $controller['method_add']);
             }
             else
             {
-                $add_str = $this->inject_substitute($add_str, 'method_add', '');
+                if (isset($controller['method_add']) && is_array($controller['method_add']))
+                {
+                    $add_str = $this->inject_substitute($add_str, 'method_add', implode("\n", $controller['method_add']));
+                }
+                else
+                {
+                    $add_str = $this->inject_substitute($add_str, 'method_add', '');
+                }
             }
             if (strlen($controller['method_add_success']) > 0)
             {
@@ -424,7 +431,14 @@ class Controller_builder extends Builder
             }
             else
             {
-                $add_str = $this->inject_substitute($add_str, 'method_add_success', '');
+                if (isset($controller['method_add_success']) && is_array($controller['method_add_success']))
+                {
+                    $add_str = $this->inject_substitute($add_str, 'method_add_success', implode("\n", $controller['method_add_success']));
+                }
+                else
+                {
+                    $add_str = $this->inject_substitute($add_str, 'method_add_success', '');
+                }
             }
 
             if (isset($controller['activity_log']) && $controller['activity_log'] === TRUE )
@@ -458,13 +472,20 @@ class Controller_builder extends Builder
             $add_view_str = $this->inject_substitute($add_view_str, 'input', $this->output_list_input_add($controller));
             $add_view_str = $this->inject_substitute($add_view_str, 'portal', $portal);
             $add_view_str = $this->inject_substitute($add_view_str, 'route', $route);
-            if (strlen($controller['custom_view_add']) > 0)
+            if (isset($controller['custom_view_add']) && is_string($controller['custom_view_add']) && strlen($controller['custom_view_add']) > 0)
             {
                 $add_view_str = $this->inject_substitute($add_view_str, 'custom_view_add', $controller['custom_view_add']);
             }
             else
             {
-                $add_view_str = $this->inject_substitute($add_view_str, 'custom_view_add', '');
+                if (isset($controller['custom_view_add']) && is_array($controller['custom_view_add']))
+                {
+                    $add_view_str = $this->inject_substitute($add_view_str, 'custom_view_add', implode("\n", $controller['custom_view_add']));
+                }
+                else
+                {
+                    $add_view_str = $this->inject_substitute($add_view_str, 'custom_view_add', '');
+                }
             }
             //check autocomplete fields
             if(!empty($this->get_autocomplete_fields($controller, 'add_fields')))
@@ -499,31 +520,52 @@ class Controller_builder extends Builder
             $edit_str = $this->inject_substitute($edit_str, 'input_post_edit', $this->output_post_fields($controller['edit_fields']));
             $edit_str = $this->inject_substitute($edit_str, 'model_array_value', $this->output_model_array_value($controller['edit_fields']));
 
-            if (strlen($controller['method_edit']) > 0)
+            if (isset($controller['method_edit']) && is_string($controller['method_edit']) && strlen($controller['method_edit']) > 0)
             {
                 $edit_str = $this->inject_substitute($edit_str, 'method_edit', $controller['method_edit']);
             }
             else
             {
-                $edit_str = $this->inject_substitute($edit_str, 'method_edit', '');
+                if (isset($controller['method_edit']) && is_array($controller['method_edit']))
+                {
+                    $edit_str = $this->inject_substitute($edit_str, 'method_edit', implode("\n", $controller['method_edit']));
+                }
+                else
+                {
+                    $edit_str = $this->inject_substitute($edit_str, 'method_edit', '');
+                }
             }
 
-            if (strlen($controller['method_edit_pre']) > 0)
+            if (isset($controller['method_edit_pre']) && is_string($controller['method_edit_pre']) && strlen($controller['method_edit_pre']) > 0)
             {
                 $edit_str = $this->inject_substitute($edit_str, 'method_edit_pre', $controller['method_edit_pre']);
             }
             else
             {
-                $edit_str = $this->inject_substitute($edit_str, 'method_edit_pre', '');
+                if (isset($controller['method_edit_pre']) && is_array($controller['method_edit_pre']))
+                {
+                    $edit_str = $this->inject_substitute($edit_str, 'method_edit_pre', implode("\n", $controller['method_edit_pre']));
+                }
+                else
+                {
+                    $edit_str = $this->inject_substitute($edit_str, 'method_edit_pre', '');
+                }
             }
 
-            if (strlen($controller['method_edit_success']) > 0)
+            if (isset($controller['method_edit_success']) && is_string($controller['method_edit_success']) && strlen($controller['method_edit_success']) > 0)
             {
                 $edit_str = $this->inject_substitute($edit_str, 'method_edit_success', $controller['method_edit_success']);
             }
             else
             {
-                $edit_str = $this->inject_substitute($edit_str, 'method_edit_success', '');
+                if (isset($controller['method_edit_success']) && is_array($controller['method_edit_success']))
+                {
+                    $edit_str = $this->inject_substitute($edit_str, 'method_edit_success', implode("\n", $controller['method_edit_success']));
+                }
+                else
+                {
+                    $edit_str = $this->inject_substitute($edit_str, 'method_edit_success', '');
+                }
             }
 
             if (isset($controller['activity_log']) && $controller['activity_log'] === TRUE )
@@ -572,13 +614,20 @@ class Controller_builder extends Builder
             $edit_view_str = $this->inject_substitute($edit_view_str, 'portal', $portal);
             $edit_view_str = $this->inject_substitute($edit_view_str, 'route', $route);
 
-            if (strlen($controller['custom_view_edit']) > 0)
+            if (isset($controller['custom_view_edit']) && is_string($controller['custom_view_edit']) && strlen($controller['custom_view_edit']) > 0)
             {
                 $edit_view_str = $this->inject_substitute($edit_view_str, 'custom_view_edit', $controller['custom_view_edit']);
             }
             else
             {
-                $edit_view_str = $this->inject_substitute($edit_view_str, 'custom_view_edit', '');
+                if (isset($controller['custom_view_edit']) && is_array($controller['custom_view_edit']))
+                {
+                    $edit_view_str = $this->inject_substitute($edit_view_str, 'custom_view_edit', implode("\n", $controller['custom_view_edit']));
+                }
+                else
+                {
+                    $edit_view_str = $this->inject_substitute($edit_view_str, 'custom_view_edit', '');
+                }
             }
             $this->_render_list['../release/application/views/' . $uc_portal . '/' . $uc_name . 'Edit.php'] = $edit_view_str;
         }
@@ -599,21 +648,35 @@ class Controller_builder extends Builder
             $view_str = $this->inject_substitute($view_str, 'portal', $portal);
             $view_str = $this->inject_substitute($view_str, 'uc_name', $uc_name);
             $view_str = $this->inject_substitute($view_str, 'name', $controller['name']);
-            if (strlen($controller['method_view']) > 0)
+            if (isset($controller['method_view']) && is_string($controller['method_view']) && strlen($controller['method_view']) > 0)
             {
                 $view_str = $this->inject_substitute($view_str, 'method_view', $controller['method_view']);
             }
             else
             {
-                $view_str = $this->inject_substitute($view_str, 'method_view', '');
+                if (isset($controller['method_view']) && is_array($controller['method_view']))
+                {
+                    $view_str = $this->inject_substitute($view_str, 'method_view', implode("\n", $controller['method_view']));
+                }
+                else
+                {
+                    $view_str = $this->inject_substitute($view_str, 'method_view', '');
+                }
             }
-            if (strlen($controller['method_view_success']) > 0)
+            if (isset($controller['method_view_success']) && is_string($controller['method_view_success']) && strlen($controller['method_view_success']) > 0)
             {
                 $view_str = $this->inject_substitute($view_str, 'method_view_success', $controller['method_view_success']);
             }
             else
             {
-                $view_str = $this->inject_substitute($view_str, 'method_view_success', '');
+                if (isset($controller['method_view_success']) && is_array($controller['method_view_success']))
+                {
+                    $view_str = $this->inject_substitute($view_str, 'method_view_success', implode("\n", $controller['method_view_success']));
+                }
+                else
+                {
+                    $view_str = $this->inject_substitute($view_str, 'method_view_success', '');
+                }
             }
             if (isset($controller['dynamic_mapping_view']) && count(array_keys($controller['dynamic_mapping_view'])) > 0 )
             {
@@ -640,13 +703,20 @@ class Controller_builder extends Builder
             $view_view_str = $this->inject_substitute($view_view_str, 'input', $this->output_list_input_view($controller));
             $view_view_str = $this->inject_substitute($view_view_str, 'portal', $portal);
             $view_view_str = $this->inject_substitute($view_view_str, 'route', $route);
-            if (strlen($controller['custom_view_view']) > 0)
+            if (isset($controller['custom_view_view']) && is_string($controller['custom_view_view']) && strlen($controller['custom_view_view']) > 0)
             {
                 $view_view_str = $this->inject_substitute($view_view_str, 'custom_view_view', $controller['custom_view_view']);
             }
             else
             {
-                $view_view_str = $this->inject_substitute($view_view_str, 'custom_view_view', '');
+                if (isset($controller['custom_view_view']) && is_array($controller['custom_view_view']))
+                {
+                    $view_view_str = $this->inject_substitute($view_view_str, 'custom_view_view', implode("\n", $controller['custom_view_view']));
+                }
+                else
+                {
+                    $view_view_str = $this->inject_substitute($view_view_str, 'custom_view_view', '');
+                }
             }
             $this->_render_list['../release/application/views/' . $uc_portal . '/' . $uc_name . 'View.php'] = $view_view_str;
         }
@@ -771,7 +841,14 @@ class Controller_builder extends Builder
                     }
                     else
                     {
-                        $list_str = $this->inject_substitute($list_str, 'method_list', '');
+                        if (isset($controller['method_list']) && is_array($controller['method_list']))
+                        {
+                            $list_str = $this->inject_substitute($list_str, 'method_list', implode("\n", $controller['method_list']));
+                        }
+                        else
+                        {
+                            $list_str = $this->inject_substitute($list_str, 'method_list', '');
+                        }
                     }
 
                     if (strlen($controller['paginate_join']) > 0)
@@ -1033,13 +1110,20 @@ class Controller_builder extends Builder
         {
             $template = $this->inject_substitute($template, 'route', $controller['route']);
         }
-        if (strlen($controller['method']) > 0)
+        if (isset($controller['method'] && is_string($controller['method'] && strlen($controller['method']) > 0)
         {
             $template = $this->inject_substitute($template, 'method', $controller['method']);
         }
         else
         {
-            $template = $this->inject_substitute($template, 'method', '');
+            if (isset($value['method']) && is_array($value['method']))
+            {
+                $model_template = $this->inject_substitute($model_template, 'method', implode("\n", $value['method']));
+            }
+            else
+            {
+                $model_template = $this->inject_substitute($model_template, 'method', '');
+            }
         }
         //generate autocomplete
         if(!empty($this->_autocomplete_fields))
@@ -1092,21 +1176,35 @@ class Controller_builder extends Builder
             $add_str = $this->inject_substitute($add_str, 'input_post_add', $this->output_post_fields($controller['add_fields']));
             $add_str = $this->inject_substitute($add_str, 'model_array_value', $this->output_model_array_value($controller['add_fields']));
             $add_str = $this->inject_substitute($add_str, 'name', $controller['name']);
-            if (strlen($controller['method_add']) > 0)
+            if (isset($controller['method_add']) && is_string($controller['method_add']) && strlen($controller['method_add']) > 0)
             {
                 $add_str = $this->inject_substitute($add_str, 'method_add', $controller['method_add']);
             }
             else
             {
-                $add_str = $this->inject_substitute($add_str, 'method_add', '');
+                if (isset($controller['method_add']) && is_array($controller['method_add']))
+                {
+                    $add_str = $this->inject_substitute($add_str, 'method_add', implode("\n", $controller['method_add']));
+                }
+                else
+                {
+                    $add_str = $this->inject_substitute($add_str, 'method_add', '');
+                }
             }
-            if (strlen($controller['method_add_success']) > 0)
+            if (isset($controller['method_add_success']) && is_string($controller['method_add_success']) && strlen($controller['method_add_success']) > 0)
             {
                 $add_str = $this->inject_substitute($add_str, 'method_add_success', $controller['method_add_success']);
             }
             else
             {
-                $add_str = $this->inject_substitute($add_str, 'method_add_success', '');
+                if (isset($controller['method_add_success']) && is_array($controller['method_add_success']))
+                {
+                    $add_str = $this->inject_substitute($add_str, 'method_add_success', implode("\n", $controller['method_add_success']));
+                }
+                else
+                {
+                    $add_str = $this->inject_substitute($add_str, 'method_add_success', '');
+                }
             }
             if (isset($controller['activity_log']) && $controller['activity_log'] === TRUE )
             {
@@ -1145,21 +1243,35 @@ class Controller_builder extends Builder
             $edit_str = $this->inject_substitute($edit_str, 'name', $controller['name']);
             $edit_str = $this->inject_substitute($edit_str, 'input_post_edit', $this->output_post_fields($controller['edit_fields']));
             $edit_str = $this->inject_substitute($edit_str, 'model_array_value', $this->output_model_array_value($controller['edit_fields']));
-            if (strlen($controller['method_edit']) > 0)
+            if (isset($controller['method_edit']) && is_string($controller['method_edit']) && strlen($controller['method_edit']) > 0)
             {
                 $edit_str = $this->inject_substitute($edit_str, 'method_edit', $controller['method_edit']);
             }
             else
             {
-                $edit_str = $this->inject_substitute($edit_str, 'method_edit', '');
+                if (isset($controller['method_edit']) && is_array($controller['method_edit']))
+                {
+                    $edit_str = $this->inject_substitute($edit_str, 'method_edit', implode("\n", $controller['method_edit']));
+                }
+                else
+                {
+                    $edit_str = $this->inject_substitute($edit_str, 'method_edit', '');
+                }
             }
-            if (strlen($controller['method_edit_success']) > 0)
+            if (isset($controller['method_edit_success']) && is_string($controller['method_edit_success']) && strlen($controller['method_edit_success']) > 0)
             {
                 $edit_str = $this->inject_substitute($edit_str, 'method_edit_success', $controller['method_edit_success']);
             }
             else
             {
-                $edit_str = $this->inject_substitute($edit_str, 'method_edit_success', '');
+                if (isset($controller['method_edit_success']) && is_array($controller['method_edit_success']))
+                {
+                    $edit_str = $this->inject_substitute($edit_str, 'method_edit_success', implode("\n", $controller['method_edit_success']));
+                }
+                else
+                {
+                    $edit_str = $this->inject_substitute($edit_str, 'method_edit_success', '');
+                }
             }
 
             if (isset($controller['activity_log']) && $controller['activity_log'] === TRUE )
@@ -1198,21 +1310,35 @@ class Controller_builder extends Builder
             $view_str = $this->inject_substitute($view_str, 'portal', $portal);
             $view_str = $this->inject_substitute($view_str, 'uc_name', $uc_name);
             $view_str = $this->inject_substitute($view_str, 'name', $controller['name']);
-            if (strlen($controller['method_view']) > 0)
+            if (isset($controller['method_view']) && is_string($controller['method_view']) && strlen($controller['method_view']) > 0)
             {
                 $view_str = $this->inject_substitute($view_str, 'method_view', $controller['method_view']);
             }
             else
             {
-                $view_str = $this->inject_substitute($view_str, 'method_view', '');
+                if (isset($controller['method_view']) && is_array($controller['method_view']))
+                {
+                    $view_str = $this->inject_substitute($view_str, 'method_view', implode("\n", $controller['method_view']));
+                }
+                else
+                {
+                    $view_str = $this->inject_substitute($view_str, 'method_view', '');
+                }
             }
-            if (strlen($controller['method_view_success']) > 0)
+            if (isset($controller['method_view_success']) && is_string($controller['method_view_success']) && strlen($controller['method_view_success']) > 0)
             {
                 $view_str = $this->inject_substitute($view_str, 'method_view_success', $controller['method_view_success']);
             }
             else
             {
-                $view_str = $this->inject_substitute($view_str, 'method_view_success', '');
+                if (isset($controller['method_view_success']) && is_array($controller['method_view_success']))
+                {
+                    $view_str = $this->inject_substitute($view_str, 'method_view_success', implode("\n", $controller['method_view_success']));
+                }
+                else
+                {
+                    $view_str = $this->inject_substitute($view_str, 'method_view_success', '');
+                }
             }
 
             if (isset($controller['dynamic_mapping_view']) && count(array_keys($controller['dynamic_mapping_view'])) > 0 )

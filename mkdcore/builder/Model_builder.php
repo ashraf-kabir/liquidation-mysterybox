@@ -54,6 +54,7 @@ class Model_builder extends Builder
             {
                 $model_template = $this->inject_substitute($model_template, 'method', $value['method']);
             }
+
             if (isset($value['method']) && is_array($value['method']))
             {
                 $model_template = $this->inject_substitute($model_template, 'method', implode("\n",$value['method']));
@@ -63,13 +64,20 @@ class Model_builder extends Builder
                 $model_template = $this->inject_substitute($model_template, 'method', '');
             }
 
-            if (isset($value['pre']) && strlen($value['pre']) > 0)
+            if (isset($value['pre']) && is_string($value['pre']) && strlen($value['pre']) > 0)
             {
                 $model_template = $this->inject_substitute($model_template, 'pre', $value['pre']);
             }
             else
             {
-                $model_template = $this->inject_substitute($model_template, 'pre', '');
+                if (isset($value['pre']) && is_array($value['pre']))
+                {
+                    $model_template = $this->inject_substitute($model_template, 'pre', implode("\n", $value['pre']));
+                }
+                else
+                {
+                    $model_template = $this->inject_substitute($model_template, 'pre', '');
+                }
             }
 
             if (isset($value['post']) && strlen($value['post']) > 0)
@@ -78,7 +86,14 @@ class Model_builder extends Builder
             }
             else
             {
-                $model_template = $this->inject_substitute($model_template, 'post', '');
+                if (isset($value['post']) && is_array($value['post']))
+                {
+                    $model_template = $this->inject_substitute($model_template, 'post', implode("\n", $value['post']));
+                }
+                else
+                {
+                    $model_template = $this->inject_substitute($model_template, 'post', '');
+                }
             }
 
             if (isset($value['count']) && strlen($value['count']) > 0)
@@ -87,7 +102,14 @@ class Model_builder extends Builder
             }
             else
             {
-                $model_template = $this->inject_substitute($model_template, 'count', '');
+                if (isset($value['count']) && is_array($value['count']))
+                {
+                    $model_template = $this->inject_substitute($model_template, 'count', implode("\n", $value['count']));
+                }
+                else
+                {
+                    $model_template = $this->inject_substitute($model_template, 'count', '');
+                }
             }
 
             if (isset($value['join']) && count($value['join']) > 0)
@@ -318,7 +340,7 @@ class Model_builder extends Builder
             if(!empty($value['import_fields']))
             {
                 $model_template = $this->inject_substitute($model_template, 'import_fields', $this->output_import_fields($value['import_fields']));
-                
+
             }
             else
             {
