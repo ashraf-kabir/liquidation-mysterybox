@@ -215,25 +215,25 @@ class Controller_builder extends Builder
                 $this->setup_crud_api($controller);
             }
 
-            if (strlen($controller['override_add']) > 0)
-            {
-                $this->setup_override_layout($controller, 'add');
-            }
+            // if (strlen($controller['override_add']) > 0)
+            // {
+            //     $this->setup_override_layout($controller, 'add');
+            // }
 
-            if (strlen($controller['override_edit']) > 0)
-            {
-                $this->setup_override_layout($controller, 'edit');
-            }
+            // if (strlen($controller['override_edit']) > 0)
+            // {
+            //     $this->setup_override_layout($controller, 'edit');
+            // }
 
-            if (strlen($controller['override_view']) > 0)
-            {
-                 $this->setup_override_layout($controller, 'view');
-            }
+            // if (strlen($controller['override_view']) > 0)
+            // {
+            //      $this->setup_override_layout($controller, 'view');
+            // }
 
-            if (strlen($controller['override_list']) > 0)
-            {
-                 $this->setup_override_list($controller);
-            }
+            // if (strlen($controller['override_list']) > 0)
+            // {
+            //      $this->setup_override_list($controller);
+            // }
         }
     }
 

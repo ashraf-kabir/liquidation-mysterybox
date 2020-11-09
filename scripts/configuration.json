@@ -34,7 +34,6 @@
 			"pre": "",
 			"post": "if(isset($data['key']))\n\t\t{\n\t\t\tunset($data['key']);\n\t\t}\n",
 			"count": "",
-			"override": "",
 			"unique": ["key"],
 			"seed": [
 				{"key": "site_name","type": 0,"value": "Manaknight Inc"},
@@ -59,7 +58,6 @@
 			"pre": "",
 			"post": "",
 			"count": "",
-			"override": "",
 			"unique": ["name"],
 			"seed": [
 				{"name": "member"},
@@ -119,7 +117,6 @@
 			"pre": "$data['status'] = 1;\n",
 			"post": "",
 			"count": "",
-			"override": "",
 			"unique": [],
 			"seed":[
 					{"email": "admin@manaknight.com", "password": "str_replace('$2y$', '$2b$', password_hash('a123456', PASSWORD_BCRYPT))","type": "n","verify": 1,"role_id": 2,"status": 1},
@@ -156,7 +153,6 @@
 		"pre": "$data['image'] = 'https://i.imgur.com/AzJ7DRw.png';\n\t\t$data['refer'] = uniqid();\n\t\t$data['status'] = 1;\n\t\t$data['verify'] = 0;\n\t\t$data['stripe_id'] = '';\n\n\t\tif(!isset($data['profile_id']))\n\t\t{\n\t\t\t$data['profile_id'] = 0;\n\t\t}\n\n\t\tif(!isset($data['type']))\n\t\t{\n\t\t\t$data['type'] = 'n';\n\t\t}\n\t\tif (strpos($data['phone'], '1') != 0)\n\t\t{\n\t\t\t$data['phone'] = '1' + $data['phone'];\n\t\t}\n",
 		"post": "\n\n\t\tif(isset($data['image']) && strlen($data['image']) < 1)\n\t\t{\n\t\t\tunset($data['image']);\n\t\t}\n",
 		"count": "",
-		"override": "",
 		"seed":[
 			{"first_name": "Admin", "last_name": "Admin","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "admin","profile_id": 0,"credential_id" : 1, "stripe_id": ""},
 			{"first_name": "Member",  "last_name": "Member","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "member","profile_id": 0,"credential_id" : 2, "stripe_id": ""}
@@ -210,7 +206,6 @@
 			"pre": "",
 			"post": "if(isset($data['slug']))\n\t\t{\n\t\t\tunset($data['slug']);\n\t\t}\n",
 			"count": "",
-			"override": "",
 			"seed": [
 				{"slug": "reset-password","subject": "Reset your password","tag": "email,reset_token,link","html": "Hi {{{email}}},<br/>You have requested to reset your password. Please click the link below to reset it.<br/><a href=\"{{{link}}}/{{{reset_token}}}\">Link</a>. <br/>Thanks,<br/> Admin"},
 				{"slug": "register","subject": "Register","tag": "email","html": "Hi {{{email}}},<br/>Thanks for registering on our platform. <br/>Thanks,<br/> Admin"},
@@ -235,7 +230,6 @@
 			"pre": "",
 			"post": "if(isset($data['slug']))\n\t\t{\n\t\t\tunset($data['slug']);\n\t\t}\n",
 			"count": "",
-			"override": "",
 			"seed": [
 				{"slug": "verify","tag": "code","content": "Your verification # is {{{code}}}"}
 			]
@@ -400,7 +394,6 @@
 			"controller": "Admin_user_controller.php",
 			"api_controller": "Admin_api_user_controller.php",
 			"activity_log":false,
-			"override": "",
 			"override_add": "",
 			"override_edit": "",
 			"override_view": "",
@@ -462,7 +455,6 @@
 			"controller": "Admin_credential_controller.php",
 			"api_controller": "Admin_api_credential_controller.php",
 			"activity_log":false,
-			"override": "",
 			"override_add": "",
 			"override_edit": "",
 			"override_view": "",
@@ -524,7 +516,6 @@
 			"controller": "Admin_email_controller.php",
 			"api_controller": "Admin_api_email_controller.php",
 			"activity_log": false,
-			"override": "",
 			"override_add": "",
 			"override_edit": "",
 			"override_view": "",
@@ -586,7 +577,6 @@
 			"controller": "Admin_sms_controller.php",
 			"api_controller": "Admin_api_sms_controller.php",
 			"activity_log": false,
-			"override": "",
 			"override_add": "",
 			"override_edit": "",
 			"override_view": "",
@@ -648,7 +638,6 @@
 			"controller": "Admin_image_controller.php",
 			"api_controller": "Admin_api_image_controller.php",
 			"activity_log": false,
-			"override": "",
 			"override_add": "",
 			"override_edit": "",
 			"override_view": "",
@@ -710,7 +699,6 @@
 			"controller": "Admin_test_controller.php",
 			"api_controller": "Admin_api_test_controller.php",
 			"activity_log": true,
-			"override": "",
 			"override_add": "",
 			"override_edit": "",
 			"override_view": "",
@@ -775,7 +763,6 @@
 			"controller": "Member_test_controller.php",
 			"api_controller": "Member_api_test_controller.php",
 			"activity_log": true,
-			"override": "",
 			"override_add": "",
 			"override_edit": "",
 			"override_view": "",
@@ -1068,8 +1055,8 @@
 			"checkout/.*",
 			"subscribe/.*",
 			"sale/register",
-			"contact", 
-			"subscribe", 
+			"contact",
+			"subscribe",
 			"member/sent_verification"
 		],
 		"encryption_key": "1n4uUX6d1Us3quFXKA7ZmqFIaQVC5MtgXlV9ho8F",
@@ -1146,7 +1133,7 @@
 		"../mkdcore/custom/Admin/views/UserAdd.php" : "../release/application/views/Admin/UserAdd.php",
 		"../mkdcore/custom/Admin/views/UserEdit.php" : "../release/application/views/Admin/UserEdit.php",
 		"./mysql.php" : "../release/mysql.php"
-		
+
 	},
 	"routes": {
 		"migrate": "Migrate",
