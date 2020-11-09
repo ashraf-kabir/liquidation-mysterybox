@@ -1110,7 +1110,7 @@ class Controller_builder extends Builder
         {
             $template = $this->inject_substitute($template, 'route', $controller['route']);
         }
-        if (isset($controller['method'] && is_string($controller['method']) && strlen($controller['method']) > 0)
+        if (isset($controller['method']) && is_string($controller['method']) && strlen($controller['method']) > 0)
         {
             $template = $this->inject_substitute($template, 'method', $controller['method']);
         }
