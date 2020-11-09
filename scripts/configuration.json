@@ -658,7 +658,7 @@
 			"model": "test",
 			"controller": "Admin_test_controller.php",
 			"api_controller": "Admin_api_test_controller.php",
-			"activity_log": true,
+			"activity_log": false,
 			"api": true,
 			"frontend": false,
 			"paginate": true,

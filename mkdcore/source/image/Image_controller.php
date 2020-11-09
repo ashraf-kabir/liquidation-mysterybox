@@ -40,7 +40,7 @@ class Image_controller extends CI_Controller
         $this->load->model('image_model');
         $data_uri = $this->input->post('image');
         $base_url = $this->config->item('base_url');
-        $image_path = __DIR__ . '/../../../../uploads/';
+        $image_path = __DIR__ . '/../../../uploads/';
         $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data_uri));
         $filename = md5(uniqid() . time()) . '.png';
         file_put_contents($image_path . $filename, $data);
@@ -80,7 +80,7 @@ class Image_controller extends CI_Controller
 
         $this->load->model('image_model');
         $data_uri = $this->input->post('image');
-        $image_path = __DIR__ . '/../../../../uploads/';
+        $image_path = __DIR__ . '/../../../uploads/';
         $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data_uri));
         $filename = md5(uniqid() . time()) . '.png';
         file_put_contents($image_path . $filename, $data);
@@ -165,7 +165,7 @@ class Image_controller extends CI_Controller
         $height = 0;
         $session = $this->get_session();
         $user_id = isset($session['user_id']) ? $session['user_id'] : 0;
-        $image_path = __DIR__ . '/../../../../uploads/';
+        $image_path = __DIR__ . '/../../../uploads/';
 
         if (!move_uploaded_file($path, $image_path . $filename))
         {
@@ -347,8 +347,8 @@ class Image_controller extends CI_Controller
                 'message' => 'xyzUpload file size too big'
             ]));
         }
-       
-        if (move_uploaded_file($path, $save_as)) 
+
+        if (move_uploaded_file($path, $save_as))
         {
             $data =  $this->csv_import_service->_import_data( $save_as );
 
@@ -390,7 +390,7 @@ class Image_controller extends CI_Controller
             ]));
         }
 
-        if (move_uploaded_file($path, $save_as)) 
+        if (move_uploaded_file($path, $save_as))
         {
             $data =  $this->csv_import_service->_get_file_data( $save_as );
             return $this->output->set_content_type('application/json')
@@ -403,7 +403,7 @@ class Image_controller extends CI_Controller
         }
 
 
-        
+
     }
 
     /**

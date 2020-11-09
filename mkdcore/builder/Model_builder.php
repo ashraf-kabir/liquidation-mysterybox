@@ -80,7 +80,7 @@ class Model_builder extends Builder
                 }
             }
 
-            if (isset($value['post']) && strlen($value['post']) > 0)
+            if (isset($value['post']) && is_string($value['post']) && strlen($value['post']) > 0)
             {
                 $model_template = $this->inject_substitute($model_template, 'post', $value['post']);
             }
@@ -96,7 +96,7 @@ class Model_builder extends Builder
                 }
             }
 
-            if (isset($value['count']) && strlen($value['count']) > 0)
+            if (isset($value['count']) && is_string($value['count']) && strlen($value['count']) > 0)
             {
                 $model_template = $this->inject_substitute($model_template, 'count', $value['count']);
             }

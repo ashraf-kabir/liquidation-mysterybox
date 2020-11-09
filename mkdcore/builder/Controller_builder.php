@@ -425,7 +425,7 @@ class Controller_builder extends Builder
                     $add_str = $this->inject_substitute($add_str, 'method_add', '');
                 }
             }
-            if (strlen($controller['method_add_success']) > 0)
+            if (isset($controller['method_add_success']) && is_string($controller['method_add_success']) && strlen($controller['method_add_success']) > 0)
             {
                 $add_str = $this->inject_substitute($add_str, 'method_add_success', $controller['method_add_success']);
             }
@@ -835,7 +835,7 @@ class Controller_builder extends Builder
                         $list_view_str = $this->inject_substitute($list_view_str, 'add_class', 'd-none');
                     }
 
-                    if (strlen($controller['method_list']) > 0)
+                    if (isset($controller['method_list']) && is_string($controller['method_list']) && strlen($controller['method_list']) > 0)
                     {
                         $list_str = $this->inject_substitute($list_str, 'method_list', $controller['method_list']);
                     }
@@ -862,7 +862,12 @@ class Controller_builder extends Builder
 
                     $template = $this->inject_substitute($template, 'listing', $list_str);
 
-                    if (strlen($controller['custom_view_list']) > 0)
+                    if (isset($controller['custom_view_list']) && is_array($controller['custom_view_list']) && count($controller['custom_view_list']) > 0)
+                    {
+                        $list_view_str = $this->inject_substitute($list_view_str, 'row', implode("\n", $controller['custom_view_list']));
+                    }
+
+                    if (isset($controller['custom_view_list']) && is_string($controller['custom_view_list']) && strlen($controller['custom_view_list']) > 0)
                     {
                         $list_view_str = $this->inject_substitute($list_view_str, 'row', $controller['custom_view_list']);
                     }
@@ -952,13 +957,20 @@ class Controller_builder extends Builder
                         $list_str = $this->inject_substitute($list_str, 'paginate', 'get_paginated');
                     }
 
-                    if (strlen($controller['method_list']) > 0)
+                    if (isset($controller['method_list']) && is_string($controller['method_list']) && strlen($controller['method_list']) > 0)
                     {
                         $list_str = $this->inject_substitute($list_str, 'method_list', $controller['method_list']);
                     }
                     else
                     {
-                        $list_str = $this->inject_substitute($list_str, 'method_list', '');
+                        if (isset($controller['method_list']) && is_array($controller['method_list']))
+                        {
+                            $list_str = $this->inject_substitute($list_str, 'method_list', implode("\n", $controller['method_list']));
+                        }
+                        else
+                        {
+                            $list_str = $this->inject_substitute($list_str, 'method_list', '');
+                        }
                     }
 
                     $template = $this->inject_substitute($template, 'listing', $list_str);
@@ -1019,13 +1031,20 @@ class Controller_builder extends Builder
                 $list_str = $this->inject_substitute($list_str, 'page_name', $controller['page_name']);
                 $list_str = $this->inject_substitute($list_str, 'uc_name', $uc_name);
                 $list_str = $this->inject_substitute($list_str, 'name', $controller['name']);
-                if (strlen($controller['method_list']) > 0)
+                if (isset($controller['method_list']) && is_string($controller['method_list']) && strlen($controller['method_list']) > 0)
                 {
                     $list_str = $this->inject_substitute($list_str, 'method_list', $controller['method_list']);
                 }
                 else
                 {
-                    $list_str = $this->inject_substitute($list_str, 'method_list', '');
+                    if (isset($controller['method_list']) && is_array($controller['method_list']))
+                    {
+                        $list_str = $this->inject_substitute($list_str, 'method_list', implode("\n", $controller['method_list']));
+                    }
+                    else
+                    {
+                        $list_str = $this->inject_substitute($list_str, 'method_list', '');
+                    }
                 }
 
                 if (!$controller['all_records'])
@@ -1118,11 +1137,11 @@ class Controller_builder extends Builder
         {
             if (isset($value['method']) && is_array($value['method']))
             {
-                $model_template = $this->inject_substitute($model_template, 'method', implode("\n", $value['method']));
+                $template = $this->inject_substitute($template, 'method', implode("\n", $value['method']));
             }
             else
             {
-                $model_template = $this->inject_substitute($model_template, 'method', '');
+                $template = $this->inject_substitute($template, 'method', '');
             }
         }
         //generate autocomplete
@@ -1419,13 +1438,20 @@ class Controller_builder extends Builder
                     $list_str = $this->inject_substitute($list_str, 'name', $controller['name']);
                     $list_str = $this->inject_substitute($list_str, 'list_paginate_filter_post', $this->output_paginate_filter_post($controller['filter_fields']));
                     $list_str = $this->inject_substitute($list_str, 'list_paginate_filter_where', $this->output_paginate_filter_where($controller['filter_fields'], $controller['all_records'], $controller['active_only']));
-                    if (strlen($controller['method_list']) > 0)
+                    if (isset($controller['method_list']) && is_string($controller['method_list']) && strlen($controller['method_list']) > 0)
                     {
                         $list_str = $this->inject_substitute($list_str, 'method_list', $controller['method_list']);
                     }
                     else
                     {
-                        $list_str = $this->inject_substitute($list_str, 'method_list', '');
+                        if (isset($controller['method_list']) && is_array($controller['method_list']))
+                        {
+                            $list_str = $this->inject_substitute($list_str, 'method_list', implode("\n", $controller['method_list']));
+                        }
+                        else
+                        {
+                            $list_str = $this->inject_substitute($list_str, 'method_list', '');
+                        }
                     }
                     if (strlen($controller['paginate_join']) > 0)
                     {
@@ -1445,13 +1471,20 @@ class Controller_builder extends Builder
                     $list_str = $this->inject_substitute($list_str, 'portal', $portal);
                     $list_str = $this->inject_substitute($list_str, 'uc_name', $uc_name);
                     $list_str = $this->inject_substitute($list_str, 'name', $controller['name']);
-                    if (strlen($controller['method_list']) > 0)
+                    if (isset($controller['method_list']) && is_string($controller['method_list']) && strlen($controller['method_list']) > 0)
                     {
                         $list_str = $this->inject_substitute($list_str, 'method_list', $controller['method_list']);
                     }
                     else
                     {
-                        $list_str = $this->inject_substitute($list_str, 'method_list', '');
+                        if (isset($controller['method_list']) && is_array($controller['method_list']))
+                        {
+                            $list_str = $this->inject_substitute($list_str, 'method_list', implode("\n", $controller['method_list']));
+                        }
+                        else
+                        {
+                            $list_str = $this->inject_substitute($list_str, 'method_list', '');
+                        }
                     }
 
                     if (strlen($controller['paginate_join']) > 0)
@@ -1483,13 +1516,20 @@ class Controller_builder extends Builder
                 $list_str = $this->inject_substitute($list_str, 'portal', $portal);
                 $list_str = $this->inject_substitute($list_str, 'uc_name', $uc_name);
                 $list_str = $this->inject_substitute($list_str, 'name', $controller['name']);
-                if (strlen($controller['method_list']) > 0)
+                if (isset($controller['method_list']) && is_string($controller['method_list']) && strlen($controller['method_list']) > 0)
                 {
                     $list_str = $this->inject_substitute($list_str, 'method_list', $controller['method_list']);
                 }
                 else
                 {
-                    $list_str = $this->inject_substitute($list_str, 'method_list', '');
+                    if (isset($controller['method_list']) && is_array($controller['method_list']))
+                    {
+                        $list_str = $this->inject_substitute($list_str, 'method_list', implode("\n", $controller['method_list']));
+                    }
+                    else
+                    {
+                        $list_str = $this->inject_substitute($list_str, 'method_list', '');
+                    }
                 }
 
                 if (!$controller['all_records'])

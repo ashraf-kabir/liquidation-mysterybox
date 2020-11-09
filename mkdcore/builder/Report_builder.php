@@ -58,7 +58,7 @@ class Report_builder extends Builder
             $template = $this->inject_substitute($template, 'ucname', $ucname);
             $template = $this->inject_substitute($template, 'query', $value['query']);
             $template = $this->inject_substitute($template, 'result', $value['result']);
-            $template = $this->inject_substitute($template, 'post', $value['post']);
+            $template = $this->inject_substitute($template, 'post', implode("\n", $value['post']));
             $this->_render_list["../release/application/services/{$ucname}_report_service.php"] = $template;
 
             $controller_template = file_get_contents('../mkdcore/source/report/Report_controller.php');
@@ -71,7 +71,7 @@ class Report_builder extends Builder
             $controller_template = $this->inject_substitute($controller_template, 'pre_controller', $value['pre_controller']);
             $controller_template = $this->inject_substitute($controller_template, 'filter_fields', $this->output_filter_fields($value['filter_field'], $value['display']));
             $controller_template = $this->inject_substitute($controller_template, 'post_fields', $this->output_post_fields($value['filter_field']));
-            $controller_template = $this->inject_substitute($controller_template, 'post', $value['post']);
+            $controller_template = $this->inject_substitute($controller_template, 'post', implode("\n", $value['post']));
             $controller_template = $this->inject_substitute($controller_template, 'process', $value['parameter']);
 
             if ($value['display'] == 'csv') {

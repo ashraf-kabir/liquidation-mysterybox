@@ -29,8 +29,8 @@
             <ul class="list-unstyled components">
 {{{menu}}}
             </ul>
-            <span class="copyright">{{{copyright}}}</span>
-            <span class="copyright">{{{powered_by}}}</span>
+            <span class="copyright d-none">{{{copyright}}}</span>
+            <span class="copyright d-none">{{{powered_by}}}</span>
         </nav>
         <?php } ?>
         <div id="content">

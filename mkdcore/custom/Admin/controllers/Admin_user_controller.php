@@ -19,7 +19,7 @@ class Admin_user_controller extends Admin_controller
     {
         parent::__construct();
 		$this->load->model('admin_operation_model');
-		$this->load->model('credential_model');        
+		$this->load->model('credential_model');
     }
 
     public function index($page)
@@ -40,13 +40,13 @@ class Admin_user_controller extends Admin_controller
 		$this->_data['view_model']->set_email(($this->input->get('email', TRUE) != NULL) ? $this->input->get('email', TRUE) : NULL);
 		$this->_data['view_model']->set_first_name(($this->input->get('first_name', TRUE) != NULL) ? $this->input->get('first_name', TRUE) : NULL);
 		$this->_data['view_model']->set_last_name(($this->input->get('last_name', TRUE) != NULL) ? $this->input->get('last_name', TRUE) : NULL);
-		
+
         $where = [
             'id' => $this->_data['view_model']->get_id(),
 			'email' => $this->_data['view_model']->get_email(),
 			'first_name' => $this->_data['view_model']->get_first_name(),
 			'last_name' => $this->_data['view_model']->get_last_name(),
-			
+
         ];
 
         $this->_data['view_model']->set_total_rows($this->user_model->count($where));
@@ -89,7 +89,7 @@ class Admin_user_controller extends Admin_controller
         $this->_data['view_model'] = new User_admin_add_view_model($this->user_model);
         $this->_data['view_model']->set_heading('Users');
         $this->_data['view_data']['roles'] = $this->credential_model->role_id_mapping();
-        
+
         $service = new User_service($this->credential_model, $this->user_model);
         $service->set_refer_log_model($this->refer_log_model);
 
@@ -107,7 +107,7 @@ class Admin_user_controller extends Admin_controller
         $password = $this->input->post('password');
         $role_id = $this->input->post('role_id');
 
-		
+
         $session = $this->get_session();
         $refer = (isset($session['refer']) && strlen($session['refer']) > 0) ? $session['refer'] : '';
 
@@ -142,7 +142,7 @@ class Admin_user_controller extends Admin_controller
         $model->{'email'} = $credential_obj->email;
         $model->{'role_id'} = $credential_obj->role_id;
         $model->{'status'} =  $credential_obj->status;
-        
+
         if($this->input->post('email') != $model->email)
         {
             $custom_validation[] = ['email', 'xyzEmail', 'trim|required|valid_email|is_unique[credential.email]'];
@@ -156,7 +156,7 @@ class Admin_user_controller extends Admin_controller
         $this->_data['view_model']->set_heading('Users');
         $this->_data['view_data']['roles'] = $this->credential_model->role_id_mapping();
         $this->_data['view_data']['status'] = $this->credential_model->status_mapping();
-        
+
 		if ($this->form_validation->run() === FALSE)
 		{
 			return $this->render('Admin/UserEdit', $this->_data);
@@ -171,7 +171,7 @@ class Admin_user_controller extends Admin_controller
 		$phone = $this->input->post('phone');
 		$image = $this->input->post('image');
         $image_id = $this->input->post('image_id');
-        
+
         $credential_params = [
             'email' => $email,
             'role_id' => $role_id,
@@ -182,7 +182,7 @@ class Admin_user_controller extends Admin_controller
         {
             $credential_params['password'] = str_replace('$2y$', '$2b$', password_hash($password, PASSWORD_BCRYPT));
         }
-		
+
         $params = [
 			'first_name' => $first_name,
 			'last_name' => $last_name,
@@ -193,7 +193,7 @@ class Admin_user_controller extends Admin_controller
 
         $credential_result = $this->credential_model->edit($credential_params,  $credential_obj->id);
         $result = $this->user_model->edit($params, $model->id);
-        
+
         if ($result && $credential_result)
         {
             $this->success('xyzSaved');
@@ -219,16 +219,16 @@ class Admin_user_controller extends Admin_controller
 		$this->_data['view_model'] = new User_admin_view_view_model($this->user_model);
 		$this->_data['view_model']->set_heading('Users');
         $this->_data['view_model']->set_model($model);
-        
+
 		return $this->render('Admin/UserView', $this->_data);
 	}
 
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
 }
