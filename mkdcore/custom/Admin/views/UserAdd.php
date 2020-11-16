@@ -68,7 +68,7 @@ if ($layout_clean_mode) {
 				<div class="form-group col-md-5 col-sm-12">
 					<label for="Image">Image </label>
 					<img id="output_image" onerror=\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\"/>
-					<div class="btn btn-info btn-sm mkd-choose-image" data-image-url="image" data-image-id="image_id" data-image-preview="output_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
+					<div class="btn btn-info btn-sm image_id_uppload_library uppload-button" data-image-url="image" data-image-id="image_id" data-image-preview="output_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
 					<input type="hidden" id="image" name="image" value=""/>
 					<input type="hidden" id="image_id" name="image_id" value=""/>
 				</div>

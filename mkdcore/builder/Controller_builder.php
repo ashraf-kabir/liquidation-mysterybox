@@ -2132,7 +2132,7 @@ class Controller_builder extends Builder
                 $result .= "\t\t\t\t<div class=\"form-group col-md-5 col-sm-12\">\n";
                 $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
                 $result .= "\t\t\t\t\t<img id=\"output_{$field[0]}\" style=\"max-height:100px\" onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/>\n";
-                $result .= "\t\t\t\t\t<div class=\"btn btn-primary btn-sm mkd-choose-image\" data-image-url=\"{$field[0]}\" data-image-id=\"{$field[0]}_id\" data-image-preview=\"output_{$field[0]}\" data-view-width=\"{$width}\" data-view-height=\"{$height}\" data-boundary-width=\"{$boundary_width}\" data-boundary-height=\"{$boundary_height}\">xyzChoose Image</div>\n";
+                $result .= "\t\t\t\t\t<div class=\"btn uppload-button image_id_uppload_library btn-primary btn-sm  \" data-image-url=\"{$field[0]}\" data-image-id=\"{$field[0]}_id\" data-image-preview=\"output_{$field[0]}\" data-view-width=\"{$width}\" data-view-height=\"{$height}\" data-boundary-width=\"{$boundary_width}\" data-boundary-height=\"{$boundary_height}\">xyzChoose Image</div>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"\"/>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}_id\" name=\"{$field[0]}_id\" value=\"\"/>\n";
                 $result .= "\t\t\t\t</div>";
@@ -2322,7 +2322,7 @@ class Controller_builder extends Builder
                 $result .= "\t\t\t\t<div class=\"form-group col-md-5 col-sm-12 mb-4\">\n";
                 $result .= "\t\t\t\t\t<label for=\"{$field[3]}\">{$field[3]} </label>\n";
                 $result .= "\t\t\t\t\t<img class='edit-preview-image d-block' style=\"max-height:100px\" id=\"output_{$field[0]}\" src=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\" onerror=\\\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\\\"/>\n";
-                $result .= "\t\t\t\t\t<br/><div class=\"btn btn-primary btn-sm mkd-choose-image\" data-image-url=\"{$field[0]}\" data-image-id=\"{$field[0]}_id\" data-image-preview=\"output_{$field[0]}\" data-view-width=\"{$width}\" data-view-height=\"{$height}\" data-boundary-width=\"{$boundary_width}\" data-boundary-height=\"{$boundary_height}\">xyzChoose Image</div>\n";
+                $result .= "\t\t\t\t\t<br/><div class=\"btn btn-primary image_id_uppload_library btn-sm uppload-button  \" data-image-url=\"{$field[0]}\" data-image-id=\"{$field[0]}_id\" data-image-preview=\"output_{$field[0]}\" data-view-width=\"{$width}\" data-view-height=\"{$height}\" data-boundary-width=\"{$boundary_width}\" data-boundary-height=\"{$boundary_height}\">xyzChoose Image</div>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}_id\" name=\"{$field[0]}_id\" value=\"<?php echo set_value('{$field[0]}_id', \$this->_data['view_model']->get_{$field[0]}_id());?>\"/>\n";
                 $result .= "\t\t\t\t</div>";

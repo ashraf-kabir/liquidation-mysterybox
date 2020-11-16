@@ -68,7 +68,7 @@ if ($layout_clean_mode) {
 				<div class="form-group col-md-5 col-sm-12 mb-4">
 					<label for="Image">Image </label>
 					<img class='edit-preview-image d-block' id="output_image" src="<?php echo set_value('image', $this->_data['view_model']->get_image());?>" onerror=\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\"/>
-					<br/><div class="btn btn-info btn-sm mkd-choose-image" data-image-url="image" data-image-id="image_id" data-image-preview="output_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
+					<br/><div class="btn btn-info btn-sm image_id_uppload_library uppload-button" data-image-url="image" data-image-id="image_id" data-image-preview="output_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
 					<input type="hidden" id="image" name="image" value="<?php echo set_value('image', $this->_data['view_model']->get_image());?>"/>
 					<input type="hidden" id="image_id" name="image_id" value="<?php echo set_value('image_id', $this->_data['view_model']->get_image_id());?>"/>
 				</div>

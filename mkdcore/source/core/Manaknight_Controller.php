@@ -340,4 +340,93 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
     {
         return $this->_setting;
     }
+
+
+
+    public function image_upload_using_s3($file_name)
+    {
+
+        if( $this->config->item('image_upload')  == 's3')
+        { 
+            $s3 = new S3Client([
+                'version' => $this->config->item('aws_version'),
+                'region'  => $this->config->item('aws_region'),
+                'credentials' => [
+                    'key'    => $this->config->item('aws_key'),
+                    'secret' => $this->config->item('aws_secret'),
+                ]
+            ]);
+
+            $this->load->model('image_model'); 
+            
+            $image_path = __DIR__ . '/../../' . $file_name;
+
+            // $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data_uri));
+            // $filename = md5(uniqid() . time()) . '.png';
+            // file_put_contents($image_path . $filename, $data);
+
+
+            list($width, $height) = getimagesize( $image_path );
+            $session = $this->get_session();
+            $user_id = isset($session['user_id']) ? $session['user_id'] : 0;
+
+            $file_name = str_replace('/uploads/','',$file_name);
+
+            try
+            {
+                $result = $s3->putObject([
+                    'Bucket' => $this->config->item('aws_bucket'),
+                    'Key'    => $file_name,
+                    'Body'   => fopen($image_path, 'r'),
+                    'ACL'    => 'public-read',
+                ]);
+
+                $image_id = $this->image_model->create([
+                    'url'       => $result->get('ObjectURL'),
+                    'type'      => 0,
+                    'user_id'   => $user_id,
+                    'width'     => $width,
+                    'caption'   => '',
+                    'height'    => $height
+                ]);
+                
+                return $this->output->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode([
+                    'id'     => $image_id,
+                    'image'  => $result->get('ObjectURL'),
+                    'width'  => $width,
+                    'height' => $height
+                ]));
+            }
+            catch (Aws\S3\Exception\S3Exception $e)
+            {
+                return $this->output->set_content_type('application/json')
+                ->set_status_header(403)
+                ->set_output(json_encode([
+                    'message' => 'Upload To S3 Failed'
+                ]));
+            }
+        }
+    }
+
+
+    
+
+    public function upload_image_with_s3($file_name)
+    { 
+        $output = $this->image_upload_using_s3($file_name);
+        $out_image = '';
+        if( isset($output->final_output ) )
+        {
+            $result = json_decode( $output->final_output );
+            if(isset($result->image))
+            {
+                $out_image = $result->image;
+            } 
+            return $out_image;
+        } else{
+            return $out_image;
+        }
+    }
 }

@@ -922,4 +922,16 @@ class {{{subclass_prefix}}}Model extends CI_Model
         }
         return $results;
     }
+
+
+
+    public function get_auto_increment_id()
+    {
+        $sql = $this->db->query('SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = "'.   $this->db->database   .'" AND TABLE_NAME = "'.   $this->_table .'"  ');
+
+        return $sql->row()->AUTO_INCREMENT;  
+    }
+
+
+    
 }

@@ -195,6 +195,7 @@
 			"migration": true,
 			"unique": ["slug"],
 			"field": [
+				["id", "integer",[], "ID", "", ""],
 				["slug","string",[{"limit": 50}],"xyzEmail Type","required|is_unique[email.slug]",""],
 				["subject", "text", [], "xyzSubject", "required", "required"],
 				["tag", "text", [], "xyzReplacement Tags", "required", ""],
@@ -220,6 +221,7 @@
 			"migration": true,
 			"unique": ["slug"],
 			"field": [
+				["id", "integer",[], "ID", "", ""],
 				["slug","string",[{"limit": 50}],"xyzSMS Slug","required|is_unique[sms.slug]",""],
 				["tag", "text", [], "xyzReplacement Tags", "required", ""],
 				["content", "text", [], "xyzSMS Body", "required", "required"]
@@ -241,6 +243,7 @@
 			"unique": [],
 			"seed": [],
 			"field": [
+				["id", "integer",[], "ID", "", ""],
 				["user_id", "integer", [], "User", "required|integer", ""],
 				["action","string",[{"limit": 50}],"Action","required|max[50]",""],
 				["detail", "text", [], "Detail", "required", ""],
@@ -264,6 +267,7 @@
 			"unique": [],
 			"seed": [],
 			"field": [
+				["id", "integer",[], "ID", "", ""],
 				["user_id", "integer", [], "User", "required|integer", ""],
 				["action","string",[{"limit": 50}],"Action","required|max[50]",""],
 				["detail", "text", [], "Detail", "required", ""],
@@ -289,6 +293,7 @@
 				{"url": "https://i.imgur.com/AzJ7DRw.png","caption": "","user_id": 1,"width": 581,"height": 581,"type": 1}
 			],
 			"field": [
+				["id", "integer",[], "ID", "", ""],
 				["url", "image|250|250|500|500", [], "xyzURL", "required", "required"],
 				["caption", "text", [], "xyzCaption", "", ""],
 				["user_id","integer",[],"xyzUser","required|integer","required|integer"],
@@ -315,6 +320,7 @@
 			"unique": [],
 			"seed": [],
 			"field": [
+				["id", "integer",[], "ID", "", ""],
 				["file", "file", [], "File", "required", "required"],
 				["file_id", "integer", [], "File ID", "", ""]
 			],
@@ -340,16 +346,21 @@
 			"api": true,
 			"profile_page_fields": [],
 			"middleware": ["auth", "acl"],
-			"js": [
-
+			"js": [ 
 				"/assets/js/media.js",
 				"/assets/js/core.js",
 				"/assets/js/setting.js",
-				"/assets/js/mkd-image-gallery.js",
+				"/assets/js/mkd-image-uppload.js",
+				"/assets/js/mkd-image-gallery.js", 
 				"/assets/js/app.js",
 				"/assets/js/admin.js"
 			],
-			"css": ["/assets/css/styles.css", "/assets/css/easy-autocomplete.min.css"],
+			"css": [
+				"/assets/css/styles.css", 
+				"/assets/css/easy-autocomplete.min.css",
+				"/assets/css/mkd-image-uppload.css",
+				"/assets/css/mkd-image-uppload-light-theme.css" 
+			],
 			"menu": {
 				"Dashboard": "/dashboard",
 				"Reports": {
@@ -376,8 +387,18 @@
 			"api_auth": true,
 			"middleware": ["affilate", "auth", "acl", "maintenance"],
 			"api": false,
-			"js": ["/assets/js/vendor.js", "/assets/js/core.js", "/assets/js/app.js"],
-			"css": ["/assets/css/styles.css"],
+			"js": [
+				"/assets/js/vendor.js", 
+				"/assets/js/core.js", 
+				"/assets/js/app.js", 
+				"/assets/js/mkd-image-uppload.js",
+				"/assets/js/mkd-image-gallery.js"
+			],
+			"css": [
+				"/assets/css/styles.css", 
+				"/assets/css/mkd-image-uppload.css", 
+				"/assets/css/mkd-image-uppload-light-theme.css" 
+			],
 			"menu": {
 				"Dashboard": "/dashboard",
 				"Profile": "/profile",
@@ -1043,9 +1064,9 @@
 		"port": 3306,
 		"dsn": "",
 		"hostname": "localhost",
-		"username": "codebuildermeRHL",
-		"password": "J3rzlL6SnUAbiyFD9WOTZ7Be",
-		"database": "codebuilder_manaknightdigital_co_U52dWDzb",
+		"username": "root",
+		"password": "",
+		"database": "code_builder",
 		"dbdriver": "mysqli",
 		"dbprefix": "",
 		"pconnect": false,
@@ -1073,6 +1094,8 @@
 		"../mkdcore/custom/styles.css": "../release/assets/css/styles.css",
 		"../mkdcore/custom/app.js": "../release/assets/js/app.js",
 		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css",
+		"../mkdcore/custom/Services/Barcode_service.php" : "../release/application/libraries/Barcode_service.php",
+		
 		"../mkdcore/custom/Admin/controllers/Admin_user_controller.php" : "../release/application/controllers/Admin/Admin_user_controller.php",
 		"../mkdcore/custom/Admin/views/UserAdd.php" : "../release/application/views/Admin/UserAdd.php",
 		"../mkdcore/custom/Admin/views/UserEdit.php" : "../release/application/views/Admin/UserEdit.php",
