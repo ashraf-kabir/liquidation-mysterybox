@@ -597,3 +597,32 @@ You need to do following steps in order to get it correctly
 upload image url 
 
  
+
+## Signature 
+
+1) first we need to place this signature html
+<div class="wrapper_signature_div">
+    <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+</div>
+<br>
+<button type="button" class="btn btn-success" id="save-png">Save Signature</button> 
+<button type="button" class="btn btn-danger " id="clear">Clear</button>
+
+<!-- <div id="signature-div" ></div>  -->
+  
+<textarea id="signature64" name="signature_in_b64" style="display: none"></textarea>
+2) Load Signature Assests from js and css
+3) Generate Image and upload image to s3 like we did for barcode 
+$folderPath = "uploads/"; 
+$image_parts = explode(";base64,", $this->input->post('signature_in_b64', TRUE) ); 
+$image_type_aux = explode("image/", $image_parts[0]); 
+$image_type = $image_type_aux[1]; 
+$image_base64 = base64_decode($image_parts[1]); 
+$file = $folderPath . uniqid() . '.'.$image_type; 
+file_put_contents($file, $image_base64);
+
+/**
+  *  Upload Image to S3
+  * 
+*/ 
+$signature_image  = $this->upload_image_with_s3($file);
