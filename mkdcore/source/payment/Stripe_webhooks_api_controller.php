@@ -392,4 +392,60 @@ class Stripe_webhooks_api_controller extends CI_Controller{
         http_response_code(200);
         exit();    
     }
+
+
+
+    
+    /**
+     * handle stripe ach events
+     * @see https://stripe.com/docs/api/events/types
+     */
+    public function stripe_events()
+    {
+        $endpoint_secret = $this->config->item('stripe_endpoint_secret'); 
+
+        $stripe_secret_key  = $this->config->item('stripe_secret_key');
+        Stripe::setApiKey($stripe_secret_key);  
+
+        $payload = @file_get_contents('php://input');
+        $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
+        $event = null;
+
+        try {
+            $event = Webhook::constructEvent(
+                $payload, $sig_header, $endpoint_secret
+            );
+        } catch(\UnexpectedValueException $e) {
+            // Invalid payload
+            http_response_code(400);
+            exit();
+        } catch(\Stripe\Exception\SignatureVerificationException $e) {
+            // Invalid signature
+            http_response_code(400);
+            exit();
+        }
+
+ 
+        // Handle the event
+        switch ($event->type) 
+        {
+            case 'invoice.paid':
+                $payment_intent = $event->data->object; 
+                // write your stripe webhook code here
+                // contains a StripePaymentIntent
+                $this->handle_invoice_paid_method($payment_intent); 
+                break;  
+            default:
+                echo 'Received unknown event type ' . $event->type;
+        }
+
+        http_response_code(200);
+    }
+
+
+    public function handle_invoice_paid_method($payment_intent)
+    {
+        $invoice_id     = $paymentIntent->id;
+        // write your code here 
+    }
 }

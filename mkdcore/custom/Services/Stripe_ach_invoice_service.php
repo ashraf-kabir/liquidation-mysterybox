@@ -66,36 +66,38 @@ class Stripe_ach_invoice_service {
                             
                         try 
                         {
-                             
-                            return $invoice_detail->id;
+                            
+                            $output['invoice_id'] = $invoice_detail->id;
+                            return $output;
                             
                             // Invoice::sendInvoice(array($invoice_detail->id));
                         } catch (Exception $e) {
-                            $this->error($e);
+                            $output['error'] = $e;
+                            return $output; 
                         } 
                         // # status (error: 0, success: 1)
                         // echo json_encode(['status' => 1]);
                         // exit();
                     } catch (Exception $e) {
-                        $this->error($e);
+                        $output['error'] = $e;
+                        return $output; 
                     } 
                 }
                 else
                 {
-                    $this->error("Error received while creating invoice");
-                    // echo json_encode(['status' => 0]);
-                    // exit();
+                    $output['error'] = $e;
+                    return $output; 
                 } 
             } catch (Exception $e) {
-                $this->error($e);
+                $output['error'] = $e;
+                return $output; 
             } 
 
             // echo json_encode(['status' => 0]);
             // exit();
         } catch (Exception $e) {
-            $this->error($e);
-            // echo $e;
-            // exit();
+            $output['error'] = $e;
+            return $output; 
         } 
     }
  

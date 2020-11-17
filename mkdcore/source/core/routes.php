@@ -50,6 +50,6 @@
 */
 
 {{{routes}}}
-$route['404_override'] = '';
+$route['404_override'] = 'Custom404';
 $route['translate_uri_dashes'] = false;
 $route['default_controller'] = 'Welcome/index';

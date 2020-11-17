@@ -1,4 +1,72 @@
+
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
+
+let image_id_uppload_library = '';
+let image_url_uppload_library = '';
+
+
+var picture = new window.uppload_Uppload({
+    call: ".uppload-button",
+    bind: ".uppload-image",
+    lang: window.uppload_en,
+    uploader: window.uppload_fetchUploader({
+      endpoint: "/v1/api/file/upload",
+      responseFunction: json => {  
+           console.log(json)
+          $("#" + image_url_uppload_library).val(json.file);
+          $("#" + image_url_uppload_library + "_id").val(json.id);
+          $("#" + image_url_uppload_library + "_text").html(json.file); 
+      }
+    })
+});
+
+$(document).on('click','.image_id_uppload_library',function(){
+  image_id_uppload_library  = $(this).attr('data-image-id'); 
+  image_url_uppload_library  = $(this).attr('data-image-url'); 
+
+});
+ 
+
+ 
+
+picture.use([
+  new window.uppload_Local(),
+  new window.uppload_Camera(), 
+  new window.uppload_Instagram(),
+  new window.uppload_Facebook(), 
+  new window.uppload_Instagram(),
+  new window.uppload_URL(),
+  new window.uppload_Instagram(),
+  new window.uppload_Screenshot(),   
+  new window.uppload_Pinterest(),
+  new window.uppload_Flickr(),
+  new window.uppload_NineGag(),
+  new window.uppload_DeviantArt(),
+  new window.uppload_ArtStation(),
+  new window.uppload_Twitter(),
+  new window.uppload_Flipboard(),
+  new window.uppload_Fotki(),
+  new window.uppload_LinkedIn(),
+  new window.uppload_Reddit(),
+  new window.uppload_Tumblr(),
+  new window.uppload_WeHeartIt(), 
+  new window.uppload_Crop(),  
+  new window.uppload_Brightness(), 
+  new window.uppload_Rotate(),  
+  new window.uppload_Flip(),  
+  new window.uppload_Preview(),  
+  new window.uppload_Blur(),  
+  new window.uppload_Contrast(),  
+  new window.uppload_Grayscale(),  
+  new window.uppload_HueRotate(),  
+  new window.uppload_Invert(),  
+  new window.uppload_Sepia(),  
+  new window.uppload_Saturate(),  
+]);
+
+
+
+
 $(document).ready(function() {
   var page = 0;
   var num_page = 0;
@@ -46,12 +114,6 @@ $(document).ready(function() {
     window.crop_output_image = "output_image";
     window.crop_image_id = 0;
     window.crop_image_url = "";
-    $("#mkd-media-gallery-container").show();
-    $(".mkd-media-panel-1").show();
-    $(".mkd-media-panel-3").hide();
-    $("#mkd-media-upload-container").hide();
-    $("#mkd-media-crop-container").hide();
-    $(".mkd-media-panel-2").hide();
   });
   $("#mkd-media-choose").click(function() {
     if (window.asset_selected_id != 0) {
@@ -100,11 +162,11 @@ $(document).ready(function() {
       for (var i = 0; i < items.length; i++) {
         var element = items[i];
         $("#mkd-media-gallery-wrapper").append(
-          '<div class="col-md-2 mb-2"><img data-id="' +
+          '<div class="col-md-3 mb-3"><img data-id="' +
             element.id +
             '"src="' +
             element.url +
-            '" alt="" onerror="if (this.src != \'/uploads/placeholder.jpg\') this.src = \'/uploads/placeholder.jpg\';" class="img-fluid mkd-gallery-image-image"></div>'
+            '" alt="" class="img-fluid mkd-gallery-image-image"></div>'
         );
       }
 
@@ -112,7 +174,6 @@ $(document).ready(function() {
         $("#mkd-load-more-container").hide();
       }
       window.asset_page = window.asset_page + window.asset_per_page;
-
       $(".mkd-gallery-image-image").click(function() {
         var id = Number($(this).attr("data-id"));
         $(this).addClass("active");
@@ -161,11 +222,11 @@ $(document).ready(function() {
       for (var i = 0; i < items.length; i++) {
         var element = items[i];
         $("#mkd-media-gallery-wrapper").append(
-          '<div class="col-md-2 mb-2"><img data-id="' +
+          '<div class="col-md-3 mb-3"><img data-id="' +
             element.id +
             '"src="' +
             element.url +
-            '" alt="" onerror="if (this.src != \'/uploads/placeholder.jpg\') this.src = \'/uploads/placeholder.jpg\';" class="img-fluid mkd-gallery-image-image"></div>'
+            '" alt="" class="img-fluid mkd-gallery-image-image"></div>'
         );
       }
 
@@ -235,6 +296,7 @@ $(document).ready(function() {
             })
             .fail(function(jqXHR, textStatus) {
               alert("Image Upload Failed");
+              console.log(jqXHR)
             });
         });
     });
@@ -348,17 +410,4 @@ function onFileImport(event, model) {
     });
   };
   reader.readAsDataURL(selectedFile);
-}
-
-function fixBrokenImages(url) {
-  var img = document.getElementsByTagName("img");
-  var i = 0,
-    l = img.length;
-  for (; i < l; i++) {
-    var t = img[i];
-    if (t.naturalWidth === 0) {
-      //this image is broken
-      t.src = url;
-    }
-  }
 }

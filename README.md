@@ -571,12 +571,29 @@ You need to do following steps in order to get it correctly
 2) Load Service where you want to you.
 3) Set config using $this->stripe_ach_invoice_service->set_config($this->config);
 4) Now you can send invoice using send_ach_invoice_sale_order function of above service if  
-    requires 4 Parameters 
+    requires 4 Parameters  return Invoice ID as response
 
   1) Customer Name
   2) Customer Email 
   3) Customer Phone 
   4) Total 
   5) Days until invoice due
+
+5) Don't forget to update your webhook response (mkdcore/source/payment/Stripe_webhooks_api_controller.php =>  function handle_invoice_paid_method )
+
+
+## Generate Barcode
+If you want to generate barcode of any string or number use Barcode_service
+ 
+You need to do following steps in order to get it correctly 
+
+1) First add service in copy object Barcode_service in configuration.json.
+2) Load Service where you want to you.
+3) use generate_png_barcode function requires 2 Parameters return image url;
+
+    1) String or Number for barcode (required)
+    2) Manually name the image (optional)
+4) use this function to upload this file to s3 $this->upload_image_with_s3($image_url) return 
+upload image url 
 
  
