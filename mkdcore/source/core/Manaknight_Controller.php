@@ -52,6 +52,12 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
         parent::__construct();
         $this->load->database();
 
+        $this->load->library('redirect_custom_service');
+        $this->load->model('url_redirect_model');
+ 
+        $this->redirect_custom_service->set_url_redirect_model( $this->url_redirect_model );
+        $this->redirect_custom_service->check_redirect();
+
         //--------------------------------------------------------------------
         // Language & Model Files
         //--------------------------------------------------------------------
