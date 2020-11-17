@@ -44,9 +44,18 @@ class Redirect_custom_service
   
         if(!empty($check_data))
         {
-            header("Location:" . $check_data->rewrite_url);
+            $rewrite_url = $this->add_http($check_data->rewrite_url);
+            return redirect($rewrite_url); 
         }
     }
 
+
+    public function add_http($url) {
+        if (!preg_match("~^(?:f|ht)tps?://~i", $url)) 
+        {
+            $url = "http://" . $url;
+        }
+        return $url;
+    }
      
 }

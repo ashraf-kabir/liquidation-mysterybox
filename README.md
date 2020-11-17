@@ -559,3 +559,24 @@ This script does 2 things:
 I.E.
 "../mkdcore/custom/generated/release_application_controllers_Guest_Home_controller.php": "../release/application/controllers/Guest/Home_controller.php",
 ```
+
+
+
+## Stripe ACH 
+If you want to send ach invoice to customer and  attach webhook for it's response
+ 
+You need to do following steps in order to get it correctly 
+
+1) First add service in copy object Stripe_ach_invoice_service.
+2) Load Service where you want to you.
+3) Set config using $this->stripe_ach_invoice_service->set_config($this->config);
+4) Now you can send invoice using send_ach_invoice_sale_order function of above service if  
+    requires 4 Parameters 
+
+  1) Customer Name
+  2) Customer Email 
+  3) Customer Phone 
+  4) Total 
+  5) Days until invoice due
+
+ 
