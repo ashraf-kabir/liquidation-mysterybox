@@ -115,6 +115,12 @@ class Admin_user_controller extends Admin_controller
 
         if ($created_user)
         {
+            $params = [  
+                'image' => $image,
+                'image_id' => $image_id,
+            ]; 
+            $this->user_model->edit($params, $created_user->id);
+
             return $this->redirect('/admin/users/0', 'refresh');
         }
 
