@@ -2,6 +2,9 @@
 /*
  * Modal background
  */
+  .image_complete_uppload{
+  display: block !important; 
+ }
 .uppload-modal-bg {
   position: fixed;
   left: 0;

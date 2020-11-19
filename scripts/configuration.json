@@ -13,6 +13,10 @@
 		{
 			"name": "admin",
 			"id": 2
+		},
+		{
+			"name": "pos",
+			"id": 3
 		}
 	],
 	"models": [{
@@ -61,7 +65,8 @@
 			"unique": ["name"],
 			"seed": [
 				{"name": "member"},
-				{"name": "admin"}
+				{"name": "admin"},
+				{"name": "pos"}
 			]
 		},
 		{
@@ -122,41 +127,41 @@
 					{"email": "admin@manaknight.com", "password": "str_replace('$2y$', '$2b$', password_hash('a123456', PASSWORD_BCRYPT))","type": "n","verify": 1,"role_id": 2,"status": 1},
 					{"email": "member@manaknight.com", "password": "str_replace('$2y$', '$2b$', password_hash('a123456', PASSWORD_BCRYPT))","type": "n","verify": 1,"role_id": 1,"status": 1}
 			]
-	 },
-	 {
-		"name": "user",
-		"timestamp": true,
-		"migration": true,
-		"unique": ["credential_id"],
-		"field": [
-				["id", "integer",[], "ID", "", ""],
-				["first_name", "string", [{"limit":255}], "xyzFirst Name" , "", ""],
-				["last_name", "string", [{"limit":255}], "xyzLast Name" , "", ""],
-				["phone", "string", [{"limit":50}], "xyzPhone #" , "", ""],
-				["image", "image|250|250|500|500", [], "xyzImage" , "", ""],
-				["image_id", "integer", [], "xyzImage ID" , "", ""],
-				["credential_id", "integer", [], "xyzCredential ID" , "", ""],
-				["refer", "string", [{"limit":50}], "xyzRefer Code" , "", ""],
-				["profile_id", "integer",[], "xyzProfile", "", ""],
-				["stripe_id", "string", [{"limit":255}], "xyzStripe Id" , "", ""]
-		],
-		"join": [
-			{
-				"name": "credential",
-				"field": "credential_id"
-		}
-		],
-		"method": "\n\tpublic function get_user_by_credential_id($credential_id)\n\t{\n\t\t$this->db->where('credential_id', $credential_id);\n\t\treturn $this->db->get($this->_table)->row();\n\t}\n",
-		"mapping": {
-			"status": {"0": "xyzInactive", "1": "Active", "2": "xyzSuspend"}
 		},
-		"pre": "$data['image'] = 'https://i.imgur.com/AzJ7DRw.png';\n\t\t$data['refer'] = uniqid();\n\t\t$data['status'] = 1;\n\t\t$data['verify'] = 0;\n\t\t$data['stripe_id'] = '';\n\n\t\tif(!isset($data['profile_id']))\n\t\t{\n\t\t\t$data['profile_id'] = 0;\n\t\t}\n\n\t\tif(!isset($data['type']))\n\t\t{\n\t\t\t$data['type'] = 'n';\n\t\t}\n\t\tif (strpos($data['phone'], '1') != 0)\n\t\t{\n\t\t\t$data['phone'] = '1' + $data['phone'];\n\t\t}\n",
-		"post": "\n\n\t\tif(isset($data['image']) && strlen($data['image']) < 1)\n\t\t{\n\t\t\tunset($data['image']);\n\t\t}\n",
-		"count": [],
-		"seed":[
-			{"first_name": "Admin", "last_name": "Admin","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "admin","profile_id": 0,"credential_id" : 1, "stripe_id": ""},
-			{"first_name": "Member",  "last_name": "Member","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "member","profile_id": 0,"credential_id" : 2, "stripe_id": ""}
-		]
+		{
+			"name": "user",
+			"timestamp": true,
+			"migration": true,
+			"unique": ["credential_id"],
+			"field": [
+					["id", "integer",[], "ID", "", ""],
+					["first_name", "string", [{"limit":255}], "xyzFirst Name" , "", ""],
+					["last_name", "string", [{"limit":255}], "xyzLast Name" , "", ""],
+					["phone", "string", [{"limit":50}], "xyzPhone #" , "", ""],
+					["image", "image|250|250|500|500", [], "xyzImage" , "", ""],
+					["image_id", "integer", [], "xyzImage ID" , "", ""],
+					["credential_id", "integer", [], "xyzCredential ID" , "", ""],
+					["refer", "string", [{"limit":50}], "xyzRefer Code" , "", ""],
+					["profile_id", "integer",[], "xyzProfile", "", ""],
+					["stripe_id", "string", [{"limit":255}], "xyzStripe Id" , "", ""]
+			],
+			"join": [
+				{
+					"name": "credential",
+					"field": "credential_id"
+			}
+			],
+			"method": "\n\tpublic function get_user_by_credential_id($credential_id)\n\t{\n\t\t$this->db->where('credential_id', $credential_id);\n\t\treturn $this->db->get($this->_table)->row();\n\t}\n",
+			"mapping": {
+				"status": {"0": "xyzInactive", "1": "Active", "2": "xyzSuspend"}
+			},
+			"pre": "$data['image'] = 'https://i.imgur.com/AzJ7DRw.png';\n\t\t$data['refer'] = uniqid();\n\t\t$data['status'] = 1;\n\t\t$data['verify'] = 0;\n\t\t$data['stripe_id'] = '';\n\n\t\tif(!isset($data['profile_id']))\n\t\t{\n\t\t\t$data['profile_id'] = 0;\n\t\t}\n\n\t\tif(!isset($data['type']))\n\t\t{\n\t\t\t$data['type'] = 'n';\n\t\t}\n\t\tif (strpos($data['phone'], '1') != 0)\n\t\t{\n\t\t\t$data['phone'] = '1' + $data['phone'];\n\t\t}\n",
+			"post": "\n\n\t\tif(isset($data['image']) && strlen($data['image']) < 1)\n\t\t{\n\t\t\tunset($data['image']);\n\t\t}\n",
+			"count": [],
+			"seed":[
+				{"first_name": "Admin", "last_name": "Admin","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "admin","profile_id": 0,"credential_id" : 1, "stripe_id": ""},
+				{"first_name": "Member",  "last_name": "Member","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "member","profile_id": 0,"credential_id" : 2, "stripe_id": ""}
+			]
         },
 		{
 			"name": "token",
@@ -352,6 +357,301 @@
 			"count": "",
 			"unique": [],
 			"seed": []
+		},
+		{
+			"name": "inventory",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzID", "", ""],
+				["product_name", "string", [{
+					"limit": 255
+				}], "xyzProduct Name", "required", "required"],
+				["sku", "string", [{
+					"limit": 255
+				}], "xyzSKU", "required", "required"],
+				["category_id", "integer", [], "xyzCategory", "", ""],
+				["manifest_id", "integer", [], "xyzManifest", "", ""],
+				["store_location_id", "integer", [], "xyzStore Location", "required", "required"],
+				["physical_location", "integer", [], "xyzPhysical Location", "", ""],
+				["location_description", "string", [{
+					"limit": 255
+				}], "xyzLocation Description", "", ""],
+				["weight", "float", [], "xyzWeight", "", ""],
+				["length", "float", [], "xyzLength", "", ""],
+				["height", "float", [], "xyzHeight", "", ""],
+				["width", "float", [], "xyzWidth", "", ""],
+				["feature_image", "image|250|250|500|500", [{
+					"limit": 255
+				}], "xyzImage", "", ""],
+				 
+				["selling_price", "float", [], "xyzSelling Price", "", ""],
+				["quantity", "integer", [], "xyzQuantity", "", ""],
+				["inventory_note", "text", [], "xyzInventory Note", "", ""],
+				["barcode_image", "text", [], "xyzBarcode Image", "", ""],
+				["cost_price", "float", [], "xyzCost Price", "", ""],
+				["admin_inventory_note", "text", [], "xyzAdmin Inventory Note", "", ""],
+				["assign_customer", "integer", [], "xyzAssign to Customer", "", ""],
+				["can_ship", "integer", [], "xyzCan Ship", "", ""],
+				["num_pallet", "integer", [], "xyz# of Pallet", "", ""],
+				["num_lot", "integer", [], "xyz# of Lot", "", ""],
+				["truckload", "integer", [], "xyz# of Truckload", "", ""], 
+				["type", "integer", [], "xyzType", "", ""],
+				["status", "integer", [], "xyzStatus", "", ""]
+			],
+			"method": [],
+			"join": [],
+			"mapping": {
+				"status": {
+					"1": "Active",
+					"0": "Inactive"
+				},
+				"type": {
+					"1": "Pallet",
+					"2": "Lot",
+					"3": "TruckLoad"
+				}, 
+				"can_ship": {
+					"1": "Yes",
+					"2": "No" 
+				}
+			},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
+		},
+		{
+			"name": "inventory_gallery_list",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzID", "", ""],
+				["inventory_id", "integer", [], "xyzInventory ID", "", ""],
+				["image_id", "integer", [], "xyzImage ID", "", ""],
+				["image_name", "string", [{"limit": 255}], "xyzName", "", ""]
+			],
+			"method": [],
+			"join": [],
+			"mapping": {},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
+		},
+		{
+			"name": "pos_user",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzID", "", ""],
+				["first_name", "string", [{
+					"limit": 255
+				}], "xyzFirst Name", "", ""],
+				["last_name", "string", [{
+					"limit": 255
+				}], "xyzLast Name", "", ""],
+				["password", "string", [{
+					"limit": 255
+				}], "xyzPassword", "required", "required"],
+				["email", "string", [{
+					"limit": 255
+				}], "xyzEmail", "required|valid_email", "required|valid_email"],
+				["logged_in", "integer", [], "xyzLogged in", "", ""],
+				["credential_id", "integer", [], "xyzCredential ID", "", ""],
+				["total_sale", "string", [{
+					"limit": 255
+				}], "xyzTotal sale", "", ""],
+				["status", "integer", [], "xyzStatus", "required|integer", "required|integer"]
+			],
+			"method": "\n\tpublic function get_user_by_credential_id($credential_id)\n\t{\n\t\t$this->db->where('credential_id', $credential_id);\n\t\treturn $this->db->get($this->_table)->row();\n\t}\n",
+			"join": [],
+			"mapping": {
+				"status": {
+					"0": "Inactive",
+					"1": "Active"
+				},
+				"logged_in" : {
+					"" : "No",
+					"0" : "No",
+					"1" : "Yes"
+				}
+			},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
+		},
+		{
+			"name": "category",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzID", "", ""],
+				["name", "string", [{
+					"limit": 255
+				}], "xyzName", "required|max_length[255]", "required|max_length[255]"],
+				["parent_category_id", "integer", [], "xyzParent Category", "", ""],
+				["status", "integer", [], "xyzStatus", "required|integer", "required|integer"]
+			],
+			"method": "",
+			"join": [],
+			"mapping": {
+				"status": { 
+					"1": "Active",
+					"0": "Inactive"
+				}
+			},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
+		},
+		{
+			"name": "customer",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzID", "", ""],
+				["name", "string", [{
+					"limit": 255
+				}], "xyzName", "required|max_length[255]", "required|max_length[255]"],
+				["email", "string", [{
+					"limit": 255
+				}], "xyzEmail", "required", "required"],
+				["phone", "string", [{
+					"limit": 255
+				}], "xyzPhone", "", ""],
+				["billing_zip", "string", [{
+					"limit": 255
+				}], "xyzBilling Zip", "", ""],
+				["billing_address", "text", [], "xyzBilling Address", "required", "required"],
+				["billing_country", "string", [{
+					"limit": 255
+				}], "xyzBilling Country", "", ""],
+				["billing_state", "string", [{
+					"limit": 255
+				}], "xyzBilling State", "", ""],
+				["billing_city", "string", [{
+					"limit": 255
+				}], "xyzBilling City", "", ""],
+				["customer_since", "date", [], "xyzCustomer Since", "required", "required"],
+				["last_order", "string", [{
+					"limit": 255
+				}], "xyzLast Order", "", ""],
+				["num_orders", "integer", [], "xyzNum Orders", "", ""],
+				["customer_type", "integer", [], "xyzCustomer Type", "", ""],
+				["company_name", "string", [{
+					"limit": 255
+				}], "xyzCompany Name", "", ""],
+				["tax_id_number", "string", [{ "limit": 255 }], "xyzTax ID Number", "", ""],
+				["tax_documents", "file", [{ "limit": 255 }], "xyzTax Document", "", ""],
+				["tax_exempt", "integer", [], "xyzTax Exempt", "", ""],
+				["tax_exempt_status", "integer", [], "xyzTax Exempt", "", ""],
+				["credential_id", "integer", [], "xyzCredential ID", "", ""],
+				["status", "integer", [], "xyzStatus", "required|integer", "required|integer"]
+			],
+			"method": "",
+			"join": [],
+			"mapping": {
+				"status": {
+					"0": "Inactive",
+					"1": "Active"
+				},
+
+				"customer_type": {
+					"1": "Business",
+					"2": "Individual"
+				},
+
+				"tax_exempt_status": {
+					"1": "Approved",
+					"2": "Disapproved",
+					"3": "Pending",
+					"4": ""
+				}
+			},
+			"pre": "if(isset($data['tax_exempt']) and $data['tax_exempt'] == 1)\n\t\t{\n\t\t\t $data['tax_exempt_status'] = 3; \n\t\t}\n",
+			"post": "if(isset($data['tax_exempt']) and $data['tax_exempt'] == 1)\n\t\t{\n\t\t\t $data['tax_exempt_status'] = 3; \n\t\t}\n",
+			"count": "",
+			"unique": [],
+			"seed": []
+		},
+		{
+			"name": "physical_location",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzID", "", ""],
+				["name", "string", [{
+					"limit": 255
+				}], "xyzName", "required|max_length[255]", "required|max_length[255]"]
+			],
+			"method": [],
+			"join": [],
+			"mapping": {},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
+		},
+		{
+			"name": "store",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzID", "", ""],
+				["name", "string", [{
+					"limit": 255
+				}], "xyzName", "required|max_length[255]", "required|max_length[255]"],
+				["address", "text", [], "xyzAddress", "required", "required"],
+				["state", "string", [{
+					"limit": 255
+				}], "xyzState", "required|max_length[255]", "required|max_length[255]"],
+				["zip", "string", [{
+					"limit": 255
+				}], "xyzZip", "required|max_length[255]", "required|max_length[255]"],
+				["phone", "string", [{
+					"limit": 255
+				}], "xyzPhone", "required|max_length[255]", "required|max_length[255]"]
+			],
+			"method": "",
+			"join": [],
+			"mapping": {
+
+			},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
+		},
+		{
+			"name": "pos_cart",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzProduct ID", "", ""],
+				["product_id", "integer", [], "xyzProduct ID", "", ""],
+				["user_id", "integer", [], "xyzUser ID", "", ""],
+				["product_qty", "integer", [], "xyzQuantity", "", ""],
+				["unit_price", "float", [], "xyzUnit Price", "", ""],
+				["total_price", "float", [], "xyzTotal Price", "", ""],
+				["product_name", "string", [{"limit": 255}], "xyzProduct Name", "", ""]
+			],
+			"method": [],
+			"join": [],
+			"mapping": {},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
 		}
 	],
 	"portals": [{
@@ -382,15 +682,13 @@
 				"/assets/css/mkd-image-uppload-light-theme.css" 
 			],
 			"menu": {
-				"Dashboard": "/dashboard",
-				"Reports": {
-					"User Report": "/report/users",
-					"Report 2": "/reports/2",
-					"Report 3": "/reports/3"
-				},
-				"Images": "/image",
-				"Users": "/users/0",
-				"Test" : "/test",
+				"Dashboard": "/dashboard", 
+				"xyzPOS Users": "/pos_user/0?order_by=id&direction=DESC",
+				"xyzInventory" : "/inventory/0?order_by=id&direction=DESC", 
+				"xyzCategory" : "/category/0?order_by=id&direction=DESC", 
+				"xyzCustomer" : "/customer/0?order_by=id&direction=DESC", 
+				"xyzPhysical Location" : "/physical_location/0?order_by=id&direction=DESC", 
+				"xyzStore" : "/store/0?order_by=id&direction=DESC",   
 				"xyzURL Redirect": "/url_redirect/0?order_by=id&direction=DESC",
 				"Change Password": "/me",
 				"Profile": "/profile",
@@ -424,6 +722,39 @@
 				"Dashboard": "/dashboard",
 				"Profile": "/profile",
 				"Logout": "/logout"
+			}
+		},
+		{
+			"name": "pos",
+			"role": "pos",
+			"model": "pos_user_model",
+			"login_type": "login_only",
+			"forgot": false,
+			"reset": false,
+			"register": false,
+			"api_auth": true,
+			"api": true,
+			"profile_page_fields": [],
+			"middleware": ["auth", "acl"],
+			"js": [
+				"/assets/js/media.js",
+				"/assets/js/core.js",
+				"/assets/js/setting.js",
+				"/assets/js/mkd-image-uppload.js",
+				"/assets/js/mkd-image-gallery.js", 
+				"/assets/js/app.js",
+				"/assets/js/admin.js"
+			],
+			"css": [
+				"/assets/css/styles.css", 
+				"/assets/css/mkd-image-uppload.css", 
+				"/assets/css/mkd-image-uppload-light-theme.css" 
+			],
+			"menu": {
+				"xyzDashboard": "/dashboard", 
+				"xyzProfile": "/profile",
+				"Change Password": "/me",
+				"xyzLogout": "/logout"
 			}
 		}
 	],
@@ -480,8 +811,8 @@
 			"dynamic_mapping": {},
 			"dynamic_mapping_add" : {},
 			"load_libraries": ["\n\t\t$this->load->model('admin_operation_model');\n\t\t$this->load->model('credential_model');"]
-	},
-	{
+		},
+		{
 			"route": "/credentials",
 			"name": "user_credentials",
 			"page_name": "Credential",
@@ -533,7 +864,7 @@
 			"dynamic_mapping": {},
 			"dynamic_mapping_add" : {},
 			"load_libraries": ["\n\t\t$this->load->model('admin_operation_model');"]
-	},
+		},
 		{
 			"route": "/emails",
 			"name": "email",
@@ -808,7 +1139,7 @@
 		{
 			"route": "/url_redirect",
 			"name": "url_redirect",
-			"page_name": "URL Redirects",
+			"page_name": "URL Redirect",
 			"model": "url_redirect",
 			"controller": "Admin_url_redirect_controller.php",
 			"api_controller": "Admin_api_url_redirect_controller.php",
@@ -863,7 +1194,374 @@
 			"dynamic_mapping_view": {},
 			"dynamic_mapping": {},
 			"load_libraries": []
+		},
+		{
+			"route": "/inventory",
+			"name": "inventory",
+			"page_name": "Inventory",
+			"model": "inventory",
+			"controller": "Admin_inventory_controller.php",
+			"api_controller": "Admin_inventory_api_controller.php",
+			"activity_log": false,
+			"override": "",
+			"override_add": "",
+			"override_edit": "",
+			"override_view": "",
+			"override_list": "",
+			"override_add_view_model": "",
+			"override_edit_view_model": "",
+			"override_view_view_model": "",
+			"override_list_view_model": "",
+			"api": true,
+			"frontend": false,
+			"paginate": true,
+			"paginate_join": "",
+			"portal": "admin",
+			"is_crud": true,
+			"method_edit_pre": "",
+			"is_add": true,
+			"is_edit": true,
+			"is_delete": false,
+			"is_real_delete": false,
+			"is_list": true,
+			"is_view": true,
+			"import": false,
+			"export": false,
+			"is_filter": true,
+			"all_records": true,
+			"active_only": false,
+			"middleware": [],
+			"method": "",
+			"method_add": "",
+			"method_edit": "",
+			"method_list": "",
+			"method_view": "",
+			"method_add_success": "$this->success('Inventory has been added successfully.');",
+			"method_edit_success": "$this->success('Inventory has been updated successfully.');",
+			"method_list_success": "",
+			"method_view_success": "",
+			"method_delete_success": "$this->success('Inventory has been deleted successfully.');",
+			"custom_view_add": "",
+			"custom_view_edit": "",
+			"custom_view_list": "",
+			"custom_view_view": "",
+			"listing_fields_api": ["id", "product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "store_location_id", "barcode_image", "type"],
+			"listing_headers": ["xyzID", "xyzProduct Name", "xyzSKU", "xyzPhysical Location", "xyzType", "xyzQuantity", "xyzCustomer", "xyzStatus"],
+			"listing_rows": ["id|integer", "product_name|string", "sku|string", "physical_location|integer", "type|integer", "quantity|integer", "assign_customer|integer", "status|integer"],
+			"listing_actions": [],
+			"filter_fields": ["product_name", "sku", "category_id", "assign_customer"],
+			"add_fields": ["product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "status", "store_location_id", "type" , "num_pallet" , "num_lot" , "truckload", "can_ship"],
+			"edit_fields": ["product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "status", "store_location_id", "type" , "num_pallet" , "num_lot" , "truckload", "can_ship"],
+			"view_fields": ["id", "product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "status", "store_location_id", "barcode_image", "type" , "num_pallet" , "num_lot" , "truckload", "can_ship"],
+			"autocomplete": "",
+			"dynamic_mapping_add": {},
+			"dynamic_mapping_edit": {},
+			"dynamic_mapping_view": {},
+			"dynamic_mapping": {},
+			"load_libraries": []
+		},
+		{
+			"route": "/pos_user",
+			"name": "pos_user",
+			"page_name": "POS Users",
+			"model": "pos_user",
+			"controller": "Admin_pos_user_controller.php",
+			"api_controller": "Admin_api_pos_user_controller.php",
+			"activity_log": false,
+			"override_add": "",
+			"override_edit": "",
+			"override_view": "",
+			"override_list": "",
+			"api": true,
+			"frontend": false,
+			"paginate": true,
+			"paginate_join": "",
+			"portal": "admin",
+			"is_crud": true,
+			"method_edit_pre": "",
+			"is_add": true,
+			"is_edit": true,
+			"is_delete": false,
+			"is_real_delete": false,
+			"is_list": true,
+			"is_view": true,
+			"import": false,
+			"export": false,
+			"is_filter": true,
+			"all_records": true,
+			"active_only": false,
+			"method": "",
+			"method_add": "",
+			"method_edit": "",
+			"method_list": "",
+			"method_view": "",
+			"method_add_success": "",
+			"method_edit_success": "",
+			"method_list_success": "",
+			"method_view_success": "",
+			"method_delete_success": "",
+			"custom_view_add": "",
+			"custom_view_edit": "",
+			"custom_view_list": "",
+			"custom_view_view": "",
+			"listing_fields_api": ["id", "email", "logged_in", "total_sale", "status"],
+			"listing_headers": ["xyzID", "xyzName",  "xyzEmail", "xyzLogged in", "xyzTotal sale", "xyzStatus"],
+			"listing_rows": ["id|integer", "first_name|string", "email|string", "logged_in|integer", "total_sale|string", "status|integer"],
+			"listing_actions": [],
+			"filter_fields": ["first_name", "last_name", "email", "status"],
+			"add_fields": ["first_name", "last_name", "email", "password", "status"],
+			"edit_fields": ["first_name", "last_name", "email", "password", "status"],
+			"view_fields": ["id", "first_name", "last_name", "email", "logged_in", "total_sale", "status"],
+			"autocomplete": "",
+			"dynamic_mapping_add": {},
+			"dynamic_mapping_edit": {},
+			"dynamic_mapping_view": {},
+			"dynamic_mapping": {},
+			"load_libraries": []
+		},
+		{
+			"route": "/customer",
+			"name": "customer",
+			"page_name": "Customer",
+			"model": "customer",
+			"controller": "Admin_customer_controller.php",
+			"api_controller": "Admin_api_customer_controller.php",
+			"activity_log": false,
+			"override_add": "",
+			"override_edit": "",
+			"override_view": "",
+			"override_list": "",
+			"api": true,
+			"frontend": false,
+			"paginate": true,
+			"paginate_join": "",
+			"portal": "admin",
+			"is_crud": true,
+			"method_edit_pre": "",
+			"is_add": true,
+			"is_edit": true,
+			"is_delete": true,
+			"is_real_delete": false,
+			"is_list": true,
+			"is_view": true,
+			"import": false,
+			"export": false,
+			"is_filter": true,
+			"all_records": true,
+			"active_only": false,
+			"method": "",
+			"method_add": "",
+			"method_edit": "",
+			"method_list": "",
+			"method_view": "",
+			"method_add_success": "$this->success('Customer has been added successfully.');",
+			"method_edit_success": "$this->success('Customer has been updated successfully.');",
+			"method_list_success": "",
+			"method_view_success": "",
+			"method_delete_success": "",
+			"custom_view_add": "",
+			"custom_view_edit": "",
+			"custom_view_list": "",
+			"custom_view_view": "",
+			"listing_fields_api": ["id", "name", "email", "phone", "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "last_order", "num_orders", "status"],
+			"listing_headers": ["xyzID", "xyzName", "xyzEmail", "xyzPhone", "xyzCustomer Since", "xyzLast Order", "xyzNum Orders", "xyzStatus"],
+			"listing_rows": ["id|integer", "name|string", "email|string", "phone|string", "customer_since|date", "last_order|string", "num_orders|integer", "status|integer"],
+			"listing_actions": [],
+			"filter_fields": ["name", "email", "phone", "customer_since", "status"],
+			"add_fields": ["name", "email", "phone",  "company_name", "tax_id_number", "tax_documents", "tax_exempt", "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status" ],
+			"edit_fields": ["name", "email", "phone", "company_name", "tax_id_number",  "tax_documents", "tax_exempt", "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status"],
+			"view_fields": ["id", "name", "email", "phone", "company_name", "tax_id_number",  "tax_documents", "tax_exempt", "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "last_order", "num_orders", "status"],
+			"autocomplete": "",
+			"dynamic_mapping_add": {},
+			"dynamic_mapping_edit": {},
+			"dynamic_mapping_view": {},
+			"dynamic_mapping": {},
+			"load_libraries": []
+		},
+		{
+			"route": "/category",
+			"name": "category",
+			"page_name": "Category",
+			"model": "category",
+			"controller": "Admin_category_controller.php",
+			"api_controller": "Admin_api_category_controller.php",
+			"activity_log": false,
+			"override_add": "",
+			"override_edit": "",
+			"override_view": "",
+			"override_list": "",
+			"api": true,
+			"frontend": false,
+			"paginate": true,
+			"paginate_join": "",
+			"portal": "admin",
+			"is_crud": true,
+			"method_edit_pre": "",
+			"is_add": true,
+			"is_edit": true,
+			"is_delete": false,
+			"is_real_delete": false,
+			"is_list": true,
+			"is_view": true,
+			"import": false,
+			"export": false,
+			"is_filter": true,
+			"all_records": true,
+			"active_only": false,
+			"method": "",
+			"method_add": "",
+			"method_edit": "",
+			"method_list": "",
+			"method_view": "",
+			"method_add_success": "$this->success('Category has been added successfully');",
+			"method_edit_success": "$this->success('Category has been updated successfully');",
+			"method_list_success": "",
+			"method_view_success": "",
+			"method_delete_success": "",
+			"custom_view_add": "",
+			"custom_view_edit": "",
+			"custom_view_list": "",
+			"custom_view_view": "",
+			"listing_fields_api": ["id", "name", "parent_category_id", "status"],
+			"listing_headers": ["xyzID", "xyzName", "xyzParent Category", "xyzStatus"],
+			"listing_rows": ["id|integer", "name|string", "parent_category_id|integer", "status|integer"],
+			"listing_actions": [],
+			"filter_fields": ["name", "status"],
+			"add_fields": ["name", "parent_category_id", "status"],
+			"edit_fields": ["name", "parent_category_id", "status"],
+			"view_fields": ["id", "name", "parent_category_id", "status"],
+			"autocomplete": "",
+			"dynamic_mapping_add": {},
+			"dynamic_mapping_edit": {},
+			"dynamic_mapping_view": {},
+			"dynamic_mapping": {},
+			"load_libraries": []
+		},
+		{
+			"route": "/physical_location",
+			"name": "Physical_Location",
+			"page_name": "Physical Location",
+			"model": "physical_location",
+			"controller": "Admin_physical_location_controller.php",
+			"api_controller": "Admin_physical_location_api_controller.php",
+			"activity_log": false,
+			"override": "",
+			"override_add": "",
+			"override_edit": "",
+			"override_view": "",
+			"override_list": "",
+			"override_add_view_model": "",
+			"override_edit_view_model": "",
+			"override_view_view_model": "",
+			"override_list_view_model": "",
+			"api": true,
+			"frontend": false,
+			"paginate": true,
+			"paginate_join": "",
+			"portal": "admin",
+			"is_crud": true,
+			"method_edit_pre": "",
+			"is_add": true,
+			"is_edit": true,
+			"is_delete": false,
+			"is_real_delete": false,
+			"is_list": true,
+			"is_view": true,
+			"import": false,
+			"export": false,
+			"is_filter": true,
+			"all_records": true,
+			"active_only": false,
+			"middleware": [],
+			"method": "",
+			"method_add": "",
+			"method_edit": "",
+			"method_list": "",
+			"method_view": "",
+			"method_add_success": "$this->success('Physical Location has been added successfully.');",
+			"method_edit_success": "$this->success('Physical Location has been updated successfully.');",
+			"method_list_success": "",
+			"method_view_success": "",
+			"method_delete_success": "$this->success('Physical Location has been deleted successfully.');",
+			"custom_view_add": "",
+			"custom_view_edit": "",
+			"custom_view_list": "",
+			"custom_view_view": "",
+			"listing_fields_api": ["id", "name"],
+			"listing_headers": ["xyzID", "xyzName"],
+			"listing_rows": ["id|integer", "name|string"],
+			"listing_actions": [],
+			"filter_fields": ["name"],
+			"add_fields": ["name"],
+			"edit_fields": ["name"],
+			"view_fields": ["id", "name"],
+			"autocomplete": "",
+			"dynamic_mapping_add": {},
+			"dynamic_mapping_edit": {},
+			"dynamic_mapping_view": {},
+			"dynamic_mapping": {},
+			"load_libraries": []
+		},
+		{
+			"route": "/store",
+			"name": "store",
+			"page_name": "Store",
+			"model": "store",
+			"controller": "Admin_store_controller.php",
+			"api_controller": "Admin_api_store_controller.php",
+			"activity_log": false,
+			"override_add": "",
+			"override_edit": "",
+			"override_view": "",
+			"override_list": "",
+			"api": true,
+			"frontend": false,
+			"paginate": true,
+			"paginate_join": "",
+			"portal": "admin",
+			"is_crud": true,
+			"method_edit_pre": "",
+			"is_add": true,
+			"is_edit": true,
+			"is_delete": false,
+			"is_real_delete": false,
+			"is_list": true,
+			"is_view": true,
+			"import": false,
+			"export": false,
+			"is_filter": true,
+			"all_records": true,
+			"active_only": false,
+			"method": "",
+			"method_add": "",
+			"method_edit": "",
+			"method_list": "",
+			"method_view": "",
+			"method_add_success": "$this->success('Store has been added successfully.');",
+			"method_edit_success": "$this->success('Store has been updated successfully.');",
+			"method_list_success": "",
+			"method_view_success": "",
+			"method_delete_success": "",
+			"custom_view_add": "",
+			"custom_view_edit": "",
+			"custom_view_list": "",
+			"custom_view_view": "",
+			"listing_fields_api": ["id", "name", "address", "state", "zip", "phone"],
+			"listing_headers": ["xyzID", "xyzName", "xyzAddress", "xyzState", "xyzZip", "xyzPhone"],
+			"listing_rows": ["id|integer", "name|string", "address|text", "state|string", "zip|string", "phone|string"],
+			"listing_actions": [],
+			"filter_fields": ["name", "state", "zip", "phone"],
+			"add_fields": ["name", "address", "state", "zip", "phone"],
+			"edit_fields": ["name", "address", "state", "zip", "phone"],
+			"view_fields": ["id", "name", "address", "state", "zip", "phone"],
+			"autocomplete": "",
+			"dynamic_mapping_add": {},
+			"dynamic_mapping_edit": {},
+			"dynamic_mapping_view": {},
+			"dynamic_mapping": {},
+			"load_libraries": []
 		}
+
 	],
 	"packages": {
 		"analytics": false,
@@ -1039,8 +1737,37 @@
 		"xyzLogin to your portal": "Login to your portal",
 		"xyzVerify your Number": "Verify your Number",
 		"xyzChange your password": "Change your password",
-		"xyzRewrite URL": "Rewrite URL",
-		"xyzURL": "URL"
+		"xyzSelling Price": "Selling Price",
+		"xyzInventory Note": "Inventory Note",
+		"xyzCost Price": "Cost Price",
+		"xyzAssign to Customer": "Assign to Customer",
+		"xyzStore Location": "Store Location",
+		"xyz# of Pallet": "# of Pallet",
+		"xyz# of Lot": "# of Lot",
+		"xyz# of Truckload": "# of Truckload",
+		"xyzSKU": "SKU",
+		"xyzCategory": "Category",
+		"xyzManifest": "Manifest",
+		"xyzPhysical Location": "Physical Location",
+		"xyzLocation Description": "Location Description",
+		"xyzWeight": "Weight",
+		"xyzLength": "Length",
+		"xyzLogged in": "Logged in",
+		"xyzTotal sale": "Total sale", 
+		"xyzPOS Users": "POS Users", 
+		"xyzInventory": "Inventory", 
+		"xyzStore": "Store", 
+		"xyzLast Order": "Last Order", 
+		"xyzNum Orders": "Num Orders", 
+		"xyzCompany Name": "Company Name", 
+		"xyzTax ID Number": "Tax ID Number", 
+		"xyzTax Exempt": "Tax Exempt", 
+		"xyzTax Document": "Tax Document",  
+		"xyzState": "State",  
+		"xyzZip": "Zip",  
+		"xyzRewrite URL": "Rewrite URL",  
+		"xyzParent Category": "Parent Category",  
+		"xyzCan Ship": "Can Ship" 
 	},
 	"reporting": [{
 		"name": "Num_users",
@@ -1180,17 +1907,36 @@
 		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css",
 		"../mkdcore/custom/Services/Barcode_service.php" : "../release/application/libraries/Barcode_service.php",
 		"../mkdcore/custom/Services/Redirect_custom_service.php" : "../release/application/libraries/Redirect_custom_service.php",
-		"../mkdcore/custom/Custom404.php" : "../release/application/controllers/Custom404.php", 
-
+		"../mkdcore/custom/Services/Names_helper_service.php" : "../release/application/libraries/Names_helper_service.php",
+		"../mkdcore/custom/Custom404.php" : "../release/application/controllers/Custom404.php",  
+		"../mkdcore/custom/Admin/controllers/Admin_pos_user_controller.php" : "../release/application/controllers/Admin/Admin_pos_user_controller.php",
 		"../mkdcore/custom/Admin/controllers/Admin_user_controller.php" : "../release/application/controllers/Admin/Admin_user_controller.php",
 		"../mkdcore/custom/Admin/views/UserAdd.php" : "../release/application/views/Admin/UserAdd.php",
 		"../mkdcore/custom/Admin/views/UserEdit.php" : "../release/application/views/Admin/UserEdit.php",
+		"../mkdcore/custom/Admin/controllers/Admin_inventory_controller.php" : "../release/application/controllers/Admin/Admin_inventory_controller.php",
+		"../mkdcore/custom/Admin/views/InventoryAdd.php" : "../release/application/views/Admin/InventoryAdd.php",
+		"../mkdcore/custom/Admin/views/InventoryEdit.php" : "../release/application/views/Admin/InventoryEdit.php",
+
+
+		"../mkdcore/custom/Admin/controllers/Admin_category_controller.php" : "../release/application/controllers/Admin/Admin_category_controller.php",
+		"../mkdcore/custom/Admin/views/CategoryAdd.php" : "../release/application/views/Admin/CategoryAdd.php",
+		"../mkdcore/custom/Admin/views/CategoryEdit.php" : "../release/application/views/Admin/CategoryEdit.php",
+
+		"../mkdcore/custom/Pos/Custom_api_controller.php" : "../release/application/controllers/Guest/Custom_api_controller.php",
+		"../mkdcore/custom/Pos/controllers/Pos_dashboard_controller.php" : "../release/application/controllers/Pos/Pos_dashboard_controller.php",
+		"../mkdcore/custom/Pos/views/Dashboard.php" : "../release/application/views/Pos/Dashboard.php",
+
 		"./mysql.php" : "../release/mysql.php"
 
 	},
 	"routes": {
 		"migrate": "Migrate",
-		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv"
+		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv",
+		"v1/api/pos_get_all_inventory_items" : "Guest/Custom_api_controller/pos_get_all_inventory_items",
+		"v1/api/add_product_to_cart": "Guest/Custom_api_controller/add_product_to_cart",
+		"v1/api/pos_get_cart_items" : "Guest/Custom_api_controller/pos_get_cart_items",
+		"v1/api/delete_cart_all" : "Guest/Custom_api_controller/delete_cart_all",
+		"v1/api/delete_cart_item" : "Guest/Custom_api_controller/delete_cart_item"
 	},
 	"reverse_copy": {
 	},

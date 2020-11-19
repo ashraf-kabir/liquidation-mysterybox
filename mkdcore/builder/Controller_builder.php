@@ -1655,15 +1655,15 @@ class Controller_builder extends Builder
         {
             $field = explode("|", $field);
             $field= $field[0];
-            $result .= "\${$field} = \$this->input->post('{$field}');\n\t\t";
+            $result .= "\${$field} = \$this->input->post('{$field}', TRUE);\n\t\t";
 
             if (strpos($field, 'image') !== FALSE)
             {
-                $result .= "\${$field}_id = \$this->input->post('{$field}_id');\n\t\t";
+                $result .= "\${$field}_id = \$this->input->post('{$field}_id', TRUE);\n\t\t";
             }
             if (strpos($field, 'file') !== FALSE)
             {
-                $result .= "\${$field}_id = \$this->input->post('{$field}_id');\n\t\t";
+                $result .= "\${$field}_id = \$this->input->post('{$field}_id', TRUE);\n\t\t";
             }
         }
         return $result;
@@ -2135,7 +2135,7 @@ class Controller_builder extends Builder
                 $result .= "\t\t\t\t\t<div class=\"btn uppload-button image_id_uppload_library btn-primary btn-sm  \" data-image-url=\"{$field[0]}\" data-image-id=\"{$field[0]}_id\" data-image-preview=\"output_{$field[0]}\" data-view-width=\"{$width}\" data-view-height=\"{$height}\" data-boundary-width=\"{$boundary_width}\" data-boundary-height=\"{$boundary_height}\">xyzChoose Image</div>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"\"/>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}_id\" name=\"{$field[0]}_id\" value=\"\"/>\n";
-                $result .= "\t\t\t\t</div>";
+                $result .= "\t\t\t\t <span id=\"{$field[0]}_complete\" class=\"image_complete_uppload\" ></span></div>";
             }
 
             if (strpos($field[1], 'file') !== FALSE)
@@ -2325,7 +2325,7 @@ class Controller_builder extends Builder
                 $result .= "\t\t\t\t\t<br/><div class=\"btn btn-primary image_id_uppload_library btn-sm uppload-button  \" data-image-url=\"{$field[0]}\" data-image-id=\"{$field[0]}_id\" data-image-preview=\"output_{$field[0]}\" data-view-width=\"{$width}\" data-view-height=\"{$height}\" data-boundary-width=\"{$boundary_width}\" data-boundary-height=\"{$boundary_height}\">xyzChoose Image</div>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}\" name=\"{$field[0]}\" value=\"<?php echo set_value('{$field[0]}', \$this->_data['view_model']->get_{$field[0]}());?>\"/>\n";
                 $result .= "\t\t\t\t\t<input type=\"hidden\" id=\"{$field[0]}_id\" name=\"{$field[0]}_id\" value=\"<?php echo set_value('{$field[0]}_id', \$this->_data['view_model']->get_{$field[0]}_id());?>\"/>\n";
-                $result .= "\t\t\t\t</div>";
+                $result .= "\t\t\t\t <span id=\"{$field[0]}_complete\" class=\"image_complete_uppload\" ></span></div>";
             }
 
             if (strpos($field[1], 'file') !== FALSE)
@@ -3074,7 +3074,7 @@ class Controller_builder extends Builder
         $search_text = "'. ". '" \'%" . $search_text . "%\'"';
         for($i = 0; $i < count($auto_complete_array); $i ++)
         {
-            $output .= "\n\tpublic function search_{$auto_complete_array[$i]["field_name"]}_{$auto_complete_array[$i]["method_type"]}_auto_complete()\n\t{\n\t\t".'$this->load->model'."('{$auto_complete_array[$i]['table_name']}_model');\n\t\t".'$search_text'." = ".'$this->input->get("search_text")'.";\n\t\t".'$sql'." =  ' SELECT {$auto_complete_array[$i]['field_label_field']}, {$auto_complete_array[$i]['field_value_field']} FROM {$auto_complete_array[$i]['table_name']} WHERE {$auto_complete_array[$i]["field_search"]} LIKE {$search_text} ;\n\t\t".'$result = $this->'."{$auto_complete_array[$i]['table_name']}_model->raw_query(".'$sql'.")->result(); \n\t\techo json_encode(".'$result'.");\n\t\texit();\n\t}\n";
+            $output .= "\n\tpublic function search_{$auto_complete_array[$i]["field_name"]}_{$auto_complete_array[$i]["method_type"]}_auto_complete()\n\t{\n\t\t".'$this->load->model'."('{$auto_complete_array[$i]['table_name']}_model');\n\t\t".'$search_text'." = ".'$this->input->get("search_text", TRUE)'.";\n\t\t".'$sql'." =  ' SELECT {$auto_complete_array[$i]['field_label_field']}, {$auto_complete_array[$i]['field_value_field']} FROM {$auto_complete_array[$i]['table_name']} WHERE {$auto_complete_array[$i]["field_search"]} LIKE {$search_text} ;\n\t\t".'$result = $this->'."{$auto_complete_array[$i]['table_name']}_model->raw_query(".'$sql'.")->result(); \n\t\techo json_encode(".'$result'.");\n\t\texit();\n\t}\n";
         }
         return $output;
     }
@@ -3082,7 +3082,7 @@ class Controller_builder extends Builder
     public function search_first_name_filter_auto_complete()
 	{
 		$this->load->model('user_model');
-		$search_text = $this->input->get("search_text");
+		$search_text = $this->input->get("search_text", TRUE);
 		$sql =  ' SELECT first_name, first_name FROM user WHERE first_name LIKE \'% $search_text%\' ';
 		$result = $this->user_model->raw_query($sql)->result();
 		echo json_encode($result);
