@@ -60,10 +60,20 @@ if ($layout_clean_mode) {
 					<label for="Product Name">Product Name </label>
 					<input type="text" class="form-control data-input" id="form_product_name" name="product_name" value="<?php echo set_value('product_name', $this->_data['view_model']->get_product_name());?>"/>
 				</div>
+
 				<div class="form-group col-md-5 col-sm-12">
 					<label for="SKU">SKU </label>
-					<input type="text" class="form-control data-input" id="form_sku" name="sku" value="<?php echo set_value('sku', $this->_data['view_model']->get_sku());?>"/>
+					<input type="text" class="form-control data-input" name="sku" id="form_sku" readonly value="<?php echo set_value('sku', $this->_data['view_model']->get_sku());?>"/>
 				</div>
+				<div class="form-group col-md-5 col-sm-12">
+					<label for="Product Type">Product Type </label>
+					<select id="form_product_type" name="product_type" class="form-control data-input">
+						<?php foreach ($view_model->product_type_mapping() as $key => $value) {
+							echo "<option value='{$key}' " . (($view_model->get_product_type() == $key && $view_model->get_product_type() != '') ? 'selected' : '') . "> {$value} </option>";
+						}?>
+					</select>
+				</div>
+				
 				<div class="form-group col-md-5 col-sm-12">
 					<label for="Category">Category </label>
 					<select  class="form-control data-input" id="form_category_id" name="category_id">
@@ -168,6 +178,16 @@ if ($layout_clean_mode) {
 					<input type="text" class="form-control data-input" id="form_truckload" name="truckload" value="<?php echo set_value('truckload', $this->_data['view_model']->get_truckload());?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
 				</div>
                 
+				<div class="form-group col-md-5 col-sm-12">
+					<label for="xyzPin Item">Pin Item </label>
+					<select id="form_pin_item_top" name="pin_item_top" class="form-control data-input">
+						<?php foreach ($view_model->pin_item_top_mapping() as $key => $value) {
+							echo "<option value='{$key}' " . (($view_model->get_pin_item_top() == $key && $view_model->get_pin_item_top() != '') ? 'selected' : '') . "> {$value} </option>";
+						}?>
+					</select>
+				</div>
+
+				
                 <div class="form-group col-md-5 col-sm-12">
 					<label for="Can Ship">Can Ship </label>
 					<select id="form_can_ship" name="can_ship" class="form-control data-input">

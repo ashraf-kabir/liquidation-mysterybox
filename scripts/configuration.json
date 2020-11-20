@@ -369,7 +369,7 @@
 				}], "xyzProduct Name", "required", "required"],
 				["sku", "string", [{
 					"limit": 255
-				}], "xyzSKU", "required", "required"],
+				}], "xyzSKU", "", ""],
 				["category_id", "integer", [], "xyzCategory", "", ""],
 				["manifest_id", "integer", [], "xyzManifest", "", ""],
 				["store_location_id", "integer", [], "xyzStore Location", "required", "required"],
@@ -397,6 +397,8 @@
 				["num_lot", "integer", [], "xyz# of Lot", "", ""],
 				["truckload", "integer", [], "xyz# of Truckload", "", ""], 
 				["type", "integer", [], "xyzType", "", ""],
+				["pin_item_top", "integer", [{"default" : 1}], "xyzPin Item", "", ""],
+				["product_type", "integer", [ ], "xyzProduct Type", "", ""],
 				["status", "integer", [], "xyzStatus", "", ""]
 			],
 			"method": [],
@@ -414,6 +416,14 @@
 				"can_ship": {
 					"1": "Yes",
 					"2": "No" 
+				},
+				"product_type": {
+					"1": "Regular",
+					"2": "Generic"
+				},
+				"pin_item_top": {
+					"1": "No",
+					"2": "Yes"
 				}
 			},
 			"pre": "",
@@ -652,7 +662,102 @@
 			"count": "",
 			"unique": [],
 			"seed": []
+		},
+		{
+			"name": "pos_order",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzid", "", ""],
+				["store_id", "integer", [], "xyzStore", "required|integer", "required|integer"],
+				["billing_name", "string", [{ "limit": 255 }], "xyzBilling Name", "required|max_length[255]", "required|max_length[255]"],
+				["billing_address", "text", [], "xyzBilling Address", "required", "required"],
+				["billing_country", "string", [{ "limit": 255 }], "xyzBilling Country", "required|max_length[255]", "required|max_length[255]"],
+				["billing_state", "string", [{ "limit": 255 }], "xyzBilling State", "required|max_length[255]", "required|max_length[255]"],
+				["billing_city", "string", [{ "limit": 255 }], "xyzBilling City", "required|max_length[255]", "required|max_length[255]"],
+				["billing_zip", "string", [{ "limit": 255 }], "xyzBilling Zip", "required|max_length[255]", "required|max_length[255]"],
+				["shipping_name", "string", [{ "limit": 255 }], "xyzShipping Name", "required|max_length[255]", "required|max_length[255]"],
+				["shipping_address", "text", [], "xyzShipping Address", "required", "required"],
+				["shipping_country", "string", [{ "limit": 255 }], "xyzShipping Country", "", ""],
+				["shipping_state", "string", [{ "limit": 255 }], "xyzShipping State", "", ""],
+				["shipping_city", "string", [{ "limit": 255 }], "xyzShipping City", "", ""],
+				["shipping_zip", "string", [{ "limit": 255 }], "xyzShipping Zip", "", ""],
+				["subtotal", "float", [], "xyzSubtotal", "required", "required"],
+				["shipping_cost", "float", [], "xyzShipping Cost", "", ""],
+				["tax", "float", [], "xyzTax", "", ""],
+				["total", "float", [], "xyzTotal", "required", "required"],
+				["discount", "float", [], "xyzDiscount", "", ""],
+				["order_type", "integer", [], "xyzOrder Type", "required|integer", "required|integer"],
+				["payment_method", "string", [{ "limit": 255 }], "xyzPayment Method", "required|max_length[255]", "required|max_length[255]"],
+				["pos_user_id", "integer", [], "xyzPOS User", "required|integer", "required|integer"],
+				["status", "integer", [], "xyzStatus", "required|integer", "required|integer"],
+				["customer_id", "integer", [], "xyzCustomer", "required|integer", "required|integer"],
+				["pos_pickup_status", "integer", [], "xyzPickup Status", "required|integer", "required|integer"]
+			],
+			"method": "",
+			"join": [],
+			"mapping": {
+				"status": {"0": "Canceled","1": "Purchased", "2" : "Refunded"},
+				"order_type": {"1": "Online", "2" : "POS"},
+				"pos_pickup_status": {"1": "Pending", "2" : "Picked"}
+			},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
+		},
+		{
+			"name": "pos_order_note",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzid", "", ""],
+				["employee_name", "string", [{"limit": 255}], "xyzName", "", ""],
+				["message_note", "text", [], "xyzMessage Note", "", ""],
+				["order_id", "integer", [], "xyzOrder ID", "", ""], 
+				["msg_type", "integer", [], "xyzMessage Type", "", ""]  
+			],
+			"method": [],
+			"join": [],
+			"mapping": {
+				"msg_type": {
+					"1": "Public",
+					"2": "Private" 
+				} 
+			},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
+		},
+		{
+			"name": "pos_order_items",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzid", "", ""],
+				["product_id", "integer", [], "xyzproduct_id", "required|integer", "required|integer"],
+				["product_name", "string", [{ "limit": 255 }], "xyzproduct_name", "", ""],
+				["amount", "float", [], "xyzamount", "required", "required"],
+				["product_unit_price", "float", [], "xyzamount", "required", "required"],
+				["quantity", "integer", [], "xyzquantity", "required|integer", "required|integer"],
+				["order_id", "integer", [], "xyzorder_id", "required|integer", "required|integer"],
+				["manifest_id", "integer", [], "xyzmanifest_id", "required|integer", "required|integer"]
+			],
+			"method": "",
+			"join": [],
+			"mapping": {
+
+			},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
 		}
+
 	],
 	"portals": [{
 			"name": "admin",
@@ -1250,9 +1355,9 @@
 			"listing_rows": ["id|integer", "product_name|string", "sku|string", "physical_location|integer", "type|integer", "quantity|integer", "assign_customer|integer", "status|integer"],
 			"listing_actions": [],
 			"filter_fields": ["product_name", "sku", "category_id", "assign_customer"],
-			"add_fields": ["product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "status", "store_location_id", "type" , "num_pallet" , "num_lot" , "truckload", "can_ship"],
-			"edit_fields": ["product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "status", "store_location_id", "type" , "num_pallet" , "num_lot" , "truckload", "can_ship"],
-			"view_fields": ["id", "product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "status", "store_location_id", "barcode_image", "type" , "num_pallet" , "num_lot" , "truckload", "can_ship"],
+			"add_fields": ["product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "status", "store_location_id", "type" , "num_pallet" , "num_lot" , "truckload", "can_ship", "product_type", "pin_item_top"],
+			"edit_fields": ["product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "status", "store_location_id", "type" , "num_pallet" , "num_lot" , "truckload", "can_ship", "product_type", "pin_item_top"],
+			"view_fields": ["id", "product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "status", "store_location_id", "barcode_image", "type" , "num_pallet" , "num_lot" , "truckload", "can_ship",  "product_type", "pin_item_top"],
 			"autocomplete": "",
 			"dynamic_mapping_add": {},
 			"dynamic_mapping_edit": {},
@@ -1767,6 +1872,7 @@
 		"xyzZip": "Zip",  
 		"xyzRewrite URL": "Rewrite URL",  
 		"xyzParent Category": "Parent Category",  
+		"xyzPin Item": "Pin Item",  
 		"xyzCan Ship": "Can Ship" 
 	},
 	"reporting": [{
@@ -1916,6 +2022,7 @@
 		"../mkdcore/custom/Admin/controllers/Admin_inventory_controller.php" : "../release/application/controllers/Admin/Admin_inventory_controller.php",
 		"../mkdcore/custom/Admin/views/InventoryAdd.php" : "../release/application/views/Admin/InventoryAdd.php",
 		"../mkdcore/custom/Admin/views/InventoryEdit.php" : "../release/application/views/Admin/InventoryEdit.php",
+		"../mkdcore/custom/Models/Inventory_model.php" : "../release/application/models/Inventory_model.php",
 
 
 		"../mkdcore/custom/Admin/controllers/Admin_category_controller.php" : "../release/application/controllers/Admin/Admin_category_controller.php",
@@ -1936,6 +2043,11 @@
 		"v1/api/add_product_to_cart": "Guest/Custom_api_controller/add_product_to_cart",
 		"v1/api/pos_get_cart_items" : "Guest/Custom_api_controller/pos_get_cart_items",
 		"v1/api/delete_cart_all" : "Guest/Custom_api_controller/delete_cart_all",
+		"v1/api/get_customer_search" : "Guest/Custom_api_controller/get_customer_search",
+		"v1/api/add_customer": "Guest/Custom_api_controller/add_customer",
+		"v1/api/pos_get_all_active_customers": "Guest/Custom_api_controller/pos_get_all_active_customers",
+		"v1/api/pos_customer_detail": "Guest/Custom_api_controller/pos_customer_detail",
+		"v1/api/pos_checkout_order": "Guest/Custom_api_controller/pos_checkout_order",
 		"v1/api/delete_cart_item" : "Guest/Custom_api_controller/delete_cart_item"
 	},
 	"reverse_copy": {

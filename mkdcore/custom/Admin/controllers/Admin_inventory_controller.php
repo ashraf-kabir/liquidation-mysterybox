@@ -99,40 +99,51 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['view_model']->set_heading('Inventory');
         
 
+        $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
+        $this->_data['stores']              =   $this->store_model->get_all();
+        $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
+
 		if ($this->form_validation->run() === FALSE)
 		{
-            $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
-            $this->_data['stores']              =   $this->store_model->get_all();
-            $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
+            
             
 			return $this->render('Admin/InventoryAdd', $this->_data);
         }
 
-        $product_name = $this->input->post('product_name');
-		$sku = $this->input->post('sku');
-		$category_id = $this->input->post('category_id');
-		$manifest_id = $this->input->post('manifest_id');
-		$physical_location = $this->input->post('physical_location');
-		$location_description = $this->input->post('location_description');
-		$weight = $this->input->post('weight');
-		$length = $this->input->post('length');
-		$height = $this->input->post('height');
-		$width = $this->input->post('width');
-		$feature_image = $this->input->post('feature_image');
-		$feature_image_id = $this->input->post('feature_image_id');
-		$selling_price = $this->input->post('selling_price');
-		$quantity = $this->input->post('quantity');
-		$inventory_note = $this->input->post('inventory_note');
-		$cost_price = $this->input->post('cost_price');
-		$admin_inventory_note = $this->input->post('admin_inventory_note');
-		$assign_customer = $this->input->post('assign_customer');
-		$status = $this->input->post('status');
-		$store_location_id = $this->input->post('store_location_id');
-		$type = $this->input->post('type');
-		$num_pallet = $this->input->post('num_pallet');
-		$num_lot = $this->input->post('num_lot');
-		$truckload = $this->input->post('truckload');
-		$can_ship = $this->input->post('can_ship');
+        $increment_id  =  $this->inventory_model->get_auto_increment_id();
+        $sku           =  sprintf("%05d", $increment_id); 
+
+        $product_name = $this->input->post('product_name', TRUE); 
+		$category_id = $this->input->post('category_id', TRUE);
+		$manifest_id = $this->input->post('manifest_id', TRUE);
+		$physical_location = $this->input->post('physical_location', TRUE);
+		$location_description = $this->input->post('location_description', TRUE);
+		$weight = $this->input->post('weight', TRUE);
+		$length = $this->input->post('length', TRUE);
+		$height = $this->input->post('height', TRUE);
+		$width = $this->input->post('width', TRUE);
+		$feature_image = $this->input->post('feature_image', TRUE);
+		$feature_image_id = $this->input->post('feature_image_id', TRUE);
+		$selling_price = $this->input->post('selling_price', TRUE);
+		$quantity = $this->input->post('quantity', TRUE);
+		$inventory_note = $this->input->post('inventory_note', TRUE);
+		$cost_price = $this->input->post('cost_price', TRUE);
+		$admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
+		$assign_customer = $this->input->post('assign_customer', TRUE);
+		$status = $this->input->post('status', TRUE);
+		$store_location_id = $this->input->post('store_location_id', TRUE);
+		$type = $this->input->post('type', TRUE);
+		$num_pallet = $this->input->post('num_pallet', TRUE);
+		$num_lot = $this->input->post('num_lot', TRUE);
+		$truckload = $this->input->post('truckload', TRUE);
+		$can_ship = $this->input->post('can_ship', TRUE);
+        $product_type = $this->input->post('product_type', TRUE);
+        $pin_item_top = $this->input->post('pin_item_top', TRUE);
+        
+        if($product_type == 2)
+        {
+            $sku = '';
+        }
 		
         $result = $this->inventory_model->create([
             'product_name' => $product_name,
@@ -159,7 +170,9 @@ class Admin_inventory_controller extends Admin_controller
 			'num_pallet' => $num_pallet,
 			'num_lot' => $num_lot,
 			'truckload' => $truckload,
-			'can_ship' => $can_ship,
+            'can_ship' => $can_ship,
+            'product_type' => $product_type,
+			'pin_item_top' => $pin_item_top,
 			
         ]);
 
@@ -212,43 +225,51 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['view_model']->set_model($model);
         $this->_data['view_model']->set_heading('Inventory');
         
+
+        $this->_data['gallery_lists']       =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
+        $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
+        $this->_data['stores']              =   $this->store_model->get_all();
+        $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
         
 		if ($this->form_validation->run() === FALSE)
-		{
-            $this->_data['gallery_lists']       =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
-            $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
-            $this->_data['stores']              =   $this->store_model->get_all();
-            $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
-
+		{ 
 			return $this->render('Admin/InventoryEdit', $this->_data);
         }
 
-        $product_name = $this->input->post('product_name');
-		$sku = $this->input->post('sku');
-		$category_id = $this->input->post('category_id');
-		$manifest_id = $this->input->post('manifest_id');
-		$physical_location = $this->input->post('physical_location');
-		$location_description = $this->input->post('location_description');
-		$weight = $this->input->post('weight');
-		$length = $this->input->post('length');
-		$height = $this->input->post('height');
-		$width = $this->input->post('width');
-		$feature_image = $this->input->post('feature_image');
-		$feature_image_id = $this->input->post('feature_image_id');
-		$selling_price = $this->input->post('selling_price');
-		$quantity = $this->input->post('quantity');
-		$inventory_note = $this->input->post('inventory_note');
-		$cost_price = $this->input->post('cost_price');
-		$admin_inventory_note = $this->input->post('admin_inventory_note');
-		$assign_customer = $this->input->post('assign_customer');
-		$status = $this->input->post('status');
-		$store_location_id = $this->input->post('store_location_id');
-		$type = $this->input->post('type');
-		$num_pallet = $this->input->post('num_pallet');
-		$num_lot = $this->input->post('num_lot');
-		$truckload = $this->input->post('truckload');
-		$can_ship = $this->input->post('can_ship');
-		
+        $product_name = $this->input->post('product_name', TRUE);
+		$sku = $this->input->post('sku', TRUE);
+		$category_id = $this->input->post('category_id', TRUE);
+		$manifest_id = $this->input->post('manifest_id', TRUE);
+		$physical_location = $this->input->post('physical_location', TRUE);
+		$location_description = $this->input->post('location_description', TRUE);
+		$weight = $this->input->post('weight', TRUE);
+		$length = $this->input->post('length', TRUE);
+		$height = $this->input->post('height', TRUE);
+		$width = $this->input->post('width', TRUE);
+		$feature_image = $this->input->post('feature_image', TRUE);
+		$feature_image_id = $this->input->post('feature_image_id', TRUE);
+		$selling_price = $this->input->post('selling_price', TRUE);
+		$quantity = $this->input->post('quantity', TRUE);
+		$inventory_note = $this->input->post('inventory_note', TRUE);
+		$cost_price = $this->input->post('cost_price', TRUE);
+		$admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
+		$assign_customer = $this->input->post('assign_customer', TRUE);
+		$status = $this->input->post('status', TRUE);
+		$store_location_id = $this->input->post('store_location_id', TRUE);
+		$type = $this->input->post('type', TRUE);
+		$num_pallet = $this->input->post('num_pallet', TRUE);
+		$num_lot = $this->input->post('num_lot', TRUE);
+		$truckload = $this->input->post('truckload', TRUE);
+		$can_ship = $this->input->post('can_ship', TRUE);
+        $product_type = $this->input->post('product_type', TRUE);
+		$pin_item_top = $this->input->post('pin_item_top', TRUE);
+        
+        if($product_type == 2)
+        {
+            $sku = '';
+        }
+
+        
         $result = $this->inventory_model->edit([
             'product_name' => $product_name,
 			'sku' => $sku,
@@ -274,7 +295,9 @@ class Admin_inventory_controller extends Admin_controller
 			'num_pallet' => $num_pallet,
 			'num_lot' => $num_lot,
 			'truckload' => $truckload,
-			'can_ship' => $can_ship,
+            'can_ship' => $can_ship,
+            'product_type' => $product_type,
+			'pin_item_top' => $pin_item_top,
 			
         ], $id);
 

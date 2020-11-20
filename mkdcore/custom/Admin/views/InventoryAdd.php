@@ -63,11 +63,18 @@ if ($layout_clean_mode) {
 					<input type="text" class="form-control data-input" id="form_product_name" name="product_name" value="<?php echo set_value('product_name'); ?>"/>
 				</div>
 
-				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="SKU">SKU </label>
-					<input type="text" class="form-control data-input" id="form_sku" name="sku" value="<?php echo set_value('sku'); ?>"/>
+				 
+
+                <div class="form-group col-md-5 col-sm-12 ">
+					<label for="Product Type">Product Type </label>
+					<select id="form_product_type" name="product_type" class="form-control data-input">
+						<?php foreach ($view_model->product_type_mapping() as $key => $value) {
+							echo "<option value='{$key}'> {$value} </option>";
+						}?>
+					</select>
 				</div>
 
+				
 
                 <div class="form-group col-md-5 col-sm-12 ">
 					<label for="Parent Category"> Category </label> 
@@ -163,6 +170,17 @@ if ($layout_clean_mode) {
 					<label for="# of Truckload"># of Truckload </label>
 					<input type="text" class="form-control data-input" id="form_truckload" name="truckload" value="<?php echo set_value('truckload'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
 				</div>
+
+                <div class="form-group col-md-5 col-sm-12 ">
+					<label for="xyzPin Item">Pin Item </label>
+					<select id="form_pin_item_top" name="pin_item_top" class="form-control data-input">
+						<?php foreach ($view_model->pin_item_top_mapping() as $key => $value) {
+							echo "<option value='{$key}'> {$value} </option>";
+						}?>
+					</select>
+				</div>
+
+                
 				<div class="form-group col-md-5 col-sm-12 ">
 					<label for="Can Ship">Can Ship </label>
 					<select id="form_can_ship" name="can_ship" class="form-control data-input">

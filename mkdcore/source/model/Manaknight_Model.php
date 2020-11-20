@@ -167,6 +167,72 @@ class {{{subclass_prefix}}}Model extends CI_Model
         return $this->db->get()->result();
 	}
 
+
+
+    /**
+	 * Get all using or like Model
+	 *
+	 * @return array
+	 */
+	public function get_all_where_or_like($where = array())
+    {
+        $this->db->from($this->_table);
+
+        foreach($where as $field => $value)
+        {
+            if (is_numeric($field) && strlen($value) > 0)
+            {
+                $this->db->where($value);
+                continue;
+            }
+
+            if ($field === NULL && $value === NULL)
+            {
+                continue;
+            }
+
+            if ($value !== NULL)
+            { 
+                $this->db->or_like($this->clean_alpha_field($field), $value, 'both');
+            }
+        }
+
+        return $this->db->get()->result();
+    }
+    
+
+
+    /**
+	 * Get all using like Model
+	 *
+	 * @return array
+	 */
+	public function get_all_where_like($where = array())
+    {
+        $this->db->from($this->_table);
+
+        foreach($where as $field => $value)
+        {
+            if (is_numeric($field) && strlen($value) > 0)
+            {
+                $this->db->where($value);
+                continue;
+            }
+
+            if ($field === NULL && $value === NULL)
+            {
+                continue;
+            }
+
+            if ($value !== NULL)
+            { 
+                $this->db->like($this->clean_alpha_field($field), $value, 'before');
+            }
+        }
+
+        return $this->db->get()->result();
+    }
+
     /**
 	 * Get all Model
 	 *

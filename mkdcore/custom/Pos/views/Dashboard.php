@@ -24,6 +24,8 @@
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/pos_css/styles.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <link href="<?php echo base_url() ?>assets/js/select2.css" />
     <title>POS</title>
 </head>
 <style type="text/css">
@@ -82,6 +84,9 @@
         background-color: #343a40;
         /* border: 1px solid #000; */
     }
+    .select2-drop-active{
+        margin-top: -25px !important;
+    }
 </style>
 <body>
 
@@ -117,7 +122,7 @@
                         </input>
                     </div>
                     <div class="col-4 d-flex justify-content-end">
-                        <a href="<?php echo base_url(); ?>pos/logout">
+                        <a href="<?php echo base_url(); ?>pos/logout" style="line-height:0px !important">
                         <span class="text-center mx-2 nav-btn">
                             <i class="fas fa-sign-out-alt d-block"></i>
                             <span>Logout</span>
@@ -779,9 +784,9 @@
                             </div>
                             <div class="col-5 " style="position: relative">
                                 <label for="checkout-address">Customer</label> 
-                                <Select class="form-control customer-list-api" name="customer_id" required >
-                                    <option value="">Select Customer</option>
-                                </Select>
+                                <select class="form-control customer-list-api" name="customer_id" required >
+                                    <option value="">Select</option>
+                                </select>
                             </div>
                         </div>       
 
@@ -1040,6 +1045,7 @@ toastr.options = {
     <!-- Main JS -->
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/select2.js"></script>
     <script src="<?php echo base_url(); ?>assets/pos_js/script.js"></script>
     <script type="text/javascript"> 
         $(document).ready(function () { 
