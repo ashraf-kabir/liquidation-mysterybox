@@ -101,10 +101,10 @@ class Admin_category_controller extends Admin_controller
         $this->_data['view_model'] = new Category_admin_add_view_model($this->category_model);
         $this->_data['view_model']->set_heading('Category');
         
-        
+        $this->_data['parent_categories'] = $this->category_model->get_all(['status' => 1]);
 		if ($this->form_validation->run() === FALSE)
 		{ 
-            $this->_data['parent_categories'] = $this->category_model->get_all(['status' => 1]);
+            
 			return $this->render('Admin/CategoryAdd', $this->_data);
         }
 
@@ -148,11 +148,9 @@ class Admin_category_controller extends Admin_controller
         $this->_data['view_model']->set_model($model);
         $this->_data['view_model']->set_heading('Category');
         
-        
+        $this->_data['parent_categories'] = $this->category_model->get_all(['status' => 1]);
 		if ($this->form_validation->run() === FALSE)
 		{
-            $this->_data['parent_categories'] = $this->category_model->get_all(['status' => 1]);
-
 			return $this->render('Admin/CategoryEdit', $this->_data);
         }
 

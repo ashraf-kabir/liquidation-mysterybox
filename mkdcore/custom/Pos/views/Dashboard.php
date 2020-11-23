@@ -87,6 +87,15 @@
     .select2-drop-active{
         margin-top: -25px !important;
     }
+
+    .fix-css-quagga-container2  video, canvas {
+        width: 100% !important;
+        height: auto;
+    }
+
+    .fix-css-quagga-container2 video.drawingBuffer, canvas.drawingBuffer {
+        display: none;
+    }
 </style>
 <body>
 
@@ -261,10 +270,18 @@
                                 <button class="btn btn-secondary w-100" data-toggle="modal"
                                     data-target="#barcode-modal">Barcode/SKU</button>
                             </div>
+
+                            <div class="col-12 my-2">
+                                <button class="btn btn-success w-100" id="btn-scanner-camera2"  style="background: #1E59B1;">Scan Product</button>
+                            </div>
+
+
                             <div class="col-12 my-2">
                                 <button class="btn btn-success w-100" data-toggle='modal'
                                     data-target="#customCart-modal" style="background: #1E59B1;">Custom Product</button>
                             </div>
+
+                            
                         </div>
                     </div>
                 </div>
@@ -430,11 +447,11 @@
                                 </div>
                                 <div class="col mx-auto">
                                     <label for="first-name" class="">First Name</label>
-                                    <input type="text" id="first-name" name="first-name" class="form-control">
+                                    <input type="text" id="first-name-report" name="first-name-report" class="form-control">
                                 </div>
                                 <div class="col ml-auto">
                                     <label for="last-name" class="">Last Name</label>
-                                    <input type="text" id="last-name" name="last-name" class="form-control">
+                                    <input type="text" id="last-name-report" name="last-name-report" class="form-control">
                                 </div>
                                 <div class="col align-self-end text-right">
                                     <input type="submit" class="btn btn-secondary" value="Search">
@@ -1006,6 +1023,35 @@
     </div>
 
 
+
+
+    <!-- Scan Product Modal -->
+    <div class="modal fade" id="scan-product-modal" tabindex="-1" role="dialog" aria-labelledby="scan-productLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-md p-3 modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="barcodeLabel">Scan Product</h5>
+                    <button type="button" class="close close-scanner-camera2"  aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                 
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-md-12 col-sm-12 fix-css-quagga-container2"  style="text-align: center;">
+                            <div id="scanner-container2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary close-scanner-camera2"  >Close</button> 
+                </div>
+                 
+            </div>
+        </div>
+    </div>
+
     <!-- Optional JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" ></script>
@@ -1054,6 +1100,9 @@ toastr.options = {
             });
         });
     </script>
+
+    <script src="/assets/js/quagga.min.js"></script>
+    <script src="/assets/js/scan_product.js" defer></script>
 </body>
  
 </html>

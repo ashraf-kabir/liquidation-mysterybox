@@ -756,6 +756,34 @@
 			"count": "",
 			"unique": [],
 			"seed": []
+		},
+		{
+			"name": "coupon",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzID", "", ""],
+				["code", "string", [{
+					"limit": 255
+				}], "xyzCode", "required|max_length[255]", "required|max_length[255]"],
+				["type", "integer", [], "xyzType", "required|integer", "required|integer"],
+				["data", "text", [], "xyzData", "required", "required"],
+				["amount", "float", [], "xyzAmount", "required|numeric", "required|numeric"],
+				["expire_at", "date", [], "xyzExpire At", "required|date", "required|date"],
+				["usage", "string", [{"limit": 255}], "xyzUsage", "required|max_length[255]", "required|max_length[255]"],
+				["status", "string", [{"limit": 255}], "xyzStatus", "required|max_length[255]", "required|max_length[255]"]
+			],
+			"method": "",
+			"join": [],
+			"mapping": {
+				"status": {"0": "Active","1": "Inactive"},
+				"type": {"0": "Fixed Amount","1": "Percentage","2": "Specific Product","3": "Cart Discount"}
+			},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
 		}
 
 	],
@@ -794,6 +822,7 @@
 				"xyzCustomer" : "/customer/0?order_by=id&direction=DESC", 
 				"xyzPhysical Location" : "/physical_location/0?order_by=id&direction=DESC", 
 				"xyzStore" : "/store/0?order_by=id&direction=DESC",   
+				"xyzCoupon": "/coupon/0?order_by=id&direction=DESC",
 				"xyzURL Redirect": "/url_redirect/0?order_by=id&direction=DESC",
 				"Change Password": "/me",
 				"Profile": "/profile",
@@ -1665,7 +1694,67 @@
 			"dynamic_mapping_view": {},
 			"dynamic_mapping": {},
 			"load_libraries": []
+		},
+		{
+			"route": "/coupon",
+			"name": "coupon",
+			"page_name": "Coupon",
+			"model": "coupon",
+			"controller": "Admin_coupon_controller.php",
+			"api_controller": "Admin_api_coupon_controller.php",
+			"activity_log": false,
+			"override_add": "",
+			"override_edit": "",
+			"override_view": "",
+			"override_list": "",
+			"api": true,
+			"frontend": false,
+			"paginate": true,
+			"paginate_join": "",
+			"portal": "admin",
+			"is_crud": true,
+			"method_edit_pre": "",
+			"is_add": true,
+			"is_edit": true,
+			"is_delete": false,
+			"is_real_delete": false,
+			"is_list": true,
+			"is_view": true,
+			"import": false,
+			"export": false,
+			"is_filter": true,
+			"all_records": true,
+			"active_only": false,
+			"method": "",
+			"method_add": "",
+			"method_edit": "",
+			"method_list": "",
+			"method_view": "",
+			"method_add_success": "$this->success('Coupon has been added successfully.');",
+			"method_edit_success": "$this->success('Coupon has been updated successfully.');",
+			"method_list_success": "",
+			"method_view_success": "",
+			"method_delete_success": "",
+			"custom_view_add": "",
+			"custom_view_edit": "",
+			"custom_view_list": "",
+			"custom_view_view": "",
+			"listing_fields_api": ["id", "code", "type", "data", "amount", "expire_at", "usage", "status"],
+			"listing_headers": ["xyzID", "xyzCode", "xyzType", "xyzData", "xyzAmount", "xyzExpire At", "xyzUsage", "xyzStatus"],
+			"listing_rows": ["id|integer", "code|string", "type|integer", "data|text", "amount|float", "expire_at|date", "usage|string", "status|string"],
+			"listing_actions": [],
+			"filter_fields": ["code", "type","amount", "expire_at", "usage", "status"],
+			"add_fields": ["code", "type", "data", "amount", "expire_at", "usage", "status"],
+			"edit_fields": ["code", "type", "data", "amount", "expire_at", "usage", "status"],
+			"view_fields": ["id", "code", "type", "data", "amount", "expire_at", "usage", "status"],
+			"autocomplete": "",
+			"dynamic_mapping_add": {},
+			"dynamic_mapping_edit": {},
+			"dynamic_mapping_view": {},
+			"dynamic_mapping": {},
+			"load_libraries": []
 		}
+		
 
 	],
 	"packages": {
@@ -2048,7 +2137,8 @@
 		"v1/api/pos_get_all_active_customers": "Guest/Custom_api_controller/pos_get_all_active_customers",
 		"v1/api/pos_customer_detail": "Guest/Custom_api_controller/pos_customer_detail",
 		"v1/api/pos_checkout_order": "Guest/Custom_api_controller/pos_checkout_order",
-		"v1/api/delete_cart_item" : "Guest/Custom_api_controller/delete_cart_item"
+		"v1/api/delete_cart_item" : "Guest/Custom_api_controller/delete_cart_item",
+		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory"
 	},
 	"reverse_copy": {
 	},

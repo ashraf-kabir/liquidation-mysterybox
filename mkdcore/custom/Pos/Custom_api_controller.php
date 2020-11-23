@@ -63,17 +63,27 @@ class Custom_api_controller extends CI_Controller
 
 
 
-    public function add_product_to_cart()
+    public function add_product_to_cart($scan_order = FALSE,$product_data = '')
     {
         if($this->session->userdata('user_id'))
         {
             $this->load->model('pos_cart_model');
 
+
+            if($scan_order)
+            {
+                $product_id   =  $product_data->id;
+                $product_qty  =  1;
+                $product_name =  $product_data->product_name;
+                $unit_price   =  $product_data->selling_price;
+            }else{
+                $product_id   =  $this->input->post('id', TRUE);
+                $product_qty  =  $this->input->post('quantity', TRUE);
+                $product_name =  $this->input->post('item', TRUE);
+                $unit_price   =  $this->input->post('price', TRUE);
+            }
             
-            $product_id   =  $this->input->post('id', TRUE);
-            $product_qty  =  $this->input->post('quantity', TRUE);
-            $product_name =  $this->input->post('item', TRUE);
-            $unit_price   =  $this->input->post('price', TRUE);
+            
             $total_price  =  $product_qty * $unit_price;
 
             $user_id = $this->session->userdata('user_id');
@@ -462,6 +472,30 @@ class Custom_api_controller extends CI_Controller
         }
     }
 
+
+
+
+    public function check_barcode_in_inventory()
+    {
+
+        $this->load->model('inventory_model'); 
+        $barcode_value = $this->input->post('barcode_value', TRUE); 
+
+        $product_data = $this->inventory_model->get_by_fields(['sku' => $barcode_value ]);
+
+        if( !empty($product_data) )
+        {
+            $output = $this->add_product_to_cart(TRUE, $product_data);
+            
+            echo $output;
+            exit();
+        }else{
+            $output['error'] = true;
+            $output['msg']   = "No such barcode found.";
+            echo json_encode($output);
+            exit();
+        } 
+    } 
 }
 
 

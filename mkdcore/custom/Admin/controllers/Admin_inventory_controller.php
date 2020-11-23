@@ -22,6 +22,8 @@ class Admin_inventory_controller extends Admin_controller
         $this->load->model('category_model');
         $this->load->model('store_model');
         $this->load->model('physical_location_model');
+        $this->load->model('customer_model'); 
+        $this->load->library('names_helper_service');
         
     }
 
@@ -84,6 +86,18 @@ class Admin_inventory_controller extends Admin_controller
             return $this->output->set_content_type('application/json')
                 ->set_status_header(200)
                 ->set_output(json_encode($this->_data['view_model']->to_json()));
+        }
+
+        
+        if ( !empty( $this->_data['view_model']->get_list() ) ) 
+        {
+            $this->names_helper_service->set_physical_location_model($this->physical_location_model);
+            $this->names_helper_service->set_customer_model($this->customer_model);
+            foreach ($this->_data['view_model']->get_list() as $key => &$value) 
+            { 
+                $value->physical_location = $this->names_helper_service->get_physical_location_real_name( $value->physical_location ); 
+                $value->assign_customer = $this->names_helper_service->get_customer_real_name( $value->assign_customer ); 
+            }
         }
 
         return $this->render('Admin/Inventory', $this->_data);
