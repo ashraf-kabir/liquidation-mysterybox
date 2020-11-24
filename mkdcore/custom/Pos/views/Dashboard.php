@@ -143,64 +143,8 @@
             <section id="main" class="container-fluid">
                 <div class="row pages active-page" id="pos">
                     <div class="col-xl-4 col-lg-4 col-md-4 cart-items" style="position: relative;">
-                        <div class="row py-3 px-md-3 justify-content-center pos-products-list "> 
+                        <div class="row py-3 px-md-3 justify-content-center pos-products-list ">  
                             
-                            <div class="col-xl-6 col-lg-6 col-md-5 col-sm-5 col-10">
-                                <div class="item" data-price="10.30" data-id="2">
-                                    <div class="w-100">
-                                        <img src="<?php echo base_url(); ?>assets/pos_images/blue-shoe.png" alt="shoe" class="mx-auto">
-                                    </div>
-                                    <h5 class="cart-item-title">Blue shoe</h5>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-5 col-sm-5 col-10">
-                                <div class="item" data-price="80.20" data-id="3">
-                                    <div class="w-100">
-                                        <img src="<?php echo base_url(); ?>assets/pos_images/black-shoe.png" alt="shoe" class="mx-auto">
-                                    </div>
-                                    <h5 class="cart-item-title">Black shoe</h5>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-5 col-sm-5 col-10">
-                                <div class="item" data-price="39.90" data-id="4">
-                                    <div class="w-100">
-                                        <img src="<?php echo base_url(); ?>assets/pos_images/men-shirt.png" alt="shoe" class="mx-auto">
-                                    </div>
-                                    <h5 class="cart-item-title">Men's Shirt</h5>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-5 col-sm-5 col-10">
-                                <div class="item" data-price="54.35" data-id="5">
-                                    <div class="w-100">
-                                        <img src="<?php echo base_url(); ?>assets/pos_images/wrist-watch.png" alt="shoe" class="mx-auto">
-                                    </div>
-                                    <h5 class="cart-item-title">Watch</h5>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-5 col-sm-5 col-10">
-                                <div class="item " data-price="54.35" data-id="5">
-                                    <div class="w-100">
-                                        <img src="<?php echo base_url(); ?>assets/pos_images/wrist-watch.png" alt="shoe" class="mx-auto">
-                                    </div>
-                                    <h5 class="cart-item-title">Watch</h5>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-5 col-sm-5 col-10">
-                                <div class="item" data-price="54.35" data-id="5">
-                                    <div class="w-100">
-                                        <img src="<?php echo base_url(); ?>assets/pos_images/wrist-watch.png" alt="shoe" class="mx-auto">
-                                    </div>
-                                    <h5 class="cart-item-title">Watch</h5>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-5 col-sm-5 col-10">
-                                <div class="item" data-price="54.35" data-id="5">
-                                    <div class="w-100">
-                                        <img src="<?php echo base_url(); ?>assets/pos_images/wrist-watch.png" alt="shoe" class="mx-auto">
-                                    </div>
-                                    <h5 class="cart-item-title">Watch</h5>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-4 cart-list px-0">
@@ -257,30 +201,25 @@
                                 <button class="btn btn-warning w-100" id="emty-carts"
                                     style=" background: #DD6928;">Empty Cart</button>
                             </div>
+
                             <div class="col-12 my-2">
                                 <button class="btn btn-primary w-100 customer-btn" data-target="#customer-modal"
                                     data-toggle="modal">Customer</button>
                             </div>
+
                             <div class="col-12 my-2">
                                 <button class="btn btn-success w-100 discount-btn" data-toggle="modal"
                                     data-target="#discount-modal"
                                     style="background: rgba(14, 135, 113, 0.83) !important;">Discount</button>
                             </div>
-                            <div class="col-12 my-2">
-                                <button class="btn btn-secondary w-100" data-toggle="modal"
-                                    data-target="#barcode-modal">Barcode/SKU</button>
-                            </div>
+                             
 
                             <div class="col-12 my-2">
                                 <button class="btn btn-success w-100" id="btn-scanner-camera2"  style="background: #1E59B1;">Scan Product</button>
                             </div>
 
 
-                            <div class="col-12 my-2">
-                                <button class="btn btn-success w-100" data-toggle='modal'
-                                    data-target="#customCart-modal" style="background: #1E59B1;">Custom Product</button>
-                            </div>
-
+                         
                             
                         </div>
                     </div>
@@ -707,7 +646,7 @@
         <div class="modal-dialog modal-md p-3 modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="discountLabel">Item Discount</h5>
+                    <h5 class="modal-title" id="discountLabel">Discount</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1101,8 +1040,7 @@ toastr.options = {
         });
     </script>
 
-    <script src="/assets/js/quagga.min.js"></script>
-    <script src="/assets/js/scan_product.js" defer></script>
+    <script src="/assets/js/quagga.min.js"></script> 
 </body>
  
 </html>

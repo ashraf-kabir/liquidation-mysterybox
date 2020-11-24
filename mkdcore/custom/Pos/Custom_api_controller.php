@@ -495,7 +495,272 @@ class Custom_api_controller extends CI_Controller
             echo json_encode($output);
             exit();
         } 
-    } 
+    }
+    
+    
+    public function edit_product_in_cart()
+    {
+        if ($this->session->userdata('user_id')) 
+        { 
+            $this->load->model('pos_cart_model');
+            
+            $product_id   = $this->input->post('id', TRUE);
+            $product_qty  = $this->input->post('quantity', TRUE);
+            
+            $user_id = $this->session->userdata('user_id');
+
+            /**
+            * Check if product in cart 
+            *   if yes update the cart
+            *    
+            */
+
+            $check_chart_if_product =  $this->pos_cart_model->get_by_fields(['product_id' => $product_id,'user_id' => $user_id]);  
+
+            if (!empty($check_chart_if_product)) 
+            {
+                $cart_product_data = $check_chart_if_product;
+ 
+                $total_price_now   =  $product_qty * $cart_product_data->unit_price;
+
+                $data_cart = array( 
+                    'product_qty'   => $product_qty, 
+                    'total_price'   => $total_price_now, 
+                ); 
+                $result = $this->pos_cart_model->edit($data_cart,$cart_product_data->id); 
+            } 
+
+
+            if ($result) 
+            {
+                $output['status'] = 200;
+                $output['success'] = 'Your data has been updated in cart successfully.'; 
+                echo json_encode($output);
+                exit();
+            }else{
+                $output['status'] = 0;
+                $output['error'] = 'Error! Please try again later.';
+                echo json_encode($output);
+                exit();
+            } 
+        }
+    }
+
+
+
+
+    /*
+    * Items in shelf that can be removed
+    */
+    public function pos_items_in_shelf()
+    {
+        
+        if ($this->session->userdata('user_id')) 
+        {  
+            $pos_user_id = $this->session->userdata('user_id'); 
+
+            $this->load->model('inventory_model');
+
+            $shelf_items_list = $this->inventory_model->get_all(['available_in_shelf' => 1]);
+
+            $table_content = '';
+            foreach ($shelf_items_list as $shelf_item_key => $shelf_item_value) 
+            {       
+                $table_content   .=   '<tr>';
+                $table_content   .=   '<th scope="row">'. $shelf_item_value->product_name  .'</th>';
+                $table_content   .=   '<td class="text-danger"> $ <span>'.  number_format($shelf_item_value->selling_price,2)  .'</span></td>';
+                $table_content   .=   '<td>'.  $shelf_item_value->quantity  .'</td>';
+                $table_content   .=   '<td></td>';
+                $table_content   .=   '<td>'.  $shelf_item_value->sku  .'</td>';
+                $table_content   .=   '<td class="btn text-danger shelf-remove" data-product-item-id="'.  $shelf_item_value->id  .'"  > Remove Product </td>';
+                $table_content   .=   '</tr>';
+                 
+            } 
+
+            if($table_content == '')
+            {
+                $table_content = "<tr><td colspan='100%'>No more items in shelf.</td></tr>";
+            }
+
+            if($table_content)
+            {
+                $output['status'] = 200;
+                $output['items_in_shelf'] = $table_content; 
+                echo json_encode($output);
+                exit();
+            }else{
+                $output['status'] = 0;
+                $output['error'] = 'Error! Please try again later.';
+                echo json_encode($output);
+                exit();
+            }
+
+        }
+    }
+
+
+
+    public function remove_from_shelf()
+    {
+        if ($this->session->userdata('user_id') and $this->input->post('product_id') ) 
+        {  
+            $product_id   =  $this->input->post('product_id', TRUE);
+
+            $this->load->model('inventory_model');
+
+            $data_update = array(
+              'available_in_shelf'  => 0, 
+            );
+            $result = $this->inventory_model->edit($data_update,$product_id);
+
+
+            if ($result) 
+            {  
+                $output['status']      = 200;
+                $output['success']     = 'Product has been removed from shelf successfully.'; 
+                echo json_encode($output);
+                exit();
+
+            }else{
+                $output['status'] = 0;
+                $output['error'] = 'Error! Please try again later.';
+                echo json_encode($output);
+                exit();
+            }
+
+        }
+    }
+
+
+
+
+    /*
+    * POS List of order that are not picked yet
+    */
+
+    public function pos_pickup_from_shelf()
+    {
+        
+        if ($this->session->userdata('user_id')) 
+        {  
+            $pos_user_id = $this->session->userdata('user_id');
+
+            $this->load->model('pos_order_model');
+            $this->load->model('pos_order_items_model');
+            
+            $orders_list = $this->pos_order_model->get_all(['pos_user_id' => $pos_user_id,'pos_pickup_status' => 1]);
+
+            $table_content = '';
+            foreach ($orders_list as $orders_list_key => $orders_list_value) 
+            {   
+
+
+                /*
+                * Order Details
+                **/
+                $items_data = $this->pos_order_items_model->get_all(['order_id' => $orders_list_value->id]);
+                $total_items        =  0;
+                $item_list_content  =  '';
+                foreach ($items_data as $items_data_key => $item_value) 
+                {
+                    $item_list_content  .=  '<li> ' .  $item_value->quantity  . 'x ' .  $item_value->product_name  . '</li>'; 
+                    $total_items++;
+                }
+
+
+                $table_content   .=  '<tr>';
+
+                $table_content   .=  '<th scope="row">'  . ucfirst($orders_list_value->billing_name) .  '</th>';
+
+                $table_content   .=  '<td>' . $orders_list_value->id  . '</td>';
+
+                $table_content   .=  '<td>
+                                        <ul class="list-unstyled text-left">
+                                            <li>'  . $total_items .  ' items</li>
+                                            '. $item_list_content .'
+                                        </ul>
+                                    </td>';
+
+                $table_content   .=  '<td>Paid in '  . ucfirst($orders_list_value->payment_method) .  '</td>';
+
+                $table_content   .=  '<td>'.  date('d F, Y',strtotime($orders_list_value->created_at))  .'</td>';
+
+                $table_content   .=  '<td>'.  date('d F, Y',strtotime($orders_list_value->updated_at))  .'</td>';
+
+                $table_content   .=  '<td><a href="" class="text-success mark_pickup_product" data-order-id="' . $orders_list_value->id . '" >Pick Up</a></td>';
+
+                $table_content   .=  '</tr>';    
+            } 
+
+
+            if($table_content == '')
+            {
+                $table_content = "<tr><td colspan='100%'>No order to pickup.</td></tr>";
+            }
+
+
+            if($table_content)
+            {
+                $output['status'] = 200;
+                $output['pickup_shelf'] = $table_content; 
+                echo json_encode($output);
+                exit();
+            }else{
+                $output['status'] = 0;
+                $output['error'] = 'Error! Please try again later.';
+                echo json_encode($output);
+                exit();
+            }
+
+        }
+    }
+
+
+    public function pos_mark_order_pickup()
+    {
+        if ($this->session->userdata('user_id')) 
+        { 
+            $this->load->model('pos_order_model');
+            $this->load->model('pos_order_note_model'); 
+
+            $pickup_order_id  =  $this->input->post('pickup_order_id', TRUE); 
+
+            $mark_order_picked_data = array( 
+                'pos_pickup_status'  => 2, 
+            ); 
+            $result = $this->pos_order_model->edit($mark_order_picked_data, $pickup_order_id); 
+
+            if ($result) 
+            { 
+                /* 
+                * Add Public Msg order is picked
+                */
+                $data_order_note = array( 
+                    'message_note'       =>  "Order has been picked.",
+                    'order_id'           =>  $pickup_order_id,
+                    'msg_type'           =>  1,  
+                ); 
+                $this->pos_order_note_model->create($data_order_note); 
+
+                $output['status']      = 200;
+                $output['success']     = 'Order has been picked successfully.'; 
+                echo json_encode($output);
+                exit();
+
+            }else{
+                $output['status'] = 0;
+                $output['error'] = 'Error! Please try again later.';
+                echo json_encode($output);
+                exit();
+            }
+
+        }
+    }
+
+
+
+
+    
 }
 
 

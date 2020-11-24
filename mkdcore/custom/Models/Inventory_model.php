@@ -14,7 +14,7 @@ class Inventory_model extends Manaknight_Model
 	protected $_primary_key = 'id';
 	protected $_return_type = 'array';
 	protected $_allowed_fields = [
-    'id',
+    	'id',
 		'product_name',
 		'sku',
 		'category_id',
@@ -32,20 +32,16 @@ class Inventory_model extends Manaknight_Model
 		'inventory_note',
 		'barcode_image',
 		'cost_price',
-		'admin_inventory_note',
-		'assign_customer',
-		'can_ship',
-		'num_pallet',
-		'num_lot',
-		'truckload',
-		'type',
+		'admin_inventory_note', 
+		'can_ship', 
 		'pin_item_top',
 		'product_type',
 		'status',
+		'available_in_shelf',
 		
     ];
 	protected $_label_fields = [
-    'ID','Product Name','SKU','Category','Manifest','Store Location','Physical Location','Location Description','Weight','Length','Height','Width','Image','Selling Price','Quantity','Inventory Note','xyzBarcode Image','Cost Price','Admin Inventory Note','Assign to Customer','Can Ship','# of Pallet','# of Lot','# of Truckload','Type','Pin Item','Product Type','Status',
+    'ID','Product Name','SKU','Category','Manifest','Store Location','Physical Location','Location Description','Weight','Length','Height','Width','Image','Selling Price','Quantity','Inventory Note','xyzBarcode Image','Cost Price','Admin Inventory Note','Can Ship','Pin Item','Product Type','Status',
     ];
 	protected $_use_timestamps = TRUE;
 	protected $_created_field = 'created_at';
@@ -71,18 +67,15 @@ class Inventory_model extends Manaknight_Model
 		['cost_price', 'Cost Price', ''],
 		['admin_inventory_note', 'Admin Inventory Note', ''],
 		['assign_customer', 'Assign to Customer', ''],
-		['can_ship', 'Can Ship', ''],
-		['num_pallet', '# of Pallet', ''],
-		['num_lot', '# of Lot', ''],
-		['truckload', '# of Truckload', ''],
-		['type', 'Type', ''],
+		['can_ship', 'Can Ship', ''], 
 		['pin_item_top', 'Pin Item', ''],
 		['product_type', 'Product Type', ''],
 		['status', 'Status', ''],
+		['available_in_shelf', 'Available In Shelf', ''],
 		
     ];
 	protected $_validation_edit_rules = [
-    ['id', 'ID', ''],
+    	['id', 'ID', ''],
 		['product_name', 'Product Name', 'required'],
 		['sku', 'SKU', ''],
 		['category_id', 'Category', ''],
@@ -102,14 +95,11 @@ class Inventory_model extends Manaknight_Model
 		['cost_price', 'Cost Price', ''],
 		['admin_inventory_note', 'Admin Inventory Note', ''],
 		['assign_customer', 'Assign to Customer', ''],
-		['can_ship', 'Can Ship', ''],
-		['num_pallet', '# of Pallet', ''],
-		['num_lot', '# of Lot', ''],
-		['truckload', '# of Truckload', ''],
-		['type', 'Type', ''],
+		['can_ship', 'Can Ship', ''], 
 		['pin_item_top', 'Pin Item', ''],
 		['product_type', 'Product Type', ''],
 		['status', 'Status', ''],
+		['available_in_shelf', 'Available In Shelf', ''],
 		
     ];
 	protected $_validation_messages = [
@@ -166,14 +156,7 @@ class Inventory_model extends Manaknight_Model
 		];
 	}
 
-	public function type_mapping ()
-	{
-		return [
-			1 => 'Pallet',
-			2 => 'Lot',
-			3 => 'TruckLoad',
-		];
-	}
+	 
 
 	public function can_ship_mapping ()
 	{
@@ -206,10 +189,12 @@ class Inventory_model extends Manaknight_Model
 	 *
 	 * @return array
 	 */
-	public function get_all_inventory_products($where = array())
+	public function get_all_inventory_products($where = array(),$available_in_shelf = 1)
     {
         $this->db->from($this->_table);
 
+		 
+		
         foreach($where as $field => $value)
         {
             if (is_numeric($field) && strlen($value) > 0)
@@ -223,11 +208,13 @@ class Inventory_model extends Manaknight_Model
                 continue;
             }
 
-            if ($value !== NULL)
+            if ($value !== NULL and !empty($value))
             { 
                 $this->db->or_like($this->clean_alpha_field($field), $value, 'both');
             }
-        }
+		}
+		
+		$this->db->where('available_in_shelf', $available_in_shelf);
         $this->db->order_by('pin_item_top','DESC');
         return $this->db->get()->result();
     }

@@ -383,8 +383,7 @@
 				["width", "float", [], "xyzWidth", "", ""],
 				["feature_image", "image|250|250|500|500", [{
 					"limit": 255
-				}], "xyzImage", "", ""],
-				 
+				}], "xyzImage", "", ""], 
 				["selling_price", "float", [], "xyzSelling Price", "", ""],
 				["quantity", "integer", [], "xyzQuantity", "", ""],
 				["inventory_note", "text", [], "xyzInventory Note", "", ""],
@@ -392,12 +391,9 @@
 				["cost_price", "float", [], "xyzCost Price", "", ""],
 				["admin_inventory_note", "text", [], "xyzAdmin Inventory Note", "", ""],
 				["assign_customer", "integer", [], "xyzAssign to Customer", "", ""],
-				["can_ship", "integer", [], "xyzCan Ship", "", ""],
-				["num_pallet", "integer", [], "xyz# of Pallet", "", ""],
-				["num_lot", "integer", [], "xyz# of Lot", "", ""],
-				["truckload", "integer", [], "xyz# of Truckload", "", ""], 
-				["type", "integer", [], "xyzType", "", ""],
+				["can_ship", "integer", [], "xyzCan Ship", "", ""],  
 				["pin_item_top", "integer", [{"default" : 1}], "xyzPin Item", "", ""],
+				["available_in_shelf", "integer", [{"default" : 1}], "xyzAvailable In Shelf", "", ""],
 				["product_type", "integer", [ ], "xyzProduct Type", "", ""],
 				["status", "integer", [], "xyzStatus", "", ""]
 			],
@@ -407,11 +403,6 @@
 				"status": {
 					"1": "Active",
 					"0": "Inactive"
-				},
-				"type": {
-					"1": "Pallet",
-					"2": "Lot",
-					"3": "TruckLoad"
 				}, 
 				"can_ship": {
 					"1": "Yes",
@@ -424,6 +415,10 @@
 				"pin_item_top": {
 					"1": "No",
 					"2": "Yes"
+				},
+				"available_in_shelf" : {
+					"1" : "Yes",
+					"0" : "No"
 				}
 			},
 			"pre": "",
@@ -1379,14 +1374,14 @@
 			"custom_view_edit": "",
 			"custom_view_list": "",
 			"custom_view_view": "",
-			"listing_fields_api": ["id", "product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "store_location_id", "barcode_image", "type"],
-			"listing_headers": ["xyzID", "xyzProduct Name", "xyzSKU", "xyzPhysical Location", "xyzType", "xyzQuantity", "xyzCustomer", "xyzStatus"],
-			"listing_rows": ["id|integer", "product_name|string", "sku|string", "physical_location|integer", "type|integer", "quantity|integer", "assign_customer|integer", "status|integer"],
+			"listing_fields_api": ["id", "product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",  "store_location_id", "barcode_image"],
+			"listing_headers": ["xyzID", "xyzProduct Name", "xyzSKU", "xyzPhysical Location", "xyzType", "xyzQuantity",  "xyzStatus"],
+			"listing_rows": ["id|integer", "product_name|string", "sku|string", "physical_location|integer", "product_type|integer", "quantity|integer", "status|integer"],
 			"listing_actions": [],
 			"filter_fields": ["product_name", "sku", "category_id", "assign_customer"],
-			"add_fields": ["product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "status", "store_location_id", "type" , "num_pallet" , "num_lot" , "truckload", "can_ship", "product_type", "pin_item_top"],
-			"edit_fields": ["product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "status", "store_location_id", "type" , "num_pallet" , "num_lot" , "truckload", "can_ship", "product_type", "pin_item_top"],
-			"view_fields": ["id", "product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "assign_customer", "status", "store_location_id", "barcode_image", "type" , "num_pallet" , "num_lot" , "truckload", "can_ship",  "product_type", "pin_item_top"],
+			"add_fields": ["product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",  "status", "store_location_id", "can_ship", "product_type", "pin_item_top"],
+			"edit_fields": ["product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",   "status", "store_location_id",   "can_ship", "product_type", "pin_item_top"],
+			"view_fields": ["id", "product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "status", "store_location_id", "barcode_image",  "can_ship",  "product_type", "pin_item_top"],
 			"autocomplete": "",
 			"dynamic_mapping_add": {},
 			"dynamic_mapping_edit": {},
@@ -1791,6 +1786,8 @@
 	},
 	"translations": {
 		"xyzSettings": "Settings",
+		"xyzBarcode Image": "Barcode Image",
+		"xyzCoupon": "Coupon",
 		"xyzCredentials" : "Credentials",
 		"xyzSave Data" : "Save Data",
 		"xyzContact Form Blacklist" : "Contact Form Blacklist",
@@ -2138,6 +2135,11 @@
 		"v1/api/pos_customer_detail": "Guest/Custom_api_controller/pos_customer_detail",
 		"v1/api/pos_checkout_order": "Guest/Custom_api_controller/pos_checkout_order",
 		"v1/api/delete_cart_item" : "Guest/Custom_api_controller/delete_cart_item",
+		"v1/api/edit_product_in_cart" : "Guest/Custom_api_controller/edit_product_in_cart",
+		"v1/api/pos_items_in_shelf" : "Guest/Custom_api_controller/pos_items_in_shelf",
+		"v1/api/remove_from_shelf" : "Guest/Custom_api_controller/remove_from_shelf",
+		"v1/api/pos_pickup_from_shelf" : "Guest/Custom_api_controller/pos_pickup_from_shelf",
+		"v1/api/pos_mark_order_pickup" : "Guest/Custom_api_controller/pos_mark_order_pickup",
 		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory"
 	},
 	"reverse_copy": {

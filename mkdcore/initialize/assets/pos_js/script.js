@@ -66,7 +66,7 @@ load_customers_list();
   {
       $.ajax({
           type: 'GET',
-          url: '../v1/api/pos/pos_pickup_from_shelf',
+          url: '../v1/api/pos_pickup_from_shelf',
           timeout: 15000,
           dataType: 'JSON', 
           success: function (response)  
@@ -108,7 +108,7 @@ load_customers_list();
   {
       $.ajax({
           type: 'GET',
-          url: '../v1/api/pos/pos_items_in_shelf',
+          url: '../v1/api/pos_items_in_shelf',
           timeout: 15000,
           dataType: 'JSON', 
           success: function (response)  
@@ -202,8 +202,15 @@ load_customers_list();
                     pos_products   +=  '<div class="col-xl-6 col-lg-6 col-md-5 col-sm-5 col-10">';
   
                     pos_products   +=  '<div class="item" data-price="'+  Number(obj.selling_price).toFixed(2)   +'" data-id="'+  obj.id   +'">';
+
+                    if(obj.feature_image != '')
+                    {
+                      pos_products   +=  '<div class="w-100"> <img src="'+  obj.feature_image   +'" alt="'+  obj.product_name   +'" class="mx-auto"> </div>';
+                    } else {
+                      pos_products   +=  '<div class="w-100"> <img src="../assets/pos_images/default_product_image.jpg" alt="'+  obj.product_name   +'" class="mx-auto"> </div>';
+                    }
    
-                    pos_products   +=  '<div class="w-100"> <img src="../assets/pos_images/red-shoe.png" alt="'+  obj.product_name   +'" class="mx-auto"> </div>';
+                    
   
                     pos_products   +=  '<h5 class="cart-item-title">'+  obj.product_name   +'</h5> </div> </div>';
   
@@ -224,7 +231,7 @@ load_customers_list();
     const pickup_order_id = e.currentTarget.getAttribute("data-order-id");
     $.ajax({
       type: 'POST',
-      url: '../v1/api/pos/pos_mark_order_pickup',
+      url: '../v1/api/pos_mark_order_pickup',
       timeout: 15000,
       data: {'pickup_order_id' : pickup_order_id },
       dataType: 'JSON', 
@@ -429,7 +436,7 @@ load_customers_list();
       // Reset the Discount and Enable the discount button
       $(".item-discount-value")[0].innerHTML = "0.00";
       $(".discount-btn").prop("disabled", false);
-      $(".discount-btn").html("Item Discount");
+      $(".discount-btn").html("Discount");
     };
   
     const deleteCartItem = (item) => {
@@ -460,7 +467,7 @@ load_customers_list();
           { 
               $.ajax({
                   type: 'POST',
-                  url: '../v1/api/pos/remove_from_shelf',
+                  url: '../v1/api/remove_from_shelf',
                   timeout: 15000,
                   dataType: 'JSON',
                   data : {'product_id' : product_id},
@@ -692,7 +699,7 @@ load_customers_list();
   
           $.ajax({
               type: 'POST',
-              url: '../v1/api/pos/edit_product_in_cart',
+              url: '../v1/api/edit_product_in_cart',
               timeout: 15000,
               data: serialized_data,
               dataType: 'JSON',
@@ -981,5 +988,159 @@ load_customers_list();
           }
       });  
     });
+
+
+ 
+  
+ 
+  
+  var _scannerIsRunning = false;
+  
+  
+  var action_in_process = 0;
+  function check_barcode_in_inventory(barcode_value)
+  { 
+      var barcode_value = barcode_value;  
+      if(barcode_value != '' && action_in_process == 0)
+      {
+          action_in_process = 1;
+          $.ajax({
+              url: ajaxURLPath + 'v1/api/check_barcode_in_inventory',
+              timeout: 15000,
+              method: 'post',
+              dataType: 'JSON',
+              data : {'barcode_value' : barcode_value},
+              success: function (response)  
+              {   
+                  if(response.error)
+                  {
+                      action_in_process = 0;
+                      toastr.error(response.msg);
+                  }
+  
+                  if(response.success)
+                  {
+                    toastr.success('Your data has been added to cart successfully.');
+                    load_cart_items_list();
+                  }
+                    
+              } 
+          })
+      }
+  } 
+   
+  
+  
+  function startScanner2() {
+      $("#scanner-container2").show();
+      $(".drawingBuffer").hide();
+      
+      Quagga.init({
+          inputStream: {
+              name: "Live",
+              type: "LiveStream",
+              target: document.querySelector('#scanner-container2'),
+              constraints: {
+                  width: 480,
+                  height: 320,
+                  facingMode: "environment"  
+              },
+          },
+          decoder: {
+              readers: [
+                  "code_128_reader",
+                  "ean_reader",
+                  "ean_8_reader",
+                  "code_39_reader",
+                  "code_39_vin_reader",
+                  "codabar_reader",
+                  "upc_reader",
+                  "upc_e_reader",
+                  "i2of5_reader"
+              ],
+              debug: {
+                  showCanvas: true,
+                  showPatches: true,
+                  showFoundPatches: true,
+                  showSkeleton: true,
+                  showLabels: true,
+                  showPatchLabels: true,
+                  showRemainingPatchLabels: true,
+                  boxFromPatches: {
+                      showTransformed: true,
+                      showTransformedBox: true,
+                      showBB: true
+                  }
+              }
+          },
+  
+      }, function (err) {
+          if (err) {
+              console.log(err);
+              alert(err)
+              return
+          } 
+          Quagga.start();
+  
+          // Set flag to is running
+          _scannerIsRunning = true;
+      });
+  
+      Quagga.onProcessed(function (result) {
+          var drawingCtx = Quagga.canvas.ctx.overlay,
+          drawingCanvas = Quagga.canvas.dom.overlay;
+  
+          if (result) {
+              if (result.boxes) {
+                  drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
+                  result.boxes.filter(function (box) {
+                      return box !== result.box;
+                  }).forEach(function (box) {
+                      Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, { color: "green", lineWidth: 2 });
+                  });
+              }
+  
+              if (result.box) {
+                  Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: "#00F", lineWidth: 2 });
+              }
+  
+              if (result.codeResult && result.codeResult.code) {
+                  Quagga.ImageDebug.drawPath(result.line, { x: 'x', y: 'y' }, drawingCtx, { color: 'red', lineWidth: 3 });
+              }
+          }
+      });
+  
+  
+      Quagga.onDetected(function (result) 
+      {
+          var barcode = result.codeResult.code;   
+          stop_barcode_camera(); 
+          check_barcode_in_inventory(barcode); 
+      });
+  }
+  
+  
+  function stop_barcode_camera()
+  {
+      Quagga.stop();
+      $("#scanner-container2").hide();  
+      _scannerIsRunning = false;
+  }
+  
+  // Start/stop scanner 
+  $(document).on('click','#btn-scanner-camera2',function(){
+      $('#scan-product-modal').modal('toggle');
+      if (_scannerIsRunning) 
+      {
+          stop_barcode_camera();
+      } else {
+          startScanner2();
+      }
   });
   
+  $(document).on('click','.close-scanner-camera2',function(){
+      $('#scan-product-modal').modal('toggle'); 
+      stop_barcode_camera(); 
+  });
+
+});

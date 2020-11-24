@@ -96,7 +96,7 @@ class Admin_inventory_controller extends Admin_controller
             foreach ($this->_data['view_model']->get_list() as $key => &$value) 
             { 
                 $value->physical_location = $this->names_helper_service->get_physical_location_real_name( $value->physical_location ); 
-                $value->assign_customer = $this->names_helper_service->get_customer_real_name( $value->assign_customer ); 
+                 
             }
         }
 
@@ -118,9 +118,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
 
 		if ($this->form_validation->run() === FALSE)
-		{
-            
-            
+		{ 
 			return $this->render('Admin/InventoryAdd', $this->_data);
         }
 
@@ -146,10 +144,7 @@ class Admin_inventory_controller extends Admin_controller
 		$assign_customer = $this->input->post('assign_customer', TRUE);
 		$status = $this->input->post('status', TRUE);
 		$store_location_id = $this->input->post('store_location_id', TRUE);
-		$type = $this->input->post('type', TRUE);
-		$num_pallet = $this->input->post('num_pallet', TRUE);
-		$num_lot = $this->input->post('num_lot', TRUE);
-		$truckload = $this->input->post('truckload', TRUE);
+		 
 		$can_ship = $this->input->post('can_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
         $pin_item_top = $this->input->post('pin_item_top', TRUE);
@@ -176,14 +171,9 @@ class Admin_inventory_controller extends Admin_controller
 			'quantity' => $quantity,
 			'inventory_note' => $inventory_note,
 			'cost_price' => $cost_price,
-			'admin_inventory_note' => $admin_inventory_note,
-			'assign_customer' => $assign_customer,
+			'admin_inventory_note' => $admin_inventory_note, 
 			'status' => $status,
-			'store_location_id' => $store_location_id,
-			'type' => $type,
-			'num_pallet' => $num_pallet,
-			'num_lot' => $num_lot,
-			'truckload' => $truckload,
+			'store_location_id' => $store_location_id, 
             'can_ship' => $can_ship,
             'product_type' => $product_type,
 			'pin_item_top' => $pin_item_top,
@@ -267,13 +257,10 @@ class Admin_inventory_controller extends Admin_controller
 		$inventory_note = $this->input->post('inventory_note', TRUE);
 		$cost_price = $this->input->post('cost_price', TRUE);
 		$admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
-		$assign_customer = $this->input->post('assign_customer', TRUE);
+		 
 		$status = $this->input->post('status', TRUE);
 		$store_location_id = $this->input->post('store_location_id', TRUE);
-		$type = $this->input->post('type', TRUE);
-		$num_pallet = $this->input->post('num_pallet', TRUE);
-		$num_lot = $this->input->post('num_lot', TRUE);
-		$truckload = $this->input->post('truckload', TRUE);
+		 
 		$can_ship = $this->input->post('can_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
 		$pin_item_top = $this->input->post('pin_item_top', TRUE);
@@ -301,14 +288,9 @@ class Admin_inventory_controller extends Admin_controller
 			'quantity' => $quantity,
 			'inventory_note' => $inventory_note,
 			'cost_price' => $cost_price,
-			'admin_inventory_note' => $admin_inventory_note,
-			'assign_customer' => $assign_customer,
+			'admin_inventory_note' => $admin_inventory_note, 
 			'status' => $status,
-			'store_location_id' => $store_location_id,
-			'type' => $type,
-			'num_pallet' => $num_pallet,
-			'num_lot' => $num_lot,
-			'truckload' => $truckload,
+			'store_location_id' => $store_location_id, 
             'can_ship' => $can_ship,
             'product_type' => $product_type,
 			'pin_item_top' => $pin_item_top,

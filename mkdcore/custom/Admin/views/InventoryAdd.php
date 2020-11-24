@@ -96,17 +96,7 @@ if ($layout_clean_mode) {
 						}?>
 					</select>  
 				</div>
-
-				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Type">Type </label>
-					<select id="form_type" name="type" class="form-control data-input">
-						<?php foreach ($view_model->type_mapping() as $key => $value) {
-							echo "<option value='{$key}'> {$value} </option>";
-						}?>
-					</select>
-				</div>
-                
-				
+ 
 				<div class="form-group col-md-5 col-sm-12 ">
 					<label for="Manifest">Manifest </label>
 					<input type="text" class="form-control data-input" id="form_manifest_id" name="manifest_id" value="<?php echo set_value('manifest_id'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
@@ -158,19 +148,7 @@ if ($layout_clean_mode) {
 					<input type="text" class="form-control data-input" id="form_selling_price" name="selling_price" value="<?php echo set_value('selling_price'); ?>" onkeypress="return mkd_is_number(event,this)"/>
 				</div>
 
-                <div class="form-group col-md-5 col-sm-12 ">
-					<label for="# of Pallet"># of Pallet </label>
-					<input type="text" class="form-control data-input" id="form_num_pallet" name="num_pallet" value="<?php echo set_value('num_pallet'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
-				</div>
-				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="# of Lot"># of Lot </label>
-					<input type="text" class="form-control data-input" id="form_num_lot" name="num_lot" value="<?php echo set_value('num_lot'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
-				</div>
-				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="# of Truckload"># of Truckload </label>
-					<input type="text" class="form-control data-input" id="form_truckload" name="truckload" value="<?php echo set_value('truckload'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
-				</div>
-
+               
                 <div class="form-group col-md-5 col-sm-12 ">
 					<label for="xyzPin Item">Pin Item </label>
 					<select id="form_pin_item_top" name="pin_item_top" class="form-control data-input">
@@ -218,14 +196,7 @@ if ($layout_clean_mode) {
                         <span id="barcode_image_text" class="mkd-upload-filename"></span>
                     </div>
                 </div>
-
-                <div class="form-group col-md-5 col-sm-12 ">
-					<label for="Assign to Customer">Assign to Customer </label>
-                    <select class="form-control data-input" id="form_assign_customer" name="assign_customer" > 
-					</select>  
-				</div>
-
-
+ 
                 <div class="form-group col-md-5 col-sm-12">
 					<label for="Inventory Note">Inventory Note </label>
 					<textarea id='form_inventory_note' name='inventory_note' class='form-control data-input' rows='5'><?php echo set_value('inventory_note'); ?></textarea>
@@ -244,8 +215,7 @@ if ($layout_clean_mode) {
 						}?>
 					</select>
 				</div>
-				
-
+				 
                     
                 <div class="form-group  col-md-5 col-sm-12">
                     <input type="submit" class="btn btn-primary text-white mr-4 my-4" value="Submit">

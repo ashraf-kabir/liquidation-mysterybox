@@ -94,16 +94,7 @@ if ($layout_clean_mode) {
 					</select>   
 				</div>
 
-
-				<div class="form-group col-md-5 col-sm-12">
-					<label for="Type">Type </label>
-					<select id="form_type" name="type" class="form-control data-input">
-						<?php foreach ($view_model->type_mapping() as $key => $value) {
-							echo "<option value='{$key}' " . (($view_model->get_type() == $key && $view_model->get_type() != '') ? 'selected' : '') . "> {$value} </option>";
-						}?>
-					</select>
-				</div>
-
+ 
 
 				<div class="form-group col-md-5 col-sm-12">
 					<label for="Manifest">Manifest </label>
@@ -165,18 +156,7 @@ if ($layout_clean_mode) {
 					<input type="text" class="form-control data-input" id="form_selling_price" name="selling_price" value="<?php echo set_value('selling_price', $this->_data['view_model']->get_selling_price());?>" onkeypress="return mkd_is_number(event,this)"/>
 				</div>
 				
-                <div class="form-group col-md-5 col-sm-12">
-					<label for="# of Pallet"># of Pallet </label>
-					<input type="text" class="form-control data-input" id="form_num_pallet" name="num_pallet" value="<?php echo set_value('num_pallet', $this->_data['view_model']->get_num_pallet());?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
-				</div>
-				<div class="form-group col-md-5 col-sm-12">
-					<label for="# of Lot"># of Lot </label>
-					<input type="text" class="form-control data-input" id="form_num_lot" name="num_lot" value="<?php echo set_value('num_lot', $this->_data['view_model']->get_num_lot());?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
-				</div>
-				<div class="form-group col-md-5 col-sm-12">
-					<label for="# of Truckload"># of Truckload </label>
-					<input type="text" class="form-control data-input" id="form_truckload" name="truckload" value="<?php echo set_value('truckload', $this->_data['view_model']->get_truckload());?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
-				</div>
+                
                 
 				<div class="form-group col-md-5 col-sm-12">
 					<label for="xyzPin Item">Pin Item </label>
@@ -243,10 +223,7 @@ if ($layout_clean_mode) {
 					<label for="Admin Inventory Note">Admin Inventory Note </label>
 					<textarea id='form_admin_inventory_note' name='admin_inventory_note' class='data-input form-control' rows='5'><?php echo set_value('admin_inventory_note', $this->_data['view_model']->get_admin_inventory_note());?></textarea>
 				</div>
-				<div class="form-group col-md-5 col-sm-12">
-					<label for="Assign to Customer">Assign to Customer </label>
-					<input type="text" class="form-control data-input" id="form_assign_customer" name="assign_customer" value="<?php echo set_value('assign_customer', $this->_data['view_model']->get_assign_customer());?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
-				</div>
+				 
 				<div class="form-group col-md-5 col-sm-12">
 					<label for="Status">Status </label>
 					<select id="form_status" name="status" class="form-control data-input">
