@@ -3,6 +3,31 @@ $(document).ready(() => {
   path = pathName.split('/')[1]+'/';
   let ajaxURLPath = document.location.origin + '/';
   let loading_gif = "../assets/image/loading.gif";
+
+
+  //past orders
+  function load_summary_report( search_date  = '')
+  {
+      $(".report_summary").html('');
+      $(".report_summary_total").html('');
+      $.ajax({
+          type: 'POST',
+          url: '../v1/api/pos_summary_report',
+          timeout: 15000,
+          dataType: 'JSON', 
+          data : {'search_date': search_date},
+          success: function (response)  
+          { 
+              if (response.report_summary) 
+              { 
+                  $(".report_summary").html(response.report_summary);
+                  $(".report_summary_total").html(response.report_summary_total);
+              } 
+          }
+      }); 
+  } 
+
+
     // $("#drawer-modal").modal("show");
   // Get list Of Pickup From Shelf
   
@@ -87,7 +112,7 @@ load_customers_list();
   {
       $.ajax({
           type: 'POST',
-          url: '../v1/api/pos/pos_past_order',
+          url: '../v1/api/pos_past_order',
           timeout: 15000,
           dataType: 'JSON', 
           data : {'start_date': search_past_orders_from, 'end_date' : search_past_orders_to, 'customer_name' : search_past_orders_customer},
@@ -322,7 +347,7 @@ load_customers_list();
     month.toString().length === 1 ? (month = `0${month}`) : month;
     day.toString().length < 1 ? (day = `0${day}`) : day;
     const todayDate = `${year}-${month}-0${day}`;
-    $("input#date")[0].value = todayDate;
+    // $("input#summary-date")[0].value = todayDate;
     // console.log("2020-08-08", todayDate);
     let cartItems = [];
   
@@ -776,6 +801,7 @@ load_customers_list();
           case "report-toggler":
               $("#report").removeClass("d-none");
               $("#report").addClass("active-page");
+              load_summary_report($('#summary-date').val());
               break; 
         default:
           null;
@@ -801,7 +827,7 @@ load_customers_list();
               type: 'POST',
               url: '../v1/api/pos_checkout_order',
               timeout: 15000,
-              data: { 'form_data' : formData, 'cart_items' : cartItems },
+              data: { 'form_data' : formData, 'cart_items' : cartItems, 'discount' : discountedTotal },
               dataType: 'JSON',
               success: function (response) 
               {
@@ -810,6 +836,9 @@ load_customers_list();
                       toastr.error(response.error);
                   } else{ 
                     toastr.success(response.success);
+                    load_cart_items_list();
+                    cartItems = [];
+                    displayCartItems(cartItems);
                     // Hide the active Page and show the receipt page
                     $(".active-page").addClass("d-none");
                     $(".active-page").removeClass("active-page");
@@ -1142,5 +1171,13 @@ load_customers_list();
       $('#scan-product-modal').modal('toggle'); 
       stop_barcode_camera(); 
   });
+
+
+
+  $(document).on('click','.search_summary_report',function(){
+    load_summary_report($('#summary-date').val());
+  });
+
+  
 
 });

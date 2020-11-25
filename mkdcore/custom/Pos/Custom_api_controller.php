@@ -322,16 +322,17 @@ class Custom_api_controller extends CI_Controller
         
         if ($this->session->userdata('user_id')) 
         { 
+            
             $pos_user_id = $this->session->userdata('user_id');
             
             $this->load->model('pos_order_model');
             $this->load->model('pos_order_note_model');
             $this->load->model('pos_order_items_model');
             $this->load->model('pos_cart_model');
+            $this->load->model('transactions_model');
 
             //list of data from cart
             $cart_items = $this->input->post('cart_items', TRUE);
-           
             
 
             //discount
@@ -393,12 +394,7 @@ class Custom_api_controller extends CI_Controller
 
 
             if ($result) 
-            {
-
-                
-                
-                
-
+            { 
                 /**
                 * Store order items detail 
                 * 
@@ -448,7 +444,26 @@ class Custom_api_controller extends CI_Controller
                     'subtotal' =>  $sub_total,  
                 );
                 $result = $this->pos_order_model->edit($data_order_prices,$order_id);
-                
+
+
+                /**
+                * Add Transaction  
+                */    
+                $add_transaction = array(
+                    'payment_type'      =>  $customer_data['payment'],
+                    'customer_id'       =>  $customer_data['customer_id'], 
+                    'pos_user_id'       =>  $pos_user_id, 
+                    'transaction_date'  =>  Date('Y-m-d'), 
+                    'transaction_time'  =>  Date('g:i:s A'), 
+                    'pos_order_id'      =>  $order_id, 
+                    'tax'               =>  $tax, 
+                    'discount'          =>  $discount, 
+                    'subtotal'          =>  $sub_total, 
+                    'total'             =>  $grand_total, 
+                );
+                $this->transactions_model->create($add_transaction);
+
+
                 
                 $user_id = $this->session->userdata('user_id'); 
                 $result = $this->pos_cart_model->real_delete_by_fields(['user_id' => $user_id]);
@@ -760,7 +775,217 @@ class Custom_api_controller extends CI_Controller
 
 
 
-    
+    /*
+    * List of Past Order for Past Order page on POS
+    */
+    public function pos_past_order()
+    {
+        
+        if ($this->session->userdata('user_id')) 
+        {  
+            $pos_user_id = $this->session->userdata('user_id');
+            
+
+            $this->load->model('pos_order_model');
+            $this->load->model('pos_order_items_model');
+            
+
+            $custom_query = '';
+            if(  $this->input->post('customer_name') and !empty($this->input->post('customer_name'))  )
+            {
+                $custom_query = ' `billing_name` LIKE "'.  $this->input->post('customer_name')  .'%" ';
+            }  
+
+            if($this->input->post('start_date') and !empty($this->input->post('start_date')) and $this->input->post('end_date') and !empty($this->input->post('end_date')) )
+            {
+                if(!empty($custom_query))
+                {
+                    $custom_query .= ' AND ';
+                }
+                $from =  $this->input->post('start_date');
+                $to   =  $this->input->post('end_date');
+                $custom_query .= " ( DATE_FORMAT(`created_at`, '%Y-%m-%d') >= '".$from."' AND  DATE_FORMAT(`created_at`, '%Y-%m-%d')  <= '".  $to  ."'   )  ";
+            }
+
+
+            if($custom_query == '')
+            {
+                $orders_list = $this->pos_order_model->get_all(['pos_user_id' => $pos_user_id,'pos_pickup_status' =>2]);
+            }else{
+                $orders_list = $this->pos_order_model->get_all_custom_where($custom_query);
+            }
+
+             
+
+            $table_content = '';
+            foreach ($orders_list as $orders_list_key => $orders_list_value) 
+            {   
+ 
+                /*
+                * Order Details
+                **/
+                $items_data = $this->pos_order_items_model->get_all(['order_id' => $orders_list_value->id]);
+                $total_items        =  0;
+                $item_list_content  =  '';
+                foreach ($items_data as $items_data_key => $item_value) 
+                {
+                    $item_list_content  .=  '<li> ' .  $item_value->quantity  . 'x ' .  $item_value->product_name  . '</li>'; 
+                    $total_items++;
+                }
+
+
+                $table_content   .=  '<tr>';
+
+                $table_content   .=  '<th scope="row">'  . ucfirst($orders_list_value->billing_name) .  '</th>';
+
+                $table_content   .=  '<td>' . $orders_list_value->id  . '</td>';
+
+                $table_content   .=  '<td>
+                                        <ul class="list-unstyled text-left">
+                                            <li>'  . $total_items .  ' items</li>
+                                            ' . $item_list_content . '
+                                        </ul>
+                                    </td>';
+
+                $table_content   .=  '<td>Paid in ' .    ucfirst($orders_list_value->payment_method)  . '</td>';
+
+                $table_content   .=  '<td  class="text-danger" >$' .   number_format($orders_list_value->total,2)    . '</td>';
+
+                $table_content   .=  '<td >$' .  number_format($orders_list_value->tax,2)   . '</td>';
+
+                $grand_total = $orders_list_value->tax + $orders_list_value->total;
+
+                $table_content   .=  '<td  class="text-danger">$' .  number_format($grand_total,2)  . '</td>';
+
+                $table_content   .=  '</tr>';    
+            } 
+
+
+            if($table_content == '')
+            {
+                $table_content = "<tr><td colspan='100%'>No record found.</td></tr>";
+            }
+
+
+            if($table_content)
+            {
+                $output['status'] = 200;
+                $output['pos_past_order'] = $table_content; 
+                echo json_encode($output);
+                exit();
+            }else{
+                $output['status'] = 0;
+                $output['error'] = 'Error! Please try again later.';
+                echo json_encode($output);
+                exit();
+            }
+
+        }
+    }
+
+
+    /*
+    * Summary of Day 
+    */
+    public function pos_summary_report()
+    {
+        
+        if ($this->session->userdata('user_id')) 
+        {  
+            $pos_user_id = $this->session->userdata('user_id');
+            
+
+            $this->load->model('pos_order_model');
+            $this->load->model('transactions_model');
+            $this->load->model('customer_model');
+            $this->load->library('names_helper_service');
+            $this->names_helper_service->set_customer_model($this->customer_model);
+            $search_date = $this->input->post('search_date', TRUE );
+ 
+            $transactions_list = $this->transactions_model->get_all( ['pos_user_id' => $pos_user_id, 'transaction_date' => $search_date ]);
+             
+
+            $table_content = '';
+
+            $total_day_cash   =  0;
+            $total_discount   =  0;
+            $total_credit     =  0;
+            $total_all        =  0;
+             
+            foreach ($transactions_list as $_key => $transaction) 
+            {    
+
+                $customer_name = $this->names_helper_service->get_customer_real_name($transaction->customer_id);
+                $table_content   .=  '<tr>';
+
+                $table_content   .=  '<th scope="row">'  . ucfirst($transaction->pos_order_id) .  '</th>'; 
+                
+                $table_content   .=  '<td>' .    ucfirst($customer_name)  . '</td>';
+  
+                $table_content   .=  '<td>' .    date('m-d-Y',strtotime( $transaction->transaction_date )) . ' ' . date('g:i A',strtotime( $transaction->transaction_time )) . '</td>';
+ 
+                $table_content   .=  '<td>' .    ucfirst($transaction->payment_type)  . '</td>';
+
+                $table_content   .=  '<td>$' .   number_format($transaction->tax,2)    . '</td>';
+
+                $table_content   .=  '<td>$' .  number_format($transaction->discount,2)   . '</td>'; 
+
+                $table_content   .=  '<td>$' .  number_format($transaction->subtotal,2)   . '</td>'; 
+
+                $table_content   .=  '<td  class="text-danger" >$' .  number_format($transaction->total,2)  . '</td>';
+
+                $table_content   .=  '</tr>';    
+
+                if($transaction->payment_type == 'card')
+                {
+                    $total_credit     +=  $transaction->total;
+                }
+
+                if($transaction->payment_type == 'cash')
+                {
+                    $total_day_cash   +=  $transaction->total;
+                }
+               
+                $total_discount   +=  $transaction->discount; 
+                $total_all        +=  $transaction->total;
+            } 
+
+            $table_summary = '';
+            if($table_content == '')
+            {
+                $table_content = "<tr><td colspan='100%'>No record found.</td></tr>";
+                $table_summary = "<tr><td colspan='100%'>No record found.</td></tr>";
+            }else{
+                $table_summary   .=  '<tr>';
+  
+                $table_summary   .=  '<td>$' .   number_format($total_day_cash,2)    . '</td>';
+
+                $table_summary   .=  '<td>$' .  number_format($total_credit,2)   . '</td>'; 
+
+                $table_summary   .=  '<td>$' .  number_format($total_discount,2)   . '</td>'; 
+
+                $table_summary   .=  '<td  class="text-danger" >$' .  number_format($total_all,2)  . '</td>';
+
+                $table_summary   .=  '</tr>';    
+            }
+
+
+            if($table_content)
+            {
+                $output['status'] = 200;
+                $output['report_summary']       =  $table_content; 
+                $output['report_summary_total'] =  $table_summary; 
+                echo json_encode($output);
+                exit();
+            }else{
+                $output['status'] = 0;
+                $output['error'] = 'Error! Please try again later.';
+                echo json_encode($output);
+                exit();
+            }
+
+        }
+    }
 }
 
 

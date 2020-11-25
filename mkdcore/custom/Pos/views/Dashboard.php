@@ -371,65 +371,55 @@
                     </div>
                 </div>
 
-                <div class="row pages d-none" id="report">
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-10 px-1 px-md-5 mt-3 py-0">
-                        <label for="date" class="d-none">Select Date</label>
-                        <p class="my-1">Select Date</p>
-                        <input type="date" name="date" id="date" class="form-control" value="">
-                    </div>
-                    <div class="col-12 px-1 px-md-5 mt-3 py-0">
-                        <form action="" class=" bg-white px-2 p-md-3">
-                            <div class="form-row align-items-center justify-content-between">
-                                <div class="col mx-auto">
-                                    <label for="id" class="">ID</label>
-                                    <input type="text" id="id" name="id" class="form-control">
-                                </div>
-                                <div class="col mx-auto">
-                                    <label for="first-name" class="">First Name</label>
-                                    <input type="text" id="first-name-report" name="first-name-report" class="form-control">
-                                </div>
-                                <div class="col ml-auto">
-                                    <label for="last-name" class="">Last Name</label>
-                                    <input type="text" id="last-name-report" name="last-name-report" class="form-control">
-                                </div>
-                                <div class="col align-self-end text-right">
-                                    <input type="submit" class="btn btn-secondary" value="Search">
-                                </div>
+                <div class="row pages d-none" id="report"> 
+
+                    <div class="col-12  px-1 my-3 px-md-5">
+                        <div class="row bg-white" style="padding: 18px 3px;margin: 0px !important;">
+                            <div class="col-3">
+                                <label for="summary-date" class="">Select Date</label>
+                                <input type="date" name="date" id="summary-date" class="form-control" value="<?php echo Date('Y-m-d'); ?>" >
                             </div>
-                        </form>
+ 
+                            <div class="col-3" style="margin-top: 29px;"> 
+                                <button class="btn btn-info search_summary_report">Search</button>
+                            </div>
+                        </div>
                     </div>
+                     
+
                     <div class="col-12 px-1 my-3 px-md-5 table-responsive ">
                         <table class="table bg-white">
                             <thead class="thead-dark text-center">
                                 <tr>
-                                    <th scope="col">Customer Name</th>
-                                    <th scope="col">Order Number</th>
-                                    <th scope="col">Items</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Sub Total</th>
-                                    <th scope="col">Tax</th>
-                                    <th scope="col">Total</th>
+                                    <th scope="col">Order No</th>
+                                    <th scope="col">Customer</th> 
+                                    <th scope="col">Transaction on</th> 
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Tax</th> 
+                                    <th scope="col">Discount</th> 
+                                    <th scope="col">Sub Total</th> 
+                                    <th scope="col">Total</th> 
                                 </tr>
                             </thead>
-                            <tbody class=" text-center">
-                                <tr>
-                                    <th scope="row">Jhone Doe</th>
-                                    <td>1</td>
-                                    <td>
-                                        <ul class="list-unstyled text-left">
-                                            <li>4 items</li>
-                                            <li>1x Step Ladder</li>
-                                            <li>2x Zero-turn mower</li>
-                                            <li>power equipment Combo Kit</li>
-                                            <li>Pressure Washers</li>
-                                        </ul>
-                                    </td>
-                                    <td>Paid in Cash</td>
-                                    <td class="text-danger">$49.99</td>
-                                    <td>$0.15</td>
-                                    <td class="text-danger">$49.68</td>
-                                </tr>
+                            <tbody class=" text-center report_summary">
+                                 
+                            </tbody>
+                        </table>
+                    </div>
 
+                    <div class="col-12 px-1 my-3 px-md-5 table-responsive ">
+                        <table class="table bg-white">
+                            <thead class="thead-dark text-center">
+                                <tr>
+                                    <th scope="col">Day Cash</th>
+                                    <th scope="col">Credit Card</th>
+                                    <th scope="col">Discount</th> 
+                                    <th scope="col">Total</th> 
+                                </tr>
+                            </thead>
+                            <tbody class=" text-center report_summary_total">
+                                <tr>  
+                                </tr> 
                             </tbody>
                         </table>
                     </div>

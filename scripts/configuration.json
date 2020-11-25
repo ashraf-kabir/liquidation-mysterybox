@@ -552,12 +552,7 @@
 				["customer_type", "integer", [], "xyzCustomer Type", "", ""],
 				["company_name", "string", [{
 					"limit": 255
-				}], "xyzCompany Name", "", ""],
-				["tax_id_number", "string", [{ "limit": 255 }], "xyzTax ID Number", "", ""],
-				["tax_documents", "file", [{ "limit": 255 }], "xyzTax Document", "", ""],
-				["tax_exempt", "integer", [], "xyzTax Exempt", "", ""],
-				["tax_exempt_status", "integer", [], "xyzTax Exempt", "", ""],
-				["credential_id", "integer", [], "xyzCredential ID", "", ""],
+				}], "xyzCompany Name", "", ""], 
 				["status", "integer", [], "xyzStatus", "required|integer", "required|integer"]
 			],
 			"method": "",
@@ -571,14 +566,7 @@
 				"customer_type": {
 					"1": "Business",
 					"2": "Individual"
-				},
-
-				"tax_exempt_status": {
-					"1": "Approved",
-					"2": "Disapproved",
-					"3": "Pending",
-					"4": ""
-				}
+				} 
 			},
 			"pre": "if(isset($data['tax_exempt']) and $data['tax_exempt'] == 1)\n\t\t{\n\t\t\t $data['tax_exempt_status'] = 3; \n\t\t}\n",
 			"post": "if(isset($data['tax_exempt']) and $data['tax_exempt'] == 1)\n\t\t{\n\t\t\t $data['tax_exempt_status'] = 3; \n\t\t}\n",
@@ -773,6 +761,37 @@
 			"mapping": {
 				"status": {"0": "Active","1": "Inactive"},
 				"type": {"0": "Fixed Amount","1": "Percentage","2": "Specific Product","3": "Cart Discount"}
+			},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
+		},
+		{
+			"name": "transactions",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzID", "", ""],
+				["payment_type", "string", [{
+					"limit": 255
+				}], "xyzPayment Type", "required|max_length[255]", "required|max_length[255]"],
+				["pos_order_id", "integer", [], "xyzOrder ID", "required|integer", "required|integer"],
+				["transaction_date", "date", [], "xyzTransaction Date", "", ""],
+				["transaction_time", "text", [], "xyzTransaction Time", "", ""],
+				["pos_user_id", "integer", [], "xyzPOS User", "", ""],
+				["customer_id", "integer", [], "xyzCustomer", "", ""], 
+				["tax", "float", [{"default" : 0}], "xyzTax", "", ""], 
+				["discount", "float", [{"default" : 0}], "xyzDiscount", "", ""], 
+				["subtotal", "float", [], "xyzSub Total", "", ""], 
+				["total", "float", [], "xyzTotal", "", ""], 
+				["status", "integer", [], "xyzStatus", "", ""]
+			],
+			"method": "",
+			"join": [],
+			"mapping": {
+				"status": {"0": "Active","1": "Inactive"} 
 			},
 			"pre": "",
 			"post": "",
@@ -1497,9 +1516,9 @@
 			"listing_rows": ["id|integer", "name|string", "email|string", "phone|string", "customer_since|date", "last_order|string", "num_orders|integer", "status|integer"],
 			"listing_actions": [],
 			"filter_fields": ["name", "email", "phone", "customer_since", "status"],
-			"add_fields": ["name", "email", "phone",  "company_name", "tax_id_number", "tax_documents", "tax_exempt", "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status" ],
-			"edit_fields": ["name", "email", "phone", "company_name", "tax_id_number",  "tax_documents", "tax_exempt", "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status"],
-			"view_fields": ["id", "name", "email", "phone", "company_name", "tax_id_number",  "tax_documents", "tax_exempt", "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "last_order", "num_orders", "status"],
+			"add_fields": ["name", "email", "phone",  "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status" ],
+			"edit_fields": ["name", "email", "phone", "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status"],
+			"view_fields": ["id", "name", "email", "phone", "company_name",   "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "last_order", "num_orders", "status"],
 			"autocomplete": "",
 			"dynamic_mapping_add": {},
 			"dynamic_mapping_edit": {},
@@ -1738,7 +1757,7 @@
 			"listing_headers": ["xyzID", "xyzCode", "xyzType", "xyzData", "xyzAmount", "xyzExpire At", "xyzUsage", "xyzStatus"],
 			"listing_rows": ["id|integer", "code|string", "type|integer", "data|text", "amount|float", "expire_at|date", "usage|string", "status|string"],
 			"listing_actions": [],
-			"filter_fields": ["code", "type","amount", "expire_at", "usage", "status"],
+			"filter_fields": ["code", "type","amount", "expire_at", "status"],
 			"add_fields": ["code", "type", "data", "amount", "expire_at", "usage", "status"],
 			"edit_fields": ["code", "type", "data", "amount", "expire_at", "usage", "status"],
 			"view_fields": ["id", "code", "type", "data", "amount", "expire_at", "usage", "status"],
@@ -1787,6 +1806,8 @@
 	"translations": {
 		"xyzSettings": "Settings",
 		"xyzBarcode Image": "Barcode Image",
+		"xyzExpire At": "Expire At",
+		"xyzUsage": "Usage",
 		"xyzCoupon": "Coupon",
 		"xyzCredentials" : "Credentials",
 		"xyzSave Data" : "Save Data",
@@ -2140,6 +2161,8 @@
 		"v1/api/remove_from_shelf" : "Guest/Custom_api_controller/remove_from_shelf",
 		"v1/api/pos_pickup_from_shelf" : "Guest/Custom_api_controller/pos_pickup_from_shelf",
 		"v1/api/pos_mark_order_pickup" : "Guest/Custom_api_controller/pos_mark_order_pickup",
+		"v1/api/pos_past_order" : "Guest/Custom_api_controller/pos_past_order",
+		"v1/api/pos_summary_report" : "Guest/Custom_api_controller/pos_summary_report",
 		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory"
 	},
 	"reverse_copy": {
