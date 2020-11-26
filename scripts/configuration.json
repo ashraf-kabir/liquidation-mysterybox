@@ -844,7 +844,7 @@
 				"xyzURL Redirect": "/url_redirect/0?order_by=id&direction=DESC",
 				"xyzReports": {
 					"xyzTransactions": "/transactions/0?order_by=id&direction=DESC",
-					"xyzCategory Wise": "/category_wise/0?order_by=id&direction=DESC",
+					"xyzCategory Wise": "/category_wise/0?order_by=id&direction=DESC"
 				},
 				"Change Password": "/me",
 				"Profile": "/profile",
