@@ -19,7 +19,8 @@ class Admin_pos_user_controller extends Admin_controller
         parent::__construct();
         
         $this->load->model('credential_model');
-        
+        $this->load->model('store_model');
+        $this->load->library('names_helper_service');
     }
 
     
@@ -83,6 +84,17 @@ class Admin_pos_user_controller extends Admin_controller
                 ->set_output(json_encode($this->_data['view_model']->to_json()));
         }
 
+
+        if ( !empty( $this->_data['view_model']->get_list() ) ) 
+        {
+            $this->names_helper_service->set_store_model($this->store_model);
+            
+            foreach ($this->_data['view_model']->get_list() as $key => &$value) 
+            { 
+                $value->store_id       = $this->names_helper_service->get_store_name( $value->store_id );  
+            }
+        }
+
         return $this->render('Admin/Pos_user', $this->_data);
 	}
 
@@ -94,7 +106,7 @@ class Admin_pos_user_controller extends Admin_controller
         $this->form_validation, $this->pos_user_model->get_all_validation_rule());
         $this->_data['view_model'] = new Pos_user_admin_add_view_model($this->pos_user_model);
         $this->_data['view_model']->set_heading('POS Users');
-        
+        $this->_data['stores']              =   $this->store_model->get_all();
 
 		if ($this->form_validation->run() === FALSE)
 		{
@@ -106,13 +118,14 @@ class Admin_pos_user_controller extends Admin_controller
 		$email = $this->input->post('email');
         $status = $this->input->post('status');
         $password = $this->input->post('password');
+        $store_id = $this->input->post('store_id');
 		
         $result = $this->pos_user_model->create([
             'first_name' => $first_name,
 			'last_name' => $last_name,
 			'email' => $email,
 			'status' => $status,
-			
+			'store_id' => $store_id, 
         ]);
 
         if ($result)
@@ -158,7 +171,7 @@ class Admin_pos_user_controller extends Admin_controller
         $this->_data['view_model'] = new Pos_user_admin_edit_view_model($this->pos_user_model);
         $this->_data['view_model']->set_model($model);
         $this->_data['view_model']->set_heading('POS Users');
-        
+        $this->_data['stores'] =   $this->store_model->get_all();
         
 		if ($this->form_validation->run() === FALSE)
 		{
@@ -170,12 +183,14 @@ class Admin_pos_user_controller extends Admin_controller
 		$email = $this->input->post('email');
         $status = $this->input->post('status');
         $password = $this->input->post('password');
+        $store_id = $this->input->post('store_id');
 		
         $result = $this->pos_user_model->edit([
             'first_name' => $first_name,
 			'last_name' => $last_name,
 			'email' => $email,
 			'status' => $status,
+			'store_id' => $store_id,
 			
         ], $id);
 
@@ -210,6 +225,10 @@ class Admin_pos_user_controller extends Admin_controller
 			return redirect('/admin/pos_user/0');
 		}
 
+        $this->names_helper_service->set_store_model($this->store_model); 
+            
+        $model->store_id       = $this->names_helper_service->get_store_name( $model->store_id );  
+            
 
         include_once __DIR__ . '/../../view_models/Pos_user_admin_view_view_model.php';
 		$this->_data['view_model'] = new Pos_user_admin_view_view_model($this->pos_user_model);

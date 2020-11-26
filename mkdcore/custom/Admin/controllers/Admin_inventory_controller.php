@@ -46,15 +46,12 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['view_model']->set_product_name(($this->input->get('product_name', TRUE) != NULL) ? $this->input->get('product_name', TRUE) : NULL);
 		$this->_data['view_model']->set_sku(($this->input->get('sku', TRUE) != NULL) ? $this->input->get('sku', TRUE) : NULL);
 		$this->_data['view_model']->set_category_id(($this->input->get('category_id', TRUE) != NULL) ? $this->input->get('category_id', TRUE) : NULL);
-		$this->_data['view_model']->set_assign_customer(($this->input->get('assign_customer', TRUE) != NULL) ? $this->input->get('assign_customer', TRUE) : NULL);
+		 
 		
         $where = [
             'product_name' => $this->_data['view_model']->get_product_name(),
 			'sku' => $this->_data['view_model']->get_sku(),
-			'category_id' => $this->_data['view_model']->get_category_id(),
-			'assign_customer' => $this->_data['view_model']->get_assign_customer(),
-			
-            
+			'category_id' => $this->_data['view_model']->get_category_id(),  
         ];
 
         $this->_data['view_model']->set_total_rows($this->inventory_model->count($where));
@@ -93,8 +90,10 @@ class Admin_inventory_controller extends Admin_controller
         {
             $this->names_helper_service->set_physical_location_model($this->physical_location_model);
             $this->names_helper_service->set_customer_model($this->customer_model);
+            $this->names_helper_service->set_category_model($this->category_model); 
             foreach ($this->_data['view_model']->get_list() as $key => &$value) 
             { 
+                $value->category_id       = $this->names_helper_service->get_category_real_name( $value->category_id ); 
                 $value->physical_location = $this->names_helper_service->get_physical_location_real_name( $value->physical_location ); 
                  
             }
@@ -140,8 +139,8 @@ class Admin_inventory_controller extends Admin_controller
 		$quantity = $this->input->post('quantity', TRUE);
 		$inventory_note = $this->input->post('inventory_note', TRUE);
 		$cost_price = $this->input->post('cost_price', TRUE);
-		$admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
-		$assign_customer = $this->input->post('assign_customer', TRUE);
+        $admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
+        
 		$status = $this->input->post('status', TRUE);
 		$store_location_id = $this->input->post('store_location_id', TRUE);
 		 

@@ -330,6 +330,7 @@ class Custom_api_controller extends CI_Controller
             $this->load->model('pos_order_items_model');
             $this->load->model('pos_cart_model');
             $this->load->model('transactions_model');
+            $this->load->model('inventory_model');
 
             $this->load->library('pos_checkout_service');
             $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
@@ -349,14 +350,16 @@ class Custom_api_controller extends CI_Controller
             {
                 $form_data_value = (object) $form_data_value;
                 $customer_data[$form_data_value->name] = $form_data_value->value;
-            }
-            
-            
+            } 
+
             $shipping_cost = 0;
             $tax           = 0;
 
             //discount
             $discount = $this->input->post('discount', TRUE); 
+
+
+            
             /**
             * Create Order 
             */ 
@@ -375,15 +378,18 @@ class Custom_api_controller extends CI_Controller
 
                 foreach ($cart_items as $cart_item_key => $cart_item_value) 
                 {
+                    $inventory_data = $this->inventory_model->get($cart_items[$cart_item_key]['id']);  
 
                     $total_amount = $cart_items[$cart_item_key]['price']  * $cart_items[$cart_item_key]['quantity'];
                     $data_order_detail = array(
-                        'product_id'    => $cart_items[$cart_item_key]['id'],
-                        'product_name'  => $cart_items[$cart_item_key]['name'], 
-                        'amount'        => $total_amount, 
-                        'quantity'      => $cart_items[$cart_item_key]['quantity'], 
-                        'order_id'      => $order_id, 
-                        'manifest_id'   => 1, 
+                        'product_id'         => $cart_items[$cart_item_key]['id'],
+                        'product_name'       => $cart_items[$cart_item_key]['name'], 
+                        'amount'             => $total_amount, 
+                        'quantity'           => $cart_items[$cart_item_key]['quantity'], 
+                        'order_id'           => $order_id, 
+                        'manifest_id'        => $inventory_data->manifest_id, 
+                        'category_id'        => $inventory_data->category_id,  
+                        'pos_user_id'        => $pos_user_id, 
                         'product_unit_price' => $cart_items[$cart_item_key]['price'],
                     );
                     $sub_total += $total_amount;

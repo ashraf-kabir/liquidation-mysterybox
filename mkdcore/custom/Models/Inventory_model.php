@@ -65,8 +65,7 @@ class Inventory_model extends Manaknight_Model
 		['inventory_note', 'Inventory Note', ''],
 		['barcode_image', 'xyzBarcode Image', ''],
 		['cost_price', 'Cost Price', ''],
-		['admin_inventory_note', 'Admin Inventory Note', ''],
-		['assign_customer', 'Assign to Customer', ''],
+		['admin_inventory_note', 'Admin Inventory Note', ''], 
 		['can_ship', 'Can Ship', ''], 
 		['pin_item_top', 'Pin Item', ''],
 		['product_type', 'Product Type', ''],
@@ -94,7 +93,6 @@ class Inventory_model extends Manaknight_Model
 		['barcode_image', 'xyzBarcode Image', ''],
 		['cost_price', 'Cost Price', ''],
 		['admin_inventory_note', 'Admin Inventory Note', ''],
-		['assign_customer', 'Assign to Customer', ''],
 		['can_ship', 'Can Ship', ''], 
 		['pin_item_top', 'Pin Item', ''],
 		['product_type', 'Product Type', ''],
@@ -220,6 +218,6 @@ class Inventory_model extends Manaknight_Model
     }
 
 
-
+ 
 
 }

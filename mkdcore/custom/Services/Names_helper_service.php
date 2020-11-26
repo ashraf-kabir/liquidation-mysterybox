@@ -4,6 +4,8 @@ class Names_helper_service {
     private $_category_model;
     private $_physical_location_model;
     private $_customer_model;  
+    private $_pos_user_model;  
+    private $_store_model;  
 
 
     public function set_category_model($category_model)
@@ -59,6 +61,44 @@ class Names_helper_service {
             $customer_real_name = $check_data->name;
         }
         return  $customer_real_name;
+    }
+
+
+
+
+    public function set_pos_user_model($pos_user_model)
+    {
+        $this->_pos_user_model = $pos_user_model;
+    }
+
+    public function get_pos_user_real_name($id)
+    { 
+        $real_name = "N/A";
+        $check_data =$this->_pos_user_model->get($id); 
+        if(isset($check_data->first_name))
+        {
+            $real_name = $check_data->first_name . " " . $check_data->last_name;
+        }
+        return  $real_name;
+    }
+
+
+
+
+    public function set_store_model($store_model)
+    {
+        $this->_store_model = $store_model;
+    }
+
+    public function get_store_name($id)
+    { 
+        $real_name = "N/A";
+        $check_data =$this->_store_model->get($id); 
+        if(isset($check_data->name))
+        {
+            $real_name = $check_data->name;
+        }
+        return  $real_name;
     }
   
 
