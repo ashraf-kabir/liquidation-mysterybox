@@ -331,17 +331,17 @@ class Custom_api_controller extends CI_Controller
             $this->load->model('pos_cart_model');
             $this->load->model('transactions_model');
 
-            //list of data from cart
-            $cart_items = $this->input->post('cart_items', TRUE);
-            
-
-            //discount
-            
-
+            $this->load->library('pos_checkout_service');
+            $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
 
             /**
-            * Refactor Customer Data 
-            * 
+            * Cart Items  
+            */
+            $cart_items = $this->input->post('cart_items', TRUE);
+             
+
+            /**
+            * Refactor Customer Data  
             */
             $form_data = $this->input->post('form_data', TRUE); 
             $customer_data = array();
@@ -355,42 +355,12 @@ class Custom_api_controller extends CI_Controller
             $shipping_cost = 0;
             $tax           = 0;
 
-            $discount = $this->input->post('discount', TRUE);
-            
-            // address
-            // message
-
+            //discount
+            $discount = $this->input->post('discount', TRUE); 
             /**
-            * Create Order
-            * 
+            * Create Order 
             */ 
-            $data_checkout_order = array( 
-                'billing_name'      =>  $customer_data['name'],
-                'billing_address'   =>  $customer_data['address'],
-                'billing_country'   =>  $customer_data['country'], 
-                'billing_state'     =>  $customer_data['state'], 
-                'billing_city'      =>  $customer_data['city'], 
-                'billing_zip'       =>  $customer_data['postal_code'], 
-                'shipping_name'     =>  '', 
-                'shipping_address'  =>  '', 
-                'shipping_country'  =>  '', 
-                'shipping_state'    =>  '', 
-                'shipping_city'     =>  '', 
-                'shipping_zip'      =>  '', 
-                'subtotal'          =>  0, 
-                'shipping_cost'     =>  $shipping_cost, 
-                'tax'               =>  $tax, 
-                'total'             =>  0, 
-                'discount'          =>  $discount, 
-                'order_type'        =>  2, 
-                'payment_method'    =>  $customer_data['payment'], 
-                'customer_id'       =>  $customer_data['customer_id'],
-                'pos_user_id'       =>  $pos_user_id, 
-                'status'            =>  1, 
-                'pos_pickup_status' =>  1, 
-            );
-
-            $result = $this->pos_order_model->create($data_checkout_order);
+            $result = $this->pos_checkout_service->create_order($customer_data,$tax,$discount,$pos_user_id,$shipping_cost);
 
 
             if ($result) 
@@ -417,8 +387,7 @@ class Custom_api_controller extends CI_Controller
                         'product_unit_price' => $cart_items[$cart_item_key]['price'],
                     );
                     $sub_total += $total_amount;
-                    $result = $this->pos_order_items_model->create($data_order_detail);
-
+                    $result = $this->pos_order_items_model->create($data_order_detail); 
                 }
 
 
@@ -461,22 +430,31 @@ class Custom_api_controller extends CI_Controller
                     'subtotal'          =>  $sub_total, 
                     'total'             =>  $grand_total, 
                 );
-                $this->transactions_model->create($add_transaction);
+                $transaction_id = $this->transactions_model->create($add_transaction);
+                if($transaction_id)
+                {
+                    $user_id = $this->session->userdata('user_id'); 
+                    $result = $this->pos_cart_model->real_delete_by_fields(['user_id' => $user_id]);
 
+                    
+
+                    $output['customer_name'] = $customer_data['name'];
+                    $output['order_id']      = $order_id;
+                    $output['address']       = $customer_data['address'];
+                    $output['status'] = 200;
+                    $output['success'] = 'Order has been created successfully.';
+                    echo json_encode($output);
+                    exit();
+
+                }else{
+                    $output['status'] = 0;
+                    $output['error'] = 'Error! While adding transaction.';
+                    echo json_encode($output);
+                    exit();
+                }
 
                 
-                $user_id = $this->session->userdata('user_id'); 
-                $result = $this->pos_cart_model->real_delete_by_fields(['user_id' => $user_id]);
-
-                $output['status'] = 200;
-                $output['success'] = 'Order has been created successfully.';
-
-                $output['customer_name'] = $customer_data['name'];
-                $output['order_id']      = $order_id;
-                $output['address']       = $customer_data['address'];
-
-                echo json_encode($output);
-                exit();
+                
             }else{
                 $output['status'] = 0;
                 $output['error'] = 'Error! Please try again later.';
