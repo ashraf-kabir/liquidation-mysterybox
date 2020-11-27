@@ -531,6 +531,9 @@
 				["phone", "string", [{
 					"limit": 255
 				}], "xyzPhone", "", ""],
+				["password", "string", [{
+					"limit": 255
+				}], "xyzPassword", "required", "required"],
 				["billing_zip", "string", [{
 					"limit": 255
 				}], "xyzBilling Zip", "", ""],
@@ -2293,7 +2296,18 @@
 
 		"../mkdcore/custom/Pos/Custom_api_controller.php" : "../release/application/controllers/Guest/Custom_api_controller.php",
 		"../mkdcore/custom/Pos/controllers/Pos_dashboard_controller.php" : "../release/application/controllers/Pos/Pos_dashboard_controller.php",
+		"../mkdcore/custom/Pos/controllers/Pos_login_controller.php" : "../release/application/controllers/Pos/Pos_login_controller.php",
 		"../mkdcore/custom/Pos/views/Dashboard.php" : "../release/application/views/Pos/Dashboard.php",
+
+
+		"../mkdcore/custom/Frontend/controllers/Home_controller.php" : "../release/application/controllers/Guest/Home_controller.php",
+		"../mkdcore/custom/Frontend/views/Header.php" : "../release/application/views/Guest/Header.php",
+		"../mkdcore/custom/Frontend/views/Footer.php" : "../release/application/views/Guest/Footer.php",
+		"../mkdcore/custom/Frontend/views/Home.php" : "../release/application/views/Guest/Home.php",
+		"../mkdcore/custom/Frontend/views/Checkout.php" : "../release/application/views/Guest/Checkout.php",
+		"../mkdcore/custom/Frontend/views/Cart.php" : "../release/application/views/Guest/Cart.php",
+		"../mkdcore/custom/Frontend/views/Categories.php" : "../release/application/views/Guest/Categories.php",
+		"../mkdcore/custom/Frontend/views/Product.php" : "../release/application/views/Guest/Product.php",
 
 		"./mysql.php" : "../release/mysql.php"
 
@@ -2319,7 +2333,18 @@
 		"v1/api/pos_mark_order_pickup" : "Guest/Custom_api_controller/pos_mark_order_pickup",
 		"v1/api/pos_past_order" : "Guest/Custom_api_controller/pos_past_order",
 		"v1/api/pos_summary_report" : "Guest/Custom_api_controller/pos_summary_report",
-		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory"
+		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory",
+		
+
+		"": "Guest/Home_controller/home",
+		"home": "Guest/Home_controller/home",
+		"checkout": "Guest/Home_controller/checkout",
+		"cart": "Guest/Home_controller/cart",
+		"logout": "Guest/Home_controller/logout",
+		"categories": "Guest/Home_controller/categories",
+		"v1/api/sign_up" : "Guest/Home_controller/sign_up",
+		"v1/api/login_customer" : "Guest/Home_controller/login_customer",
+		"product/(:num)": "Guest/Home_controller/product/$1" 
 	},
 	"reverse_copy": {
 	},

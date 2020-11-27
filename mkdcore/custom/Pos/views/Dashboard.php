@@ -953,6 +953,38 @@
 
 
 
+    <!-- POS Login Modal -->
+    <div class="modal fade " id="on-pos-login-modal" tabindex="-1" role="dialog" aria-labelledby="customerLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered  " role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="customerLabel">Add New Customer</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="text-white">&times;</span>
+                    </button>
+                </div>
+                <form action="" id="customer-form" class="p-3">
+                    <div class="form-row justify-content-between ">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-12 my-3">
+                            <label for="first-name">First Name<span class="text-danger">*</span></label>
+                            <input type="text" name="firstname" class="form-control" id="first-name"
+                                placeholder="Your First Name" required>
+                        </div> 
+                    </div>
+
+                    <div class="row justify-content-end my-3">
+                        <div class="col-12 text-right">
+                            <button class="btn btn-outline-secondary mr-2 " data-target="#customer-modal"
+                                data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="Continue">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
 
     <!-- Scan Product Modal -->
     <div class="modal fade" id="scan-product-modal" tabindex="-1" role="dialog" aria-labelledby="scan-productLabel"

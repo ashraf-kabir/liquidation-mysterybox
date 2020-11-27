@@ -782,6 +782,7 @@ load_customers_list();
           case "pos-toggler":
               $("#pos").removeClass("d-none");
               $("#pos").addClass("active-page");
+              load_pos_products();
               break;
           case "pickup-toggler":
               $("#pickup").removeClass("d-none");

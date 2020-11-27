@@ -30,11 +30,12 @@ class Custom_api_controller extends CI_Controller
     {
         if($this->session->userdata('user_id'))
         {
+            $store_id = $this->session->userdata('store_id');
             $this->load->model('inventory_model');
-
+            
             $search_product_value = $this->input->post('search_product_value', TRUE);
             
-            $inventory_items =  $this->inventory_model->get_all_inventory_products(['product_name' => $search_product_value , 'sku' => $search_product_value]);
+            $inventory_items =  $this->inventory_model->get_all_inventory_products(['product_name' => $search_product_value , 'sku' => $search_product_value, 'store_location_id' => $store_id ]);
 
             $output['status'] = 200;
             $output['products_list'] = $inventory_items; 
