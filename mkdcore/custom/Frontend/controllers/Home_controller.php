@@ -20,7 +20,7 @@ class Home_controller extends Manaknight_Controller
     {
         parent::__construct();  
         $this->load->model('category_model');
-        $this->load->model('inventory_model');
+        $this->load->model('inventory_model'); 
     }
 
     public function index($offset = 0)
@@ -156,12 +156,12 @@ class Home_controller extends Manaknight_Controller
 
             if( $this->_send_email($from_email, $subject, $message, $name) )
             {
-                $this->session->set_flashdata('success','Your message has been sent successfully.');
+                $this->session->set_flashdata('success1','Your message has been sent successfully.');
             } else{
-                $this->session->set_flashdata('error','Error! Please try again later.');
+                $this->session->set_flashdata('error1','Error! Please try again later.');
             }  
 
-            return redirect($_SERVER['HTTP_REFERER']);
+            redirect($_SERVER['HTTP_REFERER']);
         }
         
 
@@ -175,15 +175,184 @@ class Home_controller extends Manaknight_Controller
     { 
         $data['active'] = 'about';
         $data['layout_clean_mode'] = FALSE;
+        $data['no_detail'] = TRUE;
+        
+        if($this->session->userdata('customer_login'))
+        { 
+            $user_id = $this->session->userdata('user_id');
+            $this->load->model('pos_cart_model');
+            $this->load->model('customer_model');
+
+            $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+            $data['customer']   =  $this->customer_model->get($user_id); 
+        }
+
         $this->_render('Guest/Cart',$data);
     }
 
+
+
+    public function do_checkout()
+    {
+        if($this->session->userdata('customer_login'))
+        {
+
+            $full_name      =  $this->input->post('full_name', TRUE);
+            $email_address  =  $this->input->post('email_address', TRUE);
+            $phone_number   =  $this->input->post('phone_number', TRUE);
+            $city           =  $this->input->post('city', TRUE);
+            $state          =  $this->input->post('state', TRUE);
+            $country        =  $this->input->post('country', TRUE);
+            $address_1      =  $this->input->post('address_1', TRUE);
+            $address_2      =  $this->input->post('address_2', TRUE);
+            $payment        =  $this->input->post('payment', TRUE);
+
+            $user_id = $this->session->userdata('user_id');
+            $this->load->model('pos_cart_model');
+            $this->load->model('customer_model');
+
+            $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+            if( empty($data['cart_items']) )
+            {  
+                $this->session->set_flashdata('error1', 'Error! Please add item in cart first.'); 
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+
+            $data['customer']   =  $this->customer_model->get($user_id); 
+             
+            
+            $data['customer']->name =  $name;
+
+            $user_id = $this->session->userdata('user_id');
+                
+            $this->load->model('pos_order_model');
+            $this->load->model('pos_order_note_model');
+            $this->load->model('pos_order_items_model');
+            $this->load->model('pos_cart_model');
+            $this->load->model('transactions_model');
+            $this->load->model('inventory_model');
+            $this->load->model('customer_model');
+
+            $this->load->library('pos_checkout_service');
+            $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
+
+            /**
+            * Cart Items  
+            */
+            $cart_items = $this->pos_cart_model->get_all(['customer_id' => $user_id ]);
+                
+            $customer_data  =  $this->customer_model->get( $user_id ); 
+            $shipping_cost  = 0;
+            $discount       = 0;
+            $tax            = 0;
+    
+
+                
+            /**
+            * Create Order 
+            */ 
+            $result = $this->pos_checkout_service->customer_create_order($customer_data,$tax,$discount,$user_id,$shipping_cost);
+
+
+            if ($result) 
+            { 
+                /**
+                * Store order items detail 
+                * 
+                */ 
+                $order_id = $result;
+                $sub_total   = 0;
+                $grand_total = 0;
+
+                foreach ($cart_items as $cart_item_key => $cart_item_value) 
+                {
+                    $inventory_data = $this->inventory_model->get($cart_item_value->product_id);   
+                    $total_amount   = $cart_item_value->unit_price  * $cart_item_value->product_qty;
+                    $data_order_detail = array(
+                        'product_id'         => $cart_item_value->product_id,
+                        'product_name'       => $cart_item_value->product_name, 
+                        'amount'             => $total_amount, 
+                        'quantity'           => $cart_item_value->product_qty, 
+                        'order_id'           => $order_id, 
+                        'manifest_id'        => $inventory_data->manifest_id, 
+                        'category_id'        => $inventory_data->category_id,  
+                        'pos_user_id'        => 0, 
+                        'product_unit_price' => $cart_item_value->unit_price,
+                    );
+                    $sub_total += $total_amount;
+                    $result = $this->pos_order_items_model->create($data_order_detail); 
+                }
+    
+
+                /**
+                * Update prices  
+                */
+                $grand_total = $sub_total + $tax + $shipping_cost - $discount;
+                $data_order_prices = array( 
+                    'total'    =>  $grand_total,
+                    'subtotal' =>  $sub_total,  
+                );
+                $result = $this->pos_order_model->edit($data_order_prices,$order_id);
+
+
+                /**
+                * Add Transaction  
+                */    
+                $add_transaction = array(
+                    'payment_type'      =>  1,
+                    'customer_id'       =>  $user_id, 
+                    'pos_user_id'       =>  0, 
+                    'transaction_date'  =>  Date('Y-m-d'), 
+                    'transaction_time'  =>  Date('g:i:s A'), 
+                    'pos_order_id'      =>  $order_id, 
+                    'tax'               =>  $tax, 
+                    'discount'          =>  $discount, 
+                    'subtotal'          =>  $sub_total, 
+                    'total'             =>  $grand_total, 
+                );
+                $transaction_id = $this->transactions_model->create($add_transaction);
+                if($transaction_id)
+                {
+                    $user_id = $this->session->userdata('user_id'); 
+                    $result = $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]);  
+                    $output['order_id']      = $order_id;  
+                     
+
+                    $this->session->set_flashdata('success1', 'Order has been created successfully.');
+                }else{
+                     
+                    $this->session->set_flashdata('error1', 'Error! While adding transaction.'); 
+                }
+
+                redirect($_SERVER['HTTP_REFERER']);
+                
+                
+            }else{
+                $this->session->set_flashdata('error1', 'Error! Please try again later.');  
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+        }
+    }
 
 
     public function checkout()
     { 
         $data['active'] = 'about';
         $data['layout_clean_mode'] = FALSE;
+        $data['no_detail'] = TRUE;
+ 
+
+        if($this->session->userdata('customer_login'))
+        { 
+            $user_id = $this->session->userdata('user_id');
+            $this->load->model('pos_cart_model');
+            $this->load->model('customer_model');
+
+            $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+            $data['customer']   =  $this->customer_model->get($user_id); 
+        }
+
+
         $this->_render('Guest/Checkout',$data);
     }
 
@@ -192,13 +361,38 @@ class Home_controller extends Manaknight_Controller
     public function product($id = 0)
     { 
         $data['layout_clean_mode'] = FALSE;
+        $this->load->model('inventory_gallery_list_model');
          
-        
+        $model  = $this->inventory_model->get($id); 
+        if (!$model)
+		{
+			$this->error('Error');
+			return redirect('/categories');
+        }
+
+        $data['product']        =   $model;
+        $data['gallery_lists']  =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
+        $data['no_detail'] = TRUE; 
+
         $this->_render('Guest/Product',$data);
     }
 
     
+    public function about_us()
+    {
+        $data['layout_clean_mode'] = FALSE; 
+        $data['no_detail'] = TRUE; 
+
+        $this->_render('Guest/AboutUs',$data);
+    }
      
+    public function contact_us()
+    {
+        $data['layout_clean_mode'] = FALSE; 
+        $data['no_detail'] = TRUE; 
+
+        $this->_render('Guest/ContactUs',$data);
+    }
 
      
 
@@ -294,10 +488,14 @@ class Home_controller extends Manaknight_Controller
             {
                 if(password_verify($password, $user->password))
                 {
- 
+                    $this->destroy_session();
+                    
                     $this->set_session('user_id', (int) $user->id); 
                     $this->set_session('email', (string) $user->email); 
                     $this->set_session('customer_login', 1); 
+
+
+                    
 
                     $output['status'] = 0;
                     $output['success'] = 'Success!.';
@@ -317,6 +515,26 @@ class Home_controller extends Manaknight_Controller
                 echo json_encode($output);
                 exit();
             } 
+        }
+    }
+
+
+    public function cart_remove($cart_id)
+    {
+        if ($this->session->userdata('user_id') and $cart_id ) 
+        {  
+            $this->load->model('pos_cart_model');
+            $user_id = $this->session->userdata('user_id'); 
+            $cart_id = $cart_id; 
+            $result  = $this->pos_cart_model->real_delete_by_fields([ 'id' => $cart_id ]); 
+
+            if ($result) 
+            {  
+                $this->session->set_flashdata('success1', 'Item has been deleted successfully.');
+            }else{
+                $this->session->set_flashdata('error1','Error! Please try again later.'); 
+            }  
+            return redirect($_SERVER['HTTP_REFERER']); 
         }
     }
 

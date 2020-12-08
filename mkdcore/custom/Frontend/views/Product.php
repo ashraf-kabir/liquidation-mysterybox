@@ -1,38 +1,65 @@
+<style>
+    .div_box {
+      width:100%;
+      height: 500px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      overflow:hidden;
+    }
+    .div_box img {
+      flex-shrink:0;
+      -webkit-flex-shrink: 0;
+      max-width:70%;
+      max-height:90%;
+    }
+</style>
+
 <section>
       <div class="container-fluid bg-white" id="product">
         <div class="row product__overview justify-content-center py-5">
           <div
             class="col-xl-6 col-lg-6 col-md-7 col-sm-10 col-11 product__imgContainer p-3"
           >
-            <div class="text-right">
+            <div class="text-right div_box">
               <img
-                src="<?php echo base_url(); ?>/assets/frontend_images/product-main-img.png"
-                alt=""
-                class="product__mainImg mx-auto img-responsive w-100"
+                src="<?= $product->feature_image; ?>"
+                alt="<?= $product->product_name; ?>"
+                class="product__mainImg mx-auto img-responsive w-100 product_active_image"
               />
             </div>
-            <div class="d-flex product__subImages">
-              <img src="<?php echo base_url(); ?>/assets/frontend_images/categories-mastercraft.png" alt="" />
-              <img src="<?php echo base_url(); ?>/assets/frontend_images/categories-mastercraft.png" alt="" />
+            <div class="d-flex product__subImages" style="    height: 150px;">
+              <?php   
+                if(isset($gallery_lists) and !empty($gallery_lists))
+                {
+                  foreach($gallery_lists as $key => $value) { ?>
+                    <img src="<?php echo $value->image_name; ?>"  class="select_image" alt="<?= $product->product_name; ?>" />
+                  <?php 
+                  } 
+                }
+                
+              ?> 
             </div>
           </div>
           <div
             class="col-xl-4 col-lg-5 col-md-5 col-sm-10 col-11 product__detail"
           >
-            <h3>Screw drivers & Nut drivers (93)</h3>
-            <h2 class="text-danger">$49.99</h2>
+            <h3><?= $product->product_name; ?> (<?= $product->quantity; ?>)</h3>
+            <h2 class="text-danger">$<?= number_format($product->selling_price,2); ?></h2>
             <label for="quantity"
               >Qty
               <input
                 type="number"
                 name="quantity"
                 id="quantity"
-                class="form-control d-inline w-75 w-md-50"
-            /></label>
-            <button class="btn btn-success addToCartBtn">Add To Cart</button>
+                class="form-control d-inline product_quantity w-75 w-md-50" value="1"
+            /></label> 
+
+            <input type="hidden" class="product_id" name="product_id" value="<?= $product->id; ?>">
+            <button class="btn add_to_cart_button btn-success addToCartBtn">Add To Cart</button>
           </div>
         </div>
-
+<!-- 
         <div class="row py-5 justify-content-center">
           <div class="col-10">
             <h5>Recommended Product</h5>
@@ -118,7 +145,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="row justify-content-center product__details my-4">
           <div class="col-10">
@@ -273,3 +300,13 @@
         </div>
       </div>
     </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+      $(document).on('click','.select_image',function(){
+          let selected_image_url = $(this).attr('src');
+
+          $('.product_active_image').attr('src',selected_image_url);
+      })
+  }, false)
+</script>

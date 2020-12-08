@@ -143,6 +143,95 @@ class Custom_api_controller extends CI_Controller
 
     
 
+
+    public function add_product_to_cart_by_customer()
+    {
+        if($this->session->userdata('user_id'))
+        {
+            $this->load->model('pos_cart_model'); 
+            $this->load->model('inventory_model'); 
+
+            $product_id   =  $this->input->post('id', TRUE);
+            $product_qty  =  $this->input->post('quantity', TRUE);
+
+            $product_data = $this->inventory_model->get($product_id);
+
+            if( isset($product_data->product_name) )
+            {
+                $product_name =  $product_data->product_name;
+                $unit_price   =  $product_data->selling_price;
+                
+                
+                $total_price  =  $product_qty * $unit_price;
+
+                $user_id = $this->session->userdata('user_id');
+
+                /**
+                * Check if product already in cart 
+                *   if yes then add qty and do other price calculations
+                *   if no add new product to cart
+                */
+                $check_chart_if_product =  $this->pos_cart_model->get_by_fields(['product_id' => $product_id, 'customer_id' => $user_id]);  
+                if (!empty($check_chart_if_product)) 
+                {
+                    $product_data = $check_chart_if_product;
+
+                    $product_qty_now = $product_qty + $product_data->product_qty;
+                    $total_price_now = $product_qty_now * $unit_price;
+
+                    $data_cart = array(
+                        'product_id'    => $product_id,
+                        'product_qty'   => $product_qty_now,
+                        'unit_price'    => $unit_price,
+                        'total_price'   => $total_price_now,
+                        'product_name'  => $product_name,
+                        'customer_id'   => $user_id,
+                    ); 
+                    $result = $this->pos_cart_model->edit($data_cart,$product_data->id); 
+                }else{ 
+                
+                    $data_cart = array(
+                        'product_id'    => $product_id,
+                        'product_qty'   => $product_qty,
+                        'unit_price'    => $unit_price,
+                        'total_price'   => $total_price,
+                        'product_name'  => $product_name,
+                        'customer_id'   => $user_id,
+                    );
+
+                    $result = $this->pos_cart_model->create($data_cart); 
+                }
+
+                if ($result) 
+                {
+                    $output['status'] = 200;
+                    $output['success'] = 'Your data has been added to cart successfully.';
+
+                    echo json_encode($output);
+                    exit();
+                }else{
+                    $output['status'] = 0;
+                    $output['error'] = 'Error! Please try again later.';
+                    echo json_encode($output);
+                    exit();
+                }
+
+            }else{
+                $output['status'] = 0;
+                $output['error'] = 'Error! Please try again later.';
+                echo json_encode($output);
+                exit();
+            } 
+        }else{
+            $output['status'] = 0;
+            $output['error'] = 'Login to continue.';
+            echo json_encode($output);
+            exit();
+        }
+    }
+
+    
+
     public function delete_cart_item()
     {
         if ($this->session->userdata('user_id')) 
@@ -971,6 +1060,17 @@ class Custom_api_controller extends CI_Controller
 
         }
     }
+
+ 
+
+
+
+
+
+
+
+
+
 }
 
 

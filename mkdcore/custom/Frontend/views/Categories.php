@@ -96,12 +96,8 @@
                 <?php foreach($products_list as $key => $product){ ?> 
 
                   <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 my-2">
-                    <div
-                      class="store__item text-center"
-                      data-id="1"
-                      data-price="49.99"
-                      data-title="Screw drivers & Nut drivers (93)"
-                    >
+                  <a href="<?php echo base_url(); ?>product/<?php echo $product->id; ?>">
+                    <div class="store__item text-center" data-id="<?= $product->id; ?>"  data-price="<?= $product->selling_price; ?>" data-title="<?= $product->product_name; ?>" >
                       <i class="far fa-heart"></i>
 
                       <?php if( empty($product->feature_image) ) :  ?>
@@ -126,6 +122,7 @@
                         Add to Cart
                       </button>
                     </div>
+                    </a>
                   </div>
 
                 <?php } ?> 

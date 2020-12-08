@@ -635,6 +635,7 @@
 				["id", "integer", [], "xyzProduct ID", "", ""],
 				["product_id", "integer", [], "xyzProduct ID", "", ""],
 				["user_id", "integer", [], "xyzUser ID", "", ""],
+				["customer_id", "integer", [], "xyzCustomer ID", "", ""],
 				["product_qty", "integer", [], "xyzQuantity", "", ""],
 				["unit_price", "float", [], "xyzUnit Price", "", ""],
 				["total_price", "float", [], "xyzTotal Price", "", ""],
@@ -674,7 +675,7 @@
 				["total", "float", [], "xyzTotal", "required", "required"],
 				["discount", "float", [], "xyzDiscount", "", ""],
 				["order_type", "integer", [], "xyzOrder Type", "required|integer", "required|integer"],
-				["payment_method", "string", [{ "limit": 255 }], "xyzPayment Method", "required|max_length[255]", "required|max_length[255]"],
+				["payment_method", "integer", [], "xyzPayment Method", "required|integer", "required|integer"],
 				["pos_user_id", "integer", [], "xyzPOS User", "required|integer", "required|integer"],
 				["status", "integer", [], "xyzStatus", "required|integer", "required|integer"],
 				["customer_id", "integer", [], "xyzCustomer", "required|integer", "required|integer"],
@@ -685,7 +686,8 @@
 			"mapping": {
 				"status": {"0": "Canceled","1": "Purchased", "2" : "Refunded"},
 				"order_type": {"1": "Online", "2" : "POS"},
-				"pos_pickup_status": {"1": "Pending", "2" : "Picked"}
+				"pos_pickup_status": {"1": "Pending", "2" : "Picked"},
+				"payment_method": {"1": "Cash", "2" : "Card", "3" : "ACH", "4" : "Bank"}
 			},
 			"pre": "",
 			"post": "",
@@ -2308,6 +2310,8 @@
 		"../mkdcore/custom/Frontend/views/Cart.php" : "../release/application/views/Guest/Cart.php",
 		"../mkdcore/custom/Frontend/views/Categories.php" : "../release/application/views/Guest/Categories.php",
 		"../mkdcore/custom/Frontend/views/Product.php" : "../release/application/views/Guest/Product.php",
+		"../mkdcore/custom/Frontend/views/AboutUs.php" : "../release/application/views/Guest/AboutUs.php",
+		"../mkdcore/custom/Frontend/views/ContactUs.php" : "../release/application/views/Guest/ContactUs.php",
 
 		"./mysql.php" : "../release/mysql.php"
 
@@ -2334,6 +2338,10 @@
 		"v1/api/pos_past_order" : "Guest/Custom_api_controller/pos_past_order",
 		"v1/api/pos_summary_report" : "Guest/Custom_api_controller/pos_summary_report",
 		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory",
+
+		"v1/api/add_product_to_cart_by_customer" : "Guest/Custom_api_controller/add_product_to_cart_by_customer",
+		
+		 
 		
 
 		"": "Guest/Home_controller/home",
@@ -2342,8 +2350,12 @@
 		"cart": "Guest/Home_controller/cart",
 		"logout": "Guest/Home_controller/logout",
 		"categories": "Guest/Home_controller/categories",
+		"about_us": "Guest/Home_controller/about_us",
+		"contact_us": "Guest/Home_controller/contact_us",
 		"v1/api/sign_up" : "Guest/Home_controller/sign_up",
 		"v1/api/login_customer" : "Guest/Home_controller/login_customer",
+		"cart_remove/(:num)" : "Guest/Home_controller/cart_remove/$1",
+		"do_checkout" : "Guest/Home_controller/do_checkout",
 		"product/(:num)": "Guest/Home_controller/product/$1" 
 	},
 	"reverse_copy": {

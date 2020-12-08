@@ -6,11 +6,9 @@
           <div class="col-12">
             <ul class="list-unstyled">
               <li><a href="<?php echo base_url(); ?>">Home</a></li>
-              <li><a href="<?php echo base_url(); ?>">Services</a></li>
-              <li><a href="index.html">Featured Event Auction</a></li>
-              <li><a href="index.html">Auction Event</a></li>
-              <li><a href="index.html">About Us</a></li>
-              <li><a href="index.html">Contact Us</a></li>
+              <li><a href="<?php echo base_url(); ?>">Services</a></li> 
+              <li><a href="<?php echo base_url(); ?>about_us">About Us</a></li>
+              <li><a href="<?php echo base_url(); ?>contact_us">Contact Us</a></li>
             </ul>
           </div>
         </div>

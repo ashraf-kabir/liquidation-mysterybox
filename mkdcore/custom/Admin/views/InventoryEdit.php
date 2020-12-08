@@ -241,3 +241,40 @@ if ($layout_clean_mode) {
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    var id_to_add = 1;
+    function onFileUploadedGallery(event, imgid) 
+    { 
+        var selectedFile = event.target.files[0]; 
+        var reader = new FileReader();
+        reader.onload = function(e) 
+        {
+            var formData = new FormData(); 
+            formData.append("file", selectedFile);
+            $.ajax({
+                url: "/v1/api/file/upload",
+                type: "post",
+                data: formData,
+                processData: false,
+                contentType: false,
+                cache: false,
+                async: false,
+                success: function(data) 
+                {
+                     
+                    $('#barcode_image_'+ id_to_add).val(data.file);
+                    $('#barcode_image_id_'+ id_to_add).val(data.id); 
+
+                    var data_md4 = '<div class="col-md-3 form-group"><img style="height: 150px;width: 70%;" src="'+ data.file +'" /></div>';
+                     
+                    $('.add_images_gallery').append(data_md4);
+
+                    id_to_add = id_to_add +1;
+                    $('.gallery_image_add_inputs').append('<input type="hidden" id="barcode_image_'+ id_to_add +'" name="gallery_image[]"/><input type="hidden" id="barcode_image_id_'+ id_to_add +'" name="gallery_image_id[]"/>');  
+                }
+            });  
+        };
+        reader.readAsDataURL(selectedFile); 
+    } 
+</script>

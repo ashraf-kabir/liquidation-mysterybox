@@ -104,7 +104,7 @@ class=" col-xl-5 col-lg-3 col-md-5 col-sm-7 col-12 d-flex justify-content-around
         </button>
         <div class="collapse navbar-collapse pr-md-4 mb-3 mt-3" id="navbarNav">
           <ul class="navbar-nav ml-auto">
-            <button class="btn btn-secondary mr-md-5">Sell Now</button>
+            
 
             <li class="nav-item active">
               <a class="nav-link hvr-underline-from-left active-nav" href="<?php echo base_url(); ?>"
@@ -116,16 +116,12 @@ class=" col-xl-5 col-lg-3 col-md-5 col-sm-7 col-12 d-flex justify-content-around
                 >Category</a
               >
             </li>
+            
             <li class="nav-item">
-              <a class="nav-link hvr-underline-from-left" href="#"
-                >Featured Deals</a
-              >
+              <a class="nav-link hvr-underline-from-left" href="<?php echo base_url(); ?>about_us">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link hvr-underline-from-left" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link hvr-underline-from-left" href="#"
+              <a class="nav-link hvr-underline-from-left" href="<?php echo base_url(); ?>contact_us"
                 >Contact Us</a
               >
             </li>
@@ -134,7 +130,8 @@ class=" col-xl-5 col-lg-3 col-md-5 col-sm-7 col-12 d-flex justify-content-around
       </nav>
     </header>
 
-
+    
+    <?php if(!isset($no_detail)){ ?>
     <div class="container-fluid">
       <div class="row justify-content-center mt-4 w-100">
         <form class="form-row justify-content-center col-12 col-md-8" method="GET" action="<?php echo base_url(); ?>categories">
@@ -161,3 +158,4 @@ class=" col-xl-5 col-lg-3 col-md-5 col-sm-7 col-12 d-flex justify-content-around
         </form>
       </div>
     </div>
+    <?php } ?>
