@@ -13,7 +13,12 @@ if ($layout_clean_mode) {
             <a href="/admin/dashboard" class="breadcrumb-link">Dashboard</a>
         </li> -->
         <li class="breadcrumb-item active" aria-current="page">
-            <a href="/admin/inventory/0" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>
+            <?php if($this->session->userdata('role') == 2) { ?>
+                <a href="/admin/inventory/0" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>  
+            <?php }elseif($this->session->userdata('role') == 4) { ?>
+                <a href="/manager/inventory/0" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>
+            <?php } ?>
+            
         </li>
         <li class="breadcrumb-item active" aria-current="page">
             Edit
@@ -159,7 +164,7 @@ if ($layout_clean_mode) {
                 
                 
 				<div class="form-group col-md-5 col-sm-12">
-					<label for="xyzPin Item">Pin Item </label>
+					<label for="Pin Item">Pin Item </label>
 					<select id="form_pin_item_top" name="pin_item_top" class="form-control data-input">
 						<?php foreach ($view_model->pin_item_top_mapping() as $key => $value) {
 							echo "<option value='{$key}' " . (($view_model->get_pin_item_top() == $key && $view_model->get_pin_item_top() != '') ? 'selected' : '') . "> {$value} </option>";

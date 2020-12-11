@@ -22,13 +22,22 @@
             class="col-xl-6 col-lg-6 col-md-7 col-sm-10 col-11 product__imgContainer p-3"
           >
             <div class="text-right div_box">
+
+            <?php if( !empty($product->feature_image) ) : ?>
               <img
                 src="<?= $product->feature_image; ?>"
                 alt="<?= $product->product_name; ?>"
                 class="product__mainImg mx-auto img-responsive w-100 product_active_image"
               />
+            <?php else: ?>
+              <img
+                src="<?php echo base_url(); ?>/assets/pos_images/default_product_image.jpg"
+                alt="<?= $product->product_name; ?>"
+                class="product__mainImg mx-auto img-responsive w-100 product_active_image"
+              />
+            <?php endif; ?>
             </div>
-            <div class="d-flex product__subImages" style="    height: 150px;">
+            <div class="d-flex product__subImages" <?php if(isset($gallery_lists) and !empty($gallery_lists)) { ?> style=" height: 150px;" <?php  }   ?>   >
               <?php   
                 if(isset($gallery_lists) and !empty($gallery_lists))
                 {
@@ -36,8 +45,7 @@
                     <img src="<?php echo $value->image_name; ?>"  class="select_image" alt="<?= $product->product_name; ?>" />
                   <?php 
                   } 
-                }
-                
+                } 
               ?> 
             </div>
           </div>

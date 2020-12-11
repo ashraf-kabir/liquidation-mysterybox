@@ -14,7 +14,11 @@ if ($layout_clean_mode) {
             <a href="/admin/dashboard" class="breadcrumb-link">Dashboard</a>
         </li> -->
         <li class="breadcrumb-item active" aria-current="page">
+        <?php if($this->session->userdata('role') == 2) { ?>
             <a href="/admin/inventory/0" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>
+        <?php }elseif($this->session->userdata('role') == 4) { ?>
+            <a href="/manager/inventory/0" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>
+        <?php } ?> 
         </li>
         <li class="breadcrumb-item active" aria-current="page">
             Add

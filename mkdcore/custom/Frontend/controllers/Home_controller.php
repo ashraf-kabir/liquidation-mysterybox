@@ -21,6 +21,7 @@ class Home_controller extends Manaknight_Controller
         parent::__construct();  
         $this->load->model('category_model');
         $this->load->model('inventory_model'); 
+        $this->load->model('physical_location_model'); 
     }
 
     public function index($offset = 0)
@@ -87,20 +88,28 @@ class Home_controller extends Manaknight_Controller
         $this->_render('Guest/Home',$data);
     }
 
-    public function categories()
+    public function categories($offset = 0)
     {   
         $this->load->library('pagination');
         $this->_data['category_id']    =     $this->input->get('category_id', TRUE) != NULL  ? $this->input->get('category_id', TRUE) : NULL ;
         $this->_data['search_query']   =     $this->input->get('search_query', TRUE) != NULL  ? $this->input->get('search_query', TRUE) : NULL ;
-          
-        $where = [
-            'category_id'    => $this->_data['category_id'], 
-            'product_name'   => $this->_data['search_query'],  
-            'sku'            => $this->_data['search_query'] 
+         
+        $this->_data['location_id']     =     $this->input->get('location_id', TRUE) != NULL  ? $this->input->get('location_id', TRUE) : NULL ;
+        
+        $where = [ 
+            'physical_location'  => $this->_data['location_id'], 
+            'category_id'        => $this->_data['category_id'], 
+            'product_name'       => $this->_data['search_query'],  
+            'sku'                => $this->_data['search_query'] 
         ];
+  
+        $rows_data = $this->inventory_model->get_custom_count($where);
+       
  
-        $total_rows = 44; 
+        $total_rows = $rows_data;
+            
         $limit = 3;
+
         $this->pagination->initialize([
             'reuse_query_string' => TRUE,
             'base_url'      => base_url() . "categories",
@@ -128,14 +137,20 @@ class Home_controller extends Manaknight_Controller
             'num_tag_close' => '</li>'
         ]);
 
-        $data['products_list']  = $this->inventory_model->get_all($where); 
+        $data['products_list']  = $this->inventory_model->get_custom_paginated($offset , $limit, $where );  
+         
 
+        $data['location_id']      = $this->_data['location_id'];  
+        $data['category_id']      = $this->_data['category_id'];  
         $data['all_categories']  = $this->category_model->get_all(['status' => 1]);
-
+        $data['all_locations']   = $this->physical_location_model->get_all( );
+        
+        
+       
 
         $data['layout_clean_mode'] = FALSE;
         $data['active'] = 'home';
-         
+ 
         $this->_render('Guest/Categories',$data);
              
     }
@@ -488,7 +503,7 @@ class Home_controller extends Manaknight_Controller
             {
                 if(password_verify($password, $user->password))
                 {
-                    $this->destroy_session();
+                    // $this->destroy_session();
                     
                     $this->set_session('user_id', (int) $user->id); 
                     $this->set_session('email', (string) $user->email); 

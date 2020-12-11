@@ -109,10 +109,10 @@ class Admin_category_wise_controller extends Admin_controller
                             {
                                 $total_sale     +=  $item->amount;
                                 $total_qty      +=  $item->quantity;
-                                if( $item->payment_type == 'cash')
+                                if( $item->payment_type == 1)
                                 {
                                     $total_cash     +=  $item->amount;
-                                }else if($item->payment_type == 'card')
+                                }else if($item->payment_type == 2)
                                 {
                                     $total_credit   +=  $item->amount;
                                 } 
@@ -182,10 +182,10 @@ class Admin_category_wise_controller extends Admin_controller
                     { 
                         $total_sale     +=  $item->amount;
                         $total_qty      +=  $item->quantity;
-                        if( $item->payment_type == 'cash')
+                        if( $item->payment_type == 1)
                         {
                             $total_cash     +=  $item->amount;
-                        }else if($item->payment_type == 'card')
+                        }else if($item->payment_type == 2)
                         {
                             $total_credit   +=  $item->amount;
                         } 

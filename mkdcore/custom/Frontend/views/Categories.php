@@ -2,30 +2,27 @@
 <section class="container-fluid pl-0 mt-5">
       <div class="row justify-content-center">
         <div class="col-xl-2 col-lg-2 col-md-3 d-none d-md-block mx-2">
-          <form action="">
+          <form action="" method="get" id="search_form_left_side">
             <div class="row filter">
               <div class="col-12 bg-dark h-25 py-0 my-0 text-center">
                 <h4 class="filter-header my-2">Categories</h4>
               </div>
+
+              
               <div class="col-12">
-                <label for="retailers" class="my-2">
-                  <input
-                    class="mr-2"
-                    type="radio"
-                    id="retailers"
-                    name="categories"
-                  />
-                  Online Retailers Return (2)</label
-                >
-                <label for="appliances" class="my-2">
-                  <input
-                    class="mr-2"
-                    type="radio"
-                    id="appliances"
-                    name="categories"
-                  />
-                  Appliances (2)</label
-                >
+                <?php foreach($all_categories as $key => $value) { ?>  
+                  <label for="retailers" class="my-2">
+                    <input
+                      class="mr-2"
+                      type="radio" 
+                      <?php  echo ($value->id == $category_id) ? "checked" : ""; ?>
+                      name="category_id"
+                      value="<?=  $value->id; ?>"
+                      onClick="document.getElementById('search_form_left_side').submit();"
+                    />
+                    <?=  $value->name; ?> (2)</label
+                  >
+                <?php } ?>   
               </div>
             </div>
 
@@ -54,28 +51,20 @@
                 <h4 class="filter-header my-2">Location</h4>
               </div>
               <div class="col-12">
-                <label for="vegas" class="my-2">
-                  <input class="mr-2" type="radio" id="vegas" name="location" />
-                  Las Vegas NV (8)</label
-                >
-                <label for="henderson" class="my-2">
-                  <input
-                    class="mr-2"
-                    type="radio"
-                    id="henderson"
-                    name="location"
-                  />
-                  Henderson, NV (7)</label
-                >
-                <label for="phoenix" class="my-2">
-                  <input
-                    class="mr-2"
-                    type="radio"
-                    id="phoenix"
-                    name="location"
-                  />
-                  Phoenix Az (2)</label
-                >
+                 
+
+                <?php foreach($all_locations as $key => $value) { ?> 
+                  <label for="henderson" class="my-2">
+                    <input
+                      class="mr-2"
+                      <?php  echo ($value->id == $location_id) ? "checked" : ""; ?>
+                      type="radio" 
+                      value="<?=  $value->id; ?>"
+                      onClick="document.getElementById('search_form_left_side').submit();"
+                      name="location_id"
+                    />
+                    <?=  $value->name; ?> (7)</label >
+                <?php } ?>   
               </div>
             </div>
           </form>
@@ -95,7 +84,7 @@
               <div class="row justify-content-center justify-content-md-between my-5" > 
                 <?php foreach($products_list as $key => $product){ ?> 
 
-                  <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 my-2">
+                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 my-2">
                   <a href="<?php echo base_url(); ?>product/<?php echo $product->id; ?>">
                     <div class="store__item text-center" data-id="<?= $product->id; ?>"  data-price="<?= $product->selling_price; ?>" data-title="<?= $product->product_name; ?>" >
                       <i class="far fa-heart"></i>
@@ -128,6 +117,11 @@
                 <?php } ?> 
                 </div>
               </div>
+            </div>
+
+
+            <div class="col-12 col-lg-12 col-md-12 slick-current slick-center">
+                <?php echo $this->pagination->create_links(); ?>
             </div>
           </div>
         </div>

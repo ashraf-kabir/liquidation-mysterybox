@@ -797,10 +797,10 @@
                             <div class="col-xl-10 col-lg-10 col-md-10 col-12">
                                 <label class="d-block" for="payment">Select Payment Method </label>
                                 <label class="d-block" for="cash">
-                                    <input type="radio" name="payment" id="cash" value="cash" checked> Cash
+                                    <input type="radio" name="payment" id="cash" value="1" checked> Cash
                                 </label>
                                 <label class="d-block" for="card">
-                                    <input type="radio" name="payment" id="card" value="card"> Credit/Debit Card
+                                    <input type="radio" name="payment" id="card" value="2"> Credit/Debit Card
                                 </label>
                                 <div class="row d-none" id="card-input-area">
                                     <div class="col-6">

@@ -139,7 +139,7 @@ class=" col-xl-5 col-lg-3 col-md-5 col-sm-7 col-12 d-flex justify-content-around
             <select name="category_id" id="category_id" class="form-control my-2">
                 <option value="">Select Category</option>
                <?php foreach($all_categories as $key => $category){ ?>
-                  <option value="<?= $category->id; ?>"><?= $category->name; ?></option>
+                  <option <?= ( isset($category_id) AND $category_id == $category->id) ? 'selected' : ''; ?>  value="<?= $category->id; ?>"><?= $category->name; ?></option>
                <?php } ?>
             </select>
           </div>

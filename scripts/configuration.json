@@ -17,6 +17,10 @@
 		{
 			"name": "pos",
 			"id": 3
+		},
+		{
+			"name": "manager",
+			"id": 4
 		}
 	],
 	"models": [{
@@ -124,8 +128,9 @@
 			"count": [],
 			"unique": [],
 			"seed":[
-					{"email": "admin@manaknight.com", "password": "str_replace('$2y$', '$2b$', password_hash('a123456', PASSWORD_BCRYPT))","type": "n","verify": 1,"role_id": 2,"status": 1},
-					{"email": "member@manaknight.com", "password": "str_replace('$2y$', '$2b$', password_hash('a123456', PASSWORD_BCRYPT))","type": "n","verify": 1,"role_id": 1,"status": 1}
+				{"email": "member@manaknight.com", "password": "str_replace('$2y$', '$2b$', password_hash('a123456', PASSWORD_BCRYPT))","type": "n","verify": 1,"role_id": 1,"status": 1},
+				{"email": "admin@manaknight.com", "password": "str_replace('$2y$', '$2b$', password_hash('a123456', PASSWORD_BCRYPT))","type": "n","verify": 1,"role_id": 2,"status": 1}, 
+				{"email": "manager@manaknight.com", "password": "str_replace('$2y$', '$2b$', password_hash('a123456', PASSWORD_BCRYPT))","type": "n","verify": 1,"role_id": 4,"status": 1}
 			]
 		},
 		{
@@ -160,7 +165,8 @@
 			"count": [],
 			"seed":[
 				{"first_name": "Admin", "last_name": "Admin","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "admin","profile_id": 0,"credential_id" : 1, "stripe_id": ""},
-				{"first_name": "Member",  "last_name": "Member","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "member","profile_id": 0,"credential_id" : 2, "stripe_id": ""}
+				{"first_name": "Member",  "last_name": "Member","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "member","profile_id": 0,"credential_id" : 2, "stripe_id": ""},
+				{"first_name": "Manager",  "last_name": "Manager","phone": "12345678","image": "https://i.imgur.com/AzJ7DRw.png","image_id": 1, "refer": "manager","profile_id": 0,"credential_id" : 3, "stripe_id": ""}
 			]
         },
 		{
@@ -782,9 +788,7 @@
 			"migration": true,
 			"field": [
 				["id", "integer", [], "xyzID", "", ""],
-				["payment_type", "string", [{
-					"limit": 255
-				}], "xyzPayment Type", "required|max_length[255]", "required|max_length[255]"],
+				["payment_type", "integer", [], "xyzPayment Type", "", ""],
 				["pos_order_id", "integer", [], "xyzOrder ID", "required|integer", "required|integer"],
 				["transaction_date", "date", [], "xyzTransaction Date", "", ""],
 				["transaction_time", "text", [], "xyzTransaction Time", "", ""],
@@ -799,7 +803,8 @@
 			"method": "",
 			"join": [],
 			"mapping": {
-				"status": {"0": "Active","1": "Inactive"} 
+				"status": {"1": "Paid","2": "Pending"},
+				"payment_type": {"1": "Cash", "2" : "Card", "3" : "ACH", "4" : "Bank"}
 			},
 			"pre": "",
 			"post": "",
@@ -838,8 +843,7 @@
 			],
 			"menu": {
 				"Dashboard": "/dashboard", 
-				"xyzPOS Users": "/pos_user/0?order_by=id&direction=DESC",
-				
+				"xyzPOS Users": "/pos_user/0?order_by=id&direction=DESC", 
 				"xyzInventory" : "/inventory/0?order_by=id&direction=DESC", 
 				"xyzCategory" : "/category/0?order_by=id&direction=DESC", 
 				"xyzCustomer" : "/customer/0?order_by=id&direction=DESC", 
@@ -852,35 +856,6 @@
 					"xyzCategory Wise": "/category_wise/0?order_by=id&direction=DESC"
 				},
 				"Change Password": "/me",
-				"Profile": "/profile",
-				"Logout": "/logout"
-			}
-		},
-		{
-			"name": "member",
-			"role": "member",
-			"model": "user_model",
-			"login_type": "login",
-			"forgot": true,
-			"reset": true,
-			"register": "register",
-			"api_auth": true,
-			"middleware": ["affilate", "auth", "acl", "maintenance"],
-			"api": false,
-			"js": [
-				"/assets/js/vendor.js", 
-				"/assets/js/core.js", 
-				"/assets/js/app.js", 
-				"/assets/js/mkd-image-uppload.js",
-				"/assets/js/mkd-image-gallery.js"
-			],
-			"css": [
-				"/assets/css/styles.css", 
-				"/assets/css/mkd-image-uppload.css", 
-				"/assets/css/mkd-image-uppload-light-theme.css" 
-			],
-			"menu": {
-				"Dashboard": "/dashboard",
 				"Profile": "/profile",
 				"Logout": "/logout"
 			}
@@ -916,6 +891,45 @@
 				"xyzProfile": "/profile",
 				"Change Password": "/me",
 				"xyzLogout": "/logout"
+			}
+		},
+		{
+			"name": "manager",
+			"role": "manager",
+			"model": "user_model",
+			"login_type": "login_only",
+			"forgot": false,
+			"reset": false,
+			"register": false,
+			"api_auth": true,
+			"api": true,
+			"profile_page_fields": [],
+			"middleware": ["auth", "acl"],
+			"js": [
+				"/assets/js/media.js",
+				"/assets/js/core.js",
+				"/assets/js/setting.js",
+				"/assets/js/mkd-image-uppload.js",
+				"/assets/js/mkd-image-gallery.js", 
+				"/assets/js/app.js",
+				"/assets/js/admin.js"
+			],
+			"css": [
+				"/assets/css/styles.css", 
+				"/assets/css/mkd-image-uppload.css", 
+				"/assets/css/mkd-image-uppload-light-theme.css" 
+			],
+			"menu": {
+				"xyzDashboard": "/dashboard", 
+				"xyzProfile": "/profile",
+				"xyzInventory" : "/inventory/0?order_by=id&direction=DESC",  
+				"xyzCustomer" : "/customer/0?order_by=id&direction=DESC",  
+				"xyzReports": {
+					"xyzTransactions": "/transactions/0?order_by=id&direction=DESC" 
+				},
+				"Change Password": "/me",
+				"Profile": "/profile",
+				"Logout": "/logout"
 			}
 		}
 	],
@@ -1422,6 +1436,71 @@
 			"load_libraries": []
 		},
 		{
+			"route": "/inventory",
+			"name": "inventory",
+			"page_name": "Inventory",
+			"model": "inventory",
+			"controller": "Manager_inventory_controller.php",
+			"api_controller": "Manager_inventory_api_controller.php",
+			"activity_log": false,
+			"override": "",
+			"override_add": "",
+			"override_edit": "",
+			"override_view": "",
+			"override_list": "",
+			"override_add_view_model": "",
+			"override_edit_view_model": "",
+			"override_view_view_model": "",
+			"override_list_view_model": "",
+			"api": true,
+			"frontend": false,
+			"paginate": true,
+			"paginate_join": "",
+			"portal": "manager",
+			"is_crud": true,
+			"method_edit_pre": "",
+			"is_add": true,
+			"is_edit": true,
+			"is_delete": false,
+			"is_real_delete": false,
+			"is_list": true,
+			"is_view": true,
+			"import": false,
+			"export": false,
+			"is_filter": true,
+			"all_records": true,
+			"active_only": false,
+			"middleware": [],
+			"method": "",
+			"method_add": "",
+			"method_edit": "",
+			"method_list": "",
+			"method_view": "",
+			"method_add_success": "$this->success('Inventory has been added successfully.');",
+			"method_edit_success": "$this->success('Inventory has been updated successfully.');",
+			"method_list_success": "",
+			"method_view_success": "",
+			"method_delete_success": "$this->success('Inventory has been deleted successfully.');",
+			"custom_view_add": "",
+			"custom_view_edit": "",
+			"custom_view_list": "",
+			"custom_view_view": "",
+			"listing_fields_api": ["id", "product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",  "store_location_id", "barcode_image"],
+			"listing_headers": ["xyzID", "xyzProduct Name", "xyzSKU", "xyzCategory", "xyzPhysical Location", "xyzType", "xyzQuantity",  "xyzStatus"],
+			"listing_rows": ["id|integer", "product_name|string",   "sku|string", "category_id|integer", "physical_location|integer", "product_type|integer", "quantity|integer", "status|integer"],
+			"listing_actions": [],
+			"filter_fields": ["product_name", "sku", "category_id" ],
+			"add_fields": ["product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",  "status", "store_location_id", "can_ship", "product_type", "pin_item_top"],
+			"edit_fields": ["product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",   "status", "store_location_id",   "can_ship", "product_type", "pin_item_top"],
+			"view_fields": ["id", "product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "status", "store_location_id", "barcode_image",  "can_ship",  "product_type", "pin_item_top"],
+			"autocomplete": "",
+			"dynamic_mapping_add": {},
+			"dynamic_mapping_edit": {},
+			"dynamic_mapping_view": {},
+			"dynamic_mapping": {},
+			"load_libraries": []
+		},
+		{
 			"route": "/pos_user",
 			"name": "pos_user",
 			"page_name": "POS Users",
@@ -1497,6 +1576,65 @@
 			"paginate": true,
 			"paginate_join": "",
 			"portal": "admin",
+			"is_crud": true,
+			"method_edit_pre": "",
+			"is_add": true,
+			"is_edit": true,
+			"is_delete": true,
+			"is_real_delete": false,
+			"is_list": true,
+			"is_view": true,
+			"import": false,
+			"export": false,
+			"is_filter": true,
+			"all_records": true,
+			"active_only": false,
+			"method": "",
+			"method_add": "",
+			"method_edit": "",
+			"method_list": "",
+			"method_view": "",
+			"method_add_success": "$this->success('Customer has been added successfully.');",
+			"method_edit_success": "$this->success('Customer has been updated successfully.');",
+			"method_list_success": "",
+			"method_view_success": "",
+			"method_delete_success": "",
+			"custom_view_add": "",
+			"custom_view_edit": "",
+			"custom_view_list": "",
+			"custom_view_view": "",
+			"listing_fields_api": ["id", "name", "email", "phone", "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "last_order", "num_orders", "status"],
+			"listing_headers": ["xyzID", "xyzName", "xyzEmail", "xyzPhone", "xyzCustomer Since", "xyzLast Order", "xyzNum Orders", "xyzStatus"],
+			"listing_rows": ["id|integer", "name|string", "email|string", "phone|string", "customer_since|date", "last_order|string", "num_orders|integer", "status|integer"],
+			"listing_actions": [],
+			"filter_fields": ["name", "email", "phone", "customer_since", "status"],
+			"add_fields": ["name", "email", "phone",  "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status" ],
+			"edit_fields": ["name", "email", "phone", "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status"],
+			"view_fields": ["id", "name", "email", "phone", "company_name",   "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "last_order", "num_orders", "status"],
+			"autocomplete": "",
+			"dynamic_mapping_add": {},
+			"dynamic_mapping_edit": {},
+			"dynamic_mapping_view": {},
+			"dynamic_mapping": {},
+			"load_libraries": []
+		},
+		{
+			"route": "/customer",
+			"name": "customer",
+			"page_name": "Customer",
+			"model": "customer",
+			"controller": "Manager_customer_controller.php",
+			"api_controller": "Manager_api_customer_controller.php",
+			"activity_log": false,
+			"override_add": "",
+			"override_edit": "",
+			"override_view": "",
+			"override_list": "",
+			"api": true,
+			"frontend": false,
+			"paginate": true,
+			"paginate_join": "",
+			"portal": "manager",
 			"is_crud": true,
 			"method_edit_pre": "",
 			"is_add": true,
@@ -1937,6 +2075,7 @@
 		"css": ["/assets/css/guest.css"]
 	},
 	"translations": {
+		"xyzLogout": "Logout",
 		"xyzSettings": "Settings",
 		"xyzBarcode Image": "Barcode Image",
 		"xyzCustomer Since": "Customer Since",
@@ -2282,8 +2421,16 @@
 		"../mkdcore/custom/Admin/views/UserAdd.php" : "../release/application/views/Admin/UserAdd.php",
 		"../mkdcore/custom/Admin/views/UserEdit.php" : "../release/application/views/Admin/UserEdit.php",
 		"../mkdcore/custom/Admin/controllers/Admin_inventory_controller.php" : "../release/application/controllers/Admin/Admin_inventory_controller.php",
+		"../mkdcore/custom/Admin/views/Inventory.php" : "../release/application/views/Admin/Inventory.php",
 		"../mkdcore/custom/Admin/views/InventoryAdd.php" : "../release/application/views/Admin/InventoryAdd.php",
 		"../mkdcore/custom/Admin/views/InventoryEdit.php" : "../release/application/views/Admin/InventoryEdit.php",
+		"../mkdcore/custom/Admin/views/InventoryView.php" : "../release/application/views/Admin/InventoryView.php",
+
+		"../mkdcore/custom/Admin/views/Customer.php" : "../release/application/views/Admin/Customer.php",
+		"../mkdcore/custom/Admin/views/CustomerAdd.php" : "../release/application/views/Admin/CustomerAdd.php",
+		"../mkdcore/custom/Admin/views/CustomerEdit.php" : "../release/application/views/Admin/CustomerEdit.php",
+		"../mkdcore/custom/Admin/views/CustomerView.php" : "../release/application/views/Admin/CustomerView.php",
+
 		"../mkdcore/custom/Models/Inventory_model.php" : "../release/application/models/Inventory_model.php",
 		"../mkdcore/custom/Models/Pos_order_items_custom_model.php" : "../release/application/models/Pos_order_items_custom_model.php",
 
@@ -2300,6 +2447,9 @@
 		"../mkdcore/custom/Pos/controllers/Pos_dashboard_controller.php" : "../release/application/controllers/Pos/Pos_dashboard_controller.php",
 		"../mkdcore/custom/Pos/controllers/Pos_login_controller.php" : "../release/application/controllers/Pos/Pos_login_controller.php",
 		"../mkdcore/custom/Pos/views/Dashboard.php" : "../release/application/views/Pos/Dashboard.php",
+
+		"../mkdcore/custom/Manager/controllers/Manager_customer_controller.php     " : "../release/application/controllers/Manager/Manager_customer_controller.php",
+		"../mkdcore/custom/Manager/controllers/Manager_inventory_controller.php     " : "../release/application/controllers/Manager/Manager_inventory_controller.php",
 
 
 		"../mkdcore/custom/Frontend/controllers/Home_controller.php" : "../release/application/controllers/Guest/Home_controller.php",
@@ -2349,7 +2499,8 @@
 		"checkout": "Guest/Home_controller/checkout",
 		"cart": "Guest/Home_controller/cart",
 		"logout": "Guest/Home_controller/logout",
-		"categories": "Guest/Home_controller/categories",
+		"categories/(:num)": "Guest/Home_controller/categories/$1",
+		"categories": "Guest/Home_controller/categories/0",
 		"about_us": "Guest/Home_controller/about_us",
 		"contact_us": "Guest/Home_controller/contact_us",
 		"v1/api/sign_up" : "Guest/Home_controller/sign_up",
