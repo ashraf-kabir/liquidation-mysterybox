@@ -20,6 +20,7 @@ class Pos_checkout_service {
         $billing_zip         =  $customer_data['postal_code'];
         $payment             =  $customer_data['payment'];
         $customer_id         =  $customer_data['customer_id'];
+        $checkout_type       =  $customer_data['checkout_type'];
 
 
         $payment_method = 1;
@@ -54,6 +55,7 @@ class Pos_checkout_service {
             'order_type'        =>  2,  
             'pos_user_id'       =>  $pos_user_id, 
             'status'            =>  1, 
+            'checkout_type'     =>  $checkout_type, 
             'pos_pickup_status' =>  1, 
         );
 

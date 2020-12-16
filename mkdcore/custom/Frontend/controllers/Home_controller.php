@@ -8,6 +8,27 @@
  * @author Ryan Wong
  *
  */
+
+use \Stripe\Stripe;
+use \Stripe\Customer;
+use \Stripe\Charge;
+use \Stripe\Refund;
+use \Stripe\Plan;
+use \Stripe\Coupon;
+use \Stripe\Product;
+use \Stripe\Subscription;
+use \Stripe\Invoice;
+use \Stripe\Error;
+use \Stripe\Webhook;
+use \Stripe\Source;
+use \Stripe\Dispute;
+use \Stripe\File;
+use \Stripe\Exception;
+use \Stripe\Event;
+use \Stripe\InvoiceItem;
+use \Stripe\PaymentMethod;
+
+
 class Home_controller extends Manaknight_Controller
 {
      
@@ -212,6 +233,17 @@ class Home_controller extends Manaknight_Controller
         if($this->session->userdata('customer_login'))
         {
 
+
+            // Set your secret key. Remember to switch to your live secret key in production!
+            // See your keys here: https://dashboard.stripe.com/account/apikeys
+            \Stripe\Stripe::setApiKey('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+
+            // In a new endpoint on your server, create a ConnectionToken and return the
+            // `secret` to your app. The SDK needs the `secret` to connect to a reader.
+            $connectionToken = \Stripe\Terminal\ConnectionToken::create();
+
+
+
             $full_name      =  $this->input->post('full_name', TRUE);
             $email_address  =  $this->input->post('email_address', TRUE);
             $phone_number   =  $this->input->post('phone_number', TRUE);
@@ -236,7 +268,7 @@ class Home_controller extends Manaknight_Controller
             $data['customer']   =  $this->customer_model->get($user_id); 
              
             
-            $data['customer']->name =  $name;
+            $data['customer']->name =  $full_name;
 
             $user_id = $this->session->userdata('user_id');
                 
@@ -260,9 +292,11 @@ class Home_controller extends Manaknight_Controller
             $shipping_cost  = 0;
             $discount       = 0;
             $tax            = 0;
-    
+            
+            $this->db->trans_strict(TRUE);
+            $this->db->trans_begin();
 
-                
+
             /**
             * Create Order 
             */ 
@@ -320,16 +354,31 @@ class Home_controller extends Manaknight_Controller
                     'transaction_date'  =>  Date('Y-m-d'), 
                     'transaction_time'  =>  Date('g:i:s A'), 
                     'pos_order_id'      =>  $order_id, 
-                    'tax'               =>  $tax, 
+                    'tax'               =>  $tax,  
                     'discount'          =>  $discount, 
                     'subtotal'          =>  $sub_total, 
                     'total'             =>  $grand_total, 
                 );
                 $transaction_id = $this->transactions_model->create($add_transaction);
+                
+                $this->db->trans_complete();
+
+
+                if ($this->db->trans_status() === FALSE)
+                {
+                    $this->db->trans_rollback();
+                    $this->session->set_flashdata('error1', 'Error! Something went wrong please try again later.');
+                    redirect($_SERVER['HTTP_REFERER']);
+                }
+                else
+                {
+                    $this->db->trans_commit();
+                }
+
                 if($transaction_id)
                 {
                     $user_id = $this->session->userdata('user_id'); 
-                    $result = $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]);  
+                    // $result = $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]);  
                     $output['order_id']      = $order_id;  
                      
 
@@ -558,6 +607,27 @@ class Home_controller extends Manaknight_Controller
     {
         $this->destroy_session();
 		return $this->redirect('pos/login');
+    }
+
+
+    public function stripe_terminal_connection_token()
+    {
+        // Set your secret key. Remember to switch to your live secret key in production!
+        // See your keys here: https://dashboard.stripe.com/account/apikeys
+
+        $stripe_secret_key  = $this->config->item('stripe_secret_key');
+
+        Stripe::setApiKey( $stripe_secret_key );
+
+        // In a new endpoint on your server, create a ConnectionToken and return the
+        // `secret` to your app. The SDK needs the `secret` to connect to a reader.
+        $connectionToken = \Stripe\Terminal\ConnectionToken::create();
+
+         
+        $token =  $connectionToken;
+        echo json_encode(array('secret' => $token->secret));
+        exit();
+
     }
 
 }

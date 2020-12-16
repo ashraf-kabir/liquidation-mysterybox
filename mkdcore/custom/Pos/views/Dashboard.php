@@ -102,7 +102,7 @@
     <div class="wrapper container-fluid pl-0">
         <!-- Sidebar  -->
         <nav id="sidebar" class="active">
-            <div class="row h-100">
+            <div class="row">
                 <ul class="list-unstyled col-12 mt-4">
                     <li class="page-toggler pl-4 active-nav" id="pos-toggler">POS <span class="counter">0</span> 
                         <i class="fas fa-chevron-right"></i></li>
@@ -771,7 +771,7 @@
                                 <label for="checkout-type">Type</label> 
                                 <Select class="checkout_type form-control" name="checkout_type">
                                     <option value='1' selected>Pickup</option>
-                                    <option value='2'>Shipping</option>
+                                    <option value='2'>Delivery</option>
                                 </Select>
                             </div>
                         </div>

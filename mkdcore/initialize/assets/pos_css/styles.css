@@ -254,6 +254,7 @@ input#price {
   display: flex;
   width: 100%;
   align-items: stretch;
+  position: relative;
 }
 
 #sidebar {
@@ -262,7 +263,13 @@ input#price {
   background: black;
   color: #fff;
   transition: all 0.3s;
-  height: 100vh;
+  position: relative;
+}
+
+#sidebar .row{ 
+  position: sticky;
+  top: 0;
+  bottom: 0;
 }
 
 #sidebar.active {

@@ -124,6 +124,8 @@ class Custom_api_controller extends CI_Controller
 
                 $result = $this->pos_cart_model->create($data_cart); 
             }
+
+           
             if ($result) 
             {
                 $output['status'] = 200;
@@ -429,6 +431,9 @@ class Custom_api_controller extends CI_Controller
             * Cart Items  
             */
             $cart_items = $this->input->post('cart_items', TRUE);
+
+
+            
              
 
             /**
@@ -441,6 +446,29 @@ class Custom_api_controller extends CI_Controller
                 $form_data_value = (object) $form_data_value;
                 $customer_data[$form_data_value->name] = $form_data_value->value;
             } 
+
+
+            /**
+            * Validation if items support Can Ship
+            */
+            if( $customer_data['checkout_type']  == 2)
+            {
+                foreach ($cart_items as $cart_item_key => $cart_item_value) 
+                {
+                    $inventory_data = $this->inventory_model->get($cart_items[$cart_item_key]['id']);  
+
+                    if($inventory_data->can_ship ==2)
+                    {
+                        $output['status'] = 0;
+                        $output['error']  = "Error! " . $inventory_data->product_name . " can't be shipped.";
+                        echo json_encode($output);
+                        exit();
+                    }
+                }
+            }
+            
+
+
 
             $shipping_cost = 0;
             $tax           = 0;
@@ -479,11 +507,14 @@ class Custom_api_controller extends CI_Controller
                         'order_id'           => $order_id, 
                         'manifest_id'        => $inventory_data->manifest_id, 
                         'category_id'        => $inventory_data->category_id,  
+                        'store_id'           => $inventory_data->store_location_id,  
                         'pos_user_id'        => $pos_user_id, 
                         'product_unit_price' => $cart_items[$cart_item_key]['price'],
                     );
                     $sub_total += $total_amount;
                     $result = $this->pos_order_items_model->create($data_order_detail); 
+
+                     
                 }
 
 
@@ -732,6 +763,8 @@ class Custom_api_controller extends CI_Controller
         
         if ($this->session->userdata('user_id')) 
         {  
+            $this->load->library('names_helper_service');
+            
             $pos_user_id = $this->session->userdata('user_id');
 
             $this->load->model('pos_order_model');
@@ -770,7 +803,7 @@ class Custom_api_controller extends CI_Controller
                                         </ul>
                                     </td>';
 
-                $table_content   .=  '<td>Paid in '  . ucfirst($orders_list_value->payment_method) .  '</td>';
+                $table_content   .=  '<td>Paid in '  . $this->names_helper_service->get_payment_type($orders_list_value->payment_method) .  '</td>';
 
                 $table_content   .=  '<td>'.  date('d F, Y',strtotime($orders_list_value->created_at))  .'</td>';
 
@@ -814,6 +847,20 @@ class Custom_api_controller extends CI_Controller
 
             $pickup_order_id  =  $this->input->post('pickup_order_id', TRUE); 
 
+            $order_detail = $this->pos_order_model->get( $pickup_order_id ); 
+
+
+            /**
+             * Check if Order is Delivery
+             * checkout type 2 for delivery
+             * call shipstation api 
+             *  else do simple status change
+            */
+            if($order_detail->checkout_type == 2)
+            {
+
+            }
+            die();
             $mark_order_picked_data = array( 
                 'pos_pickup_status'  => 2, 
             ); 
@@ -1000,7 +1047,7 @@ class Custom_api_controller extends CI_Controller
  
                 $table_content   .=  '<td>' .    ucfirst($transaction->payment_type)  . '</td>';
 
-                $table_content   .=  '<td>$' .   number_format($transaction->tax,2)    . '</td>';
+                $table_content   .=  '<td>$' .  number_format($transaction->tax,2)    . '</td>';
 
                 $table_content   .=  '<td>$' .  number_format($transaction->discount,2)   . '</td>'; 
 

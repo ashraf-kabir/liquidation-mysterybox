@@ -11,6 +11,9 @@
     margin-top: 6px;
   }
 </style>
+
+<script src="https://js.stripe.com/terminal/v1/"></script>
+<script src="<?php base_url(); ?>assets/js/stripe_terminal.js"></script>
 <?php echo form_open('do_checkout'); ?>
   <section>
       <div class="container-fluid px-5 py-5">

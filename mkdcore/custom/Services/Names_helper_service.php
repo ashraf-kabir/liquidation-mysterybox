@@ -102,7 +102,22 @@ class Names_helper_service {
     }
   
 
-
+    public function get_payment_type($case)
+    {
+        switch ($case) {
+            case 1:
+                return "Cash";
+                break;
+            case 2:
+                return "Card";
+                break;
+            case 3:
+                return "ACH";
+                break; 
+            default:
+                return "";
+          }
+    }
 
 
 

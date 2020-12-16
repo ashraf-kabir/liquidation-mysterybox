@@ -661,7 +661,7 @@
 			"timestamp": true,
 			"migration": true,
 			"field": [
-				["id", "integer", [], "xyzid", "", ""],
+				["id", "integer", [], "xyzID", "", ""],
 				["store_id", "integer", [], "xyzStore", "required|integer", "required|integer"],
 				["billing_name", "string", [{ "limit": 255 }], "xyzBilling Name", "required|max_length[255]", "required|max_length[255]"],
 				["billing_address", "text", [], "xyzBilling Address", "required", "required"],
@@ -685,6 +685,7 @@
 				["pos_user_id", "integer", [], "xyzPOS User", "required|integer", "required|integer"],
 				["status", "integer", [], "xyzStatus", "required|integer", "required|integer"],
 				["customer_id", "integer", [], "xyzCustomer", "required|integer", "required|integer"],
+				["checkout_type", "integer", [], "xyzCheckout Type", "required|integer", "required|integer"],
 				["pos_pickup_status", "integer", [], "xyzPickup Status", "required|integer", "required|integer"]
 			],
 			"method": "",
@@ -693,6 +694,7 @@
 				"status": {"0": "Canceled","1": "Purchased", "2" : "Refunded"},
 				"order_type": {"1": "Online", "2" : "POS"},
 				"pos_pickup_status": {"1": "Pending", "2" : "Picked"},
+				"checkout_type": {"1": "Pickup", "2" : "Delivery"},
 				"payment_method": {"1": "Cash", "2" : "Card", "3" : "ACH", "4" : "Bank"}
 			},
 			"pre": "",
@@ -2488,6 +2490,7 @@
 		"v1/api/pos_past_order" : "Guest/Custom_api_controller/pos_past_order",
 		"v1/api/pos_summary_report" : "Guest/Custom_api_controller/pos_summary_report",
 		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory",
+		"v1/api/stripe_terminal_connection_token" : "Guest/Home_controller/stripe_terminal_connection_token",
 
 		"v1/api/add_product_to_cart_by_customer" : "Guest/Custom_api_controller/add_product_to_cart_by_customer",
 		
