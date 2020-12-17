@@ -1,7 +1,102 @@
 <?php 
 class Shipstation_api_service { 
  
-    
+    public function get_order()
+    {
+        $order_xml = "";
+        
+
+        $order_id       = $order_id;
+        $order_no       = $order_no;
+        $total          = $total;
+        $tax            = $tax;
+        $ship_cost      = $ship_cost;
+
+        $customer_note   = $customer_note;
+        $internal_note   = $internal_note;
+        $customer_email  = $customer_email;
+        $customer_name   = $customer_name;
+
+        $customer_company   = $customer_company;
+        $customer_phone     = $customer_phone;
+        
+
+        $order_xml   .=  ' <?xml version="1.0" encoding="utf-8"?> ';
+        $order_xml   .=  ' <Orders pages="1">';
+            $order_xml   .=  ' <Order>';
+                $order_xml   .=  ' <OrderID><![CDATA[' . $order_id . ']]></OrderID>';
+                $order_xml   .=  ' <OrderNumber><![CDATA[' . $order_no . ']]></OrderNumber>';
+                $order_xml   .=  ' <OrderDate>10/18/2019 21:56 PM</OrderDate>';
+                $order_xml   .=  ' <OrderStatus><![CDATA[paid]]></OrderStatus>';
+                $order_xml   .=  ' <LastModified>12/8/2011 12:56 PM</LastModified>';
+                $order_xml   .=  ' <ShippingMethod><![CDATA[USPSPriorityMail]]></ShippingMethod>';
+                $order_xml   .=  ' <PaymentMethod><![CDATA[Credit Card]]></PaymentMethod>';
+                $order_xml   .=  ' <OrderTotal>' . $total . '</OrderTotal>';
+                $order_xml   .=  ' <TaxAmount>' . $tax . '</TaxAmount>';
+                $order_xml   .=  ' <ShippingAmount>' . $ship_cost . '</ShippingAmount>';
+                $order_xml   .=  ' <CustomerNotes><![CDATA[' . $customer_note . ']]></CustomerNotes>';
+                $order_xml   .=  ' <InternalNotes><![CDATA[' . $internal_note . ']]></InternalNotes>';
+                $order_xml   .=  ' <Gift>false</Gift>';
+                $order_xml   .=  ' <GiftMessage></GiftMessage>';
+                $order_xml   .=  ' <CustomField1></CustomField1>';
+                $order_xml   .=  ' <CustomField2></CustomField2>';
+                $order_xml   .=  ' <CustomField3></CustomField3>';
+                $order_xml   .=  ' <Customer>';
+                    $order_xml   .=  ' <CustomerCode><![CDATA[' . $customer_email . ']]></CustomerCode>';
+                    $order_xml   .=  ' <BillTo>';
+                        $order_xml   .=  ' <Name><![CDATA[' . $customer_name . ']]></Name>';
+                        $order_xml   .=  ' <Company><![CDATA[' . $customer_company . ']]></Company>';
+                        $order_xml   .=  ' <Phone><![CDATA[' . $customer_phone . ']]></Phone>';
+                        $order_xml   .=  ' <Email><![CDATA[' . $customer_email . ']]></Email>';
+                    $order_xml   .=  ' </BillTo>';
+                    $order_xml   .=  ' <ShipTo>';
+                    $order_xml   .=  ' <Name><![CDATA[The President]]></Name>';
+                    $order_xml   .=  ' <Company><![CDATA[US Govt]]></Company>';
+                    $order_xml   .=  ' <Address1><![CDATA[1600 Pennsylvania Ave]]></Address1>';
+                    $order_xml   .=  ' <Address2></Address2>';
+                    $order_xml   .=  ' <City><![CDATA[Washington]]></City>';
+                    $order_xml   .=  ' <State><![CDATA[DC]]></State>';
+                    $order_xml   .=  ' <PostalCode><![CDATA[20500]]></PostalCode>';
+                    $order_xml   .=  ' <Country><![CDATA[US]]></Country>';
+                    $order_xml   .=  ' <Phone><![CDATA[512-555-5555]]></Phone>';
+                    $order_xml   .=  ' </ShipTo>';
+                $order_xml   .=  ' </Customer>';
+                $order_xml   .=  ' <Items>';
+                    $order_xml   .=  ' <Item>';
+                        $order_xml   .=  ' <SKU><![CDATA[FD88821]]></SKU>';
+                        $order_xml   .=  ' <Name><![CDATA[My Product Name]]></Name>';
+                        $order_xml   .=  ' <ImageUrl><![CDATA[http://www.mystore.com/products/12345.jpg]]></ImageUrl>';
+                        $order_xml   .=  ' <Weight>8</Weight>';
+                        $order_xml   .=  ' <WeightUnits>Ounces</WeightUnits>';
+                        $order_xml   .=  ' <Quantity>2</Quantity>';
+                        $order_xml   .=  ' UnitPrice>13.99</UnitPrice>';
+                        $order_xml   .=  ' <Location><![CDATA[A1-B2]]></Location>';
+                        $order_xml   .=  ' <Options>';
+                            $order_xml   .=  ' <Option>';
+                                $order_xml   .=  ' <Name><![CDATA[Size]]></Name>';
+                                $order_xml   .=  ' <Value><![CDATA[Large]]></Value>';
+                                $order_xml   .=  ' <Weight>10</Weight>';
+                            $order_xml   .=  ' </Option>';
+                            $order_xml   .=  ' <Option>';
+                                $order_xml   .=  ' <Name><![CDATA[Color]]></Name>';
+                                $order_xml   .=  ' <Value><![CDATA[Green]]></Value>';
+                                $order_xml   .=  ' <Weight>5</Weight>';
+                            $order_xml   .=  ' </Option>';
+                        $order_xml   .=  ' </Options>';
+                    $order_xml   .=  ' </Item>';
+                    $order_xml   .=  ' <Item>';
+                        $order_xml   .=  ' <SKU></SKU>';
+                        $order_xml   .=  ' <Name><![CDATA[$10 OFF]]></Name>';
+                        $order_xml   .=  ' <Quantity>1</Quantity>';
+                        $order_xml   .=  ' <UnitPrice>-10.00</UnitPrice>';
+                        $order_xml   .=  ' <Adjustment>true</Adjustment>';
+                    $order_xml   .=  ' </Item>';
+                $order_xml   .=  ' </Items>';
+            $order_xml   .=  ' </Order>';
+        $order_xml   .=  ' </Orders>';
+
+
+    }
 
     public function post_shipment_info()
     {
