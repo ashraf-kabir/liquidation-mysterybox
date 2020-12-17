@@ -2436,10 +2436,9 @@
 
 		"../mkdcore/custom/Models/Inventory_model.php" : "../release/application/models/Inventory_model.php",
 		"../mkdcore/custom/Models/Pos_order_items_custom_model.php" : "../release/application/models/Pos_order_items_custom_model.php",
-
-		"../mkdcore/custom/Shipstation_controller.php     " : "../release/application/controllers/Guest/Shipstation_controller.php",
+ 
 		
-		"../mkdcore/custom/Admin/controllers/Admin_category_controller.php     " : "../release/application/controllers/Admin/Admin_category_controller.php",
+		"../mkdcore/custom/Admin/controllers/Admin_category_controller.php" : "../release/application/controllers/Admin/Admin_category_controller.php",
 		"../mkdcore/custom/Admin/views/CategoryAdd.php" : "../release/application/views/Admin/CategoryAdd.php",
 		"../mkdcore/custom/Admin/views/CategoryEdit.php" : "../release/application/views/Admin/CategoryEdit.php",
 
@@ -2453,8 +2452,7 @@
 		"../mkdcore/custom/Pos/controllers/Pos_login_controller.php" : "../release/application/controllers/Pos/Pos_login_controller.php",
 		"../mkdcore/custom/Pos/views/Dashboard.php" : "../release/application/views/Pos/Dashboard.php",
 
-		"../mkdcore/custom/Manager/controllers/Manager_customer_controller.php     " : "../release/application/controllers/Manager/Manager_customer_controller.php",
-		"../mkdcore/custom/Manager/controllers/Manager_inventory_controller.php     " : "../release/application/controllers/Manager/Manager_inventory_controller.php",
+		
 
 
 		"../mkdcore/custom/Frontend/controllers/Home_controller.php" : "../release/application/controllers/Guest/Home_controller.php",
@@ -2468,6 +2466,11 @@
 		"../mkdcore/custom/Frontend/views/AboutUs.php" : "../release/application/views/Guest/AboutUs.php",
 		"../mkdcore/custom/Frontend/views/ContactUs.php" : "../release/application/views/Guest/ContactUs.php",
 
+		"../mkdcore/custom/Services/Stripe_terminal_service.php" : "../release/application/libraries/Stripe_terminal_service.php",
+
+		"../mkdcore/custom/Shipstation_controller.php" : "../release/application/controllers/Guest/Shipstation_controller.php",
+		"../mkdcore/custom/Manager/controllers/Manager_customer_controller.php" : "../release/application/controllers/Manager/Manager_customer_controller.php",
+		"../mkdcore/custom/Manager/controllers/Manager_inventory_controller.php" : "../release/application/controllers/Manager/Manager_inventory_controller.php",
 		"./mysql.php" : "../release/mysql.php"
 
 	},
@@ -2492,12 +2495,12 @@
 		"v1/api/pos_mark_order_pickup" : "Guest/Custom_api_controller/pos_mark_order_pickup",
 		"v1/api/pos_past_order" : "Guest/Custom_api_controller/pos_past_order",
 		"v1/api/pos_summary_report" : "Guest/Custom_api_controller/pos_summary_report",
-		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory",
-		"v1/api/stripe_terminal_connection_token" : "Guest/Home_controller/stripe_terminal_connection_token",
-
+		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory", 
 		"v1/api/add_product_to_cart_by_customer" : "Guest/Custom_api_controller/add_product_to_cart_by_customer",
 		
-		"v1/api/ship_station_endpoint" : "Guest/Shipstation_controller/ship_station_endpoint",
+		"v1/api/stripe_terminal_connection_token" : "Guest/Home_controller/stripe_terminal_connection_token",
+		"v1/api/stripe_collect_payment" : "Guest/Home_controller/stripe_collect_payment",
+		"v1/api/stripe_capture_payment" : "Guest/Home_controller/stripe_capture_payment",
 		
 
 		"": "Guest/Home_controller/home",

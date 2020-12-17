@@ -918,8 +918,13 @@ load_customers_list();
             ? $("#card-input-area").addClass("d-none")
             : null;
           break;
-        case "card":
-          $("#card-input-area").hasClass("d-none")
+        case "credit-card":
+            !$("#card-input-area").hasClass("d-none")
+            ? $("#card-input-area").addClass("d-none")
+            : null;
+          break;
+        case "terminal":
+            $("#card-input-area").hasClass("d-none")
             ? $("#card-input-area").removeClass("d-none")
             : null;
           break;

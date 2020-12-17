@@ -12,8 +12,6 @@
   }
 </style>
 
-<script src="https://js.stripe.com/terminal/v1/"></script>
-<script src="<?php base_url(); ?>assets/js/stripe_terminal.js"></script>
 <?php echo form_open('do_checkout'); ?>
   <section>
       <div class="container-fluid px-5 py-5">
@@ -41,12 +39,12 @@
 
 
           <div class="col-xl-8 col-lg-9 col-md-8 col-12 my-3">
-            <div class="bg-white w-100 p-2 p-md-4">
+            <!-- <div class="bg-white w-100 p-2 p-md-4">
               <h5>Sign in to Checkout</h5>
               <button class="btn btn-secondary bg-dark my-3">SIGN IN</button>
 
               <p class="text-muted my-3">or checkout as guest</p>
-            </div>
+            </div> -->
             <div class="bg-white w-100 p-2 p-md-4">
               <h5>Personal Information</h5>
               <hr />
@@ -57,7 +55,7 @@
                     <input
                       type="text"
                       name="full_name"
-                      id="name"
+                      id="name1"
                       value="<?php echo isset($customer->name) ? $customer->name : ""; ?>"
                       placeholder="Enter your full name"
                       class="form-control"
@@ -68,7 +66,7 @@
                     <input
                       type="text"
                       name="email_address"
-                      id="email"
+                      id="email1"
                       value="<?php echo isset($customer->email) ? $customer->email : ""; ?>"
                       placeholder="abc@example.com"
                       class="form-control"
@@ -286,7 +284,7 @@
 
               <div class="row mt-4 justify-content-between px-4">
                 <label for="terms">
-                  <input type="checkbox" required name="terms" id="terms" class="mr-2" />
+                  <input type="checkbox" required name="terms" id="terms1" class="mr-2" />
                   I’ve read and accept the terms & conditions
                 </label>
                 <button type="submit" class="btn btn-success">Place Order</button>

@@ -9,24 +9,7 @@
  *
  */
 
-use \Stripe\Stripe;
-use \Stripe\Customer;
-use \Stripe\Charge;
-use \Stripe\Refund;
-use \Stripe\Plan;
-use \Stripe\Coupon;
-use \Stripe\Product;
-use \Stripe\Subscription;
-use \Stripe\Invoice;
-use \Stripe\Error;
-use \Stripe\Webhook;
-use \Stripe\Source;
-use \Stripe\Dispute;
-use \Stripe\File;
-use \Stripe\Exception;
-use \Stripe\Event;
-use \Stripe\InvoiceItem;
-use \Stripe\PaymentMethod;
+
 
 
 class Home_controller extends Manaknight_Controller
@@ -400,24 +383,30 @@ class Home_controller extends Manaknight_Controller
 
 
     public function checkout()
-    { 
-        $data['active'] = 'about';
-        $data['layout_clean_mode'] = FALSE;
-        $data['no_detail'] = TRUE;
- 
-
+    {   
         if($this->session->userdata('customer_login'))
-        { 
-            $user_id = $this->session->userdata('user_id');
-            $this->load->model('pos_cart_model');
-            $this->load->model('customer_model');
+        {
+            $data['active'] = 'about';
+            $data['layout_clean_mode'] = FALSE;
+            $data['no_detail'] = TRUE;
+    
 
-            $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
-            $data['customer']   =  $this->customer_model->get($user_id); 
+            if($this->session->userdata('customer_login'))
+            { 
+                $user_id = $this->session->userdata('user_id');
+                $this->load->model('pos_cart_model');
+                $this->load->model('customer_model');
+
+                $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+                $data['customer']   =  $this->customer_model->get($user_id); 
+            }
+
+
+            $this->_render('Guest/Checkout',$data);
         }
-
-
-        $this->_render('Guest/Checkout',$data);
+        else{
+            redirect('');
+        }
     }
 
     
@@ -612,22 +601,73 @@ class Home_controller extends Manaknight_Controller
 
     public function stripe_terminal_connection_token()
     {
-        // Set your secret key. Remember to switch to your live secret key in production!
-        // See your keys here: https://dashboard.stripe.com/account/apikeys
+        
+        $this->load->library('stripe_terminal_service');
 
-        $stripe_secret_key  = $this->config->item('stripe_secret_key');
+        $this->stripe_terminal_service->set_config( $this->config );
 
-        Stripe::setApiKey( $stripe_secret_key );
+        $secret   =  $this->stripe_terminal_service->stripe_terminal_connection_token();
 
-        // In a new endpoint on your server, create a ConnectionToken and return the
-        // `secret` to your app. The SDK needs the `secret` to connect to a reader.
-        $connectionToken = \Stripe\Terminal\ConnectionToken::create();
-
-         
-        $token =  $connectionToken;
-        echo json_encode(array('secret' => $token->secret));
-        exit();
-
+        if(isset($secret['secret']))
+        {
+            echo json_encode( array('secret' => $secret['secret']) );
+            exit();  
+        }else{
+            echo json_encode( array('error' => $secret['error']) );
+            exit();  
+        } 
     }
+
+
+
+    public function stripe_collect_payment()
+    {
+        header('Content-Type: application/json'); 
+        $json_str = file_get_contents('php://input');
+        $json_obj = json_decode($json_str);
+
+        $this->load->library('stripe_terminal_service'); 
+        $this->stripe_terminal_service->set_config( $this->config );
+        
+        $client_secret   =  $this->stripe_terminal_service->collect_payment($json_obj);
+
+        if(isset($client_secret['client_secret']))
+        {
+            echo json_encode( array('client_secret' => $client_secret['client_secret']) );
+            exit();  
+        }else{
+            
+            echo json_encode( array('error' => $client_secret['error']) );
+            exit();  
+        }    
+    }
+
+
+    public function stripe_capture_payment()
+    {
+        header('Content-Type: application/json');
+        // retrieve JSON from POST body
+        $json_str = file_get_contents('php://input');
+        $json_obj = json_decode($json_str);
+
+        $this->load->library('stripe_terminal_service'); 
+        $this->stripe_terminal_service->set_config( $this->config );
+
+
+
+        $intent_data   =  $this->stripe_terminal_service->capture_payment($json_obj);
+
+        if(isset($intent_data['intent']))
+        {
+            echo json_encode( array('intent' => $intent_data['intent']) );
+            exit();  
+        }else{
+            echo json_encode( array('error' => $intent_data['error']) );
+            exit();  
+        }  
+         
+    }
+
+
 
 }

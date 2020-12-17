@@ -26,6 +26,10 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
     <link href="<?php echo base_url() ?>assets/js/select2.css" />
+
+    <div id="logs" style="display:none;"></div>
+    <script src="https://js.stripe.com/terminal/v1/"></script>
+    <script src="<?php echo base_url(); ?>assets/js/stripe_terminal.js"></script>
     <title>POS</title>
 </head>
 <style type="text/css">
@@ -799,16 +803,22 @@
                                 <label class="d-block" for="cash">
                                     <input type="radio" name="payment" id="cash" value="1" checked> Cash
                                 </label>
-                                <label class="d-block" for="card">
-                                    <input type="radio" name="payment" id="card" value="2"> Credit/Debit Card
+                                <label class="d-block" for="credit-card">
+                                    <input type="radio" name="payment" id="credit-card" value="2"> Credit/Debit Card
                                 </label>
+
+                                <label class="d-block" for="card">
+                                    <input type="radio" name="payment" id="terminal" value="5"> Stripe Terminal
+                                </label>
+
+
                                 <div class="row d-none" id="card-input-area">
                                     <div class="col-6">
-                                        <input type="number" name="card-number" class="form-control"
+                                        <input type="number" id="card-number-for-stripe-is" name="card-number" class="form-control card-number-for-stripe-is"
                                             placeholder="Card number" maxlength="16"
                                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
                                     </div>
-                                    <div class="col-6">
+                                    <!-- <div class="col-6">
                                         <input type="number" name="card-month" class="form-control w-25 d-inline"
                                             maxlength="2"
                                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -823,7 +833,7 @@
                                             maxlength="3"
                                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                             placeholder="CVC">
-                                    </div>
+                                    </div> -->
                                 </div>
 
 
@@ -856,6 +866,9 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
                         <input type="submit" class="btn btn-success px-4" id="payBtn" value="Pay">
+                        <button type="button" class="btn btn-success px-4" id="collect-button"  >Collect</button>
+                        <button type="button" class="btn btn-success px-4" id="capture-button"  >Capture</button>
+                         
                     </div>
                 </form>
             </div>
