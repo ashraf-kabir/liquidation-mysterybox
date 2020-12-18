@@ -28,7 +28,7 @@ class Shipstation_controller extends Manaknight_Controller
     public function ship_station_endpoint()
     {
 
-        <?xml version="1.0" encoding="utf-8"?>
+        
  
         $this->load->library('shipstation_api_service');
         $order_id       = 1;

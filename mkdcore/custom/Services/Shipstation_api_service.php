@@ -69,7 +69,7 @@ class Shipstation_api_service {
                         $order_xml   .=  ' <Weight>8</Weight>';
                         $order_xml   .=  ' <WeightUnits>Ounces</WeightUnits>';
                         $order_xml   .=  ' <Quantity>2</Quantity>';
-                        $order_xml   .=  ' UnitPrice>13.99</UnitPrice>';
+                        $order_xml   .=  ' <UnitPrice>13.99</UnitPrice>';
                         $order_xml   .=  ' <Location><![CDATA[A1-B2]]></Location>';
                         $order_xml   .=  ' <Options>';
                             $order_xml   .=  ' <Option>';
