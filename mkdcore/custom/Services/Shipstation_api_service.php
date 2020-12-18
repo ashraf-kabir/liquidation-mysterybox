@@ -1,7 +1,7 @@
 <?php 
 class Shipstation_api_service { 
  
-    public function get_order()
+    public function get_order($order_id,$order_no,$total,$tax,$ship_cost,$customer_note,$internal_note,$customer_email, $customer_name, $customer_company, $customer_phone )
     {
         $order_xml = "";
         
@@ -95,6 +95,8 @@ class Shipstation_api_service {
             $order_xml   .=  ' </Order>';
         $order_xml   .=  ' </Orders>';
 
+
+        return $order_xml;
 
     }
 
