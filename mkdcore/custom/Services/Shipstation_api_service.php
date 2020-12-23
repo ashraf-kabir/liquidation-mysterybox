@@ -1,6 +1,94 @@
 <?php 
 class Shipstation_api_service { 
- 
+    
+
+
+    public function get_shipping_cost($orders_list, $postal_code, $city, $state, $country)
+    {
+        if( !empty($orders_list) )
+        {
+
+            $weight_object = 0;
+            foreach($orders_list as $key => $value)
+            {
+                $product = $value->product_detail;    
+
+                $weight_object += $product->weight;
+            }
+        
+            /**
+             * ShipStation API
+             * Shipping Cost 
+             * https://www.shipstation.com/docs/api/shipments/get-rates/ 
+             * 
+            */
+            
+
+            $carrier_code   = "fedex";   //*
+
+            $from_postal_code   = 78703;  //*
+
+
+            // $to_state           = "DC";
+            $to_state           = $state;
+            // $to_country         = "US";  //*
+            $to_country         = $country;  //*
+            $to_postal_code     = $postal_code;  //*
+            // $to_city            = "Washington";
+            $to_city            = $city;
+            $weight_value       = $weight_object;     //*
+            $weight_units       = "ounces";   //*
+            
+            $dimensions_units   = "inches";
+            $dimensions_length  = 7;
+            $dimensions_width   = 5;
+            $dimensions_height  = 6;
+
+            $confirmation   = "delivery";
+            $residential    = "false";
+            
+
+
+            $user_name_as_key     = "6c15dc6d7bea48ed9a490f2515bd7a8e";
+            // $user_name_as_key     = "ShipStation";
+            $password_as_secret   = "e583d48514674abfbd85bb9ecabb4f5f";
+            // $password_as_secret   = "Rocks";
+
+            $authorization   = "Basic ". base64_encode($user_name_as_key . ":" . $password_as_secret);
+    
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "https://ssapi.shipstation.com/shipments/getrates",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_SSL_VERIFYPEER => FALSE,
+                CURLOPT_SSL_VERIFYHOST => FALSE,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 40,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS =>"{\n  \"carrierCode\": '". $carrier_code ."' ,\n  \"serviceCode\": null,\n  \"packageCode\": null,\n  \"fromPostalCode\": " . $from_postal_code . ",\n  \"toState\": '" . $to_state . "',\n  \"toCountry\": '" . $to_country . "',\n  \"toPostalCode\": '" . $to_postal_code . "',\n  \"toCity\": '" . $to_city . "',\n  \"weight\": {\n    \"value\": " . $weight_value . ",\n    \"units\": '" . $weight_units . "'  \n  },\n  \"dimensions\": {\n    \"units\": '" . $dimensions_units . "',\n    \"length\": " . $dimensions_length . ",\n    \"width\": " . $dimensions_width . ",\n    \"height\": " . $dimensions_height . "\n  },\n  \"confirmation\": '" . $confirmation . "',\n  \"residential\": '" . $residential . "'\n}",
+                CURLOPT_HTTPHEADER => array(
+                    "Host: ssapi.shipstation.com",
+                    "Authorization: " . $authorization,
+                    "Content-Type: application/json"
+                ),
+            ));
+
+            $response = curl_exec($curl); 
+            curl_close($curl); 
+            $response = json_decode( $response );
+            return $response;
+            exit();
+        } 
+    }
+
+
+
+
     public function get_order($order_id,$order_no,$total,$tax,$ship_cost,$customer_note,$internal_note,$customer_email, $customer_name, $customer_company, $customer_phone )
     {
         $order_xml = "";
@@ -99,6 +187,8 @@ class Shipstation_api_service {
         return $order_xml;
 
     }
+
+    
 
     public function post_shipment_info()
     {
@@ -244,6 +334,11 @@ class Shipstation_api_service {
         //Print out the response output.
         echo $result;
     }
+
+
+
+
+    
 }
 
 ?>

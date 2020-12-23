@@ -2498,11 +2498,16 @@
 		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory", 
 		"v1/api/add_product_to_cart_by_customer" : "Guest/Custom_api_controller/add_product_to_cart_by_customer",
 
+		
+		"v1/api/get_shipping_cost" : "Guest/Custom_api_controller/get_shipping_cost",
+
+
+
 		"v1/api/ship_station_endpoint" : "Guest/Shipstation_controller/ship_station_endpoint",
 		
 		"v1/api/stripe_terminal_connection_token" : "Guest/Home_controller/stripe_terminal_connection_token",
 		"v1/api/stripe_collect_payment" : "Guest/Home_controller/stripe_collect_payment",
-		"v1/api/stripe_capture_payment" : "Guest/Home_controller/stripe_capture_payment",
+		"v1/api/stripe_capture_payment" : "Guest/Home_controller/stripe_capture_payment", 
 		
 
 		"": "Guest/Home_controller/home",

@@ -1025,9 +1025,96 @@ load_customers_list();
     });
 
 
+    
+    $(document).on('click','.calculate-shipping-cost', function(){
+        var error_for_shipping = 0;
+        $('.shipping-cost-options').html('');
+
+
+        var postal_code  =  $('#checkout-postal_code').val();
+        var city         =  $('#checkout-city').val();
+        var state        =  $('#checkout-state').val();
+        var country      =  $('#checkout-country').val();
+      
+
+        if(postal_code == '' || postal_code == 0) 
+        {  
+            toastr.error('Postal Code is required.');
+            error_for_shipping = 1;
+            return false;
+            exit; 
+        }
+
+         
+
+        if(country == '' || country == 0) 
+        {
+            toastr.error('Country is required.'); 
+            error_for_shipping = 1;
+            return false;
+            exit;
+        }
+
+
+        if(error_for_shipping == 1)
+        {
+            return false;
+            exit; 
+        }
+
  
-  
- 
+        $.ajax({
+          url: ajaxURLPath + 'v1/api/get_shipping_cost',
+          timeout: 15000,
+          method: 'POST',
+          dataType: 'JSON', 
+          data : {'postal_code' : postal_code, 'city' : city,
+            'state' : state,'country' : country  },
+          success: function (response)  
+          {   
+               
+              if(response.list_all)
+              {
+                 
+                let shipping_options = '<label>Service </label><select class="form-control shipping-cost-price"><option value="">Select Service</option>';
+                  $(response.list_all).each(function(index,object){
+                    shipping_options += '<option value="' + object.serviceCode + '" data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  >' + object.serviceName + '  (Shipment Cost $' + object.shipmentCost + ' ) ( Other Cost $' + object.otherCost + ' )   </option>';
+                  }) 
+                shipping_options += '</select> <br> <label>Shipping Cost </label> <input type="number" class="form-control shipping-cost-price-value" name="shipping_cost" value="0" />';
+
+                $('.shipping-cost-options').html(shipping_options);
+              }
+              
+
+              if(response.error)
+              {
+                toastr.error(response.error); 
+              } 
+          } 
+      })
+    });
+
+
+
+
+    $(document).on('change','.customer_pickup_type', function(){ 
+        if($(this).val() == 1)
+        {
+          $('.shipping-cost-options').html(''); 
+        } 
+    });
+     
+    
+    $(document).on('change','.shipping-cost-price', function(){ 
+          var price_shipping = $(this).find(':selected').attr('data-price'); 
+          var other_price    = $(this).find(':selected').attr('data-other-cost'); 
+
+
+          let total_shipping_price = 0;
+          total_shipping_price = Number(price_shipping) + Number(other_price);
+
+          $('.shipping-cost-price-value').val(Number(total_shipping_price).toFixed(2)); 
+    });
   
   var _scannerIsRunning = false;
   

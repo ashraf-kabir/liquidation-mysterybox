@@ -773,9 +773,9 @@
 
                             <div class="col-6 " style="position: relative">
                                 <label for="checkout-type">Type</label> 
-                                <Select class="checkout_type form-control" name="checkout_type">
-                                    <option value='1' selected>Pickup</option>
-                                    <option value='2'>Delivery</option>
+                                <Select class="checkout_type customer_pickup_type form-control" name="checkout_type">
+                                    <option value='1' >Pickup</option>
+                                    <option value='2' selected>Delivery</option>
                                 </Select>
                             </div>
                         </div>
@@ -803,12 +803,12 @@
                                 <label class="d-block" for="cash">
                                     <input type="radio" name="payment" id="cash" value="1" checked> Cash
                                 </label>
-                                <label class="d-block" for="credit-card">
+                                <!-- <label class="d-block" for="credit-card">
                                     <input type="radio" name="payment" id="credit-card" value="2"> Credit/Debit Card
-                                </label>
+                                </label> -->
 
                                 <label class="d-block" for="card">
-                                    <input type="radio" name="payment" id="terminal" value="5"> Stripe Terminal
+                                    <input type="radio" name="payment" id="terminal" value="5"> Credit
                                 </label>
 
 
@@ -847,6 +847,15 @@
                                     <input type="checkbox" name="split-payment" id="split-payment"> Split Payment
                                 </label>
                             </div>
+
+                            <div class="col-12 ">
+                                <label for="split-payment">
+                                    <button class="btn btn-primary calculate-shipping-cost" type="button"> Calculate Shipping Cost </button>
+                                </label>
+                                
+                            </div>
+                            <div  class="col-12 shipping-cost-options">
+                            </div>
                         </div>
 
                         <div class="row bg-white mt-3 py-4">
@@ -857,6 +866,7 @@
                                 <h6 class="text-danger">Total</h6>
                                 <h6 class="text-danger">$ <span class="item-total discounted-total">0.00</span></h6>
                             </div>
+ 
                             <div class="col-12 d-flex justify-content-between">
                                 <h6 class="">Change</h6>
                                 <p class="text-danger">$ <span class="change">0.00</span></p>

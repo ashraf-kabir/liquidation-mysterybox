@@ -1114,7 +1114,80 @@ class Custom_api_controller extends CI_Controller
 
 
 
+    public function get_shipping_cost()
+    {
+        if ($this->session->userdata('user_id') AND $this->input->post('postal_code', TRUE)) 
+        {  
+            $this->load->model('pos_cart_model');
+            $this->load->model('inventory_model'); 
 
+            $this->load->library('shipstation_api_service');
+
+            $user_id = $this->session->userdata('user_id');  
+            $orders_list =$this->pos_cart_model->get_all(['user_id' => $user_id]);  
+
+            $error       = 0;
+            $error_msg   = "";
+            $weight_obj  = "";
+
+
+            /**
+             * Validation 
+             *  check if shipping is allowed
+            */
+
+
+
+            foreach($orders_list as $key => &$value)
+            {
+                $product = $this->inventory_model->get($value->product_id);  
+
+                if($product->can_ship == 1)
+                {
+                    if($product->weight == 0  OR $product->weight == "")
+                    {
+                        $error = 1;
+                        $error_msg = $product->product_name . " weight is required.";
+                        break;
+                    } else {
+                        $value->product_detail = $product;
+                    }
+                     
+                }else{
+                    $error = 1;
+                    $error_msg = $product->product_name . " can't be shipped.";
+                    break;
+                } 
+            }
+
+            if($error  == 1)
+            { 
+                $output['error']  = $error_msg;
+                echo json_encode($output);
+                exit();
+            }
+
+            $postal_code =  $this->input->post('postal_code', TRUE);
+            $city        =  $this->input->post('city', TRUE);
+            $state       =  $this->input->post('state', TRUE);
+            $country     =  $this->input->post('country', TRUE);
+
+            $result = $this->shipstation_api_service->get_shipping_cost($orders_list, $postal_code, $city, $state, $country);
+            
+            if (!isset($result->Message)  )
+            {
+                $output['list_all'] = $result;
+                $output['status']   = 200; 
+                echo json_encode($output);
+                exit();
+            }else{
+                $output['status'] = 0;
+                $output['error']  = $result->Message;
+                echo json_encode($output);
+                exit();
+            } 
+        } 
+    }
 
 
 

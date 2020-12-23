@@ -54,6 +54,12 @@ class Pos_login_controller extends Manaknight_Controller
                 $this->error('Wrong email or password.');
                 return $this->redirect('pos/login');
             }
+
+            if($user_obj->status == 0)
+            {
+                $this->error('Please activate your account.');
+                return $this->redirect('pos/login');
+            }
             $this->set_session('credential_id', (int) $authenticated_user->id);
             $this->set_session('user_id', (int) $user_obj->id);
             $this->set_session('store_id', (int) $user_obj->store_id);
