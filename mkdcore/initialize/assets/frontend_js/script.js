@@ -110,8 +110,51 @@ $(document).ready(() => {
       }); 
     }
   });
+
+
+
+
+  $(document).on('click','.add_to_cart_button',function(e)
+  {
+    e.preventDefault(); 
+
+    let quantity   = $('.product_quantity').val();
+    let id         = $('.product_id').val(); 
+
+
+    // get data and post to server
+    var serialized_data = [];  
+    serialized_data.push({ name: 'quantity', value :  quantity });
+    serialized_data.push({ name: 'id', value :  id }); 
+    $.ajax({
+        type: 'POST',
+        url: '../v1/api/add_product_to_cart_by_customer',
+        timeout: 15000,
+        data: serialized_data,
+        dataType: 'JSON',
+        success: function (response) 
+        {
+            if (response.error) 
+            {
+                toastr.error(response.error);
+            }
+
+            // if success add data to cart front pos
+            if (response.success) 
+            {
+                toastr.success(response.success);
+            } 
+        }
+    });
 });
- 
+
+
+
+
+});
+
+{
+}
 
 
 
