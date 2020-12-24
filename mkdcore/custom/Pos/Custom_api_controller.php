@@ -447,6 +447,7 @@ class Custom_api_controller extends CI_Controller
                 $customer_data[$form_data_value->name] = $form_data_value->value;
             } 
 
+             
 
             /**
             * Validation if items support Can Ship
@@ -467,10 +468,13 @@ class Custom_api_controller extends CI_Controller
                 }
             }
             
-
-
-
             $shipping_cost = 0;
+            if( isset($customer_data['shipping_cost']) )
+            {
+                $shipping_cost = $customer_data['shipping_cost'];
+            }
+
+ 
             $tax           = 0;
 
             //discount
@@ -853,14 +857,13 @@ class Custom_api_controller extends CI_Controller
             /**
              * Check if Order is Delivery
              * checkout type 2 for delivery
-             * call shipstation api 
+             * call shipstation api to add order
              *  else do simple status change
             */
             if($order_detail->checkout_type == 2)
             {
 
-            }
-            die();
+            } 
             $mark_order_picked_data = array( 
                 'pos_pickup_status'  => 2, 
             ); 
@@ -969,12 +972,15 @@ class Custom_api_controller extends CI_Controller
                                     </td>';
 
                 $table_content   .=  '<td>Paid in ' .    ucfirst($orders_list_value->payment_method)  . '</td>';
+ 
 
-                $table_content   .=  '<td  class="text-danger" >$' .   number_format($orders_list_value->total,2)    . '</td>';
+                $table_content   .=  '<td  class="text-danger" >$' .   number_format($orders_list_value->subtotal,2)    . '</td>';
 
                 $table_content   .=  '<td >$' .  number_format($orders_list_value->tax,2)   . '</td>';
 
-                $grand_total = $orders_list_value->tax + $orders_list_value->total;
+                $table_content   .=  '<td >$' .  number_format($orders_list_value->shipping_cost,2)   . '</td>';
+
+                $grand_total = $orders_list_value->tax + $orders_list_value->total ;
 
                 $table_content   .=  '<td  class="text-danger">$' .  number_format($grand_total,2)  . '</td>';
 
@@ -1037,6 +1043,7 @@ class Custom_api_controller extends CI_Controller
             {    
 
                 $customer_name = $this->names_helper_service->get_customer_real_name($transaction->customer_id);
+                $payment_type = $this->names_helper_service->get_payment_type($transaction->payment_type);
                 $table_content   .=  '<tr>';
 
                 $table_content   .=  '<th scope="row">'  . ucfirst($transaction->pos_order_id) .  '</th>'; 
@@ -1045,7 +1052,7 @@ class Custom_api_controller extends CI_Controller
   
                 $table_content   .=  '<td>' .    date('m-d-Y',strtotime( $transaction->transaction_date )) . ' ' . date('g:i A',strtotime( $transaction->transaction_time )) . '</td>';
  
-                $table_content   .=  '<td>' .    ucfirst($transaction->payment_type)  . '</td>';
+                $table_content   .=  '<td>' .    ucfirst($payment_type)  . '</td>';
 
                 $table_content   .=  '<td>$' .  number_format($transaction->tax,2)    . '</td>';
 
@@ -1055,17 +1062,19 @@ class Custom_api_controller extends CI_Controller
 
                 $table_content   .=  '<td  class="text-danger" >$' .  number_format($transaction->total,2)  . '</td>';
 
-                $table_content   .=  '</tr>';    
-
-                if($transaction->payment_type == 'card')
+                $table_content   .=  '</tr>';   
+                
+                if($transaction->payment_type == 1)
+                {
+                     
+                    $total_day_cash   +=  $transaction->total;
+                } 
+                if($transaction->payment_type == 2)
                 {
                     $total_credit     +=  $transaction->total;
                 }
 
-                if($transaction->payment_type == 'cash')
-                {
-                    $total_day_cash   +=  $transaction->total;
-                }
+                
                
                 $total_discount   +=  $transaction->discount; 
                 $total_all        +=  $transaction->total;
@@ -1122,7 +1131,7 @@ class Custom_api_controller extends CI_Controller
             $this->load->model('inventory_model'); 
 
             $this->load->library('shipstation_api_service');
-
+            $this->shipstation_api_service->set_config($this->config);
             $user_id = $this->session->userdata('user_id');  
             $orders_list =$this->pos_cart_model->get_all(['user_id' => $user_id]);  
 
@@ -1171,8 +1180,9 @@ class Custom_api_controller extends CI_Controller
             $city        =  $this->input->post('city', TRUE);
             $state       =  $this->input->post('state', TRUE);
             $country     =  $this->input->post('country', TRUE);
+            $from_postal =  $this->input->post('from_postal', TRUE);
 
-            $result = $this->shipstation_api_service->get_shipping_cost($orders_list, $postal_code, $city, $state, $country);
+            $result = $this->shipstation_api_service->get_shipping_cost($orders_list, $postal_code, $city, $state, $country, $from_postal);
             
             if (!isset($result->Message)  )
             {
@@ -1182,13 +1192,324 @@ class Custom_api_controller extends CI_Controller
                 exit();
             }else{
                 $output['status'] = 0;
-                $output['error']  = $result->Message;
+                if(!isset($result->ExceptionMessage))
+                {
+                    $output['error']  = $result->Message;
+                }else{
+                    $output['error']  = $result->ExceptionMessage;
+                }
+                
                 echo json_encode($output);
                 exit();
             } 
         } 
     }
 
+
+    /**
+     * Stripe Terminal Code
+     *  
+    */
+
+
+
+    public function stripe_terminal_connection_token()
+    {
+        
+        $this->load->library('stripe_terminal_service');
+
+        $this->stripe_terminal_service->set_config( $this->config );
+
+        $secret   =  $this->stripe_terminal_service->stripe_terminal_connection_token();
+
+        if(isset($secret['secret']))
+        {
+            echo json_encode( array('secret' => $secret['secret']) );
+            exit();  
+        }else{
+            echo json_encode( array('error' => $secret['error']) );
+            exit();  
+        } 
+    }
+
+    public function stripe_collect_payment()
+    {
+        if($this->session->userdata('user_id'))
+        {
+
+            header('Content-Type: application/json'); 
+            $json_str = file_get_contents('php://input');
+            $json_obj = json_decode($json_str);
+
+            $this->load->library('stripe_terminal_service');  
+            $this->stripe_terminal_service->set_config( $this->config );
+
+
+            $this->load->library('pos_checkout_service'); 
+            $this->load->model('inventory_model');
+            $this->pos_checkout_service->set_inventory_model( $this->inventory_model );   
+
+            /**
+            * Cart Items  
+            */
+            $cart_items = $this->input->post('cart_items', TRUE);
+ 
+            if(empty($cart_items))
+            {
+                echo json_encode( array('error' => "Error! Items in cart are required." ) );
+                exit();  
+            }
+
+            /**
+            * Refactor Customer Data  
+            */
+            $form_data = $this->input->post('form_data', TRUE);  
+            $customer_data = $this->pos_checkout_service->refactor_customer_data($form_data);
+             
+
+        
+
+            /**
+            * Validation if items support Can Ship
+            */
+            if( $customer_data['checkout_type']  == 2)
+            {
+                $validation_items = $this->pos_checkout_service->validation_cart_items_for_shipment($cart_items);
+                if(!empty($validation_items))
+                { 
+                    echo $validation_items;
+                    exit();
+                }
+            }
+
+
+            $shipping_cost = 0;
+            if( isset($customer_data['shipping_cost']) )
+            {
+                $shipping_cost = $customer_data['shipping_cost'];
+            } 
+            $tax           = 0;  
+            $discount = $this->input->post('discount', TRUE);   //discount
+
+            
+            $json_obj->amount = $json_obj->amount + $shipping_cost + $tax - $discount;
+            
+            $client_secret   =  $this->stripe_terminal_service->collect_payment($json_obj);
+
+            if(isset($client_secret['client_secret']))
+            {
+                echo json_encode( array('client_secret' => $client_secret['client_secret']) );
+                exit();  
+            }else{
+                
+                echo json_encode( array('error' => $client_secret['error']) );
+                exit();  
+            }    
+        }
+        
+    }
+
+
+    public function stripe_capture_payment()
+    {
+        header('Content-Type: application/json');
+        // retrieve JSON from POST body
+        $json_str = file_get_contents('php://input');
+        $json_obj = json_decode($json_str);
+
+        $this->load->library('stripe_terminal_service'); 
+        $this->stripe_terminal_service->set_config( $this->config );
+
+
+
+        $intent_data   =  $this->stripe_terminal_service->capture_payment($json_obj);
+
+        
+
+         
+
+        if(isset($intent_data['intent']))
+        {
+            if ($this->session->userdata('user_id')) 
+            { 
+                
+                $pos_user_id = $this->session->userdata('user_id');
+                
+                $this->load->model('pos_order_model');
+                $this->load->model('pos_order_note_model');
+                $this->load->model('pos_order_items_model');
+                $this->load->model('pos_cart_model');
+                $this->load->model('transactions_model');
+                $this->load->model('inventory_model');
+
+                $this->load->library('pos_checkout_service');
+                $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
+
+                /**
+                * Cart Items  
+                */
+                $cart_items = $this->input->post('cart_items', TRUE);
+
+
+                
+                
+
+                /**
+                * Refactor Customer Data  
+                */
+                $form_data = $this->input->post('form_data', TRUE); 
+                $customer_data = $this->pos_checkout_service->refactor_customer_data($form_data);
+
+                
+ 
+                
+                $shipping_cost = 0;
+                if( isset($customer_data['shipping_cost']) )
+                {
+                    $shipping_cost = $customer_data['shipping_cost'];
+                }
+
+    
+                $tax           = 0;
+
+                //discount
+                $discount = $this->input->post('discount', TRUE);  
+                
+                /**
+                * Create Order 
+                */ 
+                $result = $this->pos_checkout_service->create_order($customer_data,$tax,$discount,$pos_user_id,$shipping_cost);
+
+
+                
+
+                if ($result) 
+                { 
+                    $intent_data = json_encode($intent_data);
+                    $data_intent_data = array(  
+                        'intent_data' => $intent_data,
+                    );
+                    $this->pos_order_model->edit($data_intent_data,$result);
+
+
+                    /**
+                    * Store order items detail 
+                    * 
+                    */ 
+                    $order_id    = $result;
+                    $sub_total   = 0;
+                    $grand_total = 0;
+
+                    foreach ($cart_items as $cart_item_key => $cart_item_value) 
+                    {
+                        $inventory_data = $this->inventory_model->get($cart_items[$cart_item_key]['id']);  
+
+                        $total_amount = $cart_items[$cart_item_key]['price']  * $cart_items[$cart_item_key]['quantity'];
+                        $data_order_detail = array(
+                            'product_id'         => $cart_items[$cart_item_key]['id'],
+                            'product_name'       => $cart_items[$cart_item_key]['name'], 
+                            'amount'             => $total_amount, 
+                            'quantity'           => $cart_items[$cart_item_key]['quantity'], 
+                            'order_id'           => $order_id, 
+                            'manifest_id'        => $inventory_data->manifest_id, 
+                            'category_id'        => $inventory_data->category_id,  
+                            'store_id'           => $inventory_data->store_location_id,  
+                            'pos_user_id'        => $pos_user_id, 
+                            'product_unit_price' => $cart_items[$cart_item_key]['price'],
+                        );
+                        $sub_total += $total_amount;
+                        $result = $this->pos_order_items_model->create($data_order_detail); 
+
+                        
+                    }
+
+
+                    //Add Customer Msg
+                    if(isset($customer_data['message']) and !empty($customer_data['message']))
+                    {
+                        $data_order_note = array( 
+                            'employee_name'      =>  $customer_data['name'],
+                            'message_note'       =>  $customer_data['message'],
+                            'order_id'           =>  $order_id,
+                            'msg_type'           =>  2,
+                        );
+        
+                        $this->pos_order_note_model->create($data_order_note); 
+                    }
+
+                    /**
+                    * Update prices  
+                    */
+                    $grand_total = $sub_total + $tax + $shipping_cost - $discount;
+                    $data_order_prices = array( 
+                        'total'    =>  $grand_total,
+                        'subtotal' =>  $sub_total,  
+                        'intent_data' => $intent_data,
+                    );
+                    $result = $this->pos_order_model->edit($data_order_prices,$order_id);
+
+
+                    /**
+                    * Add Transaction  
+                    */    
+                    $add_transaction = array(
+                        'payment_type'      =>  $customer_data['payment'],
+                        'customer_id'       =>  $customer_data['customer_id'], 
+                        'pos_user_id'       =>  $pos_user_id, 
+                        'transaction_date'  =>  Date('Y-m-d'), 
+                        'transaction_time'  =>  Date('g:i:s A'), 
+                        'pos_order_id'      =>  $order_id, 
+                        'tax'               =>  $tax, 
+                        'discount'          =>  $discount, 
+                        'subtotal'          =>  $sub_total, 
+                        'total'             =>  $grand_total, 
+                    );
+                    $transaction_id = $this->transactions_model->create($add_transaction);
+                    if($transaction_id)
+                    {
+                        $user_id = $this->session->userdata('user_id'); 
+                        $result = $this->pos_cart_model->real_delete_by_fields(['user_id' => $user_id]);
+
+                        
+
+                        $output['customer_name'] = $customer_data['name'];
+                        $output['order_id']      = $order_id;
+                        $output['address']       = $customer_data['address'];
+                        $output['status'] = 200;
+                        $output['success'] = 'Order has been created successfully.';
+                        echo json_encode($output);
+                        exit();
+
+                    }else{
+                        $output['status'] = 0;
+                        $output['error'] = 'Error! While adding transaction.';
+                        echo json_encode($output);
+                        exit();
+                    }
+
+                    
+                    
+                }else{
+                    $output['status'] = 0;
+                    $output['error'] = 'Error! Please try again later.';
+                    echo json_encode($output);
+                    exit();
+                }
+
+            }
+            // echo json_encode( array('intent' => $intent_data['intent']) );
+            // exit();  
+        }else{
+            echo json_encode( array('error' => $intent_data['error']) );
+            exit();  
+        }  
+         
+    }
+
+    /**
+     * End of Stripe Terminal Code
+     *  
+    */
 
 
 }

@@ -5,6 +5,8 @@ $(document).ready(() => {
   let loading_gif = "../assets/image/loading.gif";
 
 
+  $('#capture-button').hide();
+
   //past orders
   function load_summary_report( search_date  = '')
   {
@@ -914,16 +916,20 @@ load_customers_list();
       const clickedItem = e.target.getAttribute("id");
       switch (clickedItem) {
         case "cash":
-          !$("#card-input-area").hasClass("d-none")
-            ? $("#card-input-area").addClass("d-none")
-            : null;
-          break;
-        case "credit-card":
+            $('#payBtn').show();
+            $('#capture-button').hide();
             !$("#card-input-area").hasClass("d-none")
             ? $("#card-input-area").addClass("d-none")
             : null;
           break;
+        // case "credit-card":
+        //     !$("#card-input-area").hasClass("d-none")
+        //     ? $("#card-input-area").addClass("d-none")
+        //     : null;
+        //   break;
         case "terminal":
+            $('#capture-button').show();
+            $('#payBtn').hide();
             $("#card-input-area").hasClass("d-none")
             ? $("#card-input-area").removeClass("d-none")
             : null;
@@ -1027,14 +1033,13 @@ load_customers_list();
 
     
     $(document).on('click','.calculate-shipping-cost', function(){
-        var error_for_shipping = 0;
+        var error_for_shipping = 0;  
         $('.shipping-cost-options').html('');
-
-
         var postal_code  =  $('#checkout-postal_code').val();
         var city         =  $('#checkout-city').val();
         var state        =  $('#checkout-state').val();
         var country      =  $('#checkout-country').val();
+        var from_postal  =  $('.shipping-postal-code').val();
       
 
         if(postal_code == '' || postal_code == 0) 
@@ -1055,6 +1060,14 @@ load_customers_list();
             exit;
         }
 
+        if(from_postal == '' || from_postal == 0) 
+        {
+            toastr.error('Shipping Postal Code is required.'); 
+            error_for_shipping = 1;
+            return false;
+            exit;
+        }
+
 
         if(error_for_shipping == 1)
         {
@@ -1062,13 +1075,15 @@ load_customers_list();
             exit; 
         }
 
+
+        $('.shipping-cost-options').html('<img style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
  
         $.ajax({
           url: ajaxURLPath + 'v1/api/get_shipping_cost',
-          timeout: 15000,
+          timeout: 30000,
           method: 'POST',
           dataType: 'JSON', 
-          data : {'postal_code' : postal_code, 'city' : city,
+          data : {'postal_code' : postal_code, 'city' : city, 'from_postal' : from_postal,
             'state' : state,'country' : country  },
           success: function (response)  
           {   
@@ -1076,11 +1091,11 @@ load_customers_list();
               if(response.list_all)
               {
                  
-                let shipping_options = '<label>Service </label><select class="form-control shipping-cost-price"><option value="">Select Service</option>';
+                let shipping_options = '<label>Service </label><select class="form-control shipping-cost-price" name="shipping_service_id"><option value="">Select Service</option>';
                   $(response.list_all).each(function(index,object){
                     shipping_options += '<option value="' + object.serviceCode + '" data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  >' + object.serviceName + '  (Shipment Cost $' + object.shipmentCost + ' ) ( Other Cost $' + object.otherCost + ' )   </option>';
                   }) 
-                shipping_options += '</select> <br> <label>Shipping Cost </label> <input type="number" class="form-control shipping-cost-price-value" name="shipping_cost" value="0" />';
+                shipping_options += '</select> <br> <label>Shipping Cost </label> <input type="hidden" class="form-control shipping_service_name" name="shipping_service_name" value="" /> <input type="text" class="form-control shipping-cost-price-value" name="shipping_cost" value="0" />';
 
                 $('.shipping-cost-options').html(shipping_options);
               }
@@ -1090,6 +1105,11 @@ load_customers_list();
               {
                 toastr.error(response.error); 
               } 
+          },
+          error: function()
+          {
+            $('.shipping-cost-options').html('');
+            toastr.error('Api timeout reached.'); 
           } 
       })
     });
@@ -1101,19 +1121,27 @@ load_customers_list();
         if($(this).val() == 1)
         {
           $('.shipping-cost-options').html(''); 
-        } 
+          $('.button-calculate-shipping').hide();
+          $('.shipping-postal-option').hide();
+        } else{
+          $('.shipping-postal-option').show();
+          $('.button-calculate-shipping').show();
+        }
     });
      
     
     $(document).on('change','.shipping-cost-price', function(){ 
           var price_shipping = $(this).find(':selected').attr('data-price'); 
           var other_price    = $(this).find(':selected').attr('data-other-cost'); 
+          var shipping_service_name    = $(this).find(':selected').attr('data-service-name'); 
 
 
           let total_shipping_price = 0;
           total_shipping_price = Number(price_shipping) + Number(other_price);
 
           $('.shipping-cost-price-value').val(Number(total_shipping_price).toFixed(2)); 
+
+          $('.shipping_service_name').val(shipping_service_name); 
     });
   
   var _scannerIsRunning = false;
@@ -1271,6 +1299,292 @@ load_customers_list();
     load_summary_report($('#summary-date').val());
   });
 
+
+
+
+
+
+
+
+
+
+
+
   
+
+  /**
+   *
+   *  Stripe Terminal Code 
+   *  
+  */
+  var discoveredReaders;
+  var paymentIntentId; 
+  var base_url = document.location.origin + '/';  
+  
+  var terminal = StripeTerminal.create({
+      onFetchConnectionToken: fetchConnectionToken,
+      onUnexpectedReaderDisconnect: unexpectedDisconnect,
+  });
+   
+    
+  
+  function unexpectedDisconnect() {
+      // In this function, your app should notify the user that the reader disconnected.
+      // You can also include a way to attempt to reconnect to a reader.
+      console.log("Disconnected from reader")
+  }
+    
+  function fetchConnectionToken() {
+      // Do not cache or hardcode the ConnectionToken. The SDK manages the ConnectionToken's lifecycle.
+      return fetch( base_url + 'v1/api/stripe_terminal_connection_token', { method: "POST" })
+          .then(function(response) {
+              return response.json();
+          })
+          .then(function(data) {
+              
+              return data.secret;
+          });
+  }
+    
+  // Handler for a "Discover readers" button
+  function discoverReaderHandler() {
+      var config = {simulated: true};
+      
+      terminal.discoverReaders(config).then(function(discoverResult) { 
+  
+          if (discoverResult.error) {
+              toastr.error('Failed to discover: '+ discoverResult.error); 
+          } else if (discoverResult.discoveredReaders.length === 0) {
+              toastr.error('No available readers.');  
+          } else {
+              discoveredReaders = discoverResult.discoveredReaders;
+              connectReaderHandler(discoveredReaders); 
+              log('terminal.discoverReaders', discoveredReaders);
+          }
+      });
+  }
+    
+  // Handler for a "Connect Reader" button
+  function connectReaderHandler(discoveredReaders) {
+      // Just select the first reader here. 
+      var selectedReader = discoveredReaders[0];
+      terminal.connectReader(selectedReader).then(function(connectResult) {
+          if (connectResult.error) {
+              console.log('Failed to connect: ', connectResult.error);
+              toastr.error(connectResult.error); 
+          } else {
+              toastr.success('Connected to reader: ' + connectResult.reader.label);
+              console.log('Connected to reader: ', connectResult.reader.label); 
+          }
+      });
+  }
+    
+  function fetchPaymentIntentClientSecret(amount) {
+      const formData = $("#checkout-form").serializeArray();
+      const bodyContent = JSON.stringify({ amount: totalPrice , 'form_data' : formData, 'cart_items' : cartItems, 'discount' : discountedTotal });
+    
+      return fetch(base_url + 'v1/api/stripe_collect_payment', {
+          method: "POST",
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: bodyContent
+      })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) { 
+        if (data.error) 
+        { 
+          toastr.error(data.error); 
+        } else if (data.client_secret) {
+          return data.client_secret;
+        }
+          
+      });
+  }
+    
+  function collectPayment(amount) {
+      
+      var card_number_is_stripe = '4242424242424242';
+      // if(card_number_is_stripe == '')
+      // {
+      //     toastr.error('Card number is required.');
+      //     return ;
+      // } 
+  
+      fetchPaymentIntentClientSecret(amount).then(function(client_secret) {
+          terminal.setSimulatorConfiguration({testCardNumber: card_number_is_stripe});
+          terminal.collectPaymentMethod(client_secret).then(function(result) {
+              if (result.error) {
+                  // Placeholder for handling result.error
+                  toastr.error(result.error);
+                  return ;
+              } else { 
+                  terminal.processPayment(result.paymentIntent).then(function(result) {
+                      if (result.error) 
+                      { 
+                          toastr.error(result.error.message); 
+                      } else if (result.paymentIntent) { 
+                          paymentIntentId = result.paymentIntent.id; 
+                          capture(paymentIntentId)
+                      }
+                  });
+              }
+          });
+      });
+  }
+    
+  function capture(paymentIntentId) {
+      
+      const formData = $("#checkout-form").serializeArray();
+      const address = formData[0].value;
+      const message = formData[1].value;
+      const paymentMethod = formData[2].value;
+      const cardNumber    = formData[3].value;
+      const cardMonth     = formData[4].value;
+      const cardYear      = formData[5].value;
+      const cvc           = formData[6].value;
+  
+      return fetch(base_url + 'v1/api/stripe_capture_payment', {
+          method: "POST",
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({"id": paymentIntentId, 'form_data' : formData, 'cart_items' : cartItems, 'discount' : discountedTotal })
+      })
+      .then(function(response) {
+          return response.json();
+      })
+      .then(function(data) {
+          log('server.capture', data);
+          if(data.error)
+          {
+            toastr.error(data.error);
+          } 
+          else 
+          {
+            toastr.success(data.success);
+            load_cart_items_list();
+            cartItems = [];
+            displayCartItems(cartItems);
+            // Hide the active Page and show the receipt page
+            $(".active-page").addClass("d-none");
+            $(".active-page").removeClass("active-page");
+            $("#receipt").removeClass("d-none");
+            $("#receipt").addClass("active-page");
+
+            // Set the details for the receipt
+            $("#receipt-address")[0].innerHTML = address;
+            $("#receipt-table-body")[0].innerHTML = "";
+            cartItems.forEach((item) => {
+                $("#receipt-table-body")[0].innerHTML += `
+                    <tr>
+                        <th scope="row">${item.quantity}</th>
+                        <td>${item.name}</td>
+                        <td>$ ${Number(item.quantity * Number(item.price)).toFixed(2)}</td>
+                    </tr>
+                    `;
+                $("");
+                $("#checkout-modal").modal("hide");
+                $("#checkout-form")[0].reset();
+            });
+            let date = new Date(),
+            year = date.getFullYear(),
+            month = date.getMonth() + 1,
+            day = date.getDate(),
+            min = date.getMinutes(),
+            hour = date.getHours(),
+            time = "";
+            month.toString().length === 1 ? (month = `0${month}`) : month;
+            day.toString().length < 1 ? (day = `0${day}`) : day;
+            min.length < 1 ? (min = `0${min}`) : min;
+            const todayDate = `${day}/${month}/${year}`;
+            if (hour > 12) {
+              time = `0${hour - 12}:${min} PM`;
+            } else if (hour < 12) {
+              time = `${hour}:${min} AM`;
+            } else {
+              time = `${hour}:${min} PM`;
+            }
+
+            // Set Receipt Time and date
+            $(".receipt-date")[0].innerHTML = todayDate;
+            $(".receipt-time")[0].innerHTML = time;
+
+            $("#receipt-address")[0].innerHTML = data.address;
+            $("#receipt-order-id")[0].innerHTML = data.order_id;
+            $("#receipt-customer-name")[0].innerHTML = data.customer_name;
+
+            // Hide and Reset modal and form respectively
+            $("#checkout-modal").modal("hide");
+            $("#checkout-form")[0].reset();
+          }
+      });
+  }
+    
+  
+  
+  
+  const discoverButton = document.getElementById('discover-button');
+   
+  discoverReaderHandler();
+  
+   
+  
+  
+      
+const captureButton = document.getElementById('capture-button');
+captureButton.addEventListener('click', async (event) => {
+    $('.show-loader').html('<img style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
+    amount = 20
+    collectPayment(amount);
+
+    $('.show-loader').html('');
+    // capture(paymentIntentId);
+}); 
+  
+    
+  function log(method, message){
+        var logs = document.getElementById("logs");
+        var title = document.createElement("div");
+        var log = document.createElement("div");
+        var lineCol = document.createElement("div");
+        var logCol = document.createElement("div");
+        title.classList.add('row');
+        title.classList.add('log-title');
+        title.textContent = method;
+        log.classList.add('row');
+        log.classList.add('log');
+        var hr = document.createElement("hr");
+        var pre = document.createElement("pre");
+        var code = document.createElement("code");
+        code.textContent = formatJson(JSON.stringify(message, undefined, 2));
+        pre.append(code);
+        log.append(pre);
+        logs.prepend(hr);
+        logs.prepend(log);
+        logs.prepend(title);
+  }
+      
+  function formatJson(message){
+        var lines = message.split('\n');
+        var space = " ".repeat(2);
+        var json = "";
+        for(var i = 1; i <= lines.length; i += 1){
+            line = i + space + lines[i-1];
+            json = json + line + '\n';
+        }
+        return json;
+  }
+  
+
+
+
+  /**
+   *
+   *  End of Stripe Terminal Code 
+   *  
+  */
 
 });

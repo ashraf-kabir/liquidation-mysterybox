@@ -1,9 +1,15 @@
 <?php 
 class Shipstation_api_service { 
     
+    private $_config;
 
 
-    public function get_shipping_cost($orders_list, $postal_code, $city, $state, $country)
+    public function set_config($config)
+    {
+        $this->_config = $config;
+    }
+
+    public function get_shipping_cost($orders_list, $postal_code, $city, $state, $country, $from_postal)
     {
         if( !empty($orders_list) )
         {
@@ -24,17 +30,20 @@ class Shipstation_api_service {
             */
             
 
-            $carrier_code   = "fedex";   //*
+            $carrier_code       = "fedex";   //* 
+            $from_postal_code   = $from_postal;
 
-            $from_postal_code   = 78703;  //*
+
+            // $from_postal_code   = 78703;  //*
 
 
             // $to_state           = "DC";
-            $to_state           = $state;
-            // $to_country         = "US";  //*
-            $to_country         = $country;  //*
-            $to_postal_code     = $postal_code;  //*
             // $to_city            = "Washington";
+            // $to_country         = "US";  //*
+
+            $to_state           = $state; 
+            $to_country         = $country;  //*
+            $to_postal_code     = $postal_code;  //* 
             $to_city            = $city;
             $weight_value       = $weight_object;     //*
             $weight_units       = "ounces";   //*
@@ -49,10 +58,14 @@ class Shipstation_api_service {
             
 
 
-            $user_name_as_key     = "6c15dc6d7bea48ed9a490f2515bd7a8e";
+            $user_name_as_key     =  $this->_config->item('shipstation_user_name_as_key'); 
+            $password_as_secret   =  $this->_config->item('shipstation_password_as_secret'); 
+
             // $user_name_as_key     = "ShipStation";
-            $password_as_secret   = "e583d48514674abfbd85bb9ecabb4f5f";
             // $password_as_secret   = "Rocks";
+
+             
+            
 
             $authorization   = "Basic ". base64_encode($user_name_as_key . ":" . $password_as_secret);
     

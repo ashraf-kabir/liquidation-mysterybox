@@ -348,6 +348,7 @@
                                     <th scope="col">Status</th>
                                     <th scope="col">Sub Total</th>
                                     <th scope="col">Tax</th>
+                                    <th scope="col">Shipping Cost</th>
                                     <th scope="col">Total</th>
                                 </tr>
                             </thead>
@@ -808,16 +809,16 @@
                                 </label> -->
 
                                 <label class="d-block" for="card">
-                                    <input type="radio" name="payment" id="terminal" value="5"> Credit
+                                    <input type="radio" name="payment" id="terminal" value="2"> Credit
                                 </label>
 
 
                                 <div class="row d-none" id="card-input-area">
-                                    <div class="col-6">
+                                    <!-- <div class="col-6">
                                         <input type="number" id="card-number-for-stripe-is" name="card-number" class="form-control card-number-for-stripe-is"
                                             placeholder="Card number" maxlength="16"
                                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
-                                    </div>
+                                    </div> -->
                                     <!-- <div class="col-6">
                                         <input type="number" name="card-month" class="form-control w-25 d-inline"
                                             maxlength="2"
@@ -847,8 +848,13 @@
                                     <input type="checkbox" name="split-payment" id="split-payment"> Split Payment
                                 </label>
                             </div>
+                            
+                            <div class="col-12 shipping-postal-option mb-2">
+                                <label for="">Shipping Postal Code</label>
+                                <input type="number" class="form-control shipping-postal-code" name="shipping_postal_cost" value="">
+                            </div> 
 
-                            <div class="col-12 ">
+                            <div class="col-12 button-calculate-shipping">
                                 <label for="split-payment">
                                     <button class="btn btn-primary calculate-shipping-cost" type="button"> Calculate Shipping Cost </button>
                                 </label>
@@ -876,9 +882,10 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
                         <input type="submit" class="btn btn-success px-4" id="payBtn" value="Pay">
-                        <button type="button" class="btn btn-success px-4" id="collect-button"  >Collect</button>
+                        <!-- <button type="button" class="btn btn-success px-4" id="collect-button"  >Collect</button> -->
                         <button type="button" class="btn btn-success px-4" id="capture-button"  >Capture</button>
-                         
+                        <div class="show-loader">
+                        </div>
                     </div>
                 </form>
             </div>

@@ -671,9 +671,13 @@
 				["billing_zip", "string", [{ "limit": 255 }], "xyzBilling Zip", "required|max_length[255]", "required|max_length[255]"],
 				["shipping_name", "string", [{ "limit": 255 }], "xyzShipping Name", "required|max_length[255]", "required|max_length[255]"],
 				["shipping_address", "text", [], "xyzShipping Address", "required", "required"],
+				["intent_data", "text", [], "Stripe Data", "", ""],
 				["shipping_country", "string", [{ "limit": 255 }], "xyzShipping Country", "", ""],
 				["shipping_state", "string", [{ "limit": 255 }], "xyzShipping State", "", ""],
 				["shipping_city", "string", [{ "limit": 255 }], "xyzShipping City", "", ""],
+				["shipping_zip", "string", [{ "limit": 255 }], "xyzShipping Zip", "", ""],
+				["shipping_cost_service_name", "string", [{ "limit": 255 }], "xyzShipping Service", "", ""],
+				["shipping_cost_service_code", "string", [{ "limit": 255 }], "xyzShipping Service Code", "", ""],
 				["shipping_zip", "string", [{ "limit": 255 }], "xyzShipping Zip", "", ""],
 				["subtotal", "float", [], "xyzSubtotal", "required", "required"],
 				["shipping_cost", "float", [], "xyzShipping Cost", "", ""],
@@ -2352,6 +2356,8 @@
 		"file_upload": "local",
 		"upload_byte_size_limit": "1000000000",
 		"dynamic_config": {
+			"shipstation_user_name_as_key" : "6c15dc6d7bea48ed9a490f2515bd7a8e",
+            "shipstation_password_as_secret" : "e583d48514674abfbd85bb9ecabb4f5f",
 			"jwt_key": "544e68498c28710b10af9dc9c7c9530951438f23",
 			"jwt_expire_at": 3600,
 			"jwt_refresh_expire_at": 7200,
@@ -2497,17 +2503,14 @@
 		"v1/api/pos_summary_report" : "Guest/Custom_api_controller/pos_summary_report",
 		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory", 
 		"v1/api/add_product_to_cart_by_customer" : "Guest/Custom_api_controller/add_product_to_cart_by_customer",
-
-		
-		"v1/api/get_shipping_cost" : "Guest/Custom_api_controller/get_shipping_cost",
-
-
+ 
+		"v1/api/get_shipping_cost" : "Guest/Custom_api_controller/get_shipping_cost", 
 
 		"v1/api/ship_station_endpoint" : "Guest/Shipstation_controller/ship_station_endpoint",
 		
-		"v1/api/stripe_terminal_connection_token" : "Guest/Home_controller/stripe_terminal_connection_token",
-		"v1/api/stripe_collect_payment" : "Guest/Home_controller/stripe_collect_payment",
-		"v1/api/stripe_capture_payment" : "Guest/Home_controller/stripe_capture_payment", 
+		"v1/api/stripe_terminal_connection_token" : "Guest/Custom_api_controller/stripe_terminal_connection_token",
+		"v1/api/stripe_collect_payment" : "Guest/Custom_api_controller/stripe_collect_payment",
+		"v1/api/stripe_capture_payment" : "Guest/Custom_api_controller/stripe_capture_payment", 
 		
 
 		"": "Guest/Home_controller/home",
