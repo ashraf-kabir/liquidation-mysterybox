@@ -113,7 +113,8 @@ class Manager_customer_controller extends Manager_controller
 		$billing_state = $this->input->post('billing_state', TRUE);
 		$billing_city = $this->input->post('billing_city', TRUE);
 		$customer_since = $this->input->post('customer_since', TRUE);
-		$status = $this->input->post('status', TRUE);
+        $status = $this->input->post('status', TRUE);
+        $password = $this->input->post('password', TRUE);
 		
         $result = $this->customer_model->create([
             'name' => $name,
@@ -127,7 +128,7 @@ class Manager_customer_controller extends Manager_controller
 			'billing_city' => $billing_city,
 			'customer_since' => $customer_since,
 			'status' => $status,
-			
+			'password' => $password,
         ]);
 
         if ($result)

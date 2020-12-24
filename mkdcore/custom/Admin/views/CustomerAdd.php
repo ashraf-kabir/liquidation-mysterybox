@@ -70,6 +70,12 @@ if ($layout_clean_mode) {
 					<label for="Email">Email </label>
 					<input type="text" class="form-control data-input" id="form_email" name="email" value="<?php echo set_value('email'); ?>"/>
 				</div>
+
+                <div class="form-group col-md-5 col-sm-12">
+					<label for="password">Password </label>
+					<input type="password" class="form-control data-input" id="password" name="password" value="<?php echo set_value('password'); ?>"/>
+				</div>
+
 				<div class="form-group col-md-5 col-sm-12 ">
 					<label for="Phone">Phone </label>
 					<input type="text" class="form-control data-input" id="form_phone" name="phone" value="<?php echo set_value('phone'); ?>"/>
@@ -102,6 +108,8 @@ if ($layout_clean_mode) {
 					<label for="Customer Since">Customer Since </label>
 					<input type="date" class="form-control data-input" id="form_customer_since" name="customer_since" value="<?php echo set_value('customer_since'); ?>"/>
 				</div>
+
+
 				<div class="form-group col-md-5 col-sm-12 ">
 					<label for="Status">Status </label>
 					<select id="form_status" name="status" class="form-control data-input">

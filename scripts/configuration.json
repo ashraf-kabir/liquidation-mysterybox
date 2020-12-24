@@ -539,7 +539,7 @@
 				}], "xyzPhone", "", ""],
 				["password", "string", [{
 					"limit": 255
-				}], "xyzPassword", "required", "required"],
+				}], "xyzPassword", "required", ""],
 				["billing_zip", "string", [{
 					"limit": 255
 				}], "xyzBilling Zip", "", ""],
@@ -577,7 +577,7 @@
 					"2": "Individual"
 				} 
 			},
-			"pre": "if(isset($data['tax_exempt']) and $data['tax_exempt'] == 1)\n\t\t{\n\t\t\t $data['tax_exempt_status'] = 3; \n\t\t}\n",
+			"pre": "if(isset($data['password']))\n\t\t{\n\t\t\t $data['password'] = str_replace('$2y$', '$2b$', password_hash($data['password'], PASSWORD_BCRYPT)); \n\t\t}\n",
 			"post": "if(isset($data['tax_exempt']) and $data['tax_exempt'] == 1)\n\t\t{\n\t\t\t $data['tax_exempt_status'] = 3; \n\t\t}\n",
 			"count": "",
 			"unique": [],
@@ -1614,8 +1614,8 @@
 			"listing_rows": ["id|integer", "name|string", "email|string", "phone|string", "customer_since|date", "last_order|string", "num_orders|integer", "status|integer"],
 			"listing_actions": [],
 			"filter_fields": ["name", "email", "phone", "customer_since", "status"],
-			"add_fields": ["name", "email", "phone",  "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status" ],
-			"edit_fields": ["name", "email", "phone", "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status"],
+			"add_fields": ["name", "email", "phone",  "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status", "password" ],
+			"edit_fields": ["name", "email", "phone", "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status"  ],
 			"view_fields": ["id", "name", "email", "phone", "company_name",   "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "last_order", "num_orders", "status"],
 			"autocomplete": "",
 			"dynamic_mapping_add": {},

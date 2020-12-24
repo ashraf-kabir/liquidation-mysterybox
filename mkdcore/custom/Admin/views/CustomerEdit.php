@@ -68,6 +68,10 @@ if ($layout_clean_mode) {
 					<label for="Email">Email </label>
 					<input type="text" class="form-control data-input" id="form_email" name="email" value="<?php echo set_value('email', $this->_data['view_model']->get_email());?>"/>
 				</div>
+
+                 
+
+
 				<div class="form-group col-md-5 col-sm-12">
 					<label for="Phone">Phone </label>
 					<input type="text" class="form-control data-input" id="form_phone" name="phone" value="<?php echo set_value('phone', $this->_data['view_model']->get_phone());?>"/>
