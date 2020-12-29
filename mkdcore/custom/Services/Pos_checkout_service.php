@@ -76,6 +76,7 @@ class Pos_checkout_service {
             'billing_zip'       =>  $billing_zip, 
             'payment_method'    =>  $payment_method, 
             'customer_id'       =>  $customer_id,
+            'order_date_time'   =>  Date('Y-m-d h:i:s A'),
             'shipping_name'     =>  '', 
             'shipping_address'  =>  '', 
             'shipping_country'  =>  '', 
@@ -108,10 +109,32 @@ class Pos_checkout_service {
         $billing_state       =  $customer_data->billing_state;
         $billing_city        =  $customer_data->billing_city;
         $billing_zip         =  $customer_data->billing_zip;
-        $payment_method      =  3;
+        $payment_method      =  $customer_data->payment;
         $customer_id         =  $customer_data->id;
 
+
+        $shipping_cost_service_name = "";
+        if(isset($customer_data->shipping_service_name))
+        {
+            $shipping_cost_service_name = $customer_data->shipping_service_name;
+        }
+
+        $shipping_cost_service_code = "";
+        if(isset($customer_data->shipping_service_id))
+        {
+            $shipping_cost_service_code = $customer_data->shipping_service_id;
+        }
+
+        if($payment_method != 2)
+        {
+            $shipping_cost_service_name  = "";
+            $shipping_cost_service_code  = "";
+            $shipping_zip                = "";
+        }
+
         $data_checkout_order = array( 
+            'shipping_cost_service_code'      =>  $shipping_cost_service_code,
+            'shipping_cost_service_name'      =>  $shipping_cost_service_name, 
             'billing_name'      =>  $billing_name,
             'billing_address'   =>  $billing_address,
             'billing_country'   =>  $billing_country, 
@@ -120,6 +143,7 @@ class Pos_checkout_service {
             'billing_zip'       =>  $billing_zip, 
             'payment_method'    =>  $payment_method, 
             'customer_id'       =>  $customer_id,
+            'order_date_time'   =>  Date('Y-m-d h:i:s A'),
             'shipping_name'     =>  '', 
             'shipping_address'  =>  '', 
             'shipping_country'  =>  '', 

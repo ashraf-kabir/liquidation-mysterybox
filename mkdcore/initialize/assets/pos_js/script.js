@@ -29,6 +29,49 @@ $(document).ready(() => {
       }); 
   } 
 
+/**
+   *  Print Invoice
+   *   
+   *  
+*/
+function load_print_invoice(invoice_no)
+{
+    $.ajax({
+        type: 'POST',
+        url: '../v1/api/pos_invoice_data',
+        timeout: 15000,
+        dataType: 'JSON', 
+        data: {'invoice_no' : invoice_no },
+        success: function (response)  
+        { 
+            if(response.receipt_body)
+            { 
+              // Hide the active Page and show the receipt page
+              $(".active-page").addClass("d-none");
+              $(".active-page").removeClass("active-page");
+              $("#receipt").removeClass("d-none");
+              $("#receipt").addClass("active-page");
+
+              // Set the details for the receipt
+              $("#receipt-address")[0].innerHTML = response.customer_address;
+              $("#receipt-table-body")[0].innerHTML = response.receipt_body; 
+
+              // Set Receipt Time and date
+              $(".receipt-date")[0].innerHTML = response.order_date;
+              $(".receipt-time")[0].innerHTML = response.order_time;
+
+              $("#receipt-address")[0].innerHTML       = response.customer_address;
+              $("#receipt-order-id")[0].innerHTML      = response.order_id;
+              $("#receipt-customer-name")[0].innerHTML = response.customer_name;
+
+              $(".item-discount-value-db")[0].innerHTML   = response.discount;
+              $(".item-tax-value-db")[0].innerHTML        = response.tax;
+              $(".item-total-value-db")[0].innerHTML      = response.total;
+            }
+        }
+    }); 
+}  
+
 
     // $("#drawer-modal").modal("show");
   // Get list Of Pickup From Shelf
@@ -842,56 +885,14 @@ load_customers_list();
                     load_cart_items_list();
                     cartItems = [];
                     displayCartItems(cartItems);
-                    // Hide the active Page and show the receipt page
-                    $(".active-page").addClass("d-none");
-                    $(".active-page").removeClass("active-page");
-                    $("#receipt").removeClass("d-none");
-                    $("#receipt").addClass("active-page");
-  
-                    // Set the details for the receipt
-                    $("#receipt-address")[0].innerHTML = address;
-                    $("#receipt-table-body")[0].innerHTML = "";
-                    cartItems.forEach((item) => {
-                        $("#receipt-table-body")[0].innerHTML += `
-                            <tr>
-                                <th scope="row">${item.quantity}</th>
-                                <td>${item.name}</td>
-                                <td>$ ${Number(item.quantity * Number(item.price)).toFixed(2)}</td>
-                            </tr>
-                            `;
-                        $("");
-                        $("#checkout-modal").modal("hide");
-                        $("#checkout-form")[0].reset();
-                    });
-                    let date = new Date(),
-                    year = date.getFullYear(),
-                    month = date.getMonth() + 1,
-                    day = date.getDate(),
-                    min = date.getMinutes(),
-                    hour = date.getHours(),
-                    time = "";
-                    month.toString().length === 1 ? (month = `0${month}`) : month;
-                    day.toString().length < 1 ? (day = `0${day}`) : day;
-                    min.length < 1 ? (min = `0${min}`) : min;
-                    const todayDate = `${day}/${month}/${year}`;
-                    if (hour > 12) {
-                      time = `0${hour - 12}:${min} PM`;
-                    } else if (hour < 12) {
-                      time = `${hour}:${min} AM`;
-                    } else {
-                      time = `${hour}:${min} PM`;
-                    }
-  
-                    // Set Receipt Time and date
-                    $(".receipt-date")[0].innerHTML = todayDate;
-                    $(".receipt-time")[0].innerHTML = time;
-  
-                    $("#receipt-address")[0].innerHTML = response.address;
-                    $("#receipt-order-id")[0].innerHTML = response.order_id;
-                    $("#receipt-customer-name")[0].innerHTML = response.customer_name;
+
+                    load_print_invoice(response.order_id)
+                    
+                    
   
                     // Hide and Reset modal and form respectively
-                    $("#checkout-modal").modal("hide");
+                    $('.shipping-cost-options').html('');
+                    $("#checkout-modal").modal("hide"); 
                     $("#checkout-form")[0].reset();
                 }
               }
@@ -946,10 +947,19 @@ load_customers_list();
       const formData = $("#discount-form").serializeArray();
       const discountType = formData[0].value;
       const discountPercentage = Number(formData[1].value);
-      discount = (discountPercentage / 100) * Number(totalPrice);
-      totalPrice = totalPrice - discount;
-      totalPrice = Number(totalPrice);
-      discountedTotal = totalPrice;
+      if(discountType === 'percentage')
+      {
+        discount = (discountPercentage / 100) * Number(totalPrice);
+        totalPrice = totalPrice - discount;
+        totalPrice = Number(totalPrice);
+        discountedTotal = totalPrice;
+      }else{
+        discount = discountPercentage;
+        totalPrice = totalPrice - discount;
+        totalPrice = Number(totalPrice);
+        discountedTotal = totalPrice;
+      }
+      
       for (let i = 0; i < $(".discounted-total").length; i++) {
         $(".discounted-total")[i].innerHTML = discountedTotal.toFixed(2);
       }
@@ -1469,54 +1479,10 @@ load_customers_list();
             cartItems = [];
             displayCartItems(cartItems);
             // Hide the active Page and show the receipt page
-            $(".active-page").addClass("d-none");
-            $(".active-page").removeClass("active-page");
-            $("#receipt").removeClass("d-none");
-            $("#receipt").addClass("active-page");
-
-            // Set the details for the receipt
-            $("#receipt-address")[0].innerHTML = address;
-            $("#receipt-table-body")[0].innerHTML = "";
-            cartItems.forEach((item) => {
-                $("#receipt-table-body")[0].innerHTML += `
-                    <tr>
-                        <th scope="row">${item.quantity}</th>
-                        <td>${item.name}</td>
-                        <td>$ ${Number(item.quantity * Number(item.price)).toFixed(2)}</td>
-                    </tr>
-                    `;
-                $("");
-                $("#checkout-modal").modal("hide");
-                $("#checkout-form")[0].reset();
-            });
-            let date = new Date(),
-            year = date.getFullYear(),
-            month = date.getMonth() + 1,
-            day = date.getDate(),
-            min = date.getMinutes(),
-            hour = date.getHours(),
-            time = "";
-            month.toString().length === 1 ? (month = `0${month}`) : month;
-            day.toString().length < 1 ? (day = `0${day}`) : day;
-            min.length < 1 ? (min = `0${min}`) : min;
-            const todayDate = `${day}/${month}/${year}`;
-            if (hour > 12) {
-              time = `0${hour - 12}:${min} PM`;
-            } else if (hour < 12) {
-              time = `${hour}:${min} AM`;
-            } else {
-              time = `${hour}:${min} PM`;
-            }
-
-            // Set Receipt Time and date
-            $(".receipt-date")[0].innerHTML = todayDate;
-            $(".receipt-time")[0].innerHTML = time;
-
-            $("#receipt-address")[0].innerHTML = data.address;
-            $("#receipt-order-id")[0].innerHTML = data.order_id;
-            $("#receipt-customer-name")[0].innerHTML = data.customer_name;
+            load_print_invoice(data.order_id)
 
             // Hide and Reset modal and form respectively
+            $('.shipping-cost-options').html('');
             $("#checkout-modal").modal("hide");
             $("#checkout-form")[0].reset();
           }
@@ -1537,9 +1503,11 @@ load_customers_list();
 const captureButton = document.getElementById('capture-button');
 captureButton.addEventListener('click', async (event) => {
     $('.show-loader').html('<img style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
+    $('#capture-button').hide();
     amount = 20
     collectPayment(amount);
 
+    $('#capture-button').show();
     $('.show-loader').html('');
     // capture(paymentIntentId);
 }); 

@@ -123,6 +123,7 @@ class Admin_inventory_controller extends Admin_controller
 
         $increment_id  =  $this->inventory_model->get_auto_increment_id();
         $sku           =  sprintf("%05d", $increment_id); 
+ 
 
         $product_name = $this->input->post('product_name', TRUE); 
 		$category_id = $this->input->post('category_id', TRUE);

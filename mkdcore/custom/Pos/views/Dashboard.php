@@ -432,7 +432,9 @@
 
                 <div class="row pages d-none py-2 justify-content-center" id="receipt">
                     <div class="col-12 text-center my-3">
-                        <a href="" onclick="location.reload()">Back to home</a>
+                        <a href="" onclick="location.reload()">Back to home</a> 
+                        <br> 
+                        <a class="ml-auto" href="#" onclick="$.print('#ticket');">Print Receipt</a>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-8 col-10 ticket bg-white text-center p-3 mx-auto" id="ticket">
                         <h4>Vegas Liquidation</h4>
@@ -443,12 +445,12 @@
                             <h6 class="receipt-customer-name" id="receipt-customer-name" style="width: 100%; text-align: -webkit-left;"></h6>
                             <h6 class="receipt-date"></h6>  
                             <h6 class="mx-2 receipt-time"></h6>
-                            <a class="ml-auto" href="#" onclick="$.print('#ticket');">Print Receipt</a>
+                           
                         </div>
 
 
-                        <div class="row" style="min-height: 60%;">
-                            <div class="col-12">
+                        <div class="row"  >
+                            <div class="col-12" style="margin-bottom: 70px;">
                                 <table class="table table-borderless">
                                     <thead class="thead text-center" style="border-bottom: 0.5px solid #0000002f;">
                                         <tr>
@@ -464,7 +466,7 @@
                             </div>
                         </div>
 
-                        <div class="row receipt-summary justify-content-end">
+                        <div class="row receipt-summary justify-content-end" style="position: absolute; bottom: 0; width: 100%;">
                             <div class="col-12 text-right ">
                                 <div class="row justify-content-end">
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-5 text-right">
@@ -473,9 +475,9 @@
                                     <h5 class="my-2">TOTAL</h5>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-5">
-                                        <h5 class="my-2">$ <span class="item-discount-value">0.00</span></h5>
-                                        <h5 class="my-2 ">$ <span>0.00</span></h5>
-                                        <h5 class="my-2">$ <span class=" item-total discounted-total">0.00</span></h5>
+                                        <h5 class="my-2">$ <span class="item-discount-value  item-discount-value-db">0.00</span></h5>
+                                        <h5 class="my-2 ">$ <span class="  item-tax-value-db">0.00</span></h5>
+                                        <h5 class="my-2">$ <span class=" item-total discounted-total  item-total-value-db">0.00</span></h5>
                                     </div>
                                 </div>
                              

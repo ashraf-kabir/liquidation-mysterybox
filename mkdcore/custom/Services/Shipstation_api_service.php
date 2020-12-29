@@ -15,11 +15,17 @@ class Shipstation_api_service {
         {
 
             $weight_object = 0;
+            $dimensions_length = 0;
+            $dimensions_width  = 0;
+            $dimensions_height = 0;
             foreach($orders_list as $key => $value)
             {
                 $product = $value->product_detail;    
 
                 $weight_object += $product->weight;
+                $dimensions_length += $product->length;
+                $dimensions_width  += $product->width;
+                $dimensions_height += $product->height;
             }
         
             /**
@@ -45,15 +51,15 @@ class Shipstation_api_service {
             $to_country         = $country;  //*
             $to_postal_code     = $postal_code;  //* 
             $to_city            = $city;
-            $weight_value       = $weight_object;     //*
+            $weight_value       = $weight_object * 16;     //*
             $weight_units       = "ounces";   //*
             
             $dimensions_units   = "inches";
-            $dimensions_length  = 7;
-            $dimensions_width   = 5;
-            $dimensions_height  = 6;
+            $dimensions_length  = $dimensions_length;
+            $dimensions_width   = $dimensions_width;
+            $dimensions_height  = $dimensions_height;
 
-            $confirmation   = "delivery";
+            $confirmation   = "none";
             $residential    = "false";
             
 
@@ -63,9 +69,7 @@ class Shipstation_api_service {
 
             // $user_name_as_key     = "ShipStation";
             // $password_as_secret   = "Rocks";
-
-             
-            
+ 
 
             $authorization   = "Basic ". base64_encode($user_name_as_key . ":" . $password_as_secret);
     

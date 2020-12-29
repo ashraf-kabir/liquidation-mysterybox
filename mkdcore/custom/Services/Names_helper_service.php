@@ -6,6 +6,7 @@ class Names_helper_service {
     private $_customer_model;  
     private $_pos_user_model;  
     private $_store_model;  
+    private $_department_model;  
 
 
     public function set_category_model($category_model)
@@ -23,6 +24,24 @@ class Names_helper_service {
             $category_name = $check_data->name;
         }
         return  $category_name;
+    }
+
+
+    public function set_department_model($department_model)
+    {
+        $this->_department_model = $department_model;
+    }
+
+    public function get_department_real_name($id)
+    {
+       
+        $department_name = "N/A";
+        $check_data =$this->_department_model->get($id); 
+        if(isset($check_data->department_name))
+        {
+            $department_name = $check_data->department_name;
+        }
+        return  $department_name;
     }
 
 

@@ -77,9 +77,22 @@ if ($layout_clean_mode) {
 						}?>
 					</select>   
 				</div>
+
+
+                <div class="form-group col-md-5 col-sm-12 ">
+					<label for="store_id">Department </label>
+                    <select   class="form-control data-input" id="department_id" name="department_id">
+						<option value="" >Select</option>
+                        <?php foreach ($department as $key => $value) {
+							echo "<option  " . (($view_model->get_department_id() == $value->id && $view_model->get_department_id() != '') ? 'selected' : '') . "  value='{$value->id}'> {$value->department_name} </option>";
+						}?>
+					</select>   
+				</div>
+
+
 				<div class="form-group col-md-5 col-sm-12">
 					<label for="Password">Password </label>
-					<input type="text" class="form-control data-input" id="form_password" name="password" value="<?php echo set_value('password', $this->_data['view_model']->get_password());?>"/>
+					<input type="password" class="form-control data-input" id="form_password" name="password" value="<?php echo set_value('password', $this->_data['view_model']->get_password());?>"/>
 				</div>
 				<div class="form-group col-md-5 col-sm-12">
 					<label for="Status">Status </label>

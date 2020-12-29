@@ -108,8 +108,17 @@
                 <h6>$<span class="cart-shipping">00.00</span></h6>
               </div>
               <div class="d-flex justify-content-between my-4">
+                <?php 
+                    $tax_amount  = 0;
+                    if(isset($tax->tax) and $total != 0)
+                    {
+                      $tax_amount = $tax->tax/100*$total;
+                    }
+                    
+                ?>
+
                 <h6>Tax</h6>
-                <h6>$<span class="cart-tax">00.00</span></h6>
+                <h6>$<span class="cart-tax"><?php echo number_format($tax_amount,2); ?></span></h6>
               </div>
               <div class="d-flex justify-content-between my-4">
                 <strong>Total</strong>

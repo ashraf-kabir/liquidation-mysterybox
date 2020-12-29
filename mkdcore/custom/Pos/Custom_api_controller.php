@@ -1132,8 +1132,17 @@ class Custom_api_controller extends CI_Controller
 
             $this->load->library('shipstation_api_service');
             $this->shipstation_api_service->set_config($this->config);
-            $user_id = $this->session->userdata('user_id');  
-            $orders_list =$this->pos_cart_model->get_all(['user_id' => $user_id]);  
+
+
+            $user_id     = $this->session->userdata('user_id');  
+
+            if($this->session->userdata('customer_login'))
+            {
+                $orders_list = $this->pos_cart_model->get_all(['customer_id' => $user_id]);  
+            }else{
+                $orders_list = $this->pos_cart_model->get_all(['user_id' => $user_id]); 
+            }
+           
 
             $error       = 0;
             $error_msg   = "";
@@ -1182,6 +1191,8 @@ class Custom_api_controller extends CI_Controller
             $country     =  $this->input->post('country', TRUE);
             $from_postal =  $this->input->post('from_postal', TRUE);
 
+
+            
             $result = $this->shipstation_api_service->get_shipping_cost($orders_list, $postal_code, $city, $state, $country, $from_postal);
             
             if (!isset($result->Message)  )
@@ -1510,6 +1521,130 @@ class Custom_api_controller extends CI_Controller
      * End of Stripe Terminal Code
      *  
     */
+
+    /**
+     * Invoice Data 
+     * By Order No
+    */
+
+    public function pos_invoice_data()
+    {
+         
+        if ($this->session->userdata('user_id') AND $this->input->post('invoice_no', TRUE)) 
+        {
+            $invoice_no  = $this->input->post('invoice_no', TRUE);
+
+            $pos_user_id = $this->session->userdata('user_id');
+            $this->load->library('names_helper_service');  
+            $this->load->model('pos_order_model');
+            $this->load->model('pos_order_items_model');
+            
+
+            $orders_list = $this->pos_order_model->get_all(['pos_user_id' => $pos_user_id, 'id' => $invoice_no ]);
+
+            $order_id         =  $invoice_no;
+
+            $table_content    = '';
+            $customer_address = ''; 
+            $customer_name    = '';
+
+            $order_date    = '';
+            $order_time    = '';
+
+            $discount = 0;
+            $total    = 0;
+            $tax      = 0;
+            foreach ($orders_list as $orders_list_key => $orders_list_value) 
+            {    
+
+                $customer_address = $orders_list_value->billing_address;
+                $customer_name    = $orders_list_value->billing_name;
+                $discount         = $orders_list_value->discount;
+                $total            = $orders_list_value->total;
+                $tax              = $orders_list_value->tax;
+
+                $order_date    = date('d-m-Y', strtotime($orders_list_value->order_date_time));
+                $order_time    = date('h:i:s A', strtotime($orders_list_value->order_date_time));
+
+                /*
+                * Order Details
+                **/
+                $items_data = $this->pos_order_items_model->get_all(['order_id' => $orders_list_value->id]);
+                 
+                foreach ($items_data as $items_data_key => $item_value) 
+                { 
+                    $table_content   .=  '<tr>';
+                        $table_content  .=  '<th scope="row">' .  $item_value->quantity  . '</th>';
+                        $table_content  .=  '<th>' .  ucfirst($item_value->product_name)  . '</th>';
+                        $table_content  .=  '<th>$' .  number_format($item_value->amount,2)  . '</th>'; 
+                    $table_content   .=  '</tr>'; 
+                } 
+            } 
+ 
+
+            if($table_content)
+            {
+                $output['status'] = 200;
+                $output['receipt_body']     = $table_content; 
+                $output['customer_address'] = $customer_address; 
+                $output['customer_name']    = $customer_name; 
+                $output['order_id']         = $order_id; 
+                $output['order_date']       = $order_date; 
+                $output['order_time']       = $order_time; 
+                $output['tax']              = number_format($tax, 2); 
+                $output['total']            = number_format($total, 2); 
+                $output['discount']         = number_format($discount, 2); 
+                echo json_encode($output);
+                exit();
+            }else{
+                $output['status'] = 0;
+                $output['error'] = 'Error! Please try again later.';
+                echo json_encode($output);
+                exit();
+            }
+        }
+    }
+
+
+
+    public function apply_coupon()
+    {
+        if($this->session->userdata('user_id') and $this->input->post('coupon_code', TRUE))
+        {
+            $coupon_code = $this->input->post('coupon_code', TRUE);
+            $this->load->model('coupon_model');
+            $check_code = $this->coupon_model->get_by_fields(['code' => $coupon_code]);
+            if(!empty($check_code) )
+            {
+                if( $check_code->usage > 0)
+                {
+                    if($check_code->expire_at >= Date('Y-m-d'))
+                    {
+                        $output['status']  = 200;
+                        $output['success'] = TRUE;
+                        $output['amount']  = $check_code->amount;
+                        echo json_encode($output);
+                        exit();
+                    }else{
+                        $output['status'] = 0;
+                        $output['error'] = 'Error! Coupon has been expired.';
+                        echo json_encode($output);
+                        exit();
+                    }
+                }else{
+                    $output['status'] = 0;
+                    $output['error'] = 'Error! This coupon usage has been complete.';
+                    echo json_encode($output);
+                    exit();
+                }
+            }
+
+            $output['status'] = 0;
+            $output['error'] = 'Error! Please try a valid coupon.';
+            echo json_encode($output);
+            exit();
+        }
+    }
 
 
 }

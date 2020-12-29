@@ -88,18 +88,30 @@
                     <input
                       type="text"
                       name="city"
-                      id="city"
+                      id="checkout-city"
                       value="<?php echo isset($customer->billing_city) ? $customer->billing_city : ""; ?>"
                       placeholder="Enter your city"
                       class="form-control"
                     />
                   </div>
                   <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
+                    <label for="city">Postal Code</label>
+                    <input
+                      type="text"
+                      name="postal_code"
+                      id="checkout-postal_code"
+                      value="<?php echo isset($customer->billing_zip) ? $customer->billing_zip : ""; ?>"
+                      placeholder="Enter your postal code"
+                      class="form-control"
+                    />
+                  </div>
+
+                  <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
                     <label for="state">State</label>
                     <input
                       type="text"
                       name="state"
-                      id="state"
+                      id="checkout-state"
                       value="<?php echo isset($customer->billing_state) ? $customer->billing_state : ""; ?>"
                       placeholder="Enter your State"
                       class="form-control"
@@ -110,7 +122,7 @@
                     <input
                       type="text"
                       name="country"
-                      id="country"
+                      id="checkout-country"
                       value="<?php echo isset($customer->billing_country) ? $customer->billing_country : ""; ?>"
                       placeholder="Enter your Country"
                       class="form-control"
@@ -152,7 +164,7 @@
                     name="payment"
                     id="cash"
                     value="1"
-                    class="mr-1"
+                    class="mr-1 select_card"
                     required
                   />
                   Cash
@@ -164,44 +176,16 @@
                     name="payment"
                     id="card"
                     value="2"
-                    class="mr-1"
+                    class="mr-1 select_card"
                     required
                   />
-                  Credit Card/Master
-                </label>
-
-
-                <label for="ach">
-                  <input
-                    type="radio"
-                    name="payment"
-                    id="ach"
-                    value="3"
-                    class="mr-1"
-                    required
-                  />
-                  ACH
-                </label>
-
-
-                <label for="bank">
-                  <input
-                    type="radio"
-                    name="payment"
-                    id="bank"
-                    value="4"
-                    class="mr-1"
-                    required
-                  />
-                  Bank
-                </label>
-
-
+                  Credit Card 
+                </label> 
               </div>
             </div>
 
-            <div class="bg-white p-2 p-md-4 my-4">
-              <h5>Payment Method</h5>
+            <div class="bg-white p-2 p-md-4 my-4 card_div" style="display:none;">
+              <h5>Payment Details</h5>
               <hr />
                
               <div class="form-row">
@@ -235,12 +219,12 @@
                 />
 
                 <br>
-                <select name="account-type" id="account-type" class="form-control margin_top_label">
+                <!-- <select name="account-type" id="account-type" class="form-control margin_top_label">
                     <option value="individual">Individual</option>
                     <option value="individual">Individual</option>
                     <option value="individual">Individual</option>
                     <option value="individual">Individual</option>
-                </select>
+                </select> -->
              
               </div>
             </div>
@@ -257,12 +241,30 @@
                   <h5>$<?php echo number_format($total,2); ?></h5>
                 </div>
               </div>
+
+              <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
+                  <h5>Coupon</h5>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
+                  <input type="text"   class="form-control coupon_code" /> 
+                  <p class="coupon_success_coupon_error"></p>
+                  <button class="btn btn-primary apply_coupon mb-2" type="button"> Apply Coupon </button>
+                  <h5>$<span class="coupon_amount">00</span></h5>
+                </div>
+              </div>
+
+
               <div class="row">
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
                   <h5>Ship to Home</h5>
                 </div>
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
-                  <h5>$0.00</h5>
+                <div class="col-xl-8 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
+                  
+                  <div class="shipping-cost-options">
+                  </div>
+                  <button class="btn btn-primary calculate-shipping-cost mb-2" type="button"> Calculate Shipping Cost </button>
+                  <h5>$<span class="shipping_cost_selected">00</span></h5>
                 </div>
               </div>
               <div class="row">
@@ -270,15 +272,24 @@
                   <h5>Tax</h5>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
-                  <h5>$0.00</h5>
+                <?php 
+                    $tax_amount  = 0;
+                    if(isset($tax->tax) and $total != 0)
+                    {
+                      $tax_amount = $tax->tax/100*$total;
+                    }
+                    $total = $total + $tax_amount;
+                ?>
+                  <h5>$<?php echo number_format($tax_amount,2); ?></h5>
                 </div>
               </div>
               <div class="row">
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
                   <h4>Total</h4>
                 </div>
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
-                  <h5>$<?php echo number_format($total,2); ?></h5>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">  
+                    <input type="hidden" value="<?php echo number_format($total,2); ?>" class="total_of_all" />
+                  <h5>$<span class="total_of_all_text"><?php echo number_format($total,2); ?></span></h5>
                 </div>
               </div>
 
@@ -309,15 +320,15 @@
                 </div>
                 <div class="d-flex justify-content-between my-4">
                   <h6>Shipping</h6>
-                  <h6>$<span class="cart-shipping">0.00</span></h6>
+                  <h6>$<span class="cart-shipping shipping_cost_selected">0.00</span></h6>
                 </div>
                 <div class="d-flex justify-content-between my-4">
                   <h6>Tax</h6>
-                  <h6>$<span class="cart-tax">0.00</span></h6>
+                  <h6>$<span class="cart-tax"><?php echo number_format($tax_amount,2); ?></span></h6>
                 </div>
                 <div class="d-flex justify-content-between my-4">
                   <strong>Total</strong>
-                  <strong>$<span class="cart-total"><?php echo number_format($total,2); ?></span></strong>
+                  <strong>$<span class="cart-total total_of_all_text"><?php echo number_format($total,2); ?></span></strong>
                 </div>
   
                  

@@ -201,13 +201,23 @@ class Home_controller extends Manaknight_Controller
             $user_id = $this->session->userdata('user_id');
             $this->load->model('pos_cart_model');
             $this->load->model('customer_model');
+            $this->load->model('tax_model');
 
             $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
             $data['customer']   =  $this->customer_model->get($user_id); 
+
+
+            $data['tax']   =  $this->tax_model->get(1); 
+ 
+             
+             
         }
 
         $this->_render('Guest/Cart',$data);
     }
+
+
+     
 
 
 
@@ -215,27 +225,23 @@ class Home_controller extends Manaknight_Controller
     {
         if($this->session->userdata('customer_login'))
         {
-
-
-            // Set your secret key. Remember to switch to your live secret key in production!
-            // See your keys here: https://dashboard.stripe.com/account/apikeys
-            \Stripe\Stripe::setApiKey('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
-
-            // In a new endpoint on your server, create a ConnectionToken and return the
-            // `secret` to your app. The SDK needs the `secret` to connect to a reader.
-            $connectionToken = \Stripe\Terminal\ConnectionToken::create();
-
-
-
+            echo "<pre>";
+            print_r($_POST);
+            die();
+  
             $full_name      =  $this->input->post('full_name', TRUE);
             $email_address  =  $this->input->post('email_address', TRUE);
             $phone_number   =  $this->input->post('phone_number', TRUE);
             $city           =  $this->input->post('city', TRUE);
             $state          =  $this->input->post('state', TRUE);
             $country        =  $this->input->post('country', TRUE);
+            $postal_code    =  $this->input->post('postal_code', TRUE);
             $address_1      =  $this->input->post('address_1', TRUE);
             $address_2      =  $this->input->post('address_2', TRUE);
             $payment        =  $this->input->post('payment', TRUE);
+            $shipping_cost_name         =  $this->input->post('shipping_cost_name', TRUE);
+            $shipping_cost_value        =  $this->input->post('shipping_cost_value', TRUE);
+            $shipping_service_id        =  $this->input->post('shipping_service_id', TRUE);
 
             $user_id = $this->session->userdata('user_id');
             $this->load->model('pos_cart_model');
@@ -248,9 +254,7 @@ class Home_controller extends Manaknight_Controller
                 return redirect($_SERVER['HTTP_REFERER']);
             }
 
-            $data['customer']   =  $this->customer_model->get($user_id); 
-             
-            
+            $data['customer']   =  $this->customer_model->get($user_id);   
             $data['customer']->name =  $full_name;
 
             $user_id = $this->session->userdata('user_id');
@@ -272,13 +276,24 @@ class Home_controller extends Manaknight_Controller
             $cart_items = $this->pos_cart_model->get_all(['customer_id' => $user_id ]);
                 
             $customer_data  =  $this->customer_model->get( $user_id ); 
-            $shipping_cost  = 0;
-            $discount       = 0;
-            $tax            = 0;
+            $shipping_cost  =  $shipping_cost_value;
+            $discount       =  0;
+            $tax            =  0;
             
             $this->db->trans_strict(TRUE);
             $this->db->trans_begin();
-
+ 
+            $customer_data->shipping_service_name  = $shipping_cost_name;
+            $customer_data->shipping_service_id    = $shipping_service_id;
+            $customer_data->name                   = $full_name;
+            // $customer_data->shipping_service_id    = $email_address;
+            // $customer_data->shipping_service_id    = $phone_number;
+            $customer_data->city                   = $city;
+            $customer_data->state                  = $state;
+            $customer_data->country                = $country;
+            $customer_data->billing_zip            = $postal_code;
+            $customer_data->address                = $address_1 . " " . $address_2;
+            $customer_data->payment                = $payment;
 
             /**
             * Create Order 
@@ -331,7 +346,7 @@ class Home_controller extends Manaknight_Controller
                 * Add Transaction  
                 */    
                 $add_transaction = array(
-                    'payment_type'      =>  1,
+                    'payment_type'      =>  $payment,
                     'customer_id'       =>  $user_id, 
                     'pos_user_id'       =>  0, 
                     'transaction_date'  =>  Date('Y-m-d'), 
@@ -396,9 +411,15 @@ class Home_controller extends Manaknight_Controller
                 $user_id = $this->session->userdata('user_id');
                 $this->load->model('pos_cart_model');
                 $this->load->model('customer_model');
+                $this->load->model('tax_model');
+ 
+
+
+            
 
                 $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
                 $data['customer']   =  $this->customer_model->get($user_id); 
+                $data['tax']        =  $this->tax_model->get(1);
             }
 
 
@@ -502,7 +523,7 @@ class Home_controller extends Manaknight_Controller
             $result = $this->customer_model->create([
                 'name'      => $name,
                 'email'     => $email, 
-                'password'  => password_hash($password, PASSWORD_BCRYPT),  
+                'password'  => str_replace('$2y$', '$2b$', password_hash($password, PASSWORD_BCRYPT)),  
                 'status'    => 1,  
             ]);
     

@@ -330,7 +330,7 @@ span.counter {
 /* Ticket */
 .ticket {
   width: 554px;
-  height: 575px;
+  min-height: 575px;
   background: #ffffff;
 }
 .edit-address-btn {
