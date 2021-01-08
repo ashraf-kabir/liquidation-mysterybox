@@ -131,11 +131,11 @@ class Admin_pos_user_controller extends Admin_controller
         }
         
         $result = $this->pos_user_model->create([
-            'first_name' => $first_name,
-			'last_name'  => $last_name,
-			'email'      => $email,
-			'status'     => $status,
-			'store_id'   => $store_id, 
+            'first_name'      => $first_name,
+			'last_name'       => $last_name,
+			'email'           => $email,
+			'status'          => $status,
+			'store_id'        => $store_id, 
 			'department_id'   => $department_id, 
         ]);
 

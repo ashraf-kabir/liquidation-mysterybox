@@ -8,9 +8,8 @@
  *
 */
 
-class Custom_api_controller extends CI_Controller
+class Custom_api_controller extends Manaknight_Controller
 {
-     
     public $_data = [
         'error' => '',
         'success' => ''
@@ -28,6 +27,7 @@ class Custom_api_controller extends CI_Controller
 
     public function pos_get_all_inventory_items()
     {
+
         if($this->session->userdata('user_id'))
         {
             $store_id = $this->session->userdata('store_id');
@@ -52,7 +52,7 @@ class Custom_api_controller extends CI_Controller
             $user_id = $this->session->userdata('user_id');
             $this->load->model('pos_cart_model');
             $pos_cart_items_list =  $this->pos_cart_model->get_all(['user_id' => $user_id]);  
-             
+
             $output['status'] = 200;
             $output['pos_cart_items_list'] = $pos_cart_items_list; 
             echo json_encode($output);
@@ -433,7 +433,6 @@ class Custom_api_controller extends CI_Controller
             $cart_items = $this->input->post('cart_items', TRUE);
 
 
-            
              
 
             /**
@@ -517,8 +516,7 @@ class Custom_api_controller extends CI_Controller
                     );
                     $sub_total += $total_amount;
                     $result = $this->pos_order_items_model->create($data_order_detail); 
-
-                     
+ 
                 }
 
 
@@ -567,7 +565,7 @@ class Custom_api_controller extends CI_Controller
                     $user_id = $this->session->userdata('user_id'); 
                     $result = $this->pos_cart_model->real_delete_by_fields(['user_id' => $user_id]);
 
-                    
+                    $this->send_order_to_shipper($order_id);
 
                     $output['customer_name'] = $customer_data['name'];
                     $output['order_id']      = $order_id;
@@ -1645,6 +1643,12 @@ class Custom_api_controller extends CI_Controller
             exit();
         }
     }
+
+
+
+ 
+
+
 
 
 }

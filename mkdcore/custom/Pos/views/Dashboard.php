@@ -111,7 +111,6 @@
                     <li class="page-toggler pl-4 active-nav" id="pos-toggler">POS <span class="counter">0</span> 
                         <i class="fas fa-chevron-right"></i></li>
                     <li class="page-toggler pl-4" id="pickup-toggler">Customer Pickup <i class="fas fa-chevron-right"></i></li>
-                    <li class="page-toggler pl-4" id="remove-toggler">Remove From Shelf <i class="fas fa-chevron-right"></i></li>
                     <li class="page-toggler pl-4" id="past-order-toggler">Past Order <i class="fas fa-chevron-right"></i></li>
                     <li class="page-toggler pl-4" id="report-toggler">Report <i class="fas fa-chevron-right"></i></li>
                 </ul>
@@ -215,15 +214,11 @@
                                 <button class="btn btn-success w-100 discount-btn" data-toggle="modal"
                                     data-target="#discount-modal"
                                     style="background: rgba(14, 135, 113, 0.83) !important;">Discount</button>
-                            </div>
-                             
+                            </div> 
 
                             <div class="col-12 my-2">
                                 <button class="btn btn-success w-100" id="btn-scanner-camera2"  style="background: #1E59B1;">Scan Product</button>
-                            </div>
-
-
-                         
+                            </div> 
                             
                         </div>
                     </div>
@@ -242,80 +237,12 @@
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
-                            <tbody class=" text-center">
-                                <!-- <tr>
-                                    <th scope="row">Jhone Doe</th>
-                                    <td>1</td>
-                                    <td>
-                                        <ul class="list-unstyled text-left">
-                                            <li>4 items</li>
-                                            <li>1x Step Ladder</li>
-                                            <li>2x Zero-turn mower</li>
-                                            <li>power equipment Combo Kit</li>
-                                            <li>Pressure Washers</li>
-                                        </ul>
-                                    </td>
-                                    <td>Paid in Cash</td>
-                                    <td>9 August, 2020</td>
-                                    <td>16 August, 2020</td>
-                                    <td><a href="" class="text-success">Pick Up</a></td>
-                                </tr> -->
-
+                            <tbody class=" text-center"> 
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <div class="row pages d-none py-5" id="remove-from-shelf">
-                    <div class="col-xl-11 col-lg-11 col-12 table-responsive  px-1 px-md-5">
-                        <table class="table bg-white">
-                            <thead class="thead-dark text-center">
-                                <tr>
-                                    <th scope="col">Product</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">UPC</th>
-                                    <th scope="col">SKU</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center" id="shelf-table">
-                                <!-- <tr>
-                                    <th scope="row">Red Shoe</th>
-                                    <td class="text-danger"> $ <span>200.00</span></td>
-                                    <td>3</td>
-                                    <td>24567</td>
-                                    <td>0987521319</td>
-                                    <td class="btn text-danger shelf-remove">Remove Product </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Pink Shoe</th>
-                                    <td class="text-danger"> $ <span>200.00</span></td>
-                                    <td>3</td>
-                                    <td>24567</td>
-                                    <td>0987521319</td>
-                                    <td class="btn text-danger shelf-remove">Remove Product </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Green Shoe</th>
-                                    <td class="text-danger"> $ <span>200.00</span></td>
-                                    <td>3</td>
-                                    <td>24567</td>
-                                    <td>0987521319</td>
-                                    <td class="btn text-danger shelf-remove">Remove Product </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Black Shoe</th>
-                                    <td class="text-danger"> $ <span>200.00</span></td>
-                                    <td>3</td>
-                                    <td>24567</td>
-                                    <td>0987521319</td>
-                                    <td class="btn text-danger shelf-remove">Remove Product </td>
-                                </tr> -->
-                            </tbody>
-                        </table>
+                </div> 
 
-                    </div>
-                </div>
                 <div class="row pages d-none justify-content-center my-5 " id="past-order">
                     <div class="col-12  px-1 my-3 px-md-5">
                         <div class="row bg-white" style="padding: 18px 3px;margin: 0px !important;">
@@ -384,13 +311,12 @@
                                 <label for="summary-date" class="">Select Date</label>
                                 <input type="date" name="date" id="summary-date" class="form-control" value="<?php echo Date('Y-m-d'); ?>" >
                             </div>
- 
+
                             <div class="col-3" style="margin-top: 29px;"> 
                                 <button class="btn btn-info search_summary_report">Search</button>
                             </div>
                         </div>
-                    </div>
-                     
+                    </div> 
 
                     <div class="col-12 px-1 my-3 px-md-5 table-responsive ">
                         <table class="table bg-white">
@@ -1096,5 +1022,4 @@ toastr.options = {
 
     <script src="/assets/js/quagga.min.js"></script> 
 </body>
- 
 </html>

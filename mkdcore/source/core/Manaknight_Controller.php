@@ -430,4 +430,31 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
             return $out_image;
         }
     }
+
+
+    public function send_order_to_shipper($order_id)
+    { 
+        $this->load->model('inventory_model');
+        $this->load->model('pos_order_items_model');
+        $this->load->model('pos_order_model');
+        $this->load->model('store_model');
+
+        $this->load->library('api_service');
+        $this->api_service->set_inventory_model($this->inventory_model);
+        $this->api_service->set_pos_order_items_model($this->pos_order_items_model);
+        $this->api_service->set_pos_order_model($this->pos_order_model);
+        $this->api_service->set_store_model($this->store_model);
+        $this->api_service->set_config($this->config);
+
+
+        $order_data = $this->api_service->send_order_to_shipper($order_id);
+ 
+        return $order_data;
+    }
+
+
+
+
+
+
 }
