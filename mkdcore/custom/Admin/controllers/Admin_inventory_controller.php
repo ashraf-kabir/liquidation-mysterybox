@@ -24,6 +24,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->load->model('physical_location_model');
         $this->load->model('customer_model'); 
         $this->load->library('names_helper_service');
+        $this->load->library('barcode_service');
         
     }
 
@@ -144,19 +145,32 @@ class Admin_inventory_controller extends Admin_controller
         
 		$status = $this->input->post('status', TRUE);
 		$store_location_id = $this->input->post('store_location_id', TRUE);
-		 
+
 		$can_ship = $this->input->post('can_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
         $pin_item_top = $this->input->post('pin_item_top', TRUE);
         
+
+
+
+        
+        $barcode_image_name = $this->barcode_service->generate_png_barcode($sku, "inventory"); 
+        /**
+         *  Upload Image to S3
+         * 
+        */ 
+        $barcode_image  = $this->upload_image_with_s3($barcode_image_name);
+
         if($product_type == 2)
         {
             $sku = '';
         }
+
 		
         $result = $this->inventory_model->create([
             'product_name' => $product_name,
 			'sku' => $sku,
+			'barcode_image' => $barcode_image,
 			'category_id' => $category_id,
 			'manifest_id' => $manifest_id,
 			'physical_location' => $physical_location,
