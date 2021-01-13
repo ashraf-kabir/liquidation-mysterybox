@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
+use Aws\S3\S3Client;
 
 include_once __DIR__ . '/../middlewares/Auth_middleware.php';
 include_once __DIR__ . '/../middlewares/Acl_middleware.php';
