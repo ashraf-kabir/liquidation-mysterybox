@@ -664,6 +664,7 @@
 			"field": [
 				["id", "integer", [], "xyzID", "", ""],
 				["store_id", "integer", [], "xyzStore", "required|integer", "required|integer"],
+				["pick_up_id", "integer", [], "xyzPickup", "", ""],
 				["billing_name", "string", [{ "limit": 255 }], "xyzBilling Name", "required|max_length[255]", "required|max_length[255]"],
 				["billing_address", "text", [], "xyzBilling Address", "required", "required"],
 				["billing_country", "string", [{ "limit": 255 }], "xyzBilling Country", "required|max_length[255]", "required|max_length[255]"],

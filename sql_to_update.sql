@@ -7,3 +7,6 @@ ALTER TABLE `pos_order` CHANGE `shipping_cost_service_name` `shipping_cost_servi
 ALTER TABLE `pos_order` CHANGE `intent_data` `intent_data` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL;
 
 ALTER TABLE `pos_order` CHANGE `order_date_time` DATETIME NULL;
+
+
+ALTER TABLE `pos_order` CHANGE `pick_up_id` `pick_up_id` INT(11) NULL DEFAULT NULL;

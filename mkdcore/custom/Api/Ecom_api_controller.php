@@ -25,18 +25,19 @@ class Ecom_api_controller extends Manaknight_Controller
     public function add_product()
     {
         $params = json_decode(file_get_contents('php://input'), TRUE);   
-
+        file_put_contents('file2.txt', print_r($params, true));
         if(isset($params) and !empty($params))
         {
             
 
-            if(isset($params['product_name']) and empty($params['product_name']))
+            if(!isset($params['product_name']) and empty($params['product_name']))
             {
                 $output['error'] = TRUE;
                 $output['error_msg'] = "Product name is required.";
                 echo json_encode($output);
                 exit();
             }
+ 
 
             
 
@@ -46,7 +47,7 @@ class Ecom_api_controller extends Manaknight_Controller
             *  2 for Generic
             *   
             **/
-            if(isset($params['type']) and empty($params['type']))
+            if(!isset($params['type']) or empty($params['type']))
             {
                 $output['error'] = TRUE;
                 $output['error_msg'] = "Product type is required.";
@@ -63,7 +64,7 @@ class Ecom_api_controller extends Manaknight_Controller
             }
 
 
-            if(isset($params['selling_price']) and empty($params['selling_price']))
+            if(!isset($params['selling_price']) or empty($params['selling_price']))
             {
                 $output['error'] = TRUE;
                 $output['error_msg'] = "Selling price is required.";
@@ -71,8 +72,12 @@ class Ecom_api_controller extends Manaknight_Controller
                 exit();
             }
 
-
-            if(isset($params['can_ship']) and empty($params['can_ship']))
+            /**
+             * 1 for Yes
+             * 2 for No 
+             * 
+            */
+            if(!isset($params['can_ship']) or empty($params['can_ship']))
             {
                 $output['error'] = TRUE;
                 $output['error_msg'] = "Can ship is required.";
@@ -81,7 +86,7 @@ class Ecom_api_controller extends Manaknight_Controller
             }
 
 
-            if(isset($params['store_location_id']) and empty($params['store_location_id']))
+            if(!isset($params['store_location_id']) or empty($params['store_location_id']))
             {
                 $output['error'] = TRUE;
                 $output['error_msg'] = "Store is required.";
@@ -95,26 +100,27 @@ class Ecom_api_controller extends Manaknight_Controller
 
 
 
-            $product_name       =  $params['product_name']; 
+            $product_name       =  $params['product_name'];  
             $type 		        =  $params['type'];    
             $store_location_id  =  $params['store_location_id'];
             $can_ship           =  $params['can_ship'];
             $selling_price      =  $params['selling_price'];
 
-            //generate sku here  
+
             $random_code = $this->inventory_model->get_auto_increment_id();
-            $sku_product = sprintf("%05d", $random_code);
-            
+            $sku_product = sprintf("%05d", $random_code); 
 
-
-            $barcode_image_name = $this->barcode_service->generate_png_barcode($sku_product, "inventory"); 
-
-            /**
-             *  Upload Image to S3
-             * 
-            */ 
-            $barcode_image  = $this->upload_image_with_s3($barcode_image_name);
-            
+            $barcode_image = ""; 
+            //generate sku here  
+            if($type  != 2)
+            {  
+                $barcode_image_name = $this->barcode_service->generate_png_barcode($sku_product, "inventory"); 
+                /**
+                 *  Upload Image to S3
+                 * 
+                */ 
+                $barcode_image  = $this->upload_image_with_s3($barcode_image_name);
+            }
 
             $category_id = "";
             if( isset($params['category_id']) )
@@ -173,18 +179,19 @@ class Ecom_api_controller extends Manaknight_Controller
 
             $data_detail = array( 
                 'product_name'         => $product_name, 
-                'type'                 => $type, 
-                'product_name'         => $product_id,
+                'type'                 => $type,  
                 'sku'                  => $sku_product,
                 'category_id'          => $category_id,
                 'store_location_id'    => $store_location_id,
                 'feature_image'        => $feature_image, 
                 'weight'               => $weight, 
                 'length'               => $length,  
-                'height'               => $height,
                 'width'                => $width,
+                'height'               => $height,
                 'quantity'             => $quantity,
                 'barcode_image'        => $barcode_image,
+                'pin_item_top'         => 1,
+                'available_in_shelf'   => 1,
                 'cost_price'           => $cost_price,
                 'can_ship'             => $can_ship, 
                 'selling_price'        => $selling_price, 
@@ -194,9 +201,9 @@ class Ecom_api_controller extends Manaknight_Controller
 
             if($inventory)
             {
-                $output['success'] = TRUE;
+                $output['success']       = TRUE;
                 $output['success_msg']   = "Success! Inventory has been created successfully.";
-                $output['id'] = $result;
+                $output['id']            = $inventory;
                 echo json_encode($output);
                 exit();
             } 

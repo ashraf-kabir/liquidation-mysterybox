@@ -563,9 +563,19 @@ class Custom_api_controller extends Manaknight_Controller
                 if($transaction_id)
                 {
                     $user_id = $this->session->userdata('user_id'); 
-                    $result = $this->pos_cart_model->real_delete_by_fields(['user_id' => $user_id]);
+                    
 
-                    $this->send_order_to_shipper($order_id);
+                    $order_data = $this->send_order_to_shipper($order_id);
+
+                    if( isset( $order_data->error_msg ) )
+                    {
+                        $output['status'] = 0;
+                        $output['error']  = $order_data->error_msg;
+                        echo json_encode($output);
+                        exit();
+                    } 
+
+                    $result = $this->pos_cart_model->real_delete_by_fields(['user_id' => $user_id]);
 
                     $output['customer_name'] = $customer_data['name'];
                     $output['order_id']      = $order_id;
@@ -798,6 +808,8 @@ class Custom_api_controller extends Manaknight_Controller
 
                 $table_content   .=  '<td>' . $orders_list_value->id  . '</td>';
 
+                $table_content   .=  '<td>' . $orders_list_value->pick_up_id  . '</td>';
+
                 $table_content   .=  '<td>
                                         <ul class="list-unstyled text-left">
                                             <li>'  . $total_items .  ' items</li>
@@ -937,12 +949,11 @@ class Custom_api_controller extends Manaknight_Controller
                 $orders_list = $this->pos_order_model->get_all_custom_where($custom_query);
             }
 
-             
 
             $table_content = '';
             foreach ($orders_list as $orders_list_key => $orders_list_value) 
             {   
- 
+
                 /*
                 * Order Details
                 **/
@@ -962,6 +973,8 @@ class Custom_api_controller extends Manaknight_Controller
 
                 $table_content   .=  '<td>' . $orders_list_value->id  . '</td>';
 
+                $table_content   .=  '<td>' . $orders_list_value->pick_up_id  . '</td>';
+
                 $table_content   .=  '<td>
                                         <ul class="list-unstyled text-left">
                                             <li>'  . $total_items .  ' items</li>
@@ -970,7 +983,7 @@ class Custom_api_controller extends Manaknight_Controller
                                     </td>';
 
                 $table_content   .=  '<td>Paid in ' .    ucfirst($orders_list_value->payment_method)  . '</td>';
- 
+
 
                 $table_content   .=  '<td  class="text-danger" >$' .   number_format($orders_list_value->subtotal,2)    . '</td>';
 

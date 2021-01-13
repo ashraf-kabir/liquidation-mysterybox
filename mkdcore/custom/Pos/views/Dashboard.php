@@ -230,6 +230,7 @@
                                 <tr>
                                     <th scope="col">Customer Name</th>
                                     <th scope="col">Order Number</th>
+                                    <th scope="col">Pickup ID</th>
                                     <th scope="col">Items</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Order Placed Date</th>
@@ -271,6 +272,7 @@
                                 <tr>
                                     <th scope="col">Customer Name</th>
                                     <th scope="col">Order Number</th>
+                                    <th scope="col">Pickup ID</th>
                                     <th scope="col">Items</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Sub Total</th>

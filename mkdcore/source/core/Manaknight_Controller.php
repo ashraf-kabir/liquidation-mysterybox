@@ -448,6 +448,11 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
 
 
         $order_data = $this->api_service->send_order_to_shipper($order_id);
+
+        if(isset($order_data->id))
+        { 
+            $this->pos_order_model->edit(['pick_up_id' => $order_data->id], $order_id);
+        }
  
         return $order_data;
     }
