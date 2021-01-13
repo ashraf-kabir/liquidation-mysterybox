@@ -203,7 +203,7 @@ if ($layout_clean_mode) {
 						Barcode Image
 					</div>
 					<div class='col'>
-						<?php echo $view_model->get_barcode_image();?>
+					<img class="img-fluid d-block mb-3 mt-3 view-image" style='max-height: 100px;' src="<?php echo $view_model->get_barcode_image();?>" onerror= \"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\" />
 					</div>
 				</div>
 
