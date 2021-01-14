@@ -13,7 +13,7 @@
           </div>
         </div>
         <p class="mx-auto w-100 text-center">
-          &copy; 2020 Vegas liquidation Auction. All rights reserved.
+          &copy; 2020 Vegas liquidation Ecom. All rights reserved.
         </p>
       </div>
     </footer>
@@ -48,7 +48,7 @@
                     src="<?php echo base_url(); ?>/assets/frontend_images/logo.png"
                     alt="Company logo"
                   />
-                  <p>Welcome to <strong>VEGAS LIQUIDATION AUCTION</strong></p>
+                  <p>Welcome to <strong>VEGAS LIQUIDATION ECOM</strong></p>
                   <h2><strong>SIGN UP</strong></h2>
                 </div>
               </div>
@@ -110,7 +110,7 @@
                         class="mr-2"
                         required
                       />
-                      Yes, I have read the Vegas Liquidation Auction user
+                      Yes, I have read the Vegas Liquidation Ecom user
                       agreement and agree to be bound by its terms and
                       conditions.
                     </label>
@@ -162,7 +162,7 @@
                     src="<?php echo base_url(); ?>/assets/frontend_images/logo.png"
                     alt="Company logo"
                   />
-                  <p>Welcome to <strong>VEGAS LIQUIDATION AUCTION</strong></p>
+                  <p>Welcome to <strong>VEGAS LIQUIDATION ECOM</strong></p>
                   <h2><strong>LOGIN</strong></h2>
                 </div>
               </div>
