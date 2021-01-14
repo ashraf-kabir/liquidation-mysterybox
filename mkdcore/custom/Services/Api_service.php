@@ -100,6 +100,7 @@ class Api_service{
                 'platform_id'       => $platform_id,   
                 'status'            => 1, 
                 'detail'            => $detail,
+                'checkout_type'     => $order_data->checkout_type,
             ); 
 
 
