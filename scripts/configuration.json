@@ -2591,6 +2591,7 @@
 		"../mkdcore/custom/Services/Names_helper_service.php" : "../release/application/libraries/Names_helper_service.php",
 		"../mkdcore/custom/Services/Pos_checkout_service.php" : "../release/application/libraries/Pos_checkout_service.php",
 		"../mkdcore/custom/Services/Shipstation_api_service.php" : "../release/application/libraries/Shipstation_api_service.php",
+		"../mkdcore/custom/Services/Customer_service.php" : "../release/application/libraries/Customer_service.php",
 		"../mkdcore/custom/Custom404.php" : "../release/application/controllers/Custom404.php",  
 
 

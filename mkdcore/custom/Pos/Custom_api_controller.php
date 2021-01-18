@@ -433,7 +433,7 @@ class Custom_api_controller extends Manaknight_Controller
             $cart_items = $this->input->post('cart_items', TRUE);
 
 
-             
+
 
             /**
             * Refactor Customer Data  
@@ -446,7 +446,7 @@ class Custom_api_controller extends Manaknight_Controller
                 $customer_data[$form_data_value->name] = $form_data_value->value;
             } 
 
-             
+
 
             /**
             * Validation if items support Can Ship
@@ -493,7 +493,7 @@ class Custom_api_controller extends Manaknight_Controller
                 * Store order items detail 
                 * 
                 */ 
-                $order_id = $result;
+                $order_id    = $result;
                 $sub_total   = 0;
                 $grand_total = 0;
 
@@ -577,11 +577,28 @@ class Custom_api_controller extends Manaknight_Controller
 
                     $result = $this->pos_cart_model->real_delete_by_fields(['user_id' => $user_id]);
 
+
+
+                    $this->load->library('customer_service');   
+                    $this->load->model('customer_model');  
+                    $this->customer_service->set_customer_model($this->customer_model);
+                    
+                    $customer_service = (object) $this->customer_service->add_customer_record($customer_data['customer_id'], $order_id);
+                    if( isset( $customer_service->error_msg ) )
+                    {
+                        $output['status']  = 0;
+                        $output['error']   = $customer_service->error_msg;
+                        echo json_encode($output);
+                        exit();
+                    } 
+
+
+
                     $output['customer_name'] = $customer_data['name'];
                     $output['order_id']      = $order_id;
                     $output['address']       = $customer_data['address'];
-                    $output['status'] = 200;
-                    $output['success'] = 'Order has been created successfully.';
+                    $output['status']        = 200;
+                    $output['success']       = 'Order has been created successfully.';
                     echo json_encode($output);
                     exit();
 
