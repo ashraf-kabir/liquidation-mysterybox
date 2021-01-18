@@ -2223,7 +2223,7 @@
 			"dynamic_templates" : true
 		},
 		"contact": {
-			"is_active" : true
+			"is_active" : false
         },
 		"cache": false,
 		"pdf": false,
@@ -2657,6 +2657,9 @@
 	"routes": {
 		"migrate": "Migrate",
 		"v1/api/product/add_product" : "Guest/Ecom_api_controller/add_product",
+		"v1/api/product/get_stores" : "Guest/Ecom_api_controller/get_stores",
+		"v1/api/product/get_categories" : "Guest/Ecom_api_controller/get_categories", 
+		"v1/api/product/scan_product": "Guest/Ecom_api_controller/scan_product",
 
 		"admin/category_wise/view/(:num)" : "Admin/Admin_category_wise_controller/view/$1",
 		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv",

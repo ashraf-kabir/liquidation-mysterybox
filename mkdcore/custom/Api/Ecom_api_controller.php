@@ -224,5 +224,60 @@ class Ecom_api_controller extends Manaknight_Controller
         }
 
     }
+
+
+
+
+    
+    public function get_stores()
+    {
+        $this->load->model('store_model');
+
+        $output['stores'] = $this->store_model->get_all();
+        echo json_encode($output);
+        exit();
+    }
+
+
+
+    public function get_categories()
+    {
+        $this->load->model('category_model');
+
+        $output['categories'] = $this->category_model->get_all();
+        echo json_encode($output);
+        exit();
+    }
+
+
+
+    public function scan_product()
+    {
+        $params = json_decode(file_get_contents('php://input'), TRUE);   
+        // file_put_contents('file.txt', print_r($params, true));
+        if(isset($params) and !empty($params))
+        {
+            $this->load->model('inventory_model'); 
+
+            $barcode_value = $params['product_sku']; 
+            $product_id    = $params['product_id']; 
+            
+            $check_order_data = $this->inventory_model->get_by_fields( [ 'sku' => $barcode_value, 'id' => $product_id ] );
+            
+            if( !empty($check_order_data) )
+            {
+                $output['success'] = true; 
+                echo json_encode($output);
+                exit();
+            }else{
+                $output['error'] = true;
+                $output['msg']   = "No such barcode found.";
+                echo json_encode($output);
+                exit();
+            }
+        }
+    }
+
+
     
 }
