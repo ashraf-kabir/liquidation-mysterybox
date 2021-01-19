@@ -15,11 +15,13 @@ class Custom_api_controller extends Manaknight_Controller
         'success' => ''
     ];
 
+    protected $_role_id = 3;
+
+    
     public function __construct()
     {
         parent::__construct();
-        $this->load->database();  
-
+        $this->load->database();   
         
     }
 
@@ -28,7 +30,7 @@ class Custom_api_controller extends Manaknight_Controller
     public function pos_get_all_inventory_items()
     {
 
-        if($this->session->userdata('user_id'))
+        if($this->session->userdata('user_id') AND $this->session->userdata('role') == $this->_role_id )
         {
             $store_id = $this->session->userdata('store_id');
             $this->load->model('inventory_model');
@@ -47,7 +49,7 @@ class Custom_api_controller extends Manaknight_Controller
 
     public function pos_get_cart_items()
     {
-        if($this->session->userdata('user_id'))
+        if($this->session->userdata('user_id') AND $this->session->userdata('role') == $this->_role_id )
         {
             $user_id = $this->session->userdata('user_id');
             $this->load->model('pos_cart_model');
@@ -66,7 +68,7 @@ class Custom_api_controller extends Manaknight_Controller
 
     public function add_product_to_cart($scan_order = FALSE,$product_data = '')
     {
-        if($this->session->userdata('user_id'))
+        if($this->session->userdata('user_id')  AND $this->session->userdata('role') == $this->_role_id  )
         {
             $this->load->model('pos_cart_model');
 
@@ -148,7 +150,7 @@ class Custom_api_controller extends Manaknight_Controller
 
     public function add_product_to_cart_by_customer()
     {
-        if($this->session->userdata('user_id'))
+        if($this->session->userdata('user_id') )
         {
             $this->load->model('pos_cart_model'); 
             $this->load->model('inventory_model'); 
@@ -236,7 +238,7 @@ class Custom_api_controller extends Manaknight_Controller
 
     public function delete_cart_item()
     {
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id') AND $this->session->userdata('role') == $this->_role_id ) 
         {  
 
             $this->load->model('pos_cart_model');
@@ -262,7 +264,7 @@ class Custom_api_controller extends Manaknight_Controller
 
     public function delete_cart_all()
     {
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id') AND $this->session->userdata('role') == $this->_role_id ) 
         {  
             $this->load->model('pos_cart_model');
             $user_id = $this->session->userdata('user_id'); 
@@ -287,8 +289,7 @@ class Custom_api_controller extends Manaknight_Controller
     public function get_customer_search()
     {
         if($this->session->userdata('user_id'))
-        {
-             
+        { 
             if(  $this->input->get('term')  )
             {
                 $this->load->model('customer_model');
@@ -378,7 +379,7 @@ class Custom_api_controller extends Manaknight_Controller
 
     public function pos_get_all_active_customers()
     { 
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id') ) 
         {   
             $this->load->model('customer_model');
             $customers_list = $this->customer_model->get_all(['status' => 1]); 
@@ -393,7 +394,7 @@ class Custom_api_controller extends Manaknight_Controller
 
     public function pos_customer_detail()
     { 
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id') AND $this->session->userdata('role') == $this->_role_id ) 
         {   
             $customer_id      =  $this->input->post('customer_id', TRUE);
             $this->load->model('customer_model');
@@ -412,7 +413,7 @@ class Custom_api_controller extends Manaknight_Controller
     public function pos_checkout_order()
     {
         
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id') AND $this->session->userdata('role') == $this->_role_id ) 
         { 
             
             $pos_user_id = $this->session->userdata('user_id');
@@ -649,7 +650,7 @@ class Custom_api_controller extends Manaknight_Controller
     
     public function edit_product_in_cart()
     {
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id') AND $this->session->userdata('role') == $this->_role_id ) 
         { 
             $this->load->model('pos_cart_model');
             
@@ -704,7 +705,7 @@ class Custom_api_controller extends Manaknight_Controller
     public function pos_items_in_shelf()
     {
         
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id') AND $this->session->userdata('role') == $this->_role_id) 
         {  
             $pos_user_id = $this->session->userdata('user_id'); 
 
@@ -751,7 +752,7 @@ class Custom_api_controller extends Manaknight_Controller
 
     public function remove_from_shelf()
     {
-        if ($this->session->userdata('user_id') and $this->input->post('product_id') ) 
+        if ($this->session->userdata('user_id') and $this->input->post('product_id') AND $this->session->userdata('role') == $this->_role_id ) 
         {  
             $product_id   =  $this->input->post('product_id', TRUE);
 
@@ -790,7 +791,7 @@ class Custom_api_controller extends Manaknight_Controller
     public function pos_pickup_from_shelf()
     {
         
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id') AND $this->session->userdata('role') == $this->_role_id) 
         {  
             $this->load->library('names_helper_service');
             
@@ -871,7 +872,7 @@ class Custom_api_controller extends Manaknight_Controller
 
     public function pos_mark_order_pickup()
     {
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id') AND $this->session->userdata('role') == $this->_role_id) 
         { 
             $this->load->model('pos_order_model');
             $this->load->model('pos_order_note_model'); 
@@ -932,7 +933,7 @@ class Custom_api_controller extends Manaknight_Controller
     public function pos_past_order()
     {
         
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id') AND $this->session->userdata('role') == $this->_role_id ) 
         {  
             $pos_user_id = $this->session->userdata('user_id');
             
@@ -1045,7 +1046,7 @@ class Custom_api_controller extends Manaknight_Controller
     public function pos_summary_report()
     {
         
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id') AND $this->session->userdata('role') == $this->_role_id ) 
         {  
             $pos_user_id = $this->session->userdata('user_id');
             
