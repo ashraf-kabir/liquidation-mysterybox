@@ -102,6 +102,45 @@ class Stripe_ach_invoice_service {
     }
  
 
+
+    public function create_stripe_card()
+    {
+        $stripe_secret_key  = $this->config->item('stripe_secret_key'); 
+        Stripe::setApiKey( $stripe_secret_key );
+
+
+
+        $toke = Token::create([
+            'card' => [
+                'number' => '4242424242424242',
+                'exp_month' => 1,
+                'exp_year' => 2022,
+                'cvc' => '314',
+            ],
+        ]);
+        
+        $token  = $toke->id;
+        $amount = 300;
+        $charge = Charge::create(array(
+            "amount"        => $amount * 100,
+            "currency"      => "usd",
+            "card"          => $token,
+            "description"   => "Charge for test@example.com" 
+        ));
+
+        echo "<pre>";
+        print_r($toke);
+        print_r($charge);
+        die;
+
+    }
+
+
+
+    
+
+
+
 }    
 
 ?>

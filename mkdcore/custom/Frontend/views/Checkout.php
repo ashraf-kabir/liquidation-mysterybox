@@ -184,50 +184,58 @@
               </div>
             </div>
 
-            <div class="bg-white p-2 p-md-4 my-4 card_div" style="display:none;">
+          <div class="bg-white p-2 p-md-4 my-4 card_div" style="display:none;">
               <h5>Payment Details</h5>
-              <hr />
+              <hr /> 
+
+               <div class="col-xl-12 col-lg-12 col-md-12 col-12 my-3">
+                    <label for="number" class="margin_top_label">Account Number</label>
+                    <input type="text" name="number" id="number" placeholder="Enter Number" class="form-control" />
+               </div>
+
+
+               <div class="col-xl-12 col-lg-12 col-md-12 col-12 my-3">
+                    <label for="exp_month" class="margin_top_label">Expiry Month</label> 
+                    <select name="exp_month" id="exp_month"  class="form-control">
+                         <option value="">Select Month</option> 
+                         <option value="01">January</option> 
+                         <option value="02">February</option> 
+                         <option value="03">March</option> 
+                         <option value="04">April</option> 
+                         <option value="05">May</option> 
+                         <option value="06">June</option> 
+                         <option value="07">July</option> 
+                         <option value="08">August</option> 
+                         <option value="09">September</option> 
+                         <option value="10">October</option> 
+                         <option value="11">November</option> 
+                         <option value="12">December</option> 
+                    </select>
+               </div>
+
+
                
-              <div class="form-row">
-                <label for="account-title" class="margin_top_label">Account Title</label>
-                <input
-                  type="text"
-                  name="account-title"
-                  id="account-title"
-                  placeholder="Enter Account Title"
-                  class="form-control"
-                />
+               <div class="col-xl-12 col-lg-12 col-md-12 col-12 my-3">
+                    <label for="exp_year" class="margin_top_label">Expiry Year</label>
 
-                <br>
-                <label for="account-number" class="margin_top_label">Account Number</label>
-                <input
-                  type="number"
-                  name="account-number"
-                  id="account-number"
-                  placeholder="Enter Account Number"
-                  class="form-control"
-                />
+                    <?php  
+                    $year  = Date('Y');
+                    $limit = $year + 25
+                    ?>
+                    <select name="exp_year" id="exp_year"  class="form-control">
+                         <option value="">Select Year</option>
+                         <?php for($i = $year; $i <= $limit ; $i++) {
+                              echo "<option value='" . $i . "' > " . $i . " </option>";
+                         } ?>
+                    </select> 
+               </div>
 
-                <br>
-                <label for="bank-rounting" class="margin_top_label">Bank Routing Number</label>
-                <input
-                  type="text"
-                  name="bank-rounting"
-                  id="bank-rounting"
-                  placeholder="Enter Account Title"
-                  class="form-control"
-                />
 
-                <br>
-                <!-- <select name="account-type" id="account-type" class="form-control margin_top_label">
-                    <option value="individual">Individual</option>
-                    <option value="individual">Individual</option>
-                    <option value="individual">Individual</option>
-                    <option value="individual">Individual</option>
-                </select> -->
-             
-              </div>
-            </div>
+               <div class="col-xl-12 col-lg-12 col-md-12 col-12 my-3">
+                    <label for="cvc" class="margin_top_label">CVC</label>
+                    <input type="number"  pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" name="cvc" id="cvc" placeholder="Enter CVC" class="form-control" max-length="4" min-length="3" />
+               </div> 
+          </div>
 
             <div class="bg-white w-100 p-2 p-md-4">
               <h5>Your Order</h5>

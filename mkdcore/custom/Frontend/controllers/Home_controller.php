@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); 
-
+include_once __DIR__ . '/../../services/User_service.php';
 /**
  * Home Controller to Manage all Frontend pages
  * @copyright 2019 Manaknightdigital Inc.
@@ -94,10 +94,12 @@ class Home_controller extends Manaknight_Controller
 
     public function categories($offset = 0)
     {   
+ 
+
         $this->load->library('pagination');
         $this->_data['category_id']    =     $this->input->get('category_id', TRUE) != NULL  ? $this->input->get('category_id', TRUE) : NULL ;
         $this->_data['search_query']   =     $this->input->get('search_query', TRUE) != NULL  ? $this->input->get('search_query', TRUE) : NULL ;
-         
+
         $this->_data['location_id']     =     $this->input->get('location_id', TRUE) != NULL  ? $this->input->get('location_id', TRUE) : NULL ;
         
         $where = [ 
@@ -163,8 +165,8 @@ class Home_controller extends Manaknight_Controller
 
 
     public function contacts()
-    { 
-         
+    {  
+
         if($this->input->post('email', TRUE))
         {
             $name         =  $this->input->post('name', TRUE);
@@ -207,27 +209,18 @@ class Home_controller extends Manaknight_Controller
             $data['customer']   =  $this->customer_model->get($user_id); 
 
 
-            $data['tax']   =  $this->tax_model->get(1); 
- 
-             
-             
+            $data['tax']   =  $this->tax_model->get(1);  
+
         }
 
         $this->_render('Guest/Cart',$data);
-    }
-
-
-     
-
+    } 
 
 
     public function do_checkout()
-    {
+    {  
         if($this->session->userdata('customer_login'))
-        {
-            echo "<pre>";
-            print_r($_POST);
-            die();
+        { 
   
             $full_name      =  $this->input->post('full_name', TRUE);
             $email_address  =  $this->input->post('email_address', TRUE);
@@ -239,13 +232,30 @@ class Home_controller extends Manaknight_Controller
             $address_1      =  $this->input->post('address_1', TRUE);
             $address_2      =  $this->input->post('address_2', TRUE);
             $payment        =  $this->input->post('payment', TRUE);
+
             $shipping_cost_name         =  $this->input->post('shipping_cost_name', TRUE);
             $shipping_cost_value        =  $this->input->post('shipping_cost_value', TRUE);
             $shipping_service_id        =  $this->input->post('shipping_service_id', TRUE);
 
+ 
+            
+           
             $user_id = $this->session->userdata('user_id');
+
             $this->load->model('pos_cart_model');
-            $this->load->model('customer_model');
+            $this->load->model('customer_model'); 
+            
+            $this->load->model('pos_order_model');
+            $this->load->model('pos_order_note_model');
+            $this->load->model('pos_order_items_model'); 
+            $this->load->model('transactions_model');
+            $this->load->model('inventory_model');
+            $this->load->model('customer_model'); 
+
+            $this->load->library('pos_checkout_service');
+            $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
+
+            
 
             $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
             if( empty($data['cart_items']) )
@@ -254,34 +264,50 @@ class Home_controller extends Manaknight_Controller
                 return redirect($_SERVER['HTTP_REFERER']);
             }
 
-            $data['customer']   =  $this->customer_model->get($user_id);   
-            $data['customer']->name =  $full_name;
 
-            $user_id = $this->session->userdata('user_id');
-                
-            $this->load->model('pos_order_model');
-            $this->load->model('pos_order_note_model');
-            $this->load->model('pos_order_items_model');
-            $this->load->model('pos_cart_model');
-            $this->load->model('transactions_model');
-            $this->load->model('inventory_model');
-            $this->load->model('customer_model');
+            if($payment == 2)
+            {
+                $acc_number     =  $this->input->post('number', TRUE);
+                $exp_month      =  $this->input->post('exp_month', TRUE);
+                $exp_year       =  $this->input->post('exp_year', TRUE);
+                $cvc            =  $this->input->post('cvc', TRUE);
+    
+                $this->load->library('stripe_helper_service');
+    
+                $this->stripe_helper_service->set_config($this->config);
+                $response = $this->stripe_helper_service->create_stripe_token($acc_number, $exp_month, $exp_year, $cvc);
+    
+                $token_id = "";
+                if( isset($response['success']) )
+                {
+                    $token_id = $response['success']->id;
+                }
+                else
+                {
+                    $this->session->set_flashdata('error1', 'Error! Please try again later.'); 
+                    return redirect($_SERVER['HTTP_REFERER']);
+                } 
+            }
 
-            $this->load->library('pos_checkout_service');
-            $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
+
+
+
+            $data['customer']       =  $this->customer_model->get($user_id);   
+            $data['customer']->name =  $full_name; 
+
 
             /**
             * Cart Items  
             */
-            $cart_items = $this->pos_cart_model->get_all(['customer_id' => $user_id ]);
-                
+            $cart_items     =  $this->pos_cart_model->get_all(['customer_id' => $user_id ]); 
             $customer_data  =  $this->customer_model->get( $user_id ); 
             $shipping_cost  =  $shipping_cost_value;
             $discount       =  0;
             $tax            =  0;
+
             
-            $this->db->trans_strict(TRUE);
-            $this->db->trans_begin();
+            // $this->db->trans_strict(TRUE);
+            // $this->db->trans_begin();
  
             $customer_data->shipping_service_name  = $shipping_cost_name;
             $customer_data->shipping_service_id    = $shipping_service_id;
@@ -359,19 +385,19 @@ class Home_controller extends Manaknight_Controller
                 );
                 $transaction_id = $this->transactions_model->create($add_transaction);
                 
-                $this->db->trans_complete();
+                // $this->db->trans_complete();
 
 
-                if ($this->db->trans_status() === FALSE)
-                {
-                    $this->db->trans_rollback();
-                    $this->session->set_flashdata('error1', 'Error! Something went wrong please try again later.');
-                    redirect($_SERVER['HTTP_REFERER']);
-                }
-                else
-                {
-                    $this->db->trans_commit();
-                }
+                // if ($this->db->trans_status() === FALSE)
+                // {
+                //     $this->db->trans_rollback();
+                //     $this->session->set_flashdata('error1', 'Error! Something went wrong please try again later.');
+                //     redirect($_SERVER['HTTP_REFERER']);
+                // }
+                // else
+                // {
+                //     $this->db->trans_commit();
+                // }
 
                 if($transaction_id)
                 {
@@ -379,6 +405,23 @@ class Home_controller extends Manaknight_Controller
                     // $result = $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]);  
                     $output['order_id']      = $order_id;  
                      
+
+
+                    if($payment == 2)
+                    { 
+                        $response = $this->stripe_helper_service->create_stripe_charge($token_id, $grand_total, "Ecom Order");
+             
+                        if( isset($response['success']) )
+                        { 
+                            $this->pos_order_model->edit(['intent_data' => json_encode($response['response']) ], $order_id);
+                        }
+                        else
+                        {
+                            $this->session->set_flashdata('error1', 'Error! Please try again later.'); 
+                            return redirect($_SERVER['HTTP_REFERER']);
+                        } 
+                    }
+
 
                     $this->session->set_flashdata('success1', 'Order has been created successfully.');
                 }else{
@@ -395,6 +438,9 @@ class Home_controller extends Manaknight_Controller
             }
         }
     }
+
+
+
 
 
     public function checkout()
@@ -498,13 +544,14 @@ class Home_controller extends Manaknight_Controller
 
     public function sign_up()
     { 
-         
+
         if($this->input->post('email', TRUE))
         {
             $name       = $this->input->post('first_name', TRUE);
             $email      = $this->input->post('email', TRUE);
             $password   = $this->input->post('password', TRUE); 
-
+            $password   = password_hash($password, PASSWORD_BCRYPT); 
+           
             $this->load->model('customer_model');
 
             $user = $this->customer_model->get_by_fields([
@@ -519,11 +566,10 @@ class Home_controller extends Manaknight_Controller
                 exit();
             }
 
-
             $result = $this->customer_model->create([
                 'name'      => $name,
-                'email'     => $email, 
-                'password'  => str_replace('$2y$', '$2b$', password_hash($password, PASSWORD_BCRYPT)),  
+                'email'     => $email,  
+                'password'  => $password,  
                 'status'    => 1,  
             ]);
     
@@ -559,33 +605,31 @@ class Home_controller extends Manaknight_Controller
             ]);
 
             if ($user)
-            {
-                if(password_verify($password, $user->password))
-                {
-                    // $this->destroy_session();
-                    
+            {    
+                if( password_verify($password, $user->password) )
+                {  
                     $this->set_session('user_id', (int) $user->id); 
                     $this->set_session('email', (string) $user->email); 
-                    $this->set_session('customer_login', 1); 
-
-
-                    
+                    $this->set_session('customer_login', 1);  
 
                     $output['status'] = 0;
                     $output['success'] = 'Success!.';
                     echo json_encode($output);
                     exit();
 
-                }else{
+                }
+                else
+                {
                     $output['status'] = 0;
                     $output['error'] = 'Error! Invalid email or password.';
                     echo json_encode($output);
                     exit();
-                }
-               
-            }else{
+                } 
+            }
+            else
+            {
                 $output['status'] = 0;
-                $output['error'] = 'Error! Invalid email or password.';
+                $output['error'] = 'Error! Invalid password or email.';
                 echo json_encode($output);
                 exit();
             } 
@@ -618,13 +662,6 @@ class Home_controller extends Manaknight_Controller
         $this->destroy_session();
 		return $this->redirect('pos/login');
     }
-
-
-   
-
-
-
-    
 
 
 
