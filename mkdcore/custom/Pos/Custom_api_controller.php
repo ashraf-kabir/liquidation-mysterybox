@@ -1154,6 +1154,12 @@ class Custom_api_controller extends Manaknight_Controller
 
     public function get_shipping_cost()
     {
+        $_POST['postal_code'] = 93611;
+        $_POST['city'] = 'Clovis';
+        $_POST['state'] = 'Baluchistan';
+        $_POST['country'] = 'US';
+        $_POST['from_postal'] = '93611'; 
+
         if ($this->session->userdata('user_id') AND $this->input->post('postal_code', TRUE)) 
         {  
             $this->load->model('pos_cart_model');
