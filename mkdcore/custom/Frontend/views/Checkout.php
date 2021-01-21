@@ -158,7 +158,7 @@
               <div
                 class="col-xl-6 col-lg-6 col-md-8 col-sm-8 col-12 d-flex justify-content-between"
               >
-                <label for="cash">
+                <!-- <label for="cash">
                   <input
                     type="radio"
                     name="payment"
@@ -168,7 +168,7 @@
                     required
                   />
                   Cash
-                </label>
+                </label> -->
 
                 <label for="cash">
                   <input

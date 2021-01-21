@@ -265,6 +265,7 @@ class Home_controller extends Manaknight_Controller
             }
 
 
+            $token_id = "";
             if($payment == 2)
             {
                 $acc_number     =  $this->input->post('number', TRUE);
@@ -277,10 +278,10 @@ class Home_controller extends Manaknight_Controller
                 $this->stripe_helper_service->set_config($this->config);
                 $response = $this->stripe_helper_service->create_stripe_token($acc_number, $exp_month, $exp_year, $cvc);
     
-                $token_id = "";
+                
                 if( isset($response['success']) )
                 {
-                    $token_id = $response['success']->id;
+                    $token_id = $response['response']->id;
                 }
                 else
                 {
@@ -414,12 +415,14 @@ class Home_controller extends Manaknight_Controller
                         if( isset($response['success']) )
                         { 
                             $this->pos_order_model->edit(['intent_data' => json_encode($response['response']) ], $order_id);
+                            $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]); 
                         }
                         else
-                        {
+                        { 
                             $this->session->set_flashdata('error1', 'Error! Please try again later.'); 
                             return redirect($_SERVER['HTTP_REFERER']);
                         } 
+                        
                     }
 
 
@@ -551,7 +554,7 @@ class Home_controller extends Manaknight_Controller
             $email      = $this->input->post('email', TRUE);
             $password   = $this->input->post('password', TRUE); 
             $password   = password_hash($password, PASSWORD_BCRYPT); 
-           
+            
             $this->load->model('customer_model');
 
             $user = $this->customer_model->get_by_fields([
@@ -568,13 +571,13 @@ class Home_controller extends Manaknight_Controller
 
             $result = $this->customer_model->create([
                 'name'      => $name,
-                'email'     => $email,  
-                'password'  => $password,  
+                'email'     => $email,   
                 'status'    => 1,  
             ]);
     
             if($result)
             {
+                $this->customer_model->edit([ 'password' => $password ], $result);
                 $output['status']   = 200;
                 $output['success']  =  "Your account has been registered successfully,you can login now.";  
                 echo json_encode($output);
@@ -660,7 +663,7 @@ class Home_controller extends Manaknight_Controller
     public function logout ()
     {
         $this->destroy_session();
-		return $this->redirect('pos/login');
+		return $this->redirect('');
     }
 
 
