@@ -1153,13 +1153,7 @@ class Custom_api_controller extends Manaknight_Controller
 
 
     public function get_shipping_cost()
-    {
-        $_POST['postal_code'] = 93611;
-        $_POST['city'] = 'Clovis';
-        $_POST['state'] = 'Baluchistan';
-        $_POST['country'] = 'US';
-        $_POST['from_postal'] = '93611'; 
-
+    { 
         if ($this->session->userdata('user_id') AND $this->input->post('postal_code', TRUE)) 
         {  
             $this->load->model('pos_cart_model');
@@ -1177,7 +1171,13 @@ class Custom_api_controller extends Manaknight_Controller
             }else{
                 $orders_list = $this->pos_cart_model->get_all(['user_id' => $user_id]); 
             }
-           
+            
+            if(empty($orders_list))
+            {
+                $output['error']  = "Error! Please add orders to continue.";
+                echo json_encode($output);
+                exit();
+            }
 
             $error       = 0;
             $error_msg   = "";
