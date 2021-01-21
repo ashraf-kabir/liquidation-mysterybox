@@ -221,6 +221,7 @@ $(document).ready(() => {
                 if(response.error)
                 {
                   toastr.error(response.error); 
+                  $('.shipping-cost-options').html('')
                 } 
             },
             error: function()
