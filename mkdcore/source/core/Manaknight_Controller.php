@@ -461,6 +461,54 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
 
 
 
+    public function send_order_to_accounting($order_id)
+    { 
+        $this->load->model('inventory_model');
+        $this->load->model('pos_order_items_model');
+        $this->load->model('pos_order_model');
+        $this->load->model('customer_model');
+
+        $this->load->library('accounting_api_service');
+        $this->accounting_api_service->set_inventory_model($this->inventory_model);
+        $this->accounting_api_service->set_pos_order_items_model($this->pos_order_items_model);
+        $this->accounting_api_service->set_pos_order_model($this->pos_order_model);
+        $this->accounting_api_service->set_customer_model($this->customer_model);
+        $this->accounting_api_service->set_config($this->config);
+
+
+        $order_data = $this->accounting_api_service->post_order_to_accounting($order_id);
+
+        if(isset($order_data->id))
+        { 
+            
+        }
+ 
+        return $order_data;
+    }
+
+
+    
+
+    public function send_transaction_to_accounting($transaction_id)
+    { 
+        $this->load->model('transactions_model');  
+
+        $this->load->library('accounting_api_service'); 
+        $this->accounting_api_service->set_transactions_model($this->transactions_model);
+        $this->accounting_api_service->set_config($this->config);
+
+
+        $order_data = $this->accounting_api_service->send_transaction_to_accounting($transaction_id);
+
+        if(isset($order_data->id))
+        { 
+            
+        }
+ 
+        return $order_data;
+    }
+
+    
 
 
 }

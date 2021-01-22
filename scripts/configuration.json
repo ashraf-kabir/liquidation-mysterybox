@@ -664,6 +664,8 @@
 			"field": [
 				["id", "integer", [], "xyzID", "", ""],
 				["store_id", "integer", [], "xyzStore", "required|integer", "required|integer"],
+				["is_picked", "integer", [{ "default" :  0 }], "xyzPicked", "", ""],
+				["is_shipped", "integer", [{ "default" :  0 }], "xyzShipped", "", ""],
 				["pick_up_id", "integer", [], "xyzPickup", "", ""],
 				["billing_name", "string", [{ "limit": 255 }], "xyzBilling Name", "required|max_length[255]", "required|max_length[255]"],
 				["billing_address", "text", [], "xyzBilling Address", "required", "required"],
@@ -701,7 +703,9 @@
 				"status": {"0": "Canceled","1": "Purchased", "2" : "Refunded"},
 				"order_type": {"1": "Online", "2" : "POS"},
 				"pos_pickup_status": {"1": "Pending", "2" : "Picked"},
-				"checkout_type": {"1": "Pickup", "2" : "Delivery"},
+				"checkout_type": {"1": "Pickup", "2" : "Delivery"}, 
+				"is_picked": {"1": "Yes", "0" : "No"},
+				"is_shipped": {"1": "Yes", "0" : "No"},
 				"payment_method": {"1": "Cash", "2" : "Card", "3" : "ACH", "4" : "Bank"}
 			},
 			"pre": "",
@@ -2593,6 +2597,7 @@
 		"../mkdcore/custom/Services/Shipstation_api_service.php" : "../release/application/libraries/Shipstation_api_service.php",
 		"../mkdcore/custom/Services/Stripe_helper_service.php" : "../release/application/libraries/Stripe_helper_service.php",
 		"../mkdcore/custom/Services/Customer_service.php" : "../release/application/libraries/Customer_service.php",
+		"../mkdcore/custom/Services/Accounting_api_service.php" : "../release/application/libraries/Accounting_api_service.php",
 		"../mkdcore/custom/Custom404.php" : "../release/application/controllers/Custom404.php",  
 
 

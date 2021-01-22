@@ -147,7 +147,10 @@
                 <div class="row pages active-page" id="pos">
                     <div class="col-xl-4 col-lg-4 col-md-4 cart-items" style="position: relative;">
                         <div class="row py-3 px-md-3 justify-content-center pos-products-list ">  
-                            
+
+                        </div>
+                        <div class="row py-3 px-md-3 justify-content-center "> 
+                            <button  class="btn btn-primary load_more" >Load More</button>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-4 cart-list px-0">
@@ -822,6 +825,10 @@
         </div>
     </div>
 
+
+    <input type="hidden" id="pageno" value="1">
+
+    
     <!-- Customer Modal -->
     <div class="modal fade " id="customer-modal" tabindex="-1" role="dialog" aria-labelledby="customerLabel"
         aria-hidden="true">

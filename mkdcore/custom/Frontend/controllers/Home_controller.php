@@ -426,6 +426,33 @@ class Home_controller extends Manaknight_Controller
                     }
 
 
+
+                    /**
+                     * Send Order to Accounting System
+                     *  
+                    */ 
+                    $accounting_response = $this->send_order_to_accounting( $order_id );
+                    if( isset( $accounting_response->error_msg ) )
+                    {
+                        $this->session->set_flashdata('error1', 'Error! Please try again later.'); 
+                        return redirect($_SERVER['HTTP_REFERER']);
+                    }
+
+
+                    /**
+                     * Send Transaction to Accounting System
+                     *  
+                    */ 
+                    $accounting_trans_response = $this->send_transaction_to_accounting( $transaction_id );
+                    if( isset( $accounting_trans_response->error_msg ) )
+                    {
+                        $this->session->set_flashdata('error1', 'Error! Please try again later.'); 
+                        return redirect($_SERVER['HTTP_REFERER']);
+                    }
+
+
+
+
                     $this->session->set_flashdata('success1', 'Order has been created successfully.');
                 }else{
                      

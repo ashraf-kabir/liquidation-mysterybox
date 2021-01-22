@@ -35,11 +35,16 @@ class Custom_api_controller extends Manaknight_Controller
             $store_id = $this->session->userdata('store_id');
             $this->load->model('inventory_model');
             
-            $search_product_value = $this->input->post('search_product_value', TRUE);
-            
-            $inventory_items =  $this->inventory_model->get_all_inventory_products(['product_name' => $search_product_value , 'sku' => $search_product_value, 'store_location_id' => $store_id ]);
+            $limit                 =   3;
+            $search_product_value  =   $this->input->post('search_product_value', TRUE);
+            $next_page             =   $this->input->post('next_page', TRUE);
 
-            $output['status'] = 200;
+             
+           
+            $inventory_items =  $this->inventory_model->get_all_inventory_products(['product_name' => $search_product_value , 'sku' => $search_product_value, 'store_location_id' => $store_id ], 1, $next_page, $limit);
+
+            $output['status']        = 200;
+            $output['status']        = $this->db->last_query();
             $output['products_list'] = $inventory_items; 
             echo json_encode($output);
             exit(); 
@@ -566,6 +571,12 @@ class Custom_api_controller extends Manaknight_Controller
                     $user_id = $this->session->userdata('user_id'); 
                     
 
+
+                    /**
+                     * Send Order to Shipping System
+                     *  
+                    */
+
                     $order_data = $this->send_order_to_shipper($order_id);
 
                     if( isset( $order_data->error_msg ) )
@@ -576,10 +587,20 @@ class Custom_api_controller extends Manaknight_Controller
                         exit();
                     } 
 
+
+                    /**
+                     * Delete Cart
+                     *  
+                    */
                     $result = $this->pos_cart_model->real_delete_by_fields(['user_id' => $user_id]);
 
 
 
+
+                    /**
+                     * Update Customer record
+                     *  
+                    */
                     $this->load->library('customer_service');   
                     $this->load->model('customer_model');  
                     $this->customer_service->set_customer_model($this->customer_model);
@@ -593,6 +614,37 @@ class Custom_api_controller extends Manaknight_Controller
                         exit();
                     } 
 
+
+
+                    /**
+                     * Send Order to Accounting System
+                     *  
+                    */ 
+                    $accounting_response = $this->send_order_to_accounting($order_id);
+                    if( isset( $accounting_response->error_msg ) )
+                    {
+                        $output['status']  = 0;
+                        $output['error']   = $accounting_response->error_msg;
+                        echo json_encode($output);
+                        exit();
+                    }
+
+
+                     
+
+
+                    /**
+                     * Send Transaction to Accounting System
+                     *  
+                    */ 
+                    $accounting_trans_response = $this->send_transaction_to_accounting( $transaction_id );
+                    if( isset( $accounting_trans_response->error_msg ) )
+                    {
+                        $output['status']  = 0;
+                        $output['error']   = $accounting_response->error_msg;
+                        echo json_encode($output);
+                        exit(); 
+                    }
 
 
                     $output['customer_name'] = $customer_data['name'];

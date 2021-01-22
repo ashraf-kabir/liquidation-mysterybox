@@ -187,11 +187,11 @@ class Inventory_model extends Manaknight_Model
 	 *
 	 * @return array
 	 */
-	public function get_all_inventory_products($where = array(),$available_in_shelf = 1)
+	public function get_all_inventory_products($where = array(),$available_in_shelf = 1, $page = 0, $limit=10)
     {
         $this->db->from($this->_table);
 
-		 
+		$this->db->limit($limit, $page);
 		
         foreach($where as $field => $value)
         {
