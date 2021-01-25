@@ -221,7 +221,9 @@ class Home_controller extends Manaknight_Controller
     {  
         if($this->session->userdata('customer_login'))
         { 
-  
+            // echo "<pre>";
+            // print_r($_POST);
+            // die(); 
             $full_name      =  $this->input->post('full_name', TRUE);
             $email_address  =  $this->input->post('email_address', TRUE);
             $phone_number   =  $this->input->post('phone_number', TRUE);
@@ -232,6 +234,7 @@ class Home_controller extends Manaknight_Controller
             $address_1      =  $this->input->post('address_1', TRUE);
             $address_2      =  $this->input->post('address_2', TRUE);
             $payment        =  $this->input->post('payment', TRUE);
+            $coupon_code    =  $this->input->post('coupon_code', TRUE);
 
             $shipping_cost_name         =  $this->input->post('shipping_cost_name', TRUE);
             $shipping_cost_value        =  $this->input->post('shipping_cost_value', TRUE);
@@ -251,9 +254,19 @@ class Home_controller extends Manaknight_Controller
             $this->load->model('transactions_model');
             $this->load->model('inventory_model');
             $this->load->model('customer_model'); 
+            $this->load->model('coupon_model'); 
+            $this->load->model('coupon_orders_log_model'); 
 
             $this->load->library('pos_checkout_service');
             $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
+            $this->pos_checkout_service->set_coupon_model($this->coupon_model);
+
+
+
+           
+
+
+
 
             
 
@@ -263,6 +276,30 @@ class Home_controller extends Manaknight_Controller
                 $this->session->set_flashdata('error1', 'Error! Please add item in cart first.'); 
                 return redirect($_SERVER['HTTP_REFERER']);
             }
+
+
+            /**
+             * IF Coupon is used then validate
+             * If Coupon is successful then use amount
+             * 
+            */
+            $coupon_amount    = 0; 
+            $coupon_condition = FALSE; 
+            if(!empty($coupon_code))
+            {
+                $coupon_response = (object) $this->pos_checkout_service->validation_cart_items_for_shipment( $coupon_code );
+                if( $coupon_response->success )
+                {  
+                    $coupon_amount    = $coupon_response->coupon_amount;   
+                    $coupon_condition = TRUE; 
+                }
+                else
+                {
+                    $this->session->set_flashdata('error1', $coupon_response->error_msg); 
+                    return redirect($_SERVER['HTTP_REFERER']); 
+                }
+            }
+
 
 
             $token_id = "";
@@ -356,17 +393,26 @@ class Home_controller extends Manaknight_Controller
                     $sub_total += $total_amount;
                     $result = $this->pos_order_items_model->create($data_order_detail); 
                 }
-    
+                
+
+                $coupon_log_id = "";
+                if($coupon_condition)
+                {
+                    $coupon_log_id = $this->coupon_orders_log_model->create(['code' => $code, 'order_id' => $order_id, 'user_id' => $user_id, 'user_ip' => $_SERVER['REMOTE_ADDR'], 'amount' => $coupon_amount ]);
+                }
+
+
 
                 /**
                 * Update prices  
                 */
-                $grand_total = $sub_total + $tax + $shipping_cost - $discount;
+                $grand_total = $sub_total + $tax + $shipping_cost - $discount - $coupon_amount;
                 $data_order_prices = array( 
-                    'total'    =>  $grand_total,
-                    'subtotal' =>  $sub_total,  
+                    'total'         =>  $grand_total,
+                    'subtotal'      =>  $sub_total,  
+                    'coupon_log_id' =>  $coupon_log_id,  
                 );
-                $result = $this->pos_order_model->edit($data_order_prices,$order_id);
+                $result = $this->pos_order_model->edit($data_order_prices, $order_id);
 
 
                 /**

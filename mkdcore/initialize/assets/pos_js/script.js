@@ -11,7 +11,7 @@ $(document).ready(() => {
   $(document).ready(function(){ 
        $('.load_more').on("click", function(e)
        {
-            next_page = parseInt($('#pageno').val()) + 3;
+            next_page = parseInt($('#pageno').val()) + 1;
             load_pos_products(); 
             
        });
@@ -146,11 +146,11 @@ load_customers_list();
 
 
 //pickup from shelf
-function load_pickup_from_shelf()
+function load_pickup_from_shelf(page_no = 1)
 {
    $.ajax({
        type: 'GET',
-       url: '../v1/api/pos_pickup_from_shelf',
+       url: '../v1/api/pos_pickup_from_shelf?page_no=' + page_no,
        timeout: 15000,
        dataType: 'JSON', 
        success: function (response)  
@@ -158,6 +158,7 @@ function load_pickup_from_shelf()
            if (response.pickup_shelf) 
            { 
                $("#pickup tbody").html(response.pickup_shelf);
+               $(".pagination-for-pickup").html(response.pagination);
            } 
        }
    }); 
@@ -167,11 +168,11 @@ function load_pickup_from_shelf()
 
 
 //past orders
-function load_pos_past_orders(search_past_orders_from = '', search_past_orders_to  = '', search_past_orders_customer  = '')
+function load_pos_past_orders(search_past_orders_from = '', search_past_orders_to  = '', search_past_orders_customer  = '', past_orders_page_no = 1)
 {
    $.ajax({
        type: 'POST',
-       url: '../v1/api/pos_past_order',
+       url: '../v1/api/pos_past_order?past_orders_page_no='+ past_orders_page_no,
        timeout: 15000,
        dataType: 'JSON', 
        data : {'start_date': search_past_orders_from, 'end_date' : search_past_orders_to, 'customer_name' : search_past_orders_customer},
@@ -180,6 +181,7 @@ function load_pos_past_orders(search_past_orders_from = '', search_past_orders_t
            if (response.pos_past_order) 
            { 
                $("#past-order tbody").html(response.pos_past_order);
+               $(".pagination-for-past-orders").html(response.past_order_paginations);
            } 
        }
    }); 
@@ -348,6 +350,16 @@ $(document).on("click",".mark_pickup_product",function(e){
 });
 
 
+
+
+//Pagination for customer pickup list
+$(document).on("click",".pickup_customer_pagination",function(e){ 
+   e.preventDefault();
+   const page_no = e.currentTarget.getAttribute("page-no");
+   load_pickup_from_shelf(page_no);    
+});
+
+
 //Past Order Filter
 $(document).on("click",".search_past_orders",function(e){
  e.preventDefault();
@@ -358,7 +370,18 @@ $(document).on("click",".search_past_orders",function(e){
   
  load_pos_past_orders(search_past_orders_from, search_past_orders_to, search_past_orders_customer);
 });
+
+
  
+//Pagination for past order
+$(document).on("click",".past_orders_pagination",function(e){ 
+   e.preventDefault();
+   const past_orders_page_no       = e.currentTarget.getAttribute("page-no");
+   var search_past_orders_from     = $('.search_past_orders_from').val();
+   var search_past_orders_to       = $('.search_past_orders_to').val();
+   var search_past_orders_customer = $('.search_past_orders_customer').val();
+   load_pos_past_orders(search_past_orders_from, search_past_orders_to, search_past_orders_customer,past_orders_page_no);    
+});
 
 
   //Search POS Products

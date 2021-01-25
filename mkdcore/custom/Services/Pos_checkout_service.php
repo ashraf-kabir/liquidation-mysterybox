@@ -4,6 +4,7 @@ class Pos_checkout_service {
 
     private $_pos_order_model; 
     private $_inventory_model; 
+    private $_coupon_model; 
 
 
     public function set_pos_order_model($pos_order_model)
@@ -16,6 +17,13 @@ class Pos_checkout_service {
     {
         $this->_inventory_model =  $inventory_model;
     }
+
+
+    public function set_coupon_model($coupon_model)
+    {
+        $this->_coupon_model =  $coupon_model;
+    }
+
 
     public function create_order($customer_data,$tax,$discount,$pos_user_id,$shipping_cost = 0)
     {
@@ -171,17 +179,27 @@ class Pos_checkout_service {
 
     public function validation_cart_items_for_shipment($cart_items)
     {
-        foreach ($cart_items as $cart_item_key => $cart_item_value) 
+        if(!empty($cart_items) )
         {
-            $inventory_data = $this->_inventory_model->get($cart_items[$cart_item_key]['id']);  
-
-            if($inventory_data->can_ship ==2)
+            foreach ($cart_items as $cart_item_key => $cart_item_value) 
             {
-                $output['status'] = 0;
-                $output['error']  = "Error! " . $inventory_data->product_name . " can't be shipped.";
-                return json_encode($output); 
-                exit();
+                $inventory_data = $this->_inventory_model->get($cart_items[$cart_item_key]['id']);  
+
+                if($inventory_data->can_ship ==2)
+                {
+                    $output['status'] = 0;
+                    $output['error']  = "Error! " . $inventory_data->product_name . " can't be shipped.";
+                    return json_encode($output); 
+                    exit();
+                }
             }
+        }
+        else
+        {
+            $output['status'] = 0;
+            $output['error']  = "Error! Items in cart are required.";
+            return json_encode($output); 
+            exit();
         }
     }
 
@@ -196,5 +214,73 @@ class Pos_checkout_service {
         }
         return $customer_data;
     }
+
+
+
+
+    public function checkout_verify_and_update_coupon($coupon_code)
+    {
+        if($coupon_code)
+        {
+            $coupon_data =  $this->_coupon_model->get_by_fields(['code' => $coupon_code]);
+
+            if( isset($coupon_data->usage) )
+            {
+                if($coupon_data->usage <= 0)
+                { 
+                    $response['error']     = TRUE;
+                    $response['success']   = FALSE;
+                    $response['error_msg'] = "Error! Coupon usage has expired.";
+                    return $response;
+
+                }
+                else if($coupon_data->usage == 0)
+                { 
+                    $response['error']     = TRUE;
+                    $response['success']   = FALSE;
+                    $response['error_msg'] = "Error! Coupon has been expired.";
+                    return $response;
+                }
+                else 
+                { 
+                    $coupon_usage = $coupon_data->usage - 1;
+
+                    $update_ed    =  $this->_coupon_model->edit(['usage' => $coupon_usage], $coupon_data->id);
+                    if($update_ed)
+                    { 
+                        $response['success']       = TRUE;
+                        $response['error']         = FALSE;
+                        $response['coupon_amount'] = $coupon_amount;
+                        return $response;
+                    }
+                    else
+                    { 
+                        $response['error']     = TRUE;
+                        $response['success']   = FALSE;
+                        $response['error_msg'] = 'Error! Please try again later.';
+                        return $response;
+                    }
+                }
+            }
+            else
+            {
+                $response['error']     = TRUE;
+                $response['success']   = FALSE;
+                $response['error_msg'] = "Error! No such coupon exist.";
+                return $response;
+            }
+        }
+        else
+        {
+            $response['error']     = TRUE;
+            $response['success']   = FALSE;
+            $response['error_msg'] = "Error! Coupon is required.";
+            return $response;
+        }
+
+    }
+
+
+
     
 }

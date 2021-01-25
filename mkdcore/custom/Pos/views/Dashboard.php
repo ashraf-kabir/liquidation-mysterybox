@@ -245,6 +245,9 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="col-12 px-1 px-md-5 pagination-for-pickup "> 
+                    </div>
                 </div> 
 
                 <div class="row pages d-none justify-content-center my-5 " id="past-order">
@@ -305,6 +308,9 @@
 
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="col-12 px-1 px-md-5 pagination-for-past-orders "> 
                     </div>
                 </div>
 

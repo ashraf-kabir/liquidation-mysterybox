@@ -168,6 +168,175 @@ class {{{subclass_prefix}}}Model extends CI_Model
 	}
 
 
+    
+
+    /**
+	 * Get all custom pagination Model
+	 *
+	 * @return array
+    */
+	public function get_all_custom_pagination($where = array(), $page = 0, $limit=10)
+    {
+        $this->db->from($this->_table);
+
+
+        $this->db->limit($limit, $page);
+        foreach($where as $field => $value)
+        {
+            if (is_numeric($field) && strlen($value) > 0)
+            {
+                $this->db->where($value);
+                continue;
+            }
+
+            if ($field === NULL && $value === NULL)
+            {
+                continue;
+            }
+
+            if ($value !== NULL)
+            {
+                $this->db->where($this->clean_alpha_field($field), $value, TRUE);
+            }
+        }
+
+        return $this->db->get()->result();
+	}
+
+
+
+
+
+    /**
+	 * Get all custom pagination Model
+	 *
+	 * @return array
+    */
+    public function get_all_custom_where($custom_where = null, $page = 0, $limit=10 ,$where = array())
+    {
+        $this->db->from($this->_table);
+
+
+        $this->db->limit($limit, $page);
+
+        foreach($where as $field => $value)
+        {
+            if (is_numeric($field) && strlen($value) > 0)
+            {
+                $this->db->where($value);
+                continue;
+            }
+
+            if ($field === NULL && $value === NULL)
+            {
+                continue;
+            }
+
+            if ($value !== NULL)
+            {
+                $this->db->where($this->clean_alpha_field($field), $value, TRUE);
+            }
+        }
+
+        if($custom_where !=null){
+			$this->db->where($custom_where);
+		}
+
+        return $this->db->get()->result();
+    }
+
+
+
+
+    public function count_custom_pagination_with_search($custom_where = null, $parameters = array())
+	{
+        if (!empty($parameters))
+        {
+            foreach ($parameters as $key => $value)
+            {
+                if (is_numeric($key) && strlen($value) > 0)
+                {
+                    $this->db->where($value);
+                    continue;
+                }
+
+                if ($key === NULL && $value === NULL)
+				{
+					continue;
+                }
+
+                if (!is_null($value))
+                {
+                    if(is_numeric($value))
+                    {
+                        $this->db->where($key, $value);
+                        continue;
+                    }
+
+                    if(is_string($value))
+                    {
+                        $this->db->like($key, $value);
+                        continue;
+                    }
+
+                    $this->db->where($key, $value);
+                }
+            }
+        }
+
+        if($custom_where !=null){
+			$this->db->where($custom_where);
+        }
+        
+
+        $this->_custom_counting_conditions($this->db);
+		$this->db->from($this->_table);
+		return $this->db->count_all_results();
+	}
+
+
+
+    public function count_custom_pagination($parameters)
+	{
+        if (!empty($parameters))
+        {
+            foreach ($parameters as $key => $value)
+            {
+                if (is_numeric($key) && strlen($value) > 0)
+                {
+                    $this->db->where($value);
+                    continue;
+                }
+
+                if ($key === NULL && $value === NULL)
+				{
+					continue;
+                }
+
+                if (!is_null($value))
+                {
+                    if(is_numeric($value))
+                    {
+                        $this->db->where($key, $value);
+                        continue;
+                    }
+
+                    if(is_string($value))
+                    {
+                        $this->db->like($key, $value);
+                        continue;
+                    }
+
+                    $this->db->where($key, $value);
+                }
+            }
+        }
+
+        $this->_custom_counting_conditions($this->db);
+		$this->db->from($this->_table);
+		return $this->db->count_all_results();
+	}
+
 
     /**
 	 * Get all using or like Model

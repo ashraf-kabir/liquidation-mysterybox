@@ -674,6 +674,7 @@
 				["billing_city", "string", [{ "limit": 255 }], "xyzBilling City", "required|max_length[255]", "required|max_length[255]"],
 				["billing_zip", "string", [{ "limit": 255 }], "xyzBilling Zip", "required|max_length[255]", "required|max_length[255]"],
 				["shipping_name", "string", [{ "limit": 255 }], "xyzShipping Name", "required|max_length[255]", "required|max_length[255]"],
+				["coupon_log_id", "string", [{ "limit": 255 }], "xyzCoupon Log", "", ""],
 				["shipping_address", "text", [], "xyzShipping Address", "required", "required"],
 				["intent_data", "text", [], "Stripe Data", "", ""],
 				["order_date_time", "datetime", [], "Order DateTime", "", ""],
@@ -780,7 +781,7 @@
 				["data", "text", [], "xyzData", "required", "required"],
 				["amount", "float", [], "xyzAmount", "required|numeric", "required|numeric"],
 				["expire_at", "date", [], "xyzExpire At", "required|date", "required|date"],
-				["usage", "string", [{"limit": 255}], "xyzUsage", "required|max_length[255]", "required|max_length[255]"],
+				["usage", "integer", [], "xyzUsage", "required|numeric", "required|numeric"],
 				["status", "string", [{"limit": 255}], "xyzStatus", "required|max_length[255]", "required|max_length[255]"]
 			],
 			"method": "",
@@ -789,6 +790,27 @@
 				"status": {"0": "Active","1": "Inactive"},
 				"type": {"0": "Fixed Amount","1": "Percentage","2": "Specific Product","3": "Cart Discount"}
 			},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
+		}, 
+		{
+			"name": "coupon_orders_log",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "xyzID", "", ""],
+				["code", "string", [{ "limit": 255 }], "xyzCode", "required|max_length[255]", "required|max_length[255]"], 
+				["order_id", "integer", [], "xyzOrder", "required|integer", "required|integer"], 
+				["user_id", "integer", [], "xyzUser", "required|integer", "required|integer"], 
+				["user_ip", "string", [{ "limit": 255 }], "xyzCode", "required|max_length[255]", "required|max_length[255]"], 
+				["amount", "float", [], "xyzAmount", "required", "required"]
+			],
+			"method": "",
+			"join": [],
+			"mapping": { },
 			"pre": "",
 			"post": "",
 			"count": "",

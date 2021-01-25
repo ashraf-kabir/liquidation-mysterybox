@@ -255,7 +255,7 @@
                   <h5>Coupon</h5>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
-                  <input type="text"   class="form-control coupon_code" /> 
+                  <input type="text" class="form-control coupon_code" name="coupon_code" /> 
                   <p class="coupon_success_coupon_error"></p>
                   <button class="btn btn-primary apply_coupon mb-2" type="button"> Apply Coupon </button>
                   <h5>$<span class="coupon_amount">00</span></h5>

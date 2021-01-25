@@ -16,6 +16,7 @@ class Custom_api_controller extends Manaknight_Controller
     ];
 
     protected $_role_id = 3;
+    protected $_pagination_limit = 10;
 
     
     public function __construct()
@@ -35,17 +36,17 @@ class Custom_api_controller extends Manaknight_Controller
             $store_id = $this->session->userdata('store_id');
             $this->load->model('inventory_model');
             
-            $limit                 =   3;
-            $search_product_value  =   $this->input->post('search_product_value', TRUE);
-            $next_page             =   $this->input->post('next_page', TRUE);
+            $limit                 =   $this->_pagination_limit;
+            $search_product_value  =   $this->input->post('search_product_value', TRUE); 
+            $next_page             =   $this->input->post('next_page', TRUE) *  $limit;
 
              
            
             $inventory_items =  $this->inventory_model->get_all_inventory_products(['product_name' => $search_product_value , 'sku' => $search_product_value, 'store_location_id' => $store_id ], 1, $next_page, $limit);
 
-            $output['status']        = 200;
-            $output['status']        = $this->db->last_query();
-            $output['products_list'] = $inventory_items; 
+            $output['q'] = $this->db->last_query();
+            $output['status']        = 200; 
+            $output['products_list'] = $inventory_items;  
             echo json_encode($output);
             exit(); 
         }
@@ -851,10 +852,20 @@ class Custom_api_controller extends Manaknight_Controller
 
             $this->load->model('pos_order_model');
             $this->load->model('pos_order_items_model');
-            
-            $orders_list = $this->pos_order_model->get_all(['pos_user_id' => $pos_user_id,'pos_pickup_status' => 1]);
 
-            $table_content = '';
+            $limit                   =  $this->_pagination_limit;
+            $page_no                 =  $this->input->get('page_no', TRUE); 
+
+            $offset                  =  $page_no - 1; 
+            $total_records_per_page  =  $limit;
+            $offset                  =  $offset * $limit;
+
+            $total_rows   =  $this->pos_order_model->count_custom_pagination(['pos_user_id' => $pos_user_id,'pos_pickup_status' => 1]);
+            $orders_list  =  $this->pos_order_model->get_all_custom_pagination(['pos_user_id' => $pos_user_id,'pos_pickup_status' => 1], $offset, $limit);
+            
+           
+
+            $table_content = "";
             foreach ($orders_list as $orders_list_key => $orders_list_value) 
             {   
 
@@ -904,11 +915,13 @@ class Custom_api_controller extends Manaknight_Controller
                 $table_content = "<tr><td colspan='100%'>No order to pickup.</td></tr>";
             }
 
+            $paginations = $this->get_pagination($total_rows, 'pickup_customer_pagination', $total_records_per_page, $page_no);
 
             if($table_content)
             {
-                $output['status'] = 200;
-                $output['pickup_shelf'] = $table_content; 
+                $output['status']       = 200;
+                $output['pickup_shelf'] = $table_content;  
+                $output['pagination']   = $paginations; 
                 echo json_encode($output);
                 exit();
             }else{
@@ -993,6 +1006,15 @@ class Custom_api_controller extends Manaknight_Controller
             $this->load->model('pos_order_model');
             $this->load->model('pos_order_items_model');
             
+ 
+            $limit                   =  $this->_pagination_limit;
+            $page_no                 =  $this->input->get('past_orders_page_no', TRUE); 
+
+            $offset                  =  $page_no - 1; 
+            $total_records_per_page  =  $limit;
+            $offset                  =  $offset * $limit;
+ 
+
 
             $custom_query = '';
             if(  $this->input->post('customer_name') and !empty($this->input->post('customer_name'))  )
@@ -1014,9 +1036,11 @@ class Custom_api_controller extends Manaknight_Controller
 
             if($custom_query == '')
             {
-                $orders_list = $this->pos_order_model->get_all(['pos_user_id' => $pos_user_id,'pos_pickup_status' =>2]);
+                $orders_list  =  $this->pos_order_model->get_all_custom_pagination(['pos_user_id' => $pos_user_id,'pos_pickup_status' => 2], $offset, $limit);
+                $total_rows   =  $this->pos_order_model->count_custom_pagination(['pos_user_id' => $pos_user_id, 'pos_pickup_status' => 2]);
             }else{
-                $orders_list = $this->pos_order_model->get_all_custom_where($custom_query);
+                $orders_list  =  $this->pos_order_model->get_all_custom_where($custom_query, $offset, $limit);
+                $total_rows   =  $this->pos_order_model->count_custom_pagination_with_search($custom_query);
             }
 
 
@@ -1037,6 +1061,15 @@ class Custom_api_controller extends Manaknight_Controller
                 }
 
 
+                $payment_method = "";
+                if($orders_list_value->payment_method == 1)
+                {
+                    $payment_method = "cash";
+                }else if ($orders_list_value->payment_method == 2)
+                {
+                    $payment_method = "credit";
+                }
+
                 $table_content   .=  '<tr>';
 
                 $table_content   .=  '<th scope="row">'  . ucfirst($orders_list_value->billing_name) .  '</th>';
@@ -1052,7 +1085,7 @@ class Custom_api_controller extends Manaknight_Controller
                                         </ul>
                                     </td>';
 
-                $table_content   .=  '<td>Paid in ' .    ucfirst($orders_list_value->payment_method)  . '</td>';
+                $table_content   .=  '<td>Paid in ' .    ucfirst($payment_method)  . '</td>';
 
 
                 $table_content   .=  '<td  class="text-danger" >$' .   number_format($orders_list_value->subtotal,2)    . '</td>';
@@ -1075,10 +1108,13 @@ class Custom_api_controller extends Manaknight_Controller
             }
 
 
+            $paginations = $this->get_pagination($total_rows, 'past_orders_pagination', $total_records_per_page, $page_no);
+
             if($table_content)
             {
-                $output['status'] = 200;
-                $output['pos_past_order'] = $table_content; 
+                $output['status']         =  200;
+                $output['pos_past_order'] =  $table_content; 
+                $output['past_order_paginations']    =  $paginations; 
                 echo json_encode($output);
                 exit();
             }else{
@@ -1736,6 +1772,58 @@ class Custom_api_controller extends Manaknight_Controller
 
 
  
+    public function get_pagination($total_records, $class_for_evnt, $total_records_per_page, $page_no)
+    {  
+
+        $offset         =  ($page_no-1) * $total_records_per_page;
+        $previous_page  =  $page_no - 1;
+        $next_page      =  $page_no + 1;
+        $adjacents      =  "2"; 
+        
+
+        $active_link = '<nav aria-label="Page navigation example"><ul class="pagination">';
+
+        $total_no_of_pages = ceil($total_records / $total_records_per_page);
+        $second_last       = $total_no_of_pages - 1; // total pages minus 1
+
+
+        if ($total_no_of_pages <= 10)
+        {   
+            for ($counter = 1; $counter <= $total_no_of_pages; $counter++)
+            {
+                if ($counter == $page_no) {
+                    $active_link .=  "<li class='page-item active'><a  class='page-link   " . $class_for_evnt . " '  page-no=" . $counter . " >" . $counter . "</a></li>"; 
+                }
+                else
+                {
+                    $active_link .=  "<li  class='page-item' ><a  class='page-link  " . $class_for_evnt . " '  page-no=" . $counter . " >" . $counter . "</a></li>";
+                }
+            }
+        } 
+        else if($total_no_of_pages > 10)
+        {
+            if($page_no <= 4) 
+            { 
+                for ($counter = 1; $counter < 8; $counter++)
+                { 
+                    if ($counter == $page_no) 
+                    {
+                        $active_link .=  "<li   class='page-item active' ><a  class='page-link   " . $class_for_evnt . " '  page-no=" . $counter . " >" . $counter . "</a></li>"; 
+                    }else{
+                        $active_link .=  "<li  class='page-item' ><a  class='page-link   " . $class_for_evnt . " '  page-no=" . $counter . "   >" . $counter . "</a></li>";
+                    }
+               }
+               $active_link .=  "<li  class='page-item' ><a  class='page-link   " . $class_for_evnt . " ' >...</a></li>";
+               $active_link .=  "<li  class='page-item' ><a  class='page-link   " . $class_for_evnt . " ' page-no=" . $second_last . "    >" . $second_last . "</a></li>";
+               $active_link .=  "<li  class='page-item' ><a  class='page-link   " . $class_for_evnt . " ' page-no=" . $total_no_of_pages . " >" . $total_no_of_pages . "</a></li>";
+            }
+        }
+        $active_link .= '</ul></nav>';
+
+
+        return $active_link;
+    }
+
 
 
 
