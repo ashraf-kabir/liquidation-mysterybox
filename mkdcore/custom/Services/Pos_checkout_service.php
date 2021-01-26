@@ -243,7 +243,8 @@ class Pos_checkout_service {
                 }
                 else 
                 { 
-                    $coupon_usage = $coupon_data->usage - 1;
+                    $coupon_usage  = $coupon_data->usage - 1;
+                    $coupon_amount = $coupon_data->amount;
 
                     $update_ed    =  $this->_coupon_model->edit(['usage' => $coupon_usage], $coupon_data->id);
                     if($update_ed)

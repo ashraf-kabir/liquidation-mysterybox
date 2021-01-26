@@ -287,7 +287,8 @@ class Home_controller extends Manaknight_Controller
             $coupon_condition = FALSE; 
             if(!empty($coupon_code))
             {
-                $coupon_response = (object) $this->pos_checkout_service->validation_cart_items_for_shipment( $coupon_code );
+                $coupon_response = (object) $this->pos_checkout_service->checkout_verify_and_update_coupon( $coupon_code );
+                     
                 if( $coupon_response->success )
                 {  
                     $coupon_amount    = $coupon_response->coupon_amount;   
@@ -298,6 +299,8 @@ class Home_controller extends Manaknight_Controller
                     $this->session->set_flashdata('error1', $coupon_response->error_msg); 
                     return redirect($_SERVER['HTTP_REFERER']); 
                 }
+
+                
             }
 
 
@@ -398,7 +401,7 @@ class Home_controller extends Manaknight_Controller
                 $coupon_log_id = "";
                 if($coupon_condition)
                 {
-                    $coupon_log_id = $this->coupon_orders_log_model->create(['code' => $code, 'order_id' => $order_id, 'user_id' => $user_id, 'user_ip' => $_SERVER['REMOTE_ADDR'], 'amount' => $coupon_amount ]);
+                    $coupon_log_id = $this->coupon_orders_log_model->create(['code' => $coupon_code, 'order_id' => $order_id, 'user_id' => $user_id, 'user_ip' => $_SERVER['REMOTE_ADDR'], 'amount' => $coupon_amount ]);
                 }
 
 
