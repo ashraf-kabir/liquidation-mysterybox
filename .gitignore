@@ -31,7 +31,6 @@ src/application/core/*.php
 src/application/factories/*.php
 src/application/helper/*.php
 src/application/hooks/*.php
-
 src/application/middlewares/*.php
 src/application/models/*.php
 src/application/services/*.php
