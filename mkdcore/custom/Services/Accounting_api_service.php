@@ -107,17 +107,27 @@ class Accounting_api_service {
                     'billing_address'   => $order_data->billing_address,   
                     'sale_order_date'   => $order_data->order_date_time,   
                     'platform_id'       => $platform_id,   
+                    'cash_amount'       => $order_data->total,   
+                    'payment_method'    => $order_data->payment_method,   
+                    'split_payment'     => 0,   
+                    'delivery_method'   => $order_data->checkout_type,   
+                    'tax'               => $order_data->tax,   
+                    'shipping_cost'     => $order_data->shipping_cost,   
+                    'adjustment'        => 0,   
+                    'subtotal'          => $order_data->subtotal,   
+                    'discount'          => $order_data->discount,   
                     'status'            => 1, 
                     'detail'            => $detail,
                 ); 
-
-               
+  
 
                 $curl = curl_init();
 
                 curl_setopt_array( $curl , array(
                     CURLOPT_URL => $accounting_site_url . 'v1/api/accounting/add_order',
                     CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_SSL_VERIFYHOST => false,
+                    CURLOPT_SSL_VERIFYPEER => false,
                     CURLOPT_ENCODING => '',
                     CURLOPT_MAXREDIRS => 10,
                     CURLOPT_TIMEOUT => 40,
@@ -131,7 +141,7 @@ class Accounting_api_service {
                 )); 
 
 
-                $response = curl_exec($curl);  
+                $response = curl_exec($curl);   
                 curl_close($curl);  
                 return json_decode($response); 
                 exit();
@@ -176,10 +186,14 @@ class Accounting_api_service {
 
             
 
+            
+
             $curl = curl_init(); 
             curl_setopt_array( $curl , array(
                 CURLOPT_URL => $accounting_site_url . 'v1/api/accounting/add_transaction',
                 CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_SSL_VERIFYHOST => false,
+                CURLOPT_SSL_VERIFYPEER => false,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
                 CURLOPT_TIMEOUT => 40,
