@@ -11,3 +11,6 @@ ALTER TABLE `pos_order` CHANGE `pick_up_id` `pick_up_id` INT(11) NULL DEFAULT NU
 
 ALTER TABLE `customer` CHANGE `customer_type` `customer_type` INT(11) NULL;
 ALTER TABLE `customer` CHANGE `company_name` `company_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL;
+
+
+ALTER TABLE `pos_order` CHANGE `shipping_cost` `shipping_cost` FLOAT NULL DEFAULT '0';
