@@ -790,7 +790,7 @@
                             
                             <div class="col-12 shipping-postal-option mb-2">
                                 <label for="">Shipping Postal Code</label>
-                                <input type="number" class="form-control shipping-postal-code" name="shipping_postal_cost" value="">
+                                <input type="text" class="form-control shipping-postal-code" name="shipping_postal_cost" value="">
                             </div> 
 
                             <div class="col-12 button-calculate-shipping">
@@ -898,17 +898,11 @@
                     <div class="form-row justify-content-between ">
                         <div class="col-xl-6 col-lg-6 col-md-6 col-12 my-3">
                             <label for="country">Country</label>
-                            <select name="country" id="country" class="form-control">
-                                <option value="USA">USA</option>
-                                <option value="Canada">Canada</option>
-                            </select>
+                            <input name="country" type="text" class="form-control" id="country"> 
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-12 my-3">
                             <label for="state">State</label>
-                            <select name="state" class="form-control" id="state"
-                                placeholder="Please select region,state & Province">
-                                <option value="Ontairo">Ontairo</option>
-                            </select>
+                            <input name="state" type="text" class="form-control" id="state">  
                         </div>
                     </div>
 

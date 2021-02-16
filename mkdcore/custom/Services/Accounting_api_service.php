@@ -82,7 +82,7 @@ class Accounting_api_service {
                             'item_name'          =>  $value->product_name,
                             'item_sku'           =>  $inventory_detail->sku,
                             'product_qty'        =>  $value->quantity,  
-                            'amount'             =>  $value->amount,  
+                            'amount'             =>  $value->product_unit_price,  
                             'product_type'       =>  $type, 
                             'barcode_image'      =>  $inventory_detail->barcode_image,
                         ) );

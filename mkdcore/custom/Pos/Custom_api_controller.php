@@ -324,11 +324,36 @@ class Custom_api_controller extends Manaknight_Controller
         { 
 
             $this->load->model('customer_model');
+
+            
+            $this->form_validation->set_rules('firstname', 'First Name', 'required|alpha_numeric');
+            $this->form_validation->set_rules('email', 'Email', 'valid_email');
+            $this->form_validation->set_rules('phone', 'Phone', 'numeric');
+            $this->form_validation->set_rules('postalCode', 'Postal Code', 'numeric');
+            
+
+            if ($this->form_validation->run() === FALSE)
+            {
+                $error_msg = validation_errors();
+                 
+                $output['status'] = 0;
+                $output['error'] = $error_msg;
+                echo json_encode($output);
+                exit();
+            } 
             
             $first_name   = $this->input->post('firstname', TRUE);
             $last_name    = $this->input->post('lastname', TRUE);
             $email        = $this->input->post('email', TRUE);
+            $street       = $this->input->post('street', TRUE);
+            $streetTwo    = $this->input->post('streetTwo', TRUE);
+            $city         = $this->input->post('city', TRUE);
+            $postalCode   = $this->input->post('postalCode', TRUE);
+            $country      = $this->input->post('country', TRUE);
+            $state        = $this->input->post('state', TRUE);
             $phone        = $this->input->post('phone', TRUE);
+
+
             $customer_type    = $this->input->post('customer_type', TRUE);
             $company_name     = $this->input->post('company_name', TRUE); 
               
@@ -336,11 +361,17 @@ class Custom_api_controller extends Manaknight_Controller
                 'name'            => $first_name .' '. $last_name,
                 'email'           => $email,
                 'phone'           => $phone,
+                'billing_state'   => $state,
+                'billing_country' => $country,
+                'billing_zip'     => $postalCode,
+                'billing_city'    => $city,
+                'billing_address' => $street . ' ' . $streetTwo,
                 'status'          => 1,
                 'customer_type'   => $customer_type,
                 'company_name'    => $company_name,
                 'customer_since'  => Date('Y-m-d'),
-            );
+            ); 
+
 
             if($customer_type == 2)
             {
