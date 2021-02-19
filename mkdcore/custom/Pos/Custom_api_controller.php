@@ -76,7 +76,10 @@ class Custom_api_controller extends Manaknight_Controller
         if($this->session->userdata('user_id')  AND $this->session->userdata('role') == $this->_role_id  )
         {
             $this->load->model('pos_cart_model');
+            $this->load->model('inventory_model');
 
+            $this->load->library('helpers_service');
+            $this->helpers_service->set_inventory_model($this->inventory_model);
 
             if($scan_order)
             {
@@ -89,6 +92,17 @@ class Custom_api_controller extends Manaknight_Controller
                 $product_qty  =  $this->input->post('quantity', TRUE);
                 $product_name =  $this->input->post('item', TRUE);
                 $unit_price   =  $this->input->post('price', TRUE);
+
+                
+                $check_quantity = $this->helpers_service->check_item_in_inventory($product_id, $product_qty, $product_name);
+
+                if( isset($check_quantity->error) )
+                {
+                    $output['status'] = 0;
+                    $output['error']  = $check_quantity->error;
+                    echo json_encode($output);
+                    exit();
+                }
             }
             
             
@@ -102,12 +116,28 @@ class Custom_api_controller extends Manaknight_Controller
             *   if no add new product to cart
             */
             $check_chart_if_product =  $this->pos_cart_model->get_by_fields(['product_id' => $product_id,'user_id'       => $user_id]);  
+            
             if (!empty($check_chart_if_product)) 
             {
                 $product_data = $check_chart_if_product;
 
                 $product_qty_now = $product_qty + $product_data->product_qty;
                 $total_price_now = $product_qty_now * $unit_price;
+
+                /**
+                 * 
+                 *  
+                */
+                $check_quantity = $this->helpers_service->check_item_in_inventory($product_id, $product_qty_now, $product_name);
+
+                if( isset($check_quantity->error) )
+                {
+                    $output['status'] = 0;
+                    $output['error']  = $check_quantity->error;
+                    echo json_encode($output);
+                    exit();
+                }
+
 
                 $data_cart = array(
                     'product_id'    => $product_id,
@@ -118,8 +148,9 @@ class Custom_api_controller extends Manaknight_Controller
                     'user_id'       => $user_id,
                 ); 
                 $result = $this->pos_cart_model->edit($data_cart,$product_data->id); 
-            }else{ 
-            
+            }
+            else
+            {  
                 $data_cart = array(
                     'product_id'    => $product_id,
                     'product_qty'   => $product_qty,
@@ -159,9 +190,17 @@ class Custom_api_controller extends Manaknight_Controller
         {
             $this->load->model('pos_cart_model'); 
             $this->load->model('inventory_model'); 
+ 
+
+            $this->load->library('helpers_service');
+            $this->helpers_service->set_inventory_model($this->inventory_model); 
+
 
             $product_id   =  $this->input->post('id', TRUE);
             $product_qty  =  $this->input->post('quantity', TRUE);
+
+
+            
 
             $product_data = $this->inventory_model->get($product_id);
 
@@ -188,6 +227,18 @@ class Custom_api_controller extends Manaknight_Controller
                     $product_qty_now = $product_qty + $product_data->product_qty;
                     $total_price_now = $product_qty_now * $unit_price;
 
+
+                    $check_quantity = $this->helpers_service->check_item_in_inventory($product_id, $product_qty_now, $product_name);
+
+                    if( isset($check_quantity->error) )
+                    {
+                        $output['status'] = 0;
+                        $output['error']  = $check_quantity->error;
+                        echo json_encode($output);
+                        exit();
+                    }
+
+
                     $data_cart = array(
                         'product_id'    => $product_id,
                         'product_qty'   => $product_qty_now,
@@ -197,7 +248,19 @@ class Custom_api_controller extends Manaknight_Controller
                         'customer_id'   => $user_id,
                     ); 
                     $result = $this->pos_cart_model->edit($data_cart,$product_data->id); 
-                }else{ 
+                }
+                else
+                { 
+
+                    $check_quantity = $this->helpers_service->check_item_in_inventory($product_id, $product_qty, $product_name);
+
+                    if( isset($check_quantity->error) )
+                    {
+                        $output['status'] = 0;
+                        $output['error']  = $check_quantity->error;
+                        echo json_encode($output);
+                        exit();
+                    }
                 
                     $data_cart = array(
                         'product_id'    => $product_id,
@@ -464,10 +527,37 @@ class Custom_api_controller extends Manaknight_Controller
             $this->load->library('pos_checkout_service');
             $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
 
+
+            $this->load->library('helpers_service');
+            $this->helpers_service->set_inventory_model($this->inventory_model);
+
             /**
             * Cart Items  
             */
             $cart_items = $this->input->post('cart_items', TRUE);
+
+
+
+            /**
+            * Validate Items
+            */  
+            if( !empty($cart_items) )
+            {
+                foreach ($cart_items as $cart_item_key => $cart_item_value) 
+                { 
+                    $cart_item_value = (object) $cart_item_value;
+
+                    $check_quantity = $this->helpers_service->check_item_in_inventory($cart_item_value->id, $cart_item_value->quantity, $cart_item_value->name);
+
+                    if( isset($check_quantity->error) )
+                    {
+                        $output['status'] = 0;
+                        $output['error']  = $check_quantity->error;
+                        echo json_encode($output);
+                        exit();
+                    }
+                }
+            }
 
 
 
@@ -503,6 +593,8 @@ class Custom_api_controller extends Manaknight_Controller
                     }
                 }
             }
+
+
             
             $shipping_cost = 0;
             if( isset($customer_data['shipping_cost']) )
@@ -739,6 +831,26 @@ class Custom_api_controller extends Manaknight_Controller
             
             $product_id   = $this->input->post('id', TRUE);
             $product_qty  = $this->input->post('quantity', TRUE);
+
+
+            /**
+            *   Check if quantity 
+            *    
+            */
+
+            $this->load->model('inventory_model'); 
+            $this->load->library('helpers_service');
+            $this->helpers_service->set_inventory_model($this->inventory_model);
+
+            $check_quantity = $this->helpers_service->check_item_in_inventory($product_id, $product_qty, "");
+
+            if( isset($check_quantity->error) )
+            {
+                $output['status'] = 0;
+                $output['error']  = $check_quantity->error;
+                echo json_encode($output);
+                exit();
+            }
             
             $user_id = $this->session->userdata('user_id');
 
@@ -761,21 +873,30 @@ class Custom_api_controller extends Manaknight_Controller
                     'total_price'   => $total_price_now, 
                 ); 
                 $result = $this->pos_cart_model->edit($data_cart,$cart_product_data->id); 
+
+                if ($result) 
+                {
+                    $output['status'] = 200;
+                    $output['success'] = 'Your data has been updated in cart successfully.'; 
+                    echo json_encode($output);
+                    exit();
+                }
+                else
+                {
+                    $output['status'] = 0;
+                    $output['error'] = 'Error! Please try again later.';
+                    echo json_encode($output);
+                    exit();
+                }
             } 
 
 
-            if ($result) 
-            {
-                $output['status'] = 200;
-                $output['success'] = 'Your data has been updated in cart successfully.'; 
-                echo json_encode($output);
-                exit();
-            }else{
-                $output['status'] = 0;
-                $output['error'] = 'Error! Please try again later.';
-                echo json_encode($output);
-                exit();
-            } 
+            $output['status'] = 0;
+            $output['error'] = 'Error! Please try again later.';
+            echo json_encode($output);
+            exit();
+
+             
         }
     }
 

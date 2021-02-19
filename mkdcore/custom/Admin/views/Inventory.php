@@ -55,7 +55,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
 							<div class="form-group">
 								<label for="Category">Category </label>
-								<input type="text" class="form-control" id="category_id" name="category_id" value="<?php echo $this->_data['view_model']->get_category_id();?>" onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
+                                <select class="form-control" id="category_id" name="category_id" >
+                                    <option value="" >All</option>
+                                    <?php foreach ($categories as $key => $value) {
+                                        echo "<option  " . ( ($this->_data['view_model']->get_category_id() == $value->id) ? 'selected' : '' ) . "   value='{$value->id}'> {$value->name} </option>";
+                                    } ?>
+                                </select>
+								 
 							</div>
 						</div>
 

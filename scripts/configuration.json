@@ -534,7 +534,7 @@
 				}], "xyzName", "required|max_length[255]", "required|max_length[255]"],
 				["email", "string", [{
 					"limit": 255
-				}], "xyzEmail", "required", "required"],
+				}], "xyzEmail", "required|valid_email|is_unique[customer.email]", "required|valid_email"],
 				["phone", "string", [{
 					"limit": 255
 				}], "xyzPhone", "", ""],
@@ -618,10 +618,10 @@
 				}], "xyzState", "required|max_length[255]", "required|max_length[255]"],
 				["zip", "string", [{
 					"limit": 255
-				}], "xyzZip", "required|max_length[255]", "required|max_length[255]"],
+				}], "xyzZip", "required|numeric", "required|numeric"],
 				["phone", "string", [{
 					"limit": 255
-				}], "xyzPhone", "required|max_length[255]", "required|max_length[255]"]
+				}], "xyzPhone", "required|numeric", "required|numeric"]
 			],
 			"method": "",
 			"join": [],
@@ -2619,6 +2619,7 @@
 		"../mkdcore/custom/Services/Stripe_helper_service.php" : "../release/application/libraries/Stripe_helper_service.php",
 		"../mkdcore/custom/Services/Customer_service.php" : "../release/application/libraries/Customer_service.php",
 		"../mkdcore/custom/Services/Accounting_api_service.php" : "../release/application/libraries/Accounting_api_service.php",
+		"../mkdcore/custom/Services/Helpers_service.php" : "../release/application/libraries/Helpers_service.php",
 		"../mkdcore/custom/Custom404.php" : "../release/application/controllers/Custom404.php",  
 
 

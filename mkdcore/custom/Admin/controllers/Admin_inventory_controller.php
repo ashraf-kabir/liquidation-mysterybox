@@ -100,6 +100,8 @@ class Admin_inventory_controller extends Admin_controller
             }
         }
 
+        $this->_data['categories'] = $this->category_model->get_all();
+
         return $this->render('Admin/Inventory', $this->_data);
 	}
 

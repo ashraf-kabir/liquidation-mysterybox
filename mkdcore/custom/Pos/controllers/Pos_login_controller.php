@@ -19,12 +19,13 @@ class Pos_login_controller extends Manaknight_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('pos_user_model');
     }
 
 	public function index ()
 	{
         $this->load->model('credential_model');
-        $this->load->model('pos_user_model');
+        
         $this->load->helper('cookie');
 
         $service = new User_service($this->credential_model);
@@ -65,6 +66,13 @@ class Pos_login_controller extends Manaknight_Controller
             $this->set_session('store_id', (int) $user_obj->store_id);
             $this->set_session('email', (string) $authenticated_user->email);
             $this->set_session('role', (string) $authenticated_user->role_id);
+
+
+            $this->load->library('helpers_service');
+            $this->helpers_service->set_pos_user_model($this->pos_user_model); 
+            $this->helpers_service->pos_logged_in($user_obj->id);
+
+
             return $this->redirect($redirect);
         }
 
@@ -74,6 +82,10 @@ class Pos_login_controller extends Manaknight_Controller
 
     public function logout ()
     {
+        $this->load->library('helpers_service');
+        $this->helpers_service->set_pos_user_model($this->pos_user_model); 
+        $this->helpers_service->pos_logged_out($this->session->userdata('user_id'));
+
         $this->destroy_session();
 		return $this->redirect('pos/login');
     }

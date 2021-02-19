@@ -62,7 +62,7 @@ if ($layout_clean_mode) {
                     Add <?php echo $view_model->get_heading();?>
                 </h5>
                 <?= form_open() ?>
-                    				<div class="form-group col-md-5 col-sm-12 ">
+                <div class="form-group col-md-5 col-sm-12 ">
 					<label for="Name">Name </label>
 					<input type="text" class="form-control data-input" id="form_name" name="name" value="<?php echo set_value('name'); ?>"/>
 				</div>
