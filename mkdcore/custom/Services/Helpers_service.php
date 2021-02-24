@@ -45,22 +45,50 @@ class Helpers_service {
      *  Post error if quantity is less
      * 
     */
-    public function check_item_in_inventory($product_id, $product_qty, $product_name)
+    public function check_item_in_inventory($product_id, $product_qty, $product_name, $checkout_type = false)
     {
         $inventory_data =  $this->_inventory_model->get_by_fields(['id' => $product_id]);
 
-        if( $product_qty > $inventory_data->quantity )
+
+        /**
+         *
+         * Product Type 2 = Generic 
+         * If 2 then don't check quantity 
+         * 
+        */
+
+        
+        if($inventory_data->product_type != 2)
         { 
-            if($inventory_data->quantity == 0)
-            {
-                $output['error']  = $product_name . " is out of stock.";
+            if( $product_qty > $inventory_data->quantity )
+            { 
+                if($inventory_data->quantity == 0)
+                {
+                    $output['error']  = $product_name . " is out of stock.";
+                }
+                else
+                {
+                    $output['error']  = $product_name . " quantity can't be greater than be available quantity.";
+                } 
+                return  (object)$output;
             }
-            else
-            {
-                $output['error']  = $product_name . " quantity can't be greater than be available quantity.";
-            } 
-            return  (object)$output;
         }
+        /**
+         * checkout type 2 =  Delivery
+         * 
+         * if we can't delivery show error
+         *  
+        */
+        if($checkout_type == 2)
+        {
+            if($inventory_data->can_ship == 2)
+            {
+                $output['error']  = "Error! " . $product_name . " can't be shipped."; 
+                return  (object)$output; 
+            }
+        }
+        
+        
     }
      
 

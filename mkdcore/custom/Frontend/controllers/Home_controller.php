@@ -221,9 +221,72 @@ class Home_controller extends Manaknight_Controller
     {  
         if($this->session->userdata('customer_login'))
         { 
-            // echo "<pre>";
-            // print_r($_POST);
-            // die(); 
+            $user_id = $this->session->userdata('user_id');
+
+            $this->form_validation->set_rules('full_name', "Name", "required|max_length[255]");
+            $this->form_validation->set_rules('email_address', "Email", "valid_email"); 
+            $this->form_validation->set_rules('postal_code', "Customer Postal Code", "integer");
+            $this->form_validation->set_rules('city', "City", "max_length[255]");
+            $this->form_validation->set_rules('country', "Country", "max_length[255]");
+            $this->form_validation->set_rules('state', "State", "max_length[255]"); 
+            $this->form_validation->set_rules('address_1', "Address", "required|min_length[5]"); 
+            $this->form_validation->set_rules('payment', "Payment Method", "integer");
+
+            // $this->form_validation->set_rules('shipping_postal_cost', "Shipping Postal Code", "integer"); 
+            // $this->form_validation->set_rules('checkout_type', "Checkout Type", "integer");
+
+
+            $this->load->model('pos_cart_model');
+            $this->load->model('inventory_model');
+            $this->load->library('helpers_service');
+            $this->helpers_service->set_inventory_model($this->inventory_model);
+
+
+
+            $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+            if( empty($cart_items) )
+            {  
+                $this->session->set_flashdata('error1', 'Error! Please add item in cart first.'); 
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+
+
+            if ($this->form_validation->run() === FALSE)
+            {
+                $error_msg = validation_errors(); 
+                $this->session->set_flashdata('error1', $error_msg); 
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+
+
+
+            
+            
+
+
+            /**
+            * Validate Items Quantity
+            * and Item supports shipment 
+            */ 
+            $checkout_type = 2;
+            foreach ($cart_items as $key => $cart_item_value) 
+            {
+                $cart_item_value = (object) $cart_item_value;
+                 
+                $check_quantity = $this->helpers_service->check_item_in_inventory($cart_item_value->product_id, $cart_item_value->product_qty, $cart_item_value->product_name, $checkout_type);
+
+                if( isset($check_quantity->error) )
+                {
+                    $this->session->set_flashdata('error1', $check_quantity->error); 
+                    return redirect($_SERVER['HTTP_REFERER']);
+                }
+            }
+
+
+            $data['cart_items']  = $cart_items;
+             
+
+
             $full_name      =  $this->input->post('full_name', TRUE);
             $email_address  =  $this->input->post('email_address', TRUE);
             $phone_number   =  $this->input->post('phone_number', TRUE);
@@ -240,19 +303,18 @@ class Home_controller extends Manaknight_Controller
             $shipping_cost_value        =  $this->input->post('shipping_cost_value', TRUE);
             $shipping_service_id        =  $this->input->post('shipping_service_id', TRUE);
 
- 
+            $payment = 1;
             
            
-            $user_id = $this->session->userdata('user_id');
-
-            $this->load->model('pos_cart_model');
-            $this->load->model('customer_model'); 
             
+
+            
+            $this->load->model('customer_model');  
             $this->load->model('pos_order_model');
             $this->load->model('pos_order_note_model');
             $this->load->model('pos_order_items_model'); 
             $this->load->model('transactions_model');
-            $this->load->model('inventory_model');
+            
             $this->load->model('customer_model'); 
             $this->load->model('coupon_model'); 
             $this->load->model('coupon_orders_log_model'); 
@@ -262,21 +324,7 @@ class Home_controller extends Manaknight_Controller
             $this->pos_checkout_service->set_coupon_model($this->coupon_model);
 
 
-
-           
-
-
-
-
-            
-
-            $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
-            if( empty($data['cart_items']) )
-            {  
-                $this->session->set_flashdata('error1', 'Error! Please add item in cart first.'); 
-                return redirect($_SERVER['HTTP_REFERER']);
-            }
-
+ 
 
             /**
              * IF Coupon is used then validate
@@ -298,9 +346,7 @@ class Home_controller extends Manaknight_Controller
                 {
                     $this->session->set_flashdata('error1', $coupon_response->error_msg); 
                     return redirect($_SERVER['HTTP_REFERER']); 
-                }
-
-                
+                } 
             }
 
 
@@ -382,6 +428,7 @@ class Home_controller extends Manaknight_Controller
                 {
                     $inventory_data = $this->inventory_model->get($cart_item_value->product_id);   
                     $total_amount   = $cart_item_value->unit_price  * $cart_item_value->product_qty;
+
                     $data_order_detail = array(
                         'product_id'         => $cart_item_value->product_id,
                         'product_name'       => $cart_item_value->product_name, 
@@ -394,10 +441,26 @@ class Home_controller extends Manaknight_Controller
                         'product_unit_price' => $cart_item_value->unit_price,
                     );
                     $sub_total += $total_amount;
-                    $result = $this->pos_order_items_model->create($data_order_detail); 
+                    $detail_id = $this->pos_order_items_model->create($data_order_detail); 
+
+                    /**
+                     *
+                     * Product Type 2 = Generic 
+                     * If 2 then don't decrease quantity 
+                     * 
+                    */
+                    if($detail_id and $inventory_data->product_type != 2 )
+                    {
+                        $quantity_left = $inventory_data->quantity - $cart_item_value->product_qty;
+                        $this->inventory_model->edit([
+                            'quantity' => $quantity_left
+                        ], $inventory_data->id ); 
+                    }
                 }
                 
 
+
+                //if coupon used then save log
                 $coupon_log_id = "";
                 if($coupon_condition)
                 {
@@ -435,24 +498,11 @@ class Home_controller extends Manaknight_Controller
                 );
                 $transaction_id = $this->transactions_model->create($add_transaction);
                 
-                // $this->db->trans_complete();
-
-
-                // if ($this->db->trans_status() === FALSE)
-                // {
-                //     $this->db->trans_rollback();
-                //     $this->session->set_flashdata('error1', 'Error! Something went wrong please try again later.');
-                //     redirect($_SERVER['HTTP_REFERER']);
-                // }
-                // else
-                // {
-                //     $this->db->trans_commit();
-                // }
+                
 
                 if($transaction_id)
                 {
-                    $user_id = $this->session->userdata('user_id'); 
-                    // $result = $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]);  
+                    $user_id = $this->session->userdata('user_id');  
                     $output['order_id']      = $order_id;  
                      
 
@@ -470,10 +520,12 @@ class Home_controller extends Manaknight_Controller
                         { 
                             $this->session->set_flashdata('error1', 'Error! Please try again later.'); 
                             return redirect($_SERVER['HTTP_REFERER']);
-                        } 
-                        
+                        }  
                     }
 
+
+
+                    $result = $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]); 
 
 
                     /**
@@ -501,9 +553,23 @@ class Home_controller extends Manaknight_Controller
 
 
 
+                    /**
+                     * Send Order to Shipping System
+                     *  
+                    */ 
+                    $order_data = $this->send_order_to_shipper($order_id);
+
+                    if( isset( $order_data->error_msg ) )
+                    {
+                        $this->session->set_flashdata('error1', 'Error! Please try again later.'); 
+                        return redirect($_SERVER['HTTP_REFERER']);
+                    }
+
 
                     $this->session->set_flashdata('success1', 'Order has been created successfully.');
-                }else{
+                }
+                else
+                {
                      
                     $this->session->set_flashdata('error1', 'Error! While adding transaction.'); 
                 }
@@ -511,7 +577,9 @@ class Home_controller extends Manaknight_Controller
                 redirect($_SERVER['HTTP_REFERER']);
                 
                 
-            }else{
+            }
+            else
+            {
                 $this->session->set_flashdata('error1', 'Error! Please try again later.');  
                 redirect($_SERVER['HTTP_REFERER']);
             }

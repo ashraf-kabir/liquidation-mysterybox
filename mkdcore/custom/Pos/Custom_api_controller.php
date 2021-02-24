@@ -198,7 +198,7 @@ class Custom_api_controller extends Manaknight_Controller
 
             $product_id   =  $this->input->post('id', TRUE);
             $product_qty  =  $this->input->post('quantity', TRUE);
-
+            $user_id = $this->session->userdata('user_id');
 
             
 
@@ -207,12 +207,10 @@ class Custom_api_controller extends Manaknight_Controller
             if( isset($product_data->product_name) )
             {
                 $product_name =  $product_data->product_name;
-                $unit_price   =  $product_data->selling_price;
-                
-                
+                $unit_price   =  $product_data->selling_price; 
                 $total_price  =  $product_qty * $unit_price;
 
-                $user_id = $this->session->userdata('user_id');
+                
 
                 /**
                 * Check if product already in cart 
@@ -537,30 +535,7 @@ class Custom_api_controller extends Manaknight_Controller
             $cart_items = $this->input->post('cart_items', TRUE);
 
 
-
-            /**
-            * Validate Items
-            */  
-            if( !empty($cart_items) )
-            {
-                foreach ($cart_items as $cart_item_key => $cart_item_value) 
-                { 
-                    $cart_item_value = (object) $cart_item_value;
-
-                    $check_quantity = $this->helpers_service->check_item_in_inventory($cart_item_value->id, $cart_item_value->quantity, $cart_item_value->name);
-
-                    if( isset($check_quantity->error) )
-                    {
-                        $output['status'] = 0;
-                        $output['error']  = $check_quantity->error;
-                        echo json_encode($output);
-                        exit();
-                    }
-                }
-            }
-
-
-
+           
 
             /**
             * Refactor Customer Data  
@@ -571,44 +546,95 @@ class Custom_api_controller extends Manaknight_Controller
             {
                 $form_data_value = (object) $form_data_value;
                 $customer_data[$form_data_value->name] = $form_data_value->value;
+            }  
+
+
+            if(empty($cart_items) or empty($form_data))
+            {
+                $output['status'] = 0;
+                $output['error']  = "Date is required";
+                echo json_encode($output);
+                exit(); 
+            }
+
+
+            $post_array = $customer_data;
+            $post_array['items'] = $cart_items; 
+            $_POST = $post_array;
+            $this->form_validation->set_rules('name', "Customer Name", "required|max_length[255]");
+            $this->form_validation->set_rules('customer_id', "Customer", "required");
+            $this->form_validation->set_rules('postal_code', "Customer Postal Code", "integer");
+            $this->form_validation->set_rules('address', "Address", "required|min_length[5]");
+            $this->form_validation->set_rules('payment', "Payment Method", "integer");
+            $this->form_validation->set_rules('shipping_postal_cost', "Shipping Postal Code", "integer"); 
+            $this->form_validation->set_rules('city', "City", "max_length[255]");
+            $this->form_validation->set_rules('country', "Country", "max_length[255]");
+            $this->form_validation->set_rules('state', "State", "max_length[255]");
+            $this->form_validation->set_rules('checkout_type', "Checkout Type", "integer");
+
+
+
+            foreach ($this->input->post('items') as $key => $value) 
+            {
+                $this->form_validation->set_rules('items[' . $key . '][id]', "Item", "required|integer");
+                $this->form_validation->set_rules('items[' . $key . '][name]', "Item Name", "required|max_length[255]");
+                $this->form_validation->set_rules('items[' . $key . '][price]', "Price", "numeric");
+                $this->form_validation->set_rules('items[' . $key . '][quantity]', "Item", "integer");
             } 
 
 
-
-            /**
-            * Validation if items support Can Ship
-            */
-            if( $customer_data['checkout_type']  == 2)
+            if ($this->form_validation->run() === FALSE)
             {
-                foreach ($cart_items as $cart_item_key => $cart_item_value) 
-                {
-                    $inventory_data = $this->inventory_model->get($cart_items[$cart_item_key]['id']);  
-
-                    if($inventory_data->can_ship ==2)
-                    {
-                        $output['status'] = 0;
-                        $output['error']  = "Error! " . $inventory_data->product_name . " can't be shipped.";
-                        echo json_encode($output);
-                        exit();
-                    }
-                }
+                $error_msg = validation_errors();
+                $output['status'] = 0;
+                $output['error']  = $error_msg;
+                echo json_encode($output);
+                exit();  
             }
-
 
             
-            $shipping_cost = 0;
-            if( isset($customer_data['shipping_cost']) )
-            {
-                $shipping_cost = $customer_data['shipping_cost'];
-            }
-
  
-            $tax           = 0;
 
-            //discount
-            $discount = $this->input->post('discount', TRUE); 
+            /**
+            * Validate Items Quantity
+            * and Item supports shipment 
+            */  
+              
+            $checkout_type  = $this->input->post('checkout_type', TRUE);
+            foreach ($cart_items as $cart_item_key => $cart_item_value) 
+            { 
+                $cart_item_value = (object) $cart_item_value;
+
+                $check_quantity = $this->helpers_service->check_item_in_inventory($cart_item_value->id, $cart_item_value->quantity, $cart_item_value->name, $checkout_type);
+
+                if( isset($check_quantity->error) )
+                {
+                    $output['status'] = 0;
+                    $output['error']  = $check_quantity->error;
+                    echo json_encode($output);
+                    exit();
+                }
+            }
+             
+            
+
+            $shipping_cost = 0;
+            if( $this->input->post('shipping_cost', TRUE) )
+            {
+                $shipping_cost = $this->input->post('shipping_cost', TRUE);
+            } 
 
 
+            $discount = 0;
+            if( $this->input->post('discount', TRUE) )
+            {
+                $discount = $this->input->post('discount', TRUE);
+            } 
+            $tax  = 0;
+ 
+
+
+            $this->db->trans_begin();
             
             /**
             * Create Order 
@@ -643,9 +669,23 @@ class Custom_api_controller extends Manaknight_Controller
                         'pos_user_id'        => $pos_user_id, 
                         'product_unit_price' => $cart_items[$cart_item_key]['price'],
                     );
-                    $sub_total += $total_amount;
-                    $result = $this->pos_order_items_model->create($data_order_detail); 
- 
+                    $sub_total +=  $total_amount;
+                    $detail_id     =  $this->pos_order_items_model->create($data_order_detail); 
+
+
+                    /**
+                     *
+                     * Product Type 2 = Generic 
+                     * If 2 then don't decrease quantity 
+                     * 
+                    */
+                    if($detail_id and $inventory_data->product_type != 2 )
+                    {
+                        $quantity_left = $inventory_data->quantity - $cart_items[$cart_item_key]['quantity'];
+                        $this->inventory_model->edit([
+                            'quantity' => $quantity_left
+                        ], $inventory_data->id ); 
+                    } 
                 }
 
 
@@ -657,8 +697,7 @@ class Custom_api_controller extends Manaknight_Controller
                         'message_note'       =>  $customer_data['message'],
                         'order_id'           =>  $order_id,
                         'msg_type'           =>  2,
-                    );
-    
+                    ); 
                     $this->pos_order_note_model->create($data_order_note); 
                 }
 
@@ -689,33 +728,14 @@ class Custom_api_controller extends Manaknight_Controller
                     'total'             =>  $grand_total, 
                 );
                 $transaction_id = $this->transactions_model->create($add_transaction);
+
+
                 if($transaction_id)
                 {
                     $user_id = $this->session->userdata('user_id'); 
+                     
+
                     
-
-
-                    /**
-                     * Send Order to Shipping System
-                     *  
-                    */
-
-                    $order_data = $this->send_order_to_shipper($order_id);
-
-                    if( isset( $order_data->error_msg ) )
-                    {
-                        $output['status'] = 0;
-                        $output['error']  = $order_data->error_msg;
-                        echo json_encode($output);
-                        exit();
-                    } 
-
-
-                    /**
-                     * Delete Cart
-                     *  
-                    */
-                    $result = $this->pos_cart_model->real_delete_by_fields(['user_id' => $user_id]);
 
 
 
@@ -731,11 +751,19 @@ class Custom_api_controller extends Manaknight_Controller
                     $customer_service = (object) $this->customer_service->add_customer_record($customer_data['customer_id'], $order_id);
                     if( isset( $customer_service->error_msg ) )
                     {
+                        $this->db->trans_rollback();
                         $output['status']  = 0;
                         $output['error']   = $customer_service->error_msg;
                         echo json_encode($output);
                         exit();
                     } 
+
+                    /**
+                     * Delete Cart
+                     *  
+                    */
+                    $result = $this->pos_cart_model->real_delete_by_fields(['user_id' => $user_id]);
+
 
 
 
@@ -770,6 +798,25 @@ class Custom_api_controller extends Manaknight_Controller
                     }
 
 
+                    /**
+                     * Send Order to Shipping System
+                     *  
+                    */
+
+                    $order_data = $this->send_order_to_shipper($order_id);
+
+                    if( isset( $order_data->error_msg ) )
+                    {
+                        $output['status'] = 0;
+                        $output['error']  = $order_data->error_msg;
+                        echo json_encode($output);
+                        exit();
+                    } 
+
+
+
+                    
+                    $this->db->trans_commit();
                     $output['customer_name'] = $customer_data['name'];
                     $output['order_id']      = $order_id;
                     $output['address']       = $customer_data['address'];
@@ -778,7 +825,11 @@ class Custom_api_controller extends Manaknight_Controller
                     echo json_encode($output);
                     exit();
 
-                }else{
+                }
+                else
+                {
+                    $this->db->trans_rollback();
+
                     $output['status'] = 0;
                     $output['error'] = 'Error! While adding transaction.';
                     echo json_encode($output);
@@ -787,12 +838,30 @@ class Custom_api_controller extends Manaknight_Controller
 
                 
                 
-            }else{
+            }
+            else
+            {
+                $this->db->trans_rollback();
                 $output['status'] = 0;
                 $output['error'] = 'Error! Please try again later.';
                 echo json_encode($output);
                 exit();
             }
+
+            // $this->db->trans_rollback();
+            // if ($this->db->trans_status() === FALSE)
+            // { 
+                
+            //     $output['status'] = 0;
+            //     $output['error'] = 'Error! Query roll backed.';
+            //     echo json_encode($output);
+            //     exit();
+            // }
+            // else
+            // {
+            //     $this->db->trans_commit();
+            // }
+
 
         }
     }
