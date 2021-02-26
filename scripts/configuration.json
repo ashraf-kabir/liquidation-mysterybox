@@ -391,7 +391,7 @@
 					"limit": 255
 				}], "xyzImage", "", ""], 
 				["selling_price", "float", [], "xyzSelling Price", "", ""],
-				["quantity", "integer", [], "xyzQuantity", "", ""],
+				["quantity", "integer", [], "xyzQuantity", "greater_than_equal_to[1]", ""],
 				["inventory_note", "text", [], "xyzInventory Note", "", ""],
 				["barcode_image", "text", [], "xyzBarcode Image", "", ""],
 				["cost_price", "float", [], "xyzCost Price", "", ""],
@@ -459,10 +459,10 @@
 				["id", "integer", [], "xyzID", "", ""],
 				["first_name", "string", [{
 					"limit": 255
-				}], "xyzFirst Name", "", ""],
+				}], "xyzFirst Name", "required|max_length[255]", "required|max_length[255]"],
 				["last_name", "string", [{
 					"limit": 255
-				}], "xyzLast Name", "", ""],
+				}], "xyzLast Name", "max_length[255]", "max_length[255]"],
 				["password", "string", [{
 					"limit": 255
 				}], "xyzPassword", "required", ""],
@@ -470,12 +470,10 @@
 					"limit": 255
 				}], "xyzEmail", "required|valid_email", "required|valid_email"],
 				["logged_in", "integer", [], "xyzLogged in", "", ""],
-				["store_id", "integer", [], "xyzStore", "", ""],
-				["department_id", "integer", [], "xyzDepartment", "", ""], 
+				["store_id", "integer", [], "xyzStore", "integer", "integer"],
+				["department_id", "integer", [], "xyzDepartment", "integer", "integer"], 
 				["credential_id", "integer", [], "xyzCredential ID", "", ""],
-				["total_sale", "string", [{
-					"limit": 255
-				}], "xyzTotal sale", "", ""],
+				["total_sale", "float", [], "xyzTotal sale", "", ""],
 				["status", "integer", [], "xyzStatus", "required|integer", "required|integer"]
 			],
 			"method": "\n\tpublic function get_user_by_credential_id($credential_id)\n\t{\n\t\t$this->db->where('credential_id', $credential_id);\n\t\treturn $this->db->get($this->_table)->row();\n\t}\n",
@@ -870,7 +868,7 @@
 			"unique": [],
 			"field": [
 				["id", "integer", [], "ID", "", ""], 
-				["tax", "integer", [], "xyzTax %", "required", "required"]
+				["tax", "float", [], "xyzTax %", "required|numeric|greater_than_equal_to[0]", "required|numeric|greater_than_equal_to[0]"]
 			],
 			"join": [],
 			"method": "",
@@ -1617,7 +1615,7 @@
 			"custom_view_view": "",
 			"listing_fields_api": ["id", "email", "logged_in", "total_sale", "status", "store_id"],
 			"listing_headers": ["xyzID", "xyzName",  "xyzEmail", "xyzStore", "xyzLogged in", "xyzTotal sale", "xyzStatus"],
-			"listing_rows": ["id|integer", "first_name|string", "email|string", "store_id|integer", "logged_in|integer", "total_sale|string", "status|integer"],
+			"listing_rows": ["id|integer", "complex|first_name:last_name", "email|string", "store_id|integer", "logged_in|integer", "total_sale|string", "status|integer"],
 			"listing_actions": [],
 			"filter_fields": ["first_name", "last_name", "email", "status"],
 			"add_fields": ["first_name", "last_name", "email", "department_id",  "store_id", "password", "status"],
@@ -2130,7 +2128,7 @@
 			"is_add": true,
 			"is_edit": true,
 			"is_delete": true,
-			"is_real_delete": false,
+			"is_real_delete": true,
 			"is_list": true,
 			"is_view": false,
 			"import": false,

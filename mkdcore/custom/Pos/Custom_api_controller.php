@@ -521,9 +521,11 @@ class Custom_api_controller extends Manaknight_Controller
             $this->load->model('pos_cart_model');
             $this->load->model('transactions_model');
             $this->load->model('inventory_model');
+            $this->load->model('pos_user_model');
 
             $this->load->library('pos_checkout_service');
             $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
+            $this->pos_checkout_service->set_pos_user_model($this->pos_user_model);
 
 
             $this->load->library('helpers_service');
@@ -710,6 +712,16 @@ class Custom_api_controller extends Manaknight_Controller
                     'subtotal' =>  $sub_total,  
                 );
                 $result = $this->pos_order_model->edit($data_order_prices,$order_id);
+
+                $update_pos = $this->pos_checkout_service->update_pos_record($pos_user_id, $grand_total);
+                if( isset( $update_pos->error_msg ) )
+                {
+                    $this->db->trans_rollback();
+                    $output['status']  = 0;
+                    $output['error']   = $update_pos->error_msg;
+                    echo json_encode($output);
+                    exit();
+                } 
 
 
                 /**
@@ -1702,6 +1714,7 @@ class Custom_api_controller extends Manaknight_Controller
 
                 $this->load->library('pos_checkout_service');
                 $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
+                
 
                 /**
                 * Cart Items  

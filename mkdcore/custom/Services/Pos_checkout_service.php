@@ -3,6 +3,7 @@
 class Pos_checkout_service {
 
     private $_pos_order_model; 
+    private $_pos_user_model; 
     private $_inventory_model; 
     private $_coupon_model; 
 
@@ -10,6 +11,11 @@ class Pos_checkout_service {
     public function set_pos_order_model($pos_order_model)
     {
         $this->_pos_order_model =  $pos_order_model;
+    }
+
+    public function set_pos_user_model($pos_user_model)
+    {
+        $this->_pos_user_model =  $pos_user_model;
     }
 
 
@@ -281,6 +287,45 @@ class Pos_checkout_service {
 
     }
 
+
+
+
+    public function update_pos_record($pos_user_id, $amount)
+    {
+        if( $pos_user_id )
+        { 
+            $pos_data = $this->_pos_user_model->get($pos_user_id);  
+
+            $total_sale  =  (FLOAT) $pos_data->total_sale;
+            $total_sale  =  $total_sale + $amount;
+
+            $data_add = array( 
+                'total_sale'     =>  $total_sale,
+            ); 
+            $update = $this->_pos_user_model->edit($data_add , $pos_user_id);
+
+            if($update)
+            {
+                $response['success']     =  true;
+                $response['success_msg'] =  "Success! User record has been updated successfully.";
+                
+            }
+            else
+            {
+                $response['error']      =  true;
+                $response['error_msg']  =  "Error! While updating user record.";
+                 
+            } 
+        } 
+        else
+        {
+            $response['error']      =  true;
+            $response['error_msg']  =  "Error! While updating user record.";
+             
+        }
+
+        return (object)$response;
+    }
 
 
     
