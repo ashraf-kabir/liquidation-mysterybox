@@ -296,7 +296,16 @@ function load_pos_products(search_product_value = '' )
                       var pos_products = '';
                       $.each(response.products_list,function(index,obj)
                       {
-                           pos_products   +=  '<div class="col-xl-6 col-lg-6 col-md-5 col-sm-5 col-10">';
+                            var p_quantity = "";
+                            if(obj.product_type == 2)
+                            {
+                                   p_quantity = "~";
+                            } else {
+                                   p_quantity = obj.quantity;
+                            }
+
+
+                           pos_products   +=  '<div class="col-xl-6 col-lg-6 col-md-5 col-sm-5 col-10"> <span class="quantity-remaining-span"> ' + p_quantity   + '</span> ';
        
                            pos_products   +=  '<div class="item" data-price="'+  Number(obj.selling_price).toFixed(2)   +'" data-id="'+  obj.id   +'">';
 

@@ -266,7 +266,7 @@ input#price {
   position: relative;
 }
 
-#sidebar .row{ 
+#sidebar .row {
   position: sticky;
   top: 0;
   bottom: 0;
@@ -305,14 +305,24 @@ span.counter {
   top: -10px;
   color: #fff;
   font-size: 12px;
-  background-image: url("../image/bg-red.png");
+  /* background-image: url("../image/bg-red.png");
   background-repeat: no-repeat no-repeat;
   background-size: cover cover;
-  background-position: center center;
+  background-position: center center; */
   width: 20px;
   /* padding: 5px; */
   text-align: center;
   font-weight: 500;
+
+  /* position: absolute;
+    top: 14px; 
+    font-size: 19px;
+    width: 15%; 
+    text-align: center;
+    font-weight: 500; */
+  /* left: 36px; */
+  background-color: red;
+  border-radius: 50%;
 }
 #sidebarCollapse {
   position: relative;
@@ -353,4 +363,16 @@ span.counter {
   #sidebarCollapse span {
     display: none;
   }
+}
+
+.quantity-remaining-span {
+  position: absolute;
+  top: 14px;
+  font-size: 12px;
+  width: 10%;
+  text-align: center;
+  font-weight: 500;
+  left: 36px;
+  background-color: aquamarine;
+  border-radius: 50%;
 }
