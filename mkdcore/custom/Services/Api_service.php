@@ -101,6 +101,7 @@ class Api_service{
                 'status'            => 1, 
                 'detail'            => $detail,
                 'checkout_type'     => $order_data->checkout_type,
+                'delivery_method'   => $order_data->checkout_type,
             ); 
 
 

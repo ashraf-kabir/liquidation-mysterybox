@@ -708,7 +708,7 @@
 				"is_shipped": {"1": "Yes", "0" : "No"},
 				"payment_method": {"1": "Cash", "2" : "Card", "3" : "ACH", "4" : "Bank"}
 			},
-			"pre": "",
+			"pre": "if(!isset($data['is_picked']))\n\t\t{\n\t\t\t $data['is_picked'] = 0; \n\t\t}\n\t\t\tif(!isset($data['is_shipped']))\n\t\t{\n\t\t\t$data['is_shipped'] = 0;\n\t\t}\n\t\t\t \n",
 			"post": "",
 			"count": "",
 			"unique": [],
@@ -2691,6 +2691,7 @@
 		"v1/api/product/get_categories" : "Guest/Ecom_api_controller/get_categories", 
 		"v1/api/product/scan_product"   : "Guest/Ecom_api_controller/scan_product",
 		"try_printer"                   : "Guest/Ecom_api_controller/try_printer",
+		"v1/api/sale_order/update_status": "Guest/Ecom_api_controller/update_order_status",
 
 		"admin/category_wise/view/(:num)" : "Admin/Admin_category_wise_controller/view/$1",
 		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv",

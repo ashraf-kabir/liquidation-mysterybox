@@ -1318,6 +1318,10 @@ class Custom_api_controller extends Manaknight_Controller
 
                 $table_content   .=  '<td  class="text-danger">$' .  number_format($grand_total,2)  . '</td>';
 
+                $table_content   .=  '<td>' .  $this->pos_order_model->is_picked_mapping()[$orders_list_value->is_picked]  . '</td>';
+
+                $table_content   .=  '<td>' .  $this->pos_order_model->is_shipped_mapping()[$orders_list_value->is_shipped] . '</td>';
+
                 $table_content   .=  '</tr>';    
             } 
 

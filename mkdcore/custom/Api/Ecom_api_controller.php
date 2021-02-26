@@ -325,5 +325,100 @@ class Ecom_api_controller extends Manaknight_Controller
     }
 
 
+
+
+    public function update_order_status()
+    {
+
+        $params = json_decode(file_get_contents('php://input'), TRUE);   
+        if(isset($params) and !empty($params))
+        { 
+            if(isset($params['sale_order_id']) and empty($params['sale_order_id']))
+            {
+                $output['error'] = TRUE;
+                $output['error_msg'] = "Order ID is required.";
+                echo json_encode($output);
+                exit();
+            } 
+
+            if( $params['type'] != 1 AND $params['type'] != 2    )
+            {
+                $output['error'] = TRUE;
+                $output['error_msg'] = "Type is incorrect.";
+                echo json_encode($output);
+                exit();
+            }
+
+            $sale_order_id = $params['sale_order_id'];   
+
+            $this->load->model('pos_order_model'); 
+
+            $order_data    = $this->pos_order_model->get($sale_order_id);
+
+            if( isset($order_data->id) )
+            { 
+
+                if($params['type'] == 1)
+                {
+                    //status 5 for order is picked
+                    $order_update = $this->pos_order_model->edit( [  'is_picked' => 1, 'pos_pickup_status' => 2 ], $order_data->id);
+
+                    if($order_update)
+                    {
+                       
+                    }
+                    else
+                    { 
+                        $output['error'] = TRUE;
+                        $output['error_msg'] = "Error! please try again later.";
+                        echo json_encode($output);
+                        exit();
+                    }
+                } 
+                elseif($params['type'] == 2)
+                {
+                    //status 6 for order is shipped
+                    $order_update = $this->pos_order_model->edit( [  'is_shipped' => 1 ], $order_data->id);
+
+                    if($order_update)
+                    {
+                        // $data_note = array(
+                        //     'order_id'   => $order_data->id,
+                        //     'order_no'   => $order_data->sale_order_no,
+                        //     'order_note' => "Order has been Shipped.",
+                        //     'is_public'  => 1,
+                        //     'is_private' => 0,
+                        // ); 
+                        // $this->order_notes_model->create($data_note); 
+                    }
+                    else
+                    { 
+                        $output['error'] = TRUE;
+                        $output['error_msg'] = "Error! please try again later.";
+                        echo json_encode($output);
+                        exit();
+                    }
+                }
+                
+                
+            }
+            else
+            { 
+                $output['error'] = TRUE;
+                $output['error_msg'] = "Error! No order found.";
+                echo json_encode($output);
+                exit();
+            } 
+
+        }
+        else
+        {
+            $output['error'] = TRUE;
+            $output['error_msg'] = "Data is required.";
+            echo json_encode($output);
+            exit();
+        }
+
+    }
     
 }

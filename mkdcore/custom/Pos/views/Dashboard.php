@@ -227,23 +227,25 @@
                     </div>
                 </div>
                 <div class="row pages d-none w-100 justify-content-center py-5" id="pickup">
-                    <div class="col-12 px-1 px-md-5 table-responsive ">
-                        <table class="table bg-white">
-                            <thead class="thead-dark text-center">
-                                <tr>
-                                    <th scope="col">Customer Name</th>
-                                    <th scope="col">Order Number</th>
-                                    <th scope="col">Pickup ID</th>
-                                    <th scope="col">Items</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Order Placed Date</th>
-                                    <th scope="col">Last Pick Date</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class=" text-center"> 
-                            </tbody>
-                        </table>
+                    <div class="col-12 px-1 px-md-5  ">
+                        <div class="table-responsive" >
+                            <table class="table bg-white">
+                                <thead class="thead-dark text-center">
+                                    <tr>
+                                        <th scope="col">Customer Name</th>
+                                        <th scope="col">Order Number</th>
+                                        <th scope="col">Pickup ID</th>
+                                        <th scope="col">Items</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Order Placed Date</th>
+                                        <th scope="col">Last Pick Date</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class=" text-center"> 
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <div class="col-12 px-1 px-md-5 pagination-for-pickup "> 
@@ -272,42 +274,29 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 px-1 my-3 px-md-5 table-responsive ">
-                        <table class="table bg-white">
-                            <thead class="thead-dark text-center">
-                                <tr>
-                                    <th scope="col">Customer Name</th>
-                                    <th scope="col">Order Number</th>
-                                    <th scope="col">Pickup ID</th>
-                                    <th scope="col">Items</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Sub Total</th>
-                                    <th scope="col">Tax</th>
-                                    <th scope="col">Shipping Cost</th>
-                                    <th scope="col">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody class=" text-center">
-                                <!-- <tr>
-                                    <th scope="row">Jhone Doe</th>
-                                    <td>1</td>
-                                    <td>
-                                        <ul class="list-unstyled text-left">
-                                            <li>4 items</li>
-                                            <li>1x Step Ladder</li>
-                                            <li>2x Zero-turn mower</li>
-                                            <li>power equipment Combo Kit</li>
-                                            <li>Pressure Washers</li>
-                                        </ul>
-                                    </td>
-                                    <td>Paid in Cash</td>
-                                    <td class="text-danger">$49.99</td>
-                                    <td>$0.15</td>
-                                    <td class="text-danger">$49.68</td>
-                                </tr> -->
-
-                            </tbody>
-                        </table>
+                    <div class="col-12 px-1 my-3 px-md-5  ">
+                        <div class="table-responsive" >
+                            <table class="table bg-white">
+                                <thead class="thead-dark text-center">
+                                    <tr>
+                                        <th scope="col">Customer Name</th>
+                                        <th scope="col">Order Number</th>
+                                        <th scope="col">Pickup ID</th>
+                                        <th scope="col">Items</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Sub Total</th>
+                                        <th scope="col">Tax</th>
+                                        <th scope="col">Shipping Cost</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Picked</th>
+                                        <th scope="col">Shipped</th>
+                                    </tr>
+                                </thead>
+                                <tbody class=" text-center">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <div class="col-12 px-1 px-md-5 pagination-for-past-orders "> 
@@ -329,41 +318,45 @@
                         </div>
                     </div> 
 
-                    <div class="col-12 px-1 my-3 px-md-5 table-responsive ">
-                        <table class="table bg-white">
-                            <thead class="thead-dark text-center">
-                                <tr>
-                                    <th scope="col">Order No</th>
-                                    <th scope="col">Customer</th> 
-                                    <th scope="col">Transaction on</th> 
-                                    <th scope="col">Type</th>
-                                    <th scope="col">Tax</th> 
-                                    <th scope="col">Discount</th> 
-                                    <th scope="col">Sub Total</th> 
-                                    <th scope="col">Total</th> 
-                                </tr>
-                            </thead>
-                            <tbody class=" text-center report_summary">
-                                 
-                            </tbody>
-                        </table>
+                    <div class="col-12 px-1 my-3 px-md-5  ">
+                        <div class="table-responsive">
+                            <table class="table bg-white">
+                                <thead class="thead-dark text-center">
+                                    <tr>
+                                        <th scope="col">Order No</th>
+                                        <th scope="col">Customer</th> 
+                                        <th scope="col">Transaction on</th> 
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Tax</th> 
+                                        <th scope="col">Discount</th> 
+                                        <th scope="col">Sub Total</th> 
+                                        <th scope="col">Total</th> 
+                                    </tr>
+                                </thead>
+                                <tbody class=" text-center report_summary">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <div class="col-12 px-1 my-3 px-md-5 table-responsive ">
-                        <table class="table bg-white">
-                            <thead class="thead-dark text-center">
-                                <tr>
-                                    <th scope="col">Day Cash</th>
-                                    <th scope="col">Credit Card</th>
-                                    <th scope="col">Discount</th> 
-                                    <th scope="col">Total</th> 
-                                </tr>
-                            </thead>
-                            <tbody class=" text-center report_summary_total">
-                                <tr>  
-                                </tr> 
-                            </tbody>
-                        </table>
+                    <div class="col-12 px-1 my-3 px-md-5 ">
+                        <div class="table-responsive">
+                            <table class="table bg-white">
+                                <thead class="thead-dark text-center">
+                                    <tr>
+                                        <th scope="col">Day Cash</th>
+                                        <th scope="col">Credit Card</th>
+                                        <th scope="col">Discount</th> 
+                                        <th scope="col">Total</th> 
+                                    </tr>
+                                </thead>
+                                <tbody class=" text-center report_summary_total">
+                                    <tr>  
+                                    </tr> 
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -388,18 +381,20 @@
 
                         <div class="row"  >
                             <div class="col-12" style="margin-bottom: 70px;">
-                                <table class="table table-borderless">
-                                    <thead class="thead text-center" style="border-bottom: 0.5px solid #0000002f;">
-                                        <tr>
-                                            <th scope="col">QTY</th>
-                                            <th scope="col">Product</th>
-                                            <th scope="col">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-center" id="receipt-table-body">
+                                <div class="table-responsive">
+                                    <table class="table table-borderless">
+                                        <thead class="thead text-center" style="border-bottom: 0.5px solid #0000002f;">
+                                            <tr>
+                                                <th scope="col">QTY</th>
+                                                <th scope="col">Product</th>
+                                                <th scope="col">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center" id="receipt-table-body">
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
 
