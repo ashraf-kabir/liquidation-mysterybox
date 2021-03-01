@@ -21,6 +21,8 @@ $(document).ready(() => {
 
 
 
+
+
 //past orders
 function load_summary_report( search_date  = '')
 {
@@ -288,7 +290,7 @@ function load_pos_products(search_product_value = '' )
                {
                      $('.pos-products-list').html('');
                }
-               
+
                  $('.pos-products-list').find('.loader_img_gif').remove();
                  if(response.products_list.length == 0)
                  {
@@ -1176,7 +1178,10 @@ const emptyCart = () =>
                $(response.list_all).each(function(index,object){
                  shipping_options += '<option value="' + object.serviceCode + '" data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  >' + object.serviceName + '  (Shipment Cost $' + object.shipmentCost + ' ) ( Other Cost $' + object.otherCost + ' )   </option>';
                }) 
-             shipping_options += '</select> <br> <label>Shipping Cost </label> <input type="hidden" class="form-control shipping_service_name" name="shipping_service_name" value="" /> <input type="text" class="form-control shipping-cost-price-value" name="shipping_cost" value="0" />';
+             shipping_options += '</select> <br> <label>Shipping Cost </label> <input type="hidden" class="form-control shipping_service_name" name="shipping_service_name" value="" /> <input type="text" class="form-control shipping-cost-price-value" name="shipping_cost" value="0" /> ';
+             
+             
+             shipping_options += '<p class="expected_total" >Expected Total = <span class="expected_total_value" >0.00</span> </p>';
 
              $('.shipping-cost-options').html(shipping_options);
            }
@@ -1224,6 +1229,7 @@ const emptyCart = () =>
        $('.shipping-cost-price-value').val(Number(total_shipping_price).toFixed(2)); 
 
        $('.shipping_service_name').val(shipping_service_name); 
+       calculate_expected_total_with_shipping_cost();
  });
 
 var _scannerIsRunning = false;
@@ -1626,5 +1632,20 @@ function formatJson(message){
 *  End of Stripe Terminal Code 
 *  
 */
+
+
+
+function calculate_expected_total_with_shipping_cost()
+{
+   var shipping_cost_price = $('.shipping-cost-price-value').val();
+
+   var total_after_shipping_cost = Number(shipping_cost_price) + Number(totalPrice)
+    
+   $(".expected_total_value").text( total_after_shipping_cost.toFixed(2) );
+}
+
+$(document).on('change, keyup','.shipping-cost-price-value', function (){
+   calculate_expected_total_with_shipping_cost();
+});
 
 });
