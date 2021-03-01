@@ -85,7 +85,7 @@
     .cart-col::-webkit-scrollbar-thumb {
         border-radius: 10px;
         box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-        background-color: #343a40;
+        background-color: #343a40;  
         /* border: 1px solid #000; */
     }
     .select2-drop-active{
@@ -360,13 +360,13 @@
                     </div>
                 </div>
 
-                <div class="row pages d-none py-2 justify-content-center" id="receipt">
+                <div class="row pages d-none p-2 justify-content-center" id="receipt">
                     <div class="col-12 text-center my-3">
                         <a href="" onclick="location.reload()">Back to home</a> 
                         <br> 
                         <a class="ml-auto" href="#" onclick="$.print('#ticket');">Print Receipt</a>
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-8 col-10 ticket bg-white text-center p-3 mx-auto" id="ticket">
+                    <div class="col-xl-8 col-lg-10 col-md-11 col-12 ticket bg-white text-center p-3 mx-auto" id="ticket">
                         <h4>Vegas Liquidation</h4>
                         <h6 id="receipt-address"></h6> 
                         <h6 id="receipt-order-id"></h6> 
@@ -402,14 +402,14 @@
                             <div class="col-12 text-right ">
                                 <div class="row justify-content-end">
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-5 text-right">
-                                    <h5 class="my-2">DISCOUNT</h5>
-                                    <h5 class="my-2">TAX</h5>
-                                    <h5 class="my-2">TOTAL</h5>
+                                    <h6 class="my-2">DISCOUNT</h6>
+                                    <h6 class="my-2">TAX</h6>
+                                    <h6 class="my-2">TOTAL</h6>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-5">
-                                        <h5 class="my-2">$ <span class="item-discount-value  item-discount-value-db">0.00</span></h5>
-                                        <h5 class="my-2 ">$ <span class="  item-tax-value-db">0.00</span></h5>
-                                        <h5 class="my-2">$ <span class=" item-total discounted-total  item-total-value-db">0.00</span></h5>
+                                        <h6 class="my-2">$ <span class="item-discount-value  item-discount-value-db">0.00</span></h6>
+                                        <h6 class="my-2 ">$ <span class="  item-tax-value-db">0.00</span></h6>
+                                        <h6 class="my-2">$ <span class=" item-total discounted-total  item-total-value-db">0.00</span></h6>
                                     </div>
                                 </div>
                              
