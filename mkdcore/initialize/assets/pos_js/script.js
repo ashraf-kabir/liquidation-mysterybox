@@ -284,6 +284,11 @@ function load_pos_products(search_product_value = '' )
             dataType: 'JSON', 
             success: function (response)  
             { 
+               if(next_page == 0)
+               {
+                     $('.pos-products-list').html('');
+               }
+               
                  $('.pos-products-list').find('.loader_img_gif').remove();
                  if(response.products_list.length == 0)
                  {
