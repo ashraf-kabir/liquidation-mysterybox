@@ -388,7 +388,7 @@ class Custom_api_controller extends Manaknight_Controller
 
             
             $this->form_validation->set_rules('firstname', 'First Name', 'required|alpha_numeric');
-            $this->form_validation->set_rules('email', 'Email', 'valid_email');
+            $this->form_validation->set_rules('email', 'Email', 'valid_email|is_unique[customer.email]');
             $this->form_validation->set_rules('phone', 'Phone', 'numeric');
             $this->form_validation->set_rules('postalCode', 'Postal Code', 'numeric');
             
@@ -558,11 +558,19 @@ class Custom_api_controller extends Manaknight_Controller
                 echo json_encode($output);
                 exit(); 
             }
-
+ 
+            $checkout_type  = $this->input->post('checkout_type', TRUE);
+            $shipping_cost  = $this->input->post('shipping_cost', TRUE);
+            $discount       = $this->input->post('discount', TRUE);
 
             $post_array = $customer_data;
             $post_array['items'] = $cart_items; 
-            $_POST = $post_array;
+            $_POST = $post_array;   
+            $_POST['checkout_type'] = $checkout_type;   
+            $_POST['shipping_cost'] = $shipping_cost;   
+            $_POST['discount']      = $discount;   
+            
+
             $this->form_validation->set_rules('name', "Customer Name", "required|max_length[255]");
             $this->form_validation->set_rules('customer_id', "Customer", "required");
             $this->form_validation->set_rules('postal_code', "Customer Postal Code", "integer");
@@ -633,8 +641,7 @@ class Custom_api_controller extends Manaknight_Controller
                 $discount = $this->input->post('discount', TRUE);
             } 
             $tax  = 0;
- 
-
+  
 
             $this->db->trans_begin();
             
@@ -832,6 +839,7 @@ class Custom_api_controller extends Manaknight_Controller
                     $output['customer_name'] = $customer_data['name'];
                     $output['order_id']      = $order_id;
                     $output['address']       = $customer_data['address'];
+                    $output['discount']      = $discount;
                     $output['status']        = 200;
                     $output['success']       = 'Order has been created successfully.';
                     echo json_encode($output);

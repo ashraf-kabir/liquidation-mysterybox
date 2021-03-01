@@ -111,7 +111,7 @@
        <div class="container auth-footer-content pt-4 pb-4  d-none d-lg-block">
             <div class="row ">
                 <div class="col-md-6 footer-left">
-                    <span class='footer-text'>&copy; <?php echo date("yy"); ?> {{{title}}}. All Right Reserved.</span>
+                    <span class='footer-text'>&copy; <?php echo date("Y"); ?> {{{title}}}. All Right Reserved.</span>
                 </div>
                 <div class="col-md-6 footer-right">
                 </div>
@@ -120,7 +120,7 @@
        <div class="container auth-footer-content mt-4 pb-4   d-sm-block d-md-none d-lg-none">
             <ul class='auth-footer-mb-nav'>
                 <li class='mt-1'>
-                    <span class='footer-text'>&copy; <?php echo date("yy"); ?>  {{{title}}}. All Right Reserved.</span>
+                    <span class='footer-text'>&copy; <?php echo date("Y"); ?>  {{{title}}}. All Right Reserved.</span>
                 </li>
                 <li  class='mt-1'> 
                 </li>

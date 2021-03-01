@@ -2269,6 +2269,7 @@
 		"css": ["/assets/css/guest.css"]
 	},
 	"translations": {
+		"xyzBilling Address": "Billing Address",
 		"xyzLogout": "Logout",
 		"xyzAmount": "Amount",
 		"xyzSettings": "Settings",

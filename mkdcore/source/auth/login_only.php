@@ -84,7 +84,7 @@
             </form>
     </div>
 </div>
-<div class='text-center'>&copy; <?php echo date("yy"); ?> {{{title}}}. All Right Reserved.</div>
+<div class='text-center'>&copy; <?php echo date("Y"); ?> {{{title}}}. All Right Reserved.</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>

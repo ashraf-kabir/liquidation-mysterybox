@@ -939,7 +939,7 @@ const emptyCart = () =>
            type: 'POST',
            url: '../v1/api/pos_checkout_order',
            timeout: 15000,
-           data: { 'form_data' : formData, 'cart_items' : cartItems, 'discount' : discountedTotal },
+           data: { 'form_data' : formData, 'cart_items' : cartItems, 'discount' : discount },
            dataType: 'JSON',
            success: function (response) 
            {
@@ -1180,6 +1180,7 @@ const emptyCart = () =>
            if(response.error)
            {
              toastr.error(response.error); 
+             $('.shipping-cost-options').html('');
            } 
        },
        error: function()
@@ -1457,7 +1458,7 @@ function connectReaderHandler(discoveredReaders) {
  
 function fetchPaymentIntentClientSecret(amount) {
    const formData = $("#checkout-form").serializeArray();
-   const bodyContent = JSON.stringify({ amount: totalPrice , 'form_data' : formData, 'cart_items' : cartItems, 'discount' : discountedTotal });
+   const bodyContent = JSON.stringify({ amount: totalPrice , 'form_data' : formData, 'cart_items' : cartItems, 'discount' : discount });
  
    return fetch(base_url + 'v1/api/stripe_collect_payment', {
        method: "POST",
@@ -1527,7 +1528,7 @@ function capture(paymentIntentId) {
        headers: {
            'Content-Type': 'application/json'
        },
-       body: JSON.stringify({"id": paymentIntentId, 'form_data' : formData, 'cart_items' : cartItems, 'discount' : discountedTotal })
+       body: JSON.stringify({"id": paymentIntentId, 'form_data' : formData, 'cart_items' : cartItems, 'discount' : discount })
    })
    .then(function(response) {
        return response.json();
