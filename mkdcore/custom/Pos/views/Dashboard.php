@@ -25,11 +25,13 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/pos_css/styles.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
-    <link href="<?php echo base_url() ?>assets/js/select2.css" />
+    
 
     <div id="logs" style="display:none;"></div>
     <script src="https://js.stripe.com/terminal/v1/"></script>
     <script src="<?php echo base_url(); ?>assets/js/stripe_terminal.js"></script>
+
+    <link href="<?php echo base_url() ?>assets/css/select2.css"  rel="stylesheet"/>
     <title>POS</title>
 </head>
 <style type="text/css">
@@ -101,8 +103,7 @@
         display: none;
     }
 </style>
-<body>
-
+<body> 
     <div class="wrapper container-fluid pl-0">
         <!-- Sidebar  -->
         <nav id="sidebar" class="active">
@@ -671,7 +672,7 @@
                             </div>
                             <div class="col-5 " style="position: relative">
                                 <label for="checkout-address">Customer</label> 
-                                <select class="form-control customer-list-api" name="customer_id" required >
+                                <select class="form-control search_customer_list customer-list-api" name="customer_id" required >
                                     <option value="">Select</option>
                                 </select>
                             </div>
@@ -1016,7 +1017,7 @@ toastr.options = {
     <!-- Main JS -->
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/select2.js"></script>
+    
     <script src="<?php echo base_url(); ?>assets/pos_js/script.js"></script>
     <script type="text/javascript"> 
         $(document).ready(function () { 
@@ -1027,5 +1028,7 @@ toastr.options = {
     </script>
 
     <script src="/assets/js/quagga.min.js"></script> 
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 </html>

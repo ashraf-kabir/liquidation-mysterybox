@@ -82,24 +82,24 @@ $(document).ready(() => {
    *  Select2 Library
    *
    */
-  // $(".search_customer_list").select2({
-  //   minimumInputLength: 2,
-  //   placeholder: "Select",
-  //   allowClear: true
-  //   ajax: {
-  //       url: ajaxURLPath + 'v1/api/get_customer_search',
-  //       dataType: 'json',
-  //       type: "GET",
-  //       quietMillis: 50,
-  //       minimumResultsForSearch: 10,
-  //       data: function (term) {
-  //           return term;
-  //       },
-  //       results:  function (data) {
-  //           return  { results: data  };
-  //       }
-  //   }
-  // });
+  $(".search_customer_list").select2({
+    minimumInputLength: 2,
+    placeholder: "Select",
+    allowClear: true,
+    ajax: {
+        url: ajaxURLPath + 'v1/api/get_customer_search',
+        dataType: 'json',
+        type: "GET",
+        quietMillis: 50,
+        minimumResultsForSearch: 10,
+        data: function (term) {
+            return term;
+        },
+        results:  function (data) {
+            return  { results: data  };
+        }
+    }
+  });
 
   //load customers list
   function load_customers_list() {
