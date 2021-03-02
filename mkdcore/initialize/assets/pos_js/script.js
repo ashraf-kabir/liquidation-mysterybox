@@ -290,17 +290,17 @@ $(document).ready(() => {
               p_quantity = obj.quantity;
             }
 
-            pos_products += '<div class="col-xl-6 col-lg-12 p-0 items-row">';
+            pos_products +=
+              '<div class="col-xl-6 col-lg-12 p-0"> <span class="quantity-remaining-span"> ' +
+              p_quantity +
+              "</span> ";
 
             pos_products +=
               '<div class="item" data-price="' +
               Number(obj.selling_price).toFixed(2) +
               '" data-id="' +
               obj.id +
-              '">' +
-              '<span class="quantity-remaining-span">' +
-              p_quantity +
-              "</span> ";
+              '">';
 
             if (obj.feature_image != "") {
               pos_products +=
@@ -516,7 +516,6 @@ $(document).ready(() => {
     );
     totalPrice = totalPrice.toFixed(2);
     cartItemsArray.forEach((item) => {
-      console.log(item);
       const newCartItem = `<li class="row w-100 align-items-center added-item" data-id=${
         item.id
       } data-toggle="tooltip"  data-placement="top" title="Click to Edit Quantity" >
