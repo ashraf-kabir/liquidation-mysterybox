@@ -636,7 +636,7 @@ $(document).ready(() => {
 
   // EVENT LISTENERS
   $(document).on("click", ".item", function (e) {
-    const item = e.currentTarget.children[1].innerHTML;
+    const item = e.currentTarget.children[2].innerHTML; 
     const price = e.currentTarget.getAttribute("data-price");
 
     const cartItemId = e.currentTarget.getAttribute("data-id");
