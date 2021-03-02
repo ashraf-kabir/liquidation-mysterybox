@@ -42,9 +42,10 @@ class Custom_api_controller extends Manaknight_Controller
 
              
            
-            $inventory_items =  $this->inventory_model->get_all_inventory_products(['product_name' => $search_product_value , 'sku' => $search_product_value, 'store_location_id' => $store_id ], 1, $next_page, $limit);
- 
-            $output['status']        = 200; 
+            $inventory_items =  $this->inventory_model->get_all_inventory_products($search_product_value, ['status' => 1, 'available_in_shelf'=> 1, 'store_location_id' => $store_id ], $next_page, $limit );
+            
+            // echo $this->db->last_query();
+            $output['status']        = 200;  
             $output['products_list'] = $inventory_items;  
             echo json_encode($output);
             exit(); 
