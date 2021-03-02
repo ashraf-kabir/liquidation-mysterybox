@@ -291,16 +291,14 @@ $(document).ready(() => {
             }
 
             pos_products +=
-              '<div class="col-xl-6 col-lg-12"> <span class="quantity-remaining-span"> ' +
-              p_quantity +
-              "</span> ";
+              '<div class="col-xl-6 col-lg-12 p-0">' + p_quantity + "</span> ";
 
             pos_products +=
               '<div class="item" data-price="' +
               Number(obj.selling_price).toFixed(2) +
               '" data-id="' +
               obj.id +
-              '">';
+              '"> <span class="quantity-remaining-span"> ';
 
             if (obj.feature_image != "") {
               pos_products +=

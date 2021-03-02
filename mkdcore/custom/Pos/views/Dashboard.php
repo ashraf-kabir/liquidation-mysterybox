@@ -146,7 +146,7 @@
             <section id="main" class="container-fluid">
                 <div class="row pages active-page" id="pos">
                     <div class="col-xl-4 col-lg-4 col-md-4 cart-items" style="position: relative;">
-                        <div class="row py-3 px-md-3 justify-content-space-between pos-products-list ">  
+                        <div class="pos-products-list d-flex flex-wrap justify-content-between py-3 px-md-3">  
 
                         </div>
                         <div class="row py-3 px-md-3 justify-content-center "> 
