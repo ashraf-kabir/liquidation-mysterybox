@@ -146,7 +146,7 @@
             <section id="main" class="container-fluid">
                 <div class="row pages active-page" id="pos">
                     <div class="col-xl-4 col-lg-4 col-md-4 cart-items" style="position: relative;">
-                        <div class="row py-3 px-md-3 justify-content-center pos-products-list ">  
+                        <div class="row py-3 px-md-3 justify-content-space-between pos-products-list ">  
 
                         </div>
                         <div class="row py-3 px-md-3 justify-content-center "> 
@@ -165,26 +165,26 @@
                         </div>
                         <div class="cart-summary p-3  mt-3 ">
                             <div class="row my-1">
-                                <div class="col-12 my-1">
+                                <div class="col-12 my-1" style="font-size: 14px;">
                                     <span class="counter">0</span> item(s)
                                 </div>
-                                <div class="col-6">Subtotal</div>
-                                <div class="col-6 text-right ">$ <span class="item-total"> 0.00</span></div>
+                                <div class="col-6" style="font-size: 12px;">Subtotal</div>
+                                <div class="col-6 text-right" style="font-size: 12px;">$ <span class="item-total"> 0.00</span></div>
                             </div>
                             <div class="row my-1">
-                                <div class="col-6">Tax</div>
-                                <div class="col-6 text-right">$ 0.00</div>
+                                <div class="col-6" style="font-size: 12px;">Tax</div>
+                                <div class="col-6 text-right" style="font-size: 12px;">$ 0.00</div>
                             </div>
                             <div class="row my-1">
-                                <div class="col-6">Discount</div>
-                                <div class="col-6 text-right">$ <span class="item-discount-value"> 0.00</span></div>
+                                <div class="col-6" style="font-size: 12px;">Discount</div>
+                                <div class="col-6 text-right" style="font-size: 12px;">$ <span class="item-discount-value"> 0.00</span></div>
                             </div>
                             <div class="row text-danger mt-4">
                                 <div class="col-6">
-                                    <h5>TOTAL</h5>
+                                    <h5 style="font-size: 14px;">TOTAL</h5>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <h5>$ <span class="item-total discounted-total"> 0.00</span></h5>
+                                    <h5 style="font-size: 14px;">$ <span class="item-total discounted-total"> 0.00</span></h5>
                                 </div>
                             </div>
                         </div>

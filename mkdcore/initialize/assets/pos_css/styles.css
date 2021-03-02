@@ -93,12 +93,10 @@ label {
   text-align: center;
   margin: 10px;
   cursor: pointer;
-  width: 191.15px;
-  min-height: 161.57px;
+  width: 150px;
 }
 .item img {
-  width: 103px;
-  height: 80px;
+  height: 60px;
   margin: 15px 0 5px 0;
 }
 .item h5 {
@@ -144,7 +142,7 @@ label {
   margin: 5px 0;
 }
 .cart-list li h4 {
-  font-size: 15px;
+  font-size: 14px;
 }
 .added-item {
   cursor: pointer;
@@ -160,7 +158,6 @@ small {
 .cart-summary .counter {
   position: initial;
   color: initial;
-  font-size: initial;
   background: none;
   font-weight: initial;
   padding: 0;
@@ -305,7 +302,7 @@ span.counter {
   top: -10px;
   color: #fff;
   font-size: 12px;
-  padding: 2px;
+  padding: 2px 6px;
   text-align: center;
   font-weight: 500;
   background-color: red;
@@ -339,6 +336,19 @@ span.counter {
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
+@media (max-width: 1199px) {
+  .pos-products-list {
+    justify-content: center !important;
+  }
+  #checkout-btn {
+    min-height: 0px;
+    font-size: 14px;
+  }
+  .cart-actions .btn {
+    min-height: 0;
+    font-size: 14px;
+  }
+}
 
 @media (max-width: 768px) {
   #sidebar {
@@ -356,7 +366,7 @@ span.counter {
   position: absolute;
   top: 14px;
   font-size: 12px;
-  padding: 2px;
+  padding: 2px 6px;
   text-align: center;
   font-weight: 500;
   left: 36px;
