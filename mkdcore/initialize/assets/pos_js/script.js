@@ -298,7 +298,8 @@ $(document).ready(() => {
               Number(obj.selling_price).toFixed(2) +
               '" data-id="' +
               obj.id +
-              '"> <span class="quantity-remaining-span"> ';
+              '">' +
+              '<span class="quantity-remaining-span">';
 
             if (obj.feature_image != "") {
               pos_products +=
