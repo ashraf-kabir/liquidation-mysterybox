@@ -291,7 +291,7 @@ $(document).ready(() => {
             }
 
             pos_products +=
-              '<div class="col-xl-6 col-lg-12 p-0"> <span class="quantity-remaining-span"> ' +
+              '<div class="col-xl-6 col-lg-12 p-0 items-row"> <span class="quantity-remaining-span"> ' +
               p_quantity +
               "</span> ";
 
