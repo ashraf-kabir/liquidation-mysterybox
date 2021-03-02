@@ -338,8 +338,9 @@ span.counter {
     MEDIAQUERIES
 ----------------------------------------------------- */
 @media (max-width: 1199px) {
-  .pos-products-list {
-    justify-content: center !important;
+  .items-row {
+    display: flex;
+    justify-content: center;
   }
   #checkout-btn {
     min-height: 0px;

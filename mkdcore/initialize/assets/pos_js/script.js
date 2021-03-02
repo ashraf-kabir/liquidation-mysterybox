@@ -290,7 +290,7 @@ $(document).ready(() => {
               p_quantity = obj.quantity;
             }
 
-            pos_products += '<div class="col-xl-6 col-lg-12 p-0">';
+            pos_products += '<div class="col-xl-6 col-lg-12 p-0" items-row>';
 
             pos_products +=
               '<div class="item" data-price="' +
