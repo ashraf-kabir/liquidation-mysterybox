@@ -403,11 +403,13 @@
                                 <div class="row justify-content-end">
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-5 text-right">
                                     <h6 class="my-2">DISCOUNT</h6>
+                                    <h6 class="my-2">Shipping Cost</h6>
                                     <h6 class="my-2">TAX</h6>
                                     <h6 class="my-2">TOTAL</h6>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-5">
                                         <h6 class="my-2">$ <span class="item-discount-value  item-discount-value-db">0.00</span></h6>
+                                        <h6 class="my-2">$ <span class="item-shipping-value  item-shipping-value-db">0.00</span></h6>
                                         <h6 class="my-2 ">$ <span class="  item-tax-value-db">0.00</span></h6>
                                         <h6 class="my-2">$ <span class=" item-total discounted-total  item-total-value-db">0.00</span></h6>
                                     </div>

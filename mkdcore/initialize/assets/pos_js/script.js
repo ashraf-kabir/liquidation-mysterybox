@@ -68,6 +68,7 @@ $(document).ready(() => {
           $(".item-discount-value-db")[0].innerHTML = response.discount;
           $(".item-tax-value-db")[0].innerHTML = response.tax;
           $(".item-total-value-db")[0].innerHTML = response.total;
+          $(".item-shipping-value-db")[0].innerHTML = response.shipping;
         }
       },
     });
@@ -1022,8 +1023,8 @@ $(document).ready(() => {
           $("#checkout-address").val(`${street}`);
 
           // Disable and change the button text after adding a customer
-          $(".customer-btn").html("Customer Added");
-          $(".customer-btn").prop("disabled", true);
+          // $(".customer-btn").html("Customer Added");
+          // $(".customer-btn").prop("disabled", true);
 
           // Hide modal and clear form inputs
           $("#customer-modal").modal("hide");

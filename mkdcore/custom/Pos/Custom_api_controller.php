@@ -560,15 +560,13 @@ class Custom_api_controller extends Manaknight_Controller
                 exit(); 
             }
  
-            $checkout_type  = $this->input->post('checkout_type', TRUE);
-            $shipping_cost  = $this->input->post('shipping_cost', TRUE);
+            $checkout_type  = $this->input->post('checkout_type', TRUE); 
             $discount       = $this->input->post('discount', TRUE);
 
             $post_array = $customer_data;
             $post_array['items'] = $cart_items; 
             $_POST = $post_array;   
-            $_POST['checkout_type'] = $checkout_type;   
-            $_POST['shipping_cost'] = $shipping_cost;   
+            $_POST['checkout_type'] = $checkout_type;     
             $_POST['discount']      = $discount;   
             
 
@@ -642,6 +640,8 @@ class Custom_api_controller extends Manaknight_Controller
                 $discount = $this->input->post('discount', TRUE);
             } 
             $tax  = 0;
+
+            
   
 
             $this->db->trans_begin();
@@ -1923,6 +1923,7 @@ class Custom_api_controller extends Manaknight_Controller
             $discount = 0;
             $total    = 0;
             $tax      = 0;
+            $shipping = 0;
             foreach ($orders_list as $orders_list_key => $orders_list_value) 
             {    
 
@@ -1931,6 +1932,7 @@ class Custom_api_controller extends Manaknight_Controller
                 $discount         = $orders_list_value->discount;
                 $total            = $orders_list_value->total;
                 $tax              = $orders_list_value->tax;
+                $shipping         = $orders_list_value->shipping_cost;
 
                 $order_date    = date('d-m-Y', strtotime($orders_list_value->order_date_time));
                 $order_time    = date('h:i:s A', strtotime($orders_list_value->order_date_time));
@@ -1963,6 +1965,7 @@ class Custom_api_controller extends Manaknight_Controller
                 $output['tax']              = number_format($tax, 2); 
                 $output['total']            = number_format($total, 2); 
                 $output['discount']         = number_format($discount, 2); 
+                $output['shipping']         = number_format($shipping, 2); 
                 echo json_encode($output);
                 exit();
             }else{
