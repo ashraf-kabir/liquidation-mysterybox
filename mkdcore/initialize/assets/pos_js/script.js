@@ -290,8 +290,7 @@ $(document).ready(() => {
               p_quantity = obj.quantity;
             }
 
-            pos_products +=
-              '<div class="col-xl-6 col-lg-12 p-0">' + p_quantity + "</span> ";
+            pos_products += '<div class="col-xl-6 col-lg-12 p-0">' + p_quantity;
 
             pos_products +=
               '<div class="item" data-price="' +
@@ -299,7 +298,7 @@ $(document).ready(() => {
               '" data-id="' +
               obj.id +
               '">' +
-              '<span class="quantity-remaining-span">';
+              '<span class="quantity-remaining-span"> </span> ';
 
             if (obj.feature_image != "") {
               pos_products +=
