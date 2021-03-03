@@ -170,11 +170,11 @@
                                     <span class="counter">0</span> item(s)
                                 </div>
                                 <div class="col-6" style="font-size: 12px;">Subtotal</div>
-                                <div class="col-6 text-right" style="font-size: 12px;">$ <span class="item-total"> 0.00</span></div>
+                                <div class="col-6 text-right" style="font-size: 12px;">$ <span class="item-total item-subtotal"> 0.00</span></div>
                             </div>
                             <div class="row my-1">
                                 <div class="col-6" style="font-size: 12px;">Tax</div>
-                                <div class="col-6 text-right" style="font-size: 12px;">$ 0.00</div>
+                                <div class="col-6 text-right" style="font-size: 12px;">$ <span class="item-tax-value"> 0.00</span></div>
                             </div>
                             <div class="row my-1">
                                 <div class="col-6" style="font-size: 12px;">Discount</div>
@@ -782,13 +782,13 @@
 
                             <div class="col-12">
                                 <label for="split-payment">
-                                    <input type="checkbox" name="split-payment" id="split-payment"> Split Payment
+                                    <input type="checkbox" name="split_payment" id="split-payment" value="1"> Split Payment
                                 </label>
                             </div>
                             
                             <div class="col-12 shipping-postal-option mb-2">
                                 <label for="">Shipping Postal Code</label>
-                                <input type="text" class="form-control shipping-postal-code" name="shipping_postal_cost" value="">
+                                <input type="text" class="form-control shipping-postal-code" name="shipping_postal_cost" value="<?php echo isset( $store_data->zip ) ? $store_data->zip : ""; ?>" >
                             </div> 
 
                             <div class="col-12 button-calculate-shipping">
@@ -801,19 +801,29 @@
                             </div>
                         </div>
 
+                        <div class="row bg-white is_split_payment"  style="display:none;"> 
+                            <div class="col-6 " style="position: relative">
+                                <label for="checkout-cash">Cash Amount</label> 
+                                <input type="text" name="cash_amount" class="checkout-address form-control"
+                                    id="checkout-cash-amount"  value="">
+                            </div> 
+
+                            <div class="col-6 " style="position: relative">
+                                <label for="checkout-credit">Credit Amount</label>
+                                <input type="text" name="credit_amount" class="checkout-address form-control"
+                                    id="checkout-credit-amount"  value="">
+                            </div>
+                        </div> 
+
                         <div class="row bg-white mt-3 py-4">
+                             
                             <div class="col-12">
                                 <h4>Payable</h4>
                             </div>
                             <div class="col-12 d-flex justify-content-between">
                                 <h6 class="text-danger">Total</h6>
                                 <h6 class="text-danger">$ <span class="item-total discounted-total">0.00</span></h6>
-                            </div>
- 
-                            <div class="col-12 d-flex justify-content-between">
-                                <h6 class="">Change</h6>
-                                <p class="text-danger">$ <span class="change">0.00</span></p>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                     <div class="modal-footer">

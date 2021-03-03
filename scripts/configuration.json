@@ -683,6 +683,9 @@
 				["shipping_cost_service_code", "string", [{ "limit": 255 }], "xyzShipping Service Code", "", ""],
 				["shipping_zip", "string", [{ "limit": 255 }], "xyzShipping Zip", "", ""],
 				["subtotal", "float", [], "xyzSubtotal", "required", "required"],
+				["cash_amount", "float", [], "xyzSubtotal", "", ""],
+				["credit_amount", "float", [], "xyzSubtotal", "", ""],
+				["is_split", "integer", [], "xyzSplit Payment", "", ""],
 				["shipping_cost", "float", [], "xyzShipping Cost", "", ""],
 				["tax", "float", [], "xyzTax", "", ""],
 				["total", "float", [], "xyzTotal", "required", "required"],
@@ -704,6 +707,7 @@
 				"checkout_type": {"1": "Pickup", "2" : "Delivery"}, 
 				"is_picked": {"1": "Yes", "0" : "No"},
 				"is_shipped": {"1": "Yes", "0" : "No"},
+				"is_split": {"1": "Yes", "0" : "No"},
 				"payment_method": {"1": "Cash", "2" : "Card", "3" : "ACH", "4" : "Bank"}
 			},
 			"pre": "if(!isset($data['is_picked']))\n\t\t{\n\t\t\t $data['is_picked'] = 0; \n\t\t}\n\t\t\tif(!isset($data['is_shipped']))\n\t\t{\n\t\t\t$data['is_shipped'] = 0;\n\t\t}\n\t\t\t \n",
@@ -2789,6 +2793,7 @@
 		"v1/api/add_product_to_cart_by_customer" : "Guest/Custom_api_controller/add_product_to_cart_by_customer",
 		"v1/api/pos_invoice_data" : "Guest/Custom_api_controller/pos_invoice_data",
 		"v1/api/apply_coupon" : "Guest/Custom_api_controller/apply_coupon",
+		"v1/api/load_tax_value" : "Guest/Custom_api_controller/load_tax_value",
  
 		"v1/api/get_shipping_cost" : "Guest/Custom_api_controller/get_shipping_cost", 
 
