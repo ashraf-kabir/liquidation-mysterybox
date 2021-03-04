@@ -31,7 +31,7 @@ class Pos_checkout_service {
     }
 
 
-    public function create_order($customer_data,$tax,$discount,$pos_user_id,$shipping_cost = 0)
+    public function create_order($customer_data,$tax,$discount,$pos_user_id,$shipping_cost = 0,$split_payment = 0, $cash_amount= 0, $credit_amount = 0)
     {
         $billing_name        =  $customer_data['name'];
         $billing_address     =  $customer_data['address'];
@@ -107,7 +107,17 @@ class Pos_checkout_service {
             'status'            =>  1, 
             'checkout_type'     =>  $checkout_type, 
             'pos_pickup_status' =>  1, 
+            'is_split'          =>  $split_payment, 
+            'cash_amount'       =>  $cash_amount, 
+            'credit_amount'     =>  $credit_amount, 
         );
+
+        if(!$split_payment)
+        {
+            unset( $data_checkout_order['cash_amount'] );
+            unset( $data_checkout_order['credit_amount'] );
+        }
+
 
         $result = $this->_pos_order_model->create($data_checkout_order);
 

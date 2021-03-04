@@ -187,32 +187,34 @@ class Inventory_model extends Manaknight_Model
 	 *
 	 * @return array
 	 */
-	public function get_all_inventory_products($where = array(),$available_in_shelf = 1, $page = 0, $limit=10)
+	public function get_all_inventory_products($search_product_value = false, $where2 = array(), $page = 0, $limit=10)
     {
         $this->db->from($this->_table);
 
 		$this->db->limit($limit, $page);
 		
-        foreach($where as $field => $value)
-        {
-            if (is_numeric($field) && strlen($value) > 0)
-            {
-                $this->db->where($value);
-                continue;
-            }
-
-            if ($field === NULL && $value === NULL)
-            {
-                continue;
-            }
-
-            if ($value !== NULL and !empty($value))
-            { 
-                $this->db->or_like($this->clean_alpha_field($field), $value, 'both');
-            }
+		if($search_product_value)
+		{ 
+			$this->db->group_start();
+			 
+			$this->db->or_like($this->clean_alpha_field('product_name'), $search_product_value, 'both');
+			$this->db->or_like($this->clean_alpha_field('sku'), $search_product_value, 'both');
+			 
+			$this->db->group_end();
 		}
 		
-		$this->db->where('available_in_shelf', $available_in_shelf);
+ 
+
+		if(!empty($where2))
+		{ 
+			$this->db->group_start();
+			foreach($where2 as $field => $value)
+			{
+				$this->db->where($field, $value);
+			}  
+			$this->db->group_end();
+		}
+
         $this->db->order_by('pin_item_top','DESC');
         return $this->db->get()->result();
     }

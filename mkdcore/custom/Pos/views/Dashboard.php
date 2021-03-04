@@ -25,11 +25,13 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/pos_css/styles.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
-    <link href="<?php echo base_url() ?>assets/js/select2.css" />
+    
 
     <div id="logs" style="display:none;"></div>
     <script src="https://js.stripe.com/terminal/v1/"></script>
     <script src="<?php echo base_url(); ?>assets/js/stripe_terminal.js"></script>
+
+    <link href="<?php echo base_url() ?>assets/css/select2.css"  rel="stylesheet"/>
     <title>POS</title>
 </head>
 <style type="text/css">
@@ -101,8 +103,7 @@
         display: none;
     }
 </style>
-<body>
-
+<body> 
     <div class="wrapper container-fluid pl-0">
         <!-- Sidebar  -->
         <nav id="sidebar" class="active">
@@ -169,11 +170,11 @@
                                     <span class="counter">0</span> item(s)
                                 </div>
                                 <div class="col-6" style="font-size: 12px;">Subtotal</div>
-                                <div class="col-6 text-right" style="font-size: 12px;">$ <span class="item-total"> 0.00</span></div>
+                                <div class="col-6 text-right" style="font-size: 12px;">$ <span class="item-total item-subtotal"> 0.00</span></div>
                             </div>
                             <div class="row my-1">
                                 <div class="col-6" style="font-size: 12px;">Tax</div>
-                                <div class="col-6 text-right" style="font-size: 12px;">$ 0.00</div>
+                                <div class="col-6 text-right" style="font-size: 12px;">$ <span class="item-tax-value"> 0.00</span></div>
                             </div>
                             <div class="row my-1">
                                 <div class="col-6" style="font-size: 12px;">Discount</div>
@@ -403,11 +404,13 @@
                                 <div class="row justify-content-end">
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-5 text-right">
                                     <h6 class="my-2">DISCOUNT</h6>
+                                    <h6 class="my-2">Shipping Cost</h6>
                                     <h6 class="my-2">TAX</h6>
                                     <h6 class="my-2">TOTAL</h6>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-5">
                                         <h6 class="my-2">$ <span class="item-discount-value  item-discount-value-db">0.00</span></h6>
+                                        <h6 class="my-2">$ <span class="item-shipping-value  item-shipping-value-db">0.00</span></h6>
                                         <h6 class="my-2 ">$ <span class="  item-tax-value-db">0.00</span></h6>
                                         <h6 class="my-2">$ <span class=" item-total discounted-total  item-total-value-db">0.00</span></h6>
                                     </div>
@@ -669,7 +672,7 @@
                             </div>
                             <div class="col-5 " style="position: relative">
                                 <label for="checkout-address">Customer</label> 
-                                <select class="form-control customer-list-api" name="customer_id" required >
+                                <select class="form-control search_customer_list customer-list-api" name="customer_id" required >
                                     <option value="">Select</option>
                                 </select>
                             </div>
@@ -779,13 +782,13 @@
 
                             <div class="col-12">
                                 <label for="split-payment">
-                                    <input type="checkbox" name="split-payment" id="split-payment"> Split Payment
+                                    <input type="checkbox" name="split_payment" id="split-payment" value="1"> Split Payment
                                 </label>
                             </div>
                             
                             <div class="col-12 shipping-postal-option mb-2">
                                 <label for="">Shipping Postal Code</label>
-                                <input type="text" class="form-control shipping-postal-code" name="shipping_postal_cost" value="">
+                                <input type="text" class="form-control shipping-postal-code" name="shipping_postal_cost" value="<?php echo isset( $store_data->zip ) ? $store_data->zip : ""; ?>" >
                             </div> 
 
                             <div class="col-12 button-calculate-shipping">
@@ -798,19 +801,29 @@
                             </div>
                         </div>
 
+                        <div class="row bg-white is_split_payment"  style="display:none;"> 
+                            <div class="col-6 " style="position: relative">
+                                <label for="checkout-cash">Cash Amount</label> 
+                                <input type="text" name="cash_amount" class="checkout-address form-control"
+                                    id="checkout-cash-amount"  value="">
+                            </div> 
+
+                            <div class="col-6 " style="position: relative">
+                                <label for="checkout-credit">Credit Amount</label>
+                                <input type="text" name="credit_amount" class="checkout-address form-control"
+                                    id="checkout-credit-amount"  value="">
+                            </div>
+                        </div> 
+
                         <div class="row bg-white mt-3 py-4">
+                             
                             <div class="col-12">
                                 <h4>Payable</h4>
                             </div>
                             <div class="col-12 d-flex justify-content-between">
                                 <h6 class="text-danger">Total</h6>
                                 <h6 class="text-danger">$ <span class="item-total discounted-total">0.00</span></h6>
-                            </div>
- 
-                            <div class="col-12 d-flex justify-content-between">
-                                <h6 class="">Change</h6>
-                                <p class="text-danger">$ <span class="change">0.00</span></p>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -1014,7 +1027,7 @@ toastr.options = {
     <!-- Main JS -->
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/select2.js"></script>
+    
     <script src="<?php echo base_url(); ?>assets/pos_js/script.js"></script>
     <script type="text/javascript"> 
         $(document).ready(function () { 
@@ -1025,5 +1038,7 @@ toastr.options = {
     </script>
 
     <script src="/assets/js/quagga.min.js"></script> 
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </body>
 </html>

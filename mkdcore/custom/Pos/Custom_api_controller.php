@@ -26,6 +26,24 @@ class Custom_api_controller extends Manaknight_Controller
         
     }
 
+
+
+    public function load_tax_value()
+    {
+        $this->load->model('tax_model');
+        $tax_data  =  $this->tax_model->get(1);
+
+        $tax_value = 0;
+        if( isset($tax_data->tax)  )
+        {
+            $tax_value = $tax_data->tax;
+        }
+
+
+        $output['tax_value']     = $tax_value;  
+        echo json_encode($output);
+        exit(); 
+    }
     
 
     public function pos_get_all_inventory_items()
@@ -36,15 +54,18 @@ class Custom_api_controller extends Manaknight_Controller
             $store_id = $this->session->userdata('store_id');
             $this->load->model('inventory_model');
             
+            
             $limit                 =   $this->_pagination_limit;
             $search_product_value  =   $this->input->post('search_product_value', TRUE); 
             $next_page             =   $this->input->post('next_page', TRUE) *  $limit;
 
              
            
-            $inventory_items =  $this->inventory_model->get_all_inventory_products(['product_name' => $search_product_value , 'sku' => $search_product_value, 'store_location_id' => $store_id ], 1, $next_page, $limit);
- 
-            $output['status']        = 200; 
+            $inventory_items =  $this->inventory_model->get_all_inventory_products($search_product_value, ['status' => 1, 'available_in_shelf'=> 1, 'store_location_id' => $store_id ], $next_page, $limit );
+            
+             
+            // echo $this->db->last_query();
+            $output['status']        = 200;  
             $output['products_list'] = $inventory_items;  
             echo json_encode($output);
             exit(); 
@@ -554,21 +575,21 @@ class Custom_api_controller extends Manaknight_Controller
             if(empty($cart_items) or empty($form_data))
             {
                 $output['status'] = 0;
-                $output['error']  = "Date is required";
+                $output['error']  = "Data is required";
                 echo json_encode($output);
                 exit(); 
             }
  
-            $checkout_type  = $this->input->post('checkout_type', TRUE);
-            $shipping_cost  = $this->input->post('shipping_cost', TRUE);
+            $checkout_type  = $this->input->post('checkout_type', TRUE); 
             $discount       = $this->input->post('discount', TRUE);
+            $tax_price       = $this->input->post('taxPrice', TRUE);
 
             $post_array = $customer_data;
             $post_array['items'] = $cart_items; 
             $_POST = $post_array;   
-            $_POST['checkout_type'] = $checkout_type;   
-            $_POST['shipping_cost'] = $shipping_cost;   
+            $_POST['checkout_type'] = $checkout_type;     
             $_POST['discount']      = $discount;   
+            $_POST['tax_price']     = $tax_price;   
             
 
             $this->form_validation->set_rules('name', "Customer Name", "required|max_length[255]");
@@ -581,6 +602,8 @@ class Custom_api_controller extends Manaknight_Controller
             $this->form_validation->set_rules('country', "Country", "max_length[255]");
             $this->form_validation->set_rules('state', "State", "max_length[255]");
             $this->form_validation->set_rules('checkout_type', "Checkout Type", "integer");
+            $this->form_validation->set_rules('credit_amount', "Credit Amount", "numeric");
+            $this->form_validation->set_rules('cash_amount', "Cash Amount", "numeric");
 
 
 
@@ -593,6 +616,7 @@ class Custom_api_controller extends Manaknight_Controller
             } 
 
 
+
             if ($this->form_validation->run() === FALSE)
             {
                 $error_msg = validation_errors();
@@ -602,7 +626,9 @@ class Custom_api_controller extends Manaknight_Controller
                 exit();  
             }
 
-            
+            // echo "<pre>";
+            // print_r($_POST);
+            // die;
  
 
             /**
@@ -640,7 +666,20 @@ class Custom_api_controller extends Manaknight_Controller
             {
                 $discount = $this->input->post('discount', TRUE);
             } 
-            $tax  = 0;
+
+            $tax = 0;
+            if( $this->input->post('tax_price', TRUE) )
+            {
+                $tax = $this->input->post('tax_price', TRUE);
+            }  
+
+            $split_payment = $this->input->post('split_payment');
+            
+
+             
+            $credit_amount = $this->input->post('credit_amount');
+            $cash_amount   = $this->input->post('cash_amount'); 
+             
   
 
             $this->db->trans_begin();
@@ -648,7 +687,7 @@ class Custom_api_controller extends Manaknight_Controller
             /**
             * Create Order 
             */ 
-            $result = $this->pos_checkout_service->create_order($customer_data,$tax,$discount,$pos_user_id,$shipping_cost);
+            $result = $this->pos_checkout_service->create_order($customer_data,$tax,$discount,$pos_user_id,$shipping_cost,$split_payment,$cash_amount, $credit_amount);
 
 
             if ($result) 
@@ -1922,6 +1961,7 @@ class Custom_api_controller extends Manaknight_Controller
             $discount = 0;
             $total    = 0;
             $tax      = 0;
+            $shipping = 0;
             foreach ($orders_list as $orders_list_key => $orders_list_value) 
             {    
 
@@ -1930,6 +1970,7 @@ class Custom_api_controller extends Manaknight_Controller
                 $discount         = $orders_list_value->discount;
                 $total            = $orders_list_value->total;
                 $tax              = $orders_list_value->tax;
+                $shipping         = $orders_list_value->shipping_cost;
 
                 $order_date    = date('d-m-Y', strtotime($orders_list_value->order_date_time));
                 $order_time    = date('h:i:s A', strtotime($orders_list_value->order_date_time));
@@ -1962,6 +2003,7 @@ class Custom_api_controller extends Manaknight_Controller
                 $output['tax']              = number_format($tax, 2); 
                 $output['total']            = number_format($total, 2); 
                 $output['discount']         = number_format($discount, 2); 
+                $output['shipping']         = number_format($shipping, 2); 
                 echo json_encode($output);
                 exit();
             }else{

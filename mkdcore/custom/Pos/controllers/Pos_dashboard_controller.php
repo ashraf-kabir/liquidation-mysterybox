@@ -20,6 +20,9 @@ class Pos_dashboard_controller extends Pos_controller
 
     public function index ()
     {
+        $this->load->model('store_model');
+        $this->_data['store_data'] = $this->store_model->get($this->session->userdata('store_id'));
+
         return $this->load->view('Pos/Dashboard', $this->_data);
     }
 }

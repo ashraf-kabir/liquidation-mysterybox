@@ -179,8 +179,8 @@ class Accounting_api_service {
                 'tax'                 =>  $model->tax,
                 'transaction_type'    =>  $transaction_type,
                 'status'              =>  1,
-                'pay_date'            =>  $model->created_at,
-                'transaction_date'    =>  $model->created_at,
+                'pay_date'            =>  $model->transaction_date . " " . $model->transaction_time,
+                'transaction_date'    =>  $model->transaction_date . " " . $model->transaction_time,
                 'platform_id'         =>  $platform_id,
             );
 
