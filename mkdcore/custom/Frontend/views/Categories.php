@@ -84,7 +84,7 @@
               <div class="row my-5" > 
                 <?php foreach($products_list as $key => $product){ ?> 
 
-                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 my-2">
+                  <div class="col-lg-4 col-md-6 col-sm-6 col-12 my-2">
                   <a href="<?php echo base_url(); ?>product/<?php echo $product->id; ?>">
                     <div class="store__item text-center" data-id="<?= $product->id; ?>"  data-price="<?= $product->selling_price; ?>" data-title="<?= $product->product_name; ?>" >
                       <i class="far fa-heart"></i>
