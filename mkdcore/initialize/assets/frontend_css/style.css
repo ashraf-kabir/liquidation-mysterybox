@@ -164,8 +164,9 @@ header.navbar-toggler-icon {
   position: relative;
   margin-top: 10px;
   display: flex;
-  /* align-items: ; */
   flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .store__item img {
   margin-top: 20px;
@@ -289,6 +290,8 @@ input[name="terms"] {
 .addToCartBtn {
   font-size: 14px;
   border: none;
+  border-radius: 4px;
+  height: 38px;
 }
 /* MODALS */
 .modal.fade.show {

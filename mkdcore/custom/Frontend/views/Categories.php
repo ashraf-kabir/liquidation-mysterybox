@@ -80,7 +80,7 @@
                 />
               </div>
             </div>
-            <div class="col-12" id="store">
+            <div class="col-12 p-0" id="store">
               <div class="row my-5" > 
                 <?php foreach($products_list as $key => $product){ ?> 
 
@@ -105,7 +105,7 @@
 
                       <div class="w-100 text-left">
                         <h6 class="mt-"><?= $product->product_name; ?> (<?= $product->quantity; ?>)</h6>
-                        <h4 class="mt- text-danger mb-">$<?= number_format($product->selling_price,2); ?></h3>
+                        <h5 class="mt- text-danger mb-">$<?= number_format($product->selling_price,2); ?></h3>
                       </div>
                       <button class="btn-success w-100 addToCartBtn">
                         Add to Cart
