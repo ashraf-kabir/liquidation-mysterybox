@@ -91,11 +91,13 @@ class Manager_inventory_controller extends Manager_controller
             $this->names_helper_service->set_physical_location_model($this->physical_location_model);
             $this->names_helper_service->set_customer_model($this->customer_model);
             $this->names_helper_service->set_category_model($this->category_model); 
+            $this->names_helper_service->set_store_model($this->store_model);
+            
             foreach ($this->_data['view_model']->get_list() as $key => &$value) 
             { 
                 $value->category_id       = $this->names_helper_service->get_category_real_name( $value->category_id ); 
                 $value->physical_location = $this->names_helper_service->get_physical_location_real_name( $value->physical_location ); 
-                 
+                $value->store_location_id = $this->names_helper_service->get_store_name( $value->store_location_id ); 
             }
         }
 
@@ -339,9 +341,17 @@ class Manager_inventory_controller extends Manager_controller
 		}
 
 
+        $this->names_helper_service->set_store_model($this->store_model); 
+        $this->names_helper_service->set_physical_location_model($this->physical_location_model);
+        $this->names_helper_service->set_customer_model($this->customer_model);
+        $this->names_helper_service->set_category_model($this->category_model);  
+
         include_once __DIR__ . '/../../view_models/Inventory_admin_view_view_model.php';
 		$this->_data['view_model'] = new Inventory_admin_view_view_model($this->inventory_model);
 		$this->_data['view_model']->set_heading('Inventory');
+        $model->category_id       = $this->names_helper_service->get_category_real_name( $model->category_id ); 
+        $model->physical_location = $this->names_helper_service->get_physical_location_real_name( $model->physical_location ); 
+        $model->store_location_id = $this->names_helper_service->get_store_name( $model->store_location_id ); 
         $this->_data['view_model']->set_model($model);
         
 		return $this->render('Admin/InventoryView', $this->_data);

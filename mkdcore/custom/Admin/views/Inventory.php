@@ -109,6 +109,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         if ($clean_mode) {
             $format_mode = '&layout_clean_mode=1';
         }
+        
         foreach ($view_model->get_column() as $key => $data) {
             $data_field = $field_column[$key];
             if (strlen($order_by) < 1 || $data_field == '')
@@ -143,6 +144,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							echo "<td>{$data->product_name}</td>";
 							echo "<td>{$data->sku}</td>";
 							echo "<td>{$data->category_id}</td>";
+							echo "<td>{$data->store_location_id}</td>";
 							echo "<td>{$data->physical_location}</td>";
 							echo "<td>" . ucfirst($view_model->product_type_mapping()[$data->product_type]) ."</td>";
 							echo "<td>{$data->quantity}</td>";
