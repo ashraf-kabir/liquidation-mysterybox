@@ -169,12 +169,13 @@ header.navbar-toggler-icon {
 }
 .store__item img {
   margin-top: 20px;
+  object-fit: contain;
 }
 .store__item .fa-heart {
   position: absolute;
   right: 10px;
   top: 10px;
-  font-size: 29px;
+  font-size: 20px;
   cursor: pointer;
 }
 
