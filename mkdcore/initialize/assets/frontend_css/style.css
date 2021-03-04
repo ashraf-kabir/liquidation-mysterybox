@@ -286,6 +286,10 @@ input[name="terms"] {
   align-items: center;
   margin-bottom: 10px;
 }
+.addToCartBtn {
+  font-size: 14px;
+  border: none;
+}
 /* MODALS */
 .modal.fade.show {
   z-index: 999999999999 !important;

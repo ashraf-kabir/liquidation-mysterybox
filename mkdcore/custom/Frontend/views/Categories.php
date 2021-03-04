@@ -107,7 +107,7 @@
                         <h6 class="mt-"><?= $product->product_name; ?> (<?= $product->quantity; ?>)</h6>
                         <h4 class="mt- text-danger mb-">$<?= number_format($product->selling_price,2); ?></h3>
                       </div>
-                      <button class="btn btn-success w-100 addToCartBtn">
+                      <button class="btn-success w-100 addToCartBtn">
                         Add to Cart
                       </button>
                     </div>
