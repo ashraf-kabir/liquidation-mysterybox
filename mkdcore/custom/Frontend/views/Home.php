@@ -15,26 +15,26 @@
 
     <section>
       <div class="container-fluid px-0 my-5" id="discounted-items">
-        <div class="row justify-content-center justify-content-md-between px-0">
+        <div class="row w-100">
           <div
-            class="col-xl-3 col-lg-4 col-md-6 col-12 text-center"
+            class="col-lg-3 col-md-6 col-12"
           >
             <a href="" class="hvr-ripple-out">
               <img src="<?php echo base_url(); ?>/assets/frontend_images/discount-img-1.png" alt=""
             /></a>
           </div>
-          <div class="col-xl-3 col-lg-4 col-md-6 col-12 text-center">
+          <div class="col-lg-3 col-md-6 col-12">
             <a href="" class="hvr-ripple-out">
               <img src="<?php echo base_url(); ?>/assets/frontend_images/discount-img-2.png" alt=""
             /></a>
           </div>
-          <div class="col-xl-3 col-lg-4 col-md-6 col-12 text-center">
+          <div class="col-lg-3 col-md-6 col-12">
             <a href="" class="hvr-ripple-out">
               <img src="<?php echo base_url(); ?>/assets/frontend_images/discount-img-3.png" alt=""
             /></a>
           </div>
           <div
-            class="col-xl-3 col-lg-4 col-md-6 col-12 text-center text-md-right"
+            class="col-lg-3 col-md-6 col-12"
           >
             <a href="" class="hvr-ripple-out">
               <img src="<?php echo base_url(); ?>/assets/frontend_images/discount-img-4.png" alt=""
