@@ -1,7 +1,7 @@
 <!--MAIN  -->
 <section class="container-fluid pl-0 mt-5">
-      <div class="row justify-content-center">
-        <div class="col-lg-4 col-md-3 d-none d-md-block mx-2">
+      <div class="row">
+        <div class="col-md-3 d-none d-md-block mx-2">
           <form action="" method="get" id="search_form_left_side">
             <div class="row filter">
               <div class="col-12 bg-dark h-25 py-0 my-0 text-center">
@@ -69,10 +69,10 @@
             </div>
           </form>
         </div>
-        <div class="col-lg-8 col-md-9 col-12">
-          <div class="col-xl-12 col-lg-12 col-md-12 col-12 my-3">
-            <div class="row justify-content-center">
-              <div class="col-md-10 col-12">
+        <div class="col-md-8 mx-auto">
+          <div class="col-12 my-3">
+            <div class="row">
+              <div class="col-12">
                 <img
                   src="<?php echo base_url(); ?>/assets/frontend_images/category-header-img.png"
                   class="w-100"
@@ -80,8 +80,8 @@
                 />
               </div>
             </div>
-            <div class="col-xl-12 col-lg-12 col-md-8 col-12" id="store">
-              <div class="row justify-content-center justify-content-md-between my-5" > 
+            <div class="col-12" id="store">
+              <div class="row my-5" > 
                 <?php foreach($products_list as $key => $product){ ?> 
 
                   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 my-2">
