@@ -80,6 +80,11 @@ header.navbar-toggler-icon {
   height: 3px;
   opacity: 0.59 !important;
 }
+.fa-bars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /* FOOTER */
 #footer {
   background: rgba(131, 131, 131, 1);
@@ -278,6 +283,7 @@ input[name="terms"] {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
 }
 /* MODALS */
 .modal.fade.show {

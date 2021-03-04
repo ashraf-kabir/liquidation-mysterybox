@@ -46,13 +46,13 @@
 
     <!-- Featured Products -->
     <section>
-      <div class="container px-0 my-5" id="featured-products">
-        <div class="row">
+      <div class="container-fluid px-0 my-5" id="featured-products">
+        <div class="row w-100 m-0">
           <div class="col-12">
             <h3>Featured Products</h3>
           </div>
         </div>
-        <div class="row justify-content-center justify-content-md-around">
+        <div class="row w-100 m-0">
           <div class="col-12 text-center">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
@@ -214,13 +214,13 @@
 
     <!-- Category -->
     <section>
-      <div class="container px-0" id="category">
-        <div class="row">
+      <div class="container-fluid px-0" id="category">
+        <div class="row w-100 m-0">
           <div class="col-12">
             <h3>Categories</h3>
           </div>
         </div>
-        <div class="row justify-content-center bg-white p-2 py-md-4">
+        <div class="row w-100 m-0">
           <div class="col-xl-8 col-lg-8 col-md-7 col-12">
             <div class="row justify-content-center py-3"> 
               <?php foreach($all_categories as $key => $category){ ?>
