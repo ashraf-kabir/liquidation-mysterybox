@@ -14,27 +14,27 @@
     </main>
 
     <section>
-      <div class="container px-0 my-5" id="discounted-items">
+      <div class="container-fluid px-0 my-5" id="discounted-items">
         <div class="row justify-content-center justify-content-md-between px-0">
           <div
-            class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-10 text-center text-md-left"
+            class="col-xl-3 col-lg-4 col-md-6 col-12 text-center"
           >
             <a href="" class="hvr-ripple-out">
               <img src="<?php echo base_url(); ?>/assets/frontend_images/discount-img-1.png" alt=""
             /></a>
           </div>
-          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-10 text-center">
+          <div class="col-xl-3 col-lg-4 col-md-6 col-12 text-center">
             <a href="" class="hvr-ripple-out">
               <img src="<?php echo base_url(); ?>/assets/frontend_images/discount-img-2.png" alt=""
             /></a>
           </div>
-          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-10 text-center">
+          <div class="col-xl-3 col-lg-4 col-md-6 col-12 text-center">
             <a href="" class="hvr-ripple-out">
               <img src="<?php echo base_url(); ?>/assets/frontend_images/discount-img-3.png" alt=""
             /></a>
           </div>
           <div
-            class="col-xl-3 col-lg-3 col-md-3 col-sm-5 col-10 text-center text-md-right"
+            class="col-xl-3 col-lg-4 col-md-6 col-12 text-center text-md-right"
           >
             <a href="" class="hvr-ripple-out">
               <img src="<?php echo base_url(); ?>/assets/frontend_images/discount-img-4.png" alt=""

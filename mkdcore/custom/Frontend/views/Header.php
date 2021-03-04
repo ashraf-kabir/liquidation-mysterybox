@@ -49,7 +49,7 @@
         </div>
 
         <div
-class=" col-xl-5 col-lg-3 col-md-5 col-sm-7 col-12 d-flex justify-content-around align-items-center"
+class=" col-xl-6 col-md-7 col-12 d-flex justify-content-around align-items-center"
         >
           <a href="text-dark">My WishList <i class="fas fa-heart"></i></a>
 
