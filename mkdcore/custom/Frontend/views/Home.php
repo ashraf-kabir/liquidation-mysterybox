@@ -1,279 +1,93 @@
-
-    <main>
-      <div class="container-fluid my-4" id="main-display">
-        <div class="row justify-content-center">
-          <div class="col-8 text-center" style="min-height: 200px">
-            <img
-              src="<?php echo base_url(); ?>/assets/frontend_images/image-main.png"
-              alt="Main image"
-              class="w-100 h-100"
-            />
-          </div>
+<main class="container-fluid">
+      <div class="row bg-white justify-content-center">
+        <div class="col-12 col-md-8">
+          <img class="main__img w-100" src="./assets/frontend_images/vegas_img.jpg" alt="">
+        </div>
+      </div>
+      
+      <div class="row justify-content-center p-4">
+        <div class="col-11 col-md-5 my-3 main__imgLink">
+          <a href="<?php echo base_url(); ?>?type=3">
+            <img src="./assets/frontend_images/by_truck.jpg" class="w-100" alt="">
+          </a>
+        </div>
+        <div class="col-11 col-md-5 my-3 main__imgLink">
+          <a href="<?php echo base_url(); ?>?type=1">
+            <img src="./assets/frontend_images/by_pallette.jpg" class="w-100" alt="">
+          </a>
         </div>
       </div>
     </main>
 
-    <section>
-      <div class="container-fluid px-0 my-5" id="discounted-items">
-        <div class="row w-100 m-0">
-          <div
-            class="col-lg-3 col-md-4 col-sm-6 col-12 item-box"
-          >
-            <a href="" class="hvr-ripple-out">
-              <img src="<?php echo base_url(); ?>/assets/frontend_images/discount-img-1.png" alt=""
-            /></a>
+
+    <!-- <section class="container-fluid glide" id="what-we-offer">
+      <div class="col-12 col-md-10 mx-auto mt-4">
+      <div class="row">
+        <div class="col-12 d-flex justify-content-between">
+          <h2 class="section__header">WHAT <span>WE OFFER</span></h2>
+          <ul class="nav nav-tabs ml-auto" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active offer__toggler" id="truckloads-tab" data-toggle="tab" href="#truckloads" role="tab" aria-controls="truckloads" aria-selected="true">TRUCKLOADS</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link offer__toggler" id="pallets-tab" data-toggle="tab" href="#pallets" role="tab" aria-controls="pallets" aria-selected="false">PALLETS</a>
+            </li>
+          </ul>
+          <div class="slick__buttons">
+            <button class="slick__btnLeft btn" onclick="Array.from(document.querySelectorAll('.slick-prev')).map((i) => i.click())">&lt;</button>
+            <button class="slick__btnRight btn" onclick="Array.from(document.querySelectorAll('.slick-next')).map((i) => i.click())">&gt;</button>
           </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 col-12 item-box">
-            <a href="" class="hvr-ripple-out">
-              <img src="<?php echo base_url(); ?>/assets/frontend_images/discount-img-2.png" alt=""
-            /></a>
-          </div>
-          <div class="col-lg-3 col-md-4 col-sm-6 col-12 item-box">
-            <a href="" class="hvr-ripple-out">
-              <img src="<?php echo base_url(); ?>/assets/frontend_images/discount-img-3.png" alt=""
-            /></a>
-          </div>
-          <div
-            class="col-lg-3 col-md-4 col-sm-6 col-12 item-box"
-          >
-            <a href="" class="hvr-ripple-out">
-              <img src="<?php echo base_url(); ?>/assets/frontend_images/discount-img-4.png" alt=""
-            /></a>
-          </div>
+           
         </div>
       </div>
-    </section>
-
-    <!-- Featured Products -->
-    <section>
-      <div class="container-fluid px-0 my-5" id="featured-products">
-        <div class="row w-100 m-0">
-          <div class="col-12">
-            <h3>Featured Products</h3>
-          </div>
-        </div>
-        <div class="row w-100 m-0">
-          <div class="col-12 text-center">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item" role="presentation">
-                <a
-                  class="nav-link active"
-                  id="accessories-tab"
-                  data-toggle="tab"
-                  href="#accessories"
-                  role="tab"
-                  aria-controls="accessories"
-                  aria-selected="true"
-                  >Accessories</a
-                >
-              </li>
-              <li class="nav-item" role="presentation">
-                <a
-                  class="nav-link"
-                  id="power-tab"
-                  data-toggle="tab"
-                  href="#power"
-                  role="tab"
-                  aria-controls="power"
-                  aria-selected="false"
-                  >Power Tools</a
-                >
-              </li>
-              <li class="nav-item" role="presentation">
-                <a
-                  class="nav-link"
-                  id="hand-tab"
-                  data-toggle="tab"
-                  href="#hand"
-                  role="tab"
-                  aria-controls="hand"
-                  aria-selected="false"
-                  >Hand Tools</a
-                >
-              </li>
-            </ul>
-            <div class="tab-content bg-white" id="myTabContent">
-              <div
-                class="tab-pane fade show active"
-                id="accessories"
-                role="tabpanel"
-                aria-labelledby="accessories-tab"
-              >
-                <div
-                  class="row d-flex w-100 justify-content-around py-2 mx-auto"
-                >
-                  <a href="" class="col-xl-3 col-lg-3 col-md-6 col-12 my-3">
-                    <img
-                      src="<?php echo base_url(); ?>/assets/frontend_images/accessories-img.png"
-                      alt=""
-                      class="w-100"
-                    />
-                  </a>
-                  <a href="" class="col-xl-3 col-lg-3 col-md-6 col-12 my-3">
-                    <img
-                      src="<?php echo base_url(); ?>/assets/frontend_images/accessories-img.png"
-                      alt=""
-                      class="w-100"
-                    />
-                  </a>
-                  <a href="" class="col-xl-3 col-lg-3 col-md-6 col-12 my-3">
-                    <img
-                      src="<?php echo base_url(); ?>/assets/frontend_images/accessories-img.png"
-                      alt=""
-                      class="w-100"
-                    />
-                  </a>
-                  <a href="" class="col-xl-3 col-lg-3 col-md-6 col-12 my-3">
-                    <img
-                      src="<?php echo base_url(); ?>/assets/frontend_images/accessories-img.png"
-                      alt=""
-                      class="w-100"
-                    />
-                  </a>
-                </div>
-              </div>
-              <div
-                class="tab-pane fade"
-                id="power"
-                role="tabpanel"
-                aria-labelledby="power-tab"
-              >
-                <div class="col-12 d-flex justify-content-around py-2">
-                  <a href="" class="col">
-                    <img
-                      src="<?php echo base_url(); ?>/assets/frontend_images/accessories-img.png"
-                      alt=""
-                      class="w-100"
-                    />
-                  </a>
-                  <a href="" class="col">
-                    <img
-                      src="<?php echo base_url(); ?>/assets/frontend_images/accessories-img.png"
-                      alt=""
-                      class="w-100"
-                    />
-                  </a>
-                  <a href="" class="col">
-                    <img
-                      src="<?php echo base_url(); ?>/assets/frontend_images/accessories-img.png"
-                      alt=""
-                      class="w-100"
-                    />
-                  </a>
-                  <a href="" class="col">
-                    <img
-                      src="<?php echo base_url(); ?>/assets/frontend_images/accessories-img.png"
-                      alt=""
-                      class="w-100"
-                    />
-                  </a>
-                </div>
-              </div>
-              <div
-                class="tab-pane fade"
-                id="hand"
-                role="tabpanel"
-                aria-labelledby="hand-tab"
-              >
-                <div class="col-12 d-flex justify-content-around py-2">
-                  <a href="" class="col">
-                    <img
-                      src="<?php echo base_url(); ?>/assets/frontend_images/accessories-img.png"
-                      alt=""
-                      class="w-100"
-                    />
-                  </a>
-                  <a href="" class="col">
-                    <img
-                      src="<?php echo base_url(); ?>/assets/frontend_images/accessories-img.png"
-                      alt=""
-                      class="w-100"
-                    />
-                  </a>
-                  <a href="" class="col">
-                    <img
-                      src="<?php echo base_url(); ?>/assets/frontend_images/accessories-img.png"
-                      alt=""
-                      class="w-100"
-                    />
-                  </a>
-                  <a href="" class="col">
-                    <img
-                      src="<?php echo base_url(); ?>/assets/frontend_images/accessories-img.png"
-                      alt=""
-                      class="w-100"
-                    />
-                  </a>
-                </div>
+      <hr>
+        <div class="tab-content" id="myTabContent">
+          <div id="truckloads" role="tabpanel" aria-labelledby="truckloads-tab" class="tab-pane fade show active row justify-content-center bg-light slider  mt-5">
+            <?php foreach($trucks as $key => $value ) { ?> 
+            <div class="col-12 col-lg-3 col-md-4 ">
+              <div class="offer__item">
+                <a href="<?php echo base_url(); ?>detail/<?php echo $value->id ?>">
+                <img src="./assets/frontend_images/offer-Img-1.jpg" class="w-100" alt="Offer Image">
+                <h5 class="text-gray mt-2">TRUCKLOADS</h5>
+                <h5 class="offer__itemTitle mt-2"><?php echo $value->item_name ?></h5>
+              </a>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Category -->
-    <section>
-      <div class="container-fluid px-0" id="category">
-        <div class="row w-100 m-0">
-          <div class="col-12">
-            <h3>Categories</h3>
-          </div>
-        </div>
-        <div class="row w-100 m-0">
-          <div class="col-xl-8 col-lg-8 col-md-7 col-12">
-            <div class="row justify-content-center py-3"> 
-              <?php foreach($all_categories as $key => $category){ ?>
-                  <div class="category-item col-xl-3 col-lg-3 col-md-5 col-10 text-center" >
-                      <img src="<?php echo base_url(); ?>/assets/frontend_images/drill.svg" class="category-img" alt="" />
-                      <h6><?= $category->name; ?></h6>
-                  </div>
-               <?php } ?> 
-            </div>
-          </div>
-          <div class="col-xl-4 col-lg-4 col-md-5 col-12 bg-dark">
-            <img
-              src="<?php echo base_url(); ?>/assets/frontend_images/category-img.png"
-              class="w-100"
-              alt="tractor-img"
-            />
-            <h3 class="text-orange">Lorem Ipsum</h3>
-            <p class="text-white">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta,
-              quod. Perferendis velit amet reiciendis dolores.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container-fluid bg-dark mt-5" id="about-us">
-        <div class="row justify-content-center px-2 px-md-4 py-4">
-          <div class="col-10">
-            <h3 class="text-white">About Us</h3>
+            <?php } ?>
           </div>
 
-          <div class="col-10 text-light about-details">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Explicabo, rerum? Corporis, accusamus suscipit dolores id,
-              nesciunt quibusdam provident rem atque numquam qui vitae
-              accusantium doloremque a harum cupiditate explicabo omnis!
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Explicabo, rerum? Corporis, accusamus suscipit dolores id,
-              nesciunt quibusdam provident rem atque numquam qui vitae
-              accusantium doloremque a harum cupiditate explicabo omnis!
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Explicabo, rerum? Corporis, accusamus suscipit dolores id,
-              nesciunt quibusdam provident rem atque numquam qui vitae
-              accusantium doloremque a harum cupiditate explicabo omnis!
-            </p>
+          <div id="pallets" role="tabpanel" aria-labelledby="pallets-tab" class="tab-pane fade show active row justify-content-center bg-light slider  mt-5">
+            <?php foreach($pallets as $key => $value ) { ?> 
+              <div class="col-12 col-lg-3 col-md-4 ">
+                <div class="offer__item">
+                  <a href="<?php echo base_url(); ?>detail/<?php echo $value->id ?>">
+                  <img src="./assets/frontend_images/offer-Img-1.jpg" class="w-100" alt="Offer Image">
+                  <h5 class="text-gray mt-2">PALLETS</h5>
+                  <h5 class="offer__itemTitle mt-2"><?php echo $value->item_name; ?></h5>
+                </a>
+                </div>
+              </div>
+            <?php } ?> 
           </div>
+          
+        </div>
+    </div>
+    </section>
+
+    <section class="container-fluid" id="our-updates">
+      <div class="row justify-content-center my-5">
+        <div class="col-12 col-md-10">
+          <h2 class="section__header">Our Latest Updates</h2>
+        </div>
+        <div class="col-12 col-md-5">
+          <a href="">
+            <img src="./assets/frontend_images/bulldog-auction.jpg" alt="Update image" class="w-100">
+          </a>
+        </div>
+        <div class="col-12 col-md-5">
+          <a href="">
+            <img src="./assets/frontend_images/bulldog-liquidation.jpg" alt="Update image" class="w-100">
+          </a>
         </div>
       </div>
-    </section>
+    </section> -->

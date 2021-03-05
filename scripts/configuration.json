@@ -2804,7 +2804,9 @@
 		"v1/api/stripe_capture_payment" : "Guest/Custom_api_controller/stripe_capture_payment", 
 		
 
-		"": "Guest/Home_controller/home",
+		"/(:num)": "Guest/Home_controller/categories/$1",
+		"/": "Guest/Home_controller/categories/0",
+		
 		"home": "Guest/Home_controller/home",
 		"checkout": "Guest/Home_controller/checkout",
 		"cart": "Guest/Home_controller/cart",

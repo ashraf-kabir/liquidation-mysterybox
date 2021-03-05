@@ -97,14 +97,15 @@ class Home_controller extends Manaknight_Controller
  
 
         $this->load->library('pagination');
-        $this->_data['category_id']    =     $this->input->get('category_id', TRUE) != NULL  ? $this->input->get('category_id', TRUE) : NULL ;
-        $this->_data['search_query']   =     $this->input->get('search_query', TRUE) != NULL  ? $this->input->get('search_query', TRUE) : NULL ;
 
-        $this->_data['location_id']     =     $this->input->get('location_id', TRUE) != NULL  ? $this->input->get('location_id', TRUE) : NULL ;
+
+        $this->_data['category']    =     $this->input->get('category', TRUE) != NULL  ? $this->input->get('category', TRUE) : NULL ;
+        $this->_data['search_query']   =     $this->input->get('search_query', TRUE) != NULL  ? $this->input->get('search_query', TRUE) : NULL ; 
+        $this->_data['type']           =     $this->input->get('type', TRUE) != NULL  ? $this->input->get('type', TRUE) : NULL ;
         
         $where = [ 
-            'physical_location'  => $this->_data['location_id'], 
-            'category_id'        => $this->_data['category_id'], 
+            'product_type'       => $this->_data['type'], 
+            'category_id'        => $this->_data['category'], 
             'product_name'       => $this->_data['search_query'],  
             'sku'                => $this->_data['search_query'] 
         ];
@@ -112,8 +113,7 @@ class Home_controller extends Manaknight_Controller
         $rows_data = $this->inventory_model->get_custom_count($where);
        
  
-        $total_rows = $rows_data;
-            
+        $total_rows = $rows_data; 
         $limit = 3;
 
         $this->pagination->initialize([
@@ -146,10 +146,9 @@ class Home_controller extends Manaknight_Controller
         $data['products_list']  = $this->inventory_model->get_custom_paginated($offset , $limit, $where );  
          
 
-        $data['location_id']      = $this->_data['location_id'];  
-        $data['category_id']      = $this->_data['category_id'];  
-        $data['all_categories']  = $this->category_model->get_all(['status' => 1]);
-        $data['all_locations']   = $this->physical_location_model->get_all( );
+        $data['type']            = $this->_data['type'];  
+        $data['category']        = $this->_data['category'];  
+        $data['all_categories']  = $this->category_model->get_all(['status' => 1]); 
         
         
        
@@ -194,7 +193,7 @@ class Home_controller extends Manaknight_Controller
 
     public function cart()
     { 
-        $data['active'] = 'about';
+        $data['active'] = 'cart';
         $data['layout_clean_mode'] = FALSE;
         $data['no_detail'] = TRUE;
         
@@ -207,11 +206,14 @@ class Home_controller extends Manaknight_Controller
 
             $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
             $data['customer']   =  $this->customer_model->get($user_id);  
-            $data['tax']   =  $this->tax_model->get(1);  
+            $data['tax']   =  $this->tax_model->get(1); 
 
+            $this->_render('Guest/Cart',$data);  
+        }  
+        else
+        {
+            redirect('');
         }
-
-        $this->_render('Guest/Cart',$data);
     } 
 
 
@@ -631,7 +633,7 @@ class Home_controller extends Manaknight_Controller
     {   
         if($this->session->userdata('customer_login'))
         {
-            $data['active'] = 'about';
+            $data['active'] = 'checkout';
             $data['layout_clean_mode'] = FALSE;
             $data['no_detail'] = TRUE;
     
@@ -669,9 +671,9 @@ class Home_controller extends Manaknight_Controller
          
         $model  = $this->inventory_model->get($id); 
         if (!$model)
-		{
-			$this->error('Error');
-			return redirect('/categories');
+        {
+            $this->error('Error');
+            return redirect('/categories');
         }
 
         $data['product']        =   $model;
@@ -844,7 +846,7 @@ class Home_controller extends Manaknight_Controller
     public function logout ()
     {
         $this->destroy_session();
-		return $this->redirect('');
+        return $this->redirect('');
     }
 
 

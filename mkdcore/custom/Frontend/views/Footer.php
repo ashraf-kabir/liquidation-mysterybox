@@ -1,22 +1,50 @@
-<footer>
-      <div class="container-fluid mt-5 mb-0 py-5" id="footer">
-        <div
-          class="row py-2 px-2 px-md-5 align-items-center justify-content-between justify-content-lg-start"
-        >
-          <div class="col-12">
-            <ul class="list-unstyled">
-              <li><a href="<?php echo base_url(); ?>">Home</a></li>
-              <li><a href="<?php echo base_url(); ?>">Services</a></li> 
-              <li><a href="<?php echo base_url(); ?>about_us">About Us</a></li>
-              <li><a href="<?php echo base_url(); ?>contact_us">Contact Us</a></li>
-            </ul>
-          </div>
-        </div>
-        <p class="mx-auto w-100 text-center">
-          &copy; 2020 Vegas liquidation Ecom. All rights reserved.
-        </p>
+    <footer class="container-fluid">
+    <div class="row justify-content-start offset-md-1">
+    <div class="col-10 col-md-3 pr-md-5 footer__col my-4">
+      <ul class="list-unstyled">
+        <li class="my-3 d-flex">
+          <i class="fas fa-map-marker-alt"></i>
+          <div>4460 E Cheyenne Ave.
+            Las Vegas, NV 89115</div>
+        </li>
+        <li class="my-3 d-flex">
+          <i class="fas fa-phone"></i>
+          <div>702-451-1000 <br> <span> Mon-Fri 8:30am - 4:30pm</span></div>
+        </li>
+        <li class="my-3 d-flex">
+          <i class="fas fa-envelope"></i>
+          <div> <?php echo $contact_us_email; ?></div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-10 col-md-2 footer__col my-4">
+      <h5 class="footer__header">FOLLOW US</h5>
+      <div class="follow__buttons">
+        <a href="https://facebook.com"><i class="fab fa-facebook-f fb-icon"></i></a>
+        <a href="https://facebook.com"><i class="fab fa-twitter tw-icon"></i></a>
+        <a href="https://facebook.com"><i class="fab fa-google-plus-g gp-icon"></i></a>
+        <a href="https://facebook.com"><i class="fab fa-instagram in-icon"></i></a>
+        <a href="https://facebook.com"><i class="fab fa-pinterest pi-icon"></i></a>
       </div>
-    </footer>
+    </div>
+    <div class="col-10 col-md-2 footer__col my-4">
+      <h5 class="footer__header">SITE MAP</h5>
+      <ul class="p-0 site__mapUl">
+        <li><a href="<?php echo base_url(); ?>about-us/">About Us</a></li>
+        <li><a href="<?php echo base_url(); ?>contacts/">Contacts</a></li>
+        <li><a href="<?php echo base_url(); ?>home/">Home</a></li>
+        <li><a href="<?php echo base_url(); ?>?type=1" target="_blank">Pallets</a></li>
+        <li><a href="<?php echo base_url(); ?>?type=3" target="_blank">Truckloads</a></li>
+      </ul>
+    </div>
+    </div>
+
+    <div class="row justify-content-center">
+    <div class="col-12 col-md-10 mt-4 mb-5">
+      <p class="copyright__text">Copyright &copy; <?php echo Date('Y') ?>  VegasLiquidation.com</p>
+    </div>
+    </div>
+
 
     <!-- SIGN UP MODAL -->
     <div
@@ -45,8 +73,8 @@
                 <div class="col-12 text-center">
                   <img
                     class="my-3"
-                    src="<?php echo base_url(); ?>/assets/frontend_images/logo.png"
-                    alt="Company logo"
+                    src="<?php echo base_url(); ?>/assets/frontend_images/vegas_img.jpg"
+                    alt="Company logo"  style="width: 160px;"
                   />
                   <p>Welcome to <strong>VEGAS LIQUIDATION ECOM</strong></p>
                   <h2><strong>SIGN UP</strong></h2>
@@ -133,14 +161,7 @@
 
 
     <!-- SIGN UP MODAL -->
-    <div
-      class="modal fade"
-      id="loginModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="loginModalTitle"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true" >
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -159,8 +180,8 @@
                 <div class="col-12 text-center">
                   <img
                     class="my-3"
-                    src="<?php echo base_url(); ?>/assets/frontend_images/logo.png"
-                    alt="Company logo"
+                    src="<?php echo base_url(); ?>/assets/frontend_images/vegas_img.jpg"
+                    alt="Company logo" style="width: 160px;"
                   />
                   <p>Welcome to <strong>VEGAS LIQUIDATION ECOM</strong></p>
                   <h2><strong>LOGIN</strong></h2>
@@ -209,42 +230,76 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" ></script>
-
-<script>
-  toastr.options = {
-    "closeButton": false,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": false,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": false,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "5000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-  }
- 
-</script>
 
 
+    </footer>
+
+    <button class="btn btn-warning translate-btn">Translate</button>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-      crossorigin="anonymous"
-    ></script>
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
 
-    <script src="<?php echo base_url(); ?>assets/frontend_js/script.js" ></script>
-  </body>
-</html>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" ></script>
+
+    <script>
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        } 
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <script src="<?php echo base_url(); ?>/assets/frontend_js/script.js"></script>
+
+
+    <script>
+    $(document).ready(function(){
+        $('.slider').slick({
+            centerMode: true,
+            centerPadding: '20px',
+            slidesToShow: 4,
+            responsive: 
+            [{
+                breakpoint: 768,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+            }]
+        });
+    });
+    </script>
+    </body>
+    </html>
