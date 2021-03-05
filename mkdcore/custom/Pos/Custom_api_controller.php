@@ -582,12 +582,11 @@ class Custom_api_controller extends Manaknight_Controller
  
             $checkout_type  = $this->input->post('checkout_type', TRUE); 
             $discount       = $this->input->post('discount', TRUE);
-            $tax_price       = $this->input->post('taxPrice', TRUE);
+            $tax_price      = $this->input->post('taxPrice', TRUE);
 
             $post_array = $customer_data;
             $post_array['items'] = $cart_items; 
-            $_POST = $post_array;   
-            $_POST['checkout_type'] = $checkout_type;     
+            $_POST = $post_array;       
             $_POST['discount']      = $discount;   
             $_POST['tax_price']     = $tax_price;   
             
@@ -642,7 +641,7 @@ class Custom_api_controller extends Manaknight_Controller
                 $cart_item_value = (object) $cart_item_value;
 
                 $check_quantity = $this->helpers_service->check_item_in_inventory($cart_item_value->id, $cart_item_value->quantity, $cart_item_value->name, $checkout_type);
-
+ 
                 if( isset($check_quantity->error) )
                 {
                     $output['status'] = 0;
@@ -651,8 +650,8 @@ class Custom_api_controller extends Manaknight_Controller
                     exit();
                 }
             }
-             
-            
+
+ 
 
             $shipping_cost = 0;
             if( $this->input->post('shipping_cost', TRUE) )
