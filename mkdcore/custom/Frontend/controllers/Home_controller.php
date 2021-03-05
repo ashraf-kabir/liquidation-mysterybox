@@ -206,9 +206,7 @@ class Home_controller extends Manaknight_Controller
             $this->load->model('tax_model');
 
             $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
-            $data['customer']   =  $this->customer_model->get($user_id); 
-
-
+            $data['customer']   =  $this->customer_model->get($user_id);  
             $data['tax']   =  $this->tax_model->get(1);  
 
         }
@@ -221,7 +219,19 @@ class Home_controller extends Manaknight_Controller
     {  
         if($this->session->userdata('customer_login'))
         { 
+             
             $user_id = $this->session->userdata('user_id');
+
+
+            $form_data = $this->input->post('dataForm', TRUE); 
+            $customer_data = array();
+            foreach ($form_data as $form_data_key => $form_data_value) 
+            {
+                $form_data_value = (object) $form_data_value;
+                $customer_data[$form_data_value->name] = $form_data_value->value;
+            } 
+            $_POST = $customer_data;
+             
 
             $this->form_validation->set_rules('full_name', "Name", "required|max_length[255]");
             $this->form_validation->set_rules('email_address', "Email", "valid_email"); 
@@ -231,9 +241,11 @@ class Home_controller extends Manaknight_Controller
             $this->form_validation->set_rules('state', "State", "max_length[255]"); 
             $this->form_validation->set_rules('address_1', "Address", "required|min_length[5]"); 
             $this->form_validation->set_rules('payment', "Payment Method", "integer");
-
-            // $this->form_validation->set_rules('shipping_postal_cost', "Shipping Postal Code", "integer"); 
-            // $this->form_validation->set_rules('checkout_type', "Checkout Type", "integer");
+            $this->form_validation->set_rules('number', "Account Number", "required|integer");
+            $this->form_validation->set_rules('exp_month', "Expiry Month", "required");
+            $this->form_validation->set_rules('exp_year', "Expiry Year", "required");
+            $this->form_validation->set_rules('cvc', "CVC", "required");
+              
 
 
             $this->load->model('pos_cart_model');
@@ -245,17 +257,21 @@ class Home_controller extends Manaknight_Controller
 
             $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
             if( empty($cart_items) )
-            {  
-                $this->session->set_flashdata('error1', 'Error! Please add item in cart first.'); 
-                return redirect($_SERVER['HTTP_REFERER']);
+            {   
+                $output['status'] = 0;
+                $output['error']  = 'Error! Please add item in cart first.';
+                echo json_encode($output);
+                exit();  
             }
 
 
             if ($this->form_validation->run() === FALSE)
             {
-                $error_msg = validation_errors(); 
-                $this->session->set_flashdata('error1', $error_msg); 
-                return redirect($_SERVER['HTTP_REFERER']);
+                $error_msg = validation_errors();
+                $output['status'] = 0;
+                $output['error']  = $error_msg;
+                echo json_encode($output);
+                exit();  
             }
 
 
@@ -276,9 +292,11 @@ class Home_controller extends Manaknight_Controller
                 $check_quantity = $this->helpers_service->check_item_in_inventory($cart_item_value->product_id, $cart_item_value->product_qty, $cart_item_value->product_name, $checkout_type);
 
                 if( isset($check_quantity->error) )
-                {
-                    $this->session->set_flashdata('error1', $check_quantity->error); 
-                    return redirect($_SERVER['HTTP_REFERER']);
+                {  
+                    $output['status'] = 0;
+                    $output['error']  = $check_quantity->error;
+                    echo json_encode($output);
+                    exit(); 
                 }
             }
 
@@ -343,9 +361,11 @@ class Home_controller extends Manaknight_Controller
                     $coupon_condition = TRUE; 
                 }
                 else
-                {
-                    $this->session->set_flashdata('error1', $coupon_response->error_msg); 
-                    return redirect($_SERVER['HTTP_REFERER']); 
+                { 
+                    $output['status'] = 0;
+                    $output['error']  = $coupon_response->error_msg;
+                    echo json_encode($output);
+                    exit(); 
                 } 
             }
 
@@ -371,8 +391,10 @@ class Home_controller extends Manaknight_Controller
                 }
                 else
                 {
-                    $this->session->set_flashdata('error1', 'Error! Please try again later.'); 
-                    return redirect($_SERVER['HTTP_REFERER']);
+                    $output['status'] = 0;
+                    $output['error']  = 'Error! Please try again later.';
+                    echo json_encode($output);
+                    exit();  
                 } 
             }
 
@@ -405,12 +427,14 @@ class Home_controller extends Manaknight_Controller
             $customer_data->state                  = $state;
             $customer_data->country                = $country;
             $customer_data->billing_zip            = $postal_code;
-            $customer_data->address                = $address_1 . " " . $address_2;
+            $customer_data->billing_address        = $address_1 . " " . $address_2;
             $customer_data->payment                = $payment;
 
             /**
             * Create Order 
             */ 
+
+             
             $result = $this->pos_checkout_service->customer_create_order($customer_data,$tax,$discount,$user_id,$shipping_cost);
 
 
@@ -420,7 +444,7 @@ class Home_controller extends Manaknight_Controller
                 * Store order items detail 
                 * 
                 */ 
-                $order_id = $result;
+                $order_id    = $result;
                 $sub_total   = 0;
                 $grand_total = 0;
 
@@ -503,7 +527,7 @@ class Home_controller extends Manaknight_Controller
                 if($transaction_id)
                 {
                     $user_id = $this->session->userdata('user_id');  
-                    $output['order_id']      = $order_id;  
+                    // $output['order_id']      = $order_id;  
                      
 
 
@@ -518,14 +542,16 @@ class Home_controller extends Manaknight_Controller
                         }
                         else
                         { 
-                            $this->session->set_flashdata('error1', 'Error! Please try again later.'); 
-                            return redirect($_SERVER['HTTP_REFERER']);
+                            $output['status'] = 0;
+                            $output['error']  = 'Error! Please try again later.';
+                            echo json_encode($output);
+                            exit(); 
                         }  
                     }
 
 
 
-                    $result = $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]); 
+                    $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]); 
 
 
                     /**
@@ -535,8 +561,10 @@ class Home_controller extends Manaknight_Controller
                     $accounting_response = $this->send_order_to_accounting( $order_id );
                     if( isset( $accounting_response->error_msg ) )
                     {
-                        $this->session->set_flashdata('error1', 'Error! Please try again later.'); 
-                        return redirect($_SERVER['HTTP_REFERER']);
+                        $output['status'] = 0;
+                        $output['error']  = $accounting_response->error_msg;
+                        echo json_encode($output);
+                        exit();
                     }
 
 
@@ -547,8 +575,10 @@ class Home_controller extends Manaknight_Controller
                     $accounting_trans_response = $this->send_transaction_to_accounting( $transaction_id );
                     if( isset( $accounting_trans_response->error_msg ) )
                     {
-                        $this->session->set_flashdata('error1', 'Error! Please try again later.'); 
-                        return redirect($_SERVER['HTTP_REFERER']);
+                        $output['status'] = 0;
+                        $output['error']  = $accounting_trans_response->error_msg;
+                        echo json_encode($output);
+                        exit();
                     }
 
 
@@ -561,27 +591,34 @@ class Home_controller extends Manaknight_Controller
 
                     if( isset( $order_data->error_msg ) )
                     {
-                        $this->session->set_flashdata('error1', 'Error! Please try again later.'); 
-                        return redirect($_SERVER['HTTP_REFERER']);
+                        $output['status'] = 0;
+                        $output['error']  = $order_data->error_msg;
+                        echo json_encode($output);
+                        exit();
                     }
 
-
-                    $this->session->set_flashdata('success1', 'Order has been created successfully.');
+                    $output['status'] = 0;
+                    $output['success']  = 'Order has been created successfully.';
+                    echo json_encode($output);
+                    exit(); 
                 }
                 else
                 {
-                     
-                    $this->session->set_flashdata('error1', 'Error! While adding transaction.'); 
+                    $output['status'] = 0;
+                    $output['error']  = 'Error! Please try again later.';
+                    echo json_encode($output);
+                    exit();   
                 }
-
-                redirect($_SERVER['HTTP_REFERER']);
+ 
                 
                 
             }
             else
             {
-                $this->session->set_flashdata('error1', 'Error! Please try again later.');  
-                redirect($_SERVER['HTTP_REFERER']);
+                $output['status'] = 0;
+                $output['error']  = 'Error! Please try again later.';
+                echo json_encode($output);
+                exit(); 
             }
         }
     }

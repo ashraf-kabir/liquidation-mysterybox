@@ -306,7 +306,38 @@ $(document).ready(() => {
   
   
   
-  
+       
+
+      $(document).on('submit','.send_checkout',function(e){
+        e.preventDefault();
+        dataForm = $('.send_checkout').serializeArray();
+        $.ajax({
+             url: '../v1/api/do_checkout',
+             timeout: 30000,
+             method: 'POST',
+             dataType: 'JSON', 
+             data : {'dataForm' : dataForm },
+             success: function (response)  
+             {    
+                  if(response.success)
+                  {
+                    toastr.success(response.success); 
+                    setInterval(function() {
+                      window.location.reload(true);
+                    }, 3000);
+                  } 
+
+                  if(response.error)
+                  {
+                       toastr.error(response.error); 
+                  } 
+             },
+             error: function()
+             { 
+                  toastr.error('Error! Try again later.'); 
+             } 
+        })
+    })
   
   
   

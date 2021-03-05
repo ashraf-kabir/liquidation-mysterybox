@@ -51,7 +51,7 @@
         <div
 class=" col-xl-6 col-md-7 col-12 d-flex justify-content-around align-items-center"
         >
-          <a href="text-dark">My WishList <i class="fas fa-heart"></i></a>
+          <!-- <a href="text-dark">My WishList <i class="fas fa-heart"></i></a> -->
 
           <?php if( !$this->session->userdata('customer_login') ){ ?>
             <button

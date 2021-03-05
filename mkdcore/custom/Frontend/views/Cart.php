@@ -41,10 +41,10 @@
                     <h4 class="w-100 "><?= $value->product_name; ?></h4>
               
                     <h4 class="text-danger my-3">
-                      <span>Price:</span>$<?= number_format($value->unit_price,2); ?> 
+                      <span>Price: </span>$<?= number_format($value->unit_price,2); ?> 
                     </h4>
       
-                    <div class="w-100">
+                    <!-- <div class="w-100">
                       <label for="store" class="d-block">
                         <input
                           type="radio"
@@ -67,16 +67,16 @@
                         />
                         <i class="fas fa-home"></i> Ship to Home
                       </label>
-                    </div>
+                    </div> -->
                   </div>
                   <div class="col-xl-3 col-lg-4 col-md-4 col-12 my-3 d-flex align-content-between flex-wrap">
                     <a href="<?php echo base_url(); ?>cart_remove/<?= $value->id; ?>" style="line-height: 2;" class="btn btn-danger remove-btn">Remove</a>
                     <label for="quantity">
                       Qty:
-                      <input type="number" readonly name="quantity" class="form-control w-75" value="<?= $value->product_qty; ?>"  />
+                      <input type="text" readonly name="quantity" class="form-control w-75" value="<?= $value->product_qty; ?>"  />
                     </label>
                     <h5>
-                      Total: <span>$ <?= number_format($value->total_price,2); ?> </span>
+                      Total: <span>$<?= number_format($value->total_price,2); ?> </span>
                     </h5>
                   </div>
                 </div>
@@ -86,9 +86,9 @@
           
           
           <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-10 mt-3">
-            <button class="btn text-success">
+            <a href="<?php echo base_url(); ?>categories" class="btn text-success">
               <i class="fas fa-cart-plus"></i> Continue Shopping
-            </button>
+            </a>
             <div class="cart__address p-4">
               <h4 class="my-4"><i class="fas fa-truck"></i> Shipping</h4>
              
@@ -102,19 +102,14 @@
               <div class="d-flex justify-content-between my-4">
                 <h6>Subtotal</h6>
                 <h6>$<span class="cart-subtotal"><?= number_format($total,2); ?></span></h6>
-              </div>
-              <div class="d-flex justify-content-between my-4">
-                <h6>Shipping</h6>
-                <h6>$<span class="cart-shipping">00.00</span></h6>
-              </div>
+              </div> 
               <div class="d-flex justify-content-between my-4">
                 <?php 
                     $tax_amount  = 0;
                     if(isset($tax->tax) and $total != 0)
                     {
                       $tax_amount = $tax->tax/100*$total;
-                    }
-                    
+                    } 
                 ?>
 
                 <h6>Tax</h6>
@@ -122,7 +117,7 @@
               </div>
               <div class="d-flex justify-content-between my-4">
                 <strong>Total</strong>
-                <strong>$<span class="cart-total"><?= number_format($total,2); ?></span></strong>
+                <strong>$<span class="cart-total"><?= number_format($total + $tax_amount,2); ?></span></strong>
               </div>
 
               <a  href="<?php echo base_url(); ?>checkout" style="line-height:2;" class="btn btn-success w-100" >Checkout Out</a >

@@ -110,6 +110,7 @@ class Pos_checkout_service {
             'is_split'          =>  $split_payment, 
             'cash_amount'       =>  $cash_amount, 
             'credit_amount'     =>  $credit_amount, 
+            'is_picked'         =>  1, 
         );
 
         if(!$split_payment)
@@ -118,6 +119,11 @@ class Pos_checkout_service {
             unset( $data_checkout_order['credit_amount'] );
         }
 
+
+        if($checkout_type == 2)
+        {
+            unset( $data_checkout_order['is_picked'] );
+        }
 
         $result = $this->_pos_order_model->create($data_checkout_order);
 

@@ -12,7 +12,7 @@
   }
 </style>
 
-<?php echo form_open('do_checkout'); ?>
+<?php echo form_open('',array('class' => 'send_checkout' )); ?>
   <section>
       <div class="container-fluid px-5 py-5">
         <div class="row justify-content-around">
@@ -56,7 +56,7 @@
                       type="text"
                       name="full_name"
                       id="name1"
-                      value="<?php echo isset($customer->name) ? $customer->name : ""; ?>"
+                      value="<?php echo set_value('full_name', $customer->name); ?>"
                       placeholder="Enter your full name"
                       class="form-control"
                     />
@@ -67,7 +67,7 @@
                       type="text"
                       name="email_address"
                       id="email1"
-                      value="<?php echo isset($customer->email) ? $customer->email : ""; ?>"
+                      value="<?php echo set_value('email_address', $customer->email); ?>"
                       placeholder="abc@example.com"
                       class="form-control"
                     />
@@ -79,7 +79,7 @@
                       name="phone_number"
                       id="number"
                       placeholder="+123-456-789"
-                      value="<?php echo isset($customer->phone) ? $customer->phone : ""; ?>"
+                      value="<?php echo set_value('phone_number', $customer->phone); ?>"
                       class="form-control"
                     />
                   </div>
@@ -89,7 +89,7 @@
                       type="text"
                       name="city"
                       id="checkout-city"
-                      value="<?php echo isset($customer->billing_city) ? $customer->billing_city : ""; ?>"
+                      value="<?php echo set_value('city', $customer->billing_city); ?>"
                       placeholder="Enter your city"
                       class="form-control"
                     />
@@ -100,7 +100,7 @@
                       type="text"
                       name="postal_code"
                       id="checkout-postal_code"
-                      value="<?php echo isset($customer->billing_zip) ? $customer->billing_zip : ""; ?>"
+                      value="<?php echo set_value('postal_code', $customer->billing_zip); ?>"
                       placeholder="Enter your postal code"
                       class="form-control"
                     />
@@ -112,7 +112,7 @@
                       type="text"
                       name="state"
                       id="checkout-state"
-                      value="<?php echo isset($customer->billing_state) ? $customer->billing_state : ""; ?>"
+                      value="<?php echo set_value('state', $customer->billing_state); ?>"
                       placeholder="Enter your State"
                       class="form-control"
                     />
@@ -123,7 +123,7 @@
                       type="text"
                       name="country"
                       id="checkout-country"
-                      value="<?php echo isset($customer->billing_country) ? $customer->billing_country : ""; ?>"
+                      value="<?php echo set_value('country', "US"); ?>"
                       placeholder="Enter your Country"
                       class="form-control"
                     />
@@ -134,7 +134,7 @@
                       type="text"
                       name="address_1"
                       id="address-1"
-                      value="<?php echo isset($customer->billing_address) ? $customer->billing_address : ""; ?>"
+                      value="<?php echo set_value('address_1', $customer->billing_address); ?>"
                       placeholder="Address here..."
                       class="form-control"
                     />
@@ -145,6 +145,7 @@
                       type="text"
                       name="address_2"
                       id="address-2"
+                      value="<?php echo set_value('address_2'); ?>"
                       placeholder="Address here..."
                       class="form-control"
                     />
@@ -190,7 +191,7 @@
 
                <div class="col-xl-12 col-lg-12 col-md-12 col-12 my-3">
                     <label for="number" class="margin_top_label">Account Number</label>
-                    <input type="text" name="number" id="number" placeholder="Enter Number" class="form-control" />
+                    <input type="text" value="<?php echo set_value('number'); ?>"  name="number" id="number" placeholder="Enter Number" class="form-control" />
                </div>
 
 
@@ -233,7 +234,7 @@
 
                <div class="col-xl-12 col-lg-12 col-md-12 col-12 my-3">
                     <label for="cvc" class="margin_top_label">CVC</label>
-                    <input type="number"  pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" name="cvc" id="cvc" placeholder="Enter CVC" class="form-control" max-length="4" min-length="3" />
+                    <input type="number" value="<?php echo set_value('cvc'); ?>"  pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" name="cvc" id="cvc" placeholder="Enter CVC" class="form-control" max-length="4" min-length="3" />
                </div> 
           </div>
 
@@ -258,7 +259,7 @@
                   <input type="text" class="form-control coupon_code" name="coupon_code" /> 
                   <p class="coupon_success_coupon_error"></p>
                   <button class="btn btn-primary apply_coupon mb-2" type="button"> Apply Coupon </button>
-                  <h5>$<span class="coupon_amount">00</span></h5>
+                  <h5>$<span class="coupon_amount">0.00</span></h5>
                 </div>
               </div>
 
@@ -272,7 +273,7 @@
                   <div class="shipping-cost-options">
                   </div>
                   <button class="btn btn-primary calculate-shipping-cost mb-2" type="button"> Calculate Shipping Cost </button>
-                  <h5>$<span class="shipping_cost_selected">00</span></h5>
+                  <h5>$<span class="shipping_cost_selected">0.00</span></h5>
                 </div>
               </div>
               <div class="row">

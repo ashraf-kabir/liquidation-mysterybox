@@ -2816,7 +2816,7 @@
 		"v1/api/sign_up" : "Guest/Home_controller/sign_up",
 		"v1/api/login_customer" : "Guest/Home_controller/login_customer",
 		"cart_remove/(:num)" : "Guest/Home_controller/cart_remove/$1",
-		"do_checkout" : "Guest/Home_controller/do_checkout", 
+		"v1/api/do_checkout" : "Guest/Home_controller/do_checkout", 
 		"product/(:num)": "Guest/Home_controller/product/$1" 
 	},
 	"reverse_copy": {

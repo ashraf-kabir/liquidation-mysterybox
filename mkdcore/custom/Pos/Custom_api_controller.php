@@ -207,12 +207,12 @@ class Custom_api_controller extends Manaknight_Controller
 
     public function add_product_to_cart_by_customer()
     {
-        if($this->session->userdata('user_id') )
+        if($this->session->userdata('customer_login') )
         {
             $this->load->model('pos_cart_model'); 
             $this->load->model('inventory_model'); 
  
-
+             
             $this->load->library('helpers_service');
             $this->helpers_service->set_inventory_model($this->inventory_model); 
 

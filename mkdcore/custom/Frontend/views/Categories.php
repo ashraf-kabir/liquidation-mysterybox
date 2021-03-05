@@ -87,7 +87,7 @@
                   <div class="col-lg-4 col-md-6 col-sm-6 col-12 my-2">
                   <a href="<?php echo base_url(); ?>product/<?php echo $product->id; ?>">
                     <div class="store__item text-center" data-id="<?= $product->id; ?>"  data-price="<?= $product->selling_price; ?>" data-title="<?= $product->product_name; ?>" >
-                      <i class="far fa-heart"></i>
+                      <!-- <i class="far fa-heart"></i> -->
 
                       <?php if( empty($product->feature_image) ) :  ?>
                         <img
