@@ -5,6 +5,8 @@
   {  
     $total = $total + $value->total_price;  
   }
+
+  $sub_total = $total;
 ?>
 <style>
   .margin_top_label{
@@ -247,7 +249,7 @@
                   <h5>Subtotal</h5>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
-                  <h5>$<?php echo number_format($total,2); ?></h5>
+                  <h5>$<?php echo number_format($sub_total,2); ?></h5>
                 </div>
               </div>
 
@@ -325,7 +327,7 @@
                 <h5><i class="fas fa-cart-plus"></i> Order Summary</h5>
                 <div class="d-flex justify-content-between my-4">
                   <h6>Subtotal</h6>
-                  <h6>$<span class="cart-subtotal"><?php echo number_format($total,2); ?></span></h6>
+                  <h6>$<span class="cart-subtotal"><?php echo number_format($sub_total,2); ?></span></h6>
                 </div>
                 <div class="d-flex justify-content-between my-4">
                   <h6>Shipping</h6>
