@@ -2594,10 +2594,7 @@
 		"../mkdcore/custom/Admin/views/Category_wiseDetail.php" : "../release/application/views/Admin/Category_wiseDetail.php",
 
 		"../mkdcore/custom/Pos/Custom_api_controller.php" : "../release/application/controllers/Guest/Custom_api_controller.php",
-		"../mkdcore/custom/Pos/controllers/Pos_dashboard_controller.php" : "../release/application/controllers/Pos/Pos_dashboard_controller.php",
-		"../mkdcore/custom/Pos/controllers/Pos_login_controller.php" : "../release/application/controllers/Pos/Pos_login_controller.php",
-		"../mkdcore/custom/Pos/views/Dashboard.php" : "../release/application/views/Pos/Dashboard.php",
-
+		  
 		
 
 
