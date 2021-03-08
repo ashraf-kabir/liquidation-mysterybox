@@ -85,7 +85,7 @@
           </div>
           
           
-          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-10 mt-3">
+          <div class="col-xl-3 col-lg-4 col-md-4 col-sm-12 col-10 mt-3" style=" background-color: white; border-radius: 6px;padding-top: 7px;">
             <a href="<?php echo base_url(); ?>categories" class="btn text-success">
               <i class="fas fa-cart-plus"></i> Continue Shopping
             </a>
