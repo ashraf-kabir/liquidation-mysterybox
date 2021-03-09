@@ -3,12 +3,12 @@ echo "Enter Release\n";
 # cp ../release/application/config/database.php .
 cd ../release;
 echo "Copy Code\n";
-rm -rf ../../prod_repo/*
-cp -R * ../../prod_repo;
+rm -rf ../../ecom_vegas_liquidation_prod/*
+cp -R * ../../ecom_vegas_liquidation_prod;
 echo "Copy Configuration\n";
-cp ../scripts/config.php ../../prod_repo/application/config;
-cp ../scripts/database.php ../../prod_repo/application/config;
-cd ../../prod_repo;
+cp ../scripts/config.php ../../ecom_vegas_liquidation_prod/application/config;
+cp ../scripts/database.php ../../ecom_vegas_liquidation_prod/application/config;
+cd ../../ecom_vegas_liquidation_prod;
 chmod -R 775 *;
 chown -R www-data:www-data *;
 echo "Committing\n";
