@@ -246,7 +246,9 @@ class Home_controller extends Manaknight_Controller
             } 
             $_POST = $customer_data;
              
-
+            // echo "<pre>";
+            // print_r($_POST);
+            // die();
             $this->form_validation->set_rules('full_name', "Name", "required|max_length[255]");
             $this->form_validation->set_rules('email_address', "Email", "valid_email"); 
             $this->form_validation->set_rules('postal_code', "Customer Postal Code", "integer");
@@ -350,6 +352,7 @@ class Home_controller extends Manaknight_Controller
             $this->load->model('customer_model'); 
             $this->load->model('coupon_model'); 
             $this->load->model('coupon_orders_log_model'); 
+            $this->load->model('tax_model'); 
 
             $this->load->library('pos_checkout_service');
             $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
@@ -427,7 +430,14 @@ class Home_controller extends Manaknight_Controller
             $shipping_cost  =  $shipping_cost_value;
             $discount       =  0;
             $tax            =  0;
+             
+            $tax_data       =  $this->tax_model->get(1); 
 
+            $tax_amount  = 0;
+            if(isset($tax_data->tax) )
+            {
+              $tax_amount = $tax_data->tax/100;
+            } 
             
             // $this->db->trans_strict(TRUE);
             // $this->db->trans_begin();
@@ -449,7 +459,7 @@ class Home_controller extends Manaknight_Controller
             */ 
 
              
-            $result = $this->pos_checkout_service->customer_create_order($customer_data,$tax,$discount,$user_id,$shipping_cost);
+            $result = $this->pos_checkout_service->customer_create_order($customer_data,$tax,$discount,$user_id,$shipping_cost, $checkout_type);
 
 
             if ($result) 
@@ -509,10 +519,14 @@ class Home_controller extends Manaknight_Controller
 
                 /**
                 * Update prices  
-                */
-                $grand_total = $sub_total + $tax + $shipping_cost - $discount - $coupon_amount;
+                */ 
+                $tax              =  $tax_amount * $sub_total;
+
+
+                $grand_total =   $tax + $sub_total - $discount - $coupon_amount  +  $shipping_cost;
                 $data_order_prices = array( 
                     'total'         =>  $grand_total,
+                    'tax'           =>  $tax,
                     'subtotal'      =>  $sub_total,  
                     'coupon_log_id' =>  $coupon_log_id,  
                 );

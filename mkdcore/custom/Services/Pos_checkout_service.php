@@ -131,7 +131,7 @@ class Pos_checkout_service {
     }
 
 
-    public function customer_create_order($customer_data,$tax,$discount,$pos_user_id,$shipping_cost =0)
+    public function customer_create_order($customer_data,$tax,$discount,$pos_user_id,$shipping_cost =0, $checkout_type)
     {
         $billing_name        =  $customer_data->name;
         $billing_address     =  $customer_data->billing_address;
@@ -189,6 +189,7 @@ class Pos_checkout_service {
             'pos_user_id'       =>  0, 
             'status'            =>  1, 
             'pos_pickup_status' =>  1, 
+            'checkout_type'     =>  $checkout_type, 
         );
 
         $result = $this->_pos_order_model->create($data_checkout_order);

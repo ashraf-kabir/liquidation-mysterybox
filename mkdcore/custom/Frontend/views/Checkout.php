@@ -262,6 +262,7 @@
                   <p class="coupon_success_coupon_error"></p>
                   <button class="btn btn-primary apply_coupon mb-2" type="button"> Apply Coupon </button>
                   <h5>$<span class="coupon_amount">0.00</span></h5>
+                  <input type="hidden"  id="coupon_amount_now" value="0">
                 </div>
               </div>
 
