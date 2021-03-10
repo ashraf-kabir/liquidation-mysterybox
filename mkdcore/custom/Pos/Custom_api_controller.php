@@ -207,21 +207,20 @@ class Custom_api_controller extends Manaknight_Controller
 
     public function add_product_to_cart_by_customer()
     {
-        if($this->session->userdata('customer_login') )
-        {
-            $this->load->model('pos_cart_model'); 
-            $this->load->model('inventory_model'); 
- 
-             
-            $this->load->library('helpers_service');
-            $this->helpers_service->set_inventory_model($this->inventory_model); 
+        $this->load->model('pos_cart_model'); 
+        $this->load->model('inventory_model'); 
 
+         
+        $this->load->library('helpers_service');
+        $this->helpers_service->set_inventory_model($this->inventory_model); 
 
+        // if($this->session->userdata('customer_login') )
+        // { 
             $product_id   =  $this->input->post('id', TRUE);
             $product_qty  =  $this->input->post('quantity', TRUE);
-            $user_id = $this->session->userdata('user_id');
-
+            $user_id      =  $this->session->userdata('user_id');
             
+            $ip_address_user = $_SERVER['REMOTE_ADDR'];
 
             $product_data = $this->inventory_model->get($product_id);
 
@@ -238,7 +237,13 @@ class Custom_api_controller extends Manaknight_Controller
                 *   if yes then add qty and do other price calculations
                 *   if no add new product to cart
                 */
-                $check_chart_if_product =  $this->pos_cart_model->get_by_fields(['product_id' => $product_id, 'customer_id' => $user_id]);  
+                if ($this->session->userdata('user_id')) 
+                {
+                    $check_chart_if_product =  $this->pos_cart_model->get_by_fields(['product_id' => $product_id, 'customer_id' => $user_id]);  
+                }else{
+                    $check_chart_if_product =  $this->pos_cart_model->get_by_fields(['product_id' => $product_id, 'secret_key' => $ip_address_user]);  
+                }
+                
                 if (!empty($check_chart_if_product)) 
                 {
                     $product_data = $check_chart_if_product;
@@ -265,6 +270,7 @@ class Custom_api_controller extends Manaknight_Controller
                         'total_price'   => $total_price_now,
                         'product_name'  => $product_name,
                         'customer_id'   => $user_id,
+                        'secret_key'    => $ip_address_user,
                     ); 
                     $result = $this->pos_cart_model->edit($data_cart,$product_data->id); 
                 }
@@ -288,6 +294,7 @@ class Custom_api_controller extends Manaknight_Controller
                         'total_price'   => $total_price,
                         'product_name'  => $product_name,
                         'customer_id'   => $user_id,
+                        'secret_key'    => $ip_address_user,
                     );
 
                     $result = $this->pos_cart_model->create($data_cart); 
@@ -313,12 +320,15 @@ class Custom_api_controller extends Manaknight_Controller
                 echo json_encode($output);
                 exit();
             } 
-        }else{
-            $output['status'] = 0;
-            $output['error'] = 'Login to continue.';
-            echo json_encode($output);
-            exit();
-        }
+        // }
+        // else
+        // { 
+
+        //     $output['status'] = 0;
+        //     $output['error'] = 'Login to continue.';
+        //     echo json_encode($output);
+        //     exit();
+        // }
     }
 
     

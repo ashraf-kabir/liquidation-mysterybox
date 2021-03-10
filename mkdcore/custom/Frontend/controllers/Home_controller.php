@@ -197,23 +197,35 @@ class Home_controller extends Manaknight_Controller
         $data['layout_clean_mode'] = FALSE;
         $data['no_detail'] = TRUE;
         
-        if($this->session->userdata('customer_login'))
-        { 
+        // if($this->session->userdata('customer_login'))
+        // { 
             $user_id = $this->session->userdata('user_id');
             $this->load->model('pos_cart_model');
             $this->load->model('customer_model');
             $this->load->model('tax_model');
 
-            $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+            
+
+            if ($this->session->userdata('user_id')) 
+            { 
+                $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+            }
+            else
+            {
+                $ip_address_user = $_SERVER['REMOTE_ADDR']; 
+                $data['cart_items'] =  $this->pos_cart_model->get_all(['secret_key' => $ip_address_user]); 
+            } 
             $data['customer']   =  $this->customer_model->get($user_id);  
+
+            
             $data['tax']   =  $this->tax_model->get(1); 
 
             $this->_render('Guest/Cart',$data);  
-        }  
-        else
-        {
-            redirect('');
-        }
+        // }  
+        // else
+        // {
+        //     redirect('');
+        // }
     } 
 
 
@@ -794,10 +806,12 @@ class Home_controller extends Manaknight_Controller
             {    
                 if( password_verify($password, $user->password) )
                 {  
+
                     $this->set_session('user_id', (int) $user->id); 
                     $this->set_session('email', (string) $user->email); 
                     $this->set_session('customer_login', 1);  
 
+                    $this->add_user_id_for_orders();
                     $output['status'] = 0;
                     $output['success'] = 'Success!.';
                     echo json_encode($output);
@@ -825,15 +839,29 @@ class Home_controller extends Manaknight_Controller
 
     public function cart_remove($cart_id)
     {
-        if ($this->session->userdata('user_id') and $cart_id ) 
+        if ( $cart_id ) 
         {  
             $this->load->model('pos_cart_model');
-            $user_id = $this->session->userdata('user_id'); 
+            $this->load->model('inventory_model');  
             $cart_id = $cart_id; 
+
+
+            // $model  = $this->pos_cart_model->get($cart_id);
+
+
+
             $result  = $this->pos_cart_model->real_delete_by_fields([ 'id' => $cart_id ]); 
 
             if ($result) 
             {  
+                // if($model)
+                // {
+                //     $inventory = $this->inventory_model->get($model->product_id);
+                //     $quantity  = $inventory->quantity + $model->product_qty;
+
+                //     $this->inventory_model->edit(['quantity' => $quantity], $model->product_id);
+                // }
+
                 $this->session->set_flashdata('success1', 'Item has been deleted successfully.');
             }else{
                 $this->session->set_flashdata('error1','Error! Please try again later.'); 
@@ -850,5 +878,20 @@ class Home_controller extends Manaknight_Controller
     }
 
 
+
+    public function add_user_id_for_orders()
+    {
+        $this->load->model('pos_cart_model');
+
+        $ip_address_user = $_SERVER['REMOTE_ADDR'];
+        $user_id         = $this->session->userdata('user_id');
+
+        $cart_items =  $this->pos_cart_model->get_all(['secret_key' => $ip_address_user]); 
+
+        foreach ($cart_items as $cart_item_key => $cart_item_value) 
+        {
+            $this->pos_cart_model->edit(['customer_id' => $user_id], $cart_item_value->id); 
+        }
+    }
 
 }

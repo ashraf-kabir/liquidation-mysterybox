@@ -88,8 +88,14 @@
                               <a class="nav-link <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>" href="<?php echo base_url(); ?>contacts/">contact</a>
                          </li> 
 
+                          <li class="nav-item <?php if( isset($active) and $active == 'cart' ){ echo 'active'; } ?>">
+                              <a class="nav-link <?php if( isset($active)  and $active == 'cart'  ){ echo 'active'; } ?>" href="<?php echo base_url(); ?>cart/">Cart</a>
+                         </li>
 
+                         
                          <?php if( !$this->session->userdata('customer_login') ){ ?> 
+
+                              
 
                               <li class="nav-item <?php if( isset($active) and $active == 'contact' ){ echo 'active'; } ?>">
                                    <a class="nav-link <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>"   data-target="#loginModal" data-toggle="modal">Login</a>
@@ -98,11 +104,11 @@
                               <li class="nav-item <?php if( isset($active) and $active == 'contact' ){ echo 'active'; } ?>">
                                    <a class="nav-link <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>"  data-target="#signupModal" data-toggle="modal">Register</a>
                               </li> 
+
+
                          <?php }else { ?>
 
-                              <li class="nav-item <?php if( isset($active) and $active == 'cart' ){ echo 'active'; } ?>">
-                                   <a class="nav-link <?php if( isset($active)  and $active == 'cart'  ){ echo 'active'; } ?>" href="<?php echo base_url(); ?>cart/">Cart</a>
-                              </li>
+                             
 
                               <li class="nav-item <?php if( isset($active) and $active == 'contact' ){ echo 'active'; } ?>">
                                    <a class="nav-link <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>"  href="<?php echo base_url(); ?>logout" >Logout</a>

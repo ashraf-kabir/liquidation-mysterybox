@@ -596,7 +596,9 @@
 				["product_qty", "integer", [], "xyzQuantity", "", ""],
 				["unit_price", "float", [], "xyzUnit Price", "", ""],
 				["total_price", "float", [], "xyzTotal Price", "", ""],
-				["product_name", "string", [{"limit": 255}], "xyzProduct Name", "", ""]
+				["product_name", "string", [{"limit": 255}], "xyzProduct Name", "", ""],
+				["secret_key", "string", [{"limit": 255}], "xyzKey", "", ""],
+				["expiry", "integer", [], "xyzExpiry", "", ""]
 			],
 			"method": [],
 			"join": [],

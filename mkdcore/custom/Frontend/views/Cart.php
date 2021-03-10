@@ -92,9 +92,9 @@
             <div class="cart__address p-4">
               <h4 class="my-4"><i class="fas fa-truck"></i> Shipping</h4>
              
-              <h5 class="my-3">  <?= $customer->billing_city ; ?> </h5>
+              <h5 class="my-3">  <?php echo isset($customer->billing_city) ? $customer->billing_city : '' ; ?> </h5>
               <p class="w-75 my-2">
-              <?= $customer->billing_address ; ?>
+                <?php echo  isset($customer->billing_address) ? $customer->billing_address : '' ; ?> 
               </p>
             </div>
             <div class="cart__summary px-4 py-4">
@@ -120,7 +120,7 @@
                 <strong>$<span class="cart-total"><?= number_format($total + $tax_amount,2); ?></span></strong>
               </div>
 
-              <a  href="<?php echo base_url(); ?>checkout" style="line-height:2;" class="btn btn-success w-100" >Checkout Out</a >
+              <a  <?php if ($this->session->userdata('user_id')): ?> href="<?php echo base_url(); ?>checkout"   <?php else: ?>  data-target="#loginModal" data-toggle="modal" <?php endif; ?>style="line-height:2;" class="btn btn-success w-100" >Checkout Out</a >
             </div>
           </div>
         </div>
