@@ -20,7 +20,7 @@ class Admin_category_wise_controller extends Admin_controller
         
         $this->load->model('inventory_model');    
         $this->load->model('pos_order_items_model');    
-        $this->load->model('pos_order_items_custom_model');    
+        $this->load->model('pos_order_items_report_model');    
         
     }
 
@@ -100,7 +100,7 @@ class Admin_category_wise_controller extends Admin_controller
                             'product_id'        =>  $product->id
                         ];
         
-                        $order_items = $this->pos_order_items_custom_model->get_all_pos_order( $where_sale_order ); 
+                        $order_items = $this->pos_order_items_report_model->get_all_pos_order( $where_sale_order ); 
                         
                         
                         if ( !empty( $order_items ) ) 
@@ -169,7 +169,7 @@ class Admin_category_wise_controller extends Admin_controller
                     'product_id'        =>  $product->id
                 ];
 
-                $order_items = $this->pos_order_items_custom_model->get_all_pos_order( $where_sale_order ); 
+                $order_items = $this->pos_order_items_report_model->get_all_pos_order( $where_sale_order ); 
                  
                 $total_sale     =  0;
                 $total_qty      =  0;

@@ -8,7 +8,7 @@
  * @author Ryan Wong
  *
  */
-class Pos_order_items_custom_model extends Manaknight_Model
+class Pos_order_items_report_model extends Manaknight_Model
 {
 	protected $_table = 'pos_order_items';
 	protected $_primary_key = 'id';

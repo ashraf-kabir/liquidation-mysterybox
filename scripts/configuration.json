@@ -2583,7 +2583,7 @@
 		"../mkdcore/custom/Admin/views/CustomerView.php" : "../release/application/views/Admin/CustomerView.php",
 
 		"../mkdcore/custom/Models/Inventory_model.php" : "../release/application/models/Inventory_model.php",
-		"../mkdcore/custom/Models/Pos_order_items_custom_model.php" : "../release/application/models/Pos_order_items_custom_model.php",
+		"../mkdcore/custom/Models/Pos_order_items_report_model.php" : "../release/application/models/Pos_order_items_report_model.php",
  
 		
 		"../mkdcore/custom/Admin/controllers/Admin_category_controller.php" : "../release/application/controllers/Admin/Admin_category_controller.php",
