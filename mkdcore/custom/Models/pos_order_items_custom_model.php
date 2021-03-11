@@ -151,4 +151,9 @@ class Pos_order_items_custom_model extends Manaknight_Model
     
 
 
+    public function do_nothing()
+    {
+
+    }
+
 }
