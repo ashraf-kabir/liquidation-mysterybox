@@ -17,8 +17,7 @@ class Admin_transactions_controller extends Admin_controller
     public function __construct()
     {
         parent::__construct(); 
-        $this->load->model('customer_model');
-        $this->load->model('pos_user_model');
+        $this->load->model('customer_model'); 
         $this->load->library('names_helper_service');
     }
 
@@ -81,15 +80,13 @@ class Admin_transactions_controller extends Admin_controller
 
 
         $this->names_helper_service->set_customer_model($this->customer_model); 
-        $this->names_helper_service->set_pos_user_model($this->pos_user_model); 
+        
 
         if ( !empty( $this->_data['view_model']->get_list() ) ) 
         {
             foreach ($this->_data['view_model']->get_list() as $key => &$value) 
-            { 
-                $value->pos_user_id = $this->names_helper_service->get_pos_user_real_name( $value->pos_user_id ); 
-                $value->customer_id = $this->names_helper_service->get_customer_real_name( $value->customer_id );  
-
+            {  
+                $value->customer_id = $this->names_helper_service->get_customer_real_name( $value->customer_id );   
             }
         }
 
