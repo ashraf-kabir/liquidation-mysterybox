@@ -23,7 +23,7 @@
 </head>
 <body>
      <header class="container-fluid py-4">
-          <form method="GET" action="<?php echo base_url(); ?>/categories">
+          <form method="GET" action="<?php echo base_url(); ?>categories">
                <div class="row justify-content-center align-items-center my-2">
 
                     <div class="col-10 col-md-5 text-center text-d-left">
@@ -55,14 +55,7 @@
                          <li class="dropdown-submenu nav-item d-none d-md-block">
                               <a  class="dropdown-item nav-link" tabindex="-1" href="#">Shop</a>
                               <ul class="dropdown-menu">
-
-                                   <li class="dropdown-submenu">
-                                        <a class="dropdown-item" href="#">Type</a>
-                                        <ul class="dropdown-menu second">
-                                             <li class="dropdown-item"><a href="<?php echo base_url(); ?>categories/?type=1">Regular</a></li> 
-                                             <li class="dropdown-item"><a href="<?php echo base_url(); ?>categories/?type=2">Generic</a></li> 
-                                        </ul>
-                                   </li>
+ 
                                    <li class="dropdown-submenu">
                                         <a class="dropdown-item" href="#">Categories</a>
                                         <ul class="dropdown-menu second">

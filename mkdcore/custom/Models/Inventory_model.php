@@ -41,7 +41,7 @@ class Inventory_model extends Manaknight_Model
 		
     ];
 	protected $_label_fields = [
-    'ID','Product Name','SKU','Category','Manifest','Store Location','Physical Location','Location Description','Weight','Length','Height','Width','Image','Selling Price','Quantity','Inventory Note','Barcode Image','Cost Price','Admin Inventory Note','Can Ship','Pin Item','Product Type','Status',
+    'ID','Product Name','SKU','Category','Manifest','Store Location','Physical Location','Inventory Location Description','Weight','Length','Height','Width','Image','Selling Price','Quantity','Inventory Note','Barcode Image','Cost Price','Admin Inventory Note','Can Ship','Pin Item','Product Type','Status',
     ];
 	protected $_use_timestamps = TRUE;
 	protected $_created_field = 'created_at';
@@ -53,8 +53,8 @@ class Inventory_model extends Manaknight_Model
 		['category_id', 'Category', ''],
 		['manifest_id', 'Manifest', ''],
 		['store_location_id', 'Store Location', 'required'],
-		['physical_location', 'Physical Location', ''],
-		['location_description', 'Location Description', ''],
+		['physical_location', 'Inventory Location', ''],
+		['location_description', 'Inventory Location Description', ''],
 		['weight', 'Weight', ''],
 		['length', 'Length', ''],
 		['height', 'Height', ''],
@@ -80,8 +80,8 @@ class Inventory_model extends Manaknight_Model
 		['category_id', 'Category', ''],
 		['manifest_id', 'Manifest', ''],
 		['store_location_id', 'Store Location', 'required'],
-		['physical_location', 'Physical Location', ''],
-		['location_description', 'Location Description', ''],
+		['physical_location', 'Inventory Location', ''],
+		['location_description', 'Inventory Location Description', ''],
 		['weight', 'Weight', ''],
 		['length', 'Length', ''],
 		['height', 'Height', ''],
@@ -153,7 +153,7 @@ class Inventory_model extends Manaknight_Model
 			0 => 'Inactive',
 		];
 	}
-
+ 
 	 
 
 	public function can_ship_mapping ()
@@ -161,6 +161,16 @@ class Inventory_model extends Manaknight_Model
 		return [
 			1 => 'Yes',
 			2 => 'No',
+		];
+	}
+	 
+
+	public function free_ship_mapping ()
+	{
+		return [
+			2 => 'No',
+			1 => 'Yes',
+			
 		];
 	}
 

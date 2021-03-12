@@ -106,7 +106,7 @@ if ($layout_clean_mode) {
 					<input type="text" class="form-control data-input" id="form_manifest_id" name="manifest_id" value="<?php echo set_value('manifest_id'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
 				</div>
 				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Physical Location">Physical Location </label>
+					<label for="Inventory Location">Inventory Location </label>
                     <select class="form-control data-input" id="form_physical_location" name="physical_location">
 						<option value="" >Select</option>
                         <?php foreach ($physical_locations as $key => $value) {
@@ -115,7 +115,7 @@ if ($layout_clean_mode) {
 					</select>   
 				</div>
 				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Location Description">Location Description </label>
+					<label for="Inventory Location Description">Inventory Location Description </label>
 					<input type="text" class="form-control data-input" id="form_location_description" name="location_description" value="<?php echo set_value('location_description'); ?>"/>
 				</div>
 				<div class="form-group  col-md-5 col-sm-12">
@@ -171,6 +171,16 @@ if ($layout_clean_mode) {
 						}?>
 					</select>
 				</div>
+
+                
+                <div class="form-group col-md-5 col-sm-12 ">
+                    <label for="form_free_ship">Free Shipping </label>
+                    <select id="form_free_ship" name="free_ship" class="form-control data-input">
+                        <?php foreach ($view_model->free_ship_mapping() as $key => $value) {
+                            echo "<option value='{$key}'> {$value} </option>";
+                        }?>
+                    </select>
+                </div>
 
 
                 <div class="form-group col-md-5 col-sm-12">

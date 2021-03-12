@@ -28,8 +28,9 @@ if ($layout_clean_mode) {
                 <h5 class="primaryHeading2 text-md-left">
                     <?php echo $view_model->get_heading();?> Details
                 </h5>
+                <button onClick="printdiv('print-me-1')" class="btn btn-info " style="float: right;" type="button"> Print</button>
                 
-				<div class='row mb-4'>
+				<div class='row mb-4'  style=" clear: both;">
 					<div class='col'>
 						ID
 					</div>
@@ -76,7 +77,7 @@ if ($layout_clean_mode) {
 
 				<div class='row mb-4'>
 					<div class='col'>
-						Physical Location
+						Inventory Location
 					</div>
 					<div class='col'>
 						<?php echo $view_model->get_physical_location();?>
@@ -85,7 +86,7 @@ if ($layout_clean_mode) {
 
 				<div class='row mb-4'>
 					<div class='col'>
-						Location Description
+						Inventory Location Description
 					</div>
 					<div class='col'>
 						<?php echo $view_model->get_location_description();?>
@@ -218,6 +219,15 @@ if ($layout_clean_mode) {
 				
 				<div class='row mb-4'>
 					<div class='col'>
+						Free Shipping
+					</div>
+					<div class='col'>
+						<?php echo $view_model->free_ship_mapping()[$view_model->get_free_ship()];?>
+					</div>
+				</div>
+				
+				<div class='row mb-4'>
+					<div class='col'>
 						Product Type
 					</div>
 				<div class='col'>
@@ -229,12 +239,64 @@ if ($layout_clean_mode) {
 					<div class='col'>
 						Pin Item
 					</div>
-				<div class='col'>
+					<div class='col'>
 						<?php echo $view_model->pin_item_top_mapping()[$view_model->get_pin_item_top()];?>
 					</div>
-					</div>
+				</div>
 				
+
+
+				<div style="display:none !important;text-align: center;" id="print-me-1">
+					<div class='row '  >
+						<div class="col-sm-12" style="text-align: center  !important;">
+							<h1 >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
+						</div> 
+					</div>
+
+
+
+					<div class='row ' >
+						<div class="col-sm-12" style="text-align: center  !important;">
+							<h1 >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
+						</div> 
+					</div>
+
+
+					<div class='row '>
+						<div class="col-sm-12" style="text-align: center  !important;">
+							<h1 >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
+						</div> 
+					</div> 
+ 
+
+					<div class='row' >
+						<div class="col-sm-12" style="text-align: center  !important;">
+							<img   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
+						</div> 
+					</div>  
+				</div>
+
+
             </div>
         </div>
     </div>
 </div>
+
+
+<script>
+// window.print();
+    document.addEventListener('DOMContentLoaded', function()
+    { 
+	    function printdiv(printpage) 
+	    {
+	        var headstr = "<html><head><title></title></head><body>";
+	        var footstr = "</body>";
+	        var newstr = document.all.item(printpage).innerHTML;
+	        var oldstr = document.body.innerHTML;
+	        document.body.innerHTML = headstr + newstr + footstr;
+	        window.print();
+	        document.body.innerHTML = oldstr;
+	        return false;
+	    } 
+    },  false)
+</script>

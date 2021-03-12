@@ -107,7 +107,7 @@ if ($layout_clean_mode) {
 				</div>
 				
 				<div class="form-group col-md-5 col-sm-12">
-					<label for="Physical Location">Physical Location </label>
+					<label for="Inventory Location">Inventory Location </label>
 					<select class="form-control data-input" id="form_physical_location" name="physical_location">
 						<option value="" >Select</option>
                         <?php foreach ($physical_locations as $key => $value) {
@@ -117,7 +117,7 @@ if ($layout_clean_mode) {
 				</div>
 
 				<div class="form-group col-md-5 col-sm-12">
-					<label for="Location Description">Location Description </label>
+					<label for="Inventory Location Description">Inventory Location Description </label>
 					<input type="text" class="form-control data-input" id="form_location_description" name="location_description" value="<?php echo set_value('location_description', $this->_data['view_model']->get_location_description());?>"/>
 				</div>
 
@@ -181,6 +181,17 @@ if ($layout_clean_mode) {
 						}?>
 					</select>
 				</div>
+
+
+                
+                <div class="form-group col-md-5 col-sm-12">
+                    <label for="Can Ship">Free Shipping </label>
+                    <select id="form_can_ship" name="can_ship" class="form-control data-input">
+                        <?php foreach ($view_model->free_ship_mapping() as $key => $value) {
+                            echo "<option value='{$key}' " . (($view_model->get_free_ship() == $key && $view_model->get_free_ship() != '') ? 'selected' : '') . "> {$value} </option>";
+                        }?>
+                    </select>
+                </div>
 
 
                 <div class="form-group col-md-5 col-sm-12 mb-4">

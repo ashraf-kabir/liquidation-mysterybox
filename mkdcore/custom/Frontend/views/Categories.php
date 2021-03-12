@@ -67,7 +67,7 @@
                         </section>        
                     </aside>  
 
-                    <aside id="sidebar-shop" class="widget-area site-sidebar style-2" role="complementary">
+                   <!--  <aside id="sidebar-shop" class="widget-area site-sidebar style-2" role="complementary">
                         <section  id="tz_categories-2" class="widget widget_tz_categories"><h3 class="widget-title" itemprop="name"><span>Type</span></h3>
 
                               <ul class="pt-categories"> 
@@ -75,7 +75,7 @@
                                    <li class="cat-item cat-item-116"><a href="<?php echo base_url(); ?>categories/?type=2">Generic</a></li>  
                               </ul>
                         </section>        
-                    </aside>            
+                    </aside>     -->        
                </div>
 
                <div class="col-md-9"> 
@@ -101,7 +101,7 @@
                                              <?php }else{ ?>
                                                   <img style='max-height: 150px !important; min-height: 150px !important;'  src="/assets/frontend_images/noun_pallet_box_1675914.png" class="w-100" alt="<?php echo $value->product_name; ?>">     
                                              <?php } ?>
-                                             <h5 class="text-gray mt-2"><?php if($value->product_type == 1 ) { echo "Regular"; } elseif($value->product_type == 2 ){ echo "Generic"; } ?> </h5>
+                                             <!-- <h5 class="text-gray mt-2"><?php if($value->product_type == 1 ) { echo "Regular"; } elseif($value->product_type == 2 ){ echo "Generic"; } ?> </h5> -->
                                              <h5 class="offer__itemTitle mt-2"><?php echo $value->product_name; ?></h5>
                                              <h5>Price : $<?php echo number_format($value->selling_price,2); ?></h5>
                                         </a>

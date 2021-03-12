@@ -27,3 +27,9 @@ ALTER TABLE `transactions` CHANGE `payment_type` `payment_type` INT(11) NULL, CH
 ALTER TABLE `customer` CHANGE `name` `name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL, CHANGE `email` `email` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL, CHANGE `phone` `phone` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL, CHANGE `password` `password` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL, CHANGE `billing_zip` `billing_zip` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL, CHANGE `billing_address` `billing_address` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL, CHANGE `billing_country` `billing_country` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL, CHANGE `billing_state` `billing_state` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL, CHANGE `billing_city` `billing_city` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL, CHANGE `last_order` `last_order` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0', CHANGE `num_orders` `num_orders` INT(11) NULL DEFAULT '0', CHANGE `status` `status` INT(11) NULL;
 
 ALTER TABLE `pos_cart` CHANGE `secret_key` `secret_key` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `expiry` `expiry` INT(11) NULL DEFAULT '0';
+
+
+ALTER TABLE `inventory` CHANGE `free_ship` `free_ship` INT(11) NULL DEFAULT '2';
+
+
+

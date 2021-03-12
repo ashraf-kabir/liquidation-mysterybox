@@ -202,19 +202,32 @@ class Home_controller extends Manaknight_Controller
             $user_id = $this->session->userdata('user_id');
             $this->load->model('pos_cart_model');
             $this->load->model('customer_model');
+            $this->load->model('inventory_model');
             $this->load->model('tax_model');
 
             
 
             if ($this->session->userdata('user_id')) 
             { 
-                $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+                $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
             }
             else
             {
                 $ip_address_user = $_SERVER['REMOTE_ADDR']; 
-                $data['cart_items'] =  $this->pos_cart_model->get_all(['secret_key' => $ip_address_user]); 
+                $cart_items =  $this->pos_cart_model->get_all(['secret_key' => $ip_address_user]); 
             } 
+
+            if(!empty($cart_items))
+            {
+                foreach ($cart_items as $cart_key => &$cart) 
+                {
+                    $data_i = $this->inventory_model->get($cart->product_id);
+                    
+                    $cart->feature_image = $data_i->feature_image;
+                }
+            }
+
+            $data['cart_items'] = $cart_items;
             $data['customer']   =  $this->customer_model->get($user_id);  
 
             

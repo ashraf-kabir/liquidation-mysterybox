@@ -393,6 +393,7 @@
 				["cost_price", "float", [], "xyzCost Price", "", ""],
 				["admin_inventory_note", "text", [], "xyzAdmin Inventory Note", "", ""], 
 				["can_ship", "integer", [], "xyzCan Ship", "", ""],  
+				["free_ship", "integer", [], "xyzFree Shipping", "", ""],  
 				["pin_item_top", "integer", [{"default" : 1}], "xyzPin Item", "", ""],
 				["available_in_shelf", "integer", [{"default" : 1}], "xyzAvailable In Shelf", "", ""],
 				["product_type", "integer", [ ], "xyzProduct Type", "", ""],
@@ -409,9 +410,14 @@
 					"1": "Yes",
 					"2": "No" 
 				},
+
+				"free_ship": {
+					"1": "Yes",
+					"2": "No" 
+				},
 				"product_type": {
-					"1": "Regular",
-					"2": "Generic"
+					"1": "Inventory",
+					"2": "Non Inventory"
 				},
 				"pin_item_top": {
 					"1": "No",
@@ -873,7 +879,7 @@
 				"xyzDepartment" : "/department/0?order_by=id&direction=DESC", 
 				"xyzTax": "/tax/0?order_by=id&direction=DESC",
 				"xyzCustomer" : "/customer/0?order_by=id&direction=DESC", 
-				"xyzPhysical Location" : "/physical_location/0?order_by=id&direction=DESC", 
+				"xyzInventory Location" : "/inventory_location/0?order_by=id&direction=DESC", 
 				"xyzStore" : "/store/0?order_by=id&direction=DESC",   
 				"xyzCoupon": "/coupon/0?order_by=id&direction=DESC",
 				"xyzURL Redirect": "/url_redirect/0?order_by=id&direction=DESC",
@@ -1672,12 +1678,12 @@
 			"load_libraries": []
 		},
 		{
-			"route": "/physical_location",
-			"name": "Physical_Location",
+			"route": "/inventory_location",
+			"name": "Inventory_Location",
 			"page_name": "Physical Location",
 			"model": "physical_location",
-			"controller": "Admin_physical_location_controller.php",
-			"api_controller": "Admin_physical_location_api_controller.php",
+			"controller": "Admin_inventory_location_controller.php",
+			"api_controller": "Admin_inventory_location_api_controller.php",
 			"activity_log": false,
 			"override": "",
 			"override_add": "",
@@ -2196,6 +2202,7 @@
 		"css": ["/assets/css/guest.css"]
 	},
 	"translations": {
+		"xyzInventory Location": "Inventory Location",
 		"xyzPayment Method": "Payment Method",
 		"xyzOrder Type": "Order Type",
 		"xyzCheckout Type": "Checkout Type",
