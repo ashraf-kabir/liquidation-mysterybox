@@ -201,7 +201,27 @@ class Admin_category_controller extends Admin_controller
 
     
     
-    
+    public function delete($id)
+    {
+        $model = $this->category_model->get($id);
+
+        if (!$model)
+        {
+            $this->error('Error');
+            return redirect('/admin/category/0');
+        }
+
+        $result = $this->category_model->real_delete($id);
+
+        if ($result)
+        {
+            
+            return $this->redirect('/admin/category/0', 'refresh');
+        }
+
+        $this->error('Error');
+        return redirect('/admin/category/0');
+    }
     
     
     
