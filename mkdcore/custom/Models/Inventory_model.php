@@ -41,7 +41,7 @@ class Inventory_model extends Manaknight_Model
 		
     ];
 	protected $_label_fields = [
-    'ID','Product Name','SKU','Category','Manifest','Store Location','Physical Location','Inventory Location Description','Weight','Length','Height','Width','Image','Selling Price','Quantity','Inventory Note','Barcode Image','Cost Price','Admin Inventory Note','Can Ship','Pin Item','Product Type','Status',
+    'ID','Product Name','SKU','Category','Manifest','Store Location','Inventory Location','Inventory Location Description','Weight','Length','Height','Width','Image','Selling Price','Quantity','Inventory Note','Barcode Image','Cost Price','Admin Inventory Note','Can Ship','Pin Item','Product Type','Status',
     ];
 	protected $_use_timestamps = TRUE;
 	protected $_created_field = 'created_at';
