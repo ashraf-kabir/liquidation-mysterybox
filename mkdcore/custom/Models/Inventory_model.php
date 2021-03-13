@@ -177,8 +177,8 @@ class Inventory_model extends Manaknight_Model
 	public function product_type_mapping ()
 	{
 		return [
-			1 => 'Regular',
-			2 => 'Generic',
+			1 => 'Inventory',
+			2 => 'Non Inventory',
 		];
 	}
 
