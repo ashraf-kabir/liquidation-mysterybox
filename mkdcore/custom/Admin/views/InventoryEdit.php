@@ -186,7 +186,7 @@ if ($layout_clean_mode) {
                 
                 <div class="form-group col-md-5 col-sm-12">
                     <label for="Can Ship">Free Shipping </label>
-                    <select id="form_can_ship" name="can_ship" class="form-control data-input">
+                    <select id="form_can_ship" name="free_ship" class="form-control data-input">
                         <?php foreach ($view_model->free_ship_mapping() as $key => $value) {
                             echo "<option value='{$key}' " . (($view_model->get_free_ship() == $key && $view_model->get_free_ship() != '') ? 'selected' : '') . "> {$value} </option>";
                         }?>

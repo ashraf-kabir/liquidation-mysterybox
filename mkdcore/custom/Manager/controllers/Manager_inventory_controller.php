@@ -147,6 +147,7 @@ class Manager_inventory_controller extends Manager_controller
 		$store_location_id = $this->input->post('store_location_id', TRUE);
 		 
 		$can_ship = $this->input->post('can_ship', TRUE);
+        $free_ship = $this->input->post('free_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
         $pin_item_top = $this->input->post('pin_item_top', TRUE);
         
@@ -176,6 +177,7 @@ class Manager_inventory_controller extends Manager_controller
 			'status' => $status,
 			'store_location_id' => $store_location_id, 
             'can_ship' => $can_ship,
+            'free_ship' => $free_ship,
             'product_type' => $product_type,
 			'pin_item_top' => $pin_item_top,
 			
@@ -264,6 +266,7 @@ class Manager_inventory_controller extends Manager_controller
 		$store_location_id = $this->input->post('store_location_id', TRUE);
 		 
 		$can_ship = $this->input->post('can_ship', TRUE);
+        $free_ship = $this->input->post('free_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
 		$pin_item_top = $this->input->post('pin_item_top', TRUE);
         
@@ -294,6 +297,7 @@ class Manager_inventory_controller extends Manager_controller
 			'status' => $status,
 			'store_location_id' => $store_location_id, 
             'can_ship' => $can_ship,
+            'free_ship' => $free_ship,
             'product_type' => $product_type,
 			'pin_item_top' => $pin_item_top,
 			

@@ -36,6 +36,7 @@ class Inventory_model extends Manaknight_Model
 		'can_ship', 
 		'pin_item_top',
 		'product_type',
+		'free_ship',
 		'status',
 		'available_in_shelf',
 		

@@ -57,12 +57,10 @@
                               <ul class="dropdown-menu">
  
                                    <li class="dropdown-submenu">
-                                        <a class="dropdown-item" href="#">Categories</a>
-                                        <ul class="dropdown-menu second">
-                                             <?php foreach($all_categories as $key => $value) { ?> 
-                                                  <li class="dropdown-item"><a href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>"><?php echo $value->name; ?></a></li>  
-                                             <?php } ?> 
-                                        </ul>
+                                        <a class="dropdown-item" >Mystery box</a> 
+                                        <?php foreach($all_categories as $key => $value) { ?> 
+                                             <a  class="dropdown-item" href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>"><?php echo $value->name; ?></a>
+                                        <?php } ?>  
                                    </li>
 
                               </ul>
@@ -99,10 +97,7 @@
                               </li> 
 
 
-                         <?php }else { ?>
-
-                             
-
+                         <?php }else { ?> 
                               <li class="nav-item <?php if( isset($active) and $active == 'contact' ){ echo 'active'; } ?>">
                                    <a class="nav-link <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>"  href="<?php echo base_url(); ?>logout" >Logout</a>
                               </li>  
