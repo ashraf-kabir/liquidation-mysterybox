@@ -2544,17 +2544,17 @@ class Controller_builder extends Builder
 
             if ($controller['is_edit'])
             {
-                $result .= "\t\t\t\t\t\t\techo '<a class=\"btn btn-primary btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/edit/' . \$data->id . '\">xyzEdit</a>';\n";
+                $result .= "\t\t\t\t\t\t\techo '<a class=\"btn btn-primary btn-sm\" target=\"_blank\" href=\"/{$controller['portal']}{$controller['route']}/edit/' . \$data->id . '\">xyzEdit</a>';\n";
             }
 
             if ($controller['is_view'])
             {
-                $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-warning btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/view/' . \$data->id . '\">xyzView</a>';\n";
+                $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-warning btn-sm\" target=\"_blank\" href=\"/{$controller['portal']}{$controller['route']}/view/' . \$data->id . '\">xyzView</a>';\n";
             }
 
             if ($controller['is_delete'] || $controller['is_real_delete'])
             {
-                $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-danger btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/delete/' . \$data->id . '\">xyzRemove</a>';\n";
+                $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-danger btn-sm\" target=\"_blank\" href=\"/{$controller['portal']}{$controller['route']}/delete/' . \$data->id . '\">xyzRemove</a>';\n";
             }
 
             $result .= "\t\t\t\t\t\t\techo '</td>';";
@@ -2773,11 +2773,11 @@ class Controller_builder extends Builder
             {
                 if ($has_join)
                 {
-                    $result .= "\t\t\t\t\t\t\techo '<a class=\"btn btn-link  link-underline text-underline btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/edit/' . \$data->a_id . '\">xyzEdit</a>';\n";
+                    $result .= "\t\t\t\t\t\t\techo '<a class=\"btn btn-link  link-underline text-underline btn-sm\" target=\"_blank\" href=\"/{$controller['portal']}{$controller['route']}/edit/' . \$data->a_id . '\">xyzEdit</a>';\n";
                 }
                 else
                 {
-                    $result .= "\t\t\t\t\t\t\techo '<a class=\"btn btn-link  link-underline text-underline  btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/edit/' . \$data->id . '\">xyzEdit</a>';\n";
+                    $result .= "\t\t\t\t\t\t\techo '<a class=\"btn btn-link  link-underline text-underline  btn-sm\" target=\"_blank\" href=\"/{$controller['portal']}{$controller['route']}/edit/' . \$data->id . '\">xyzEdit</a>';\n";
                 }
             }
 
@@ -2785,11 +2785,11 @@ class Controller_builder extends Builder
             {
                 if ($has_join)
                 {
-                $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  link-underline text-underline btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/view/' . \$data->a_id . '\">xyzView</a>';\n";
+                $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  link-underline text-underline btn-sm\" target=\"_blank\" href=\"/{$controller['portal']}{$controller['route']}/view/' . \$data->a_id . '\">xyzView</a>';\n";
                 }
                 else
                 {
-                    $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  link-underline text-underline btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/view/' . \$data->id . '\">xyzView</a>';\n";
+                    $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  link-underline text-underline btn-sm\" target=\"_blank\" href=\"/{$controller['portal']}{$controller['route']}/view/' . \$data->id . '\">xyzView</a>';\n";
                 }
             }
 
@@ -2797,11 +2797,11 @@ class Controller_builder extends Builder
             {
                 if ($has_join)
                 {
-                $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  link-underline text-underline text-danger btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/delete/' . \$data->a_id . '\">xyzRemove</a>';\n";
+                $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  link-underline text-underline text-danger btn-sm\" target=\"_blank\" href=\"/{$controller['portal']}{$controller['route']}/delete/' . \$data->a_id . '\">xyzRemove</a>';\n";
                 }
                 else
                 {
-                    $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  link-underline text-underline text-danger btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/delete/' . \$data->id . '\">xyzRemove</a>';\n";
+                    $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-link  link-underline text-underline text-danger btn-sm\" target=\"_blank\" href=\"/{$controller['portal']}{$controller['route']}/delete/' . \$data->id . '\">xyzRemove</a>';\n";
                 }
             }
 
@@ -2898,7 +2898,7 @@ class Controller_builder extends Builder
 
     protected function output_add_button ($controller)
     {
-        return "<a class=\"btn btn-primary btn-sm\" target=\"__blank\" href=\"/{$controller['portal']}{$controller['route']}/add\"><i class=\"fas fa-plus-circle\"></i></a>";
+        return "<a class=\"btn btn-primary btn-sm\" target=\"_blank\" href=\"/{$controller['portal']}{$controller['route']}/add\"><i class=\"fas fa-plus-circle\"></i></a>";
     }
 
     protected function output_export_button ($controller)

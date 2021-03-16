@@ -54,6 +54,7 @@ $(document).ready(() => {
           if (response.success) 
           { 
             toastr.success(response.success); 
+            $('#signupModal').modal('toggle')
           }
           
           if (response.error) 

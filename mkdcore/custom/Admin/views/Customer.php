@@ -93,9 +93,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <?php echo $view_model->get_heading();?>
 
     <?php if($this->session->userdata('role') == 2) { ?>
-        <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="__blank" href="/admin/customer/add"><i class="fas fa-plus-circle"></i></a></span>  
+        <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/admin/customer/add"><i class="fas fa-plus-circle"></i></a></span>  
     <?php }elseif($this->session->userdata('role') == 4) { ?>
-        <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="__blank" href="/manager/customer/add"><i class="fas fa-plus-circle"></i></a></span>
+        <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/manager/customer/add"><i class="fas fa-plus-circle"></i></a></span>
     <?php } ?>
   
 </h5>
@@ -161,13 +161,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             echo '<td>';
                             
                             if($this->session->userdata('role') == 2) {  
-                                echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="__blank" href="/admin/customer/edit/' . $data->id . '">Edit</a>';
-							    echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="__blank" href="/admin/customer/view/' . $data->id . '">View</a>';
+                                echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/admin/customer/edit/' . $data->id . '">Edit</a>';
+							    echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/customer/view/' . $data->id . '">View</a>';
 							     
                             }
                             elseif($this->session->userdata('role') == 4) {  
-                                echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="__blank" href="/manager/customer/edit/' . $data->id . '">Edit</a>';
-							    echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="__blank" href="/manager/customer/view/' . $data->id . '">View</a>';
+                                echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/manager/customer/edit/' . $data->id . '">Edit</a>';
+							    echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/manager/customer/view/' . $data->id . '">View</a>';
 							     
                             }  
 							echo '</td>';

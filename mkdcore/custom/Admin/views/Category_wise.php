@@ -127,7 +127,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							echo "<td>" . number_format($data->total_credit,2) . "</td>";
 							echo "<td>" . number_format($data->total_cash,2) . "</td>";
                             echo '<td>';
-                            echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="__blank" href="/admin/category_wise/view/' . $data->id . '">Detail</a>';
+                            echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/category_wise/view/' . $data->id . '">Detail</a>';
 							echo '</td>';
                     echo '</tr>';
                 ?>

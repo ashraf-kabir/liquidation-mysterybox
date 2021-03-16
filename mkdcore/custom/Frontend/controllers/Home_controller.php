@@ -107,7 +107,8 @@ class Home_controller extends Manaknight_Controller
             'product_type'       => $this->_data['type'], 
             'category_id'        => $this->_data['category'], 
             'product_name'       => $this->_data['search_query'],  
-            'sku'                => $this->_data['search_query'] 
+            'sku'                => $this->_data['search_query'], 
+            'status'             => 1
         ];
   
         $rows_data = $this->inventory_model->get_custom_count($where);
@@ -712,7 +713,7 @@ class Home_controller extends Manaknight_Controller
         $data['layout_clean_mode'] = FALSE;
         $this->load->model('inventory_gallery_list_model');
          
-        $model  = $this->inventory_model->get($id); 
+        $model  = $this->inventory_model->get_by_fields(['id' =>$id, 'status' => 1]); 
         if (!$model)
         {
             $this->error('Error');
