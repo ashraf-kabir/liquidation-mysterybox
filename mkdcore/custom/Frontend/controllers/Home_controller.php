@@ -447,11 +447,15 @@ class Home_controller extends Manaknight_Controller
             $tax_data       =  $this->tax_model->get(1); 
 
             $tax_amount  = 0;
-            if(isset($tax_data->tax) )
-            {
-              $tax_amount = $tax_data->tax/100;
-            } 
             
+
+            if (strtolower($state) == 'nv' or strtolower($state) == 'nevada') 
+            {
+               if(isset($tax_data->tax) )
+                {
+                  $tax_amount = $tax_data->tax/100;
+                }  
+            }
             // $this->db->trans_strict(TRUE);
             // $this->db->trans_begin();
  

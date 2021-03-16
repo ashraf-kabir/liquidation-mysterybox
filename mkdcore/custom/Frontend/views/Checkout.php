@@ -292,7 +292,7 @@
                     }
                     $total = $total + $tax_amount;
                 ?>
-                  <h5>$<?php echo number_format($tax_amount,2); ?></h5>
+                  <h5 class="cart-tax">$<?php echo number_format($tax_amount,2); ?></h5>
                 </div>
               </div>
               <div class="row">
@@ -301,6 +301,8 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">  
                     <input type="hidden" value="<?php echo number_format($total,2); ?>" class="total_of_all" />
+                    <input type="hidden" value="<?php echo number_format($tax_amount,2); ?>" class="tax_amount_val" />
+                    <input type="hidden" value="<?php echo number_format($total-$tax_amount,2); ?>" class="total_without_tax" />
                   <h5>$<span class="total_of_all_text"><?php echo number_format($total,2); ?></span></h5>
                 </div>
               </div>
