@@ -31,7 +31,7 @@ class Admin_inventory_controller extends Admin_controller
     
 
     public function index($page)
-	{
+    {
         $this->load->library('pagination');
         include_once __DIR__ . '/../../view_models/Inventory_admin_list_paginate_view_model.php';
         $session = $this->get_session();
@@ -45,14 +45,14 @@ class Admin_inventory_controller extends Admin_controller
             '/admin/inventory/0');
         $this->_data['view_model']->set_heading('Inventory');
         $this->_data['view_model']->set_product_name(($this->input->get('product_name', TRUE) != NULL) ? $this->input->get('product_name', TRUE) : NULL);
-		$this->_data['view_model']->set_sku(($this->input->get('sku', TRUE) != NULL) ? $this->input->get('sku', TRUE) : NULL);
-		$this->_data['view_model']->set_category_id(($this->input->get('category_id', TRUE) != NULL) ? $this->input->get('category_id', TRUE) : NULL);
-		 
-		
+        $this->_data['view_model']->set_sku(($this->input->get('sku', TRUE) != NULL) ? $this->input->get('sku', TRUE) : NULL);
+        $this->_data['view_model']->set_category_id(($this->input->get('category_id', TRUE) != NULL) ? $this->input->get('category_id', TRUE) : NULL);
+         
+        
         $where = [
             'product_name' => $this->_data['view_model']->get_product_name(),
-			'sku' => $this->_data['view_model']->get_sku(),
-			'category_id' => $this->_data['view_model']->get_category_id(),  
+            'sku' => $this->_data['view_model']->get_sku(),
+            'category_id' => $this->_data['view_model']->get_category_id(),  
         ];
 
         $this->_data['view_model']->set_total_rows($this->inventory_model->count($where));
@@ -63,7 +63,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['view_model']->set_sort($direction);
         $this->_data['view_model']->set_sort_base_url('/admin/inventory/0');
         $this->_data['view_model']->set_page($page);
-		$this->_data['view_model']->set_list($this->inventory_model->get_paginated(
+        $this->_data['view_model']->set_list($this->inventory_model->get_paginated(
             $this->_data['view_model']->get_page(),
             $this->_data['view_model']->get_per_page(),
             $where,
@@ -105,10 +105,10 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['categories'] = $this->category_model->get_all();
 
         return $this->render('Admin/Inventory', $this->_data);
-	}
+    }
 
     public function add()
-	{
+    {
         include_once __DIR__ . '/../../view_models/Inventory_admin_add_view_model.php';
         $session = $this->get_session();
         $this->form_validation = $this->inventory_model->set_form_validation(
@@ -121,9 +121,9 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['stores']              =   $this->store_model->get_all();
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
 
-		if ($this->form_validation->run() === FALSE)
-		{ 
-			return $this->render('Admin/InventoryAdd', $this->_data);
+        if ($this->form_validation->run() === FALSE)
+        { 
+            return $this->render('Admin/InventoryAdd', $this->_data);
         }
 
         $increment_id  =  $this->inventory_model->get_auto_increment_id();
@@ -131,26 +131,26 @@ class Admin_inventory_controller extends Admin_controller
  
 
         $product_name = $this->input->post('product_name', TRUE); 
-		$category_id = $this->input->post('category_id', TRUE);
-		$manifest_id = $this->input->post('manifest_id', TRUE);
-		$physical_location = $this->input->post('physical_location', TRUE);
-		$location_description = $this->input->post('location_description', TRUE);
-		$weight = $this->input->post('weight', TRUE);
-		$length = $this->input->post('length', TRUE);
-		$height = $this->input->post('height', TRUE);
-		$width = $this->input->post('width', TRUE);
-		$feature_image = $this->input->post('feature_image', TRUE);
-		$feature_image_id = $this->input->post('feature_image_id', TRUE);
-		$selling_price = $this->input->post('selling_price', TRUE);
-		$quantity = $this->input->post('quantity', TRUE);
-		$inventory_note = $this->input->post('inventory_note', TRUE);
-		$cost_price = $this->input->post('cost_price', TRUE);
+        $category_id = $this->input->post('category_id', TRUE);
+        $manifest_id = $this->input->post('manifest_id', TRUE);
+        $physical_location = $this->input->post('physical_location', TRUE);
+        $location_description = $this->input->post('location_description', TRUE);
+        $weight = $this->input->post('weight', TRUE);
+        $length = $this->input->post('length', TRUE);
+        $height = $this->input->post('height', TRUE);
+        $width = $this->input->post('width', TRUE);
+        $feature_image = $this->input->post('feature_image', TRUE);
+        $feature_image_id = $this->input->post('feature_image_id', TRUE);
+        $selling_price = $this->input->post('selling_price', TRUE);
+        $quantity = $this->input->post('quantity', TRUE);
+        $inventory_note = $this->input->post('inventory_note', TRUE);
+        $cost_price = $this->input->post('cost_price', TRUE);
         $admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
         
-		$status = $this->input->post('status', TRUE);
-		$store_location_id = $this->input->post('store_location_id', TRUE);
+        $status = $this->input->post('status', TRUE);
+        $store_location_id = $this->input->post('store_location_id', TRUE);
 
-		$can_ship = $this->input->post('can_ship', TRUE);
+        $can_ship = $this->input->post('can_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
         $pin_item_top = $this->input->post('pin_item_top', TRUE);
         
@@ -170,36 +170,37 @@ class Admin_inventory_controller extends Admin_controller
             $sku = '';
         }
 
-		
+        
         $result = $this->inventory_model->create([
             'product_name' => $product_name,
-			'sku' => $sku,
-			'barcode_image' => $barcode_image,
-			'category_id' => $category_id,
-			'manifest_id' => $manifest_id,
-			'physical_location' => $physical_location,
-			'location_description' => $location_description,
-			'weight' => $weight,
-			'length' => $length,
-			'height' => $height,
-			'width' => $width,
-			'feature_image' => $feature_image,
-			'feature_image_id' => $feature_image_id,
-			'selling_price' => $selling_price,
-			'quantity' => $quantity,
-			'inventory_note' => $inventory_note,
-			'cost_price' => $cost_price,
-			'admin_inventory_note' => $admin_inventory_note, 
-			'status' => $status,
-			'store_location_id' => $store_location_id, 
+            'sku' => $sku,
+            'barcode_image' => $barcode_image,
+            'category_id' => $category_id,
+            'manifest_id' => $manifest_id,
+            'physical_location' => $physical_location,
+            'location_description' => $location_description,
+            'weight' => $weight,
+            'length' => $length,
+            'height' => $height,
+            'width' => $width,
+            'feature_image' => $feature_image,
+            'feature_image_id' => $feature_image_id,
+            'selling_price' => $selling_price,
+            'quantity' => $quantity,
+            'inventory_note' => $inventory_note,
+            'cost_price' => $cost_price,
+            'admin_inventory_note' => $admin_inventory_note, 
+            'status' => $status,
+            'store_location_id' => $store_location_id, 
             'can_ship' => $can_ship,
             'product_type' => $product_type,
-			'pin_item_top' => $pin_item_top,
-			
+            'pin_item_top' => $pin_item_top,
+            
         ]);
 
         if ($result)
         {
+            $inventery_id = $result;
             /**
              * Get all images that are uploaded
              * save them one by one
@@ -223,21 +224,21 @@ class Admin_inventory_controller extends Admin_controller
 
             $this->success('Inventory has been added successfully.');
             
-            return $this->redirect('/admin/inventory/0', 'refresh');
+            return $this->redirect('/admin/inventory/view/' . $inventery_id .'?print=1');
         }
 
         $this->_data['error'] = 'Error';
         return $this->render('Admin/InventoryAdd', $this->_data);
-	}
+    }
 
     public function edit($id)
-	{
+    {
         $model = $this->inventory_model->get($id);
         $session = $this->get_session();
-		if (!$model)
-		{
-			$this->error('Error');
-			return redirect('/admin/inventory/0');
+        if (!$model)
+        {
+            $this->error('Error');
+            return redirect('/admin/inventory/0');
         }
 
         include_once __DIR__ . '/../../view_models/Inventory_admin_edit_view_model.php';
@@ -253,35 +254,35 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['stores']              =   $this->store_model->get_all();
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
         
-		if ($this->form_validation->run() === FALSE)
-		{ 
-			return $this->render('Admin/InventoryEdit', $this->_data);
+        if ($this->form_validation->run() === FALSE)
+        { 
+            return $this->render('Admin/InventoryEdit', $this->_data);
         }
 
         $product_name = $this->input->post('product_name', TRUE);
-		$sku = $this->input->post('sku', TRUE);
-		$category_id = $this->input->post('category_id', TRUE);
-		$manifest_id = $this->input->post('manifest_id', TRUE);
-		$physical_location = $this->input->post('physical_location', TRUE);
-		$location_description = $this->input->post('location_description', TRUE);
-		$weight = $this->input->post('weight', TRUE);
-		$length = $this->input->post('length', TRUE);
-		$height = $this->input->post('height', TRUE);
-		$width = $this->input->post('width', TRUE);
-		$feature_image = $this->input->post('feature_image', TRUE);
-		$feature_image_id = $this->input->post('feature_image_id', TRUE);
-		$selling_price = $this->input->post('selling_price', TRUE);
-		$quantity = $this->input->post('quantity', TRUE);
-		$inventory_note = $this->input->post('inventory_note', TRUE);
-		$cost_price = $this->input->post('cost_price', TRUE);
-		$admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
-		 
-		$status = $this->input->post('status', TRUE);
-		$store_location_id = $this->input->post('store_location_id', TRUE);
-		 
-		$can_ship = $this->input->post('can_ship', TRUE);
+        $sku = $this->input->post('sku', TRUE);
+        $category_id = $this->input->post('category_id', TRUE);
+        $manifest_id = $this->input->post('manifest_id', TRUE);
+        $physical_location = $this->input->post('physical_location', TRUE);
+        $location_description = $this->input->post('location_description', TRUE);
+        $weight = $this->input->post('weight', TRUE);
+        $length = $this->input->post('length', TRUE);
+        $height = $this->input->post('height', TRUE);
+        $width = $this->input->post('width', TRUE);
+        $feature_image = $this->input->post('feature_image', TRUE);
+        $feature_image_id = $this->input->post('feature_image_id', TRUE);
+        $selling_price = $this->input->post('selling_price', TRUE);
+        $quantity = $this->input->post('quantity', TRUE);
+        $inventory_note = $this->input->post('inventory_note', TRUE);
+        $cost_price = $this->input->post('cost_price', TRUE);
+        $admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
+         
+        $status = $this->input->post('status', TRUE);
+        $store_location_id = $this->input->post('store_location_id', TRUE);
+         
+        $can_ship = $this->input->post('can_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
-		$pin_item_top = $this->input->post('pin_item_top', TRUE);
+        $pin_item_top = $this->input->post('pin_item_top', TRUE);
         
         if($product_type == 2)
         {
@@ -291,28 +292,28 @@ class Admin_inventory_controller extends Admin_controller
         
         $result = $this->inventory_model->edit([
             'product_name' => $product_name,
-			'sku' => $sku,
-			'category_id' => $category_id,
-			'manifest_id' => $manifest_id,
-			'physical_location' => $physical_location,
-			'location_description' => $location_description,
-			'weight' => $weight,
-			'length' => $length,
-			'height' => $height,
-			'width' => $width,
-			'feature_image' => $feature_image,
-			'feature_image_id' => $feature_image_id,
-			'selling_price' => $selling_price,
-			'quantity' => $quantity,
-			'inventory_note' => $inventory_note,
-			'cost_price' => $cost_price,
-			'admin_inventory_note' => $admin_inventory_note, 
-			'status' => $status,
-			'store_location_id' => $store_location_id, 
+            'sku' => $sku,
+            'category_id' => $category_id,
+            'manifest_id' => $manifest_id,
+            'physical_location' => $physical_location,
+            'location_description' => $location_description,
+            'weight' => $weight,
+            'length' => $length,
+            'height' => $height,
+            'width' => $width,
+            'feature_image' => $feature_image,
+            'feature_image_id' => $feature_image_id,
+            'selling_price' => $selling_price,
+            'quantity' => $quantity,
+            'inventory_note' => $inventory_note,
+            'cost_price' => $cost_price,
+            'admin_inventory_note' => $admin_inventory_note, 
+            'status' => $status,
+            'store_location_id' => $store_location_id, 
             'can_ship' => $can_ship,
             'product_type' => $product_type,
-			'pin_item_top' => $pin_item_top,
-			
+            'pin_item_top' => $pin_item_top,
+            
         ], $id);
 
         if ($result)
@@ -345,17 +346,17 @@ class Admin_inventory_controller extends Admin_controller
 
         $this->_data['error'] = 'Error';
         return $this->render('Admin/InventoryEdit', $this->_data);
-	}
+    }
 
     public function view($id)
-	{
+    {
         $model = $this->inventory_model->get($id);
 
-		if (!$model)
-		{
-			$this->error('Error');
-			return redirect('/admin/inventory/0');
-		}
+        if (!$model)
+        {
+            $this->error('Error');
+            return redirect('/admin/inventory/0');
+        }
 
         $this->names_helper_service->set_store_model($this->store_model); 
         $this->names_helper_service->set_physical_location_model($this->physical_location_model);
@@ -363,8 +364,8 @@ class Admin_inventory_controller extends Admin_controller
         $this->names_helper_service->set_category_model($this->category_model);  
 
         include_once __DIR__ . '/../../view_models/Inventory_admin_view_view_model.php';
-		$this->_data['view_model'] = new Inventory_admin_view_view_model($this->inventory_model);
-		$this->_data['view_model']->set_heading('Inventory');
+        $this->_data['view_model'] = new Inventory_admin_view_view_model($this->inventory_model);
+        $this->_data['view_model']->set_heading('Inventory');
         $model->category_id       = $this->names_helper_service->get_category_real_name( $model->category_id ); 
         $model->physical_location = $this->names_helper_service->get_physical_location_real_name( $model->physical_location ); 
         $model->store_location_id = $this->names_helper_service->get_store_name( $model->store_location_id ); 
@@ -375,8 +376,8 @@ class Admin_inventory_controller extends Admin_controller
          
 
 
-		return $this->render('Admin/InventoryView', $this->_data);
-	}
+        return $this->render('Admin/InventoryView', $this->_data);
+    }
 
     
     

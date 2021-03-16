@@ -183,6 +183,7 @@ class Manager_inventory_controller extends Manager_controller
 
         if ($result)
         {
+            $inventery_id = $result;
             /**
              * Get all images that are uploaded
              * save them one by one
@@ -206,7 +207,7 @@ class Manager_inventory_controller extends Manager_controller
 
             $this->success('Inventory has been added successfully.');
             
-            return $this->redirect('/manager/inventory/0', 'refresh');
+            return $this->redirect('/manager/inventory/view/' . $inventery_id .'?print=1');
         }
 
         $this->_data['error'] = 'Error';

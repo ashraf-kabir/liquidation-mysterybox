@@ -283,6 +283,39 @@ if ($layout_clean_mode) {
 </div>
 
 
+<?php if ($this->input->get('print') == 1): ?>
+	<div class="modal print-modal" tabindex="-1" role="dialog">
+	  	<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      	<div class="modal-header">
+			        <h5 class="modal-title">Please print the SKU below</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          	<span aria-hidden="true">&times;</span>
+			        </button>
+		      	</div>
+		      	<div class="modal-body" id="print-me-2">
+			        <div class='row ' >
+						<div class="col-sm-12" style="text-align: center  !important;">
+							<h1 >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
+						</div> 
+					</div>
+
+					<div class='row' >
+						<div class="col-sm-12" style="text-align: center  !important;">
+							<img   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
+						</div> 
+					</div>  
+		      	</div>
+		      	<div class="modal-footer">
+		        	<button type="button" class="btn btn-primary"  onClick="printdiv('print-me-2')" >Print</button>
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		      	</div>
+		    </div>
+	  	</div>
+	</div>
+<?php endif ?>
+
+
 <script>
 	function printdiv(printpage) 
     {
@@ -295,4 +328,11 @@ if ($layout_clean_mode) {
         document.body.innerHTML = oldstr;
         return false;
     }   
+
+
+    <?php if ($this->input->get('print') == 1): ?>
+    document.addEventListener('DOMContentLoaded', function(){
+    	$('.print-modal').modal('toggle')
+    }, false);
+    <?php endif ?>
 </script>
