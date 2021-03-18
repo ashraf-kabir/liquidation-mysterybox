@@ -64,7 +64,7 @@ class Image_portal_controller extends Manaknight_Controller
             
             if (isset($data_list->images_list)) 
             {
-                $total_rows   =  $data_list->total_rows;
+                // $total_rows   =  $data_list->total_rows;
                 $images_list  =  $data_list->images_list;
 
 
@@ -77,12 +77,12 @@ class Image_portal_controller extends Manaknight_Controller
                     $content_div .= "</div>";
                 }
 
-                $paginations = $this->get_pagination($total_rows, 'image_portal_pagination', 10, $page_no);
+                // $paginations = $this->get_pagination($total_rows, 'image_portal_pagination', 10, $page_no);
 
 
-                $content_div .= "<div class='col-12' >";
-                $content_div .=  $paginations;
-                $content_div .= "</div></div>";
+                // $content_div .= "<div class='col-12' >";
+                // $content_div .=  $paginations;
+                // $content_div .= "</div></div>";
 
 
               
@@ -189,8 +189,5 @@ class Image_portal_controller extends Manaknight_Controller
             exit;
         }
     }
-
-
-
-    
+  
 }
