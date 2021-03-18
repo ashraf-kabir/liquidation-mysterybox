@@ -63,114 +63,114 @@ if ($layout_clean_mode) {
                 </h5>
                 <?= form_open() ?>
                 <div class="form-group col-md-5 col-sm-12 ">
-					<label for="Product Name">Product Name </label>
-					<input type="text" class="form-control data-input" id="form_product_name" name="product_name" value="<?php echo set_value('product_name'); ?>"/>
-				</div>
+                    <label for="Product Name">Product Name </label>
+                    <input type="text" class="form-control data-input" id="form_product_name" name="product_name" value="<?php echo set_value('product_name'); ?>"/>
+                </div>
 
-				 
-
-                <div class="form-group col-md-5 col-sm-12 ">
-					<label for="Product Type">Product Type </label>
-					<select id="form_product_type" name="product_type" class="form-control data-input">
-						<?php foreach ($view_model->product_type_mapping() as $key => $value) {
-							echo "<option value='{$key}'> {$value} </option>";
-						}?>
-					</select>
-				</div>
-
-				
+                 
 
                 <div class="form-group col-md-5 col-sm-12 ">
-					<label for="Parent Category"> Category </label> 
+                    <label for="Product Type">Product Type </label>
+                    <select id="form_product_type" name="product_type" class="form-control data-input">
+                        <?php foreach ($view_model->product_type_mapping() as $key => $value) {
+                            echo "<option value='{$key}'> {$value} </option>";
+                        }?>
+                    </select>
+                </div>
+
+                
+
+                <div class="form-group col-md-5 col-sm-12 ">
+                    <label for="Parent Category"> Category </label> 
                     <select  class="form-control data-input" id="form_category_id" name="category_id">
-						<option value="" >Select</option>
+                        <option value="" >Select</option>
                         <?php foreach ($parent_categories as $key => $value) {
-							echo "<option value='{$value->id}'> {$value->name} </option>";
-						}?>
-					</select> 
-				</div>
+                            echo "<option value='{$value->id}'> {$value->name} </option>";
+                        }?>
+                    </select> 
+                </div>
  
 
                 <div class="form-group col-md-5 col-sm-12 ">
-					<label for="Store Location">Store </label>
+                    <label for="Store Location">Store </label>
                     <select   class="form-control data-input" id="form_store_location_id" name="store_location_id">
-						<option value="" >Select</option>
+                        <option value="" >Select</option>
                         <?php foreach ($stores as $key => $value) {
-							echo "<option value='{$value->id}'> {$value->name} </option>";
-						}?>
-					</select>  
-				</div>
+                            echo "<option value='{$value->id}'> {$value->name} </option>";
+                        }?>
+                    </select>  
+                </div>
  
-				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Manifest">Manifest </label>
-					<input type="text" class="form-control data-input" id="form_manifest_id" name="manifest_id" value="<?php echo set_value('manifest_id'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
-				</div>
-				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Inventory Location">Inventory Location </label>
+                <div class="form-group col-md-5 col-sm-12 ">
+                    <label for="Manifest">Manifest </label>
+                    <input type="text" class="form-control data-input" id="form_manifest_id" name="manifest_id" value="<?php echo set_value('manifest_id'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
+                </div>
+                <div class="form-group col-md-5 col-sm-12 ">
+                    <label for="Inventory Location">Inventory Location </label>
                     <select class="form-control data-input" id="form_physical_location" name="physical_location">
-						<option value="" >Select</option>
+                        <option value="" >Select</option>
                         <?php foreach ($physical_locations as $key => $value) {
-							echo "<option value='{$value->id}'> {$value->name} </option>";
-						}?>
-					</select>   
-				</div>
-				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Inventory Location Description">Inventory Location Description </label>
-					<input type="text" class="form-control data-input" id="form_location_description" name="location_description" value="<?php echo set_value('location_description'); ?>"/>
-				</div>
-				<div class="form-group  col-md-5 col-sm-12">
-					<label for="Weight">Weight </label>
-					<input type="text" class="form-control data-input" id="form_weight" name="weight" value="<?php echo set_value('weight'); ?>" onkeypress="return mkd_is_number(event,this)"/>
-				</div>
-				<div class="form-group  col-md-5 col-sm-12">
-					<label for="Length">Length </label>
-					<input type="text" class="form-control data-input" id="form_length" name="length" value="<?php echo set_value('length'); ?>" onkeypress="return mkd_is_number(event,this)"/>
-				</div>
-				<div class="form-group  col-md-5 col-sm-12">
-					<label for="Height">Height </label>
-					<input type="text" class="form-control data-input" id="form_height" name="height" value="<?php echo set_value('height'); ?>" onkeypress="return mkd_is_number(event,this)"/>
-				</div>
-				<div class="form-group  col-md-5 col-sm-12">
-					<label for="Width">Width </label>
-					<input type="text" class="form-control data-input" id="form_width" name="width" value="<?php echo set_value('width'); ?>" onkeypress="return mkd_is_number(event,this)"/>
-				</div>
-				
-				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Quantity">Quantity </label>
-					<input type="text" class="form-control data-input" id="form_quantity" name="quantity" value="<?php echo set_value('quantity'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
-				</div>
-				
-				<div class="form-group  col-md-5 col-sm-12">
-					<label for="Cost Price">Cost Price </label>
-					<input type="text" class="form-control data-input" id="form_cost_price" name="cost_price" value="<?php echo set_value('cost_price'); ?>" onkeypress="return mkd_is_number(event,this)"/>
-				</div>
+                            echo "<option value='{$value->id}'> {$value->name} </option>";
+                        }?>
+                    </select>   
+                </div>
+                <div class="form-group col-md-5 col-sm-12 ">
+                    <label for="Inventory Location Description">Inventory Location Description </label>
+                    <input type="text" class="form-control data-input" id="form_location_description" name="location_description" value="<?php echo set_value('location_description'); ?>"/>
+                </div>
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="Weight">Weight </label>
+                    <input type="text" class="form-control data-input" id="form_weight" name="weight" value="<?php echo set_value('weight'); ?>" onkeypress="return mkd_is_number(event,this)"/>
+                </div>
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="Length">Length </label>
+                    <input type="text" class="form-control data-input" id="form_length" name="length" value="<?php echo set_value('length'); ?>" onkeypress="return mkd_is_number(event,this)"/>
+                </div>
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="Height">Height </label>
+                    <input type="text" class="form-control data-input" id="form_height" name="height" value="<?php echo set_value('height'); ?>" onkeypress="return mkd_is_number(event,this)"/>
+                </div>
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="Width">Width </label>
+                    <input type="text" class="form-control data-input" id="form_width" name="width" value="<?php echo set_value('width'); ?>" onkeypress="return mkd_is_number(event,this)"/>
+                </div>
+                
+                <div class="form-group col-md-5 col-sm-12 ">
+                    <label for="Quantity">Quantity </label>
+                    <input type="text" class="form-control data-input" id="form_quantity" name="quantity" value="<?php echo set_value('quantity'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
+                </div>
+                
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="Cost Price">Cost Price </label>
+                    <input type="text" class="form-control data-input" id="form_cost_price" name="cost_price" value="<?php echo set_value('cost_price'); ?>" onkeypress="return mkd_is_number(event,this)"/>
+                </div>
 
                 
                 
                 <div class="form-group  col-md-5 col-sm-12">
-					<label for="Selling Price">Selling Price </label>
-					<input type="text" class="form-control data-input" id="form_selling_price" name="selling_price" value="<?php echo set_value('selling_price'); ?>" onkeypress="return mkd_is_number(event,this)"/>
-				</div>
+                    <label for="Selling Price">Selling Price </label>
+                    <input type="text" class="form-control data-input" id="form_selling_price" name="selling_price" value="<?php echo set_value('selling_price'); ?>" onkeypress="return mkd_is_number(event,this)"/>
+                </div>
 
                
                 <div class="form-group col-md-5 col-sm-12 ">
-					<label for="xyzPin Item">Pin Item </label>
-					<select id="form_pin_item_top" name="pin_item_top" class="form-control data-input">
-						<?php foreach ($view_model->pin_item_top_mapping() as $key => $value) {
-							echo "<option value='{$key}'> {$value} </option>";
-						}?>
-					</select>
-				</div>
+                    <label for="Pin Item">Pin Item </label>
+                    <select id="form_pin_item_top" name="pin_item_top" class="form-control data-input">
+                        <?php foreach ($view_model->pin_item_top_mapping() as $key => $value) {
+                            echo "<option value='{$key}'> {$value} </option>";
+                        }?>
+                    </select>
+                </div>
 
                 
-				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Can Ship">Can Ship </label>
-					<select id="form_can_ship" name="can_ship" class="form-control data-input">
-						<?php foreach ($view_model->can_ship_mapping() as $key => $value) {
-							echo "<option value='{$key}'> {$value} </option>";
-						}?>
-					</select>
-				</div>
+                <div class="form-group col-md-5 col-sm-12 ">
+                    <label for="Can Ship">Can Ship </label>
+                    <select id="form_can_ship" name="can_ship" class="form-control data-input">
+                        <?php foreach ($view_model->can_ship_mapping() as $key => $value) {
+                            echo "<option value='{$key}'> {$value} </option>";
+                        }?>
+                    </select>
+                </div>
 
                 
                 <div class="form-group col-md-5 col-sm-12 ">
@@ -184,13 +184,17 @@ if ($layout_clean_mode) {
 
 
                 <div class="form-group col-md-5 col-sm-12">
-					<label for="Image">Feature Image </label>
-					<img id="output_feature_image" style="max-height:100px" onerror="if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';"/>
-					<div class="btn uppload-button image_id_uppload_library btn-primary btn-sm  " data-image-url="feature_image" data-image-id="feature_image_id" data-image-preview="output_feature_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
-					<input type="hidden" id="feature_image" name="feature_image" value=""/>
-					<input type="hidden" id="feature_image_id" name="feature_image_id" value=""/>
+                    <label for="Image">Feature Image </label>
+                    <img id="output_feature_image" style="max-height:100px" onerror="if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';"/>
+                    <div class="btn uppload-button image_id_uppload_library btn-primary btn-sm  " data-image-url="feature_image" data-image-id="feature_image_id" data-image-preview="output_feature_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
+                    <input type="hidden" id="feature_image" name="feature_image" value=""/>
+                    <input type="hidden" id="feature_image_id" name="feature_image_id" value=""/>
+
+                    <button type="button"  data-url="feature_image" data-id="feature_image_id"  class="btn btn-primary btn-sm add-image-form-portal create-image-portal-modal">+</button>
                     <span id="feature_image_complete" style="display: block;"></span>
-				</div>				
+
+
+                </div>              
                 
 
                 <div class="form-group col-md-12 col-sm-12 ">
@@ -212,24 +216,24 @@ if ($layout_clean_mode) {
                 </div>
  
                 <div class="form-group col-md-5 col-sm-12">
-					<label for="Inventory Note">Inventory Note </label>
-					<textarea id='form_inventory_note' name='inventory_note' class='form-control data-input' rows='5'><?php echo set_value('inventory_note'); ?></textarea>
-				</div>
+                    <label for="Inventory Note">Inventory Note </label>
+                    <textarea id='form_inventory_note' name='inventory_note' class='form-control data-input' rows='5'><?php echo set_value('inventory_note'); ?></textarea>
+                </div>
 
-				<div class="form-group col-md-5 col-sm-12">
-					<label for="Admin Inventory Note">Admin Inventory Note </label>
-					<textarea id='form_admin_inventory_note' name='admin_inventory_note' class='form-control data-input' rows='5'><?php echo set_value('admin_inventory_note'); ?></textarea>
-				</div>
-				
-				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Status">Status </label>
-					<select id="form_status" name="status" class="form-control data-input">
-						<?php foreach ($view_model->status_mapping() as $key => $value) {
-							echo "<option value='{$key}'> {$value} </option>";
-						}?>
-					</select>
-				</div>
-				 
+                <div class="form-group col-md-5 col-sm-12">
+                    <label for="Admin Inventory Note">Admin Inventory Note </label>
+                    <textarea id='form_admin_inventory_note' name='admin_inventory_note' class='form-control data-input' rows='5'><?php echo set_value('admin_inventory_note'); ?></textarea>
+                </div>
+                
+                <div class="form-group col-md-5 col-sm-12 ">
+                    <label for="Status">Status </label>
+                    <select id="form_status" name="status" class="form-control data-input">
+                        <?php foreach ($view_model->status_mapping() as $key => $value) {
+                            echo "<option value='{$key}'> {$value} </option>";
+                        }?>
+                    </select>
+                </div>
+                 
                     
                 <div class="form-group  col-md-5 col-sm-12">
                     <input type="submit" class="btn btn-primary text-white mr-4 my-4" value="Submit">
@@ -240,6 +244,14 @@ if ($layout_clean_mode) {
     </div>
 </div>
 </div>
+
+
+
+<?php 
+    $this->load->view('Guest/ImagePortalModal.php');
+?>
+
+
 
 
 <script type="text/javascript">
@@ -277,4 +289,7 @@ if ($layout_clean_mode) {
         };
         reader.readAsDataURL(selectedFile); 
     } 
+ 
 </script>
+
+<script type="text/javascript" src="http://localhost:8000/assets/js/image-portal.js"></script>
