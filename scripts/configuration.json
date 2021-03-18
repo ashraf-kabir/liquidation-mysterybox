@@ -2552,7 +2552,7 @@
 		"../mkdcore/custom/logout.svg" : "../release/assets/image/logout.svg",
 		"../mkdcore/custom/collapse-category.svg" : "../release/assets/image/collapse-category.svg",
 		"../mkdcore/custom/styles.css": "../release/assets/css/styles.css",
-		"../mkdcore/custom/app.js": "../release/assets/js/app.js",
+		"../mkdcore/custom/app.js": "../release/assets/js/app.js", 
 		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css",
 		"../mkdcore/custom/Services/Api_service.php" : "../release/application/libraries/Api_service.php",
 		"../mkdcore/custom/Services/Barcode_service.php" : "../release/application/libraries/Barcode_service.php",
@@ -2624,6 +2624,8 @@
 		"../mkdcore/custom/Manager/controllers/Manager_customer_controller.php" : "../release/application/controllers/Manager/Manager_customer_controller.php",
 		"../mkdcore/custom/Manager/controllers/Manager_inventory_controller.php" : "../release/application/controllers/Manager/Manager_inventory_controller.php",
 
+
+		"../mkdcore/custom/assets/js/image-portal.js": "../release/assets/js/image-portal.js",
 		"../mkdcore/custom/Api/Image_portal_controller.php" : "../release/application/controllers/Guest/Image_portal_controller.php",
 		"../mkdcore/custom/Guest/views/ImagePortalModal.php" : "../release/application/views/Guest/ImagePortalModal.php",
 
@@ -2631,6 +2633,10 @@
 
 	},
 	"routes": {
+		"v1/api/get_images": "Guest/Image_portal_controller/get_images",
+		"v1/api/upload_image_portal_image_to_s3": "Guest/Image_portal_controller/upload_image_portal_image_to_s3",
+
+		
 		"migrate": "Migrate",
 		"v1/api/product/add_product"    : "Guest/Ecom_api_controller/add_product",
 		"v1/api/product/get_stores"     : "Guest/Ecom_api_controller/get_stores",
@@ -2639,8 +2645,7 @@
 		"try_printer"                   : "Guest/Ecom_api_controller/try_printer",
 		"v1/api/sale_order/update_status": "Guest/Ecom_api_controller/update_order_status",
 		
-		"v1/api/get_images": "Guest/Image_portal_controller/get_images",
-		"v1/api/upload_image_portal_image_to_s3": "Guest/Image_portal_controller/upload_image_portal_image_to_s3",
+		
 
 		"admin/category_wise/view/(:num)" : "Admin/Admin_category_wise_controller/view/$1",
 		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv",
