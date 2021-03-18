@@ -34,7 +34,7 @@ class Image_portal_controller extends Manaknight_Controller
 
             $post_data = array(
                 'page_no'       => $page_no,
-                'email'         => "member@manaknight.com", 
+                'email'         => $this->session->userdata('email'), 
             ); 
 
 
