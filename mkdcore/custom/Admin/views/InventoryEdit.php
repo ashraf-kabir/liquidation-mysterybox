@@ -241,7 +241,9 @@ if ($layout_clean_mode) {
                     <?php if(!empty($video_url)){ 
                     foreach ($video_url as $key => $video){ ?>
                         <input type="url" style="width: 89%;display: inline;margin: 6px 0px;" class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo $video; ?>"  />
-                    <?php } } ?>
+                    <?php } }else{ ?>
+                        <input type="url" style="width: 89%;display: inline;margin: 6px 0px;" class="form-control data-input" id="video_url" name="video_url[]" value=""  />
+                   <?php } ?>
                      
                     <button type="button" style="margin-left: 5px;" class="btn btn-primary btn-sm  add_new_video_url">+</button>
                 </div>
