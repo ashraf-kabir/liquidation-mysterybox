@@ -150,6 +150,7 @@ class Manager_inventory_controller extends Manager_controller
         $free_ship = $this->input->post('free_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
         $pin_item_top = $this->input->post('pin_item_top', TRUE);
+        $video_url = json_encode($this->input->post('video_url', TRUE));
         
         if($product_type == 2)
         {
@@ -180,6 +181,7 @@ class Manager_inventory_controller extends Manager_controller
             'free_ship' => $free_ship,
             'product_type' => $product_type,
 			'pin_item_top' => $pin_item_top,
+            'video_url' => $video_url,
 			
         ]);
 
@@ -269,6 +271,7 @@ class Manager_inventory_controller extends Manager_controller
         $free_ship = $this->input->post('free_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
 		$pin_item_top = $this->input->post('pin_item_top', TRUE);
+        $video_url = json_encode($this->input->post('video_url', TRUE));
         
         if($product_type == 2)
         {
@@ -300,6 +303,7 @@ class Manager_inventory_controller extends Manager_controller
             'free_ship' => $free_ship,
             'product_type' => $product_type,
 			'pin_item_top' => $pin_item_top,
+            'video_url' => $video_url,
 			
         ], $id);
 

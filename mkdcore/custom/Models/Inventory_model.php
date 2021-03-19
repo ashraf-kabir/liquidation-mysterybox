@@ -38,6 +38,7 @@ class Inventory_model extends Manaknight_Model
 		'product_type',
 		'free_ship',
 		'status',
+		'video_url',
 		'available_in_shelf',
 		
     ];
@@ -71,6 +72,7 @@ class Inventory_model extends Manaknight_Model
 		['pin_item_top', 'Pin Item', ''],
 		['product_type', 'Product Type', ''],
 		['status', 'Status', ''],
+		['video_url', 'Video URL', ''],
 		['available_in_shelf', 'Available In Shelf', ''],
 		
     ];
@@ -97,6 +99,7 @@ class Inventory_model extends Manaknight_Model
 		['can_ship', 'Can Ship', ''], 
 		['pin_item_top', 'Pin Item', ''],
 		['product_type', 'Product Type', ''],
+		['video_url', 'Video URL', ''],
 		['status', 'Status', ''],
 		['available_in_shelf', 'Available In Shelf', ''],
 		

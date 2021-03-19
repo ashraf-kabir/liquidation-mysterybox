@@ -136,6 +136,20 @@ if ($layout_clean_mode) {
 				</div>
 				</div>
 
+
+				<div class='row mb-4'>
+					<div class='col'>
+						<span class='d-block'>Video URL</span>
+						<?php 
+		                	$video_url = json_decode($this->_data['view_model']->get_video_url());
+		                
+					 		foreach ($video_url as $key => $video):  
+					 			echo $video .'<br>'; 
+					 		endforeach 
+				 		?>
+					</div>
+				</div>
+
 				<div class='row mb-4'>
 					<div class='col'>
 						Selling Price
@@ -207,6 +221,9 @@ if ($layout_clean_mode) {
 					<img class="img-fluid d-block mb-3 mt-3 view-image" style='max-height: 100px;' src="<?php echo $view_model->get_barcode_image();?>" onerror= \"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\" />
 					</div>
 				</div>
+
+
+
 
 				<div class='row mb-4'>
 					<div class='col'>

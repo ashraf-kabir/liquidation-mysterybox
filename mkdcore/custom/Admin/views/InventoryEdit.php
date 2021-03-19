@@ -230,6 +230,22 @@ if ($layout_clean_mode) {
                     </div>
                 </div>
 
+
+                
+                <?php 
+                $video_url = json_decode($this->_data['view_model']->get_video_url());
+                ?>
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="video_url" style="display: block;">Video URL </label>
+
+                    <?php foreach ($video_url as $key => $video): ?>
+                        <input type="url" style="width: 89%;display: inline;margin: 6px 0px;" class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo $video; ?>"  />
+                    <?php endforeach ?>
+                     
+                    <button type="button" style="margin-left: 5px;" class="btn btn-primary btn-sm  add_new_video_url">+</button>
+                </div>
+ 
+
 				<div class="form-group col-md-5 col-sm-12">
 					<label for="Inventory Note">Inventory Note </label>
 					<textarea id='form_inventory_note' name='inventory_note' class='data-input form-control' rows='5'><?php echo set_value('inventory_note', $this->_data['view_model']->get_inventory_note());?></textarea>
@@ -293,4 +309,11 @@ if ($layout_clean_mode) {
         };
         reader.readAsDataURL(selectedFile); 
     } 
+
+
+    document.addEventListener('DOMContentLoaded',function(){
+        $(document).on('click','.add_new_video_url', function(){
+            $(this).before('<input type="url" style="width: 91%;display: inline;margin: 6px 0px;" class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo set_value('video_url'); ?>"  />')
+        });
+    }, false)
 </script>

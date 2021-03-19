@@ -31,5 +31,5 @@ ALTER TABLE `pos_cart` CHANGE `secret_key` `secret_key` VARCHAR(255) CHARACTER S
 
 ALTER TABLE `inventory` CHANGE `free_ship` `free_ship` INT(11) NULL DEFAULT '2';
 
-
+ALTER TABLE `inventory` CHANGE `video_url` `video_url` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 

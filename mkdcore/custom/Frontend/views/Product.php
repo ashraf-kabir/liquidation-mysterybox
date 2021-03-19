@@ -73,7 +73,22 @@
 				<h5>Product Details</h5>
 			</div>
 
+			
+			
+
 			<div class="col-10 product__detailTexts">
+				<?php 
+				$video_url = json_decode($product->video_url);
+				if (!empty($video_url)) 
+				{ 
+					foreach ($video_url as $key => $video):
+						if (!empty($video)) 
+						{
+						  	echo '<a target="_blank" href= "' . $video .'" /> Watch Video </a> <br>'; 
+					  	}   
+		         	endforeach ;
+	         	}
+			 	?>
 				<p>
 					Mastercraft Screwdriver Set features satin-chrome plated shafts
 					for durability and rust resistance.

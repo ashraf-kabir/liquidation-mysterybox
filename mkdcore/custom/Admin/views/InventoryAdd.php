@@ -152,6 +152,9 @@ if ($layout_clean_mode) {
                     <input type="text" class="form-control data-input" id="form_selling_price" name="selling_price" value="<?php echo set_value('selling_price'); ?>" onkeypress="return mkd_is_number(event,this)"/>
                 </div>
 
+
+                
+
                
                 <div class="form-group col-md-5 col-sm-12 ">
                     <label for="Pin Item">Pin Item </label>
@@ -213,6 +216,14 @@ if ($layout_clean_mode) {
                         <input type="hidden" id="barcode_image_id_1" name="gallery_image_id[]"/>
                         <span id="barcode_image_text" class="mkd-upload-filename"></span>
                     </div>
+                </div>
+
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="video_url" style="display: block;">Video URL </label>
+                    <input type="url" style="width: 89%;display: inline;" class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo set_value('video_url'); ?>"  />
+
+
+                    <button type="button" style="margin-left: 5px;" class="btn btn-primary btn-sm  add_new_video_url">+</button>
                 </div>
  
                 <div class="form-group col-md-5 col-sm-12">
@@ -289,7 +300,13 @@ if ($layout_clean_mode) {
         };
         reader.readAsDataURL(selectedFile); 
     } 
- 
+    
+
+    document.addEventListener('DOMContentLoaded',function(){
+        $(document).on('click','.add_new_video_url', function(){
+            $(this).before('<input type="url" style="width: 91%;display: inline;margin: 6px 0px;" class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo set_value('video_url'); ?>"  />')
+        });
+    }, false)
 </script>
 
 <script type="text/javascript" src="http://localhost:8000/assets/js/image-portal.js"></script>
