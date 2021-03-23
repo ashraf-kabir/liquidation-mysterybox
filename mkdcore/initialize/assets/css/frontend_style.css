@@ -502,8 +502,7 @@ img {
 }
 
 .row:after {
-  /* content: ""; */
-  width: 200%;
+  content: "";
   display: table;
   clear: both;
 }
