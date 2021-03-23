@@ -103,7 +103,7 @@ $total_images =  count($gallery_lists) + 1;
         
         <div class="row justify-content-center bg-white mx-md-5 "> 
             
-            <div class="col-10  py-3 bg-white ">
+            <div class="col-10 p-0 py-4 bg-white ">
 				<label for="quantity" >Qty
 					<input type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity w-75 w-md-50" value="1" />
 				</label> 
@@ -113,7 +113,7 @@ $total_images =  count($gallery_lists) + 1;
 			</div>
 
             <div class="col-10 p-0 bg-white">
-                <h4>DESCRIPTION</h4>
+                <h4 class="mb-2">DESCRIPTION</h4>
                 <div class="row justify-content-between">
                         <div class="video-container">
                         <iframe width="300" height="195"
@@ -146,7 +146,7 @@ $total_images =  count($gallery_lists) + 1;
         </div>
 
         <div class="row justify-content-center bg-white mx-md-5 ">
-            <div class="col-10 p-2 p-md-4 bg-white">
+            <div class="col-10 p-0 py-3 bg-white">
                 <h4>Terms and Conditions</h4>
                 <ul>
                     <li>publishing any Website material in any other media;</li>
