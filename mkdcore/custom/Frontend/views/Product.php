@@ -80,11 +80,7 @@ $total_images =  count($gallery_lists) + 1;
                     <ul class="list-unstyled">
                         <li class="my-4">Price <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li>
                         <li class="my-4">Quantity <span class="product__price"> <?php echo $product->quantity; ?></span></li>
-                        <?php if($product->status == 1) { ?> 
-                            <li class="my-4"> In stock</li> 
-                        <?php }else { ?>  
-                            <li class="my-4"> Out of stock</li>
-                        <?php } ?>  
+                        
                         <li class="my-4">Category  <span class="product__price"> <?php echo $product->category_real_name; ?></span></li>
                         <li class="my-4">Dimension  <span class="product__price"> <?php echo $product->width; ?> x <?php echo $product->height; ?></span></li>
                         <li class="my-4">Length  <span class="product__price"> <?php echo $product->length; ?>in</span></li>
