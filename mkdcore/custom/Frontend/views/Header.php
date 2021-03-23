@@ -67,7 +67,7 @@
                                         if (!empty($category->parent_category_id) ) 
                                         { 
                                              ?>
-                                             <a class="sub-item" href="<?php echo base_url(); ?>categories/?category=<?php echo $detail_value->id; ?>">
+                                             <a class="sub-item" href="<?php echo base_url(); ?>categories/?category=<?php echo $category->id; ?>">
                                                   <?php echo $category->name; ?>
                                              </a> <br> 
                                         <?php } ?>
