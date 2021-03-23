@@ -129,10 +129,10 @@ function getYoutubeEmbedUrl($url)
 
             <div class="col-10 p-0 bg-white">
                 <h4 class="mb-2">DESCRIPTION</h4>
-                <div class="row justify-content-between">
-
+                <div class="row justify-content-between"> 
                     <p class="my-3"><?php echo $product->inventory_note; ?></p> 
-                    
+                </div>
+                <div class="row justify-content-between"> 
                     <?php 
                     $video_url = json_decode($product->video_url);
                     if (!empty($video_url)) 
