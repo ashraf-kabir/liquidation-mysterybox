@@ -13,7 +13,6 @@ body {
   text-decoration: none;
   padding: 0 5px;
   font-size: 12px;
-  font-weight: bold;
 }
 .dropdown-submenu > .dropdown-menu {
   top: 0;
@@ -67,8 +66,9 @@ body {
   border-radius: 6px 0 6px 6px;
 }
 .dropdown-menu .dropdown-submenu .main-item {
-  padding: 3px 5px;
+  font-size: 16px !important;
   font-weight: bold;
+  pointer-events: none;
 }
 .dropdown-menu .dropdown-submenu .sub-item {
   padding-left: 10px !important;
