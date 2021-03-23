@@ -59,7 +59,7 @@
                               <ul class="dropdown-menu">
                               
                                    <li class="dropdown-submenu">
-                                   <a class="dropdown-item" href="#">
+                                   <a class="main-item" href="#">
                                    Category
                                    <a class="sub-item" href="#">
                                         Sub Category
