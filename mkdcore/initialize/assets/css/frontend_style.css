@@ -62,11 +62,11 @@ body {
   -moz-border-radius: 6px 0 6px 6px;
   border-radius: 6px 0 6px 6px;
 }
-.main-item {
+.dropdown-menu .main-item {
   padding: 3px 5px;
   font-weight: bold;
 }
-.sub-item {
+.dropdown-menu .sub-item {
   padding-left: 10px !important;
 }
 header {
