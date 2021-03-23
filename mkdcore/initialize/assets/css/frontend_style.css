@@ -10,6 +10,8 @@ body {
 }
 .dropdown-menu a {
   color: #000 !important;
+  text-decoration: none;
+  padding: 0 5px;
 }
 .dropdown-submenu > .dropdown-menu {
   top: 0;
