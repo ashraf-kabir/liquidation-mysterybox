@@ -59,7 +59,18 @@
                               <ul class="dropdown-menu">
                               
                                    <li class="dropdown-submenu">
-                                   <a class="dropdown-item" href="#">Category</a>
+                                   <a class="dropdown-item" href="#">
+                                   Category
+                                   <a class="sub-item" href="#">
+                                        Sub Category
+                                   </a>
+                                   <a class="sub-item" href="#">
+                                        Sub Category
+                                   </a>
+                                   <a class="sub-item" href="#">
+                                        Sub Category
+                                   </a>
+                                   </a>
                                    </li> 
                               </ul>
                          </li>
