@@ -122,22 +122,24 @@ $total_images =  count($gallery_lists) + 1;
                         </div>
 
                         <div class="video-container">
-                        <iframe width="300" height="195"
+                        <iframe width="250" height="145"
                             src="https://www.youtube.com/embed/duKL2dAJN6I">
                         </iframe>
                         </div>
 
                         <div class="video-container">
-                        <iframe width="300" height="195"
+                        <iframe width="250" height="145"
                             src="https://www.youtube.com/embed/duKL2dAJN6I">
                         </iframe>
                         </div>
 
                         <div class="video-container">
-                        <iframe width="300" height="195"
+                        <iframe width="250" height="145"
                             src="https://www.youtube.com/embed/duKL2dAJN6I">
                         </iframe>
                         </div>
+
+                        
                 </div>
                 <p class="my-3"><?php echo $product->inventory_note; ?></p> 
             </div> 
