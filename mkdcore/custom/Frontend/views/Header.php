@@ -52,19 +52,35 @@
                          <li class="nav-item <?php if( isset($active)  and $active == 'home' ){ echo 'active'; } ?> ">
                               <a class="nav-link <?php if( isset($active)  AND $active == 'home' ){ echo 'active'; } ?>" href="<?php echo base_url(); ?>categories">HOME <span class="sr-only">(current)</span></a>
                          </li>
+
+
                          <li class="dropdown-submenu nav-item d-none d-md-block">
                               <a  class="dropdown-item nav-link" tabindex="-1" href="#">Shop</a>
-                              <ul class="dropdown-menu"> 
+                              <ul class="dropdown-menu">
+                              
                                    <li class="dropdown-submenu">
-                                        <!-- <a class="dropdown-item" >Mystery box</a>  -->
-                                        <?php foreach($all_categories as $key => $value) { ?> 
-                                             <a  class="dropdown-item" href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>"><?php echo $value->name; ?></a>
-                                        <?php } ?>  
-                                   </li>
+                                        <?php foreach ($all_categories as $key => $category): 
+                                             if (empty($category->parent_category_id) ) 
+                                             { 
+                                                  ?>
+                                                  <a class="dropdown-item" href="#"><?php echo $category->name; ?></a>
 
+                                                  <?php if ( !empty($category->detail) ): ?> 
+                                                       <ul class="dropdown-menu second">
+
+                                                       <?php foreach ($category->detail as $detail_key => $detail_value): ?> 
+                                                            <li class="dropdown-item"><a href="<?php echo base_url(); ?>categories/?category=<?php echo $detail_value->id; ?>"><?php echo $detail_value->name; ?></a></li>  
+                                                       <?php endforeach ?> 
+
+                                                       </ul>
+                                                  <?php endif ?>
+                                             <?php } ?>
+                                        <?php endforeach ?>
+                                        
+                                   </li> 
                               </ul>
                          </li>
-
+ 
                          <li class="nav-item">
                               <a class="nav-link" href="http://www.bulldogliquidators702.com/" target="_blank">store front</a>
                          </li>

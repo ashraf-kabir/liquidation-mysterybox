@@ -202,7 +202,7 @@ class Manager_inventory_controller extends Manager_controller
                     $data_add_gallery = array(
                         'image_name'     => $image_name,
                         'image_id'       => $gallery_image_id,
-                        'inventery_id'   => $result,
+                        'inventery_id'   => $inventery_id,
                     );
                     $this->inventory_gallery_list_model->create($data_add_gallery);
                 }

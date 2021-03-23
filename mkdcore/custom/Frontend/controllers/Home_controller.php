@@ -712,6 +712,7 @@ class Home_controller extends Manaknight_Controller
     { 
         $data['layout_clean_mode'] = FALSE;
         $this->load->model('inventory_gallery_list_model');
+        
          
         $model  = $this->inventory_model->get_by_fields(['id' =>$id, 'status' => 1]); 
         if (!$model)
@@ -720,8 +721,21 @@ class Home_controller extends Manaknight_Controller
             return redirect('/categories');
         }
 
+        $this->load->library('names_helper_service');
+        $this->load->model('category_model');
+        $this->load->model('physical_location_model'); 
+
+
+        
+        $this->names_helper_service->set_category_model($this->category_model);
+        $this->names_helper_service->set_physical_location_model($this->physical_location_model);
+
+        $model->category_real_name = $this->names_helper_service->get_category_real_name( $model->category_id );
+        $model->location_real_name = $this->names_helper_service->get_physical_location_real_name( $model->physical_location );
+
         $data['product']        =   $model;
         $data['gallery_lists']  =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
+ 
         $data['no_detail'] = TRUE; 
 
         $this->_render('Guest/Product',$data);
@@ -749,8 +763,14 @@ class Home_controller extends Manaknight_Controller
     protected function _render($template, $data)
     {
         
-        $data['all_categories']  = $this->category_model->get_all(['status' => 1]);
-        $data['page_section'] = $template;
+        $all_categories  = $this->category_model->get_all(['status' => 1]);
+        foreach ($all_categories as $key => &$category) 
+        {
+            $category->detail = $this->category_model->get_all(['parent_category_id' => $category->id ]);
+        }
+
+        $data['all_categories']   = $all_categories;
+        $data['page_section']     = $template;
         $data['contact_us_email'] = $this->config->item('contact_us_email'); 
          
 
