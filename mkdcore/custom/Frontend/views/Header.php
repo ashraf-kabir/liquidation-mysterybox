@@ -63,13 +63,13 @@
                                    Category
                                    <a class="sub-item" href="#">
                                         Sub Category
-                                   </a>
+                                   </a> <br>
                                    <a class="sub-item" href="#">
                                         Sub Category
-                                   </a>
+                                   </a> <br>
                                    <a class="sub-item" href="#">
                                         Sub Category
-                                   </a>
+                                   </a> <br>
                                    </a>
                                    </li> 
                               </ul>
