@@ -114,18 +114,11 @@ $total_images =  count($gallery_lists) + 1;
 
             <div class="col-10 p-2 p-md-4 bg-white">
                 <h4>DESCRIPTION</h4>
-            	<?php 
-				$video_url = json_decode($product->video_url);
-				if (!empty($video_url)) 
-				{ 
-					foreach ($video_url as $key => $video):
-						if (!empty($video)) 
-						{
-						  	echo '<a target="_blank" href= "' . $video .'" /> Watch Video </a> <br>'; 
-					  	}   
-		         	endforeach ;
-	         	}
-			 	?> 
+                        <div class="youtube-links">
+                        <div class="video-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/watch?v=vyi9HWfYO2s&t=128s&ab_channel=BiohazardWorld" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        </div>
                 <p class="my-3"><?php echo $product->inventory_note; ?></p> 
             </div> 
         </div>
