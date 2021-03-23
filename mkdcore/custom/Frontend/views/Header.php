@@ -59,24 +59,7 @@
                               <ul class="dropdown-menu">
                               
                                    <li class="dropdown-submenu">
-                                        <?php foreach ($all_categories as $key => $category): 
-                                             if (empty($category->parent_category_id) ) 
-                                             { 
-                                                  ?>
-                                                  <a class="dropdown-item" href="#"><?php echo $category->name; ?></a>
-
-                                                  <?php if ( !empty($category->detail) ): ?> 
-                                                       <ul class="dropdown-menu second">
-
-                                                       <?php foreach ($category->detail as $detail_key => $detail_value): ?> 
-                                                            <li class="dropdown-item"><a href="<?php echo base_url(); ?>categories/?category=<?php echo $detail_value->id; ?>"><?php echo $detail_value->name; ?></a></li>  
-                                                       <?php endforeach ?> 
-
-                                                       </ul>
-                                                  <?php endif ?>
-                                             <?php } ?>
-                                        <?php endforeach ?>
-                                        
+                                   <a class="dropdown-item" href="#">Category</a>
                                    </li> 
                               </ul>
                          </li>
