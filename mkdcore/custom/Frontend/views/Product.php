@@ -116,8 +116,26 @@ $total_images =  count($gallery_lists) + 1;
                 <h4>DESCRIPTION</h4>
                         <div class="youtube-links">
                         <div class="video-container">
-                        <iframe width="420" height="315"
-                            src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                        <iframe width="350" height="245"
+                            src="https://www.youtube.com/embed/duKL2dAJN6I">
+                        </iframe>
+                        </div>
+
+                        <div class="video-container">
+                        <iframe width="350" height="245"
+                            src="https://www.youtube.com/embed/duKL2dAJN6I">
+                        </iframe>
+                        </div>
+
+                        <div class="video-container">
+                        <iframe width="350" height="245"
+                            src="https://www.youtube.com/embed/duKL2dAJN6I">
+                        </iframe>
+                        </div>
+
+                        <div class="video-container">
+                        <iframe width="350" height="245"
+                            src="https://www.youtube.com/embed/duKL2dAJN6I">
                         </iframe>
                         </div>
                         </div>
