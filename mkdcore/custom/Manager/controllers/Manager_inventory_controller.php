@@ -187,7 +187,7 @@ class Manager_inventory_controller extends Manager_controller
 
         if ($result)
         {
-            $inventery_id = $result;
+            $inventory_id = $result;
             /**
              * Get all images that are uploaded
              * save them one by one
@@ -202,7 +202,7 @@ class Manager_inventory_controller extends Manager_controller
                     $data_add_gallery = array(
                         'image_name'     => $image_name,
                         'image_id'       => $gallery_image_id,
-                        'inventery_id'   => $inventery_id,
+                        'inventory_id'   => $inventory_id,
                     );
                     $this->inventory_gallery_list_model->create($data_add_gallery);
                 }
@@ -211,7 +211,7 @@ class Manager_inventory_controller extends Manager_controller
 
             $this->success('Inventory has been added successfully.');
             
-            return $this->redirect('/manager/inventory/view/' . $inventery_id .'?print=1');
+            return $this->redirect('/manager/inventory/view/' . $inventory_id .'?print=1');
         }
 
         $this->_data['error'] = 'Error';
@@ -309,7 +309,7 @@ class Manager_inventory_controller extends Manager_controller
 
         if ($result)
         {
-            $inventery_id = $id;
+            $inventory_id = $id;
 
             /**
              * Get all images that are uploaded
@@ -325,7 +325,7 @@ class Manager_inventory_controller extends Manager_controller
                     $data_add_gallery = array(
                         'image_name'   => $image_name,
                         'image_id'     => $gallery_image_id,
-                        'inventery_id' => $inventery_id,
+                        'inventory_id' => $inventory_id,
                     );
                     $this->inventory_gallery_list_model->create($data_add_gallery);
                 }
