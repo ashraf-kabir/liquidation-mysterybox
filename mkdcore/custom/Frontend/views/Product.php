@@ -114,6 +114,7 @@ $total_images =  count($gallery_lists) + 1;
 
             <div class="col-10 p-2 p-md-4 bg-white">
                 <h4>DESCRIPTION</h4>
+                <div class="row">
                         <div class="youtube-links">
                         <div class="video-container">
                         <iframe width="350" height="245"
@@ -139,6 +140,7 @@ $total_images =  count($gallery_lists) + 1;
                         </iframe>
                         </div>
                         </div>
+                </div>
                 <p class="my-3"><?php echo $product->inventory_note; ?></p> 
             </div> 
         </div>
