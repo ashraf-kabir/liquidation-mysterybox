@@ -311,17 +311,35 @@ if ($layout_clean_mode) {
 			        </button>
 		      	</div>
 		      	<div class="modal-body" id="print-me-2">
-			        <div class='row ' >
+
+		      		<div class='row '  >
+						<div class="col-sm-12" style="text-align: center  !important;">
+							<h1 >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
+						</div> 
+					</div>
+
+
+
+					<div class='row ' >
 						<div class="col-sm-12" style="text-align: center  !important;">
 							<h1 >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
 						</div> 
 					</div>
+
+
+					<div class='row '>
+						<div class="col-sm-12" style="text-align: center  !important;">
+							<h1 >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
+						</div> 
+					</div> 
+ 
 
 					<div class='row' >
 						<div class="col-sm-12" style="text-align: center  !important;">
 							<img   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
 						</div> 
 					</div>  
+			         
 		      	</div>
 		      	<div class="modal-footer">
 		        	<button type="button" class="btn btn-primary"  onClick="printdiv('print-me-2')" >Print</button>
