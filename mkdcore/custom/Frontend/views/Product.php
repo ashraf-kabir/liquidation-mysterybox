@@ -103,7 +103,7 @@ $total_images =  count($gallery_lists) + 1;
         
         <div class="row justify-content-center bg-white mx-md-5 "> 
             
-            <div class="col-10  p-2 p-md-4 bg-white ">
+            <div class="col-10  py-3 bg-white ">
 				<label for="quantity" >Qty
 					<input type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity w-75 w-md-50" value="1" />
 				</label> 
@@ -112,7 +112,7 @@ $total_images =  count($gallery_lists) + 1;
 				<button class="btn add_to_cart_button btn-success addToCartBtn">Add To Cart</button>
 			</div>
 
-            <div class="col-10 p-2 p-md-4 bg-white">
+            <div class="col-10 p-0 bg-white">
                 <h4>DESCRIPTION</h4>
                 <div class="row justify-content-between">
                         <div class="video-container">
