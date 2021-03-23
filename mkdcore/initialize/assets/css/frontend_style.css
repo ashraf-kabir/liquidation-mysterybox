@@ -503,6 +503,7 @@ img {
 
 .row:after {
   /* content: ""; */
+  width: 200%;
   display: table;
   clear: both;
 }
