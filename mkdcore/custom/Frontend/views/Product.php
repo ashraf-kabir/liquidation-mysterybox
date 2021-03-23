@@ -6,7 +6,22 @@
 <?php 
 $total_images =  count($gallery_lists) + 1;
 
- ?>
+
+function getYoutubeEmbedUrl($url)
+{
+    $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+    $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+
+    if (preg_match($longUrlRegex, $url, $matches)) {
+        $youtube_id = $matches[count($matches) - 1];
+    }
+
+    if (preg_match($shortUrlRegex, $url, $matches)) {
+        $youtube_id = $matches[count($matches) - 1];
+    }
+    return 'https://www.youtube.com/embed/' . $youtube_id ;
+}
+?>
     <main class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-12 col-md-10 my-4">
@@ -115,33 +130,30 @@ $total_images =  count($gallery_lists) + 1;
             <div class="col-10 p-0 bg-white">
                 <h4 class="mb-2">DESCRIPTION</h4>
                 <div class="row justify-content-between">
-                        <div class="video-container">
-                        <iframe width="300" height="195"
-                            src="https://www.youtube.com/embed/duKL2dAJN6I" allowfullscreen="allowfullscreen">
-                        </iframe>
-                        </div>
 
-                        <div class="video-container">
-                        <iframe width="300" height="195"
-                            src="https://www.youtube.com/embed/duKL2dAJN6I" allowfullscreen="allowfullscreen">
-                        </iframe>
-                        </div>
+                    <p class="my-3"><?php echo $product->inventory_note; ?></p> 
+                    
+                    <?php 
+                    $video_url = json_decode($product->video_url);
+                    if (!empty($video_url)) 
+                    { 
+                        foreach ($video_url as $key => $video):
+                            if (!empty($video)) 
+                            {
+                                ?>
+                                <div class="video-container"> 
+                                    <iframe width="300" height="195"
+                                        src="<?php echo getYoutubeEmbedUrl($video); ?>" allowfullscreen="allowfullscreen">
+                                    </iframe>
+                                </div> 
 
-                        <div class="video-container">
-                        <iframe width="300" height="195"
-                            src="https://www.youtube.com/embed/duKL2dAJN6I" allowfullscreen="allowfullscreen">
-                        </iframe>
-                        </div>
-
-                        <div class="video-container">
-                        <iframe width="300" height="195"
-                            src="https://www.youtube.com/embed/duKL2dAJN6I" allowfullscreen="allowfullscreen">
-                        </iframe>
-                        </div>
-
-                        
+                                <?php
+                            }   
+                        endforeach ;
+                    }
+                    ?>  
                 </div>
-                <p class="my-3"><?php echo $product->inventory_note; ?></p> 
+                
             </div> 
         </div>
 

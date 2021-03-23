@@ -764,10 +764,7 @@ class Home_controller extends Manaknight_Controller
     {
         
         $all_categories  = $this->category_model->get_all(['status' => 1]);
-        foreach ($all_categories as $key => &$category) 
-        {
-            $category->detail = $this->category_model->get_all(['parent_category_id' => $category->id ]);
-        }
+         
 
         $data['all_categories']   = $all_categories;
         $data['page_section']     = $template;

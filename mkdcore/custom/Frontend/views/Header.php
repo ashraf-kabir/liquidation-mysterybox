@@ -56,21 +56,23 @@
 
                          <li class="dropdown-submenu nav-item d-none d-md-block">
                               <a  class="dropdown-item nav-link" tabindex="-1" href="#">Shop</a>
-                              <ul class="dropdown-menu">
-                              
+                              <ul class="dropdown-menu"> 
                                    <li class="dropdown-submenu">
-                                   <a class="main-item" href="#">
-                                        Category
+                                   <a class="main-item" href="">
+                                        Mystery Box
                                    </a> <br>
-                                   <a class="sub-item" href="#">
-                                        Sub Category
-                                   </a> <br>
-                                   <a class="sub-item" href="#">
-                                        Sub Category
-                                   </a> <br>
-                                   <a class="sub-item" href="#">
-                                        Sub Category
-                                   </a> <br>
+
+                                   <?php 
+                                   foreach ($all_categories as $key => $category): 
+                                        if (!empty($category->parent_category_id) ) 
+                                        { 
+                                             ?>
+                                             <a class="sub-item" href="<?php echo base_url(); ?>categories/?category=<?php echo $detail_value->id; ?>">
+                                                  <?php echo $category->name; ?>
+                                             </a> <br> 
+                                        <?php } ?>
+                                   <?php endforeach ?>
+                                   
                                    </li> 
                               </ul>
                          </li>
