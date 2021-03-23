@@ -61,7 +61,7 @@
                                    <li class="dropdown-submenu">
                                    <a href="main-item">
                                         Category
-                                   </a>
+                                   </a> <br>
                                    <a class="sub-item" href="#">
                                         Sub Category
                                    </a> <br>

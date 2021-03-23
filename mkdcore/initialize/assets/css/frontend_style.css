@@ -12,6 +12,8 @@ body {
   color: #000 !important;
   text-decoration: none;
   padding: 0 5px;
+  font-size: 12px;
+  font-weight: bold;
 }
 .dropdown-submenu > .dropdown-menu {
   top: 0;
