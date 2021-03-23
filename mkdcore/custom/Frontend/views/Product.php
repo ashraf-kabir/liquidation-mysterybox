@@ -116,26 +116,26 @@ $total_images =  count($gallery_lists) + 1;
                 <h4>DESCRIPTION</h4>
                 <div class="row justify-content-between">
                         <div class="video-container">
-                        <iframe width="250" height="145"
-                            src="https://www.youtube.com/embed/duKL2dAJN6I">
+                        <iframe width="300" height="195"
+                            src="https://www.youtube.com/embed/duKL2dAJN6I" allowfullscreen="allowfullscreen">
                         </iframe>
                         </div>
 
                         <div class="video-container">
-                        <iframe width="250" height="145"
-                            src="https://www.youtube.com/embed/duKL2dAJN6I">
+                        <iframe width="300" height="195"
+                            src="https://www.youtube.com/embed/duKL2dAJN6I" allowfullscreen="allowfullscreen">
                         </iframe>
                         </div>
 
                         <div class="video-container">
-                        <iframe width="250" height="145"
-                            src="https://www.youtube.com/embed/duKL2dAJN6I">
+                        <iframe width="300" height="195"
+                            src="https://www.youtube.com/embed/duKL2dAJN6I" allowfullscreen="allowfullscreen">
                         </iframe>
                         </div>
 
                         <div class="video-container">
-                        <iframe width="250" height="145"
-                            src="https://www.youtube.com/embed/duKL2dAJN6I">
+                        <iframe width="300" height="195"
+                            src="https://www.youtube.com/embed/duKL2dAJN6I" allowfullscreen="allowfullscreen">
                         </iframe>
                         </div>
 
