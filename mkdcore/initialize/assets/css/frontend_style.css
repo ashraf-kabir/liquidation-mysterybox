@@ -309,11 +309,6 @@ footer {
   font-size: 12px;
   font-weight: 700;
 }
-.youtube-links {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-}
 
 * {
   box-sizing: border-box;
