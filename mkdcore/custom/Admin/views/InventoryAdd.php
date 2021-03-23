@@ -219,11 +219,26 @@ if ($layout_clean_mode) {
                 </div>
 
                 <div class="form-group  col-md-5 col-sm-12">
-                    <label for="video_url" style="display: block;">Video URL </label>
-                    <input type="url" style="width: 89%;display: inline;" class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo set_value('video_url'); ?>"  />
+                    <label for="video_url" >Youtube URL 1 </label>
+                    <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo set_value('video_url'); ?>"  /> 
+                </div>
 
 
-                    <button type="button" style="margin-left: 5px;" class="btn btn-primary btn-sm  add_new_video_url">+</button>
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="video_url" >Youtube URL 2 </label>
+                    <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo set_value('video_url'); ?>"  /> 
+                </div>
+
+
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="video_url" >Youtube URL 3</label>
+                    <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo set_value('video_url'); ?>"  /> 
+                </div>
+
+
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="video_url" >Youtube URL 4 </label>
+                    <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo set_value('video_url'); ?>"  /> 
                 </div>
  
                 <div class="form-group col-md-5 col-sm-12">

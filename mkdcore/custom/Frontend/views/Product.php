@@ -14,14 +14,12 @@
 		max-height:90%;
 	}
 </style>
-
+ 
 <section>
 	<div class="container-fluid bg-white" id="product">
 		<div class="row product__overview justify-content-center py-5">
-			<div
-			class="col-xl-6 col-lg-6 col-md-7 col-sm-10 col-11 product__imgContainer p-3"
-			>
-			<div class="text-right div_box">
+			<div class="col-xl-6 col-lg-6 col-md-7 col-sm-10 col-11 product__imgContainer p-3" >
+				<div class="text-right div_box">
 
 				<?php if( !empty($product->feature_image) ) : ?>
 					<img
@@ -53,6 +51,22 @@
 				<h3><?= $product->product_name; ?>  </h3>
 				<h2 class="text-danger">$<?= number_format($product->selling_price,2); ?></h2>
 
+	                <div class="bg-white w-100 p-2 p-md-4"> 
+	                    <ul class="list-unstyled">
+	                        <li class="my-4">Price <span class="product__price">$55.00</span></li> 
+                            <li class="my-4"> In stock</li>  
+	                        <li class="my-4">Category  <span class="product__price"> N/A</span></li>
+	                        <li class="my-4">Dimension  <span class="product__price"> <?php echo $product->width; ?></span> x <?php echo $product->length; ?></li>
+	                        <li class="my-4">Length  <span class="product__price">  <?php echo $product->length; ?>in</span></li>
+	                        <li class="my-4">Weight <span class="product__price">  <?php echo $product->weight; ?>lb</span></li>
+	                        <li class="my-4">Physical Location <span class="product__price"> N/A</span></li>
+	                        <li class="my-4">Warehouse <span class="product__price"> Muhammad Zeeshan</span></li>
+	                    </ul>
+	                     
+	                </div>
+	                <div class="bg-white w-100 p-2 p-md-4 mt-5 d-flex product__deliveryDetails">
+                     	<img src="<?php echo $product->barcode_image; ?>" style="width:100%">
+	                </div> 
 			</div>
 		</div>
 
@@ -69,12 +83,7 @@
 			</div>
 
 
-			<div class="col-10">
-				<h5>Product Details</h5>
-			</div>
-
-			
-			
+			 
 
 			<div class="col-10 product__detailTexts">
 				<?php 
@@ -88,37 +97,7 @@
 					  	}   
 		         	endforeach ;
 	         	}
-			 	?>
-				<p>
-					Mastercraft Screwdriver Set features satin-chrome plated shafts
-					for durability and rust resistance.
-				</p>
-				<p>Made with CRV blades for durability and strength.</p>
-				<p>Soft textured grip for comfort and control.</p>
-				<p>
-					Set includes 15 screwdrivers (slotted：1/8" x 3", 3/16" x 4", 1/4"
-					x 1-1/2", 1/4" x 4", 5/16" x 6", phillips：ph1 x 1-1/2", ph2 x
-					1-1/2", ph2 x 4", ph3 x 6", two pieces square：S0 x 3", S1 x
-					1-1/2", S1 x 4", S2 x 1-1/2", S2 x 4", S3 x 6")
-				</p>
-				<p>
-					8 precision drivers (slotted: 2.0 x 50, 2.4 x 50, 3.0 x 50 mm,
-					phillips: #000 x 50, #00 x 50, #0 x 50 mm, torx: T8x50, T9x50 mm).
-				</p>
-				<p>
-					9 hex keys (5/64", 3/32", 7/64", 1/8", 9/64", 5/32", 3/16", 7/32",
-					1/4").
-				</p>
-				<p>
-					42 bits (7pc slotted：1/8" x 2pc, 3/16" x 2pc, 1/4" x 2pc, 5/16";
-					11pc phillips：#0 x 2pc, #1 x 3pc, #2 x 4pc, #3 x 2pc; 10pc
-					square：#0 x 2pc, #1 x 2pc, #2 x 4pc, #3 x 2pc; 8pc torx：T5, T7,
-					T10, T15, T20, T25, T30, T40; 6pc hex：2, 3, 4, 5, 5.5, 6 mm)
-				</p>
-				<p>
-					Also includes tack remover, nut driver (1/4"), nut driver (5/16"),
-					demo driver (5/16"x6"), ratchet handle, and nylon bag.
-				</p>
+			 	?> 
 			</div>
 		</div>  
 	</div>

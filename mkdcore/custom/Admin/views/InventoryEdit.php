@@ -235,18 +235,30 @@ if ($layout_clean_mode) {
                 <?php 
                 $video_url = json_decode($this->_data['view_model']->get_video_url());
                 ?>
-                <div class="form-group  col-md-5 col-sm-12">
-                    <label for="video_url" style="display: block;">Video URL </label>
 
-                    <?php if(!empty($video_url)){ 
-                    foreach ($video_url as $key => $video){ ?>
-                        <input type="url" style="width: 89%;display: inline;margin: 6px 0px;" class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo $video; ?>"  />
-                    <?php } }else{ ?>
-                        <input type="url" style="width: 89%;display: inline;margin: 6px 0px;" class="form-control data-input" id="video_url" name="video_url[]" value=""  />
-                   <?php } ?>
-                     
-                    <button type="button" style="margin-left: 5px;" class="btn btn-primary btn-sm  add_new_video_url">+</button>
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="video_url" >Youtube URL 1 </label>
+                    <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo isset($video_url[0]) ? $video_url[0] : ''; ?>"  /> 
                 </div>
+
+
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="video_url" >Youtube URL 2 </label>
+                    <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo isset($video_url[1]) ? $video_url[1] : ''; ?>"   /> 
+                </div>
+
+
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="video_url" >Youtube URL 3</label>
+                    <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo isset($video_url[2]) ? $video_url[2] : ''; ?>"   /> 
+                </div>
+
+
+                <div class="form-group  col-md-5 col-sm-12">
+                    <label for="video_url" >Youtube URL 4 </label>
+                    <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo isset($video_url[3]) ? $video_url[3] : ''; ?>"   /> 
+                </div>
+ 
  
 
 				<div class="form-group col-md-5 col-sm-12">
