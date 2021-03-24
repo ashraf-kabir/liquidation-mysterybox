@@ -51,10 +51,61 @@ class Stripe_terminal_service {
             return $output; 
             exit();
 
-        } catch (Error $e) { 
-            $output['error'] = $e->getMessage();
-            return $output;  
-        } 
+        }  
+        catch (\Stripe\Exception\CardException $e)
+        {
+            
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+            
+        }
+        catch (\Stripe\Exception\RateLimitException $e)
+        {
+            // Too many requests made to the API too quickly
+            // echo 'Message is:' . $e->getError()->message . '\n';
+
+            
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (\Stripe\Exception\InvalidRequestException $e)
+        {
+            // Invalid parameters were supplied to Stripe's API
+            // echo 'Message is:' . $e->getError()->message . '\n';
+
+            
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (\Stripe\Exception\AuthenticationException $e)
+        {
+            // Authentication with Stripe's API failed
+            // (maybe you changed API keys recently)
+            
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (\Stripe\Exception\ApiConnectionException $e)
+        {
+            // Network communication with Stripe failed
+            
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (\Stripe\Exception\ApiErrorException $e)
+        {
+            // Display a very generic error to the user, and maybe send
+            // yourself an email
+            
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
 
     }
     
@@ -80,9 +131,60 @@ class Stripe_terminal_service {
             $output['client_secret'] = $intent->client_secret;
             return $output; 
 
-        } catch (Error $e) {
-            $output['error'] = $e->getMessage();
-            return $output;  
+        } 
+        catch (\Stripe\Exception\CardException $e)
+        {
+            
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+            
+        }
+        catch (\Stripe\Exception\RateLimitException $e)
+        {
+            // Too many requests made to the API too quickly
+            // echo 'Message is:' . $e->getError()->message . '\n';
+
+            
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (\Stripe\Exception\InvalidRequestException $e)
+        {
+            // Invalid parameters were supplied to Stripe's API
+            // echo 'Message is:' . $e->getError()->message . '\n';
+
+            
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (\Stripe\Exception\AuthenticationException $e)
+        {
+            // Authentication with Stripe's API failed
+            // (maybe you changed API keys recently)
+            
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (\Stripe\Exception\ApiConnectionException $e)
+        {
+            // Network communication with Stripe failed
+            
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (\Stripe\Exception\ApiErrorException $e)
+        {
+            // Display a very generic error to the user, and maybe send
+            // yourself an email
+            
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
         }
     }
 

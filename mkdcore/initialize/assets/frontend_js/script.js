@@ -398,8 +398,8 @@ $(document).ready(() => {
               {
                 toastr.success(response.success); 
                 setInterval(function() {
-                  window.location.reload(true);
-                }, 5000);
+                  window.location.href = response.redirect_url;
+                }, 2000);
               } 
 
               if(response.error)
@@ -416,6 +416,4 @@ $(document).ready(() => {
 
 
 
-});
-
-
+}); 

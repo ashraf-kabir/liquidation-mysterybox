@@ -192,6 +192,17 @@ class Home_controller extends Manaknight_Controller
     }
 
 
+
+    public function order_confirmation()
+    {   
+        $data['layout_clean_mode'] = FALSE;
+        $this->_render('Guest/Order_Confirmation',$data);
+    }
+
+
+
+
+
     public function cart()
     { 
         $data['active'] = 'cart';
@@ -351,7 +362,7 @@ class Home_controller extends Manaknight_Controller
             $shipping_cost_value        =  $this->input->post('shipping_cost_value', TRUE);
             $shipping_service_id        =  $this->input->post('shipping_service_id', TRUE);
 
-            $payment = 1;
+            // $payment = 1;
             
            
             
@@ -421,14 +432,14 @@ class Home_controller extends Manaknight_Controller
                     $token_id = $response['response']->id;
                 }
                 else
-                {
+                { 
                     $output['status'] = 0;
-                    $output['error']  = 'Error! Please try again later.';
+                    $output['error']  = $response['error_msg'];
                     echo json_encode($output);
                     exit();  
                 } 
             }
-
+ 
 
 
 
@@ -645,6 +656,7 @@ class Home_controller extends Manaknight_Controller
 
                     $output['status'] = 0;
                     $output['success']  = 'Order has been created successfully.';
+                    $output['redirect_url']  = base_url() . 'order_confirmation';
                     echo json_encode($output);
                     exit(); 
                 }
