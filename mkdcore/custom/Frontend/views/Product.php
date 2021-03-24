@@ -97,16 +97,36 @@ function getYoutubeEmbedUrl($url)
                         <li class="my-4">Quantity <span class="product__price"> <?php echo $product->quantity; ?></span></li>
                         
                         <li class="my-4">Category  <span class="product__price"> <?php echo $product->category_real_name; ?></span></li>
-                        <li class="my-4">Dimension  <span class="product__price"> <?php echo $product->width; ?> x <?php echo $product->height; ?></span></li>
-                        <li class="my-4">Length  <span class="product__price"> <?php echo $product->length; ?>in</span></li>
-                        <li class="my-4">Weight <span class="product__price"> <?php echo $product->weight; ?>lb</span></li>
-                        <li class="my-4">Physical Location <span class="product__price"> <?php echo $product->location_real_name; ?></span></li>
+                        <li class="my-4">Dimension  <span class="product__price"> <?php echo $product->width; ?> x <?php echo $product->height; ?> x <?php echo $product->length; ?> x <?php echo $product->weight; ?></span></li> 
+                        
                          
                     </ul>
                     <?php if(!empty($product->manifest_id) ) { ?> 
                         <a href="<?php echo base_url(); ?>view_manifest/<?php echo $product->id; ?>"  target="popup"   onclick="window.open('<?php echo base_url(); ?>view_manifest/<?php echo $product->id; ?>','popup','width=600,height=600'); return false;"  >View Manifest</a>
                     <?php } ?> 
                 </div>
+
+                <div class="col-12 p-0 py-4 bg-white ">
+                    <label for="quantity" >Qty
+                        <input type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity w-75 w-md-50" value="1" />
+                    </label> 
+
+                    <input type="hidden" class="product_id" name="product_id" value="<?= $product->id; ?>" />
+                    <button class="btn add_to_cart_button btn-success addToCartBtn">Add To Cart</button>
+                </div>
+
+
+
+                <div class="bg-white w-100 p-2 p-md-4 mt-5 d-flex product__deliveryDetails">
+                    <h4 class="mb-2">DESCRIPTION</h4>
+                    <div class="row justify-content-between"> 
+                        <p class="my-3"><?php echo $product->inventory_note; ?></p> 
+                    </div>
+                </div>
+ 
+                
+
+
                 <div class="bg-white w-100 p-2 p-md-4 mt-5 d-flex product__deliveryDetails">
                      <img src="<?php echo $product->barcode_image; ?>" style="width:100%" />
                 </div>
@@ -118,20 +138,9 @@ function getYoutubeEmbedUrl($url)
         
         <div class="row justify-content-center bg-white mx-md-5 "> 
             
-            <div class="col-10 p-0 py-4 bg-white ">
-				<label for="quantity" >Qty
-					<input type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity w-75 w-md-50" value="1" />
-				</label> 
-
-				<input type="hidden" class="product_id" name="product_id" value="<?= $product->id; ?>" />
-				<button class="btn add_to_cart_button btn-success addToCartBtn">Add To Cart</button>
-			</div>
-
+            
             <div class="col-10 p-0 bg-white">
-                <h4 class="mb-2">DESCRIPTION</h4>
-                <div class="row justify-content-between"> 
-                    <p class="my-3"><?php echo $product->inventory_note; ?></p> 
-                </div>
+                 
                 <div class="row justify-content-between"> 
                     <?php 
                     $video_url = json_decode($product->video_url);
@@ -141,11 +150,9 @@ function getYoutubeEmbedUrl($url)
                             if (!empty($video)) 
                             {
                                 ?>
-                                <div class="video-container">
+                                <div class="video-container" style="padding: 20px 0px">
                                     <a href="<?php echo $video; ?>" target="_blank"> 
-                                        <iframe width="300" height="195"
-                                            src="<?php echo getYoutubeEmbedUrl($video); ?>" allowfullscreen="allowfullscreen">
-                                        </iframe>
+                                        Watch Video 
                                     </a> 
                                 </div> 
 
@@ -159,7 +166,7 @@ function getYoutubeEmbedUrl($url)
             </div> 
         </div>
 
-        <div class="row justify-content-center bg-white mx-md-5 ">
+       <!--  <div class="row justify-content-center bg-white mx-md-5 ">
             <div class="col-10 p-0 py-3 bg-white">
                 <h4>Terms and Conditions</h4>
                 <ul>
@@ -169,7 +176,7 @@ function getYoutubeEmbedUrl($url)
                     <li>using this Website in any way that is or may be damaging to this Website;</li>
                 </ul>
             </div> 
-        </div>
+        </div> -->
     </section>
 
 

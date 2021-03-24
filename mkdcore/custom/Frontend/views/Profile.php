@@ -49,13 +49,49 @@
                               <label for="password2">Billing Address</label>
                               <input type="text" id="billing_address" name="billing_address"   class="form-control"   value="<?php echo $customer->billing_address ?>" >
                             </div>
-                             
 
-                            <div class="col-md-3 col-12 mb-5">
-                                <button type="submit" class="btn btn-secondary update__form_submit w-100">
-                                    Update
-                                </button>
+
+
+
+
+                            <div class="col-md-6 col-12 my-2">
+                              <label for="shipping_country">Shipping Country</label>
+                              <input type="text" id="shipping_country" name="shipping_country"   class="form-control" value="<?php echo $customer->shipping_country ?>" >
                             </div>
+
+
+
+                            <div class="col-md-6 col-12 my-2">
+                              <label for="shipping_state">Shipping State</label>
+                              <input type="text" id="shipping_state" name="shipping_state"   class="form-control"  value="<?php echo $customer->shipping_state ?>" >
+                            </div>
+
+
+                            <div class="col-md-6 col-12 my-2">
+                              <label for="shipping_city">Shipping City</label>
+                              <input type="text" id="shipping_city" name="shipping_city"   class="form-control" value="<?php echo $customer->shipping_city ?>" >
+                            </div>
+
+                            <div class="col-md-6 col-12 my-2">
+                              <label for="shipping_zip">Shipping Zip</label>
+                              <input type="text" id="shipping_zip" name="shipping_zip"  class="form-control"  value="<?php echo $customer->shipping_zip ?>" >
+                            </div>
+
+
+                            <div class="col-md-12 col-12 my-2">
+                              <label for="shipping_address">Shipping Address</label>
+                              <input type="text" id="shipping_address" name="shipping_address"   class="form-control"   value="<?php echo $customer->shipping_address ?>" >
+                            </div> 
+                            
+                        </div>
+
+
+                        <div class="form-row justify-content-center"> 
+                          <div class="col-md-3 col-12 mb-5">
+                              <button type="submit" class="btn btn-secondary update__form_submit w-100">
+                                  Update
+                              </button>
+                          </div>
                         </div>
                     </div>
                 </form> 

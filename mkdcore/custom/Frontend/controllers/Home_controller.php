@@ -215,6 +215,7 @@ class Home_controller extends Manaknight_Controller
                 $this->form_validation->set_rules('name', 'First Name', 'required');
                 $this->form_validation->set_rules('phone', 'Phone', 'numeric');
                 $this->form_validation->set_rules('billing_zip', 'Billing Zip', 'numeric');
+                $this->form_validation->set_rules('shipping_zip', 'Shipping Zip', 'numeric');
                 
 
                 if ($this->form_validation->run() === FALSE)
@@ -232,6 +233,12 @@ class Home_controller extends Manaknight_Controller
                 $billing_state   =  $this->input->post('billing_state', TRUE);
                 $billing_country =  $this->input->post('billing_country', TRUE);
                 $phone           =  $this->input->post('phone', TRUE);
+
+                $shipping_country       =  $this->input->post('shipping_country', TRUE);
+                $shipping_state         =  $this->input->post('shipping_state', TRUE);
+                $shipping_city          =  $this->input->post('shipping_city', TRUE);
+                $shipping_zip           =  $this->input->post('shipping_zip', TRUE);
+                $shipping_address       =  $this->input->post('shipping_address', TRUE);
                  
                 $response = $this->customer_model->edit([
                     'name' => $name,
@@ -241,6 +248,11 @@ class Home_controller extends Manaknight_Controller
                     'billing_state' => $billing_state,
                     'billing_country' => $billing_country,
                     'phone' => $phone,
+                    'shipping_address' => $shipping_address,
+                    'shipping_zip' => $shipping_zip,
+                    'shipping_city' => $shipping_city,
+                    'shipping_state' => $shipping_state,
+                    'shipping_country' => $shipping_country,
                 ], $this->session->userdata('user_id'));
 
 

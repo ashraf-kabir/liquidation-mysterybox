@@ -47,7 +47,7 @@
                <button class="navbar-toggler ml-3" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"><i class="fas fa-bars mt-1"></i></span>
                </button>
-               <div class="collapse navbar-collapse col-md-9" id="navbarNavDropdown">
+               <div class="collapse navbar-collapse col-md-12" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                          <li class="nav-item <?php if( isset($active)  and $active == 'home' ){ echo 'active'; } ?> ">
                               <a class="nav-link <?php if( isset($active)  AND $active == 'home' ){ echo 'active'; } ?>" href="<?php echo base_url(); ?>categories">HOME <span class="sr-only">(current)</span></a>

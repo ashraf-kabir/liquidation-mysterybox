@@ -79,9 +79,9 @@
           <div class="cart__address p-4">
             <h4 class="my-4"><i class="fas fa-truck"></i> Shipping</h4>
 
-            <h5 class="my-3">  <?php echo isset($customer->billing_city) ? $customer->billing_city : '' ; ?> </h5>
+            <h5 class="my-3">  <?php echo isset($customer->shipping_city) ? $customer->shipping_city : '' ; ?> </h5>
             <p class="w-75 my-2">
-              <?php echo  isset($customer->billing_address) ? $customer->billing_address : '' ; ?> 
+              <?php echo  isset($customer->shipping_address) ? $customer->shipping_address : '' ; ?> 
             </p>
           </div>
           <div class="cart__summary px-4 py-4">
@@ -90,22 +90,7 @@
               <h6>Subtotal</h6>
               <h6>$<span class="cart-subtotal"><?= number_format($total,2); ?></span></h6>
             </div> 
-            <div class="d-flex justify-content-between my-4">
-              <?php 
-              $tax_amount  = 0;
-              if(isset($tax->tax) and $total != 0)
-              {
-                $tax_amount = $tax->tax/100*$total;
-              } 
-              ?>
-
-              <h6>Tax</h6>
-              <h6>$<span class="cart-tax"><?php echo number_format($tax_amount,2); ?></span></h6>
-            </div>
-            <div class="d-flex justify-content-between my-4">
-              <strong>Total</strong>
-              <strong>$<span class="cart-total"><?= number_format($total + $tax_amount,2); ?></span></strong>
-            </div>
+           
 
             <a  
 

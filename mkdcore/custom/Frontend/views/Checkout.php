@@ -269,7 +269,7 @@
 
               <div class="row">
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
-                  <h5>Ship to Home</h5>
+                  <h5>Shipping Cost</h5>
                 </div>
                 <div class="col-xl-8 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
                   
@@ -320,9 +320,9 @@
             <div class="bg-white">
               <div class="cart__address p-4">
                 <h4 class="my-4"><i class="fas fa-truck"></i> Shipping</h4>
-                <h5 class="my-3">A-Block</h5>
+                <h5 class="my-3"><?php echo $customer->shipping_state; ?></h5>
                 <p class="w-75 my-2">
-                  Street 123, abc Road, New York city123-555-789
+                  <?php echo $customer->shipping_address; ?>, <?php echo $customer->shipping_country; ?>
                 </p>
               </div>
               <hr />

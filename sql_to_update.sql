@@ -36,3 +36,4 @@ ALTER TABLE `inventory` CHANGE `video_url` `video_url` TEXT CHARACTER SET utf8 C
 ALTER TABLE `category` CHANGE `sku_prefix` `sku_prefix` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
 
+ALTER TABLE `customer` CHANGE `shipping_address` `shipping_address` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `shipping_zip` `shipping_zip` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `shipping_city` `shipping_city` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `shipping_country` `shipping_country` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `shipping_state` `shipping_state` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;

@@ -510,6 +510,28 @@
 				["billing_city", "string", [{
 					"limit": 255
 				}], "xyzBilling City", "", ""],
+
+				["shipping_address", "string", [{
+					"limit": 255
+				}], "Shipping Address", "", ""],
+
+				["shipping_zip", "string", [{
+					"limit": 255
+				}], "Shipping Zip", "", ""],
+
+				["shipping_city", "string", [{
+					"limit": 255
+				}], "Shipping City", "", ""],
+
+				["shipping_country", "string", [{
+					"limit": 255
+				}], "Shipping Country", "", ""],
+
+				["shipping_state", "string", [{
+					"limit": 255
+				}], "Shipping State", "", ""],
+
+
 				["customer_since", "date", [], "xyzCustomer Since", "required", "required"],
 				["last_order", "string", [{
 					"limit": 255

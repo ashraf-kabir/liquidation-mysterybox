@@ -40,7 +40,7 @@
     
 </style>
 
-     <div class="container " style="min-height:650px">
+     <div class="container-fluid  " style="min-height:650px">
 
           
                <div class="row">
@@ -54,14 +54,17 @@
           <div class="row">
                <div class="col-md-3">  
                     <aside id="sidebar-shop" class="widget-area site-sidebar style-2" role="complementary">
-                        <section  id="tz_categories-2" class="widget widget_tz_categories"><h3 class="widget-title" itemprop="name"><span>Categories</span></h3>
+                        <section  id="tz_categories-2" class="widget widget_tz_categories"><h3 class="widget-title" itemprop="name"><span>Mystery Box</span></h3>
 
                               <ul class="pt-categories">
                                    <?php if( !empty($all_categories) ){ ?>
-                                        <?php foreach($all_categories as $key => $value){ ?>  
+                                        <?php foreach($all_categories as $key => $value){ 
+                                             if (!empty($value->parent_category_id) ) 
+                                             {
+                                             ?>  
                                              <li class="cat-item cat-item-116"><a href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>"><?php echo $value->name; ?></a> 
                                              </li>
-                                        <?php } ?>
+                                        <?php } } ?>
                                    <?php } ?>            
                               </ul>
                         </section>        
