@@ -2,6 +2,36 @@ $(document).ready(() => {
   let loading_gif = "../assets/image/loading.gif";
 
 
+
+
+ $(document).on('click','.update__form_submit',function(e){
+    e.preventDefault();
+    dataForm = $('#update__form').serializeArray();
+    $.ajax({
+         url: '../v1/api/profile',
+         timeout: 30000,
+         method: 'POST',
+         dataType: 'JSON', 
+         data : dataForm,
+         success: function (response)  
+         {    
+              if(response.success)
+              {
+                toastr.success(response.success);  
+              } 
+
+              if(response.error)
+              {
+                   toastr.error(response.error); 
+              } 
+         },
+         error: function()
+         { 
+              toastr.error('Error! Try again later.'); 
+         } 
+    })
+  })
+
   $(document).on('click','.signup__form_submit',function(e){
      
     let first_name         = $('#name').val();
@@ -413,6 +443,13 @@ $(document).ready(() => {
          } 
     })
   })
+
+
+
+
+     
+
+ 
 
 
 

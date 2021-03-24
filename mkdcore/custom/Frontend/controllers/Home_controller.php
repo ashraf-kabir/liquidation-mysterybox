@@ -201,6 +201,80 @@ class Home_controller extends Manaknight_Controller
 
 
 
+    public function profile()
+    {    
+
+        if($this->session->userdata('customer_login'))
+        {
+            $this->load->model('customer_model');
+            $customer = $this->customer_model->get($this->session->userdata('user_id'));
+
+            if($this->input->post('name', TRUE)  )
+            {
+
+                $this->form_validation->set_rules('name', 'First Name', 'required');
+                $this->form_validation->set_rules('phone', 'Phone', 'numeric');
+                $this->form_validation->set_rules('billing_zip', 'Billing Zip', 'numeric');
+                
+
+                if ($this->form_validation->run() === FALSE)
+                {
+                    $error_msg = validation_errors(); 
+                    $output['error'] = $error_msg;
+                    echo json_encode($output);
+                    exit();
+                } 
+
+                $name            =  $this->input->post('name', TRUE);
+                $billing_zip     =  $this->input->post('billing_zip', TRUE);
+                $billing_address =  $this->input->post('billing_address', TRUE);
+                $billing_city    =  $this->input->post('billing_city', TRUE);
+                $billing_state   =  $this->input->post('billing_state', TRUE);
+                $billing_country =  $this->input->post('billing_country', TRUE);
+                $phone           =  $this->input->post('phone', TRUE);
+                 
+                $response = $this->customer_model->edit([
+                    'name' => $name,
+                    'billing_zip' => $billing_zip,
+                    'billing_address' => $billing_address,
+                    'billing_city' => $billing_city,
+                    'billing_state' => $billing_state,
+                    'billing_country' => $billing_country,
+                    'phone' => $phone,
+                ], $this->session->userdata('user_id'));
+
+
+                if( $response )
+                {
+                    $output['status'] = 0;
+                    $output['success']  = 'Profile has been updated successfully.'; 
+                    echo json_encode($output);
+                    exit();
+                    
+                }
+                else
+                {
+                    $output['status'] = 0;
+                    $output['error']  = "Error! Please try again later.";
+                    echo json_encode($output);
+                    exit();
+                } 
+                     
+            }
+
+            $data['customer'] = $customer;
+            $data['active'] = 'profile';
+            $data['layout_clean_mode'] = FALSE;
+            $this->_render('Guest/Profile',$data);
+        }
+        else
+        {
+            redirect('');
+        } 
+    }
+
+
+
 
 
     public function cart()

@@ -2618,6 +2618,7 @@
 		"../mkdcore/custom/Frontend/views/AboutUs.php" : "../release/application/views/Guest/AboutUs.php",
 		"../mkdcore/custom/Frontend/views/ContactUs.php" : "../release/application/views/Guest/ContactUs.php",
 		"../mkdcore/custom/Frontend/views/Order_Confirmation.php" : "../release/application/views/Guest/Order_Confirmation.php",
+		"../mkdcore/custom/Frontend/views/Profile.php" : "../release/application/views/Guest/Profile.php",
 
 		"../mkdcore/custom/Services/Stripe_terminal_service.php" : "../release/application/libraries/Stripe_terminal_service.php",
 
@@ -2680,6 +2681,7 @@
 		"v1/api/stripe_terminal_connection_token" : "Guest/Custom_api_controller/stripe_terminal_connection_token",
 		"v1/api/stripe_collect_payment" : "Guest/Custom_api_controller/stripe_collect_payment",
 		"v1/api/stripe_capture_payment" : "Guest/Custom_api_controller/stripe_capture_payment", 
+		"v1/api/profile" : "Guest/Home_controller/profile", 
 		
 
 		"/(:num)": "Guest/Home_controller/categories/$1",
@@ -2698,7 +2700,8 @@
 		"cart_remove/(:num)" : "Guest/Home_controller/cart_remove/$1",
 		"v1/api/do_checkout" : "Guest/Home_controller/do_checkout", 
 		"product/(:num)": "Guest/Home_controller/product/$1",
-		"order_confirmation": "Guest/Home_controller/order_confirmation" 
+		"order_confirmation": "Guest/Home_controller/order_confirmation",
+		"profile": "Guest/Home_controller/profile" 
 	},
 	"reverse_copy": {
 	},
