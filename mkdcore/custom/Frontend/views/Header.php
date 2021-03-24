@@ -55,7 +55,7 @@
 
 
                          <li class="dropdown-submenu nav-item d-none d-md-block">
-                              <a  class="dropdown-item nav-link" tabindex="-1" href="#">Shop</a>
+                              <a  class="dropdown-item nav-link" tabindex="-1" href="<?php echo base_url(); ?>categories">Shop</a>
                               <ul class="dropdown-menu"> 
                                    <li class="dropdown-submenu">
                                    <a class="main-item" href="">

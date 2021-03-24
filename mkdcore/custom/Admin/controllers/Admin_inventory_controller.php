@@ -157,6 +157,13 @@ class Admin_inventory_controller extends Admin_controller
         $video_url = json_encode($this->input->post('video_url', TRUE));
         
 
+        //SKU for category
+        $category_data = $this->category_model->get($category_id);
+
+        if (isset($category_data->sku_prefix) and !empty($category_data->sku_prefix))
+        {
+            $sku = $category_data->sku_prefix . "" . $sku;
+        }
 
 
         
@@ -198,8 +205,7 @@ class Admin_inventory_controller extends Admin_controller
             'free_ship' => $free_ship,
             'product_type' => $product_type,
             'pin_item_top' => $pin_item_top,
-            'video_url' => $video_url,
-            
+            'video_url' => $video_url, 
         ]);
 
         if ($result)

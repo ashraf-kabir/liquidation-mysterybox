@@ -230,8 +230,7 @@
 
 
 </footer>
-
-<button class="btn btn-warning translate-btn">Translate</button>
+ 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script

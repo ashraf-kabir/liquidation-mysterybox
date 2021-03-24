@@ -218,8 +218,17 @@ class Custom_api_controller extends Manaknight_Controller
         // { 
             $product_id   =  $this->input->post('id', TRUE);
             $product_qty  =  $this->input->post('quantity', TRUE);
+            $force_update =  $this->input->post('force_update', TRUE);
             $user_id      =  $this->session->userdata('user_id');
             
+
+            if ($product_qty == 0) 
+            {
+                $output['status'] = 0;
+                $output['error'] = 'Error! Quantity must be greater then 0.';
+                echo json_encode($output);
+                exit();
+            }
             $ip_address_user = $_SERVER['REMOTE_ADDR'];
 
             $product_data = $this->inventory_model->get($product_id);
@@ -250,6 +259,12 @@ class Custom_api_controller extends Manaknight_Controller
 
                     $product_qty_now = $product_qty + $product_data->product_qty;
                     $total_price_now = $product_qty_now * $unit_price;
+
+                    if ($force_update) 
+                    { 
+                        $product_qty_now = $product_qty;
+                        $total_price_now = $product_qty_now * $unit_price;
+                    }
 
 
                     $check_quantity = $this->helpers_service->check_item_in_inventory($product_id, $product_qty_now, $product_name);

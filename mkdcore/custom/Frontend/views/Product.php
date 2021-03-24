@@ -141,10 +141,12 @@ function getYoutubeEmbedUrl($url)
                             if (!empty($video)) 
                             {
                                 ?>
-                                <div class="video-container"> 
-                                    <iframe width="300" height="195"
-                                        src="<?php echo getYoutubeEmbedUrl($video); ?>" allowfullscreen="allowfullscreen">
-                                    </iframe>
+                                <div class="video-container">
+                                    <a href="<?php echo $video; ?>" target="_blank"> 
+                                        <iframe width="300" height="195"
+                                            src="<?php echo getYoutubeEmbedUrl($video); ?>" allowfullscreen="allowfullscreen">
+                                        </iframe>
+                                    </a> 
                                 </div> 
 
                                 <?php

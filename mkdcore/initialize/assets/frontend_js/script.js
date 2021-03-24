@@ -150,6 +150,45 @@ $(document).ready(() => {
     });
   });
 
+
+
+    $(document).on('click','.edit_to_cart_button',function(e){
+        e.preventDefault(); 
+
+        let quantity   = $(this).parent().parent().find('.quantity_value').val();
+        let id         = $(this).attr('data-id'); 
+
+
+        // get data and post to server
+        var serialized_data = [];  
+        serialized_data.push({ name: 'quantity', value :  quantity });
+        serialized_data.push({ name: 'id', value :  id }); 
+        serialized_data.push({ name: 'force_update', value :  true }); 
+        $.ajax({
+            type: 'POST',
+            url: '../v1/api/add_product_to_cart_by_customer',
+            timeout: 15000,
+            data: serialized_data,
+            dataType: 'JSON',
+            success: function (response) 
+            {
+                if (response.error) 
+                {
+                    toastr.error(response.error);
+                }
+
+                // if success add data to cart front pos
+                if (response.success) 
+                {
+                    toastr.success(response.success);
+                    setInterval(function() {
+                      window.location.reload(true);
+                    }, 2000); 
+                } 
+            }
+        });
+    });
+
   $(document).on('click','.calculate-shipping-cost', function(){
       var error_for_shipping = 0;  
       $('.shipping-cost-options').html('');
@@ -360,7 +399,7 @@ $(document).ready(() => {
                 toastr.success(response.success); 
                 setInterval(function() {
                   window.location.reload(true);
-                }, 3000);
+                }, 5000);
               } 
 
               if(response.error)

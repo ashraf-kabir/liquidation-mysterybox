@@ -71,6 +71,13 @@ if ($layout_clean_mode) {
 						}?>
 					</select> 
 				</div>
+
+                <div class="form-group col-md-5 col-sm-12 ">
+                    <label for="Name">SKU Prefix </label>
+                    <input type="text" class="form-control data-input" id="sku_prefix" name="sku_prefix" value="<?php echo set_value('sku_prefix'); ?>"/>
+                </div>
+
+
 				<div class="form-group col-md-5 col-sm-12 ">
 					<label for="Status">Status </label>
 					<select id="form_status" name="status" class="form-control data-input">

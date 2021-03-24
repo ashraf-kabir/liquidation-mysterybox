@@ -108,14 +108,16 @@ class Admin_category_controller extends Admin_controller
 			return $this->render('Admin/CategoryAdd', $this->_data);
         }
 
-        $name = $this->input->post('name');
-		$parent_category_id = $this->input->post('parent_category_id');
-		$status = $this->input->post('status');
+        $name = $this->input->post('name', TRUE);
+		$parent_category_id = $this->input->post('parent_category_id', TRUE);
+		$status = $this->input->post('status', TRUE);
+        $sku_prefix = $this->input->post('sku_prefix', TRUE);
 		
         $result = $this->category_model->create([
             'name' => $name,
 			'parent_category_id' => $parent_category_id,
 			'status' => $status,
+            'sku_prefix' => $sku_prefix,
 			
         ]);
 
@@ -154,14 +156,16 @@ class Admin_category_controller extends Admin_controller
 			return $this->render('Admin/CategoryEdit', $this->_data);
         }
 
-        $name = $this->input->post('name');
-		$parent_category_id = $this->input->post('parent_category_id');
-		$status = $this->input->post('status');
+        $name = $this->input->post('name', TRUE);
+        $parent_category_id = $this->input->post('parent_category_id', TRUE);
+        $status = $this->input->post('status', TRUE);
+        $sku_prefix = $this->input->post('sku_prefix', TRUE);
 		
         $result = $this->category_model->edit([
             'name' => $name,
 			'parent_category_id' => $parent_category_id,
 			'status' => $status,
+            'sku_prefix' => $sku_prefix,
 			
         ], $id);
 
