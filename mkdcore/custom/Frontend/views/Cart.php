@@ -107,7 +107,15 @@
               <strong>$<span class="cart-total"><?= number_format($total + $tax_amount,2); ?></span></strong>
             </div>
 
-            <a  <?php if ($this->session->userdata('user_id')): ?> href="<?php echo base_url(); ?>checkout"   <?php else: ?>  data-target="#loginModal" data-toggle="modal" <?php endif; ?> style="line-height:2;" class="btn btn-success w-100" >Checkout Out</a >
+            <a  
+
+            <?php if ($this->session->userdata('customer_login')): ?>
+               href="<?php echo base_url(); ?>checkout"   
+            <?php else: ?>  
+                data-target="#loginModal" data-toggle="modal" 
+            <?php endif; ?> 
+
+            style="line-height:2;" class="btn btn-success w-100" >Checkout Out</a >
           </div>
         </div>
       </div>
