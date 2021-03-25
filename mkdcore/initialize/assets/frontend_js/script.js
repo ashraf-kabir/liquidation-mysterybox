@@ -305,7 +305,7 @@ $(document).ready(() => {
       })
   });
   
-  calculate_cost()
+    calculate_cost()
     function calculate_cost()
     {
         var price_shipping = $('.shipping-cost-price').find(':selected').attr('data-price'); 
