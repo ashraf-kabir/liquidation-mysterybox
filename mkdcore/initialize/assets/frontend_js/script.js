@@ -306,109 +306,112 @@ $(document).ready(() => {
   });
   
   calculate_cost()
-  function calculate_cost()
-  {
-      var price_shipping = $('.shipping-cost-price').find(':selected').attr('data-price'); 
-      var other_price    = $('.shipping-cost-price').find(':selected').attr('data-other-cost'); 
-      var shipping_service_name    = $('.shipping-cost-price').find(':selected').attr('data-service-name'); 
+    function calculate_cost()
+    {
+        var price_shipping = $('.shipping-cost-price').find(':selected').attr('data-price'); 
+        var other_price    = $('.shipping-cost-price').find(':selected').attr('data-other-cost'); 
+        var shipping_service_name    = $('.shipping-cost-price').find(':selected').attr('data-service-name'); 
 
-      if(!price_shipping)
-      {
+        if(!price_shipping)
+        {
           price_shipping = 0;
-      }
+        }
 
-      if(!other_price)
-      {
+        if(!other_price)
+        {
           other_price = 0;
-      }
+        }
 
-      var coupon_amount_now    = Number($('#coupon_amount_now').val()).toFixed(2); 
+        var coupon_amount_now    = $('#coupon_amount_now').val();
 
+        if(!coupon_amount_now)
+        {
+            coupon_amount_now = 0;
+        }
 
-      let total_shipping_price = 0;
-      total_shipping_price = Number(price_shipping) + Number(other_price);
+        coupon_amount_now = Number(coupon_amount_now).toFixed(2);
 
-      $('.shipping-cost-name').val(shipping_service_name);   
-      $('.shipping-cost-price-value').val(total_shipping_price);   
-      $('.shipping_cost_selected').text(Number(total_shipping_price).toFixed(2));  
+        let total_shipping_price = 0;
+        total_shipping_price = Number(price_shipping) + Number(other_price);
 
-      let total_of_all =  0;
-      if ( $('#checkout-state').val().toLowerCase() == 'nevada' ||  $('#checkout-state').val().toLowerCase() == 'nv'  ) 
-      {
+        $('.shipping-cost-name').val(shipping_service_name);   
+        $('.shipping-cost-price-value').val(total_shipping_price);   
+        $('.shipping_cost_selected').text(Number(total_shipping_price).toFixed(2));  
 
-          $('.cart-tax').text(Number($('.tax_amount_val').val()).toFixed(2));
-          total_of_all = $('.total_of_all').val();
-      }
-      else
-      {
-          $('.cart-tax').text(Number(0).toFixed(2));
-          total_of_all = $('.total_without_tax').val();
-      }
-      
-
-      let total_after_shipping = Number(total_of_all) + total_shipping_price - coupon_amount_now
-      $('.total_of_all_text').text(Number(total_after_shipping).toFixed(2)); 
-  }
-
-
-  $(document).on('change','.shipping-cost-price', function(){ 
-      calculate_cost();
-  });
-
-  $(document).on('keyup','#checkout-state', function(){ 
-      calculate_cost();
-  });
+        let total_of_all =  0;
+        if ( $('#checkout-state').val().toLowerCase() == 'nevada' ||  $('#checkout-state').val().toLowerCase() == 'nv'  ) 
+        { 
+            $('.cart-tax').text(Number($('.tax_amount_val').val()).toFixed(2));
+            total_of_all = $('.total_of_all').val();
+        }
+        else
+        {
+            $('.cart-tax').text(Number(0).toFixed(2));
+            total_of_all = $('.total_without_tax').val();
+        } 
+        let total_after_shipping = Number(total_of_all) + total_shipping_price - coupon_amount_now
+        $('.total_of_all_text').text(Number(total_after_shipping).toFixed(2)); 
+    }
 
 
+    $(document).on('change','.shipping-cost-price', function(){ 
+        calculate_cost();
+    });
 
-  $(document).on('click','.select_card',function(){
-      if($(this).is(':checked') && $(this).val() == 2 )
-      {
-           $('.card_div').show();
-      }else{
-           $('.card_div').hide();
-      }
-  })
+    $(document).on('keyup','#checkout-state', function(){ 
+        calculate_cost();
+    });
+
+
+
+    $(document).on('click','.select_card',function(){
+        if($(this).is(':checked') && $(this).val() == 2 )
+        {
+            $('.card_div').show();
+        }else{
+            $('.card_div').hide();
+        }
+    })
 
 
  
 
-  $(document).on('click','.apply_coupon',function(){
-      $('#coupon_amount_now').val('0');
-      let coupon_code = $('.coupon_code').val();
-      if(coupon_code == '' || coupon_code == 0) 
-      {
-          toastr.error('Coupon Code is required.');  
-          return false;
-          exit;
-      }
-      $.ajax({
-          url: '../v1/api/apply_coupon',
-          timeout: 30000,
-          method: 'POST',
-          dataType: 'JSON', 
-          data : {'coupon_code' : coupon_code },
-          success: function (response)  
-          {    
-              if(response.success)
-              {
-                 $('.coupon_amount').text( Number(response.amount).toFixed(2) ) 
-                 $('#coupon_amount_now').val( Number(response.amount).toFixed(2) ) 
+    $(document).on('click','.apply_coupon',function(){
+        $('#coupon_amount_now').val('0');
+        let coupon_code = $('.coupon_code').val();
+        if(coupon_code == '' || coupon_code == 0) 
+        {
+            toastr.error('Coupon Code is required.');  
+            return false;
+            exit;
+        }
+        $.ajax({
+            url: '../v1/api/apply_coupon',
+            timeout: 30000,
+            method: 'POST',
+            dataType: 'JSON', 
+            data : {'coupon_code' : coupon_code },
+            success: function (response)  
+            {    
+                if(response.success)
+                {
+                    $('.coupon_amount').text( Number(response.amount).toFixed(2) ) 
+                    $('#coupon_amount_now').val( Number(response.amount).toFixed(2) ) 
 
-              } 
-              calculate_cost();
-              if(response.error)
-              {
-                  $('.coupon_amount').text( Number(0).toFixed(2) ) 
-                  toastr.error(response.error); 
-              } 
-          },
-          error: function()
-          { 
-              toastr.error('Error! Try again later.'); 
-          } 
-      })
-  })
+                } 
+                calculate_cost();
+                if(response.error)
+                {
+                    $('.coupon_amount').text( Number(0).toFixed(2) ) 
+                    toastr.error(response.error); 
+                } 
+            },
+            error: function()
+            { 
+                toastr.error('Error! Try again later.'); 
+            } 
+        })
+    })
 
 
 
