@@ -174,6 +174,7 @@ $(document).ready(() => {
             // if success add data to cart front pos
             if (response.success) 
             {
+                check_cart_total_items();
                 toastr.success(response.success);
             } 
         }
@@ -210,6 +211,7 @@ $(document).ready(() => {
                 // if success add data to cart front pos
                 if (response.success) 
                 {
+                    check_cart_total_items();
                     toastr.success(response.success);
                     setInterval(function() {
                       window.location.reload(true);
@@ -444,13 +446,40 @@ $(document).ready(() => {
     })
   })
 
-
-
-
      
+   
 
  
 
 
 
 }); 
+
+
+
+ function check_cart_total_items()
+{
+    $.ajax({
+        url: '../v1/api/check_cart_total_items',
+        timeout: 30000,
+        method: 'POST',
+        dataType: 'JSON',  
+        success: function (response)  
+        {     
+            if(response.cart_items)
+            {
+               $('#lblCartCount').text(response.cart_items)
+            } 
+        },
+        error: function()
+        { 
+             
+        } 
+    });
+}
+
+
+
+
+
+check_cart_total_items();
