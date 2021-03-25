@@ -350,7 +350,7 @@ $(document).ready(() => {
             total_of_all = $('.total_without_tax').val();
         } 
 
-        total_of_all.replace(/,/g,'');
+        total_of_all = total_of_all.replace(/,/g,'');
 
 
         var total_after_shipping = Number(total_of_all) + total_shipping_price - coupon_amount_now;
