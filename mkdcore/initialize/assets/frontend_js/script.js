@@ -305,7 +305,7 @@ $(document).ready(() => {
       })
   });
   
-    calculate_cost()
+  calculate_cost()
     function calculate_cost()
     {
         var price_shipping = $('.shipping-cost-price').find(':selected').attr('data-price'); 
@@ -331,14 +331,14 @@ $(document).ready(() => {
 
         coupon_amount_now = Number(coupon_amount_now).toFixed(2);
 
-        let total_shipping_price = 0;
+        var total_shipping_price = 0;
         total_shipping_price = Number(price_shipping) + Number(other_price);
 
         $('.shipping-cost-name').val(shipping_service_name);   
         $('.shipping-cost-price-value').val(total_shipping_price);   
         $('.shipping_cost_selected').text(Number(total_shipping_price).toFixed(2));  
 
-        let total_of_all =  0;
+        var total_of_all =  0;
         if ( $('#checkout-state').val().toLowerCase() == 'nevada' ||  $('#checkout-state').val().toLowerCase() == 'nv'  ) 
         { 
             $('.cart-tax').text(Number($('.tax_amount_val').val()).toFixed(2));
@@ -349,7 +349,11 @@ $(document).ready(() => {
             $('.cart-tax').text(Number(0).toFixed(2));
             total_of_all = $('.total_without_tax').val();
         } 
-        let total_after_shipping = Number(total_of_all) + total_shipping_price - coupon_amount_now
+
+        total_of_all.replace(/,/g,'');
+
+
+        var total_after_shipping = Number(total_of_all) + total_shipping_price - coupon_amount_now;
         $('.total_of_all_text').text(Number(total_after_shipping).toFixed(2)); 
     }
 

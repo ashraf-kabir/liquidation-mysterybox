@@ -262,7 +262,7 @@
                   <p class="coupon_success_coupon_error"></p>
                   <button class="btn btn-primary apply_coupon mb-2" type="button"> Apply Coupon </button>
                   <h5>$<span class="coupon_amount">0.00</span></h5>
-                  <input type="number"   style="display: none"  id="coupon_amount_now" value="0">
+                  <input type="hidden"  id="coupon_amount_now" value="0">
                 </div>
               </div>
 
@@ -300,9 +300,9 @@
                   <h4>Total</h4>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">  
-                    <input type="number"  style="display: none"  value="<?php echo number_format($total,2); ?>" class="total_of_all" />
-                    <input type="number"  style="display: none"  value="<?php echo number_format($tax_amount,2); ?>" class="tax_amount_val" />
-                    <input type="number" style="display: none" value="<?php echo number_format($total-$tax_amount,2); ?>" class="total_without_tax" />
+                    <input type="hidden" value="<?php echo number_format($total,2); ?>" class="total_of_all" />
+                    <input type="hidden" value="<?php echo number_format($tax_amount,2); ?>" class="tax_amount_val" />
+                    <input type="hidden" value="<?php echo number_format($total-$tax_amount,2); ?>" class="total_without_tax" />
                   <h5>$<span class="total_of_all_text"><?php echo number_format($total,2); ?></span></h5>
                 </div>
               </div>
