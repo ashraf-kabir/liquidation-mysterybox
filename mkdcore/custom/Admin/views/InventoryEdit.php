@@ -241,10 +241,33 @@ if ($layout_clean_mode) {
                     <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo isset($video_url[0]) ? $video_url[0] : ''; ?>"  /> 
                 </div>
 
+                <div class="form-group col-md-5 col-sm-12 mb-4">
+                    <label for="Image">Youtube Thumbnail 1</label>
+                    <img class='edit-preview-image d-block' style="max-height:100px" id="output_youtube_thumbnail_1" src="<?php echo set_value('youtube_thumbnail_1', $this->_data['view_model']->get_youtube_thumbnail_1());?>" />
+
+                    <br/>
+                    <div class="btn btn-primary image_id_uppload_library btn-sm uppload-button  " data-image-url="youtube_thumbnail_1" data-image-id="youtube_thumbnail_1_id" data-image-preview="output_youtube_thumbnail_1" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
+                    <input type="hidden" id="youtube_thumbnail_1" name="youtube_thumbnail_1" value="<?php echo set_value('youtube_thumbnail_1', $this->_data['view_model']->get_youtube_thumbnail_1());?>"/> 
+                    <span id="youtube_thumbnail_1_complete" style="display: block;"></span>
+                </div>
+
+
 
                 <div class="form-group  col-md-5 col-sm-12">
                     <label for="video_url" >Youtube URL 2 </label>
                     <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo isset($video_url[1]) ? $video_url[1] : ''; ?>"   /> 
+                </div>
+
+
+                <div class="form-group col-md-5 col-sm-12 mb-4">
+                    <label for="Image">Youtube Thumbnail 2</label>
+                    <img class='edit-preview-image d-block' style="max-height:100px" id="output_youtube_thumbnail_2" src="<?php echo set_value('youtube_thumbnail_2', $this->_data['view_model']->get_youtube_thumbnail_2());?>" />
+
+                    <br/>
+                    <div class="btn btn-primary image_id_uppload_library btn-sm uppload-button  " data-image-url="youtube_thumbnail_2" data-image-id="youtube_thumbnail_2_id" data-image-preview="output_youtube_thumbnail_2" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
+                    <input type="hidden" id="youtube_thumbnail_2" name="youtube_thumbnail_2" value="<?php echo set_value('youtube_thumbnail_2', $this->_data['view_model']->get_youtube_thumbnail_2());?>"/>
+                    
+                    <span id="youtube_thumbnail_2_complete" style="display: block;"></span>
                 </div>
 
 
@@ -254,12 +277,35 @@ if ($layout_clean_mode) {
                 </div>
 
 
+                <div class="form-group col-md-5 col-sm-12 mb-4">
+                    <label for="Image">Youtube Thumbnail 3</label>
+                    <img class='edit-preview-image d-block' style="max-height:100px" id="output_youtube_thumbnail_3" src="<?php echo set_value('youtube_thumbnail_3', $this->_data['view_model']->get_youtube_thumbnail_3());?>" />
+
+                    <br/>
+                    <div class="btn btn-primary image_id_uppload_library btn-sm uppload-button  " data-image-url="youtube_thumbnail_3" data-image-id="youtube_thumbnail_3_id" data-image-preview="output_youtube_thumbnail_3" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
+                    <input type="hidden" id="youtube_thumbnail_3" name="youtube_thumbnail_3" value="<?php echo set_value('youtube_thumbnail_3', $this->_data['view_model']->get_youtube_thumbnail_3());?>"/> 
+                    
+                    <span id="youtube_thumbnail_3_complete" style="display: block;"></span>
+                </div>
+
+
+
                 <div class="form-group  col-md-5 col-sm-12">
                     <label for="video_url" >Youtube URL 4 </label>
                     <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo isset($video_url[3]) ? $video_url[3] : ''; ?>"   /> 
                 </div>
  
- 
+                <div class="form-group col-md-5 col-sm-12 mb-4">
+                    <label for="Image">Youtube Thumbnail 4</label>
+                    <img class='edit-preview-image d-block' style="max-height:100px" id="output_youtube_thumbnail_4" src="<?php echo set_value('youtube_thumbnail_4', $this->_data['view_model']->get_youtube_thumbnail_4());?>" />
+
+                    <br/>
+                    <div class="btn btn-primary image_id_uppload_library btn-sm uppload-button  " data-image-url="youtube_thumbnail_4" data-image-id="youtube_thumbnail_4_id" data-image-preview="output_youtube_thumbnail_4" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
+                    <input type="hidden" id="youtube_thumbnail_4" name="youtube_thumbnail_4" value="<?php echo set_value('youtube_thumbnail_4', $this->_data['view_model']->get_youtube_thumbnail_4());?>"/> 
+                    <span id="youtube_thumbnail_4_complete" style="display: block;"></span>
+                </div>
+
+
 
 				<div class="form-group col-md-5 col-sm-12">
 					<label for="Inventory Note">Inventory Note </label>

@@ -20,6 +20,29 @@
 
      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
      <title>Vegas Liquidation</title>
+
+     <style type="text/css">
+          .badge {
+               padding-left: 9px;
+               padding-right: 9px;
+               -webkit-border-radius: 9px;
+               -moz-border-radius: 9px;
+               border-radius: 9px;
+          }
+
+          .label-warning[href],
+          .badge-warning[href] {
+               background-color: #c67605;
+          }
+          #lblCartCount {
+               font-size: 13px;
+              background: #ff0000;
+              color: #fff;
+              padding: 0 5px;
+              vertical-align: top;
+              margin-left: -4px;
+          }
+     </style>
 </head>
 <body>
      <header class="container-fluid py-4">
@@ -84,14 +107,18 @@
                               <a class="nav-link" href="http://www.bulldogauctionz.com/Las-Vegas-nv/" target="_blank">auctions</a>
                          </li>
                          <li class="nav-item <?php if( isset($active)  and $active == 'about'  ){ echo 'active'; } ?>">
-                              <a class="nav-link <?php if( isset($active)  and $active == 'about'  ){ echo 'active'; } ?>" href="<?php echo base_url(); ?>about-us/">about us</a>
+                              <a class="nav-link <?php if( isset($active)  and $active == 'about'  ){ echo 'active'; } ?>" href="<?php echo base_url(); ?>about_us/">about us</a>
                          </li>
                          <li class="nav-item <?php if( isset($active) and $active == 'contact' ){ echo 'active'; } ?>">
-                              <a class="nav-link <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>" href="<?php echo base_url(); ?>contacts/">contact</a>
+                              <a class="nav-link <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>" href="<?php echo base_url(); ?>contact_us/">contact</a>
                          </li> 
 
                           <li class="nav-item <?php if( isset($active) and $active == 'cart' ){ echo 'active'; } ?>">
-                              <a class="nav-link <?php if( isset($active)  and $active == 'cart'  ){ echo 'active'; } ?>" href="<?php echo base_url(); ?>cart/">Cart</a>
+
+                              <a class="nav-link <?php if( isset($active)  and $active == 'cart'  ){ echo 'active'; } ?>" href="<?php echo base_url(); ?>cart/">Cart 
+                                   <i class="fa" style="font-size:15px">&#xf07a;</i>
+                                   <span class='badge badge-warning' id='lblCartCount'> 0 </span>
+                              </a>
                          </li>
 
                          

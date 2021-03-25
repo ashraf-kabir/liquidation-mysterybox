@@ -34,9 +34,15 @@
           margin: 0;
           font-size: 0.933em;
      }
-    .product__pathLink a {
+     .product__pathLink a {
           padding: 0px 11px;
-    }
+     }
+     .image-fit-in-div{
+          width: 100%;
+          min-height: 200px;
+          max-height: 200px;
+          object-fit: cover;
+     }
     
 </style>
 
@@ -100,9 +106,9 @@
                                    <div class="offer__item">
                                         <a href="<?php echo base_url(); ?>product/<?php echo $value->id; ?>" tabindex="-1"> 
                                              <?php if(!empty($value->feature_image)){   ?>
-                                                  <img style='max-height: 150px !important; min-height: 150px !important;' src="<?php echo $value->feature_image; ?>" class="w-100" alt="<?php echo $value->product_name; ?>">
+                                                  <img  src="<?php echo $value->feature_image; ?>" class="w-100 img-thumbnail image-fit-in-div" alt="<?php echo $value->product_name; ?>">
                                              <?php }else{ ?>
-                                                  <img style='max-height: 150px !important; min-height: 150px !important;'  src="/assets/frontend_images/noun_pallet_box_1675914.png" class="w-100" alt="<?php echo $value->product_name; ?>">     
+                                                  <img   src="/assets/frontend_images/noun_pallet_box_1675914.png" class="w-100 image-fit-in-div img-thumbnail" alt="<?php echo $value->product_name; ?>">     
                                              <?php } ?>
                                              <!-- <h5 class="text-gray mt-2"><?php if($value->product_type == 1 ) { echo "Regular"; } elseif($value->product_type == 2 ){ echo "Generic"; } ?> </h5> -->
                                              <h5 class="offer__itemTitle mt-2"><?php echo $value->product_name; ?></h5>

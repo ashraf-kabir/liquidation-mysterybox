@@ -1,0 +1,39 @@
+1) for non inventory we don't create sku is true for mystery box as well ?
+2) Coupon types that are sure 
+3) for videos should i add watch video button only  
+
+
+auto hide boxes to display how many video link are plugged into inventory page
+
+add credit card on signup
+shipstation integration?
+never recieve email that you purchased something
+
+01 - january                      -----------------------------------------------------
+update quantity button not working  ---------------------------------------------------
+keep term and condition below  ---------------------------------------------------
+
+
+So changes:
+1.Make the menu and body on home page and products page fluid and align on left side -------------
+
+2.remove mystery box from category left menu   -------------------------
+
+3.for month on checkout put <month in number> - <month name>  ---------------------
+
+4.quantity update button not work on cart. alot of cart UI issues  - 
+
+5.on the cart link, we should put a small bubble so we know how many item in cart -----
+
+6.there a total NAN issue on checkout
+
+7.on all order completion, email order details to client
+
+this apply to all systems
+
+8.for youtube links, make it youtube_thumbnail_image_1 and you youtube_1
+for every image have play icon that links to youtube_1
+
+and make sure center those images so it use space
+
+9.on hover of shop, those arrows pop out not sure why  -----

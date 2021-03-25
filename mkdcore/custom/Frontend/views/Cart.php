@@ -1,11 +1,23 @@
 
 <style type="text/css">
-  .delete_btn_c{
+  .delete_btn_c {
     z-index: 2;
     position: absolute;
-    right: -47px; 
-    top: -15px; 
+    right: -47px;
+    top: -24px;
     color: #dc3545;
+    text-decoration: none !important;
+  }
+
+  .delete_btn_c:hover { 
+    color: #dc3545 !important; 
+  }
+
+  .image-fit-in-div{
+      width: 100%;
+      min-height: 200px;
+      max-height: 200px;
+      object-fit: cover;
   }
 </style>
 <section>
@@ -40,9 +52,9 @@
             <div class="row cart__addedItem justify-content-between mb-4"  style="background-color: white;">
               <div class="col-xl-3 col-lg-4 col-md-4 col-12 my-3">
                 <?php if( empty($value->feature_image) ) :  ?>
-                  <img style=" width: 100%;" src="<?php echo base_url(); ?>/assets/frontend_images/noun_pallet_box_1675914.png" alt="<?= $value->product_name; ?>"  />
+                  <img  class="image-fit-in-div img-thumbnail " src="<?php echo base_url(); ?>/assets/frontend_images/noun_pallet_box_1675914.png" alt="<?= $value->product_name; ?>"  />
                   <?php else:  ?>
-                    <img  style=" width: 100%;"  src="<?php echo $value->feature_image; ?>" alt="<?= $value->product_name; ?>" />
+                    <img  class="image-fit-in-div img-thumbnail "  src="<?php echo $value->feature_image; ?>" alt="<?= $value->product_name; ?>" />
                   <?php endif;  ?>
 
                 </div>
@@ -54,7 +66,7 @@
                   </h4> 
                 </div>
                 <div class="col-xl-3 col-lg-4 col-md-4 col-12 my-3 d-flex align-content-between flex-wrap">
-                  <a href="<?php echo base_url(); ?>cart_remove/<?= $value->id; ?>" style="line-height: 2;" class=" delete_btn_c  remove-btn"><i class="fa fa-trash"></i></a>
+                  <a href="<?php echo base_url(); ?>cart_remove/<?= $value->id; ?>" style="line-height: 2;" class=" delete_btn_c  remove-btn"><strong>X</strong></a>
                   <label for="quantity">
                     Qty:
                     <input type="text"  name="quantity" class="quantity_value form-control w-75" value="<?= $value->product_qty; ?>"  />

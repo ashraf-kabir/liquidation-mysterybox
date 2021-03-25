@@ -2,25 +2,16 @@
     .mySlides img {
         max-height: 350px !important;
     }
+
+    .image-fit-in-div{
+        width: 100%;
+        min-height: 200px;
+        max-height: 200px;
+        object-fit: cover;
+    }
 </style>
 <?php 
-$total_images =  count($gallery_lists) + 1;
-
-
-function getYoutubeEmbedUrl($url)
-{
-    $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
-    $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
-
-    if (preg_match($longUrlRegex, $url, $matches)) {
-        $youtube_id = $matches[count($matches) - 1];
-    }
-
-    if (preg_match($shortUrlRegex, $url, $matches)) {
-        $youtube_id = $matches[count($matches) - 1];
-    }
-    return 'https://www.youtube.com/embed/' . $youtube_id ;
-}
+$total_images =  count($gallery_lists) + 1; 
 ?>
     <main class="container-fluid">
         <div class="row justify-content-center">
@@ -106,7 +97,7 @@ function getYoutubeEmbedUrl($url)
                     <?php } ?> 
                 </div>
 
-                <div class="col-12 p-0 py-4 bg-white ">
+                <div class="col-12 bg-white w-100 p-2 p-md-4 ">
                     <label for="quantity" >Qty
                         <input type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity w-75 w-md-50" value="1" />
                     </label> 
@@ -142,17 +133,57 @@ function getYoutubeEmbedUrl($url)
             <div class="col-10 p-0 bg-white">
                  
                 <div class="row justify-content-between"> 
+ 
+                    
                     <?php 
-                    $video_url = json_decode($product->video_url);
+                    $video_url = json_decode($product->video_url);  
                     if (!empty($video_url)) 
                     { 
+                        $total_videos = 0;
+                        foreach ($video_url as $key => $video)
+                        {
+                            if (!empty($video)) 
+                            {
+                                $total_videos++;
+                            }
+                        }
+
+                        if ($total_videos == 1) 
+                        {
+                            $total_videos = 2;
+                        }
+
+                        $total_percentage = 100/$total_videos;
+
                         foreach ($video_url as $key => $video):
                             if (!empty($video)) 
                             {
                                 ?>
-                                <div class="video-container" style="padding: 20px 0px">
+                                <div class="video-container" style="padding: 20px 10px;width: <?php echo $total_percentage; ?>%"> 
                                     <a href="<?php echo $video; ?>" target="_blank"> 
-                                        Watch Video 
+                                        <img  
+
+                                        class="img-thumbnail image-fit-in-div"
+
+                                        <?php if ($key == 0): ?>
+                                            src="<?php echo $product->youtube_thumbnail_1; ?>"
+                                        <?php endif ?>
+                                        
+
+                                        <?php if ($key == 1): ?>
+                                            src="<?php echo $product->youtube_thumbnail_2; ?>"
+                                        <?php endif ?>
+
+
+                                        <?php if ($key == 2): ?>
+                                            src="<?php echo $product->youtube_thumbnail_3; ?>"
+                                        <?php endif ?>
+
+
+                                        <?php if ($key == 3): ?>
+                                            src="<?php echo $product->youtube_thumbnail_4; ?>"
+                                        <?php endif ?>
+                                        /> 
                                     </a> 
                                 </div> 
 
@@ -160,13 +191,13 @@ function getYoutubeEmbedUrl($url)
                             }   
                         endforeach ;
                     }
-                    ?>  
+                    ?>   
                 </div>
                 
             </div> 
         </div>
 
-       <!--  <div class="row justify-content-center bg-white mx-md-5 ">
+        <div class="row justify-content-center bg-white mx-md-5 ">
             <div class="col-10 p-0 py-3 bg-white">
                 <h4>Terms and Conditions</h4>
                 <ul>
@@ -176,7 +207,7 @@ function getYoutubeEmbedUrl($url)
                     <li>using this Website in any way that is or may be damaging to this Website;</li>
                 </ul>
             </div> 
-        </div> -->
+        </div>
     </section>
 
 

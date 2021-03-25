@@ -157,6 +157,13 @@ class Admin_inventory_controller extends Admin_controller
         $video_url = json_encode($this->input->post('video_url', TRUE));
         
 
+
+        $youtube_thumbnail_1 = $this->input->post('youtube_thumbnail_1', TRUE);
+        $youtube_thumbnail_2 = $this->input->post('youtube_thumbnail_2', TRUE);
+        $youtube_thumbnail_3 = $this->input->post('youtube_thumbnail_3', TRUE);
+        $youtube_thumbnail_4 = $this->input->post('youtube_thumbnail_4', TRUE);
+
+
         //SKU for category
         $category_data = $this->category_model->get($category_id);
 
@@ -206,8 +213,12 @@ class Admin_inventory_controller extends Admin_controller
             'product_type' => $product_type,
             'pin_item_top' => $pin_item_top,
             'video_url' => $video_url, 
+            'youtube_thumbnail_1' => $youtube_thumbnail_1, 
+            'youtube_thumbnail_2' => $youtube_thumbnail_2, 
+            'youtube_thumbnail_3' => $youtube_thumbnail_3, 
+            'youtube_thumbnail_4' => $youtube_thumbnail_4, 
         ]);
-
+ 
         if ($result)
         {
             $inventory_id = $result;
@@ -296,6 +307,12 @@ class Admin_inventory_controller extends Admin_controller
         $pin_item_top = $this->input->post('pin_item_top', TRUE);
         $video_url = json_encode($this->input->post('video_url', TRUE));
         
+ 
+        $youtube_thumbnail_1 = $this->input->post('youtube_thumbnail_1', TRUE);
+        $youtube_thumbnail_2 = $this->input->post('youtube_thumbnail_2', TRUE);
+        $youtube_thumbnail_3 = $this->input->post('youtube_thumbnail_3', TRUE);
+        $youtube_thumbnail_4 = $this->input->post('youtube_thumbnail_4', TRUE);
+
         if($product_type == 2)
         {
             $sku = '';
@@ -327,6 +344,10 @@ class Admin_inventory_controller extends Admin_controller
             'product_type' => $product_type,
             'pin_item_top' => $pin_item_top,
             'video_url' => $video_url,
+            'youtube_thumbnail_1' => $youtube_thumbnail_1, 
+            'youtube_thumbnail_2' => $youtube_thumbnail_2, 
+            'youtube_thumbnail_3' => $youtube_thumbnail_3, 
+            'youtube_thumbnail_4' => $youtube_thumbnail_4,
             
         ], $id);
        
@@ -384,12 +405,7 @@ class Admin_inventory_controller extends Admin_controller
         $model->physical_location = $this->names_helper_service->get_physical_location_real_name( $model->physical_location ); 
         $model->store_location_id = $this->names_helper_service->get_store_name( $model->store_location_id ); 
         $this->_data['view_model']->set_model($model);
-
-        
-             
-         
-
-
+ 
         return $this->render('Admin/InventoryView', $this->_data);
     }
 

@@ -39,8 +39,11 @@ class Inventory_model extends Manaknight_Model
 		'free_ship',
 		'status',
 		'video_url',
-		'available_in_shelf',
-		
+		'youtube_thumbnail_1',
+		'youtube_thumbnail_2',
+		'youtube_thumbnail_3',
+		'youtube_thumbnail_4',
+		'available_in_shelf', 
     ];
 	protected $_label_fields = [
     'ID','Product Name','SKU','Category','Manifest','Store Location','Inventory Location','Inventory Location Description','Weight','Length','Height','Width','Image','Selling Price','Quantity','Inventory Note','Barcode Image','Cost Price','Admin Inventory Note','Can Ship','Pin Item','Product Type','Status',
@@ -72,7 +75,11 @@ class Inventory_model extends Manaknight_Model
 		['pin_item_top', 'Pin Item', ''],
 		['product_type', 'Product Type', ''],
 		['status', 'Status', ''],
-		['video_url', 'Video URL', ''],
+		['video_url', 'Video URL', ''], 
+		['youtube_thumbnail_1', 'Youtube Thumbnail 1', ''],
+		['youtube_thumbnail_2', 'Youtube Thumbnail 2', ''],
+		['youtube_thumbnail_3', 'Youtube Thumbnail 3', ''],
+		['youtube_thumbnail_4', 'Youtube Thumbnail 4', ''],
 		['available_in_shelf', 'Available In Shelf', ''],
 		
     ];
@@ -102,6 +109,10 @@ class Inventory_model extends Manaknight_Model
 		['video_url', 'Video URL', ''],
 		['status', 'Status', ''],
 		['available_in_shelf', 'Available In Shelf', ''],
+		['youtube_thumbnail_1', 'Youtube Thumbnail 1', ''],
+		['youtube_thumbnail_2', 'Youtube Thumbnail 2', ''],
+		['youtube_thumbnail_3', 'Youtube Thumbnail 3', ''],
+		['youtube_thumbnail_4', 'Youtube Thumbnail 4', ''],
 		
     ];
 	protected $_validation_messages = [

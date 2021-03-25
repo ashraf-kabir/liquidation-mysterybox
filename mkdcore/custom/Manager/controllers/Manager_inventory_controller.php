@@ -156,6 +156,11 @@ class Manager_inventory_controller extends Manager_controller
         {
             $sku = '';
         }
+
+        $youtube_thumbnail_1 = $this->input->post('youtube_thumbnail_1', TRUE);
+        $youtube_thumbnail_2 = $this->input->post('youtube_thumbnail_2', TRUE);
+        $youtube_thumbnail_3 = $this->input->post('youtube_thumbnail_3', TRUE);
+        $youtube_thumbnail_4 = $this->input->post('youtube_thumbnail_4', TRUE);
 		
         $result = $this->inventory_model->create([
             'product_name' => $product_name,
@@ -182,6 +187,10 @@ class Manager_inventory_controller extends Manager_controller
             'product_type' => $product_type,
 			'pin_item_top' => $pin_item_top,
             'video_url' => $video_url,
+            'youtube_thumbnail_1' => $youtube_thumbnail_1, 
+            'youtube_thumbnail_2' => $youtube_thumbnail_2, 
+            'youtube_thumbnail_3' => $youtube_thumbnail_3, 
+            'youtube_thumbnail_4' => $youtube_thumbnail_4,
 			
         ]);
 
@@ -278,6 +287,10 @@ class Manager_inventory_controller extends Manager_controller
             $sku = '';
         }
 
+        $youtube_thumbnail_1 = $this->input->post('youtube_thumbnail_1', TRUE);
+        $youtube_thumbnail_2 = $this->input->post('youtube_thumbnail_2', TRUE);
+        $youtube_thumbnail_3 = $this->input->post('youtube_thumbnail_3', TRUE);
+        $youtube_thumbnail_4 = $this->input->post('youtube_thumbnail_4', TRUE);
         
         $result = $this->inventory_model->edit([
             'product_name' => $product_name,
@@ -304,6 +317,10 @@ class Manager_inventory_controller extends Manager_controller
             'product_type' => $product_type,
 			'pin_item_top' => $pin_item_top,
             'video_url' => $video_url,
+            'youtube_thumbnail_1' => $youtube_thumbnail_1, 
+            'youtube_thumbnail_2' => $youtube_thumbnail_2, 
+            'youtube_thumbnail_3' => $youtube_thumbnail_3, 
+            'youtube_thumbnail_4' => $youtube_thumbnail_4,
 			
         ], $id);
 
