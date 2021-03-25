@@ -362,16 +362,22 @@ class Home_controller extends Manaknight_Controller
             // die();
             $this->form_validation->set_rules('full_name', "Name", "required|max_length[255]");
             $this->form_validation->set_rules('email_address', "Email", "valid_email"); 
-            $this->form_validation->set_rules('postal_code', "Customer Postal Code", "integer");
-            $this->form_validation->set_rules('city', "City", "max_length[255]");
-            $this->form_validation->set_rules('country', "Country", "max_length[255]");
-            $this->form_validation->set_rules('state', "State", "max_length[255]"); 
-            $this->form_validation->set_rules('address_1', "Address", "required|min_length[5]"); 
+            $this->form_validation->set_rules('postal_code', "Billing Postal Code", "integer");
+            $this->form_validation->set_rules('city', "Billing City", "max_length[255]");
+            $this->form_validation->set_rules('country', "Billing Country", "max_length[255]");
+            $this->form_validation->set_rules('state', "Billing State", "max_length[255]"); 
+            $this->form_validation->set_rules('address_1', "Billing Address", "required|min_length[5]"); 
             $this->form_validation->set_rules('payment', "Payment Method", "integer");
             $this->form_validation->set_rules('number', "Account Number", "required|integer");
             $this->form_validation->set_rules('exp_month', "Expiry Month", "required");
             $this->form_validation->set_rules('exp_year', "Expiry Year", "required");
             $this->form_validation->set_rules('cvc', "CVC", "required");
+
+            $this->form_validation->set_rules('shipping_zip', "Shipping Zip", "integer");
+            $this->form_validation->set_rules('shipping_city', "Shipping City", "max_length[255]");
+            $this->form_validation->set_rules('shipping_country', "Shipping Country", "max_length[255]");
+            $this->form_validation->set_rules('shipping_state', "Shipping State", "max_length[255]"); 
+            $this->form_validation->set_rules('shipping_address', "Shipping Address", "required|min_length[5]"); 
               
 
 
@@ -448,11 +454,15 @@ class Home_controller extends Manaknight_Controller
             $shipping_cost_value        =  $this->input->post('shipping_cost_value', TRUE);
             $shipping_service_id        =  $this->input->post('shipping_service_id', TRUE);
 
-            // $payment = 1;
-            
-           
-            
 
+            $shipping_country        =  $this->input->post('shipping_country', TRUE);
+            $shipping_state        =  $this->input->post('shipping_state', TRUE);
+            $shipping_zip        =  $this->input->post('shipping_zip', TRUE);
+            $shipping_city        =  $this->input->post('shipping_city', TRUE);
+            $shipping_address        =  $this->input->post('shipping_address', TRUE);
+ 
+ 
+             
             
             $this->load->model('customer_model');  
             $this->load->model('pos_order_model');
@@ -568,6 +578,13 @@ class Home_controller extends Manaknight_Controller
             $customer_data->billing_zip            = $postal_code;
             $customer_data->billing_address        = $address_1 . " " . $address_2;
             $customer_data->payment                = $payment;
+
+
+            $customer_data->shipping_address              = $shipping_address;
+            $customer_data->shipping_country              = $shipping_country;
+            $customer_data->shipping_state                = $shipping_state;
+            $customer_data->shipping_zip                  = $shipping_zip;
+            $customer_data->shipping_city                 = $shipping_city;
 
             /**
             * Create Order 
