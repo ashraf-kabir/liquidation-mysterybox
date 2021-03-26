@@ -50,7 +50,7 @@
                <div class="row justify-content-center align-items-center my-2">
 
                     <div class="col-10 col-md-5 text-center text-d-left">
-                         <h1>Vegas Liquidation</h1>
+                         <a href="<?php echo base_url(); ?>"><h1>Vegas Liquidation</h1></a>
                     </div>
                     <div class="col-10 col-md-3 text-center text-md-right d-flex align-items-center my-2">
                          <input type="text" name="search_term" id="" class="form-control" placeholder="Product name or Sku">

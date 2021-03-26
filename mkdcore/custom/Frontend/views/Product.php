@@ -153,7 +153,12 @@ $total_images =  count($gallery_lists) + 1;
                             $total_videos = 2;
                         }
 
-                        $total_percentage = 100/$total_videos;
+                        if ($total_videos != 0 ) 
+                        {
+                            $total_percentage = 100/$total_videos;
+                        }
+
+                        
 
                         foreach ($video_url as $key => $video):
                             if (!empty($video)) 

@@ -5,6 +5,14 @@ if ($layout_clean_mode) {
 	echo '<style>#content{padding:0px !important;}</style>';
 }
 ?>
+
+<style type="text/css">
+	@media print{    
+	    .make_font_big{
+	        font-size: 42px;
+	    }
+	}
+</style>
 <div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
 <div aria-label="breadcrumb">
@@ -265,7 +273,7 @@ if ($layout_clean_mode) {
 				<div style="display:none !important;text-align: center;" id="print-me-1">
 					<div class='row '  >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1 >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
+							<h1 class="make_font_big" style="font-size: 42px;"  >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
 						</div> 
 					</div>
 
@@ -273,21 +281,21 @@ if ($layout_clean_mode) {
 
 					<div class='row ' >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1 >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
+							<h1  class="make_font_big"  style="font-size: 42px;"  >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
 						</div> 
 					</div>
 
 
 					<div class='row '>
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1 >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
+							<h1  class="make_font_big"  style="font-size: 42px;"  >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
 						</div> 
 					</div> 
  
 
 					<div class='row' >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<img   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
+							<img  style="width: 100%" src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
 						</div> 
 					</div>  
 				</div>
@@ -313,7 +321,7 @@ if ($layout_clean_mode) {
 
 		      		<div class='row '  >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1 >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
+							<h1  class="make_font_big"  style="font-size: 42px;" >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
 						</div> 
 					</div>
 
@@ -321,21 +329,21 @@ if ($layout_clean_mode) {
 
 					<div class='row ' >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1 >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
+							<h1  class="make_font_big"  style="font-size: 42px;" >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
 						</div> 
 					</div>
 
 
 					<div class='row '>
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1 >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
+							<h1  class="make_font_big"  style="font-size: 42px;"  >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
 						</div> 
 					</div> 
  
 
 					<div class='row' >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<img   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
+							<img style="width: 100%"   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
 						</div> 
 					</div>  
 			         

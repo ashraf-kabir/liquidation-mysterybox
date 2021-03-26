@@ -1079,7 +1079,13 @@ class Home_controller extends Manaknight_Controller
             $ip_address_user = $_SERVER['REMOTE_ADDR']; 
             $cart_items =  $this->pos_cart_model->get_all(['secret_key' => $ip_address_user]); 
         }  
-        $output['cart_items'] = count($cart_items);
+
+        $quantity = 0;
+        foreach ($cart_items as $key => $value) 
+        { 
+            $quantity += $value->product_qty;
+        }
+        $output['cart_items'] = $quantity;
 
         echo json_encode($output);
         exit();  
