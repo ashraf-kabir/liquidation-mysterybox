@@ -111,7 +111,7 @@ $total_images =  count($gallery_lists) + 1;
                 <div class="bg-white w-100 p-2 p-md-4 mt-5 d-flex product__deliveryDetails">
                     
                     <div class="row justify-content-between"> 
-                        <h4  style="width: 100%">DESCRIPTION</h4>
+                        <h4  style="width: 100%;text-align: left;">DESCRIPTION</h4>
                         <p class="my-3"><?php echo $product->inventory_note; ?></p> 
                     </div>
                 </div>
