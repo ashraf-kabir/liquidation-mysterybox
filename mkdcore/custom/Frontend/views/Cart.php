@@ -112,7 +112,7 @@
                 data-target="#loginModal" data-toggle="modal" 
             <?php endif; ?> 
 
-            style="line-height:2;" class="btn btn-success w-100" >Checkout Out</a >
+            style="line-height:2;" class="btn btn-success w-100" >Checkout</a >
           </div>
         </div>
       </div>
