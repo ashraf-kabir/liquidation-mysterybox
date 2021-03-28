@@ -11,6 +11,10 @@ if ($layout_clean_mode) {
 	    .make_font_big{
 	        font-size: 42px;
 	    }
+	    .page_full_width{
+	    	width:100vh; 
+  			height:100vh;
+	    }
 	}
 </style>
 <div class="tab-content mx-4" id="nav-tabContent">
@@ -270,7 +274,7 @@ if ($layout_clean_mode) {
 				
 
 
-				<div style="display:none !important;text-align: center;" id="print-me-1">
+				<div class="page_full_width" style="display:none !important;text-align: center;" id="print-me-1">
 					<div class='row '  >
 						<div class="col-sm-12" style="text-align: center  !important;">
 							<h1 class="make_font_big" style="font-size: 42px;"  >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
@@ -317,7 +321,7 @@ if ($layout_clean_mode) {
 			          	<span aria-hidden="true">&times;</span>
 			        </button>
 		      	</div>
-		      	<div class="modal-body" id="print-me-2">
+		      	<div class="modal-body  page_full_width" id="print-me-2">
 
 		      		<div class='row '  >
 						<div class="col-sm-12" style="text-align: center  !important;">
