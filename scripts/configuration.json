@@ -663,6 +663,8 @@
 				["is_picked", "integer", [{ "default" :  0 }], "xyzPicked", "", ""],
 				["is_shipped", "integer", [{ "default" :  0 }], "xyzShipped", "", ""],
 				["pick_up_id", "integer", [], "xyzPickup", "", ""],
+				["customer_email", "string", [{ "limit": 255 }], "xyzCustomer Email", "", ""],
+				["customer_phone", "string", [{ "limit": 255 }], "Phone", "max_length[255]", "max_length[255]"],
 				["billing_name", "string", [{ "limit": 255 }], "xyzBilling Name", "required|max_length[255]", "required|max_length[255]"],
 				["billing_address", "text", [], "xyzBilling Address", "required", "required"],
 				["billing_country", "string", [{ "limit": 255 }], "xyzBilling Country", "required|max_length[255]", "required|max_length[255]"],

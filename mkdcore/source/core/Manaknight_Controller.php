@@ -511,7 +511,7 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
     
 
 
-     public function send_email_on_order($order_id, $customer_name, $customer_email)
+    public function send_email_on_order($order_id)
     {
         $this->load->model('pos_order_model'); 
         $this->load->model('pos_order_items_model'); 
@@ -525,7 +525,7 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
         $id    = $order_id;  
         $model = $this->pos_order_model->get($id);
 
-        if ($model and filter_var($customer_email, FILTER_VALIDATE_EMAIL))
+        if ($model and isset($model->customer_email) and filter_var($model->customer_email, FILTER_VALIDATE_EMAIL))
         {   
             include_once __DIR__ . '/../view_models/Orders_admin_view_view_model.php';
             $this->_data['view_model'] = new Orders_admin_view_view_model($this->pos_order_model);
@@ -537,15 +537,13 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
 
             ob_start();  
             $this->load->view('Admin/OrderEmailCopy', $this->_data); 
-            $content = ob_get_contents();
-            ob_end_clean();
- 
+            $content = ob_get_contents(); 
+            ob_end_clean(); 
             $from = $this->config->item('from_email');
-            $this->mail_service->send($from, $customer_email, "Order Update", $content);
+            $this->mail_service->send($from, $model->customer_email, "Order Update", $content);
             
         }  
     }
-
 
 
 }

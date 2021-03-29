@@ -40,3 +40,6 @@ ALTER TABLE `customer` CHANGE `shipping_address` `shipping_address` TEXT CHARACT
 
 
 ALTER TABLE `inventory` CHANGE `youtube_thumbnail_1` `youtube_thumbnail_1` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `youtube_thumbnail_2` `youtube_thumbnail_2` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `youtube_thumbnail_3` `youtube_thumbnail_3` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `youtube_thumbnail_4` `youtube_thumbnail_4` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+
+ALTER TABLE `pos_order` CHANGE `customer_email` `customer_email` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `customer_phone` `customer_phone` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;

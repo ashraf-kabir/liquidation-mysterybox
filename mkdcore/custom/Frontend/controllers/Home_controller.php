@@ -570,8 +570,8 @@ class Home_controller extends Manaknight_Controller
             $customer_data->shipping_service_name  = $shipping_cost_name;
             $customer_data->shipping_service_id    = $shipping_service_id;
             $customer_data->name                   = $full_name;
-            // $customer_data->shipping_service_id    = $email_address;
-            // $customer_data->shipping_service_id    = $phone_number;
+            $customer_data->email                  = $email_address;
+            $customer_data->phone                  = $phone_number;
             $customer_data->city                   = $city;
             $customer_data->state                  = $state;
             $customer_data->country                = $country;
@@ -760,7 +760,7 @@ class Home_controller extends Manaknight_Controller
 
 
 
-                    $this->send_email_on_order($order_id, $full_name, $customer_data->email);
+                    $this->send_email_on_order($order_id);
 
                     $output['status'] = 0;
                     $output['success']  = 'Order has been created successfully.';

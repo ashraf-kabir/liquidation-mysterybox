@@ -124,7 +124,7 @@ class Api_service{
                 'ship_address'      =>  $order_data->shipping_address,
                 'ship_country'      =>  $order_data->shipping_country,
                 'ship_name'         =>  "",
-                'ship_phone'        =>  "", 
+                'ship_phone'        =>  $order_data->customer_phone, 
                 'payment_date'      =>  "",
                 'bill_city'         =>  $order_data->billing_city,
                 'bill_country'      =>  $order_data->billing_country,
@@ -137,7 +137,7 @@ class Api_service{
                 'internal_notes'    =>  "",
                 'payment_method'    =>  $payment_method,
                 'order_date'        =>  $order_data->order_date_time,
-                'customer_email'    =>  "",
+                'customer_email'    =>  $order_data->customer_email,
                 
             ); 
 

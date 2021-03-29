@@ -180,6 +180,8 @@ class Pos_checkout_service {
             'shipping_state'    =>  $customer_data->shipping_state,  
             'shipping_city'     =>  $customer_data->shipping_city,  
             'shipping_zip'      =>  $customer_data->shipping_zip, 
+            'customer_email'    =>  $customer_data->email, 
+            'customer_phone'    =>  $customer_data->phone, 
             'subtotal'          =>  0, 
             'shipping_cost'     =>  $shipping_cost, 
             'tax'               =>  $tax, 
