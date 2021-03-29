@@ -87,7 +87,21 @@ class Api_service{
                         'length'             =>  $inventory_detail->length,
                         'weight'             =>  $inventory_detail->weight, 
                         'barcode_image'      =>  $inventory_detail->barcode_image,
+                        'tax_amount'         =>  0,
+                        'unit_price'         =>  $value->product_unit_price,
+                
                     ) );
+            }
+
+            $payment_method = ""; 
+            if ($order_data->payment_method == 1) 
+            {
+                $payment_method = "Cash"; 
+            }
+
+            if ($order_data->payment_method == 2) 
+            {
+                $payment_method = "Credit Card"; 
             }
 
             $post_data = array(
@@ -102,6 +116,29 @@ class Api_service{
                 'detail'            => $detail,
                 'checkout_type'     => $order_data->checkout_type,
                 'delivery_method'   => $order_data->checkout_type,
+
+                
+                'ship_city'         =>  $order_data->shipping_city,
+                'ship_state'        =>  $order_data->shipping_state,  
+                'ship_postal_code'  =>  $order_data->shipping_zip,
+                'ship_address'      =>  $order_data->shipping_address,
+                'ship_country'      =>  $order_data->shipping_country,
+                'ship_name'         =>  "",
+                'ship_phone'        =>  "", 
+                'payment_date'      =>  "",
+                'bill_city'         =>  $order_data->billing_city,
+                'bill_country'      =>  $order_data->billing_country,
+                'bill_postal_code'  =>  $order_data->billing_zip,
+                'bill_state'        =>  $order_data->billing_state,
+                'shipping_amount'   =>  $order_data->shipping_cost,
+                'tax_amount'        =>  $order_data->tax,
+                'amount_paid'       =>  $order_data->total,
+                'customer_notes'    =>  "",
+                'internal_notes'    =>  "",
+                'payment_method'    =>  $payment_method,
+                'order_date'        =>  $order_data->order_date_time,
+                'customer_email'    =>  "",
+                
             ); 
 
 
