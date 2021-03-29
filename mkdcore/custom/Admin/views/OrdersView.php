@@ -79,12 +79,63 @@ if ($layout_clean_mode) {
 					</div>
 				</div>
 
+
+
+				 
+
 				<div class='row mb-4'>
 					<div class='col'>
-						Order DateTime
+						Shipping Country
 					</div>
 					<div class='col'>
-						<?php echo $view_model->get_order_date_time();?>
+						<?php echo $view_model->get_shipping_country();?>
+					</div>
+				</div>
+
+				<div class='row mb-4'>
+					<div class='col'>
+						Shipping City
+					</div>
+					<div class='col'>
+						<?php echo $view_model->get_shipping_city();?>
+					</div>
+				</div>
+
+				<div class='row mb-4'>
+					<div class='col'>
+						Shipping Zip
+					</div>
+					<div class='col'>
+						<?php echo $view_model->get_shipping_zip();?>
+					</div>
+				</div>
+
+				<div class='row mb-4'>
+					<div class='col'>
+						Shipping Address
+					</div>
+					<div class='col'>
+						<?php echo $view_model->get_shipping_address();?>
+					</div>
+				</div>
+
+
+				<div class='row mb-4'>
+					<div class='col'>
+						Order Date
+					</div>
+					<div class='col'>
+						<?php echo date('m-d-Y', strtotime( $view_model->get_order_date_time() ));?>
+					</div>
+				</div>
+
+
+				<div class='row mb-4'>
+					<div class='col'>
+						Order Time
+					</div>
+					<div class='col'>
+						<?php echo date('H:i:s', strtotime( $view_model->get_order_date_time() ));?>
 					</div>
 				</div>
 

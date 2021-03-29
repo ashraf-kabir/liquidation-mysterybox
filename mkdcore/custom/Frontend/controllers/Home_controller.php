@@ -757,6 +757,11 @@ class Home_controller extends Manaknight_Controller
                         exit();
                     }
 
+
+
+
+                    $this->send_email_on_order($order_id, $full_name, $customer_data->email);
+
                     $output['status'] = 0;
                     $output['success']  = 'Order has been created successfully.';
                     $output['redirect_url']  = base_url() . 'order_confirmation';
