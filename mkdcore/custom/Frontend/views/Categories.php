@@ -60,7 +60,7 @@
           <div class="row">
                <div class="col-md-3">  
                     <aside id="sidebar-shop" class="widget-area site-sidebar style-2" role="complementary">
-                        <section  id="tz_categories-2" class="widget widget_tz_categories"><h3 class="widget-title" itemprop="name"><span>Mystery Box</span></h3>
+                        <section  id="tz_categories-2" style="width: 50%;" class="widget widget_tz_categories"><h3 class="widget-title" itemprop="name"><span>Mystery Box</span></h3>
 
                               <ul class="pt-categories">
                                    <?php if( !empty($all_categories) ){ ?>
@@ -102,7 +102,7 @@
                     <div class="row">
                     <?php  if( !empty($products_list) ){  ?>                    
                          <?php foreach($products_list as $key => $value){ ?> 
-                              <div class="col-12 col-lg-3 col-md-4 slick-current slick-center" >
+                              <div class="col-12 col-lg-4 col-md-4 slick-current slick-center" >
                                    <div class="offer__item">
                                         <a href="<?php echo base_url(); ?>product/<?php echo $value->id; ?>" tabindex="-1"> 
                                              <?php if(!empty($value->feature_image)){   ?>

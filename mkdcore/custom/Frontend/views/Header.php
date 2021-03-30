@@ -47,10 +47,10 @@
 <body>
      <header class="container-fluid py-4">
           <form method="GET" action="<?php echo base_url(); ?>categories">
-               <div class="row justify-content-center align-items-center my-2">
+               <div class="row justify-content-center align-items-center my-2" style="margin-left: 2px;justify-content: normal !important;">
 
-                    <div class="col-10 col-md-5 text-center text-d-left">
-                         <a href="<?php echo base_url(); ?>"><h1>Vegas Liquidation</h1></a>
+                    <div class="col-10 col-md-4 text-center text-d-left" style="padding: 0px;text-align: left !important;">
+                         <a style="color: #333333;text-decoration: none;" href="<?php echo base_url(); ?>"><h1 style="text-decoration: none;">Vegas Liquidation</h1></a>
                     </div>
                     <div class="col-10 col-md-3 text-center text-md-right d-flex align-items-center my-2">
                          <input type="text" name="search_term" id="" class="form-control" placeholder="Product name or Sku">
