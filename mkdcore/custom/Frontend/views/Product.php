@@ -1,6 +1,7 @@
 <style type="text/css">
     .mySlides img {
         max-height: 350px !important;
+        object-fit: contain;
     }
 
     .image-fit-in-div{
@@ -8,6 +9,12 @@
         min-height: 200px;
         max-height: 200px;
         object-fit: cover;
+    }
+
+    .slider_img_css{
+        width: 100%;
+        object-fit: contain;
+        height: 200px;
     }
 </style>
 <?php 
@@ -30,11 +37,11 @@ $total_images =  count($gallery_lists) + 1;
 
                         <?php if(!empty($product->feature_image)){   ?>
                             <div class="column w-75">
-                                <img class="demo cursor" src="<?php echo $product->feature_image; ?>" style="width:100%; object-fit: contain;" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>" >
+                                <img class="demo cursor slider_img_css" src="<?php echo $product->feature_image; ?>" style="width:100%; object-fit: contain;" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>" >
                             </div> 
                         <?php }else{ ?>
                             <div class="column w-75">
-                                <img class="demo cursor" src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%;object-fit: contain;" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>"  >
+                                <img class="demo cursor slider_img_css" src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%;object-fit: contain;" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>"  >
                             </div>  
                         <?php } ?> 
 
@@ -43,7 +50,7 @@ $total_images =  count($gallery_lists) + 1;
                             <?php foreach ($gallery_lists as $key => $value): ?>
 
                                 <div class="column w-75">
-                                    <img class="demo cursor" src="<?php echo $value->image_name; ?>" style="width:100%" onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
+                                    <img class="demo cursor slider_img_css" src="<?php echo $value->image_name; ?>" style="width:100%" onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
                                 </div>
                                  
                             <?php endforeach ?> 
