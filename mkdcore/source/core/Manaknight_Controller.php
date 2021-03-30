@@ -546,4 +546,39 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
     }
 
 
+
+    public function send_email_new_order_to_admin($order_id)
+    {
+        $this->load->model('pos_order_model'); 
+        $this->load->model('pos_order_items_model'); 
+        $this->load->model('email_model');
+
+
+        $this->load->library('mail_service');
+        $this->mail_service->set_adapter('smtp');
+
+
+        $id    = $order_id;  
+        $model = $this->pos_order_model->get($id);
+
+        if ($model)
+        {   
+            include_once __DIR__ . '/../view_models/Orders_admin_view_view_model.php';
+            $this->_data['view_model'] = new Orders_admin_view_view_model($this->pos_order_model);
+            $this->_data['view_model']->set_heading('Orders');
+            $this->_data['view_model']->set_model($model);
+            $this->load->model('pos_order_items_model'); 
+            $this->_data['orders_details'] = $this->pos_order_items_model->get_all(['order_id' => $id]); 
+             
+
+            ob_start();  
+            $this->load->view('Admin/OrderEmailCopy', $this->_data); 
+            $content = ob_get_contents(); 
+            ob_end_clean(); 
+            $from = $this->config->item('from_email');
+            $admin_email = $this->config->item('admin_email');
+            $this->mail_service->send($from, $admin_email, "New Order Received on Mysterybox", $content);
+            
+        }  
+    }
 }

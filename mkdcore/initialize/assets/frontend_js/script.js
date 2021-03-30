@@ -322,14 +322,15 @@ $(document).ready(() => {
           other_price = 0;
         }
 
-        var coupon_amount_now    = $('#coupon_amount_now').val();
+        coupon_amount_now = 0;
+        // var coupon_amount_now    = $('#coupon_amount_now').val();
 
-        if(!coupon_amount_now)
-        {
-            coupon_amount_now = 0;
-        }
+        // if(!coupon_amount_now)
+        // {
+        //     coupon_amount_now = 0;
+        // }
 
-        coupon_amount_now = Number(coupon_amount_now).toFixed(2);
+        // coupon_amount_now = Number(coupon_amount_now).toFixed(2);
 
         var total_shipping_price = 0;
         total_shipping_price = Number(price_shipping) + Number(other_price);
@@ -422,36 +423,45 @@ $(document).ready(() => {
 
      
 
-  $(document).on('submit','.send_checkout',function(e){
-    e.preventDefault();
-    dataForm = $('.send_checkout').serializeArray();
-    $.ajax({
-         url: '../v1/api/do_checkout',
-         timeout: 30000,
-         method: 'POST',
-         dataType: 'JSON', 
-         data : {'dataForm' : dataForm },
-         success: function (response)  
-         {    
-              if(response.success)
-              {
-                toastr.success(response.success); 
-                setInterval(function() {
-                  window.location.href = response.redirect_url;
-                }, 2000);
-              } 
+$(document).on('submit','.send_checkout',function(e){
+     e.preventDefault();
 
-              if(response.error)
-              {
-                   toastr.error(response.error); 
-              } 
-         },
-         error: function()
-         { 
-              toastr.error('Error! Try again later.'); 
-         } 
-    })
-  })
+     $('.place-order-btn').hide();
+     $('.place-order-btn').parent().append('<img src="' + loading_gif + '" class="image-on-submit" style="width: 6%;">');
+
+
+     dataForm = $('.send_checkout').serializeArray();
+     $.ajax({
+          url: '../v1/api/do_checkout',
+          timeout: 30000,
+          method: 'POST',
+          dataType: 'JSON', 
+          data : {'dataForm' : dataForm },
+          success: function (response)  
+          {    
+               if(response.success)
+               {
+                    toastr.success(response.success); 
+                    setInterval(function() {
+                         window.location.href = response.redirect_url;
+                    }, 2000);
+               } 
+
+               if(response.error)
+               {
+                    $('.image-on-submit').remove();
+                    $('.place-order-btn').show();
+                    toastr.error(response.error); 
+               } 
+          },
+          error: function()
+          { 
+               $('.image-on-submit').remove();
+               $('.place-order-btn').show();
+               toastr.error('Error! Connection timeout.'); 
+          } 
+     })
+})
 
      
    

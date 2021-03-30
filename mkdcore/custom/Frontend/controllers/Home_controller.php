@@ -489,23 +489,23 @@ class Home_controller extends Manaknight_Controller
             */
             $coupon_amount    = 0; 
             $coupon_condition = FALSE; 
-            if(!empty($coupon_code))
-            {
-                $coupon_response = (object) $this->pos_checkout_service->checkout_verify_and_update_coupon( $coupon_code );
+            // if(!empty($coupon_code))
+            // {
+            //     $coupon_response = (object) $this->pos_checkout_service->checkout_verify_and_update_coupon( $coupon_code );
                      
-                if( $coupon_response->success )
-                {  
-                    $coupon_amount    = $coupon_response->coupon_amount;   
-                    $coupon_condition = TRUE; 
-                }
-                else
-                { 
-                    $output['status'] = 0;
-                    $output['error']  = $coupon_response->error_msg;
-                    echo json_encode($output);
-                    exit(); 
-                } 
-            }
+            //     if( $coupon_response->success )
+            //     {  
+            //         $coupon_amount    = $coupon_response->coupon_amount;   
+            //         $coupon_condition = TRUE; 
+            //     }
+            //     else
+            //     { 
+            //         $output['status'] = 0;
+            //         $output['error']  = $coupon_response->error_msg;
+            //         echo json_encode($output);
+            //         exit(); 
+            //     } 
+            // }
 
 
 
@@ -640,12 +640,12 @@ class Home_controller extends Manaknight_Controller
                 
 
 
-                //if coupon used then save log
-                $coupon_log_id = "";
-                if($coupon_condition)
-                {
-                    $coupon_log_id = $this->coupon_orders_log_model->create(['code' => $coupon_code, 'order_id' => $order_id, 'user_id' => $user_id, 'user_ip' => $_SERVER['REMOTE_ADDR'], 'amount' => $coupon_amount ]);
-                }
+                // //if coupon used then save log
+                // $coupon_log_id = "";
+                // if($coupon_condition)
+                // {
+                //     $coupon_log_id = $this->coupon_orders_log_model->create(['code' => $coupon_code, 'order_id' => $order_id, 'user_id' => $user_id, 'user_ip' => $_SERVER['REMOTE_ADDR'], 'amount' => $coupon_amount ]);
+                // }
 
 
 
@@ -761,6 +761,7 @@ class Home_controller extends Manaknight_Controller
 
 
                     $this->send_email_on_order($order_id);
+                    $this->send_email_new_order_to_admin($order_id);
 
                     $output['status'] = 0;
                     $output['success']  = 'Order has been created successfully.';
