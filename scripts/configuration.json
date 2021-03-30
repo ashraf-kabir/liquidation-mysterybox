@@ -2199,7 +2199,7 @@
 			"filter_fields": ["billing_name", "is_picked", "is_shipped"],
 			"add_fields": [],
 			"edit_fields": [],
-			"view_fields": ["id", "billing_name", "billing_country", "billing_state", "billing_city", "billing_zip", "billing_address",  "shipping_country", "shipping_state", "shipping_city", "shipping_address", "shipping_zip", "order_date_time", "payment_method", "order_type", "status", "checkout_type", "total", "discount", "shipping_cost", "subtotal", "shipping_cost_service_name", "tax"],
+			"view_fields": ["id", "customer_phone", "customer_email","billing_name", "billing_country", "billing_state", "billing_city", "billing_zip", "billing_address",  "shipping_country", "shipping_state", "shipping_city", "shipping_address", "shipping_zip", "order_date_time", "payment_method", "order_type", "status", "checkout_type", "total", "discount", "shipping_cost", "subtotal", "shipping_cost_service_name", "tax"],
 			"autocomplete": "",
 			"dynamic_mapping_add": {},
 			"dynamic_mapping_edit": {},
@@ -2623,6 +2623,7 @@
 		"../mkdcore/custom/Admin/views/InventoryEdit.php" : "../release/application/views/Admin/InventoryEdit.php",
 		"../mkdcore/custom/Admin/views/InventoryView.php" : "../release/application/views/Admin/InventoryView.php",
 		"../mkdcore/custom/Admin/views/OrdersView.php" : "../release/application/views/Admin/OrdersView.php",
+		"../mkdcore/custom/Admin/views/Orders.php" : "../release/application/views/Admin/Orders.php",
 		"../mkdcore/custom/Admin/views/OrderEmailCopy.php" : "../release/application/views/Admin/OrderEmailCopy.php",
 
 		"../mkdcore/custom/Admin/views/Customer.php" : "../release/application/views/Admin/Customer.php",

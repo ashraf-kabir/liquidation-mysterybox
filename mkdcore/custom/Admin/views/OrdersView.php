@@ -42,6 +42,23 @@ if ($layout_clean_mode) {
 						<?php echo $view_model->get_billing_name();?>
 					</div>
 				</div>
+				<div class='row mb-4'>
+					<div class='col'>
+						Email
+					</div>
+					<div class='col'>
+						<?php echo $view_model->get_customer_email();?>
+					</div>
+				</div>
+
+				<div class='row mb-4'>
+					<div class='col'>
+						Phone
+					</div>
+					<div class='col'>
+						<?php echo $view_model->get_customer_phone();?>
+					</div>
+				</div>
 
 				<div class='row mb-4'>
 					<div class='col'>
@@ -197,8 +214,8 @@ if ($layout_clean_mode) {
                                 <tr>
                                     <td><?php echo  $detail->product_name; ?>  </td> 
                                     <td><?php echo  $detail->quantity; ?></td>
-                                    <td><?php echo  number_format($detail->product_unit_price,2); ?></td> 
-                                    <td><?php echo  number_format($detail->amount,2); ?></td>
+                                    <td>$<?php echo  number_format($detail->product_unit_price,2); ?></td> 
+                                    <td>$<?php echo  number_format($detail->amount,2); ?></td>
                                 </tr>
                             <?php } ?>
                             </tbody>
@@ -206,12 +223,12 @@ if ($layout_clean_mode) {
 							<tr>
 								<td colspan="2"></td> 
 								<td>Subtotal</td>
-								<td><?php echo number_format($view_model->get_subtotal(),2);?></td>
+								<td>$<?php echo number_format($view_model->get_subtotal(),2);?></td>
 							</tr> 
 							<tr>
 								<td colspan="2"></td> 
 								<td>Shipping Cost</td>
-								<td><?php echo number_format($view_model->get_shipping_cost(),2);?>
+								<td>$<?php echo number_format($view_model->get_shipping_cost(),2);?>
 									<span><?php echo $view_model->get_shipping_cost_service_name() ; ?></span>
 								</td>
 							</tr>
@@ -220,21 +237,21 @@ if ($layout_clean_mode) {
 							<tr>
 								<td colspan="2"></td> 
 								<td>Tax</td>
-								<td><?php echo number_format($view_model->get_tax(),2);?></td>
+								<td>$<?php echo number_format($view_model->get_tax(),2);?></td>
 							</tr>
 
 
 							<tr>
 								<td colspan="2"></td> 
 								<td>Discount</td>
-								<td><?php echo number_format($view_model->get_discount(), 2);?></td>
+								<td>$<?php echo number_format($view_model->get_discount(), 2);?></td>
 							</tr>
 
 							<tr>
 								<td colspan="2"></td> 
 								<td>Total</td>
 								<td>
-                                    <?php  
+                                    $<?php  
                                         echo number_format($view_model->get_total(), 2);
                                     ?>
                                     

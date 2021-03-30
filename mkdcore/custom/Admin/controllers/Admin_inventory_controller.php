@@ -121,10 +121,21 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['stores']              =   $this->store_model->get_all();
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
 
+
+        if ($this->input->post('can_ship') == 1) 
+        {
+            $this->form_validation->set_rules('weight', 'Weight', 'required|greater_than_equal_to[1]');
+            $this->form_validation->set_rules('length', 'Length', 'required|greater_than_equal_to[1]');
+            $this->form_validation->set_rules('height', 'Height', 'required|greater_than_equal_to[1]');
+            $this->form_validation->set_rules('width', 'Width', 'required|greater_than_equal_to[1]');
+        }
+
         if ($this->form_validation->run() === FALSE)
         { 
             return $this->render('Admin/InventoryAdd', $this->_data);
         }
+ 
+
 
         $increment_id  =  $this->inventory_model->get_auto_increment_id();
         $sku           =  sprintf("%05d", $increment_id); 
@@ -274,6 +285,16 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
         $this->_data['stores']              =   $this->store_model->get_all();
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
+        
+
+        if ($this->input->post('can_ship') == 1) 
+        {
+            $this->form_validation->set_rules('weight', 'Weight', 'required|greater_than_equal_to[1]');
+            $this->form_validation->set_rules('length', 'Length', 'required|greater_than_equal_to[1]');
+            $this->form_validation->set_rules('height', 'Height', 'required|greater_than_equal_to[1]');
+            $this->form_validation->set_rules('width', 'Width', 'required|greater_than_equal_to[1]');
+        }
+
         
         if ($this->form_validation->run() === FALSE)
         { 
