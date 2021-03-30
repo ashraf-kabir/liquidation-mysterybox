@@ -30,11 +30,11 @@ $total_images =  count($gallery_lists) + 1;
 
                         <?php if(!empty($product->feature_image)){   ?>
                             <div class="column w-75">
-                                <img class="demo cursor" src="<?php echo $product->feature_image; ?>" style="width:100%" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>" style="object-fit: contain;">
+                                <img class="demo cursor" src="<?php echo $product->feature_image; ?>" style="width:100%; object-fit: contain;" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>" >
                             </div> 
                         <?php }else{ ?>
                             <div class="column w-75">
-                                <img class="demo cursor" src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>"  style="object-fit: contain;">
+                                <img class="demo cursor" src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%;object-fit: contain;" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>"  >
                             </div>  
                         <?php } ?> 
 
