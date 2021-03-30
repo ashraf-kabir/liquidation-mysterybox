@@ -2691,6 +2691,9 @@
 		
 		
 
+		"admin/inventory/delete_gallery_image/(:num)": "Admin/Admin_inventory_controller/delete_gallery_image/$1",
+		"manager/inventory/delete_gallery_image/(:num)": "Manager/Manager_inventory_controller/delete_gallery_image/$1",
+		
 		"admin/category_wise/view/(:num)" : "Admin/Admin_category_wise_controller/view/$1",
 		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv",
 		"v1/api/pos_get_all_inventory_items" : "Guest/Custom_api_controller/pos_get_all_inventory_items",

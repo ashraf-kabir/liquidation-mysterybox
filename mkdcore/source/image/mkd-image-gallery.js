@@ -12,7 +12,7 @@ var picture = new window.uppload_Uppload({
     uploader: window.uppload_fetchUploader({
       endpoint: "/v1/api/file/upload",
       responseFunction: json => {   
-          $("#" + image_url_uppload_library).val(json.file);
+          $("#" + image_url_uppload_library).val(json.file).trigger('change');
           $("#" + image_url_uppload_library + "_id").val(json.id);
           $("#" + image_url_uppload_library + "_text").html(json.file); 
           $("#" + image_url_uppload_library + "_complete").text("Upload Complete"); 
@@ -33,10 +33,8 @@ picture.use([
   new window.uppload_Local(),
   new window.uppload_Camera(), 
   new window.uppload_Instagram(),
-  new window.uppload_Facebook(), 
-  new window.uppload_Instagram(),
-  new window.uppload_URL(),
-  new window.uppload_Instagram(),
+  new window.uppload_Facebook(),  
+  new window.uppload_URL(), 
   new window.uppload_Screenshot(),   
   new window.uppload_Pinterest(),
   new window.uppload_Flickr(),

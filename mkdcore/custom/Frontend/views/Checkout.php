@@ -93,52 +93,6 @@ $sub_total = $total;
                     <hr /> 
                     <div class="form-row justify-content-between">
 
-
-                        <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
-                            <label for="city">City</label>
-                            <input
-                            type="text"
-                            name="city"
-                            id="checkout-city"
-                            value="<?php echo set_value('city', $customer->billing_city); ?>"
-                            placeholder="Enter your city"
-                            class="form-control"
-                            />
-                        </div>
-                        <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
-                            <label for="city">Postal Code</label>
-                            <input
-                            type="text"
-                            name="postal_code"
-                            id="checkout-postal_code"
-                            value="<?php echo set_value('postal_code', $customer->billing_zip); ?>"
-                            placeholder="Enter your postal code"
-                            class="form-control"
-                            />
-                        </div>
-
-                        <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
-                            <label for="state">State</label>
-                            <input
-                            type="text"
-                            name="state"
-                            id="checkout-state"
-                            value="<?php echo set_value('state', $customer->billing_state); ?>"
-                            placeholder="Enter your State"
-                            class="form-control"
-                            />
-                        </div>
-                        <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
-                            <label for="country">Country</label>
-                            <input
-                            type="text"
-                            name="country"
-                            id="checkout-country"
-                            value="<?php echo set_value('country', "US"); ?>"
-                            placeholder="Enter your Country"
-                            class="form-control"
-                            />
-                        </div>
                         <div class="col-12 my-3">
                             <label for="address-1">Address 1</label>
                             <input
@@ -161,6 +115,58 @@ $sub_total = $total;
                             class="form-control"
                             />
                         </div>
+
+                        <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
+                            <label for="city">City</label>
+                            <input
+                            type="text"
+                            name="city"
+                            id="checkout-city"
+                            value="<?php echo set_value('city', $customer->billing_city); ?>"
+                            placeholder="Enter your city"
+                            class="form-control"
+                            />
+                        </div>
+                        
+
+                        <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
+                            <label for="state">State</label>
+                            <input
+                            type="text"
+                            name="state"
+                            id="checkout-state"
+                            value="<?php echo set_value('state', $customer->billing_state); ?>"
+                            placeholder="Enter your State"
+                            class="form-control"
+                            />
+                        </div>
+                        
+
+                        <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
+                            <label for="city">Postal Code</label>
+                            <input
+                            type="text"
+                            name="postal_code"
+                            id="checkout-postal_code"
+                            value="<?php echo set_value('postal_code', $customer->billing_zip); ?>"
+                            placeholder="Enter your postal code"
+                            class="form-control"
+                            />
+                        </div>
+
+
+                        <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
+                            <label for="country">Country</label>
+                            <input
+                            type="text"
+                            name="country"
+                            id="checkout-country"
+                            value="<?php echo set_value('country', "US"); ?>"
+                            placeholder="Enter your Country"
+                            class="form-control"
+                            />
+                        </div>
+                        
                     </div> 
                 </div>
 
@@ -172,7 +178,37 @@ $sub_total = $total;
                 <div class="bg-white w-100 p-2 p-md-4">
                     <h5>Shipping Information</h5>
                     <hr /> 
+
+
+
+
                     <div class="form-row justify-content-between">
+
+                        <div class="col-12 my-3">
+                            <label for="address-1">Address</label>
+                            <input
+                            type="text"
+                            name="shipping_address"
+                            id="shipping_address"
+                            value="<?php echo set_value('address_1', $customer->shipping_address); ?>"
+                            placeholder="Address here..."
+                            class="form-control"
+                            />
+                        </div>
+
+
+                        <div class="col-12 my-3">
+                            <label for="address-2">Address 2 (Optional)</label>
+                            <input
+                            type="text"
+                            name="shipping_address_2"
+                            id="shipping_address-2"
+                            value="<?php echo set_value('shipping_address_2'); ?>"
+                            placeholder="Address here..."
+                            class="form-control"
+                            />
+                        </div>
+
 
                         <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
                             <label for="city">City</label>
@@ -185,17 +221,7 @@ $sub_total = $total;
                             class="form-control"
                             />
                         </div>
-                        <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
-                            <label for="city">Postal Code</label>
-                            <input
-                            type="text"
-                            name="shipping_zip"
-                            id="shipping_zip"
-                            value="<?php echo set_value('postal_code', $customer->shipping_zip); ?>"
-                            placeholder="Enter your postal code"
-                            class="form-control"
-                            />
-                        </div>
+                        
 
                         <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
                             <label for="state">State</label>
@@ -208,6 +234,20 @@ $sub_total = $total;
                             class="form-control"
                             />
                         </div>
+
+                        <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
+                            <label for="city">Postal Code</label>
+                            <input
+                            type="text"
+                            name="shipping_zip"
+                            id="shipping_zip"
+                            value="<?php echo set_value('postal_code', $customer->shipping_zip); ?>"
+                            placeholder="Enter your postal code"
+                            class="form-control"
+                            />
+                        </div>
+
+
                         <div class="col-xl-5 col-lg-5 col-md-5 col-12 my-3">
                             <label for="country">Country</label>
                             <input
@@ -219,17 +259,7 @@ $sub_total = $total;
                             class="form-control"
                             />
                         </div>
-                        <div class="col-12 my-3">
-                            <label for="address-1">Address</label>
-                            <input
-                            type="text"
-                            name="shipping_address"
-                            id="shipping_address"
-                            value="<?php echo set_value('address_1', $customer->shipping_address); ?>"
-                            placeholder="Address here..."
-                            class="form-control"
-                            />
-                        </div>
+                        
 
                     </div> 
                 </div>
@@ -383,9 +413,11 @@ $sub_total = $total;
             <div class="bg-white">
                 <div class="cart__address p-4">
                     <h4 class="my-4"><i class="fas fa-truck"></i> Shipping</h4>
-                    <h5 class="my-3"><?php echo $customer->shipping_state; ?></h5>
+                     
                     <p class="w-75 my-2">
-                        <?php echo $customer->shipping_address; ?>, <?php echo $customer->shipping_country; ?>
+                        <?php echo $customer->shipping_city; ?>, <?php echo $customer->shipping_state; ?>
+
+                        <?php echo $customer->shipping_zip; ?>
                     </p>
                 </div>
                 <hr />

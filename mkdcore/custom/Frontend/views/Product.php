@@ -23,8 +23,7 @@ $total_images =  count($gallery_lists) + 1;
         </div>
         <div class="row justify-content-center">
             <div class="col-md-7 bg-white p-2 p-md-4">
-                <h2 class="product__title"><?php echo $product->product_name; ?></h2>
-                <h4  ><?php echo $product->sku; ?></h4>
+                <h2 class="product__title"><?php echo $product->product_name; ?></h2> 
 
                 <div class="row">
                     <div class="col-4">
@@ -80,54 +79,57 @@ $total_images =  count($gallery_lists) + 1;
                         </div>
                     </div>
                 </div>
+
+
+                <br>
+                <div class="row">
+                    <div class="row justify-content-center bg-white mx-md-5 ">
+                        <div class="col-10 p-0 py-3 bg-white">
+                            <h4  style="width: 100%;text-align: left;">DESCRIPTION</h4>
+                            <p class="my-3"><?php echo $product->inventory_note; ?></p> 
+                             
+                        </div> 
+                    </div> 
+                </div>
             </div>
             <div class="col-md-3 ">
                 <div class="bg-white w-100 p-2 p-md-4"> 
                     <ul class="list-unstyled">
-                        <li class="my-4">Price <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li>
-                        <li class="my-4">Quantity <span class="product__price"> <?php echo $product->quantity; ?></span></li>
-                        
-                        <li class="my-4">Category  <span class="product__price"> <?php echo $product->category_real_name; ?></span></li>
-                        <li class="my-4">Dimension  <span class="product__price"> <?php echo $product->width; ?> x <?php echo $product->height; ?> x <?php echo $product->length; ?> x <?php echo $product->weight; ?></span></li> 
-                        
+                        <li class="my-4">Price <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li> 
                          
-                    </ul>
-                    <?php if(!empty($product->manifest_id) ) { ?> 
-                        <a href="<?php echo base_url(); ?>view_manifest/<?php echo $product->id; ?>"  target="popup"   onclick="window.open('<?php echo base_url(); ?>view_manifest/<?php echo $product->id; ?>','popup','width=600,height=600'); return false;"  >View Manifest</a>
-                    <?php } ?> 
+                    </ul> 
                 </div>
 
                 <div class="col-12 bg-white w-100 p-2 p-md-4 ">
-                    <label for="quantity" >Qty
-                        <input type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity w-75 w-md-50" value="1" />
+                    <label for="quantity" >Qty 
+                        <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity w-75 w-md-50"  > 
+                            <option value="">Select</option>
+                            <?php 
+                            if ($product->quantity > 0) 
+                            { 
+                                for ($i=1; $i < $product->quantity; $i++) 
+                                { 
+                                    echo '<option value="' . $i . '" >' . $i .'</option>';
+                                }
+                            }
+                            ?>
+                        </select> 
                     </label> 
 
                     <input type="hidden" class="product_id" name="product_id" value="<?= $product->id; ?>" />
-                    <button class="btn add_to_cart_button btn-success addToCartBtn">Add To Cart</button>
-                </div>
-
-
-
-                <div class="bg-white w-100 p-2 p-md-4 mt-5 d-flex product__deliveryDetails">
-                    
-                    <div class="row justify-content-between"> 
-                        <h4  style="width: 100%;text-align: left;">DESCRIPTION</h4>
-                        <p class="my-3"><?php echo $product->inventory_note; ?></p> 
-                    </div>
+                    <button style="width: 100%" class="btn add_to_cart_button btn-success addToCartBtn">Add To Cart</button>
                 </div>
  
-                
-
-
-                <div class="bg-white w-100 p-2 p-md-4 mt-5 d-flex product__deliveryDetails">
-                     <img src="<?php echo $product->barcode_image; ?>" style="width:100%" />
-                </div>
+               <!--   -->
             </div>
         </div>
     </main>
 
     <section class="container-fluid mt-5 px-md-5 my-5" id="product__description">
         
+        
+
+
         <div class="row justify-content-center bg-white mx-md-5 "> 
             
             

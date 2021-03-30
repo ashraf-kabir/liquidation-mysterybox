@@ -181,7 +181,7 @@ if ($layout_clean_mode) {
 
 				<div class='row mb-4'>
 					<div class='col'>
-						Inventory Note
+						Description
 					</div>
 					<div class='col'>
 						<?php echo $view_model->get_inventory_note();?>

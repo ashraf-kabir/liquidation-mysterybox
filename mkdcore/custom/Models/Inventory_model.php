@@ -46,7 +46,7 @@ class Inventory_model extends Manaknight_Model
 		'available_in_shelf', 
     ];
 	protected $_label_fields = [
-    'ID','Product Name','SKU','Category','Manifest','Store Location','Inventory Location','Inventory Location Description','Weight','Length','Height','Width','Image','Selling Price','Quantity','Inventory Note','Barcode Image','Cost Price','Admin Inventory Note','Can Ship','Pin Item','Product Type','Status',
+    'ID','Product Name','SKU','Category','Manifest','Store Location','Inventory Location','Inventory Location Description','Weight','Length','Height','Width','Image','Selling Price','Quantity','Description','Barcode Image','Cost Price','Admin Inventory Note','Can Ship','Pin Item','Product Type','Status',
     ];
 	protected $_use_timestamps = TRUE;
 	protected $_created_field = 'created_at';
@@ -67,7 +67,7 @@ class Inventory_model extends Manaknight_Model
 		['feature_image', 'Image', ''],
 		['selling_price', 'Selling Price', ''],
 		['quantity', 'Quantity', ''],
-		['inventory_note', 'Inventory Note', ''],
+		['inventory_note', 'Description', ''],
 		['barcode_image', 'Barcode Image', ''],
 		['cost_price', 'Cost Price', ''],
 		['admin_inventory_note', 'Admin Inventory Note', ''], 
@@ -99,7 +99,7 @@ class Inventory_model extends Manaknight_Model
 		['feature_image', 'Image', ''],
 		['selling_price', 'Selling Price', ''],
 		['quantity', 'Quantity', ''],
-		['inventory_note', 'Inventory Note', ''],
+		['inventory_note', 'Description', ''],
 		['barcode_image', 'Barcode Image', ''],
 		['cost_price', 'Cost Price', ''],
 		['admin_inventory_note', 'Admin Inventory Note', ''],

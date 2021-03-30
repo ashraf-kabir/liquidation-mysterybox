@@ -190,15 +190,14 @@ if ($layout_clean_mode) {
                     <label for="Image">Feature Image </label>
                     <img id="output_feature_image" style="max-height:100px" onerror="if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';"/>
                     <div class="btn uppload-button image_id_uppload_library btn-primary btn-sm  " data-image-url="feature_image" data-image-id="feature_image_id" data-image-preview="output_feature_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
-                    <input type="hidden" id="feature_image" name="feature_image" value=""/>
+                    <input type="hidden" id="feature_image" data-srcid="output_feature_image" class="check_change_event" name="feature_image" value=""/>
                     <input type="hidden" id="feature_image_id" name="feature_image_id" value=""/>
 
                     <button type="button"  data-url="feature_image" data-id="feature_image_id"  class="btn btn-primary btn-sm add-image-form-portal create-image-portal-modal">+</button>
                     <span id="feature_image_complete" style="display: block;"></span>
-
-
+ 
                 </div>              
-                
+                 
 
                 <div class="form-group col-md-12 col-sm-12 ">
                     <div class="mkd-upload-form-btn-wrapper ">
@@ -210,17 +209,16 @@ if ($layout_clean_mode) {
                 <div class="form-group col-md-5 col-sm-12 ">
                     <div class="mkd-upload-form-btn-wrapper gallery_image_add_inputs">
                         <button class="mkd-upload-btn btn btn-primary d-block">Upload Image(s)</button>
-                        <input type="file" name="barcode_image_upload" id="barcode_image_upload" onchange="onFileUploadedGallery(event, 'barcode_image')" accept=".jpg,.jpeg,.png"/>
+                        <input type="file" name="barcode_image_upload" multiple id="barcode_image_upload" onchange="manaknightMultipleImageUploader(event, 'manaknight_multiple_image')" accept=".jpg,.jpeg,.png"/>
 
-                        <input type="hidden" id="barcode_image_1" name="gallery_image[]"/>
-                        <input type="hidden" id="barcode_image_id_1" name="gallery_image_id[]"/>
-                        <span id="barcode_image_text" class="mkd-upload-filename"></span>
+                        <input type="hidden" id="manaknight_multiple_image_1" name="gallery_image[]"/>
+                        <input type="hidden" id="manaknight_multiple_image_id_1" name="gallery_image_id[]"/> 
                     </div>
                 </div>
 
                 <div class="form-group  col-md-5 col-sm-12">
                     <label for="video_url" >Youtube URL 1 </label>
-                    <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo set_value('video_url'); ?>"  /> 
+                    <input type="url"  class="form-control data-input"  name="video_url[]" value="<?php echo set_value('video_url'); ?>"  /> 
                 </div>
 
 
@@ -230,7 +228,7 @@ if ($layout_clean_mode) {
 
                     <br/>
                     <div class="btn btn-primary image_id_uppload_library btn-sm uppload-button  " data-image-url="youtube_thumbnail_1" data-image-id="youtube_thumbnail_1_id" data-image-preview="output_youtube_thumbnail_1" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
-                    <input type="hidden" id="youtube_thumbnail_1" name="youtube_thumbnail_1" value="<?php echo set_value('youtube_thumbnail_1');?>"/>
+                    <input type="hidden" id="youtube_thumbnail_1" name="youtube_thumbnail_1" value="<?php echo set_value('youtube_thumbnail_1');?>"  class="check_change_event" data-srcid="output_youtube_thumbnail_1"    />
                     <input type="hidden" id="youtube_thumbnail_1_id" name="youtube_thumbnail_1_id" value="<?php echo set_value('youtube_thumbnail_1_id');?>"/>
                     
                     <span id="youtube_thumbnail_1_complete" style="display: block;"></span>
@@ -239,7 +237,7 @@ if ($layout_clean_mode) {
 
                 <div class="form-group  col-md-5 col-sm-12">
                     <label for="video_url" >Youtube URL 2 </label>
-                    <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo set_value('video_url'); ?>"  /> 
+                    <input type="url"  class="form-control data-input"  name="video_url[]" value="<?php echo set_value('video_url'); ?>"  /> 
                 </div>
 
 
@@ -249,7 +247,7 @@ if ($layout_clean_mode) {
 
                     <br/>
                     <div class="btn btn-primary image_id_uppload_library btn-sm uppload-button  " data-image-url="youtube_thumbnail_2" data-image-id="youtube_thumbnail_2_id" data-image-preview="output_youtube_thumbnail_2" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
-                    <input type="hidden" id="youtube_thumbnail_2" name="youtube_thumbnail_2" value="<?php echo set_value('youtube_thumbnail_2' );?>"/>
+                    <input type="hidden" id="youtube_thumbnail_2" name="youtube_thumbnail_2" value="<?php echo set_value('youtube_thumbnail_2' );?>"   class="check_change_event"  data-srcid="output_youtube_thumbnail_2"      />
                     <input type="hidden" id="youtube_thumbnail_2_id" name="youtube_thumbnail_2_id" value="<?php echo set_value('youtube_thumbnail_2_id');?>"/>
                     
                     <span id="youtube_thumbnail_2_complete" style="display: block;"></span>
@@ -260,7 +258,7 @@ if ($layout_clean_mode) {
 
                 <div class="form-group  col-md-5 col-sm-12">
                     <label for="video_url" >Youtube URL 3</label>
-                    <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo set_value('video_url'); ?>"  /> 
+                    <input type="url"  class="form-control data-input"  name="video_url[]" value="<?php echo set_value('video_url'); ?>"  /> 
                 </div>
 
 
@@ -270,7 +268,7 @@ if ($layout_clean_mode) {
 
                     <br/>
                     <div class="btn btn-primary image_id_uppload_library btn-sm uppload-button  " data-image-url="youtube_thumbnail_3" data-image-id="youtube_thumbnail_3_id" data-image-preview="output_youtube_thumbnail_3" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
-                    <input type="hidden" id="youtube_thumbnail_3" name="youtube_thumbnail_3" value="<?php echo set_value('youtube_thumbnail_3');?>"/>
+                    <input type="hidden" id="youtube_thumbnail_3" name="youtube_thumbnail_3" value="<?php echo set_value('youtube_thumbnail_3');?>"  class="check_change_event"  data-srcid="output_youtube_thumbnail_3"     />
                     <input type="hidden" id="youtube_thumbnail_3_id" name="youtube_thumbnail_3_id" value="<?php echo set_value('youtube_thumbnail_3_id');?>"/> 
                     <span id="youtube_thumbnail_3_complete" style="display: block;"></span>
                 </div>
@@ -281,7 +279,7 @@ if ($layout_clean_mode) {
 
                 <div class="form-group  col-md-5 col-sm-12">
                     <label for="video_url" >Youtube URL 4 </label>
-                    <input type="url"  class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo set_value('video_url'); ?>"  /> 
+                    <input type="url"  class="form-control data-input"  name="video_url[]" value="<?php echo set_value('video_url'); ?>"  /> 
                 </div>
 
 
@@ -291,14 +289,14 @@ if ($layout_clean_mode) {
 
                     <br/>
                     <div class="btn btn-primary image_id_uppload_library btn-sm uppload-button  " data-image-url="youtube_thumbnail_4" data-image-id="youtube_thumbnail_4_id" data-image-preview="output_youtube_thumbnail_4" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
-                    <input type="hidden" id="youtube_thumbnail_4" name="youtube_thumbnail_4" value="<?php echo set_value('youtube_thumbnail_4');?>"/>
+                    <input type="hidden" id="youtube_thumbnail_4" name="youtube_thumbnail_4" value="<?php echo set_value('youtube_thumbnail_4');?>"  class="check_change_event"  data-srcid="output_youtube_thumbnail_4"      />
                     <input type="hidden" id="youtube_thumbnail_4_id" name="youtube_thumbnail_4_id" value="<?php echo set_value('youtube_thumbnail_4_id');?>"/> 
                     <span id="youtube_thumbnail_4_complete" style="display: block;"></span>
                 </div>
 
  
                 <div class="form-group col-md-5 col-sm-12">
-                    <label for="Inventory Note">Inventory Note </label>
+                    <label for="Inventory Note">Description </label>
                     <textarea id='form_inventory_note' name='inventory_note' class='form-control data-input' rows='5'><?php echo set_value('inventory_note'); ?></textarea>
                 </div>
 
@@ -335,49 +333,18 @@ if ($layout_clean_mode) {
 
 
 
+ 
+
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/image-portal.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/multiple-gallery-image-upload.js"></script>
 
 <script type="text/javascript">
-    var id_to_add = 1;
-    function onFileUploadedGallery(event, imgid) 
-    { 
-        var selectedFile = event.target.files[0]; 
-        var reader = new FileReader();
-        reader.onload = function(e) 
-        {
-            var formData = new FormData(); 
-            formData.append("file", selectedFile);
-            $.ajax({
-                url: "/v1/api/file/upload",
-                type: "post",
-                data: formData,
-                processData: false,
-                contentType: false,
-                cache: false,
-                async: false,
-                success: function(data) 
-                {
-                     
-                    $('#barcode_image_'+ id_to_add).val(data.file);
-                    $('#barcode_image_id_'+ id_to_add).val(data.id); 
-
-                    var data_md4 = '<div class="col-md-3 form-group"><img style="height: 150px;width: 70%;" src="'+ data.file +'" /></div>';
-                     
-                    $('.add_images_gallery').append(data_md4);
-
-                    id_to_add = id_to_add +1;
-                    $('.gallery_image_add_inputs').append('<input type="hidden" id="barcode_image_'+ id_to_add +'" name="gallery_image[]"/><input type="hidden" id="barcode_image_id_'+ id_to_add +'" name="gallery_image_id[]"/>');  
-                }
-            });  
-        };
-        reader.readAsDataURL(selectedFile); 
-    } 
-    
-
-    document.addEventListener('DOMContentLoaded',function(){
-        $(document).on('click','.add_new_video_url', function(){
-            $(this).before('<input type="url" style="width: 91%;display: inline;margin: 6px 0px;" class="form-control data-input" id="video_url" name="video_url[]" value="<?php echo set_value('video_url'); ?>"  />')
+    document.addEventListener('DOMContentLoaded', function(){  
+        $(function(){ 
+            $("body").on("change",".check_change_event",function(){
+                var current_src_id = $(this).attr('data-srcid'); 
+                $('#' + current_src_id).attr('src', $(this).val());
+            });
         });
     }, false)
 </script>
-
-<script type="text/javascript" src="http://localhost:8000/assets/js/image-portal.js"></script>

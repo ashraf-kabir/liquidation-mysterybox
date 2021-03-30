@@ -405,6 +405,30 @@ class Manager_inventory_controller extends Manager_controller
 	}
 
     
+
+     
+    
+    public function delete_gallery_image($id)
+    {
+        $model = $this->inventory_gallery_list_model->get($id);
+
+        if (!$model)
+        {
+            $this->error('Error');
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+
+        $result = $this->inventory_gallery_list_model->real_delete($id);
+
+        if ($result)
+        {
+            $this->success('Image deleted successfully.');
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+
+        $this->error('Error');
+        return redirect($_SERVER['HTTP_REFERER']);
+    }
     
     
     
