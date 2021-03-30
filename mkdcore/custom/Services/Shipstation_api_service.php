@@ -20,12 +20,15 @@ class Shipstation_api_service {
             $dimensions_height = 0;
             foreach($orders_list as $key => $value)
             {
-                $product = $value->product_detail;    
-
-                $weight_object += $product->weight;
-                $dimensions_length += $product->length;
-                $dimensions_width  += $product->width;
-                $dimensions_height += $product->height;
+                $product        = $value->product_detail;  
+                
+                if ($product->free_ship != 1) 
+                {
+                    $weight_object     += $product->weight;
+                    $dimensions_length += $product->length;
+                    $dimensions_width  += $product->width;
+                    $dimensions_height += $product->height;
+                } 
             }
         
             /**

@@ -81,8 +81,8 @@ $total_images =  count($gallery_lists) + 1;
                         <a class="prev" onclick="plusSlides(-1)">❮</a>
                         <a class="next" onclick="plusSlides(1)">❯</a>
                     
-                        <div class="caption-container">
-                            <p id="caption"></p>
+                        <div class="caption-container" style="padding: 11px 0px;">
+                            <p id="caption" style=" margin: 0px;"></p>
                         </div>
                     </div>
                 </div>
@@ -107,27 +107,30 @@ $total_images =  count($gallery_lists) + 1;
                     </ul> 
                 </div>
 
-                <div class="col-12 bg-white w-100 p-2 p-md-4 ">
-                    <label for="quantity" >Qty 
-                        <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity w-75 w-md-50"  > 
-                            <option value="">Select</option>
-                            <?php 
-                            if ($product->quantity > 0) 
-                            { 
+                <?php  if ($product->quantity > 0)  { ?>
+                    <div class="col-12 bg-white w-100 p-2 p-md-4 ">
+                        <label for="quantity" >Qty 
+                            <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity w-75 w-md-50"  > 
+                                <option value="">Select</option>
+                                <?php  
                                 for ($i=1; $i < $product->quantity; $i++) 
                                 { 
                                     echo '<option value="' . $i . '" >' . $i .'</option>';
                                 }
-                            }
-                            ?>
-                        </select> 
-                    </label> 
+                                ?>
+                                
+                            </select> 
+                        </label> 
 
-                    <input type="hidden" class="product_id" name="product_id" value="<?= $product->id; ?>" />
-                    <button style="width: 100%" class="btn add_to_cart_button btn-success addToCartBtn">Add To Cart</button>
-                </div>
- 
-               <!--   -->
+                        <input type="hidden" class="product_id" name="product_id" value="<?= $product->id; ?>" />
+                        <button style="width: 100%" class="btn add_to_cart_button btn-success addToCartBtn">Add To Cart</button>
+                    </div>
+                <?php }else{ ?>
+                    <div class="col-12 bg-white w-100 p-2 p-md-4 ">
+                        <label style="color: red;" for="quantity" ><strong>Out of stock</strong></label>  
+                    </div>
+                <?php } ?>
+  
             </div>
         </div>
     </main>

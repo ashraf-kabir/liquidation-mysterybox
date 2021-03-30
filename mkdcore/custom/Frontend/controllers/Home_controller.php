@@ -814,7 +814,20 @@ class Home_controller extends Manaknight_Controller
 
             
 
-                $data['cart_items'] =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+                $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+
+                if (!empty($cart_items)) 
+                {                     
+                    foreach ($cart_items as $key => &$value)
+                    {
+                        $item_data = $this->inventory_model->get($value->product_id);
+
+                        $value->free_ship = $item_data->free_ship;
+                    }
+                }
+
+                
+                $data['cart_items']   =  $cart_items; 
                 $data['customer']   =  $this->customer_model->get($user_id); 
                 $data['tax']        =  $this->tax_model->get(1);
             }

@@ -1,9 +1,17 @@
 <?php 
 $total      = 0;
 $sub_total  = 0;
+
+$free_shipping = true;
 foreach($cart_items as $key => $value) 
 {  
-    $total = $total + $value->total_price;  
+    
+
+    if ($value->free_ship != 1) 
+    {
+        $free_shipping = false;
+    }
+    $total = $total + $value->total_price;   
 }
 
 $sub_total = $total;
@@ -356,18 +364,27 @@ $sub_total = $total;
 
 
 
-                <div class="row">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
-                        <h5>Shipping Cost</h5>
-                    </div>
-                    <div class="col-xl-8 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
-
-                        <div class="shipping-cost-options">
+                <?php if (!$free_shipping): ?> 
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
+                            <h5>Shipping Cost</h5>
                         </div>
-                        <button class="btn btn-primary calculate-shipping-cost mb-2" type="button"> Calculate Shipping Cost </button>
-                        <h5>$<span class="shipping_cost_selected">0.00</span></h5>
-                    </div>
-                </div>
+                        <div class="col-xl-8 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
+
+                            <div class="shipping-cost-options">
+                            </div>
+                            <button class="btn btn-primary calculate-shipping-cost mb-2" type="button"> Calculate Shipping Cost </button>
+                            <h5>$<span class="shipping_cost_selected">0.00</span></h5>
+                        </div>
+                    </div> 
+                <?php else: ?>
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
+                            <h5>Free Shipping</h5>
+                        </div> 
+                    </div> 
+                <?php endif; ?>
+
                 <div class="row">
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-6 my-2">
                         <h5>Tax</h5>
