@@ -68,89 +68,93 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 text-center">
-                       <img
-                       class="my-3"
-                       src="<?php echo base_url(); ?>/assets/frontend_images/vegas_img.jpg"
-                       alt="Company logo"  style="width: 160px;"
-                       />
-                       <p>Welcome to <strong>VEGAS LIQUIDATION ECOM</strong></p>
-                       <h2><strong>SIGN UP</strong></h2>
-                   </div>
+                        <img
+                        class="my-3"
+                        src="<?php echo base_url(); ?>/assets/frontend_images/vegas_img.jpg"
+                        alt="Company logo"  style="width: 160px;"
+                        />
+                        <p>Welcome to <strong>VEGAS LIQUIDATION ECOM</strong></p>
+                        <h2><strong>SIGN UP</strong></h2>
+                    </div>
                 </div>
                 <form action="" id="signup__form">
-                <div class="form-row justify-content-center">
-                    <div class="col-md-9 col-12 my-2">
-                        <label for="name">Full Name</label>
-                        <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Your full name here"
-                        class="form-control"
-                        required
-                        />
+                    <div class="form-row justify-content-center">
+                        <div class="col-md-9 col-12 my-2">
+                            <label for="name">Full Name</label>
+                            <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Your full name here"
+                            class="form-control"
+                            required
+                            />
+                        </div>
+
+                        <div class="col-md-9 col-12 my-2">
+                            <label for="email">Email Address</label>
+                            <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="example@google.com"
+                            class="form-control"
+                            required
+                            />
+                        </div>
+
+                        <div class="col-md-9 col-12 my-2">
+                            <label for="password1">Password</label>
+                            <input
+                            type="password"
+                            id="password1"
+                            name="password1"
+                            placeholder="*********"
+                            class="form-control"
+                            required
+                            />
+                        </div>
+
+                        <div class="col-md-9 col-12 my-2">
+                            <label for="password2">Confirm Password</label>
+                            <input
+                            type="password"
+                            id="password2"
+                            name="password2"
+                            placeholder="*********"
+                            class="form-control"
+                            required
+                            />
+                        </div>
+                        <div class="col-md-9 col-12 my-3">
+                            <label for="terms">
+                                <input
+                                type="checkbox"
+                                id="terms"
+                                name="terms"
+                                class="mr-2"
+                                required
+                                />
+                                Yes, I have read the Vegas Liquidation Ecom user
+                                agreement and agree to be bound by its terms and
+                                conditions.
+                            </label>
+                        </div>
+
+                        <div class="col-md-9 col-12 mb-5">
+                            <button type="button" class="btn btn-secondary signup__form_submit w-100">
+                                Create Account
+                            </button>
+                        </div>
+
+                        <div class="col-md-9 col-12 mb-5" style="text-align: center;">
+                            Already have an account? <a class="login_now" href="<?php echo base_url() ?>">Login  Now</a>   
+                        </div>
                     </div>
-
-                    <div class="col-md-9 col-12 my-2">
-                        <label for="email">Email Address</label>
-                        <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="example@google.com"
-                        class="form-control"
-                        required
-                        />
-                    </div>
-
-                    <div class="col-md-9 col-12 my-2">
-                        <label for="password1">Password</label>
-                        <input
-                        type="password"
-                        id="password1"
-                        name="password1"
-                        placeholder="*********"
-                        class="form-control"
-                        required
-                        />
-                    </div>
-
-                  <div class="col-md-9 col-12 my-2">
-                      <label for="password2">Confirm Password</label>
-                      <input
-                      type="password"
-                      id="password2"
-                      name="password2"
-                      placeholder="*********"
-                      class="form-control"
-                      required
-                      />
-                  </div>
-                  <div class="col-md-9 col-12 my-3">
-                      <label for="terms">
-                         <input
-                         type="checkbox"
-                         id="terms"
-                         name="terms"
-                         class="mr-2"
-                         required
-                         />
-                         Yes, I have read the Vegas Liquidation Ecom user
-                         agreement and agree to be bound by its terms and
-                         conditions.
-                     </label>
-                 </div>
-
-                 <div class="col-md-9 col-12 mb-5">
-                  <button type="button" class="btn btn-secondary signup__form_submit w-100">
-                     Create Account
-                 </button>
-                </div>
-                </div>
                 </form>
- </div>
-</div>
-</div>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 
@@ -164,7 +168,7 @@
             <div class="modal-header">
                 <button
                 type="button"
-                class="close"
+                class="close signupModal_close"
                 data-dismiss="modal"
                 aria-label="Close"
                 >
@@ -175,53 +179,60 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 text-center">
-                       <img
-                       class="my-3"
-                       src="<?php echo base_url(); ?>/assets/frontend_images/vegas_img.jpg"
-                       alt="Company logo" style="width: 160px;"
-                       />
-                       <p>Welcome to <strong>VEGAS LIQUIDATION ECOM</strong></p>
-                       <h2><strong>LOGIN</strong></h2>
-                   </div>
-               </div>
-               <form action="" id="loginsignup__form">
-                <div class="form-row justify-content-center">
+                        <img
+                        class="my-3"
+                        src="<?php echo base_url(); ?>/assets/frontend_images/vegas_img.jpg"
+                        alt="Company logo" style="width: 160px;"
+                        />
+                        <p>Welcome to <strong>VEGAS LIQUIDATION ECOM</strong></p>
+                        <h2><strong>LOGIN</strong></h2>
+                    </div>
+                </div>
+                <form action="" id="loginsignup__form">
+                    <div class="form-row justify-content-center">
 
 
-                   <div class="col-md-9 col-12 my-2">
-                      <label for="email_login">Email Address</label>
-                      <input
-                      type="email"
-                      id="email_login"
-                      name="email_login"
-                      placeholder="example@google.com"
-                      class="form-control"
-                      required
-                      />
-                  </div>
+                        <div class="col-md-9 col-12 my-2">
+                            <label for="email_login">Email Address</label>
+                            <input
+                            type="email"
+                            id="email_login"
+                            name="email_login"
+                            placeholder="example@google.com"
+                            class="form-control"
+                            required
+                            />
+                        </div>
 
-                  <div class="col-md-9 col-12 my-2">
-                      <label for="password1_login">Password</label>
-                      <input
-                      type="password"
-                      id="password1_login"
-                      name="password1_login"
-                      placeholder="*********"
-                      class="form-control"
-                      required
-                      />
-                  </div>
+                        <div class="col-md-9 col-12 my-2">
+                            <label for="password1_login">Password</label>
+                            <input
+                            type="password"
+                            id="password1_login"
+                            name="password1_login"
+                            placeholder="*********"
+                            class="form-control"
+                            required
+                            />
+                        </div>
 
-                  <div class="col-md-9 col-12 mb-5">
-                      <button type="button" class="btn btn-secondary login__form_submit w-100">
-                         Login
-                     </button>
-                 </div>
-             </div>
-         </form>
-     </div>
- </div>
-</div>
+                        <div class="col-md-9 col-12 mb-5">
+                            <button type="button" class="btn btn-secondary login__form_submit w-100">
+                                Login
+                            </button> 
+                            <a href="<?php echo base_url() ?>forgot_password">Forgot my password</a>  
+                        </div>
+
+                        <div class="col-md-9 col-12 mb-5" style="text-align: center;">
+                            Don't have an account? <a href="" class="register_now"  >Register Now</a>   
+                        </div>    
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 <!-- Optional JavaScript -->
@@ -230,7 +241,7 @@
 
 
 </footer>
- 
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script
@@ -299,3 +310,23 @@ crossorigin="anonymous"></script>
 </script> 
 </body>
 </html>
+
+<script type="text/javascript">
+    $(document).on('click','.register_now', function(e)
+    {
+        e.preventDefault();
+        $('#loginModal').modal('hide');
+        $('#signupModal').modal('show');
+        $('.modal').css('overflow-y', 'auto');
+    });
+
+
+    $(document).on('click','.login_now', function(e)
+    {
+        e.preventDefault();
+        
+        $('#signupModal').modal('hide');
+        $('#loginModal').modal('show');
+        $('.modal').css('overflow-y', 'auto');
+    })
+</script>
