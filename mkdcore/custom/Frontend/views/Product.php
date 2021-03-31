@@ -90,8 +90,8 @@ $total_images =  count($gallery_lists) + 1;
 
                 <br>
                 <div class="row">
-                    <div class="row justify-content-center bg-white mx-md-5 ">
-                        <div class="col-10 p-0 py-3 bg-white">
+                    <div class="col-12  ">
+                        <div class="col-12 p-0 py-3 bg-white">
                             <h4  style="width: 100%;text-align: left;">DESCRIPTION</h4>
                             <p class="my-3"><?php echo $product->inventory_note; ?></p> 
                              
