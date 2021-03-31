@@ -277,7 +277,7 @@ if ($layout_clean_mode) {
 				<div class="page_full_width" style="display:none !important;text-align: center;" id="print-me-1">
 					<div class='row '  >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1 class="make_font_big" style="font-size: 42px;"  >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
+							<h1 class="make_font_big" style="font-size: 72px;"  >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
 						</div> 
 					</div>
 
@@ -285,14 +285,14 @@ if ($layout_clean_mode) {
 
 					<div class='row ' >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1  class="make_font_big"  style="font-size: 42px;"  >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
+							<h1  class="make_font_big"  style="font-size: 72px;"  >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
 						</div> 
 					</div>
 
 
 					<div class='row '>
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1  class="make_font_big"  style="font-size: 42px;"  >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
+							<h1  class="make_font_big"  style="font-size: 72px;"  >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
 						</div> 
 					</div> 
  
@@ -325,7 +325,7 @@ if ($layout_clean_mode) {
 
 		      		<div class='row '  >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1  class="make_font_big"  style="font-size: 42px;" >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
+							<h1  class="make_font_big"  style="font-size: 72px;" >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
 						</div> 
 					</div>
 
@@ -333,14 +333,14 @@ if ($layout_clean_mode) {
 
 					<div class='row ' >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1  class="make_font_big"  style="font-size: 42px;" >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
+							<h1  class="make_font_big"  style="font-size: 72px;" >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
 						</div> 
 					</div>
 
 
 					<div class='row '>
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1  class="make_font_big"  style="font-size: 42px;"  >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
+							<h1  class="make_font_big"  style="font-size: 72px;"  >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
 						</div> 
 					</div> 
  
