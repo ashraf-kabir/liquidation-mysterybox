@@ -925,7 +925,6 @@
 				"Dashboard": "/dashboard", 
 				"xyzInventory" : "/inventory/0?order_by=id&direction=DESC", 
 				"xyzCategory" : "/category/0?order_by=id&direction=DESC", 
-				"xyzDepartment" : "/department/0?order_by=id&direction=DESC", 
 				"xyzTax": "/tax/0?order_by=id&direction=DESC",
 				"xyzCustomer" : "/customer/0?order_by=id&direction=DESC", 
 				"xyzInventory Location" : "/inventory_location/0?order_by=id&direction=DESC", 
