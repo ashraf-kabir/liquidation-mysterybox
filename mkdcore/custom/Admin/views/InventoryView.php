@@ -9,7 +9,7 @@ if ($layout_clean_mode) {
 <style type="text/css">
 	@media print{    
 	    .make_font_big{
-	        font-size: 42px;
+	        font-size: 72px;
 	    }
 	    .page_full_width{
 	    	width:100vh; 
