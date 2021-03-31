@@ -1188,4 +1188,61 @@ class Home_controller extends Manaknight_Controller
         exit();  
     }
 
+
+
+    public function add_alert_notification()
+    {
+
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('product_name', 'Product Name', 'required');
+        $this->form_validation->set_rules('product_sku', 'Product Sku', 'required');
+        $this->form_validation->set_rules('product_id', 'Product ID', 'required|integer'); 
+        
+        if ($this->form_validation->run() === FALSE)
+        {
+            $error_msg = validation_errors(); 
+            $output['error'] = $error_msg;
+            echo json_encode($output);
+            exit(); 
+        }
+        
+        $this->load->model('notification_system_model');
+        
+        $product_id    =   $this->input->post('product_id', TRUE);
+        $email         =   $this->input->post('email', TRUE);
+        $product_name  =   $this->input->post('product_name', TRUE);
+        $product_sku   =   $this->input->post('product_sku', TRUE);
+        $product_upc   =   $this->input->post('product_upc', TRUE);
+        
+        $already_exist = $this->notification_system_model->get_by_fields(['email' => $email , 'product_id' => $product_id , 'is_notified' => 0 ]); 
+
+        if (empty($already_exist)) 
+        {
+            $response =  $this->notification_system_model->create([
+                'product_id'   => $product_id,
+                'email'        => $email,
+                'product_name' => $product_name,
+                'product_sku'  => $product_sku,
+                'product_upc'  => $product_upc,
+                'is_notified'  => 0
+            ]);
+
+
+            if ($response) 
+            {
+                $output['success'] = "Success! Your notification has been added successfully."; 
+                echo json_encode($output);
+                exit(); 
+            }
+
+            $output['error'] = "Error! Please try again later."; 
+            echo json_encode($output);
+            exit(); 
+        }
+  
+        $output['error'] = "Error! Your notification is already there."; 
+        echo json_encode($output);
+        exit();  
+    }
+
 }

@@ -500,3 +500,43 @@ $(document).on('submit','.send_checkout',function(e){
 
 
 check_cart_total_items();
+
+
+$(document).on('click','.on_click_notification',function(e){
+    e.preventDefault();
+    $('.product__title_on_modal').text($(this).attr('data-product-title') );
+    $('.on_click_notification_modal').modal('show');
+});
+
+
+
+
+$(document).on('click','.add_alert_notification',function(e){
+    e.preventDefault();
+    dataForm = $('#add_alert_notification').serializeArray();
+    $.ajax({
+        url: '../v1/api/add_alert_notification',
+        timeout: 30000,
+        method: 'POST',
+        dataType: 'JSON',  
+        data : dataForm,
+        success: function (response)  
+        {     
+            if(response.success)
+            {
+                $('.on_click_notification_modal').modal('hide');
+                toastr.success(response.success); 
+            } 
+
+
+            if(response.error)
+            { 
+                toastr.error(response.error); 
+            } 
+        },
+        error: function()
+        { 
+            toastr.error('Error! Connection timeout.'); 
+        } 
+    });
+});

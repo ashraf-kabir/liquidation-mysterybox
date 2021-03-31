@@ -127,7 +127,9 @@ $total_images =  count($gallery_lists) + 1;
                     </div>
                 <?php }else{ ?>
                     <div class="col-12 bg-white w-100 p-2 p-md-4 ">
-                        <label style="color: red;" for="quantity" ><strong>Out of stock</strong></label>  
+                        <label style="color: red;" for="quantity" ><strong>Out of stock</strong> 
+                            <a href="" class="on_click_notification btn btn-primary" data-product-title="<?php echo $product->product_name; ?>"> Notify me when available</a>
+                        </label>  
                     </div>
                 <?php } ?>
   
@@ -228,7 +230,36 @@ $total_images =  count($gallery_lists) + 1;
         </div>
     </section>
 
+<div class="modal on_click_notification_modal" tabindex="-1">
+    <div class="modal-dialog">
+        <form id="add_alert_notification">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title product__title_on_modal">Product name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                        
+                   
+                    <p>Enter your email address and we will let you know when it's back.</p>
 
+                    <input type="email" class="form-control" name="email" value=""  required placeholder="xyz@gmail.com" />
+                    <input type="hidden" name="product_id" value="<?php echo $product->id ?>"   />
+                    <input type="hidden" name="product_name" value="<?php echo $product->product_name ?>"    />
+                    <input type="hidden" name="product_sku" value="<?php echo $product->sku ?>"    />
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary add_alert_notification">Add</button>
+            </div>
+        </div> 
+        </form>
+    </div>
+</div>
  
     
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" defer></script>

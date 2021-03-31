@@ -19,7 +19,8 @@
 			"id": 4
 		}
 	],
-	"models": [{
+	"models": [
+		{
 			"name": "setting",
 			"timestamp": true,
 			"migration": true,
@@ -891,6 +892,31 @@
 			"count": "",
 			"override": "",
 			"seed": [{ "tax": 8 }]
+		},
+		{ 
+			"name": "notification_system",
+			"timestamp": true,
+			"migration": true,
+			"unique": [],
+			"field": [
+				["id", "integer", [], "ID", "", ""], 
+				["product_id", "id", [], "Product ID", "required|numeric", "required|numeric"],
+				["email", "string", [{"limit": 255}], "Email", "required|valid_email", "required|valid_email"],
+				["is_notified", "id", [], "Is Notified", "required|numeric", "required|numeric"],
+				["product_name", "string", [{"limit": 255}], "Product Name", "required", "required"],
+				["product_sku", "string", [{"limit": 255}], "Product Sku", "required", "required"],
+				["product_upc", "string", [{"limit": 255}], "Product UPC", "", ""]
+			],
+			"join": [],
+			"method": "",
+			"mapping": { 
+				"is_notified": {"1": "Yes","0": "No"}
+			},
+			"pre": "if(!isset($data['is_notified']))\n\t\t{\n\t\t\t $data['is_notified'] = 0; \n\t\t}\n\t\t\t",
+			"post": "",
+			"count": "",
+			"override": "",
+			"seed": []
 		}
 
 	],
@@ -2699,6 +2725,7 @@
 		"v1/api/product/scan_product"   : "Guest/Ecom_api_controller/scan_product",
 		"try_printer"                   : "Guest/Ecom_api_controller/try_printer",
 		"v1/api/sale_order/update_status": "Guest/Ecom_api_controller/update_order_status",
+		"v1/api/add_alert_notification": "Guest/Home_controller/add_alert_notification",
 		
 		
 
