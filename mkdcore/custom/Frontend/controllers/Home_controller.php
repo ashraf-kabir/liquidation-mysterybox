@@ -553,7 +553,7 @@ class Home_controller extends Manaknight_Controller
             $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
             $this->pos_checkout_service->set_coupon_model($this->coupon_model);
 
-
+            $this->db->trans_begin();
  
 
             /**
@@ -638,8 +638,7 @@ class Home_controller extends Manaknight_Controller
                   $tax_amount = $tax_data->tax/100;
                 }  
             }
-            // $this->db->trans_strict(TRUE);
-            // $this->db->trans_begin();
+             
  
             $customer_data->shipping_service_name  = $shipping_cost_name;
             $customer_data->shipping_service_id    = $shipping_service_id;
@@ -715,7 +714,7 @@ class Home_controller extends Manaknight_Controller
 
 
                 // //if coupon used then save log
-                // $coupon_log_id = "";
+                $coupon_log_id = "";
                 // if($coupon_condition)
                 // {
                 //     $coupon_log_id = $this->coupon_orders_log_model->create(['code' => $coupon_code, 'order_id' => $order_id, 'user_id' => $user_id, 'user_ip' => $_SERVER['REMOTE_ADDR'], 'amount' => $coupon_amount ]);
@@ -776,6 +775,7 @@ class Home_controller extends Manaknight_Controller
                         }
                         else
                         { 
+                            $this->db->trans_rollback();
                             $output['status'] = 0;
                             $output['error']  = 'Error! Please try again later.';
                             echo json_encode($output);
@@ -837,6 +837,8 @@ class Home_controller extends Manaknight_Controller
                     $this->send_email_on_order($order_id);
                     $this->send_email_new_order_to_admin($order_id);
 
+
+                    $this->db->trans_commit();
                     $output['status'] = 0;
                     $output['success']  = 'Order has been created successfully.';
                     $output['redirect_url']  = base_url() . 'order_confirmation';
@@ -845,6 +847,7 @@ class Home_controller extends Manaknight_Controller
                 }
                 else
                 {
+                    $this->db->trans_rollback();
                     $output['status'] = 0;
                     $output['error']  = 'Error! Please try again later.';
                     echo json_encode($output);
@@ -856,6 +859,7 @@ class Home_controller extends Manaknight_Controller
             }
             else
             {
+                $this->db->trans_rollback();
                 $output['status'] = 0;
                 $output['error']  = 'Error! Please try again later.';
                 echo json_encode($output);

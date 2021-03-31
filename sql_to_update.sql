@@ -56,9 +56,3 @@ ALTER TABLE `customer` CHANGE `token` `token` VARCHAR(255) CHARACTER SET utf8 CO
 
 
 
-
-
-
-
-ALTER TABLE `customer` ADD `token` VARCHAR(255) NOT NULL AFTER `name`, ADD `token_expiry` VARCHAR(255) NOT NULL AFTER `token`;
-
