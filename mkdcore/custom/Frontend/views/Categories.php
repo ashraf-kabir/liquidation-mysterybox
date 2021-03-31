@@ -60,7 +60,7 @@
           <div class="row">
                <div class="col-md-3">  
                     <aside id="sidebar-shop" class="widget-area site-sidebar style-2" role="complementary">
-                        <section  id="tz_categories-2" style="width: 50%;" class="widget widget_tz_categories"><h3 class="widget-title" itemprop="name"><span>Mystery Box</span></h3>
+                        <section  id="tz_categories-2" style="width: 152px;" class="widget widget_tz_categories"><h3 class="widget-title" itemprop="name"><span>Mystery Box</span></h3>
 
                               <ul class="pt-categories">
                                    <?php if( !empty($all_categories) ){ ?>
