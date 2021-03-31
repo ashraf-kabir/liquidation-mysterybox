@@ -29,65 +29,7 @@ class Home_controller extends Manaknight_Controller
     }
 
     public function index($offset = 0)
-    { 
-        // $this->load->model('inventory_model');
-        
-
-        // $search_term = $this->input->get('search_term', TRUE);
-        // $category_id = $this->input->get('category', TRUE);
-        // $type_id     = $this->input->get('type', TRUE);
-
-        // if($search_term != '')
-        // {
-        //     $this->load->model('search_terms_model');
-        //     $this->load->library('search_record_service');
-
-        //     $this->search_record_service->set_search_terms_model($this->search_terms_model); 
-        //     $this->search_record_service->add_search_record($search_term); 
-        // }
-
-        // $this->load->library('pagination');
-        // $rows_data = $this->inventory_model->all_products_list($type_id, $search_term, $category_id);
-
-        // $total_rows = 0;
-        // if(!empty($rows_data))
-        // {
-        //     $total_rows = count($rows_data);
-        // }
-        // $limit = 3;
-        // $this->pagination->initialize([
-        //     'reuse_query_string' => TRUE,
-        //     'base_url' => 'http://localhost:9000/',
-        //     'total_rows' => $total_rows,
-        //     'per_page' => $limit,
-        //     'num_links' => 4,
-        //     'full_tag_open' => '<ul class="pagination justify-content-end">',
-        //     'full_tag_close' => '</ul>',
-        //     'attributes' => ['class' => 'page-link'],
-        //     'first_link' => FALSE,
-        //     'last_link' => FALSE,
-        //     'first_tag_open' => '<li class="page-item">',
-        //     'first_tag_close' => '</li>',
-        //     'prev_link' => '&laquo',
-        //     'prev_tag_open' => '<li class="page-item">',
-        //     'prev_tag_close' => '</li>',
-        //     'next_link' => '&raquo',
-        //     'next_tag_open' => '<li class="page-item">',
-        //     'next_tag_close' => '</li>',
-        //     'last_tag_open' => '<li class="page-item">',
-        //     'last_tag_close' => '</li>',
-        //     'cur_tag_open' => '<li class="page-item active"><a href="#" class="page-link">',
-        //     'cur_tag_close' => '<span class="sr-only">(current)</span></a></li>',
-        //     'num_tag_open' => '<li class="page-item">',
-        //     'num_tag_close' => '</li>'
-        // ]);
-        
-
-        // $data['all_products']    = $this->inventory_model->all_products_list($type_id, $search_term, $category_id,$offset,$limit);
-        
-        
-
-         
+    {  
         $data['layout_clean_mode'] = FALSE;
         $this->_render('Guest/Home',$data);
     }
@@ -195,28 +137,132 @@ class Home_controller extends Manaknight_Controller
 
     public function forgot_password()
     {  
+        
 
         if($this->input->post('email', TRUE))
         {
-        //     $name         =  $this->input->post('name', TRUE);
-        //     $from_email   =  $this->input->post('email', TRUE);
-        //     $subject      =  $this->input->post('subject', TRUE);
-        //     $subject      =  $subject . ' - ' . $name;
-        //     $message      =  $this->input->post('message', TRUE); 
+            $email         =  $this->input->post('email', TRUE);
+             
+ 
+            $this->load->model('customer_model'); 
+            $model = $this->customer_model->get_by_fields(['email' => $email ]);
 
-        //     if( $this->_send_email($from_email, $subject, $message, $name) )
-        //     {
-        //         $this->session->set_flashdata('success1','Your message has been sent successfully.');
-        //     } else{
+            if ($model)
+            {     
+
+                $this->load->library('mail_service');
+                $this->mail_service->set_adapter('smtp');
+
+                $token_b = uniqid();
+                $email_b = $email;
+
+                $data['reset_link'] = base_url() . 'update_password/' . $token_b;
+
+
+                $output = $this->customer_model->edit(['token' => $token_b], $model->id );
+
+                if ($output) 
+                { 
+                    ob_start();  
+                    $this->load->view('Guest/ResetPasswordTemplate', $data); 
+                    $content = ob_get_contents(); 
+                    ob_end_clean(); 
+
+                     
+                    $from = $this->config->item('from_email');
+                    
+
+                    $response = $this->mail_service->send($from, $email, "Reset your password", $content);
+
+                    if( $response )
+                    {
+                        $this->session->set_flashdata('success1','Success! Please check your mail for further instructions.');
+                        redirect($_SERVER['HTTP_REFERER']);
+                    }   
+                }
+
                 $this->session->set_flashdata('error1','Error! Please try again later.');
-            // }  
+                redirect($_SERVER['HTTP_REFERER']);
+            }  
 
+              
+            $this->session->set_flashdata('error1','Error! Invalid Email/Password.'); 
             redirect($_SERVER['HTTP_REFERER']);
         }
         
  
         $data['layout_clean_mode'] = FALSE;
         $this->_render('Guest/ForgotPassword',$data);
+    }
+
+
+    public function update_password($token)
+    {  
+        
+
+        if($token)
+        {
+            $token         =  $token;  
+            $this->load->model('customer_model'); 
+            $model = $this->customer_model->get_by_fields(['token' => $token]);
+
+            if (!$model)
+            {     
+                return redirect('/forgot_password');
+            }  
+              
+            $data['layout_clean_mode'] = FALSE;
+            $data['token'] = $token;
+            $this->_render('Guest/ChangePassword',$data);
+        } 
+        else
+        {
+            return redirect('');
+        }
+    }
+
+
+
+    public function set_new_password()
+    {  
+        
+
+        if($this->input->post('token_b', TRUE))
+        {
+            $token             =  $this->input->post('token_b', TRUE);
+            $password          =  $this->input->post('password', TRUE);
+            $password2         =  $this->input->post('password2', TRUE);
+
+
+            if ($password != $password2) 
+            {
+                $this->session->set_flashdata('error1','Error! Both password should be same.'); 
+                redirect($_SERVER['HTTP_REFERER']);
+            }
+
+            $this->load->model('customer_model'); 
+            $model = $this->customer_model->get_by_fields(['token' => $token]);
+
+            if ($model) 
+            {
+                $password   = password_hash($password, PASSWORD_BCRYPT); 
+                $response = $this->customer_model->edit([ 'password' => $password ,'token' => '' ], $model->id);
+
+                if ($response) 
+                {
+                    $this->session->set_flashdata('success1','Success! Your password has been updated successfully.');
+                    
+                    redirect('');
+                } 
+            }
+            
+            $this->session->set_flashdata('error1','Error! Please try again later.'); 
+            redirect($_SERVER['HTTP_REFERER']);
+        } 
+        else
+        {
+            return redirect('');
+        }
     }
 
 

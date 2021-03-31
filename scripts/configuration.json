@@ -557,6 +557,15 @@
 				["company_name", "string", [{
 					"limit": 255
 				}], "xyzCompany Name", "", ""], 
+
+				["token", "string", [{
+					"limit": 255
+				}], "Token", "", ""], 
+
+				["token_expiry", "string", [{
+					"limit": 255
+				}], "Token Expiry", "", ""], 
+
 				["status", "integer", [], "xyzStatus", "required|integer", "required|integer"]
 			],
 			"method": "",
@@ -2660,8 +2669,10 @@
 		"../mkdcore/custom/Frontend/views/Product.php" : "../release/application/views/Guest/Product.php",
 		"../mkdcore/custom/Frontend/views/AboutUs.php" : "../release/application/views/Guest/AboutUs.php",
 		"../mkdcore/custom/Frontend/views/ContactUs.php" : "../release/application/views/Guest/ContactUs.php",
+		"../mkdcore/custom/Frontend/views/ResetPasswordTemplate.php" : "../release/application/views/Guest/ResetPasswordTemplate.php",
 		"../mkdcore/custom/Frontend/views/Order_Confirmation.php" : "../release/application/views/Guest/Order_Confirmation.php",
 		"../mkdcore/custom/Frontend/views/Profile.php" : "../release/application/views/Guest/Profile.php",
+		"../mkdcore/custom/Frontend/views/ChangePassword.php" : "../release/application/views/Guest/ChangePassword.php",
 
 		"../mkdcore/custom/Services/Stripe_terminal_service.php" : "../release/application/libraries/Stripe_terminal_service.php",
 
@@ -2743,6 +2754,8 @@
 		"about_us": "Guest/Home_controller/about_us",
 		"contact_us": "Guest/Home_controller/contact_us",
 		"forgot_password": "Guest/Home_controller/forgot_password",
+		"set_new_password": "Guest/Home_controller/set_new_password",
+		"update_password/(:any)": "Guest/Home_controller/update_password/$1",
 		"v1/api/sign_up" : "Guest/Home_controller/sign_up",
 		"v1/api/login_customer" : "Guest/Home_controller/login_customer",
 		"cart_remove/(:num)" : "Guest/Home_controller/cart_remove/$1",

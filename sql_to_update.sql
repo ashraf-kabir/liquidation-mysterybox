@@ -43,3 +43,22 @@ ALTER TABLE `inventory` CHANGE `youtube_thumbnail_1` `youtube_thumbnail_1` VARCH
 
 
 ALTER TABLE `pos_order` CHANGE `customer_email` `customer_email` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `customer_phone` `customer_phone` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+
+ALTER TABLE `customer` CHANGE `token` `token` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `token_expiry` `token_expiry` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ALTER TABLE `customer` ADD `token` VARCHAR(255) NOT NULL AFTER `name`, ADD `token_expiry` VARCHAR(255) NOT NULL AFTER `token`;
+
