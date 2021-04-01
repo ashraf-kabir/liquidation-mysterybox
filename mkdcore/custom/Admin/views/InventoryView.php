@@ -350,7 +350,7 @@ if ($layout_clean_mode) {
 
 					<div class='row' >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<img style="width: 100%"   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
+							<img style="width: 100%;    transform: rotate(90deg);"   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
 						</div> 
 					</div>  
 			         
