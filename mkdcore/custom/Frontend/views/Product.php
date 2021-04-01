@@ -85,19 +85,7 @@ $total_images =  count($gallery_lists) + 1;
                             <p id="caption" style=" margin: 0px;"></p>
                         </div>
                     </div>
-                </div>
-
-
-                <br>
-                <div class="row">
-                    <div class="col-12  ">
-                        <div class="col-12 p-0 py-3 bg-white">
-                            <h4  style="width: 100%;text-align: left;">DESCRIPTION</h4>
-                            <p class="my-3"><?php echo $product->inventory_note; ?></p> 
-                             
-                        </div> 
-                    </div> 
-                </div>
+                </div> 
             </div>
             <div class="col-md-3 ">
                 <div class="bg-white w-100 p-2 p-md-4"> 
@@ -113,9 +101,13 @@ $total_images =  count($gallery_lists) + 1;
                             <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity w-75 w-md-50"  > 
                                 <option value="">Select</option>
                                 <?php  
-                                for ($i=1; $i < $product->quantity; $i++) 
+                                for ($i=1; $i <= $product->quantity; $i++) 
                                 { 
-                                    echo '<option value="' . $i . '" >' . $i .'</option>';
+                                    if($i <= 10)
+                                    {
+                                        echo '<option value="' . $i . '" >' . $i .'</option>';
+                                    }
+                                    
                                 }
                                 ?>
                                 
@@ -131,8 +123,17 @@ $total_images =  count($gallery_lists) + 1;
                             <a href="" class="on_click_notification btn btn-primary" data-product-title="<?php echo $product->product_name; ?>"> Notify me when available</a>
                         </label>  
                     </div>
-                <?php } ?>
-  
+                <?php } ?> 
+
+                <div class="row mt-4">
+                    <div class="col-12  ">
+                        <div class="col-12 p-2 p-md-4 bg-white">
+                            <h4  style="width: 100%;text-align: left;">DESCRIPTION</h4>
+                            <p class="my-3"><?php echo $product->inventory_note; ?></p> 
+                             
+                        </div> 
+                    </div> 
+                </div>
             </div>
         </div>
     </main>

@@ -431,6 +431,7 @@ $sub_total = $total;
                 <div class="cart__address p-4">
                     <h4 class="my-4"><i class="fas fa-truck"></i> Shipping</h4>
                      
+                    <h5 class="my-3">  <?php echo $customer->shipping_address; ?>  </h5>
                     <p class="w-75 my-2">
                         <?php echo $customer->shipping_city; ?>, <?php echo $customer->shipping_state; ?>
 

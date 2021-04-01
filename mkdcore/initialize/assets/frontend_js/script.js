@@ -283,7 +283,9 @@ $(document).ready(() => {
                 
                 let shipping_options = '<input type="hidden" class="shipping-cost-name" name="shipping_cost_name" value=""  /><input type="hidden" class="shipping-cost-price-value" name="shipping_cost_value" value="0"  /><select class="form-control shipping-cost-price  mb-2" name="shipping_service_id"><option value="">Select Service</option>';
                   $(response.list_all).each(function(index,object){
-                    shipping_options += '<option value="' + object.serviceCode + '" data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  >' + object.serviceName + '  (Shipment Cost $' + object.shipmentCost + ' ) ( Other Cost $' + object.otherCost + ' )   </option>';
+                    var shipping_cost_total = object.shipmentCost + object.otherCost;
+                    shipping_cost_total = parseFloat(shipping_cost_total).toFixed(2);
+                    shipping_options += '<option value="' + object.serviceCode + '" data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  >' + object.serviceName + '  ( $' + shipping_cost_total + ' )</option>';
                   }) 
                 shipping_options += '</select>';
 
