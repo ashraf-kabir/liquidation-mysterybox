@@ -7,15 +7,33 @@ if ($layout_clean_mode) {
 ?>
 
 <style type="text/css">
-	/*@media print{    
-	    .make_font_big{
-	        font-size: 72px !important;
+
+	@media print 
+	{ 
+		.make_font_big{
+	        font-size: 5.5rem !important;
+	        text-align: center;
 	    }
-	    .page_full_width2{
-		 	    writing-mode: vertical-rl !important;
-    text-orientation: mixed !important;
-	    }
-	}*/
+		.printable{  
+			size:3.5in;
+		}  
+
+		.printable{padding:0px!important;margin:0px!important;}
+		.printable{width:100%!important;float:left!important;}
+		.printable{padding:0px!important;margin:0px!important;}
+
+
+		.record_break_per {
+    		page-break-before : avoid;
+    		page-break-after: always; 
+		}
+		.record_break_per{
+		    display: block;
+		    padding-left: 0 !important;
+		    width: 100%;
+		} 
+	} 
+	 
 </style>
 <div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
@@ -274,10 +292,10 @@ if ($layout_clean_mode) {
 				
 
 
-				<div class="page_full_width" style="display:none !important;text-align: center;" id="print-me-1">
-					<div class="page_full_width2" style=" writing-mode: vertical-rl !important;text-orientation: mixed !important;" >
+				<div class="page_full_width record_break_per printable" style="display:none !important;text-align: center;" id="print-me-1">
+					 
 					<div class='row '  >
-						<div class="col-sm-12" style="text-align: center  !important;">
+						<div class="col-sm-12" >
 							<h1 class="make_font_big"   >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
 						</div> 
 					</div>
@@ -285,28 +303,25 @@ if ($layout_clean_mode) {
 
 
 					<div class='row ' >
-						<div class="col-sm-12" style="text-align: center  !important;">
+						<div class="col-sm-12" >
 							<h1  class="make_font_big"    >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
 						</div> 
 					</div>
 
 
 					<div class='row '>
-						<div class="col-sm-12" style="text-align: center  !important;">
+						<div class="col-sm-12" >
 							<h1  class="make_font_big"    >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
 						</div> 
 					</div> 
  
 
-					<div class='row' >
-						<div class="col-sm-12" style="text-align: center  !important;">
+					<div class='row' style="text-align: center;" >
+						<div class="col-sm-12" >
 							<img  style="width: 100%" src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
 						</div> 
 					</div>  
-					</div>
-				</div>
-
-
+				</div> 
             </div>
         </div>
     </div>
@@ -323,38 +338,37 @@ if ($layout_clean_mode) {
 			          	<span aria-hidden="true">&times;</span>
 			        </button>
 		      	</div>
-		      	<div class="modal-body  page_full_width" id="print-me-2">
+		      	<div class="modal-body  page_full_width  record_break_per printable" id="print-me-2">
 
-		      		<div class='page_full_width2 '  style=" writing-mode: vertical-rl !important;text-orientation: mixed !important;width: 100%;" >
+		      		 
 		      		<div class='row '  >
-						<div class="col-sm-12" style="text-align: center  !important;padding: 0px;">
-							<h1  class="make_font_big" style="padding: 0px;margin: 0px;font-size: 120px"   >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
+						<div class="col-sm-12" >
+							<h1  class="make_font_big"    >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
 						</div> 
 					</div>
 
 
 
 					<div class='row ' >
-						<div class="col-sm-12" style="text-align: center  !important;padding: 0px;">
-							<h1  class="make_font_big" style="padding: 0px;margin: 0px;font-size: 120px"  >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
+						<div class="col-sm-12" >
+							<h1  class="make_font_big"   >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
 						</div> 
 					</div>
 
 
 					<div class='row '>
-						<div class="col-sm-12" style="text-align: center  !important;padding: 0px;">
-							<h1  class="make_font_big"   style="padding: 0px;margin: 0px;font-size: 120px" >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
+						<div class="col-sm-12" >
+							<h1  class="make_font_big"    >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
 						</div> 
 					</div> 
  
 
-					<div class='row' >
-						<div class="col-sm-12" style="text-align: center  !important;padding: 0px;">
-							<img style="width: 100%;    transform: rotate(90deg);"   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
+					<div class='row' style="text-align: center;">
+						<div class="col-sm-12" >
+							<img style="width: 100%"   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
 						</div> 
 					</div>  
 			         
-		      		</div>
 		      	</div>
 		      	<div class="modal-footer">
 		        	<button type="button" class="btn btn-primary"  onClick="printdiv('print-me-2')" >Print</button>

@@ -90,15 +90,13 @@ class Shipstation_api_service {
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS =>"{\n  \"carrierCode\": '". $carrier_code ."' ,\n  \"serviceCode\": null,\n  \"packageCode\": null,\n  \"fromPostalCode\": " . $from_postal_code . ",\n  \"toState\": '" . $to_state . "',\n  \"toCountry\": '" . $to_country . "',\n  \"toPostalCode\": '" . $to_postal_code . "',\n  \"toCity\": '" . $to_city . "',\n  \"weight\": {\n    \"value\": " . $weight_value . ",\n    \"units\": '" . $weight_units . "'  \n  },\n  \"dimensions\": {\n    \"units\": '" . $dimensions_units . "',\n    \"length\": " . $dimensions_length . ",\n    \"width\": " . $dimensions_width . ",\n    \"height\": " . $dimensions_height . "\n  },\n  \"confirmation\": '" . $confirmation . "',\n \n}",
+                CURLOPT_POSTFIELDS =>"{\n  \"carrierCode\": '". $carrier_code ."' ,\n  \"serviceCode\": null,\n  \"packageCode\": null,\n  \"fromPostalCode\": " . $from_postal_code . ",\n  \"toState\": '" . $to_state . "',\n  \"toCountry\": '" . $to_country . "',\n  \"toPostalCode\": '" . $to_postal_code . "',\n  \"toCity\": '" . $to_city . "',\n  \"weight\": {\n    \"value\": " . $weight_value . ",\n    \"units\": '" . $weight_units . "'  \n  },\n  \"dimensions\": {\n    \"units\": '" . $dimensions_units . "',\n    \"length\": " . $dimensions_length . ",\n    \"width\": " . $dimensions_width . ",\n    \"height\": " . $dimensions_height . "\n  },\n  \"confirmation\": '" . $confirmation . "',\n  \"residential\": '" . $residential . "'\n}",
                 CURLOPT_HTTPHEADER => array(
                     "Host: ssapi.shipstation.com",
                     "Authorization: " . $authorization,
                     "Content-Type: application/json"
                 ),
             ));
-
-             // \"residential\": '" . $residential . "'
 
             $response = curl_exec($curl); 
             curl_close($curl); 
