@@ -7,15 +7,15 @@ if ($layout_clean_mode) {
 ?>
 
 <style type="text/css">
-	@media print{    
+	/*@media print{    
 	    .make_font_big{
-	        font-size: 72px;
+	        font-size: 72px !important;
 	    }
-	    .page_full_width{
-	    	width:100vh; 
-  			height:100vh;
+	    .page_full_width2{
+		 	    writing-mode: vertical-rl !important;
+    text-orientation: mixed !important;
 	    }
-	}
+	}*/
 </style>
 <div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
@@ -275,9 +275,10 @@ if ($layout_clean_mode) {
 
 
 				<div class="page_full_width" style="display:none !important;text-align: center;" id="print-me-1">
+					<div class="page_full_width2" style=" writing-mode: vertical-rl !important;text-orientation: mixed !important;" >
 					<div class='row '  >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1 class="make_font_big" style="font-size: 72px;"  >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
+							<h1 class="make_font_big"   >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
 						</div> 
 					</div>
 
@@ -285,14 +286,14 @@ if ($layout_clean_mode) {
 
 					<div class='row ' >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1  class="make_font_big"  style="font-size: 72px;"  >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
+							<h1  class="make_font_big"    >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
 						</div> 
 					</div>
 
 
 					<div class='row '>
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1  class="make_font_big"  style="font-size: 72px;"  >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
+							<h1  class="make_font_big"    >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
 						</div> 
 					</div> 
  
@@ -302,6 +303,7 @@ if ($layout_clean_mode) {
 							<img  style="width: 100%" src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
 						</div> 
 					</div>  
+					</div>
 				</div>
 
 
@@ -323,9 +325,10 @@ if ($layout_clean_mode) {
 		      	</div>
 		      	<div class="modal-body  page_full_width" id="print-me-2">
 
+		      		<div class='page_full_width2 '  style=" writing-mode: vertical-rl !important;text-orientation: mixed !important;width: 100%;" >
 		      		<div class='row '  >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1  class="make_font_big"  style="font-size: 72px;" >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
+							<h1  class="make_font_big" style="padding: 0px;margin: 0px;font-size: 120px"   >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
 						</div> 
 					</div>
 
@@ -333,14 +336,14 @@ if ($layout_clean_mode) {
 
 					<div class='row ' >
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1  class="make_font_big"  style="font-size: 72px;" >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
+							<h1  class="make_font_big" style="padding: 0px;margin: 0px;font-size: 120px"  >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
 						</div> 
 					</div>
 
 
 					<div class='row '>
 						<div class="col-sm-12" style="text-align: center  !important;">
-							<h1  class="make_font_big"  style="font-size: 72px;"  >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
+							<h1  class="make_font_big"   style="padding: 0px;margin: 0px;font-size: 120px" >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
 						</div> 
 					</div> 
  
@@ -351,6 +354,7 @@ if ($layout_clean_mode) {
 						</div> 
 					</div>  
 			         
+		      		</div>
 		      	</div>
 		      	<div class="modal-footer">
 		        	<button type="button" class="btn btn-primary"  onClick="printdiv('print-me-2')" >Print</button>
