@@ -327,7 +327,7 @@ if ($layout_clean_mode) {
 
 		      		<div class='page_full_width2 '  style=" writing-mode: vertical-rl !important;text-orientation: mixed !important;width: 100%;" >
 		      		<div class='row '  >
-						<div class="col-sm-12" style="text-align: center  !important;">
+						<div class="col-sm-12" style="text-align: center  !important;padding: 0px;">
 							<h1  class="make_font_big" style="padding: 0px;margin: 0px;font-size: 120px"   >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
 						</div> 
 					</div>
@@ -335,21 +335,21 @@ if ($layout_clean_mode) {
 
 
 					<div class='row ' >
-						<div class="col-sm-12" style="text-align: center  !important;">
+						<div class="col-sm-12" style="text-align: center  !important;padding: 0px;">
 							<h1  class="make_font_big" style="padding: 0px;margin: 0px;font-size: 120px"  >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
 						</div> 
 					</div>
 
 
 					<div class='row '>
-						<div class="col-sm-12" style="text-align: center  !important;">
+						<div class="col-sm-12" style="text-align: center  !important;padding: 0px;">
 							<h1  class="make_font_big"   style="padding: 0px;margin: 0px;font-size: 120px" >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
 						</div> 
 					</div> 
  
 
 					<div class='row' >
-						<div class="col-sm-12" style="text-align: center  !important;">
+						<div class="col-sm-12" style="text-align: center  !important;padding: 0px;">
 							<img style="width: 100%;    transform: rotate(90deg);"   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
 						</div> 
 					</div>  
