@@ -2628,6 +2628,9 @@
 		"../mkdcore/custom/styles.css": "../release/assets/css/styles.css",
 		"../mkdcore/custom/app.js": "../release/assets/js/app.js", 
 		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css",
+		
+		"../mkdcore/custom/assets/js/address_form.js": "../release/assets/js/address_form.js",
+
 		"../mkdcore/custom/Services/Api_service.php" : "../release/application/libraries/Api_service.php",
 		"../mkdcore/custom/Services/Barcode_service.php" : "../release/application/libraries/Barcode_service.php",
 		"../mkdcore/custom/Services/Redirect_custom_service.php" : "../release/application/libraries/Redirect_custom_service.php",
