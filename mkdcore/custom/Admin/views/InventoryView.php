@@ -11,11 +11,11 @@ if ($layout_clean_mode) {
 	@media print 
 	{ 
 		.make_font_big{
-	        font-size: 5.5rem !important;
+	        font-size: 15rem !important;
 	        text-align: center;
 	    }
 		.printable{  
-			size:3.5in;
+			size:6in;
 		}  
 
 		.printable{padding:0px!important;margin:0px!important;}
