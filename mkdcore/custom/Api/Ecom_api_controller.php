@@ -341,6 +341,34 @@ class Ecom_api_controller extends Manaknight_Controller
                 exit();
             } 
 
+
+            $this->load->model('pos_order_model'); 
+            if(isset($params['tracking_no']) and !empty($params['tracking_no']))
+            {
+                $tracking_no    = $params['tracking_no'];
+                $sale_order_id  = $params['sale_order_id'];
+
+
+                $order_data    = $this->pos_order_model->get($sale_order_id);
+
+                if ($order_data) 
+                {
+                    $order_update = $this->pos_order_model->edit( [  'tracking_no' => $tracking_no ], $order_data->id);
+
+                    if(!$order_update)
+                    {
+                        $output['error'] = TRUE;
+                        $output['error_msg'] = "Error! please try again later.";
+                        echo json_encode($output);
+                        exit(); 
+                    } 
+                    exit(); 
+                }
+                     
+            } 
+
+
+
             if( $params['type'] != 1 AND $params['type'] != 2    )
             {
                 $output['error'] = TRUE;
@@ -351,7 +379,7 @@ class Ecom_api_controller extends Manaknight_Controller
 
             $sale_order_id = $params['sale_order_id'];   
 
-            $this->load->model('pos_order_model'); 
+            
 
             $order_data    = $this->pos_order_model->get($sale_order_id);
 

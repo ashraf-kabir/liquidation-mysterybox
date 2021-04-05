@@ -136,8 +136,8 @@
                                 required
                                 />
                                 Yes, I have read the Vegas Liquidation Ecom user
-                                agreement and agree to be bound by its terms and
-                                conditions.
+                                agreement and agree to be bound by its <a href="">Terms and
+                                conditions.</a>
                             </label>
                         </div>
 

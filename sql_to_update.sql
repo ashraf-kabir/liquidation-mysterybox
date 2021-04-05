@@ -56,3 +56,10 @@ ALTER TABLE `customer` CHANGE `token` `token` VARCHAR(255) CHARACTER SET utf8 CO
 
 
 ALTER TABLE `notification_system` CHANGE `product_id` `product_id` INT(11) NULL DEFAULT NULL, CHANGE `email` `email` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL, CHANGE `is_notified` `is_notified` INT(11) NULL DEFAULT NULL, CHANGE `product_name` `product_name` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL, CHANGE `product_sku` `product_sku` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL, CHANGE `product_upc` `product_upc` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+
+
+
+ALTER TABLE `pos_order` ADD `tracking_no` VARCHAR(255) NOT NULL AFTER `checkout_type`;
+
+ALTER TABLE `pos_order` CHANGE `tracking_no` `tracking_no` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;

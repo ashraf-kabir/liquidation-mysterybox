@@ -26,12 +26,12 @@
 
   <div class="row justify-content-center p-4">
     <div class="col-11 col-md-5 my-3 main__imgLink">
-      <a href="<?php echo base_url(); ?>?type=3">
+      <a>
         <img src="./assets/frontend_images/by_truck.jpg" class="w-100" alt="">
       </a>
     </div>
     <div class="col-11 col-md-5 my-3 main__imgLink">
-      <a href="<?php echo base_url(); ?>?type=1">
+      <a >
         <img src="./assets/frontend_images/by_pallette.jpg" class="w-100" alt="">
       </a>
     </div>

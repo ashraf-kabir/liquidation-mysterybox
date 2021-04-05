@@ -686,6 +686,7 @@
 				["shipping_address", "text", [], "xyzShipping Address", "required", "required"],
 				["intent_data", "text", [], "Stripe Data", "", ""],
 				["order_date_time", "datetime", [], "Order DateTime", "", ""],
+				["tracking_no", "string", [{ "limit": 255 }], "xyzTracking No", "", ""],
 				["shipping_country", "string", [{ "limit": 255 }], "xyzShipping Country", "", ""],
 				["shipping_state", "string", [{ "limit": 255 }], "xyzShipping State", "", ""],
 				["shipping_city", "string", [{ "limit": 255 }], "xyzShipping City", "", ""], 
