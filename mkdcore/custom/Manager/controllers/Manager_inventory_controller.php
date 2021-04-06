@@ -349,6 +349,20 @@ class Manager_inventory_controller extends Manager_controller
         {
             $inventory_id = $id;
 
+
+
+            if($quantity > $model->quantity )
+            {
+                $this->load->model('notification_system_model');
+                $this->load->library('helpers_service');
+                $this->load->library('mail_service');
+                $this->helpers_service->set_notification_system_model($this->notification_system_model);
+                $this->helpers_service->set_mail_service($this->mail_service);
+                $this->helpers_service->set_config($this->config);
+                $this->helpers_service->notify_item_has_been_added($inventory_id); 
+            }
+
+            
             /**
              * Get all images that are uploaded
              * save them one by one

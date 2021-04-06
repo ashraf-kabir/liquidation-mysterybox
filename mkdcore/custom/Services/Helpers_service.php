@@ -3,12 +3,39 @@ class Helpers_service {
 
     private $_pos_user_model;
     private $_inventory_model;
+    private $_notification_system_model;
+    private $_mail_service;
+    private $_config;
 
 
     public function set_pos_user_model($pos_user_model)
     {
         $this->_pos_user_model = $pos_user_model;
     }
+
+
+
+    public function set_config($config)
+    {
+        $this->_config = $config;
+    }
+
+
+
+
+    public function set_mail_service($_mail_service)
+    {
+        $this->_mail_service = $_mail_service;
+    }
+
+
+
+    public function set_notification_system_model($notification_system_model)
+    {
+        $this->_notification_system_model = $notification_system_model;
+    }
+
+
 
 
     public function set_inventory_model($inventory_model)
@@ -110,5 +137,27 @@ class Helpers_service {
         $this->_pos_user_model->edit($data_update,$shipper_id);
     }
 
+
+
+
+
+    public function notify_item_has_been_added($item_id)
+    {  
+        $list_data = $this->_notification_system_model->get_all( ['product_id' => $item_id , 'is_notified' => 0 ] ); 
+        if( !empty($list_data) )
+        {  
+            $this->_mail_service->set_adapter('smtp');
+            $from = $this->_config->item('from_email');
+
+            foreach ($list_data as $key => $value) 
+            {
+                $content = $value->product_name . " having sku " . $value->product_sku . " is available in stock now.";
+
+                $this->_mail_service->send($from, $value->email, $value->product_name . " new stock has been added", $content);
+
+                $this->_notification_system_model->edit( ['is_notified' => 1 ], $value->id);
+            }
+        }   
+    }
 
 }
