@@ -900,7 +900,9 @@ class Home_controller extends Manaknight_Controller
                     {
                         $item_data = $this->inventory_model->get($value->product_id);
 
-                        $value->free_ship = $item_data->free_ship;
+                        $value->free_ship     = $item_data->free_ship;
+                        $value->feature_image = $item_data->feature_image;
+                        $value->description   = $item_data->inventory_note; 
                     }
                 }
 

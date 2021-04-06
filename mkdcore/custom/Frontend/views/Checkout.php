@@ -670,11 +670,19 @@
                                 
                             <div class="product">
                                 <div class="image">
-                                    <img src="https://source.unsplash.com/collection/random" alt="" height="100" width="100" />
+
+                                    <?php if(!empty($product->feature_image)){   ?>
+                                         
+                                        <img src="<?php echo $product->feature_image; ?>" alt="" height="100" width="100" alt="<?php echo $product->product_name; ?>" />
+                                    <?php }else{ ?>
+                                        <img src="/assets/frontend_images/noun_pallet_box_1675914.png" alt="" height="100" width="100" alt="<?php echo $product->product_name; ?>" />
+                                        
+                                    <?php } ?>
+                                    
                                 </div>
                                 <div class="details">
                                     <h4><?php echo $value->product_name; ?></h4>
-                                    <p>Details: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, earum?</p>
+                                    <p>Details: <?php echo $value->description; ?></p>
                                     <p>Price: $<?php echo $value->total_price; ?></p>
                                     <div class="product-quantity">
                                         <p>Quantity:</p>
@@ -683,20 +691,23 @@
                                         <button class="btn btn-secondary">-</button>
                                     </div>
                                     <div class="shipping-cost">
-                                        <p>shipping cost:</p>
-                                        <p>$100</p>
-                                        <select name="" id="">
-                                            <option value="">Us</option>
-                                            <option value="">Canada</option>
-                                            <option value="">Germany</option>
-                                        </select>
-                                        <button class="btn btn-secondary">calculate</button>
+
+                                        <?php if ($value->free_ship == 1): ?>
+                                            <p>Free Shipping:</p>
+                                        <?php else: ?>
+                                            <p>Shipping Cost:</p>
+                                            <p>$0.00</p>
+                                            <select name="" id="">
+                                                <option value="">Us</option>
+                                                <option value="">Canada</option>
+                                                <option value="">Germany</option>
+                                            </select>
+                                            <button class="btn btn-secondary">calculate</button>
+                                        <?php endif; ?>
+                                        
                                     </div>
                                 </div>
-                            </div>
-                               
-                                $total = $total + $value->total_price;   
-                            
+                            </div> 
                         <?php  } ?>
             <div class="product">
               <div class="image">
