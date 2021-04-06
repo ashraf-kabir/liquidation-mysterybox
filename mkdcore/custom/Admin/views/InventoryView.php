@@ -6,35 +6,7 @@ if ($layout_clean_mode) {
 }
 ?>
 
-<style type="text/css">
 
-	@media print 
-	{ 
-		.make_font_big{
-	        font-size: 15rem !important;
-	        text-align: center;
-	    }
-		.printable{  
-			size:6in;
-		}  
-
-		.printable{padding:0px!important;margin:0px!important;}
-		.printable{width:100%!important;float:left!important;}
-		.printable{padding:0px!important;margin:0px!important;}
-
-
-		.record_break_per {
-    		page-break-before : avoid;
-    		page-break-after: always; 
-		}
-		.record_break_per{
-		    display: block;
-		    padding-left: 0 !important;
-		    width: 100%;
-		} 
-	} 
-	 
-</style>
 <div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
 <div aria-label="breadcrumb">
@@ -383,7 +355,8 @@ if ($layout_clean_mode) {
 <script>
 	function printdiv(printpage) 
     {
-        var headstr = "<html><head><title></title></head><body>";
+        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">@media print {  .make_font_big{font-size: 15rem !important;text-align: center;}.printable{  size:6in;}  .printable{padding:0px!important;margin:0px!important;} .printable{width:100%!important;float:left!important;} .printable{padding:0px!important;margin:0px!important;} .record_break_per {page-break-before : avoid;page-break-after: always; }.record_break_per{display: block;padding-left: 0 !important;width: 100%;} } </style><body>';
+       
         var footstr = "</body>";
         var newstr = document.all.item(printpage).innerHTML;
         var oldstr = document.body.innerHTML;

@@ -59,7 +59,6 @@ ALTER TABLE `notification_system` CHANGE `product_id` `product_id` INT(11) NULL 
 
 
 
-
-ALTER TABLE `pos_order` ADD `tracking_no` VARCHAR(255) NOT NULL AFTER `checkout_type`;
+ 
 
 ALTER TABLE `pos_order` CHANGE `tracking_no` `tracking_no` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
