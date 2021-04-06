@@ -262,38 +262,36 @@ if ($layout_clean_mode) {
 					</div>
 				</div>
 				
-
-
 				<div class="page_full_width record_break_per printable" style="display:none !important;text-align: center;" id="print-me-1">
-					 
-					<div class='row '  >
-						<div class="col-sm-12" >
-							<h1 class="make_font_big"   >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
+		      		<div class='row '  >
+						<div class="col-sm-12 col-md-12" >
+							<h1  class="make_font_big"    >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
 						</div> 
 					</div>
 
 
 
 					<div class='row ' >
-						<div class="col-sm-12" >
-							<h1  class="make_font_big"    >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
+						<div class="col-sm-12  col-md-12" >
+							<h1  class="make_font_big"   >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
 						</div> 
 					</div>
 
 
 					<div class='row '>
-						<div class="col-sm-12" >
+						<div class="col-sm-12  col-md-12" >
 							<h1  class="make_font_big"    >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
 						</div> 
 					</div> 
  
 
-					<div class='row' style="text-align: center;" >
-						<div class="col-sm-12" >
-							<img  style="width: 100%" src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
+					<div class='row' style="text-align: center;">
+						<div class="col-sm-12  col-md-12" >
+							<img style="width: 100%"   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
 						</div> 
 					</div>  
-				</div> 
+		        </div>  
+				 
             </div>
         </div>
     </div>
@@ -355,7 +353,7 @@ if ($layout_clean_mode) {
 <script>
 	function printdiv(printpage) 
     {
-        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">@media print {  .make_font_big{font-size: 9rem !important; }.printable{  size:6in;}  .printable{padding:0px!important;margin:0px!important;} .printable{width:100%!important;} .printable{padding:0px!important;margin:0px!important;} .record_break_per {page-break-before : avoid;page-break-after: always; }.record_break_per{display: block;padding-left: 0 !important;width: 100%;} } </style><body>';
+        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">@media print {  .make_font_big{font-size: 8rem  !important; } @page {  size:10in 8in !important; margin: 0px !important; }     .printable{padding:0px !important;margin:0px  !important; width:100% !important;}      } </style><body  style="margin: 0px !important; padding: 0px !important;" >';
        
         var footstr = "</body>";
         var newstr = document.all.item(printpage).innerHTML;
