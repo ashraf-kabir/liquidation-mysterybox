@@ -182,10 +182,9 @@ class Inventory_model extends Manaknight_Model
 
 	public function free_ship_mapping ()
 	{
-		return [
-			2 => 'No',
+		return [ 
 			1 => 'Yes',
-			
+			2 => 'No', 
 		];
 	}
 
