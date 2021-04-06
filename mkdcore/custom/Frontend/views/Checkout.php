@@ -506,258 +506,312 @@
 </style>
 
 <section class="checkout-section" id="checkout-section">
-			<div class="checkout-left">
-				<div class="checkout-row">
-					<div class="first-box">
-						<span>1</span>
-						<span>Shipping Address</span>
-					</div>
-					<div class="second-box">
-						<p>521 Chardonnay Drive</p>
-						<p>Langley, VA</p>
-						<p>Washington</p>
-					</div>
-					<div class="third-box">
-						<button class="dropdown-btn btn btn-secondary">change/add</button>
-						<div class="dropdown-box">
-							<div class="modal-container">
-								<div class="shipping-address">
-									<div class="heading">Add shipping Address</div>
-									<div class="inputs-container">
-										<div>
-											<label for="address">Address:</label>
-											<input name="address" type="text" placeholder="your address" />
-										</div>
-										<div>
-											<label for="country">Country:</label>
-											<input name="country" type="text" placeholder="your country" />
-										</div>
-										<div>
-											<label for="city">City:</label>
-											<input name="city" type="text" placeholder="your city" />
-										</div>
-										<div>
-											<label for="state">State:</label>
-											<input name="state" type="text" placeholder="your state" />
-										</div>
-										<div>
-											<label for="zip-code">Zip-Code:</label>
-											<input name="zip-code" type="text" placeholder="your zip-code" />
-										</div>
-									</div>
-								</div>
+      <div class="checkout-left">
+        <div class="checkout-row">
+          <div class="first-box">
+            <span>1</span>
+            <span>Shipping Address</span>
+          </div>
+          <div class="second-box">
+            <p>521 Chardonnay Drive</p>
+            <p>Langley, VA</p>
+            <p>Washington</p>
+          </div>
+          <div class="third-box">
+            <button class="dropdown-btn btn btn-secondary">change/add</button>
+            <div class="dropdown-box">
+              <div class="modal-container">
+                <div class="shipping-address">
+                  <div class="heading">Add shipping Address</div>
+                  <div class="inputs-container">
+                    <div>
+                      <label for="address">Address:</label>
+                      <input name="address" value="<?php echo set_value('address_1', $customer->shipping_address); ?>" type="text" placeholder="your address" />
+                    </div>
+                    <div>
+                      <label for="country">Country:</label>
+                      <input name="country" value="<?php echo set_value('country', $customer->shipping_country); ?>" type="text" placeholder="your country" />
+                    </div>
+                    <div>
+                      <label for="city">City:</label>
+                      <input name="city" value="<?php echo set_value('city', $customer->shipping_city); ?>" type="text" placeholder="your city" />
+                    </div>
+                    <div>
+                      <label for="state">State:</label>
+                      <input name="state" value="<?php echo set_value('state', $customer->shipping_state); ?>" type="text" placeholder="your state" />
+                    </div>
+                    <div>
+                      <label for="zip-code">Zip-Code:</label>
+                      <input name="zip-code" value="<?php echo set_value('postal_code', $customer->shipping_zip); ?>" type="text" placeholder="your zip-code" />
+                    </div>
+                  </div>
+                </div>
 
-								<div class="checkout-info-add-btn">
-									<button class="close-btn btn btn-secondary">Close</button>
-									<button class="btn btn-primary">Save</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="checkout-row">
-					<div class="first-box">
-						<span>2</span>
-						<span>payment method</span>
-					</div>
-					<div class="second-box">
-						<p>visa expires in 3days</p>
-						<p>
-							<span>Billing Address:</span>
-							<span>Lorem, ipsum dolor.</span>
-						</p>
-						<!-- <p>lorem psum</p> -->
-					</div>
-					<div class="third-box">
-						<button class="dropdown-btn btn btn-secondary">change/add</button>
-						<div class="dropdown-box">
-							<div class="modal-container">
-								<div class="payments-details">
-									<div class="account-details">
-										<div class="heading">Add Payement Details</div>
-										<div class="inputs-container">
-											<div>
-												<label for="account-no">account-no:</label>
-												<input name="account-no" type="text" placeholder="your account-no" />
-											</div>
-											<div>
-												<label for="month">month:</label>
-												<input name="month" type="text" placeholder="your month" />
-											</div>
-											<div>
-												<label for="year">year:</label>
-												<input name="year" type="text" placeholder="your year" />
-											</div>
-											<div>
-												<label for="CVC">CVC:</label>
-												<input name="CVC" type="text" placeholder="your CVC" />
-											</div>
-										</div>
-									</div>
+                <div class="checkout-info-add-btn">
+                  <button class="close-btn btn btn-secondary">Close</button>
+                  <button class="btn btn-primary">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="checkout-row">
+          <div class="first-box">
+            <span>2</span>
+            <span>payment method</span>
+          </div>
+          <div class="second-box">
+            <p>visa expires in 3days</p>
+            <p>
+              <span>Billing Address:</span>
+              <span>Lorem, ipsum dolor.</span>
+            </p>
+            <!-- <p>lorem psum</p> -->
+          </div>
+          <div class="third-box">
+            <button class="dropdown-btn btn btn-secondary">change/add</button>
+            <div class="dropdown-box">
+              <div class="modal-container">
+                <div class="payments-details">
+                  <div class="account-details">
+                    <div class="heading">Add Payement Details</div>
+                    <div class="inputs-container">
+                      <div>
+                        <label for="account-no">account-no:</label>
+                        <input name="account-no" type="text" placeholder="your account-no" />
+                      </div>
+                      <div>
+                        <label for="month">month:</label>
+                        <select name="exp_month" id="exp_month"  class="form-control">
+                        <option value="">Select Month</option> 
+                        <option value="01">01 - January</option> 
+                        <option value="02">02 - February</option> 
+                        <option value="03">03 - March</option> 
+                        <option value="04">04 - April</option> 
+                        <option value="05">05 - May</option> 
+                        <option value="06">06 - June</option> 
+                        <option value="07">07 - July</option> 
+                        <option value="08">08 - August</option> 
+                        <option value="09">09 - September</option> 
+                        <option value="10">10 - October</option> 
+                        <option value="11">11 - November</option> 
+                        <option value="12">12 - December</option> 
+                    </select>
+                      </div>
+                      <div>
+                        <label for="year">year:</label>
+                        <?php  
+                    $year  = Date('Y');
+                    $limit = $year + 25;
+                    ?>
+                    <select name="exp_year" id="exp_year"  class="form-control">
+                        <option value="">Select Year</option>
+                        <?php for($i = $year; $i <= $limit ; $i++) {
+                            echo "<option value='" . $i . "' > " . $i . " </option>";
+                        } ?>
+                    </select>
+                      </div>
+                      <div>
+                        <label for="CVC">CVC:</label>
+                        <input name="CVC" type="text" placeholder="your CVC" />
+                      </div>
+                    </div>
+                  </div>
 
-									<div class="billing-address">
-										<div class="heading">Add Billing Address</div>
-										<div class="inputs-container">
-											<div>
-												<label for="address">Address:</label>
-												<input name="address" type="text" placeholder="your address" />
-											</div>
-											<div>
-												<label for="country">Country:</label>
-												<input name="country" type="text" placeholder="your country" />
-											</div>
-											<div>
-												<label for="city">City:</label>
-												<input name="city" type="text" placeholder="your city" />
-											</div>
-											<div>
-												<label for="state">State:</label>
-												<input name="state" type="text" placeholder="your state" />
-											</div>
-											<div>
-												<label for="zip-code">Zip-Code:</label>
-												<input name="zip-code" type="text" placeholder="your zip-code" />
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="checkout-info-add-btn">
-									<button class="close-btn btn btn-secondary">Close</button>
-									<button class="btn btn-primary">Save</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="checkout-row" id="review-and-shipping">
-					<div class="first-box">
-						<span>3</span>
-						<p>review items & shipping</p>
-					</div>
-					<div class="box">
-						<div class="heading">
-							<h3>Lorem ipsum dolor sit amet.</h3>
-							<p>
-								Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque molestias ex quasi consequatur excepturi ullam cum aliquid
-								voluptates iure ut itaque perferendis, maiores laudantium eaque voluptate at rem iusto. Ipsa voluptatem minima ipsam dolore distinctio
-								illo assumenda, dignissimos vitae tempora.
-							</p>
-						</div>
+                  <div class="billing-address">
+                    <div class="heading">Add Billing Address</div>
+                    <div class="inputs-container">
+                      <div>
+                        <label for="address">Address:</label>
+                        <input name="address" value="<?php echo set_value('address_1', $customer->billing_address); ?>" type="text" placeholder="your address" />
+                      </div>
+                      <div>
+                        <label for="country">Country:</label>
+                        <input name="country" type="text" value="<?php echo set_value('country', "US"); ?>" placeholder="your country" />
+                      </div>
+                      <div>
+                        <label for="city">City:</label>
+                        <input name="city" value="<?php echo set_value('city', $customer->billing_city); ?>" type="text" placeholder="your city" />
+                      </div>
+                      <div>
+                        <label for="state">State:</label>
+                        <input name="state" value="<?php echo set_value('state', $customer->billing_state); ?>" type="text" placeholder="your state" />
+                      </div>
+                      <div>
+                        <label for="zip-code">Zip-Code:</label>
+                        <input name="zip-code"  value="<?php echo set_value('postal_code', $customer->billing_zip); ?>" type="text" placeholder="your zip-code" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="checkout-info-add-btn">
+                  <button class="close-btn btn btn-secondary">Close</button>
+                  <button class="btn btn-primary">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="checkout-row" id="review-and-shipping">
+          <div class="first-box">
+            <span>3</span>
+            <p>review items & shipping</p>
+          </div>
+          <div class="box">
+            <div class="heading">
+              <h3>Lorem ipsum dolor sit amet.</h3>
+              <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque molestias ex quasi consequatur excepturi ullam cum aliquid
+                voluptates iure ut itaque perferendis, maiores laudantium eaque voluptate at rem iusto. Ipsa voluptatem minima ipsam dolore distinctio
+                illo assumenda, dignissimos vitae tempora.
+              </p>
+            </div>
+                        <?php foreach($cart_items as $key => $value)  { print_r($value); die();  ?>
+                                
+                            <div class="product">
+                                <div class="image">
+                                    <img src="https://source.unsplash.com/collection/random" alt="" height="100" width="100" />
+                                </div>
+                                <div class="details">
+                                    <h4><?php echo $value->product_name; ?></h4>
+                                    <p>Details: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, earum?</p>
+                                    <p>Price: $<?php echo $value->total_price; ?></p>
+                                    <div class="product-quantity">
+                                        <p>Quantity:</p>
+                                        <button class="btn btn-secondary">+</button>
+                                        <span><?php echo $value->product_qty; ?></span>
+                                        <button class="btn btn-secondary">-</button>
+                                    </div>
+                                    <div class="shipping-cost">
+                                        <p>shipping cost:</p>
+                                        <p>$100</p>
+                                        <select name="" id="">
+                                            <option value="">Us</option>
+                                            <option value="">Canada</option>
+                                            <option value="">Germany</option>
+                                        </select>
+                                        <button class="btn btn-secondary">calculate</button>
+                                    </div>
+                                </div>
+                            </div>
+                               
+                                $total = $total + $value->total_price;   
+                            
+                        <?php  } ?>
+            <div class="product">
+              <div class="image">
+                <img src="https://source.unsplash.com/collection/random" alt="" height="100" width="100" />
+              </div>
+              <div class="details">
+                <h4>Product Name</h4>
+                <p>Details: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, earum?</p>
+                <p>Price: $100</p>
+                <div class="product-quantity">
+                  <p>Quantity:</p>
+                  <button class="btn btn-secondary">+</button>
+                  <span>1</span>
+                  <button class="btn btn-secondary">-</button>
+                </div>
+                <div class="shipping-cost">
+                  <p>shipping cost:</p>
+                  <p>$100</p>
+                  <select name="" id="">
+                    <option value="">Us</option>
+                    <option value="">Canada</option>
+                    <option value="">Germany</option>
+                  </select>
+                  <button class="btn btn-secondary">calculate</button>
+                </div>
+              </div>
+            </div>
 
-						<div class="product">
-							<div class="image">
-								<img src="https://source.unsplash.com/collection/random" alt="" height="100" width="100" />
-							</div>
-							<div class="details">
-								<h4>Product Name</h4>
-								<p>Details: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, earum?</p>
-								<p>Price: $100</p>
-								<div class="product-quantity">
-									<p>Quantity:</p>
-									<button class="btn btn-secondary">+</button>
-									<span>1</span>
-									<button class="btn btn-secondary">-</button>
-								</div>
-								<div class="shipping-cost">
-									<p>shipping cost:</p>
-									<p>$100</p>
-									<select name="" id="">
-										<option value="">Us</option>
-										<option value="">Canada</option>
-										<option value="">Germany</option>
-									</select>
-									<button class="btn btn-secondary">calculate</button>
-								</div>
-							</div>
-						</div>
+            <div class="product">
+              <div class="image">
+                <img src="https://source.unsplash.com/collection/random" alt="" height="100" width="100" />
+              </div>
+              <div class="details">
+                <h4>Product Name</h4>
+                <p>Details: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, earum?</p>
+                <p>Price: $100</p>
+                <div class="product-quantity">
+                  <p>Quantity:</p>
+                  <button class="btn btn-secondary">+</button>
+                  <span>1</span>
+                  <button class="btn btn-secondary">-</button>
+                </div>
+                <div class="shipping-cost">
+                  <p>shipping cost:</p>
+                  <p>$100</p>
+                  <select name="" id="">
+                    <option value="">Us</option>
+                    <option value="">Canada</option>
+                    <option value="">Germany</option>
+                  </select>
+                  <button class="btn btn-secondary">calculate</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="checkout-right">
+        <div class="box">
+          <div class="summary">
+            <p>Order summary</p>
+            <div class="details">
+              <div>
+                <p>Items(2):</p>
+                <p>$199.00</p>
+              </div>
+              <div>
+                <p>shipping & handling:</p>
+                <p>$00.00</p>
+              </div>
+              <div>
+                <p>Total before tax:</p>
+                <p>$199.00</p>
+              </div>
+              <div>
+                <p>tax:</p>
+                <p>$10.00</p>
+              </div>
+              <div>
+                <p>order total:</p>
+                <p>$209.00</p>
+              </div>
+            </div>
+          </div>
+          <div class="header">
+            <button class="btn btn-warning">Place your Order</button>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi commodi neque</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-						<div class="product">
-							<div class="image">
-								<img src="https://source.unsplash.com/collection/random" alt="" height="100" width="100" />
-							</div>
-							<div class="details">
-								<h4>Product Name</h4>
-								<p>Details: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, earum?</p>
-								<p>Price: $100</p>
-								<div class="product-quantity">
-									<p>Quantity:</p>
-									<button class="btn btn-secondary">+</button>
-									<span>1</span>
-									<button class="btn btn-secondary">-</button>
-								</div>
-								<div class="shipping-cost">
-									<p>shipping cost:</p>
-									<p>$100</p>
-									<select name="" id="">
-										<option value="">Us</option>
-										<option value="">Canada</option>
-										<option value="">Germany</option>
-									</select>
-									<button class="btn btn-secondary">calculate</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="checkout-right">
-				<div class="box">
-					<div class="summary">
-						<p>Order summary</p>
-						<div class="details">
-							<div>
-								<p>Items(2):</p>
-								<p>$199.00</p>
-							</div>
-							<div>
-								<p>shipping & handling:</p>
-								<p>$00.00</p>
-							</div>
-							<div>
-								<p>Total before tax:</p>
-								<p>$199.00</p>
-							</div>
-							<div>
-								<p>tax:</p>
-								<p>$10.00</p>
-							</div>
-							<div>
-								<p>order total:</p>
-								<p>$209.00</p>
-							</div>
-						</div>
-					</div>
-					<div class="header">
-						<button class="btn btn-warning">Place your Order</button>
-						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi commodi neque</p>
-					</div>
-				</div>
-			</div>
-		</section>
+    <script>
+      const checkoutBtns = document.querySelectorAll('.dropdown-btn');
+      const modalBox = document.querySelectorAll('.dropdown-box');
+      const closeBtns = document.querySelectorAll('.close-btn');
 
-		<script>
-			const checkoutBtns = document.querySelectorAll('.dropdown-btn');
-			const modalBox = document.querySelectorAll('.dropdown-box');
-			const closeBtns = document.querySelectorAll('.close-btn');
+      checkoutBtns.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.target.nextElementSibling.classList.add('active');
+        });
+      });
+      modalBox.forEach((modal) => {
+        modal.addEventListener('click', (e) => {
+          if (e.target.classList.contains('active') && e.target.classList.contains('dropdown-box')) {
+            e.target.classList.remove('active');
+          }
+        });
+      });
 
-			checkoutBtns.forEach((btn) => {
-				btn.addEventListener('click', (e) => {
-					e.target.nextElementSibling.classList.add('active');
-				});
-			});
-			modalBox.forEach((modal) => {
-				modal.addEventListener('click', (e) => {
-					if (e.target.classList.contains('active') && e.target.classList.contains('dropdown-box')) {
-						e.target.classList.remove('active');
-					}
-				});
-			});
-
-			closeBtns.forEach((btn) => {
-				btn.addEventListener('click', (e) => {
-					modalBox.forEach((modal) => {
-						modal.classList.remove('active');
-					});
-				});
-			});
-		</script>
+      closeBtns.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          modalBox.forEach((modal) => {
+            modal.classList.remove('active');
+          });
+        });
+      });
+    </script>
