@@ -353,7 +353,7 @@ if ($layout_clean_mode) {
 <script>
 	function printdiv(printpage) 
     {
-        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">@media print {  .make_font_big{font-size: 8rem  !important; } @page {  size:10in 8in !important; margin: 0px !important; }     .printable{padding:0px !important;margin:0px  !important; width:100% !important;}      } </style><body  style="margin: 0px !important; padding: 0px !important;" >';
+        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">@media print {  .make_font_big{font-size: 8rem  !important; } @page {  size:10in !important; margin: 0px !important; }     .printable{padding:0px !important;margin:0px  !important; width:100% !important;}      } </style><body  style="margin: 0px !important; padding: 0px !important;" >';
        
         var footstr = "</body>";
         var newstr = document.all.item(printpage).innerHTML;

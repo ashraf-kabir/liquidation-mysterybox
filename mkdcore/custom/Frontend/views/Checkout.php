@@ -666,16 +666,16 @@
                 illo assumenda, dignissimos vitae tempora.
               </p>
             </div>
-                        <?php foreach($cart_items as $key => $value)  { print_r($value); die();  ?>
+                        <?php foreach($cart_items as $key => $value)  {   ?>
                                 
                             <div class="product">
                                 <div class="image">
 
-                                    <?php if(!empty($product->feature_image)){   ?>
+                                    <?php if(!empty($value->feature_image)){   ?>
                                          
-                                        <img src="<?php echo $product->feature_image; ?>" alt="" height="100" width="100" alt="<?php echo $product->product_name; ?>" />
+                                        <img src="<?php echo $value->feature_image; ?>" alt="" height="100" width="100" alt="<?php echo $value->product_name; ?>" />
                                     <?php }else{ ?>
-                                        <img src="/assets/frontend_images/noun_pallet_box_1675914.png" alt="" height="100" width="100" alt="<?php echo $product->product_name; ?>" />
+                                        <img src="/assets/frontend_images/noun_pallet_box_1675914.png" alt="" height="100" width="100" alt="<?php echo $value->product_name; ?>" />
                                         
                                     <?php } ?>
                                     
