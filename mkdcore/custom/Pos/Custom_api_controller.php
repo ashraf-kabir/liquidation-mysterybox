@@ -1560,11 +1560,13 @@ class Custom_api_controller extends Manaknight_Controller
 
             $user_id     = $this->session->userdata('user_id');  
 
+            $id =  $this->input->post('id', TRUE);
+
             if($this->session->userdata('customer_login'))
             {
-                $orders_list = $this->pos_cart_model->get_all(['customer_id' => $user_id]);  
+                $orders_list = $this->pos_cart_model->get_all(['customer_id' => $user_id, 'id' => $id ]);  
             }else{
-                $orders_list = $this->pos_cart_model->get_all(['user_id' => $user_id]); 
+                $orders_list = $this->pos_cart_model->get_all(['user_id' => $user_id, 'id' => $id ]); 
             }
             
             if(empty($orders_list))
@@ -1615,11 +1617,12 @@ class Custom_api_controller extends Manaknight_Controller
                 exit();
             }
 
+            
             $postal_code =  $this->input->post('postal_code', TRUE);
             $city        =  $this->input->post('city', TRUE);
             $state       =  $this->input->post('state', TRUE);
             $country     =  $this->input->post('country', TRUE);
-            $from_postal =  $this->input->post('from_postal', TRUE);
+            $from_postal =  $this->config->item('from_postal');
 
 
             

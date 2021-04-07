@@ -431,16 +431,14 @@ class Home_controller extends Manaknight_Controller
             } 
             $_POST = $customer_data;
              
-            // echo "<pre>";
-            // print_r($_POST);
-            // die();
+            
             $this->form_validation->set_rules('full_name', "Name", "required|max_length[255]");
             $this->form_validation->set_rules('email_address', "Email", "valid_email"); 
-            $this->form_validation->set_rules('postal_code', "Billing Postal Code", "integer");
-            $this->form_validation->set_rules('city', "Billing City", "max_length[255]");
-            $this->form_validation->set_rules('country', "Billing Country", "max_length[255]");
-            $this->form_validation->set_rules('state', "Billing State", "max_length[255]"); 
-            $this->form_validation->set_rules('address_1', "Billing Address", "required|min_length[5]"); 
+            $this->form_validation->set_rules('billing_zip', "Billing Postal Code", "integer");
+            $this->form_validation->set_rules('billing_city', "Billing City", "max_length[255]");
+            $this->form_validation->set_rules('billing_country', "Billing Country", "max_length[255]");
+            $this->form_validation->set_rules('billing_state', "Billing State", "max_length[255]"); 
+            $this->form_validation->set_rules('billing_address', "Billing Address", "required|min_length[5]"); 
             $this->form_validation->set_rules('payment', "Payment Method", "integer");
             $this->form_validation->set_rules('number', "Account Number", "required|integer");
             $this->form_validation->set_rules('exp_month', "Expiry Month", "required");
@@ -515,24 +513,22 @@ class Home_controller extends Manaknight_Controller
             $full_name      =  $this->input->post('full_name', TRUE);
             $email_address  =  $this->input->post('email_address', TRUE);
             $phone_number   =  $this->input->post('phone_number', TRUE);
-            $city           =  $this->input->post('city', TRUE);
-            $state          =  $this->input->post('state', TRUE);
-            $country        =  $this->input->post('country', TRUE);
-            $postal_code    =  $this->input->post('postal_code', TRUE);
-            $address_1      =  $this->input->post('address_1', TRUE);
-            $address_2      =  $this->input->post('address_2', TRUE);
+            $city           =  $this->input->post('billing_city', TRUE);
+            $state          =  $this->input->post('billing_state', TRUE);
+            $country        =  $this->input->post('billing_country', TRUE);
+            $postal_code    =  $this->input->post('billing_zip', TRUE);
+            $address_1      =  $this->input->post('billing_address', TRUE); 
             $payment        =  $this->input->post('payment', TRUE);
+            $payment        =  2;
             $coupon_code    =  $this->input->post('coupon_code', TRUE);
 
-            $shipping_cost_name         =  $this->input->post('shipping_cost_name', TRUE);
-            $shipping_cost_value        =  $this->input->post('shipping_cost_value', TRUE);
-            $shipping_service_id        =  $this->input->post('shipping_service_id', TRUE);
+            
 
 
             $shipping_country        =  $this->input->post('shipping_country', TRUE);
-            $shipping_state        =  $this->input->post('shipping_state', TRUE);
-            $shipping_zip        =  $this->input->post('shipping_zip', TRUE);
-            $shipping_city        =  $this->input->post('shipping_city', TRUE);
+            $shipping_state          =  $this->input->post('shipping_state', TRUE);
+            $shipping_zip            =  $this->input->post('shipping_zip', TRUE);
+            $shipping_city           =  $this->input->post('shipping_city', TRUE);
             $shipping_address        =  $this->input->post('shipping_address', TRUE);
  
  
@@ -622,7 +618,7 @@ class Home_controller extends Manaknight_Controller
             */
             $cart_items     =  $this->pos_cart_model->get_all(['customer_id' => $user_id ]); 
             $customer_data  =  $this->customer_model->get( $user_id ); 
-            $shipping_cost  =  $shipping_cost_value;
+            $shipping_cost  =  0;
             $discount       =  0;
             $tax            =  0;
              
@@ -640,8 +636,8 @@ class Home_controller extends Manaknight_Controller
             }
              
  
-            $customer_data->shipping_service_name  = $shipping_cost_name;
-            $customer_data->shipping_service_id    = $shipping_service_id;
+            // $customer_data->shipping_service_name  = $shipping_cost_name;
+            // $customer_data->shipping_service_id    = $shipping_service_id;
             $customer_data->name                   = $full_name;
             $customer_data->email                  = $email_address;
             $customer_data->phone                  = $phone_number;
@@ -649,7 +645,7 @@ class Home_controller extends Manaknight_Controller
             $customer_data->state                  = $state;
             $customer_data->country                = $country;
             $customer_data->billing_zip            = $postal_code;
-            $customer_data->billing_address        = $address_1 . " " . $address_2;
+            $customer_data->billing_address        = $address_1;
             $customer_data->payment                = $payment;
 
 
@@ -676,12 +672,19 @@ class Home_controller extends Manaknight_Controller
                 $order_id    = $result;
                 $sub_total   = 0;
                 $grand_total = 0;
+                $shipping_cost_total = 0;
 
                 foreach ($cart_items as $cart_item_key => $cart_item_value) 
                 {
                     $inventory_data = $this->inventory_model->get($cart_item_value->product_id);   
                     $total_amount   = $cart_item_value->unit_price  * $cart_item_value->product_qty;
 
+
+                    $shipping_cost_name         =  $this->input->post('shipping_cost_name_' . $cart_item_value->id, TRUE);
+                    $shipping_cost_value        =  $this->input->post('shipping_cost_value_' . $cart_item_value->id, TRUE);
+                    $shipping_service_id        =  $this->input->post('shipping_service_id_' . $cart_item_value->id, TRUE);
+
+                    $shipping_cost_total += (Float) $shipping_cost_value; 
                     $data_order_detail = array(
                         'product_id'         => $cart_item_value->product_id,
                         'product_name'       => $cart_item_value->product_name, 
@@ -692,6 +695,9 @@ class Home_controller extends Manaknight_Controller
                         'category_id'        => $inventory_data->category_id,  
                         'pos_user_id'        => 0, 
                         'product_unit_price' => $cart_item_value->unit_price,
+                        'shipping_cost_name'  => $shipping_cost_name,
+                        'shipping_cost_value' => $shipping_cost_value,
+                        'shipping_service_id' => $shipping_service_id,
                     );
                     $sub_total += $total_amount;
                     $detail_id = $this->pos_order_items_model->create($data_order_detail); 
@@ -734,6 +740,7 @@ class Home_controller extends Manaknight_Controller
                     'tax'           =>  $tax,
                     'subtotal'      =>  $sub_total,  
                     'coupon_log_id' =>  $coupon_log_id,  
+                    'shipping_cost' =>  $shipping_cost_total,  
                 );
                 $result = $this->pos_order_model->edit($data_order_prices, $order_id);
 
@@ -1246,5 +1253,81 @@ class Home_controller extends Manaknight_Controller
         echo json_encode($output);
         exit();  
     }
+
+
+    public function update_customer_address()
+    {
+        if($this->session->userdata('customer_login'))
+        {
+            $user_id = $this->session->userdata('user_id');
+            $this->load->model('customer_model');
+            
+
+            if ( $this->input->post('shipping_address', TRUE) ) 
+            { 
+                $shipping_address    =   $this->input->post('shipping_address', TRUE);
+                $shipping_country    =   $this->input->post('shipping_country', TRUE);
+                $shipping_state      =   $this->input->post('shipping_state', TRUE);
+                $shipping_city       =   $this->input->post('shipping_city', TRUE);
+                $shipping_zip        =   $this->input->post('shipping_zip', TRUE);
+                
+                $response = $this->customer_model->edit([
+                    'shipping_address'  => $shipping_address, 
+                    'shipping_country'  => $shipping_country, 
+                    'shipping_state'    => $shipping_state, 
+                    'shipping_city'     => $shipping_city, 
+                    'shipping_zip'      => $shipping_zip,  
+                ], $user_id); 
+
+                $output['success'] = "Success! Shipping address has been updated."; 
+            }
+
+
+            if ( $this->input->post('billing_address', TRUE) ) 
+            { 
+                $billing_address    =   $this->input->post('billing_address', TRUE);
+                $billing_country    =   $this->input->post('billing_country', TRUE);
+                $billing_state      =   $this->input->post('billing_state', TRUE);
+                $billing_city       =   $this->input->post('billing_city', TRUE);
+                $billing_zip        =   $this->input->post('billing_zip', TRUE);
+                
+                $response = $this->customer_model->edit([
+                    'billing_address'  => $billing_address, 
+                    'billing_country'  => $billing_country, 
+                    'billing_state'    => $billing_state, 
+                    'billing_city'     => $billing_city, 
+                    'billing_zip'      => $billing_zip,  
+                ], $user_id); 
+
+                $output['success'] = "Success! Billing address has been updated."; 
+            }
+
+
+
+            
+
+             
+
+            if ($response) 
+            {
+                
+                echo json_encode($output);
+                exit(); 
+            }
+
+            $output['error'] = "Error! Please try again later."; 
+            echo json_encode($output);
+            exit(); 
+             
+        }
+
+
+    }
+
+
+
+
+
+
 
 }

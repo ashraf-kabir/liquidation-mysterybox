@@ -761,6 +761,9 @@
 				["product_id", "integer", [], "xyzProduct", "required|integer", "required|integer"],
 				["category_id", "integer", [], "xyzCategory", "required|integer", "required|integer"],
 				["product_name", "string", [{ "limit": 255 }], "xyzProduct", "", ""],
+				["shipping_cost_name", "string", [{ "limit": 255 }], "Shipping Cost Name", "", ""],
+				["shipping_cost_value", "float", [], "Shipping Cost Value", "", ""],
+				["shipping_service_id", "string", [{ "limit": 255 }], "Shipping Service ID", "", ""],
 				["amount", "float", [], "xyzAmount", "required", "required"],
 				["product_unit_price", "float", [], "xyzPrice", "required", "required"],
 				["quantity", "integer", [], "xyzQuantity", "required|integer", "required|integer"],
@@ -2631,6 +2634,7 @@
 		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css",
 		
 		"../mkdcore/custom/assets/js/address_form.js": "../release/assets/js/address_form.js",
+		"../mkdcore/custom/assets/css/checkout.css": "../release/assets/css/checkout.css",
 
 		"../mkdcore/custom/Services/Api_service.php" : "../release/application/libraries/Api_service.php",
 		"../mkdcore/custom/Services/Barcode_service.php" : "../release/application/libraries/Barcode_service.php",
@@ -2730,6 +2734,7 @@
 		"try_printer"                   : "Guest/Ecom_api_controller/try_printer",
 		"v1/api/sale_order/update_status": "Guest/Ecom_api_controller/update_order_status",
 		"v1/api/add_alert_notification": "Guest/Home_controller/add_alert_notification",
+		"v1/api/update_customer_address": "Guest/Home_controller/update_customer_address",
 		
 		
 
