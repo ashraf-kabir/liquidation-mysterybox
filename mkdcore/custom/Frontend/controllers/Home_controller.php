@@ -734,7 +734,7 @@ class Home_controller extends Manaknight_Controller
                 $tax              =  $tax_amount * $sub_total;
 
 
-                $grand_total =   $tax + $sub_total - $discount - $coupon_amount  +  $shipping_cost;
+                $grand_total =   $tax + $sub_total - $discount - $coupon_amount  +  $shipping_cost_total;
                 $data_order_prices = array( 
                     'total'         =>  $grand_total,
                     'tax'           =>  $tax,
