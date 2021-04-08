@@ -426,9 +426,7 @@ class Ecom_api_controller extends Manaknight_Controller
                         echo json_encode($output);
                         exit();
                     }
-                }
-                
-                
+                }   
             }
             else
             { 

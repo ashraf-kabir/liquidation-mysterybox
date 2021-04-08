@@ -264,11 +264,11 @@ if ($layout_clean_mode) {
 				
 
 
-				<div class="page_full_width record_break_per printable" style="display:none !important;text-align: center;" id="print-me-1">
+				<div class="page_full_width record_break_per printable" style="text-align: center;display: none;" id="print-me-1">
 					 
 					<div class='row '  >
 						<div class="col-sm-12" >
-							<h1 class="make_font_big"   >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
+							<h1 class="make_font_big"  style="overflow: hidden;" >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
 						</div> 
 					</div>
 
@@ -276,14 +276,14 @@ if ($layout_clean_mode) {
 
 					<div class='row ' >
 						<div class="col-sm-12" >
-							<h1  class="make_font_big"    >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
+							<h1  class="make_font_big" style="overflow: hidden;"   >  SKU  :  <?php echo $view_model->get_sku();?></h1> 
 						</div> 
 					</div>
 
 
 					<div class='row '>
 						<div class="col-sm-12" >
-							<h1  class="make_font_big"    >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
+							<h1  class="make_font_big"  >  Selling Price  :  $<?php echo number_format($view_model->get_selling_price(),2); ?>   </h1> 
 						</div> 
 					</div> 
  
@@ -355,7 +355,7 @@ if ($layout_clean_mode) {
 <script>
 	function printdiv(printpage) 
     {
-        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">@media print {  .make_font_big{font-size: 9rem !important; }.printable{  size:6in;}  .printable{padding:0px!important;margin:0px!important;} .printable{width:100%!important;float:left!important;} .printable{padding:0px!important;margin:0px!important;} .record_break_per {page-break-before : avoid;page-break-after: always; }.record_break_per{display: block;padding-left: 0 !important;width: 100%;} } </style><body>';
+        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">@media print {  .make_font_big{font-size: 7rem !important; white-space: nowrap;overflow: hidden;text-overflow: ellipsis; } @page{  size:15in 15in; }   .printable{padding:0px!important;margin:0px!important;} .printable{width:100%!important;float:left!important;} .printable{padding:0px!important;margin:0px!important;} .record_break_per {page-break-before : avoid;page-break-after: always; }.record_break_per{display: block;padding-left: 0 !important;width: 100%;} } </style><body>';
        
         var footstr = "</body>";
         var newstr = document.all.item(printpage).innerHTML;
