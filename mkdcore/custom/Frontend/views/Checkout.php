@@ -15,7 +15,7 @@
                </div>
                <div class="third-box">
                     <button  type="button"  class="dropdown-btn btn btn-secondary">change/add</button>
-                    <div class="dropdown-box">
+                    <div class="dropdown-box" style="overflow-y: auto;">
                          <div class="modal-container">
                               <div class="shipping-address">
                                    <div class="heading">Add shipping Address</div>
@@ -89,7 +89,7 @@
                </div>
                <div class="third-box">
                     <button type="button" class="dropdown-btn btn btn-secondary">change/add</button>
-                    <div class="dropdown-box">
+                    <div class="dropdown-box" style="overflow-y: auto;">
                          <div class="modal-container">
                               <div class="payments-details">
                                    <div class="account-details">
