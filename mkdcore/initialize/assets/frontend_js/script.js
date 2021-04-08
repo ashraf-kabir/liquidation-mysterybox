@@ -1,4 +1,32 @@
 // $(document).ready(() => {  
+
+function check_cart_total_items()
+{
+  $.ajax({
+    url: '../v1/api/check_cart_total_items',
+    timeout: 30000,
+    method: 'POST',
+    dataType: 'JSON',  
+    success: function (response)  
+    {     
+      if(response.cart_items)
+      {
+        $('#lblCartCount').text(response.cart_items)
+      } 
+    },
+    error: function()
+    { 
+
+    } 
+  });
+} 
+check_cart_total_items();
+
+
+
+
+
+
   let loading_gif = "../assets/image/loading.gif";
 
 
@@ -299,84 +327,12 @@
     })
   });
 
-  calculate_cost()
-  function calculate_cost()
-  {
-    var total_shipping_price = 0; 
-
-    $('.shipping-cost-price').each(function(index, obj){
-      var price_shipping  = $(this).find(':selected').attr('data-price'); 
-      var other_price     = $(this).find(':selected').attr('data-other-cost'); 
-      var shipping_service_name    = $(this).find(':selected').attr('data-service-name'); 
-
-      var selected_item_shipping_cost = 0;
-      selected_item_shipping_cost = Number(price_shipping) + Number(other_price); 
-      selected_item_shipping_cost = Number(selected_item_shipping_cost).toFixed(2); 
-
-
-      total_shipping_price += selected_item_shipping_cost;
-      $(this).parent().parent().find('.selected_item_shipping_cost').text(selected_item_shipping_cost);
+  
 
 
 
 
-      $(this).parent().parent().find('.shipping-cost-name').val(shipping_service_name);   
-      $(this).parent().parent().find('.shipping-cost-price-value').val(selected_item_shipping_cost);   
-
-    });
-
-
-
-    // if(!price_shipping)
-    // {
-    //      price_shipping = 0;
-    // }
-
-    // if(!other_price)
-    // {
-    //      other_price = 0;
-    // }
-
-    coupon_amount_now = 0;
-    // var coupon_amount_now    = $('#coupon_amount_now').val();
-
-    // if(!coupon_amount_now)
-    // {
-    //     coupon_amount_now = 0;
-    // }
-
-    // coupon_amount_now = Number(coupon_amount_now).toFixed(2);
-
-    // var total_shipping_price = 0;
-    // total_shipping_price = Number(price_shipping) + Number(other_price);
-
-    // $('.shipping-cost-name').val(shipping_service_name);   
-    // $('.shipping-cost-price-value').val(total_shipping_price);   
-    $('.shipping_total_cost').text(Number(total_shipping_price).toFixed(2));  
-
-    var total_of_all =  0;
-    if ( $('#shipping_state').val().toLowerCase() == 'nevada' ||  $('#shipping_state').val().toLowerCase() == 'nv'  ) 
-    { 
-      $('.cart-tax').text(Number($('.tax_amount_val').val()).toFixed(2));
-      total_of_all = $('.total_of_all').val();
-    }
-    else
-    {
-      $('.cart-tax').text(Number(0).toFixed(2));
-      total_of_all = $('.total_without_tax').val();
-    } 
-
-    total_of_all = total_of_all.replace(/,/g,'');
-
-
-    var total_after_shipping = Number(total_of_all) + Number(total_shipping_price) - Number(coupon_amount_now);
-    $('.total_of_all_text').text(Number(total_after_shipping).toFixed(2)); 
-  }
-
-
-
-
-  $(document).on('keyup','#billing_state', function(){ 
+  $(document).on('keyup','#shipping_state', function(){ 
     calculate_cost();
   });
 
@@ -487,32 +443,7 @@
 
 
 
-function check_cart_total_items()
-{
-  $.ajax({
-    url: '../v1/api/check_cart_total_items',
-    timeout: 30000,
-    method: 'POST',
-    dataType: 'JSON',  
-    success: function (response)  
-    {     
-      if(response.cart_items)
-      {
-        $('#lblCartCount').text(response.cart_items)
-      } 
-    },
-    error: function()
-    { 
 
-    } 
-  });
-}
-
-
-
-
-
-check_cart_total_items();
 
 
 $(document).on('click','.on_click_notification',function(e){
@@ -655,3 +586,91 @@ $(document).on('change','.shipping-cost-price', function(){
 $(document).on('click','.place-order-btn', function(){    
   $('.send_checkout').submit();
 });
+
+
+
+
+
+
+
+
+calculate_cost()
+
+function calculate_cost()
+{
+  var total_shipping_price = 0; 
+
+  $('.shipping-cost-price').each(function(index, obj){
+    var price_shipping  = $(this).find(':selected').attr('data-price'); 
+    var other_price     = $(this).find(':selected').attr('data-other-cost'); 
+    var shipping_service_name    = $(this).find(':selected').attr('data-service-name'); 
+
+    var selected_item_shipping_cost = 0;
+    selected_item_shipping_cost = Number(price_shipping) + Number(other_price); 
+    selected_item_shipping_cost = Number(selected_item_shipping_cost).toFixed(2); 
+
+
+    total_shipping_price += selected_item_shipping_cost;
+    $(this).parent().parent().find('.selected_item_shipping_cost').text(selected_item_shipping_cost);
+
+
+
+
+    $(this).parent().parent().find('.shipping-cost-name').val(shipping_service_name);   
+    $(this).parent().parent().find('.shipping-cost-price-value').val(selected_item_shipping_cost);   
+
+  });
+
+
+
+  // if(!price_shipping)
+  // {
+  //      price_shipping = 0;
+  // }
+
+  // if(!other_price)
+  // {
+  //      other_price = 0;
+  // }
+
+  coupon_amount_now = 0;
+  // var coupon_amount_now    = $('#coupon_amount_now').val();
+
+  // if(!coupon_amount_now)
+  // {
+  //     coupon_amount_now = 0;
+  // }
+
+  // coupon_amount_now = Number(coupon_amount_now).toFixed(2);
+
+  // var total_shipping_price = 0;
+  // total_shipping_price = Number(price_shipping) + Number(other_price);
+
+  // $('.shipping-cost-name').val(shipping_service_name);   
+  // $('.shipping-cost-price-value').val(total_shipping_price);   
+
+
+  $('.shipping_total_cost').text(Number(total_shipping_price).toFixed(2));  
+
+  var total_of_all =  0;
+  if ( $('#shipping_state').val().toLowerCase() == 'nevada' ||  $('#shipping_state').val().toLowerCase() == 'nv'  ) 
+  { 
+    var tax_amount_val = $('.tax_amount_val').val();
+    tax_amount_val = tax_amount_val.replace(/,/g,'');
+
+    
+    $('.cart-tax').text(Number(tax_amount_val).toFixed(2));
+    total_of_all = $('.total_of_all').val();
+  }
+  else
+  {
+    $('.cart-tax').text(Number(0).toFixed(2));
+    total_of_all = $('.total_without_tax').val();
+  } 
+
+  total_of_all = total_of_all.replace(/,/g,'');
+
+
+  var total_after_shipping = Number(total_of_all) + Number(total_shipping_price) - Number(coupon_amount_now);
+  $('.total_of_all_text').text(Number(total_after_shipping).toFixed(2)); 
+}

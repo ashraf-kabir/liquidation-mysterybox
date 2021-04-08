@@ -42,11 +42,8 @@ ALTER TABLE `notification_system` CHANGE `product_id` `product_id` INT(11) NULL 
 
 ALTER TABLE `pos_order` CHANGE `tracking_no` `tracking_no` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
+
 ALTER TABLE `pos_order_items` CHANGE `shipping_cost_name` `shipping_cost_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `shipping_cost_value` `shipping_cost_value` FLOAT NULL DEFAULT '0', CHANGE `shipping_service_id` `shipping_service_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
-
-
-
-
 
 
 
