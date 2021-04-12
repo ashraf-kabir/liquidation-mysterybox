@@ -9,6 +9,7 @@
                     <span>Shipping Address</span>
                </div>
                <div class="second-box">
+                    <p id="msg_full_name"><?php echo $customer->name; ?></p>
                     <p id="msg_shipping_address"><?php echo $customer->shipping_address; ?></p>
                     <p> <span id="msg_shipping_city"><?php echo $customer->shipping_city; ?></span>, <span id="msg_shipping_state"><?php echo $customer->shipping_state; ?></span></p>
                     <p id="msg_shipping_zip"><?php echo $customer->shipping_zip; ?></p>
@@ -182,12 +183,7 @@
                </div>
                <div class="box">
                     <div class="heading">
-                         <h3>Lorem ipsum dolor sit amet.</h3>
-                         <p>
-                              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque molestias ex quasi consequatur excepturi ullam cum aliquid
-                              voluptates iure ut itaque perferendis, maiores laudantium eaque voluptate at rem iusto. Ipsa voluptatem minima ipsam dolore distinctio
-                              illo assumenda, dignissimos vitae tempora.
-                         </p>
+                         
                     </div>
                     <?php 
                     $total = 0;
