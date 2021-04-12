@@ -355,7 +355,7 @@ if ($layout_clean_mode) {
 <script>
 	function printdiv(printpage) 
     {
-        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">  body  { margin: 11mm 11mm 11mm 11mm;  } @media print {  .make_font_big{font-size: 7rem !important; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align:center;} h1{  margin-top: -47px !important;   }  @page{  size:15in 9in; margin: 0px !important; padding: 0px !important; }   .printable{padding:0px!important;margin:0px!important;} .printable{width:100%!important;float:left!important;} .printable{padding:0px!important;margin:0px!important;}  } </style><body>';
+        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">  body  { margin: 11mm 11mm 11mm 11mm;  } @media print {  .make_font_big{font-size: 7rem !important; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;text-align:center; } @page{  size:auto; margin: 0px !important; padding: 0px !important; }   .printable{padding:0px!important;margin:0px!important;} .printable{width:100%!important;float:left!important;} .printable{padding:0px!important;margin:0px!important;}  } </style><body>';
        
         var footstr = "</body>";
         var newstr = document.all.item(printpage).innerHTML;
