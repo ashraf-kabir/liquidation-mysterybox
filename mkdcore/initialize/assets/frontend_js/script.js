@@ -511,6 +511,7 @@ $(document).on('click','.add-shipping-address',function(e){
         $('.on_click_shipping_modal').trigger('click');
         toastr.success(response.success); 
 
+        $('#msg_full_name').text($('#full_name').val())
         $('#msg_shipping_address').text(shipping_address)
  
         $('#msg_shipping_zip').text(shipping_zip)

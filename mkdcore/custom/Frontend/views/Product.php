@@ -141,15 +141,15 @@ $total_images =  count($gallery_lists) + 1;
     <section class="container-fluid mt-5 px-md-5 my-5" id="product__description">
         
         
+        <div class="row justify-content-center bg-white mx-md-5 ">
+            <div class="col-10 p-0 py-3 bg-white">
+                <h4 style="text-align: center;">Review Videos</h4> 
+            </div> 
+        </div>
 
-
-        <div class="row justify-content-center bg-white mx-md-5 "> 
-            
-            
-            <div class="col-10 p-0 bg-white">
-                 
-                <div class="row justify-content-between"> 
- 
+        <div class="row justify-content-center bg-white mx-md-5 ">  
+            <div class="col-10 p-0 bg-white"> 
+                <div class="row justify-content-between">  
                     
                     <?php 
                     $video_url = json_decode($product->video_url);  
