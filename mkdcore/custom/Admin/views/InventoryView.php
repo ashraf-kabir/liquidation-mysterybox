@@ -315,7 +315,7 @@ if ($layout_clean_mode) {
 		      		 
 		      		<div class='row '  >
 						<div class="col-sm-12" >
-							<h1  class="make_font_big" style="margin-top: 30px"    >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
+							<h1  class="make_font_big"     >  Name  :  <?php echo $view_model->get_product_name();?></h1> 
 						</div> 
 					</div>
 
@@ -355,7 +355,7 @@ if ($layout_clean_mode) {
 <script>
 	function printdiv(printpage) 
     {
-        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">  body  { margin: 0px !important;  } @media print {  .make_font_big{font-size: 7rem !important;padding: 5px 0px !important;  } h1{margin-top: -47px;} @page{ width:216px !important; height: 140px !important; margin: 0px !important; padding: 0px !important; }   .printable{padding:0px!important;margin:0px!important;} .printable{width:100%!important;float:left!important;} .printable{padding:0px!important;margin:0px!important;}  } </style><body>';
+        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">  body  { margin: 0px !important;  } @media print {  .make_font_big{font-size: 7rem !important;padding: 5px 0px !important;  } @page{ width:216px !important; height: 170px !important; margin: 0px !important; padding: 0px !important; }   .printable{padding:0px!important;margin:0px!important;} .printable{width:100%!important;float:left!important;} .printable{padding:0px!important;margin:0px!important;}  } </style><body>';
        
         var footstr = "</body>";
         var newstr = document.all.item(printpage).innerHTML;
