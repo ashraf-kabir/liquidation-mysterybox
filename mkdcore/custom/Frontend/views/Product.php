@@ -140,6 +140,22 @@ $total_images =  count($gallery_lists) + 1;
 
     <section class="container-fluid mt-5 px-md-5 my-5" id="product__description">
         
+        <?php 
+        $video_url = json_decode($product->video_url);  
+        $total_videos = 0;
+        if (!empty($video_url)) 
+        {  
+            foreach ($video_url as $key => $video)
+            {
+                if (!empty($video)) 
+                {
+                    $total_videos++;
+                }
+            }
+        }
+        ?>
+        
+        <?php if ($total_videos != 0 ): ?> 
         
         <div class="row justify-content-center bg-white mx-md-5 ">
             <div class="col-10 p-0 py-3 bg-white">
@@ -147,23 +163,15 @@ $total_images =  count($gallery_lists) + 1;
             </div> 
         </div>
 
+        <?php endif ?>
+
         <div class="row justify-content-center bg-white mx-md-5 ">  
             <div class="col-10 p-0 bg-white"> 
                 <div class="row justify-content-between">  
                     
-                    <?php 
-                    $video_url = json_decode($product->video_url);  
+                    <?php  
                     if (!empty($video_url)) 
-                    { 
-                        $total_videos = 0;
-                        foreach ($video_url as $key => $video)
-                        {
-                            if (!empty($video)) 
-                            {
-                                $total_videos++;
-                            }
-                        }
-
+                    {  
                         if ($total_videos == 1) 
                         {
                             $total_videos = 2;
