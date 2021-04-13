@@ -37,3 +37,20 @@ for every image have play icon that links to youtube_1  ------------
 and make sure center those images so it use space  -------
 
 9.on hover of shop, those arrows pop out not sure why  -----
+
+
+Can you please clarify when we say no free shipping what it exactly means? do we just list all shipping option but  ground shipping not free?
+No additional shipping options that are faster than ground or home delivery on Mystery boxes
+On Check out page #3 There is no way to update the quantity if they want to change the amount they are purchasing. Can you clarify this
+
+
+-Should have a dropdown box offering local pickup, and local pickup no shipping. If local pickup no shipping is selected no shipping options will be shown.
+
+
+-Free shipping would be free ground or home delivery local pickup is an option as well. Faster shipping option should show. On Mystery Boxes only Fedex options. 
+
+-No Free Shipping would show all Fedex options for now. Only Show ground or home delivery based on address type. Can show all of Fedex faster options as those don’t matter if its going to a business or house. 
+
+Please note on Ecomm website we will have to build out the shipping options based on box sizes to product sizes for what options are available but that is a longer conversation.
+
+On number #3 what if I wanted to go from qty of 1 to qty of 2 qty on checkout page there is no way to update it

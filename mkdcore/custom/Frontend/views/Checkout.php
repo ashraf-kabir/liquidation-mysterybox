@@ -210,9 +210,9 @@
                                    <p>Price: $<?php echo $value->total_price; ?></p>
                                    <div class="product-quantity">
                                         <p>Quantity:</p>
-                                        <!-- <button class="btn btn-secondary">+</button> -->
+                                        <button data-id="<?php echo $value->product_id; ?>"  data-product_qty="<?php echo $value->product_qty; ?>"  type="button" class="btn btn-secondary add_to_cart_button">+</button>
                                         <span style="margin-left: 11px;"><?php echo $value->product_qty; ?></span>
-                                        <!-- <button class="btn btn-secondary">-</button> -->
+                                        <button data-id="<?php echo $value->product_id; ?>" data-product_qty="<?php echo $value->product_qty; ?>" type="button"  class="btn btn-secondary minus_to_cart_button">-</button>
                                    </div>
                                    <div class="shipping-cost">
                                         <?php if ($value->can_ship == 2): ?>

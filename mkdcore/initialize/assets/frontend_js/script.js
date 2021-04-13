@@ -211,12 +211,8 @@ check_cart_total_items();
 
 
 
-  $(document).on('click','.edit_to_cart_button',function(e){
-    e.preventDefault(); 
-
-    let quantity   = $(this).parent().parent().find('.quantity_value').val();
-    let id         = $(this).attr('data-id'); 
-
+  function update_create_cart(quantity, id)
+  {
 
     // get data and post to server
     var serialized_data = [];  
@@ -233,6 +229,7 @@ check_cart_total_items();
       {
         if (response.error) 
         {
+          $('.place-order-btn').show();
           toastr.error(response.error);
         }
 
@@ -247,7 +244,40 @@ check_cart_total_items();
         } 
       }
     });
+  }
+
+
+  $(document).on('click','.edit_to_cart_button',function(e){
+    e.preventDefault(); 
+    let quantity   = $(this).parent().parent().find('.quantity_value').val();
+    let id         = $(this).attr('data-id');
+    
+    update_create_cart(quantity, id)
   });
+
+
+
+
+
+
+  $(document).on('click','.add_to_cart_button',function(e){
+    e.preventDefault(); 
+    let quantity_add   = Number($(this).attr('data-product_qty')) + 1;
+    let id_product     = $(this).attr('data-id');
+    $('.place-order-btn').hide();
+    update_create_cart(quantity_add, id_product)
+  });
+
+
+  $(document).on('click','.minus_to_cart_button',function(e){
+    e.preventDefault();  
+    let id_item         = $(this).attr('data-id');
+    let quantity_minus  = $(this).attr('data-product_qty') - 1;
+    $('.place-order-btn').hide();
+    update_create_cart(quantity_minus, id_item)
+  });
+
+
 
   $(document).on('click','.calculate-shipping-cost', function(){
     var error_for_shipping = 0;  
