@@ -599,19 +599,30 @@ calculate_cost()
 
 function calculate_cost()
 {
-  var total_shipping_price = 0; 
+  let total_shipping_price = 0; 
 
   $('.shipping-cost-price').each(function(index, obj){
     var price_shipping  = $(this).find(':selected').attr('data-price'); 
     var other_price     = $(this).find(':selected').attr('data-other-cost'); 
     var shipping_service_name    = $(this).find(':selected').attr('data-service-name'); 
 
+    if(!price_shipping)
+    {
+      price_shipping = 0;
+    }
+
+    if(!other_price)
+    {
+      other_price = 0;
+    }
+
     var selected_item_shipping_cost = 0;
     selected_item_shipping_cost = Number(price_shipping) + Number(other_price); 
     selected_item_shipping_cost = Number(selected_item_shipping_cost).toFixed(2); 
 
-
-    total_shipping_price += selected_item_shipping_cost;
+ 
+    total_shipping_price = Number(selected_item_shipping_cost)  + Number(total_shipping_price);
+ 
     $(this).parent().parent().find('.selected_item_shipping_cost').text(selected_item_shipping_cost);
 
 

@@ -188,6 +188,8 @@
                     <?php 
                     $total = 0;
                     foreach($cart_items as $key => $value)  { 
+                         // print_r($value);
+                         // die;
                          $total = $total + $value->total_price;    ?>
 
                          <div class="product">
@@ -213,16 +215,26 @@
                                         <!-- <button class="btn btn-secondary">-</button> -->
                                    </div>
                                    <div class="shipping-cost">
+                                        <?php if ($value->can_ship == 2): ?>
+                                             <div class="" style="margin-right: 5px;">
+                                                  <select class="form-control">
+                                                       <option>Select</option>
+                                                       <option>Local Pickup</option>
+                                                       <option>Local Pickup No Shipping</option>
+                                                  </select>
+                                             </div>
+                                        <?php else: ?> 
 
-                                        <?php if ($value->free_ship == 1): ?>
-                                             <p>Free Shipping:</p>
-                                        <?php else: ?>
-                                             <p>Shipping Cost:</p>
-                                             <p>$<span class="selected_item_shipping_cost">0.00</span></p>
+                                             <?php if ($value->free_ship == 1): ?>
+                                                  <p>Free Shipping:</p>
+                                             <?php else: ?>
+                                                  <p>Shipping Cost:</p>
+                                                  <p>$<span class="selected_item_shipping_cost">0.00</span></p>
 
-                                             <div class="shipping-cost-options" style="margin-right: 5px;"></div>
-                                              
-                                             <button type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
+                                                  <div class="shipping-cost-options" style="margin-right: 5px;"></div>
+                                                   
+                                                  <button type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
+                                             <?php endif; ?>
                                         <?php endif; ?>
 
                                    </div>
