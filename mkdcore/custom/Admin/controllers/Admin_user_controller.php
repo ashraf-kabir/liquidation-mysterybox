@@ -210,7 +210,7 @@ class Admin_user_controller extends Admin_controller
         return $this->render('Admin/UserEdit', $this->_data);
 	}
 
-    	public function view($id)
+	public function view($id)
 	{
         $model = $this->user_model->get($id);
 
