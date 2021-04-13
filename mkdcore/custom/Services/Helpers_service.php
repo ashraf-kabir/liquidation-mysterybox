@@ -108,11 +108,11 @@ class Helpers_service {
         */
         if($checkout_type == 2)
         {
-            if($inventory_data->can_ship == 2)
-            {
-                $output['error']  = "Error! " . $product_name . " can't be shipped."; 
-                return  (object)$output; 
-            }
+            // if($inventory_data->can_ship == 2)
+            // {
+            //     $output['error']  = "Error! " . $product_name . " can't be shipped."; 
+            //     return  (object)$output; 
+            // }
         }
         
         
