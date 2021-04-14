@@ -773,6 +773,7 @@ class Home_controller extends Manaknight_Controller
 
                     if($payment == 2)
                     { 
+                        $grand_total = number_format($grand_total,2);
                         $response = $this->stripe_helper_service->create_stripe_charge($token_id, $grand_total, "Ecom Order");
              
                         if( isset($response['success']) )
