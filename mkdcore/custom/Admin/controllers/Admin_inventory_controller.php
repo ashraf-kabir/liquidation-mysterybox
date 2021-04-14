@@ -474,4 +474,14 @@ class Admin_inventory_controller extends Admin_controller
     
     
     
+    public function scan_product_view()
+    { 
+        $this->_data['page_name'] = "Scan Inventory";
+            
+        
+        return $this->render('Admin/Scan_Product_View', $this->_data);
+    }
+
+
+
 }

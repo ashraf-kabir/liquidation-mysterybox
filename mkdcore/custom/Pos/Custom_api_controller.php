@@ -28,6 +28,29 @@ class Custom_api_controller extends Manaknight_Controller
 
 
 
+    public function scan_barcode_in_inventory()
+    {
+
+        $this->load->model('inventory_model'); 
+        $barcode_value = $this->input->post('barcode_value', TRUE); 
+
+        $product_data = $this->inventory_model->get_by_fields(['sku' => $barcode_value ]);
+
+        if( !empty($product_data) )
+        { 
+            $output['redirect_url']   = base_url() . 'admin/inventory/view/' . $product_data->id;
+            echo json_encode($output);
+            exit();
+            
+        }else{
+            $output['error'] = true;
+            $output['msg']   = "No such barcode found.";
+            echo json_encode($output);
+            exit();
+        } 
+    }
+
+
     public function load_tax_value()
     {
         $this->load->model('tax_model');

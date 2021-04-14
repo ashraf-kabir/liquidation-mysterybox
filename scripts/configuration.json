@@ -954,6 +954,7 @@
 			"menu": {
 				"Dashboard": "/dashboard", 
 				"xyzInventory" : "/inventory/0?order_by=id&direction=DESC", 
+				"Scan Inventory" : "/scan/scan_product_view", 
 				"xyzCategory" : "/category/0?order_by=id&direction=DESC", 
 				"xyzTax": "/tax/0?order_by=id&direction=DESC",
 				"xyzCustomer" : "/customer/0?order_by=id&direction=DESC", 
@@ -2670,6 +2671,7 @@
 		"../mkdcore/custom/Admin/views/InventoryAdd.php" : "../release/application/views/Admin/InventoryAdd.php",
 		"../mkdcore/custom/Admin/views/InventoryEdit.php" : "../release/application/views/Admin/InventoryEdit.php",
 		"../mkdcore/custom/Admin/views/InventoryView.php" : "../release/application/views/Admin/InventoryView.php",
+		"../mkdcore/custom/Admin/views/Scan_Product_View.php" : "../release/application/views/Admin/Scan_Product_View.php",
 		"../mkdcore/custom/Admin/views/OrdersView.php" : "../release/application/views/Admin/OrdersView.php",
 		"../mkdcore/custom/Admin/views/Orders.php" : "../release/application/views/Admin/Orders.php",
 		"../mkdcore/custom/Admin/views/OrderEmailCopy.php" : "../release/application/views/Admin/OrderEmailCopy.php",
@@ -2743,7 +2745,9 @@
 		"v1/api/update_customer_address": "Guest/Home_controller/update_customer_address",
 		
 		
+		"admin/scan/scan_product_view": "Admin/Admin_inventory_controller/scan_product_view",
 
+		
 		"admin/inventory/delete_gallery_image/(:num)": "Admin/Admin_inventory_controller/delete_gallery_image/$1",
 		"manager/inventory/delete_gallery_image/(:num)": "Manager/Manager_inventory_controller/delete_gallery_image/$1",
 		
@@ -2767,6 +2771,7 @@
 		"v1/api/pos_past_order" : "Guest/Custom_api_controller/pos_past_order",
 		"v1/api/pos_summary_report" : "Guest/Custom_api_controller/pos_summary_report",
 		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory", 
+		"v1/api/scan_barcode_in_inventory" : "Guest/Custom_api_controller/scan_barcode_in_inventory", 
 		"v1/api/add_product_to_cart_by_customer" : "Guest/Custom_api_controller/add_product_to_cart_by_customer",
 		"v1/api/pos_invoice_data" : "Guest/Custom_api_controller/pos_invoice_data",
 		"v1/api/apply_coupon" : "Guest/Custom_api_controller/apply_coupon",

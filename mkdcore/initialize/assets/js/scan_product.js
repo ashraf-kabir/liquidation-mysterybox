@@ -13,7 +13,7 @@ function check_barcode_in_inventory(barcode_value)
     {
         action_in_process = 1;
         $.ajax({
-            url: ajaxURLPath + 'v1/api/check_barcode_in_inventory',
+            url: ajaxURLPath + 'v1/api/scan_barcode_in_inventory',
             timeout: 15000,
             method: 'post',
             dataType: 'JSON',
@@ -22,13 +22,12 @@ function check_barcode_in_inventory(barcode_value)
             {   
                 if(response.error)
                 {
-                    action_in_process = 0;
-                    alert(response.msg)
+                    action_in_process = 0; 
                 }
 
-                if(response.success)
+                if(response.redirect_url)
                 {
-                     
+                    window.location.href = response.redirect_url;
                 }
                   
             } 
@@ -150,3 +149,5 @@ $(document).on('click','.close-scanner-camera2',function(){
     $('#scan-product-modal').modal('toggle'); 
     stop_barcode_camera(); 
 });
+
+ 
