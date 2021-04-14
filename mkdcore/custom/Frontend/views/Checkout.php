@@ -277,7 +277,7 @@
                          </div>
                          <div>
                               <p>tax:</p>
-                              <p >$<span class="cart-tax"><?php echo number_format($tax_amount,2); ?></span></p>
+                              <p >$<span class="cart-tax">0.00</span></p>
                          </div>
                          <div>
                               <p>order total:</p>

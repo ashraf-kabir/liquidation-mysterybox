@@ -41,7 +41,7 @@ function initialize() {
                 
                if (addressType == 'country') 
                {
-                    document.getElementById('billing_country').value = val;
+                    document.getElementById('billing_country').value = "US";
                }
 
                if (addressType == 'locality') 
@@ -83,7 +83,7 @@ function initialize() {
                 
                if (addressType == 'country') 
                {
-                    document.getElementById('shipping_country').value = val;
+                    document.getElementById('shipping_country').value = "US";
                }
 
                if (addressType == 'locality') 

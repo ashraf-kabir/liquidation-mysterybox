@@ -362,7 +362,7 @@ check_cart_total_items();
 
 
 
-  $(document).on('keyup','#shipping_state', function(){ 
+  $(document).on('keyup','#billing_state', function(){ 
     calculate_cost();
   });
 
@@ -695,7 +695,7 @@ function calculate_cost()
   $('.shipping_total_cost').text(Number(total_shipping_price).toFixed(2));  
 
   var total_of_all =  0;
-  if ( $('#shipping_state').val().toLowerCase() == 'nevada' ||  $('#shipping_state').val().toLowerCase() == 'nv'  ) 
+  if ( $('#billing_state').val().toLowerCase() == 'nevada' ||  $('#billing_state').val().toLowerCase() == 'nv'  ) 
   { 
     var tax_amount_val = $('.tax_amount_val').val();
     tax_amount_val = tax_amount_val.replace(/,/g,'');

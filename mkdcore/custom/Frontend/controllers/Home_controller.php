@@ -629,9 +629,9 @@ class Home_controller extends Manaknight_Controller
 
             if (strtolower($state) == 'nv' or strtolower($state) == 'nevada') 
             {
-               if(isset($tax_data->tax) )
+                if(isset($tax_data->tax) )
                 {
-                  $tax_amount = $tax_data->tax/100;
+                    $tax_amount = $tax_data->tax/100;
                 }  
             }
              
