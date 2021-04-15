@@ -719,3 +719,15 @@ function calculate_cost()
   var total_after_shipping = Number(total_of_all) + Number(total_shipping_price) - Number(coupon_amount_now);
   $('.total_of_all_text').text(Number(total_after_shipping).toFixed(2)); 
 }
+
+
+
+
+
+
+
+$(document).on('change','.shipping_service_name_change', function(){    
+  $(this).parent().find('.shipping_service_name_for_selected').val(''); 
+  var service_name = $(this).find(':selected').attr('data-service_name'); 
+  $(this).parent().find('.shipping_service_name_for_selected').val(service_name);
+});

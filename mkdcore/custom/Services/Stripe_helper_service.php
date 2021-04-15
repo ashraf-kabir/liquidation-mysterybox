@@ -135,12 +135,20 @@ class Stripe_helper_service {
 
         if($token_id AND $amount)
         {
+            $amount = str_replace(",", "", $amount);
+            // $amount =  trim($amount);
+            // $amount =  filter_var($amount, FILTER_SANITIZE_NUMBER_FLOAT);
+            $price_total = 0;
+            $price_total = $amount * 100; 
             $token  = $token_id;
-            $amount = $amount;
+            
+            // echo $amount;
+            // echo $price_total;
+            // exit();
             try 
             {
                 $charge = Charge::create(array(
-                    "amount"        => $amount * 100,
+                    "amount"        => $price_total,
                     "currency"      => "usd",
                     "card"          => $token,
                     "description"   => $description 

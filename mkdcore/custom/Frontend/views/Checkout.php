@@ -218,8 +218,9 @@
                                    <div class="shipping-cost"> 
                                         <?php if ($value->can_ship != 2): ?>
                                         <p>Expected Days:</p>
-                                        <select class="form-control">
-                                             <option value="">Select</option>
+                                        <input type="hidden" name="shipping_service_name_<?php echo $value->id; ?>" class="shipping_service_name_for_selected">
+                                        <select class="form-control shipping_service_name_change" name="shipping_service_name_code_<?php echo $value->id; ?>">
+                                             <option  value="">Select</option>
                                              <?php 
                                              foreach ($services as $key => $service) 
                                              { 
@@ -227,7 +228,7 @@
                                                   { 
                                                        ?>
                                              
-                                                       <option value="<?php echo $service->name; ?>"><?php echo $service->name; ?></option>
+                                                       <option data-service_name="<?php echo $service->name; ?>" value="<?php echo $service->code; ?>"><?php echo $service->name; ?></option>
                                                        <?php     
                                                   }    
                                              }    

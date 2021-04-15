@@ -684,6 +684,10 @@ class Home_controller extends Manaknight_Controller
                     $shipping_cost_value        =  $this->input->post('shipping_cost_value_' . $cart_item_value->id, TRUE);
                     $shipping_service_id        =  $this->input->post('shipping_service_id_' . $cart_item_value->id, TRUE);
 
+
+                    $shipping_service_code        =  $this->input->post('shipping_service_name_code_' . $cart_item_value->id, TRUE);
+                    $shipping_service_name        =  $this->input->post('shipping_service_name_' . $cart_item_value->id, TRUE);
+
                     $shipping_cost_total += (Float) $shipping_cost_value; 
                     $data_order_detail = array(
                         'product_id'         => $cart_item_value->product_id,
@@ -698,6 +702,9 @@ class Home_controller extends Manaknight_Controller
                         'shipping_cost_name'  => $shipping_cost_name,
                         'shipping_cost_value' => $shipping_cost_value,
                         'shipping_service_id' => $shipping_service_id,
+                        
+                        'shipping_service_code' => $shipping_service_code,
+                        'shipping_service_name' => $shipping_service_name,
                     );
                     $sub_total += $total_amount;
                     $detail_id = $this->pos_order_items_model->create($data_order_detail); 
@@ -785,7 +792,7 @@ class Home_controller extends Manaknight_Controller
                         { 
                             $this->db->trans_rollback();
                             $output['status'] = 0;
-                            $output['error']  = 'Error! Please try again later.';
+                            $output['error']  = $response['error_msg'];
                             echo json_encode($output);
                             exit(); 
                         }  
@@ -926,7 +933,7 @@ class Home_controller extends Manaknight_Controller
 
                 $data['services'] =  $this->shipstation_api_service->get_list_of_services();
 
-                 
+
 
             }
 
