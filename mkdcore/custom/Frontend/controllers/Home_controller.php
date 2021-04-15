@@ -931,7 +931,7 @@ class Home_controller extends Manaknight_Controller
                 $this->load->library('shipstation_api_service');
                 $this->shipstation_api_service->set_config($this->config);
 
-                $data['services'] =  $this->shipstation_api_service->get_list_of_services();
+                // $data['services'] =  $this->shipstation_api_service->get_list_of_services();
 
 
 

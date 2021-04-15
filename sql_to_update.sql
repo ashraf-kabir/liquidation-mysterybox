@@ -46,9 +46,4 @@ ALTER TABLE `pos_order` CHANGE `tracking_no` `tracking_no` VARCHAR(255) CHARACTE
 ALTER TABLE `pos_order_items` CHANGE `shipping_cost_name` `shipping_cost_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `shipping_cost_value` `shipping_cost_value` FLOAT NULL DEFAULT '0', CHANGE `shipping_service_id` `shipping_service_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
 
-
-
-
-ALTER TABLE `pos_order_items` ADD `shipping_service_name` VARCHAR(255) NOT NULL AFTER `shipping_cost_name`, ADD `shipping_service_code` VARCHAR(255) NOT NULL AFTER `shipping_service_name`;
-
 ALTER TABLE `pos_order_items` CHANGE `shipping_service_name` `shipping_service_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `shipping_service_code` `shipping_service_code` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;

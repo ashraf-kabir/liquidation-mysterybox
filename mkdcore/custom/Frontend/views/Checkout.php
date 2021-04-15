@@ -1,5 +1,12 @@
 <link rel="stylesheet" type="text/css" href="./assets/css/checkout.css">
-
+<style type="text/css">
+     .custom-pricing-div{
+          margin-right: 5px;
+          text-align: start;
+          padding-left: 113px;
+          display: grid;
+     }
+</style>
 <?php echo form_open('',array('class' => 'send_checkout' )); ?>
 <section class="checkout-section" id="checkout-section">
      <div class="checkout-left">
@@ -215,27 +222,7 @@
                                         <button data-id="<?php echo $value->product_id; ?>" data-product_qty="<?php echo $value->product_qty; ?>" type="button"  class="btn btn-secondary minus_to_cart_button">-</button>
                                    </div>
 
-                                   <div class="shipping-cost"> 
-                                        <?php if ($value->can_ship != 2): ?>
-                                        <p>Expected Days:</p>
-                                        <input type="hidden" name="shipping_service_name_<?php echo $value->id; ?>" class="shipping_service_name_for_selected">
-                                        <select class="form-control shipping_service_name_change" name="shipping_service_name_code_<?php echo $value->id; ?>">
-                                             <option  value="">Select</option>
-                                             <?php 
-                                             foreach ($services as $key => $service) 
-                                             { 
-                                                  if ($service->domestic == 1) 
-                                                  { 
-                                                       ?>
-                                             
-                                                       <option data-service_name="<?php echo $service->name; ?>" value="<?php echo $service->code; ?>"><?php echo $service->name; ?></option>
-                                                       <?php     
-                                                  }    
-                                             }    
-                                             ?>
-                                        </select> 
-                                        <?php endif; ?>
-                                   </div>
+                                    
 
 
                                    <div class="shipping-cost">
@@ -255,17 +242,17 @@
                                                   <p>Shipping Cost:</p>
                                                   <p>$<span class="selected_item_shipping_cost">0.00</span></p>
 
-                                                  <div class="shipping-cost-options" style="margin-right: 5px;"></div>
-                                                   
-                                                  <button type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
+                                                 
+                                                  <button style="display: none;" type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
                                              <?php endif; ?>
 
                                              
 
-                                        <?php endif; ?>
-
-
+                                        <?php endif; ?> 
                                    </div>
+
+
+                                   <div class="shipping-cost-options custom-pricing-div"  > </div>
                               </div>
                          </div>
 

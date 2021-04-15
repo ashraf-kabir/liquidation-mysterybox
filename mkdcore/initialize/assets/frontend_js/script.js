@@ -334,13 +334,15 @@ check_cart_total_items();
         if(response.list_all)
         {
 
-          let shipping_options = '<input type="hidden" class="shipping-cost-name" name="shipping_cost_name_' + id + '" value=""  /><input type="hidden" class="shipping-cost-price-value" name="shipping_cost_value_' + id + '" value="0"  /><select class="form-control shipping-cost-price  mb-2" name="shipping_service_id_' + id + '"><option value="">Select Service</option>';
+          let shipping_options = '<input type="hidden" class="shipping-cost-name" name="shipping_cost_name_' + id + '" value=""  /><input type="hidden" class="shipping-cost-price-value" name="shipping_cost_value_' + id + '" value="0"  />';
+
+
           $(response.list_all).each(function(index,object){
             var shipping_cost_total = object.shipmentCost + object.otherCost;
             shipping_cost_total = parseFloat(shipping_cost_total).toFixed(2);
-            shipping_options += '<option value="' + object.serviceCode + '" data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  >' + object.serviceName + '  ( $' + shipping_cost_total + ' )</option>';
+            shipping_options += '<label><input name="shipping_service_id_' + id + '" class="mr-3 shipping-cost-change" type="radio" value="' + object.serviceCode + '" data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  />' + object.serviceName + '  ( $' + shipping_cost_total + ' ) ' + object.expected_date + ' </label>';
           }) 
-          shipping_options += '</select>';
+          // shipping_options += '</select>';
 
           p_object.find('.shipping-cost-options').html(shipping_options);
         }
@@ -550,6 +552,9 @@ $(document).on('click','.add-shipping-address',function(e){
         $('#msg_shipping_zip').text(shipping_zip)
         $('#msg_shipping_state').text(shipping_state)
         $('#msg_shipping_city').text(shipping_city) 
+
+        $('.calculate-shipping-cost').trigger('click');
+
       } 
 
 
@@ -612,7 +617,7 @@ $(document).on('click','.add-billing-address',function(e){
 
 
 
-$(document).on('change','.shipping-cost-price', function(){    
+$(document).on('click','.shipping-cost-change', function(){    
   calculate_cost();
 });
 
@@ -634,36 +639,38 @@ function calculate_cost()
 {
   let total_shipping_price = 0; 
 
-  $('.shipping-cost-price').each(function(index, obj){
-    var price_shipping  = $(this).find(':selected').attr('data-price'); 
-    var other_price     = $(this).find(':selected').attr('data-other-cost'); 
-    var shipping_service_name    = $(this).find(':selected').attr('data-service-name'); 
+  $('.shipping-cost-change').each(function(index, obj){
+    if($(this).is(':checked'))
+    { 
+      var price_shipping  = $(this).attr('data-price'); 
+      var other_price     = $(this).attr('data-other-cost'); 
+      var shipping_service_name    = $(this).attr('data-service-name'); 
 
-    if(!price_shipping)
-    {
-      price_shipping = 0;
+      if(!price_shipping)
+      {
+        price_shipping = 0;
+      }
+
+      if(!other_price)
+      {
+        other_price = 0;
+      }
+
+      var selected_item_shipping_cost = 0;
+      selected_item_shipping_cost = Number(price_shipping) + Number(other_price); 
+      selected_item_shipping_cost = Number(selected_item_shipping_cost).toFixed(2); 
+
+   
+      total_shipping_price = Number(selected_item_shipping_cost)  + Number(total_shipping_price);
+   
+      $(this).parent().parent().parent().find('.selected_item_shipping_cost').text(selected_item_shipping_cost);
+
+
+
+
+      $(this).parent().parent().find('.shipping-cost-name').val(shipping_service_name);   
+      $(this).parent().parent().find('.shipping-cost-price-value').val(selected_item_shipping_cost);   
     }
-
-    if(!other_price)
-    {
-      other_price = 0;
-    }
-
-    var selected_item_shipping_cost = 0;
-    selected_item_shipping_cost = Number(price_shipping) + Number(other_price); 
-    selected_item_shipping_cost = Number(selected_item_shipping_cost).toFixed(2); 
-
- 
-    total_shipping_price = Number(selected_item_shipping_cost)  + Number(total_shipping_price);
- 
-    $(this).parent().parent().find('.selected_item_shipping_cost').text(selected_item_shipping_cost);
-
-
-
-
-    $(this).parent().parent().find('.shipping-cost-name').val(shipping_service_name);   
-    $(this).parent().parent().find('.shipping-cost-price-value').val(selected_item_shipping_cost);   
-
   });
 
 
@@ -721,7 +728,7 @@ function calculate_cost()
 }
 
 
-
+$('.calculate-shipping-cost').trigger('click');
 
 
 

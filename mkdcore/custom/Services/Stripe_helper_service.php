@@ -133,7 +133,7 @@ class Stripe_helper_service {
 
         Stripe::setApiKey( $stripe_secret_key );
 
-        if($token_id AND $amount)
+        if($token_id && $amount)
         {
             $amount = str_replace(",", "", $amount);
             // $amount =  trim($amount);
