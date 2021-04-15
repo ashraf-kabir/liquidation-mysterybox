@@ -939,11 +939,11 @@
 			"js": [ 
 				"/assets/js/media.js",
 				"/assets/js/core.js",
-				"/assets/js/setting.js",
-				"/assets/js/mkd-image-uppload.js",
-				"/assets/js/mkd-image-gallery.js", 
+				"/assets/js/setting.js", 
 				"/assets/js/app.js",
-				"/assets/js/admin.js"
+				"/assets/js/admin.js",
+				"/assets/js/mkd-image-uppload.js",
+				"/assets/js/mkd-image-gallery.js"
 			],
 			"css": [
 				"/assets/css/styles.css", 

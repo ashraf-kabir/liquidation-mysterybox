@@ -358,6 +358,55 @@ class Shipstation_api_service {
 
 
 
+    public function get_list_of_services()
+    {
+
+        /**
+         * ShipStation API
+         * List Services
+         * https://www.shipstation.com/docs/api/carriers/list-services/
+         * 
+        */
+        
+
+        $user_name_as_key     =  $this->_config->item('shipstation_user_name_as_key'); 
+        $password_as_secret   =  $this->_config->item('shipstation_password_as_secret'); 
+
+
+        $carrier_code   =  "fedex"; 
+
+        // $user_name_as_key     = "ShipStation";
+        // $password_as_secret   = "Rocks";
+
+
+        $authorization   = "Basic ". base64_encode($user_name_as_key . ":" . $password_as_secret);
+    
+
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://ssapi.shipstation.com/carriers/listservices?carrierCode=" . $carrier_code,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => FALSE,
+            CURLOPT_SSL_VERIFYHOST => FALSE,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "Host: ssapi.shipstation.com",
+                "Authorization: " . $authorization
+            ),
+        ));
+
+        $response = curl_exec($curl); 
+        curl_close($curl);
+        return json_decode($response);
+    }
+
     
 }
 

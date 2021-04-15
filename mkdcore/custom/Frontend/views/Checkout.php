@@ -214,6 +214,29 @@
                                         <span style="margin-left: 11px;"><?php echo $value->product_qty; ?></span>
                                         <button data-id="<?php echo $value->product_id; ?>" data-product_qty="<?php echo $value->product_qty; ?>" type="button"  class="btn btn-secondary minus_to_cart_button">-</button>
                                    </div>
+
+                                   <div class="shipping-cost"> 
+                                        <?php if ($value->can_ship != 2): ?>
+                                        <p>Expected Days:</p>
+                                        <select class="form-control">
+                                             <option value="">Select</option>
+                                             <?php 
+                                             foreach ($services as $key => $service) 
+                                             { 
+                                                  if ($service->domestic == 1) 
+                                                  { 
+                                                       ?>
+                                             
+                                                       <option value="<?php echo $service->name; ?>"><?php echo $service->name; ?></option>
+                                                       <?php     
+                                                  }    
+                                             }    
+                                             ?>
+                                        </select> 
+                                        <?php endif; ?>
+                                   </div>
+
+
                                    <div class="shipping-cost">
                                         <?php if ($value->can_ship == 2): ?>
                                              <div class="" style="margin-right: 5px;">
@@ -223,7 +246,7 @@
                                                        <option>Local Pickup No Shipping</option>
                                                   </select>
                                              </div>
-                                        <?php else: ?> 
+                                        <?php else: ?>  
 
                                              <?php if ($value->free_ship == 1): ?>
                                                   <p>Free Shipping:</p>
@@ -235,7 +258,11 @@
                                                    
                                                   <button type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
                                              <?php endif; ?>
+
+                                             
+
                                         <?php endif; ?>
+
 
                                    </div>
                               </div>

@@ -917,8 +917,17 @@ class Home_controller extends Manaknight_Controller
 
                 
                 $data['cart_items']   =  $cart_items; 
-                $data['customer']   =  $this->customer_model->get($user_id); 
-                $data['tax']        =  $this->tax_model->get(1);
+                $data['customer']     =  $this->customer_model->get($user_id); 
+                $data['tax']          =  $this->tax_model->get(1);
+
+
+                $this->load->library('shipstation_api_service');
+                $this->shipstation_api_service->set_config($this->config);
+
+                $data['services'] =  $this->shipstation_api_service->get_list_of_services();
+
+                 
+
             }
 
 
