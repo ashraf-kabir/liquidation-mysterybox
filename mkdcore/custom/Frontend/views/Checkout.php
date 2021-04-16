@@ -227,12 +227,17 @@
 
                                    <div class="shipping-cost">
                                         <?php if ($value->can_ship == 2): ?>
-                                             <div class="" style="margin-right: 5px;">
-                                                  <select class="form-control">
-                                                       <option>Select</option>
-                                                       <option>Local Pickup</option>
-                                                       <option>Local Pickup No Shipping</option>
-                                                  </select>
+                                             <div class="shipping-cost-options custom-pricing-div" style="margin-right: 5px;">
+
+                                                  <input type="hidden" class="shipping-cost-name" name="shipping_cost_name_<?php echo $value->id; ?>" value="">
+
+                                                  <input type="hidden" class="shipping-cost-price-value" name="shipping_cost_value_<?php echo $value->id; ?>" value="0">
+
+                                                  <label><input name="shipping_service_id_<?php echo $value->id; ?>" class="mr-3 shipping-cost-change" type="radio" value="Local Pickup" data-other-cost="0" data-price="0" data-service-code="Local Pickup" data-service-name="Local Pickup">Local Pickup </label>
+
+                                                  <label><input name="shipping_service_id_<?php echo $value->id; ?>" class="mr-3 shipping-cost-change" type="radio" value="Local Pickup No Shipping" data-other-cost="0" data-price="0" data-service-code="Local Pickup No Shipping" data-service-name="Local Pickup No Shipping">Local Pickup No Shipping </label>
+
+                                                   
                                              </div>
                                         <?php else: ?>  
 
@@ -244,10 +249,7 @@
 
                                                  
                                                   <button style="display: none;" type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
-                                             <?php endif; ?>
-
-                                             
-
+                                             <?php endif; ?> 
                                         <?php endif; ?> 
                                    </div>
 
