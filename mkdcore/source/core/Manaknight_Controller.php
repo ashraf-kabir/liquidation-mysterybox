@@ -439,6 +439,7 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
         $this->load->model('pos_order_items_model');
         $this->load->model('pos_order_model');
         $this->load->model('store_model');
+        $this->load->model('physical_location_model');
 
         $this->load->library('api_service');
         $this->api_service->set_inventory_model($this->inventory_model);
@@ -446,6 +447,7 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
         $this->api_service->set_pos_order_model($this->pos_order_model);
         $this->api_service->set_store_model($this->store_model);
         $this->api_service->set_config($this->config);
+        $this->api_service->set_physical_location_model($this->physical_location_model);
 
 
         $order_data = $this->api_service->send_order_to_shipper($order_id);

@@ -7,11 +7,17 @@ class Api_service{
     protected $_pos_order_items_model;
     protected $_pos_order_model;
     protected $_store_model;
+    protected $_physical_location_model;
     
 
     public function set_config($config)
     {
         $this->_config = $config;
+    }
+
+    public function set_physical_location_model($physical_location_model)
+    {
+        $this->_physical_location_model = $physical_location_model;
     }
 
 
@@ -58,6 +64,7 @@ class Api_service{
 
                 $inventory_detail  = $this->_inventory_model->get($value->product_id);
                 $store_detail      = $this->_store_model->get($value->store_id);
+                $physical_location = $this->_physical_location_model->get($inventory_detail->physical_location);
                     
 
 
@@ -65,6 +72,13 @@ class Api_service{
                 if(isset($store_detail->name))
                 {
                     $store_location    = $store_detail->name;
+                } 
+
+
+                $physical_location_name = "N/A";
+                if(isset($physical_location->name))
+                {
+                    $physical_location_name    = $physical_location->name;
                 } 
 
                 $product_type = "";
@@ -82,6 +96,7 @@ class Api_service{
                         'product_qty'        =>  $value->quantity,  
                         'item_sku'           =>  $inventory_detail->sku, 
                         'product_type'       =>  $product_type,
+                        'product_location'   =>  $physical_location_name,
                         'width'              =>  $inventory_detail->width,
                         'height'             =>  $inventory_detail->height,
                         'length'             =>  $inventory_detail->length,
