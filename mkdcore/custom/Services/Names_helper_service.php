@@ -26,6 +26,7 @@ class Names_helper_service {
         return  $category_name;
     }
 
+   
 
     public function set_department_model($department_model)
     {

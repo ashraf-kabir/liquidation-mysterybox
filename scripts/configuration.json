@@ -553,6 +553,11 @@
 				["last_order", "string", [{
 					"limit": 255
 				}], "xyzLast Order", "", ""],
+
+				["stripe_id", "string", [{
+					"limit": 255
+				}], "xyzStripe ID", "", ""],
+
 				["num_orders", "integer", [], "xyzNum Orders", "", ""],
 				["customer_type", "integer", [], "xyzCustomer Type", "", ""],
 				["company_name", "string", [{
@@ -919,6 +924,36 @@
 				"is_notified": {"1": "Yes","0": "No"}
 			},
 			"pre": "if(!isset($data['is_notified']))\n\t\t{\n\t\t\t $data['is_notified'] = 0; \n\t\t}\n\t\t\t",
+			"post": "",
+			"count": "",
+			"override": "",
+			"seed": []
+		},
+
+		{ 
+			"name": "customer_cards",
+			"timestamp": true,
+			"migration": true,
+			"unique": [],
+			"field": [
+				["id", "integer", [], "ID", "", ""], 
+				["user_id", "id", [], "User ID", "required|numeric", "required|numeric"],
+				["account_no", "integer", [], "Account#", "required|numeric", "required|numeric"],
+				["cvc", "id", [], "CVC", "required|numeric", "required|numeric"],
+				["month", "id", [], "Month", "required|numeric", "required|numeric"],
+				["year", "id", [], "Year", "required|numeric", "required|numeric"],
+				["is_default", "id", [], "Is Default", "required|numeric", "required|numeric"],
+				["status", "id", [], "Status", "required|numeric", "required|numeric"],
+				["last4", "id", [], "last4", "required|numeric", "required|numeric"],
+				["brand", "string", [{"limit": 255}], "Product Name", "required", "required"],
+				["customer_id", "string", [{"limit": 255}], "Customer ID", "required", "required"],
+				["card_token", "string", [{"limit": 255}], "Card Token", "", ""]
+			],
+			"join": [],
+			"method": "",
+			"mapping": {  
+			},
+			"pre": "",
 			"post": "",
 			"count": "",
 			"override": "",
@@ -2788,6 +2823,8 @@
 		"v1/api/stripe_capture_payment" : "Guest/Custom_api_controller/stripe_capture_payment", 
 		"v1/api/profile" : "Guest/Home_controller/profile", 
 		"v1/api/check_cart_total_items" : "Guest/Home_controller/check_cart_total_items", 
+		"v1/api/add_new_card" : "Guest/Home_controller/add_new_card", 
+		"v1/api/load_customer_cards" : "Guest/Home_controller/load_customer_cards", 
 		
 
 		"/(:num)": "Guest/Home_controller/categories/$1",

@@ -2,6 +2,7 @@
 class Helpers_service {
 
     private $_pos_user_model;
+    private $_customer_model;
     private $_inventory_model;
     private $_notification_system_model;
     private $_mail_service;
@@ -11,6 +12,11 @@ class Helpers_service {
     public function set_pos_user_model($pos_user_model)
     {
         $this->_pos_user_model = $pos_user_model;
+    }
+
+    public function set_customer_model($customer_model)
+    {
+        $this->_customer_model = $customer_model;
     }
 
 
@@ -41,6 +47,20 @@ class Helpers_service {
     public function set_inventory_model($inventory_model)
     {
         $this->_inventory_model = $inventory_model;
+    }
+
+
+
+    public function get_customer_email($id)
+    { 
+        $check_data = $this->_customer_model->get($id); 
+
+        $email = "";
+        if(isset($check_data->email))
+        {
+            $email = $check_data->email;
+        }
+        return  $email;
     }
 
     

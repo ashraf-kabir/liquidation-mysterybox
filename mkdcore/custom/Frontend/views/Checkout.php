@@ -6,6 +6,9 @@
           padding-left: 113px;
           display: grid;
      }
+     .add_card_div{
+          display: none;
+     }
 </style>
 <?php echo form_open('',array('class' => 'send_checkout' )); ?>
 <section class="checkout-section" id="checkout-section">
@@ -103,11 +106,26 @@
                                    <div class="account-details">
                                         <div class="heading">Add Payement Details</div>
                                         <div class="inputs-container">
-                                             <div>
-                                                  <label for="account-no">account-no:</label>
-                                                  <input name="number" type="text" placeholder="your account-no" />
+
+                                             <div  class="select_card_div">
+                                                  <label for="account-no">Select Card:</label>
+                                                   
+                                                  <select name="customer_card" id="customer_card"  class="form-control">
+                                                       <option value="">Select Month</option> 
+                                                  </select> 
                                              </div>
-                                             <div>
+
+                                             <div  class="select_card_div">
+                                                  <button type="button" class="add_card_btn_show btn btn-primary">Add New</button>
+                                             </div>
+ 
+                                                  
+                                             
+                                             <div class="add_card_div" style="display: none;">
+                                                  <label for="account-no">account-no:</label>
+                                                  <input name="number" id="account_no" type="text" placeholder="your account-no" />
+                                             </div>
+                                             <div class="add_card_div"  style="display: none;">
                                                   <label for="month">month:</label>
                                                   <select name="exp_month" id="exp_month"  class="form-control">
                                                        <option value="">Select Month</option> 
@@ -125,7 +143,7 @@
                                                        <option value="12">12 - December</option> 
                                                   </select>
                                              </div>
-                                             <div>
+                                             <div class="add_card_div"  style="display: none;">
                                                   <label for="year">year:</label>
                                                   <?php  
                                                   $year  = Date('Y');
@@ -138,10 +156,18 @@
                                                        } ?>
                                                   </select>
                                              </div>
-                                             <div>
+                                             <div class="add_card_div"  style="display: none;">
                                                   <label for="CVC">CVC:</label>
-                                                  <input pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" name="cvc"  min-length="3" type="text" placeholder="your CVC" />
+                                                  <input pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" id="cvc_numb" name="cvc"  min-length="3" type="text" placeholder="your CVC" />
                                              </div>
+
+                                             <div class="add_card_div"  style="display: none;text-align: right;">
+                                                  <button  style="display: none;" type="button" class="add_new_card btn btn-primary add_card_div">Save</button>
+
+                                                  <button  style="display: none;" type="button" class="close_new_card_div btn btn-info add_card_div">Close</button>
+                                             </div>
+                                             
+ 
                                         </div>
                                    </div>
 

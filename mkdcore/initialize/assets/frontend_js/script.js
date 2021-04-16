@@ -628,6 +628,49 @@ $(document).on('click','.add-billing-address',function(e){
 
 
 
+
+
+
+
+$(document).on('click','.add_new_card',function(e){
+  e.preventDefault();
+
+  var exp_month    = $('#exp_month').val();
+  var card_number  = $('#account_no').val();
+  var exp_year     = $('#exp_year').val();
+  var cvc          = $('#cvc_numb').val(); 
+
+  $.ajax({
+    url: '../v1/api/add_new_card',
+    timeout: 30000,
+    method: 'POST',
+    dataType: 'JSON',  
+    data : {exp_month, card_number, exp_year, cvc },
+    success: function (response)  
+    {     
+      if(response.success)
+      {
+        toastr.success(response.success); 
+         load_customer_cards();
+      } 
+
+
+      if(response.error)
+      { 
+        toastr.error(response.error); 
+      } 
+    },
+    error: function()
+    { 
+      toastr.error('Error! Connection timeout.'); 
+    } 
+  });
+});
+
+
+
+
+
 $(document).on('click','.shipping-cost-change', function(){    
   calculate_cost();
 });
@@ -635,6 +678,16 @@ $(document).on('click','.shipping-cost-change', function(){
 
 $(document).on('click','.place-order-btn', function(){    
   $('.send_checkout').submit();
+});
+
+
+$(document).on('click','.add_card_btn_show', function(){    
+  $('.add_card_div').show();
+  $('.select_card_div').hide();
+});
+$(document).on('click','.close_new_card_div', function(){    
+  $('.add_card_div').hide();
+  $('.select_card_div').show();
 });
 
 
@@ -749,3 +802,48 @@ $(document).on('change','.shipping_service_name_change', function(){
   var service_name = $(this).find(':selected').attr('data-service_name'); 
   $(this).parent().find('.shipping_service_name_for_selected').val(service_name);
 });
+
+
+
+
+
+
+
+
+ 
+function load_customer_cards()
+{ 
+  $.ajax({
+    url: '../v1/api/load_customer_cards',
+    timeout: 30000,
+    method: 'POST',
+    dataType: 'JSON',   
+    success: function (response)  
+    {    
+      all_cards = "";
+      if(response.all_cards)
+      { 
+        all_cards += '<option value=""   > Select </option>';
+        $(response.all_cards).each(function(index,object){ 
+          all_cards += '<option value="' + object.id  +  '"   > ' + object.brand  + ' </option>';
+        });
+
+        $('#customer_card').html(all_cards)
+         
+      } 
+
+
+      if(response.error)
+      { 
+        toastr.error(response.error); 
+      } 
+    },
+    error: function()
+    { 
+      toastr.error('Error! Connection timeout.'); 
+    } 
+  });
+}
+
+
+load_customer_cards();

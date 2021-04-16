@@ -47,3 +47,6 @@ ALTER TABLE `pos_order_items` CHANGE `shipping_cost_name` `shipping_cost_name` V
 
 
 ALTER TABLE `pos_order_items` CHANGE `shipping_service_name` `shipping_service_name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `shipping_service_code` `shipping_service_code` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+
+
+ALTER TABLE `customer` CHANGE `stripe_id` `stripe_id` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;

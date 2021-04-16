@@ -440,16 +440,17 @@ class Home_controller extends Manaknight_Controller
             $this->form_validation->set_rules('billing_state', "Billing State", "max_length[255]"); 
             $this->form_validation->set_rules('billing_address', "Billing Address", "required|min_length[5]"); 
             $this->form_validation->set_rules('payment', "Payment Method", "integer");
-            $this->form_validation->set_rules('number', "Account Number", "required|integer");
-            $this->form_validation->set_rules('exp_month', "Expiry Month", "required");
-            $this->form_validation->set_rules('exp_year', "Expiry Year", "required");
-            $this->form_validation->set_rules('cvc', "CVC", "required");
+            // $this->form_validation->set_rules('number', "Account Number", "required|integer");
+            // $this->form_validation->set_rules('exp_month', "Expiry Month", "required");
+            // $this->form_validation->set_rules('exp_year', "Expiry Year", "required");
+            // $this->form_validation->set_rules('cvc', "CVC", "required");
 
             $this->form_validation->set_rules('shipping_zip', "Shipping Zip", "integer");
             $this->form_validation->set_rules('shipping_city', "Shipping City", "max_length[255]");
             $this->form_validation->set_rules('shipping_country', "Shipping Country", "max_length[255]");
             $this->form_validation->set_rules('shipping_state', "Shipping State", "max_length[255]"); 
             $this->form_validation->set_rules('shipping_address', "Shipping Address", "required|min_length[5]"); 
+            $this->form_validation->set_rules('customer_card', "Card is required", "required"); 
               
 
 
@@ -541,6 +542,7 @@ class Home_controller extends Manaknight_Controller
             $this->load->model('transactions_model');
             
             $this->load->model('customer_model'); 
+            $this->load->model('customer_cards_model'); 
             $this->load->model('coupon_model'); 
             $this->load->model('coupon_orders_log_model'); 
             $this->load->model('tax_model'); 
@@ -577,34 +579,37 @@ class Home_controller extends Manaknight_Controller
             //     } 
             // }
 
+            $this->load->library('stripe_helper_service'); 
+            $this->stripe_helper_service->set_config($this->config);
+            $this->stripe_helper_service->set_customer_model($this->customer_model);
+            $this->stripe_helper_service->set_customer_cards_model($this->customer_cards_model);
 
-
-            $token_id = "";
-            if($payment == 2)
-            {
-                $acc_number     =  $this->input->post('number', TRUE);
-                $exp_month      =  $this->input->post('exp_month', TRUE);
-                $exp_year       =  $this->input->post('exp_year', TRUE);
-                $cvc            =  $this->input->post('cvc', TRUE);
+            $token_id = $this->input->post('customer_card', TRUE);
+            // if($payment == 2)
+            // {
+            //     $acc_number     =  $this->input->post('number', TRUE);
+            //     $exp_month      =  $this->input->post('exp_month', TRUE);
+            //     $exp_year       =  $this->input->post('exp_year', TRUE);
+            //     $cvc            =  $this->input->post('cvc', TRUE);
     
-                $this->load->library('stripe_helper_service');
+            //     $this->load->library('stripe_helper_service');
     
-                $this->stripe_helper_service->set_config($this->config);
-                $response = $this->stripe_helper_service->create_stripe_token($acc_number, $exp_month, $exp_year, $cvc);
+            //     $this->stripe_helper_service->set_config($this->config);
+            //     $response = $this->stripe_helper_service->create_stripe_token($acc_number, $exp_month, $exp_year, $cvc);
     
                 
-                if( isset($response['success']) )
-                {
-                    $token_id = $response['response']->id;
-                }
-                else
-                { 
-                    $output['status'] = 0;
-                    $output['error']  = $response['error_msg'];
-                    echo json_encode($output);
-                    exit();  
-                } 
-            }
+            //     if( isset($response['success']) )
+            //     {
+            //         $token_id = $response['response']->id;
+            //     }
+            //     else
+            //     { 
+            //         $output['status'] = 0;
+            //         $output['error']  = $response['error_msg'];
+            //         echo json_encode($output);
+            //         exit();  
+            //     } 
+            // }
  
 
 
@@ -781,7 +786,7 @@ class Home_controller extends Manaknight_Controller
                     if($payment == 2)
                     { 
                         $grand_total = number_format($grand_total,2);
-                        $response = $this->stripe_helper_service->create_stripe_charge($token_id, $grand_total, "Ecom Order");
+                        $response = $this->stripe_helper_service->create_stripe_charge($user_id, $token_id, $grand_total, "Ecom Order");
              
                         if( isset($response['success']) )
                         { 
@@ -1346,6 +1351,233 @@ class Home_controller extends Manaknight_Controller
 
 
 
+
+    public function add_new_card()
+    {
+        $user_id = $this->session->userdata('user_id');
+
+        if (empty($user_id))
+        { 
+            $output['error'] = 'Error! Login to continue.'; 
+            echo json_encode($output);
+            exit();
+        }
+        else
+        {
+            $this->load->model('customer_model');
+            $this->load->model('customer_cards_model');
+            
+            $this->load->library('stripe_helper_service'); 
+            $this->stripe_helper_service->set_config($this->config);
+            $this->stripe_helper_service->set_customer_model($this->customer_model);
+
+            
+            $this->load->library('helpers_service'); 
+            $this->helpers_service->set_customer_model($this->customer_model);
+
+
+            
+
+            // stripe_helper_service
+            $card_number = $this->input->post('card_number', TRUE);
+            $exp_month   = $this->input->post('exp_month', TRUE);
+            $exp_year    = $this->input->post('exp_year', TRUE);
+            $cvc         = $this->input->post('cvc', TRUE); 
+
+            $new_card_last4 = substr($card_number, 12);
+
+            // check card already added or not
+            $prev_card = $this->customer_cards_model->get_by_field('user_id', $user_id);
+     
+
+            if (!empty($prev_card))
+            {
+                if (!empty($card_number) && !empty($exp_month) && !empty($exp_year) && !empty($cvc))
+                {
+                    // if ($prev_card->last4 == $new_card_last4)
+                    // {
+                    //     // throw error
+                    //     $this->error('This card last4->(...' . $new_card_last4 . ') is already added. Try again with a new card.');
+                    //     return redirect($_SERVER['HTTP_REFERER']);
+                    // }
+                    // else
+                    // {
+
+                        // add card
+                        $response = $this->stripe_helper_service->create_stripe_token($card_number, $exp_month, $exp_year, $cvc);
+
+                        if (isset($response['success']))
+                        {
+                            $stripe_token_id = $response['token']->id;
+ 
+ 
+
+                            // pass token_id to assign card to user
+                            $res_card_data = $this->stripe_helper_service->add_new_card($stripe_token_id, $user_id);
+
+                            if (isset($res_card_data['success']))
+                            {
+                                $stripe_card_id   = $res_card_data['card_data']->id;
+                                $stripe_brand     = $res_card_data['card_data']->brand;
+                                $stripe_exp_month = $res_card_data['card_data']->exp_month;
+                                $stripe_exp_year  = $res_card_data['card_data']->exp_year;
+                                $stripe_last4     = $res_card_data['card_data']->last4;
+
+                                // store the card id with the associated user
+                                $check_new_card = $this->customer_cards_model->create([
+                                    'is_default'     => 0,
+                                    'user_id'        => $user_id,
+                                    'card_token'     => $stripe_card_id,
+                                    'brand'          => $stripe_brand,
+                                    'month'          => $stripe_exp_month,
+                                    'year'           => $stripe_exp_year,
+                                    'last4'          => $stripe_last4,
+                                    'cvc'            => $cvc,
+                                    'status'         => 1,
+                                ]);
+
+                                if ($check_new_card)
+                                {
+                                    $output['success'] = 'Card added successfully.'; 
+                                    echo json_encode($output);
+                                    exit();  
+                                }
+                                else
+                                {
+                                    $output['error'] = "Error! Card add failed. Try Again."; 
+                                    echo json_encode($output);
+                                    exit();  
+                                } 
+                            }
+                            else
+                            {
+                                // when user do not have the user->stripe_id
+                                
+                                $output['error'] = $res_card_data['error_msg']; 
+                                echo json_encode($output);
+                                exit(); 
+                            }
+                        }
+                        else
+                        {
+                            $output['error'] = $response['error_msg']; 
+                            echo json_encode($output);
+                            exit();  
+                        }
+                    // }
+                }
+                else
+                {
+                    $output['error'] = "Empty Fields"; 
+                    echo json_encode($output);
+                    exit();   
+                }
+            }
+            else
+            {
+
+                
+
+
+
+                // create stripe_customer_id and add the new card
+                // $this->error('No prev record found');
+                // return redirect($_SERVER['HTTP_REFERER']);
+                
+                $response = $this->stripe_helper_service->create_stripe_token($card_number, $exp_month, $exp_year, $cvc);
+
+                if (isset($response['success']))
+                {
+                    
+                    $stripe_token_id = $response['response']->id;
+                    
+
+                    // get user email from credential model
+                    $customer_email = $this->helpers_service->get_customer_email($user_id);
+
+                    
+                    $res_customer = $this->stripe_helper_service->create_stripe_customer_with_card($customer_email, $stripe_token_id);
+
+                    if (isset($res_customer['success']))
+                    {
+                        $stripe_customer_id = $res_customer['card']->customer;
+                        $stripe_card_id     = $res_customer['card']->id;
+                        $stripe_brand       = $res_customer['card']->brand;
+                        $stripe_exp_month   = $res_customer['card']->exp_month;
+                        $stripe_exp_year    = $res_customer['card']->exp_year;
+                        $stripe_last4       = $res_customer['card']->last4;
+
+                        // update user->stripe_id
+                        $update_stripe_id = $this->customer_model->edit([
+                            'stripe_id' => $stripe_customer_id
+                        ], $user_id);
+
+                        // add card on user_card
+                        if ($update_stripe_id)
+                        {
+                            // store the card id with the associated user
+                            $check_new_card = $this->customer_cards_model->create([
+                                'is_default'     => 0,
+                                'user_id'        => $user_id,
+                                'card_token'     => $stripe_card_id,
+                                'brand'          => $stripe_brand,
+                                'month'          => $stripe_exp_month,
+                                'year'           => $stripe_exp_year,
+                                'last4'          => $stripe_last4,
+                                'cvc'            => $cvc,
+                                'status'         => 1,
+                            ]);
+
+                            if ($check_new_card)
+                            {
+                                $output['success'] = 'Card added successfully and set to default.'; 
+                                echo json_encode($output);
+                                exit(); 
+                            }
+                            else
+                            {
+                                $output['error'] = "Card add failed. Try Again. (Y)"; 
+                                echo json_encode($output);
+                                exit();   
+                            } 
+                        }
+                    }
+                    else
+                    {
+                        $output['error'] = $res_customer['error_msg']; 
+                        echo json_encode($output);
+                        exit();  
+                    }
+
+                }
+                else
+                {
+                    // when new card validation failed
+                    $output['error'] = $response['error_msg']; 
+                    echo json_encode($output);
+                    exit();  
+                }
+            }
+        }
+    }
+
+
+    public function load_customer_cards()
+    {
+        if ($this->session->userdata('user_id')) 
+        {
+            $user_id = $this->session->userdata('user_id'); 
+            $this->load->model('customer_cards_model');
+            $all_cards = $this->customer_cards_model->get_all(['user_id' => $user_id]);
+
+
+            $output['all_cards'] = $all_cards; 
+            echo json_encode($output);
+            exit();
+
+        }
+        
+    }
 
 
 }
