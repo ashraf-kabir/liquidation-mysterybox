@@ -321,47 +321,49 @@ check_cart_total_items();
       exit; 
     }
 
+    if (error_for_shipping == 0) 
+    {
+      p_object.find('.shipping-cost-options').html('<img style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
 
-    p_object.find('.shipping-cost-options').html('<img style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
+      $.ajax({
+        url: '../v1/api/get_shipping_cost',
+        timeout: 30000,
+        method: 'POST',
+        dataType: 'JSON',  
+        data : {'postal_code' : postal_code, 'city' : city, 'state' : state, 'country' : country, 'id' : id  },
+        success: function (response)  
+        {   
 
-    $.ajax({
-      url: '../v1/api/get_shipping_cost',
-      timeout: 30000,
-      method: 'POST',
-      dataType: 'JSON',  
-      data : {'postal_code' : postal_code, 'city' : city, 'state' : state, 'country' : country, 'id' : id  },
-      success: function (response)  
-      {   
+          if(response.list_all)
+          {
 
-        if(response.list_all)
+            let shipping_options = '<input type="hidden" class="shipping-cost-name" name="shipping_cost_name_' + id + '" value=""  /><input type="hidden" class="shipping-cost-price-value" name="shipping_cost_value_' + id + '" value="0"  />';
+
+
+            $(response.list_all).each(function(index,object){
+              var shipping_cost_total = object.shipmentCost + object.otherCost;
+              shipping_cost_total = parseFloat(shipping_cost_total).toFixed(2);
+              shipping_options += '<label><input name="shipping_service_id_' + id + '" class="mr-3 shipping-cost-change" type="radio" value="' + object.serviceCode + '" data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  />' + object.serviceName + '  ( $' + shipping_cost_total + ' ) ' + object.expected_date + ' </label>';
+            }) 
+            // shipping_options += '</select>';
+
+            p_object.find('.shipping-cost-options').html(shipping_options);
+          }
+
+
+          if(response.error)
+          {
+            toastr.error(response.error); 
+            p_object.find('.shipping-cost-options').html('')
+          } 
+        },
+        error: function()
         {
-
-          let shipping_options = '<input type="hidden" class="shipping-cost-name" name="shipping_cost_name_' + id + '" value=""  /><input type="hidden" class="shipping-cost-price-value" name="shipping_cost_value_' + id + '" value="0"  />';
-
-
-          $(response.list_all).each(function(index,object){
-            var shipping_cost_total = object.shipmentCost + object.otherCost;
-            shipping_cost_total = parseFloat(shipping_cost_total).toFixed(2);
-            shipping_options += '<label><input name="shipping_service_id_' + id + '" class="mr-3 shipping-cost-change" type="radio" value="' + object.serviceCode + '" data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  />' + object.serviceName + '  ( $' + shipping_cost_total + ' ) ' + object.expected_date + ' </label>';
-          }) 
-          // shipping_options += '</select>';
-
-          p_object.find('.shipping-cost-options').html(shipping_options);
-        }
-
-
-        if(response.error)
-        {
-          toastr.error(response.error); 
-          p_object.find('.shipping-cost-options').html('')
+          p_object.find('.shipping-cost-options').html('');
+          toastr.error('Error! Try again later.'); 
         } 
-      },
-      error: function()
-      {
-        p_object.find('.shipping-cost-options').html('');
-        toastr.error('Error! Try again later.'); 
-      } 
-    })
+      })
+    }
   });
 
   
@@ -539,49 +541,71 @@ $(document).on('click','.add_alert_notification',function(e){
 
 $(document).on('click','.add-shipping-address',function(e){
   e.preventDefault();
-
+  var error_for_updating_shipping = 0;
   var shipping_address = $('#shipping_address').val();
   var shipping_country = $('#shipping_country').val();
   var shipping_zip     = $('#shipping_zip').val();
   var shipping_state   = $('#shipping_state').val();
   var shipping_city    = $('#shipping_city').val();
 
-  $.ajax({
-    url: '../v1/api/update_customer_address',
-    timeout: 30000,
-    method: 'POST',
-    dataType: 'JSON',  
-    data : {shipping_address, shipping_country, shipping_city, shipping_state, shipping_zip },
-    success: function (response)  
-    {     
-      if(response.success)
-      {
-        $('.on_click_shipping_modal').trigger('click');
-        toastr.success(response.success); 
-
-        $('#msg_full_name').text($('#full_name').val())
-        $('#msg_shipping_address').text(shipping_address)
- 
-        $('#msg_shipping_zip').text(shipping_zip)
-        $('#msg_shipping_state').text(shipping_state)
-        $('#msg_shipping_city').text(shipping_city) 
-
-        $('.calculate-shipping-cost').trigger('click');
-
-      } 
+  if(shipping_zip == '' || shipping_zip == 0) 
+  {  
+    toastr.error('Zip Code is required.');
+    error_for_updating_shipping = 1;
+    return false;
+    exit; 
+  }
 
 
-      if(response.error)
-      { 
-        toastr.error(response.error); 
-      } 
+
+  if(shipping_country == '' || shipping_country == 0) 
+  {
+    toastr.error('Country is required.'); 
+    error_for_updating_shipping = 1;
+    return false;
+    exit;
+  }
+
+
+  if (error_for_updating_shipping == 0) 
+  {
+    $.ajax({
+      url: '../v1/api/update_customer_address',
+      timeout: 30000,
+      method: 'POST',
+      dataType: 'JSON',  
+      data : {shipping_address, shipping_country, shipping_city, shipping_state, shipping_zip },
+      success: function (response)  
+      {     
+        if(response.success)
+        {
+          $('.on_click_shipping_modal').trigger('click');
+          toastr.success(response.success); 
+
+          $('#msg_full_name').text($('#full_name').val())
+          $('#msg_shipping_address').text(shipping_address)
+   
+          $('#msg_shipping_zip').text(shipping_zip)
+          $('#msg_shipping_state').text(shipping_state)
+          $('#msg_shipping_city').text(shipping_city) 
+
+          $('.calculate-shipping-cost').trigger('click');
+
+        } 
+
+
+        if(response.error)
+        { 
+          toastr.error(response.error); 
+        } 
       },
       error: function()
       { 
         toastr.error('Error! Connection timeout.'); 
       } 
     });
-  });
+  }
+});
 
 
 $(document).on('click','.add-billing-address',function(e){

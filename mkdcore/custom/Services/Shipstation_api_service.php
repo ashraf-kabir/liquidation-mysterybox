@@ -102,7 +102,8 @@ class Shipstation_api_service {
             curl_close($curl); 
             $response = json_decode( $response );
 
-            if(!empty($response))
+
+            if(!empty($response) and !isset($response->ExceptionMessage))
             { 
                 foreach ($response as $key => &$value) 
                 {
