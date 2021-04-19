@@ -128,6 +128,33 @@ class Manager_inventory_controller extends Manager_controller
         }
 
 
+
+        if ( isset($_POST['video_url'][0]) && !empty($_POST['video_url'][0]) ) 
+        {
+            $this->form_validation->set_rules('youtube_thumbnail_1', 'Youtube Thumbnail 1', 'required'); 
+        }
+
+
+        if (  isset($_POST['video_url'][1]) && !empty($_POST['video_url'][1]) ) 
+        {
+            $this->form_validation->set_rules('youtube_thumbnail_2', 'Youtube Thumbnail 2', 'required'); 
+        }
+
+
+
+        if (  isset($_POST['video_url'][2]) && !empty($_POST['video_url'][2])  ) 
+        {
+            $this->form_validation->set_rules('youtube_thumbnail_3', 'Youtube Thumbnail 3', 'required'); 
+        }
+
+
+
+        if (  isset($_POST['video_url'][3]) && !empty($_POST['video_url'][3]) ) 
+        {
+            $this->form_validation->set_rules('youtube_thumbnail_4', 'Youtube Thumbnail 4', 'required'); 
+        }
+         
+
 		if ($this->form_validation->run() === FALSE)
 		{ 
 			return $this->render('Admin/InventoryAdd', $this->_data);
@@ -270,6 +297,32 @@ class Manager_inventory_controller extends Manager_controller
         }
 
 
+        
+        if ( isset($_POST['video_url'][0]) && !empty($_POST['video_url'][0]) ) 
+        {
+            $this->form_validation->set_rules('youtube_thumbnail_1', 'Youtube Thumbnail 1', 'required'); 
+        }
+
+
+        if (  isset($_POST['video_url'][1]) && !empty($_POST['video_url'][1]) ) 
+        {
+            $this->form_validation->set_rules('youtube_thumbnail_2', 'Youtube Thumbnail 2', 'required'); 
+        }
+
+
+
+        if (  isset($_POST['video_url'][2]) && !empty($_POST['video_url'][2])  ) 
+        {
+            $this->form_validation->set_rules('youtube_thumbnail_3', 'Youtube Thumbnail 3', 'required'); 
+        }
+
+
+
+        if (  isset($_POST['video_url'][3]) && !empty($_POST['video_url'][3]) ) 
+        {
+            $this->form_validation->set_rules('youtube_thumbnail_4', 'Youtube Thumbnail 4', 'required'); 
+        }
+         
         
 		if ($this->form_validation->run() === FALSE)
 		{ 
