@@ -268,7 +268,7 @@
                                         <?php else: ?>  
 
                                              <?php if ($value->free_ship == 1): ?>
-                                                  <p>Free Shipping:</p>
+                                                  <p>Free Shipping</p>
                                              <?php else: ?>
                                                   <p>Shipping Cost:</p>
                                                   <p>$<span class="selected_item_shipping_cost">0.00</span></p>

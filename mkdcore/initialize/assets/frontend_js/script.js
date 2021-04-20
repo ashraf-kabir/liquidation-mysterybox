@@ -567,6 +567,15 @@ $(document).on('click','.add-shipping-address',function(e){
   }
 
 
+  if(shipping_address == '' || shipping_address == 0) 
+  {
+    toastr.error('Address is required.'); 
+    error_for_updating_shipping = 1;
+    return false;
+    exit;
+  }
+
+
   if (error_for_updating_shipping == 0) 
   {
     $.ajax({
@@ -611,43 +620,66 @@ $(document).on('click','.add-shipping-address',function(e){
 $(document).on('click','.add-billing-address',function(e){
   e.preventDefault();
 
+  var error_for_updating_billing = 0;
   var billing_address = $('#billing_address').val();
   var billing_country = $('#billing_country').val();
   var billing_zip     = $('#billing_zip').val();
   var billing_state   = $('#billing_state').val();
   var billing_city    = $('#billing_city').val();
 
-  $.ajax({
-    url: '../v1/api/update_customer_address',
-    timeout: 30000,
-    method: 'POST',
-    dataType: 'JSON',  
-    data : {billing_address, billing_country, billing_city, billing_state, billing_zip },
-    success: function (response)  
-    {     
-      if(response.success)
-      {
-        $('.on_click_billing_modal').trigger('click');
-        toastr.success(response.success); 
-
-        $('#msg_billing_address').text(billing_address)
- 
-        $('#msg_billing_zip').text(billing_zip)
-        $('#msg_billing_state').text(billing_state)
-        $('#msg_billing_city').text(billing_city) 
-      } 
+  
+  if(billing_zip == '' || billing_zip == 0) 
+  {  
+    toastr.error('Zip Code is required.');
+    error_for_updating_billing = 1;
+    return false;
+    exit; 
+  }
 
 
-      if(response.error)
+
+  if(billing_address == '' || billing_address == 0) 
+  {
+    toastr.error('Address is required.'); 
+    error_for_updating_billing = 1;
+    return false;
+    exit;
+  }
+
+  if (error_for_updating_billing == 0) 
+  {
+    $.ajax({
+      url: '../v1/api/update_customer_address',
+      timeout: 30000,
+      method: 'POST',
+      dataType: 'JSON',  
+      data : {billing_address, billing_country, billing_city, billing_state, billing_zip },
+      success: function (response)  
+      {     
+        if(response.success)
+        {
+          $('.on_click_billing_modal').trigger('click');
+          toastr.success(response.success); 
+
+          $('#msg_billing_address').text(billing_address)
+   
+          $('#msg_billing_zip').text(billing_zip)
+          $('#msg_billing_state').text(billing_state)
+          $('#msg_billing_city').text(billing_city) 
+        } 
+
+
+        if(response.error)
+        { 
+          toastr.error(response.error); 
+        } 
+      },
+      error: function()
       { 
-        toastr.error(response.error); 
+        toastr.error('Error! Connection timeout.'); 
       } 
-    },
-    error: function()
-    { 
-      toastr.error('Error! Connection timeout.'); 
-    } 
-  });
+    });
+  }
 });
 
 

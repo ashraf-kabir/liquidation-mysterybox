@@ -131,27 +131,27 @@ class Admin_inventory_controller extends Admin_controller
         }
 
 
-        if ($this->input->post('video_url')[0] &&  !empty($this->input->post('video_url')[0])) 
+        if ( isset($_POST['video_url'][0]) && !empty($_POST['video_url'][0]) ) 
         {
             $this->form_validation->set_rules('youtube_thumbnail_1', 'Youtube Thumbnail 1', 'required'); 
         }
 
 
-        if ($this->input->post('video_url')[1] &&  !empty($this->input->post('video_url')[1])) 
+        if (  isset($_POST['video_url'][1]) && !empty($_POST['video_url'][1]) ) 
         {
             $this->form_validation->set_rules('youtube_thumbnail_2', 'Youtube Thumbnail 2', 'required'); 
         }
 
 
 
-        if ($this->input->post('video_url')[2] &&  !empty($this->input->post('video_url')[2])) 
+        if (  isset($_POST['video_url'][2]) && !empty($_POST['video_url'][2])  ) 
         {
             $this->form_validation->set_rules('youtube_thumbnail_3', 'Youtube Thumbnail 3', 'required'); 
         }
 
 
 
-        if ($this->input->post('video_url')[3] &&  !empty($this->input->post('video_url')[3])) 
+        if (  isset($_POST['video_url'][3]) && !empty($_POST['video_url'][3]) ) 
         {
             $this->form_validation->set_rules('youtube_thumbnail_4', 'Youtube Thumbnail 4', 'required'); 
         }

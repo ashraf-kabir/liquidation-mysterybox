@@ -1331,9 +1331,8 @@ class Home_controller extends Manaknight_Controller
 
              
 
-            if ($response) 
-            {
-                
+            if (isset($response) && $response) 
+            { 
                 echo json_encode($output);
                 exit(); 
             }
