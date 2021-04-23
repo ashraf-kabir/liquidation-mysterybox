@@ -39,6 +39,18 @@ function initialize() {
                var addressType = place.address_components[i].types[0]; 
                var val = place.address_components[i][componentForm[addressType]];
                 
+               if (addressType == 'street_number') 
+               {
+                    document.getElementById('billing_address').value = val;
+               }
+
+               if (addressType == 'route') 
+               {
+                    var street_number_add = document.getElementById('billing_address').value
+                    var full_address      = street_number_add + " " + val;
+                    document.getElementById('billing_address').value = full_address;
+               }
+
                if (addressType == 'country') 
                {
                     document.getElementById('billing_country').value = "US";
@@ -80,7 +92,20 @@ function initialize() {
           { 
                var addressType = place.address_components[i].types[0]; 
                var val = place.address_components[i][componentForm[addressType]];
-                
+
+               if (addressType == 'street_number') 
+               {
+                    document.getElementById('shipping_address').value = val;
+               }
+
+               if (addressType == 'route') 
+               {
+                    var street_number_add_shpping = document.getElementById('shipping_address').value
+                    var full_address_shpping      = street_number_add_shpping + " " + val;
+                    document.getElementById('shipping_address').value = full_address_shpping;
+               }
+
+
                if (addressType == 'country') 
                {
                     document.getElementById('shipping_country').value = "US";
