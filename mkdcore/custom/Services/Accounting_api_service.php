@@ -71,10 +71,10 @@ class Accounting_api_service {
                     $type = "";
                     if($inventory_detail->product_type == 1)
                     {
-                        $type = "Regular";
+                        $type = "Inventory";
                     }else if ($inventory_detail->product_type == 2)
                     {
-                        $type = "Generic";
+                        $type = "Non Inventory";
                     } 
 
                     array_push($detail, array(

@@ -1341,9 +1341,7 @@ class Home_controller extends Manaknight_Controller
             echo json_encode($output);
             exit(); 
              
-        }
-
-
+        } 
     }
 
 

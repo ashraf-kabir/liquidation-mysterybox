@@ -84,10 +84,10 @@ class Api_service{
                 $product_type = "";
                 if($inventory_detail->product_type == 1)
                 {
-                    $product_type = "Regular";
+                    $product_type = "Inventory";
                 }else if ($inventory_detail->product_type == 2)
                 {
-                    $product_type = "Generic";
+                    $product_type = "Non Inventory";
                 } 
 
                 array_push($detail, array(
