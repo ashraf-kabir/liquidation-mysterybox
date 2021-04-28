@@ -11,14 +11,15 @@ include_once 'Admin_controller.php';
  */
 class Admin_category_wise_controller extends Admin_controller
 {
-    protected $_model_file = 'category_model';
-    public $_page_name = 'Category Wise';
+    protected $_model_file = 'inventory_model';
+    public $_page_name = 'Sales Report';
 
     public function __construct()
     {
         parent::__construct();
         
         $this->load->model('inventory_model');    
+        $this->load->model('category_model');    
         $this->load->model('pos_order_items_model');    
         $this->load->model('pos_order_items_report_model');    
         
@@ -27,27 +28,40 @@ class Admin_category_wise_controller extends Admin_controller
     
 
     public function index($page)
-	{
+    {
         $this->load->library('pagination');
         include_once __DIR__ . '/../../view_models/Category_wise_admin_list_paginate_view_model.php';
         $session = $this->get_session();
         $format = $this->input->get('format', TRUE) ?? 'view';
-        $order_by = $this->input->get('order_by', TRUE) ?? '';
+        $order_by = $this->input->get('order_by', TRUE) ?? 'id';
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
 
         $this->_data['view_model'] = new Category_wise_admin_list_paginate_view_model(
-            $this->category_model,
+            $this->inventory_model,
             $this->pagination,
             '/admin/category_wise/0');
-        $this->_data['view_model']->set_heading('Category Wise');
-        $this->_data['view_model']->set_name(($this->input->get('name', TRUE) != NULL) ? $this->input->get('name', TRUE) : NULL);
+        $this->_data['view_model']->set_heading('Sale Report');
+         
         $this->_data['order_date'] = $this->input->get('order_date', TRUE) != NULL ? $this->input->get('order_date', TRUE) : NULL;
-		
+
+        $this->_data['category_id']    =     $this->input->get('category_id', TRUE) != NULL  ? $this->input->get('category_id', TRUE) : NULL ;
+        $this->_data['from_date']      =     $this->input->get('from_date', TRUE) != NULL  ? $this->input->get('from_date', TRUE) : NULL ;
+        $this->_data['to_date']        =     $this->input->get('to_date', TRUE) != NULL  ? $this->input->get('to_date', TRUE) : NULL ;
+
+        $from_date = $this->_data['from_date'];
+        $to_date   = $this->_data['to_date'];
+
+        if($from_date > $to_date)
+        {  
+            $this->session->set_flashdata('error2', 'Error! From date must be greater then to date.');
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+        
         $where = [
-            'name' => $this->_data['view_model']->get_name(), 
+            'category_id' => $this->_data['category_id'], 
         ];
 
-        $this->_data['view_model']->set_total_rows($this->category_model->count($where));
+        $this->_data['view_model']->set_total_rows($this->inventory_model->count($where));
 
         $this->_data['view_model']->set_format_layout($this->_data['layout_clean_mode']);
         $this->_data['view_model']->set_per_page(25);
@@ -55,7 +69,7 @@ class Admin_category_wise_controller extends Admin_controller
         $this->_data['view_model']->set_sort($direction);
         $this->_data['view_model']->set_sort_base_url('/admin/category_wise/0');
         $this->_data['view_model']->set_page($page);
-		$this->_data['view_model']->set_list($this->category_model->get_paginated(
+        $this->_data['view_model']->set_list($this->inventory_model->get_paginated(
             $this->_data['view_model']->get_page(),
             $this->_data['view_model']->get_per_page(),
             $where,
@@ -81,46 +95,41 @@ class Admin_category_wise_controller extends Admin_controller
 
         if ( !empty( $this->_data['view_model']->get_list() ) ) 
         {
+            
             foreach ($this->_data['view_model']->get_list() as $key => &$value) 
             {
-                $products_list = $this->inventory_model->get_all(['category_id' => $value->id  ]); 
-
-
                 $total_items    =  0;
                 $total_sale     =  0;
                 $total_qty      =  0;
                 $total_credit   =  0;
                 $total_cash     =  0;
-                if ( !empty( $products_list ) ) 
+
+                $where_sale_order = [ 
+                    'product_id' =>  $value->id
+                ];
+
+                $from_date = $this->_data['from_date'];
+                $to_date   = $this->_data['to_date'];
+
+                $order_items = $this->pos_order_items_report_model->get_all_pos_order( $where_sale_order, null, $from_date , $to_date); 
+
+                if ( !empty( $order_items ) ) 
                 {
-                    foreach ($products_list as $key_product => $product) 
+                    foreach ($order_items as $key_item => $item) 
                     {
-                        $where_sale_order = [
-                            'transaction_date'  =>  $this->_data['order_date'],  
-                            'product_id'        =>  $product->id
-                        ];
-        
-                        $order_items = $this->pos_order_items_report_model->get_all_pos_order( $where_sale_order ); 
-                        
-                        
-                        if ( !empty( $order_items ) ) 
-                        {
-                            foreach ($order_items as $key_item => $item) 
-                            {
-                                $total_sale     +=  $item->amount;
-                                $total_qty      +=  $item->quantity;
-                                if( $item->payment_type == 1)
-                                {
-                                    $total_cash     +=  $item->amount;
-                                }else if($item->payment_type == 2)
-                                {
-                                    $total_credit   +=  $item->amount;
-                                } 
-                            }
-                        }
-                        $total_items++;
+                        $total_sale     +=  $item->amount;
+                        $total_qty      +=  $item->quantity;
+                        // if( $item->payment_type == 1)
+                        // {
+                        //     $total_cash     +=  $item->amount;
+                        // }else if($item->payment_type == 2)
+                        // {
+                        //     $total_credit   +=  $item->amount;
+                        // } 
                     }
                 }
+                $total_items++;
+                     
 
 
                 $value->total_sale    =  $total_sale;
@@ -132,15 +141,50 @@ class Admin_category_wise_controller extends Admin_controller
             }
         }
 
+        
+
+        $this->_data['categories'] = $this->category_model->get_all(); 
+        $products_list = $this->inventory_model->get_all();
+
+
+        $total_tax           = $this->pos_order_items_report_model->get_all_tax([], null, $from_date , $to_date); 
+        $grand_total       =  0; 
+        $total_wout_tax    =  0;  
+        if ( !empty( $products_list ) ) 
+        {
+            foreach ($products_list as $key_product => $product) 
+            {
+                $where_sale_order = [ 
+                    'product_id' =>  $product->id
+                ]; 
+                $order_items = $this->pos_order_items_report_model->get_all_pos_order( $where_sale_order, null, $from_date , $to_date); 
+                 
+                if ( !empty( $order_items ) ) 
+                {
+                    foreach ($order_items as $key_item => $item) 
+                    {
+                        $total_wout_tax     +=  $item->amount;  
+                    }
+                } 
+            }
+        } 
+        
+
+        $grand_total = $total_wout_tax + $total_tax;
+
+        $this->_data['grand_total']    = $grand_total;
+        $this->_data['total_wout_tax'] = $total_wout_tax;
+        $this->_data['total_tax']      = $total_tax;
+         
         return $this->render('Admin/Category_wise', $this->_data);
-	}
+    }
 
     
 
     
 
     public function view($id)
-	{ 
+    { 
         $category_data = $this->category_model->get( $id ); 
        
 
@@ -149,7 +193,9 @@ class Admin_category_wise_controller extends Admin_controller
         $this->_data['search_name']   =     $this->input->get('search_name', TRUE) != NULL  ? $this->input->get('search_name', TRUE) : NULL ;
         $this->_data['order_date']    =     $this->input->get('order_date', TRUE) != NULL  ? $this->input->get('order_date', TRUE) : NULL ;
 
-		
+        
+
+        
         $where = [
             'sku'            => $this->_data['search_sku'], 
             'product_name'   => $this->_data['search_name'],  
@@ -207,7 +253,7 @@ class Admin_category_wise_controller extends Admin_controller
         $this->_data['products_list']    =  $products_list;
 
         return $this->render('Admin/Category_wiseDetail', $this->_data);
-	}
+    }
 
     
     

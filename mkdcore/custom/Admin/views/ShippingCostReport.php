@@ -25,6 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 <?php endif; ?>
 
+
 <?php if ($this->session->flashdata('error2')): ?>
     <div class="row">
         <div class="col-md-12">
@@ -35,32 +36,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
 <?php endif ?>
 
+
 <section>
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="card" id="category_wise_filter_listing">
+        <div class="card" id="ShippingCostReport_filter_listing">
             <div class="card-body">
               <h5 class="primaryHeading2 text-md-left">
                     <?php echo $view_model->get_heading();?> Search
               </h5>
-                <?= form_open('/admin/category_wise/0', ['method' => 'get']) ?>
+                <?= form_open('/admin/shipping_cost_report/0', ['method' => 'get']) ?>
                     <div class="row">
-
-                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-                            <div class="form-group">
-                                <label for="category_id">Category </label>
-                                <select  class="form-control" id="category_id" name="category_id">
-                                    <option value="">All</option>
-                                    <?php foreach ($categories as $key => $value): ?>
-                                        <option <?php if ($category_id == $value->id): ?> selected
-                                            
-                                        <?php endif ?> value="<?php echo $value->id; ?>"><?php echo $value->name; ?></option>
-                                    <?php endforeach ?>
-                                </select> 
-                            </div>
-                        </div>
-
- 
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                             <div class="form-group">
                                 <label for="from_date">From </label>
@@ -74,13 +60,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <input type="date" class="form-control" id="to_date" name="to_date" value="<?php echo $to_date;?>"/>
                             </div>
                         </div>
+                    <div style="width:100%;height:10px;display:block;float:none;"></div>
+
+                        
 
 
-                        <div style="width:100%;height:10px;display:block;float:none;"></div>
-                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <input type="submit" name="submit" class="btn btn-primary" value="Search">
-                                </div>
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                           <div class="form-group">
+                                <input type="submit" name="submit" class="btn btn-primary" value="Search">
                             </div>
                         </div>
                     </div>
@@ -117,10 +104,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
         foreach ($view_model->get_column() as $key => $data) {
             $data_field = $field_column[$key];
+
             if ($data == 'Action') 
             {
                 continue;
             } 
+
             if (strlen($order_by) < 1 || $data_field == '')
             {
                 echo "<th scope='col' class='paragraphText text-left'>{$data}</th>";
@@ -146,27 +135,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         } ?>
         </thead>
         <tbody class="tbody-light">
-            <?php foreach ($view_model->get_list() as $data) { ?>
+            <?php 
+                $i = 1;
+                $row_total = 0;
+                foreach ($view_model->get_list() as $data) { ?>
                 <?php
+                    $row_total += $data->total_sale;
                     echo '<tr>';
-                            echo "<td>{$data->id}</td>";
-                            echo "<td>{$data->product_name}</td>";  
-                            echo "<td>{$data->sku}</td>";  
+                            echo "<td>" . $i++ . "</td>";
+                            echo "<td>{$data->shipping_state}</td>";
                             echo "<td>{$data->total_qty}</td>";
-                            echo "<td>$" . number_format($data->total_sale,2) . "</td>";  
+                            echo "<td>$" . number_format($data->total_sale,2) . "</td>";
+                            echo "<td>$" . number_format($data->total_avg,2) . "</td>"; 
                     echo '</tr>';
                 ?>
             <?php } ?>
         </tbody>
 
         <tfoot class='thead-light'>
-            <tr> 
-                <th></th>
-                <th></th> 
-                <th>Total = $<?php echo number_format($total_wout_tax,2) ?></th>
-                <th>Tax = $<?php echo number_format($total_tax,2) ?></th>
-                <th>Grand Total = $<?php echo number_format($grand_total,2) ?></th>
-            </tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>Grand Total = $<?php echo number_format($row_total,2); ?></th>
+            <th></th>
         </tfoot>
     </table>
      <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>

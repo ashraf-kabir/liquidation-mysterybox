@@ -153,7 +153,7 @@ a {
       background: #151515; }
     #sidebar a.active {
       color: black;
-      background-color: #fff; }
+      background-color: #fff !important;  }
 
   #sidebar.active {
     margin-left: -250px; }

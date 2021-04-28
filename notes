@@ -78,3 +78,16 @@ https://pm2.manaknightdigital.com/?controller=TaskViewController&action=show&tas
 
 
 
+Reporting:
+
+Sales Reporting
+
+-Date range -Category selectable any or all -Qty sold -Dollar Amount and then Total dollar amount at bottom not including tax should look like the following Total= $3.00 Tax= $0.25 Grand Total= $3.25
+
+Currently Inventory Report -Category selectable any or all -Show currently inventory Qty (Display zero as well)
+
+Shipping cost report -Date range -Qty shipped per state and average Example Florida= 2 Qty total $50.00 Average $25.00 ea (Take total shipping number divide by Qty) -Totals at bottom of page.
+
+Traffic link report -Social media selectable any or all -Can you show traffic and sales that come in per posted links?
+
+Customer report -Date range -Customer name, Qty sold and total income from customer.
