@@ -906,7 +906,7 @@ function load_customer_cards()
       {  
         $(response.all_cards).each(function(index,object)
         {  
-          all_cards += '<label style="display: block;"><input style="margin-right: 7px;" type="radio" name="customer_card"  ><strong>' + object.brand  + '</strong>  ending in  ' + object.last4  + '</label>';
+          all_cards += '<label style="display: block;"><input style="margin-right: 7px;" type="radio" name="customer_card" value="' + object.card_token  + '" ><strong>' + object.brand  + '</strong>  ending in  ' + object.last4  + '</label>';
         });
 
         $('#customer_card').html(all_cards)
