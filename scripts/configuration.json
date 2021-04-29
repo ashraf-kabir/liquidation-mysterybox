@@ -678,6 +678,7 @@
 				["is_picked", "integer", [{ "default" :  0 }], "xyzPicked", "", ""],
 				["is_shipped", "integer", [{ "default" :  0 }], "xyzShipped", "", ""],
 				["pick_up_id", "integer", [], "xyzPickup", "", ""],
+				["referrer", "integer", [], "xyzReferrer", "", ""],
 				["customer_email", "string", [{ "limit": 255 }], "xyzCustomer Email", "", ""],
 				["customer_phone", "string", [{ "limit": 255 }], "Phone", "max_length[255]", "max_length[255]"],
 				["billing_name", "string", [{ "limit": 255 }], "xyzBilling Name", "required|max_length[255]", "required|max_length[255]"],
@@ -724,9 +725,10 @@
 				"is_picked": {"1": "Yes", "0" : "No"},
 				"is_shipped": {"1": "Yes", "0" : "No"},
 				"is_split": {"1": "Yes", "0" : "No"},
-				"payment_method": {"1": "Cash", "2" : "Card", "3" : "ACH", "4" : "Bank"}
+				"payment_method": {"1": "Cash", "2" : "Card", "3" : "ACH", "4" : "Bank"},
+				"referrer": {"1": "None", "2" : "Facebook", "3" : "Instagram", "4" : "Tiktok"}
 			},
-			"pre": "if(!isset($data['is_picked']))\n\t\t{\n\t\t\t $data['is_picked'] = 0; \n\t\t}\n\t\t\tif(!isset($data['is_shipped']))\n\t\t{\n\t\t\t$data['is_shipped'] = 0;\n\t\t}\n\t\t\t \n",
+			"pre": "if(!isset($data['is_picked']))\n\t\t{\n\t\t\t $data['is_picked'] = 0; \n\t\t}\n\t\t\tif(!isset($data['referrer']))\n\t\t{\n\t\t\t $data['referrer'] = 1; \n\t\t}\n\t\t\tif(!isset($data['is_shipped']))\n\t\t{\n\t\t\t$data['is_shipped'] = 0;\n\t\t}\n\t\t\t \n",
 			"post": "",
 			"count": "",
 			"unique": [],

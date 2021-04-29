@@ -91,3 +91,7 @@ Shipping cost report -Date range -Qty shipped per state and average Example Flor
 Traffic link report -Social media selectable any or all -Can you show traffic and sales that come in per posted links?
 
 Customer report -Date range -Customer name, Qty sold and total income from customer.
+
+
+"sale_email": "sales@vegasliqudation.com",
+            "support_email": "support@vegasLiquidation.com",

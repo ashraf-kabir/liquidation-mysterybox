@@ -578,8 +578,8 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
             $content = ob_get_contents(); 
             ob_end_clean(); 
             $from = $this->config->item('from_email');
-            $admin_email = $this->config->item('admin_email');
-            $this->mail_service->send($from, $admin_email, "New Order Received on Mysterybox", $content);
+            $sale_email = $this->config->item('sale_email');
+            $this->mail_service->send($from, $sale_email, "New Order Received on Mysterybox", $content);
             
         }  
     }

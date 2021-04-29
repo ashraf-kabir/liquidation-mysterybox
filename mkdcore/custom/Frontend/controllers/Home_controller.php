@@ -1012,7 +1012,7 @@ class Home_controller extends Manaknight_Controller
 
         $data['all_categories']   = $all_categories;
         $data['page_section']     = $template;
-        $data['contact_us_email'] = $this->config->item('contact_us_email'); 
+        $data['support_email']    = $this->config->item('support_email'); 
          
 
         $this->load->view('Guest/Header', $data);
@@ -1025,8 +1025,8 @@ class Home_controller extends Manaknight_Controller
         $this->load->library('mail_service');
         $this->mail_service->set_adapter('smtp'); 
          
-        $email = $this->config->item('contact_us_email'); 
-        return $this->mail_service->send($from_email, $email, $subject, $template); 
+        $support_email = $this->config->item('support_email'); 
+        return $this->mail_service->send($from_email, $support_email, $subject, $template); 
         return FALSE;
     }
 
@@ -1391,23 +1391,24 @@ class Home_controller extends Manaknight_Controller
             {
                 if (!empty($card_number) && !empty($exp_month) && !empty($exp_year) && !empty($cvc))
                 {
-                    // if ($prev_card->last4 == $new_card_last4)
-                    // {
-                    //     // throw error
-                    //     $this->error('This card last4->(...' . $new_card_last4 . ') is already added. Try again with a new card.');
-                    //     return redirect($_SERVER['HTTP_REFERER']);
-                    // }
-                    // else
-                    // {
+                    if ($prev_card->last4 == $new_card_last4)
+                    {
+                        $error_msg = 'This card last4->(...' . $new_card_last4 . ') is already added. Try again with a new card.';
+                         
+                        $output['error'] = $error_msg; 
+                        echo json_encode($output);
+                        exit();
+                    }
+                    else
+                    {
 
                         // add card
                         $response = $this->stripe_helper_service->create_stripe_token($card_number, $exp_month, $exp_year, $cvc);
 
-                        if (isset($response['success']))
+                        if (isset($response['success']) && isset($response['response'])  && isset($response['response']->id)  )
                         {
-                            $stripe_token_id = $response['token']->id;
- 
- 
+                            $stripe_token_id = $response['response']->id;
+  
 
                             // pass token_id to assign card to user
                             $res_card_data = $this->stripe_helper_service->add_new_card($stripe_token_id, $user_id);
@@ -1420,6 +1421,7 @@ class Home_controller extends Manaknight_Controller
                                 $stripe_exp_year  = $res_card_data['card_data']->exp_year;
                                 $stripe_last4     = $res_card_data['card_data']->last4;
 
+ 
                                 // store the card id with the associated user
                                 $check_new_card = $this->customer_cards_model->create([
                                     'is_default'     => 0,
@@ -1461,7 +1463,7 @@ class Home_controller extends Manaknight_Controller
                             echo json_encode($output);
                             exit();  
                         }
-                    // }
+                    }
                 }
                 else
                 {
