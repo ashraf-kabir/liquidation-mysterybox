@@ -115,10 +115,7 @@ class Shipstation_api_service {
                     $value = (object) $value;
                     $myDate = Date('Y-m-d'); 
 
-                    echo "<pre>";
-                    print_r($response);
-                    die();
-                     
+                    
                     $value->expected_date = "";
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_express_saver') 
                     {
