@@ -548,13 +548,34 @@ $(document).on('click','.add-shipping-address',function(e){
   var shipping_state   = $('#shipping_state').val();
   var shipping_city    = $('#shipping_city').val();
 
-  if(shipping_zip == '' || shipping_zip == 0) 
-  {  
-    toastr.error('Zip Code is required.');
+  if(shipping_address == '' || shipping_address == 0) 
+  {
+    toastr.error('Address is required.'); 
     error_for_updating_shipping = 1;
     return false;
-    exit; 
+    exit;
   }
+
+
+  if(shipping_state == '' || shipping_state == 0) 
+  {
+    toastr.error('State is required.'); 
+    error_for_updating_shipping = 1;
+    return false;
+    exit;
+  }
+
+
+  if(shipping_city == '' || shipping_city == 0) 
+  {
+    toastr.error('City is required.'); 
+    error_for_updating_shipping = 1;
+    return false;
+    exit;
+  }
+
+
+  
 
 
 
@@ -566,14 +587,16 @@ $(document).on('click','.add-shipping-address',function(e){
     exit;
   }
 
-
-  if(shipping_address == '' || shipping_address == 0) 
-  {
-    toastr.error('Address is required.'); 
+  if(shipping_zip == '' || shipping_zip == 0) 
+  {  
+    toastr.error('Zip Code is required.');
     error_for_updating_shipping = 1;
     return false;
-    exit;
+    exit; 
   }
+  
+
+
 
 
   if (error_for_updating_shipping == 0) 
@@ -880,10 +903,10 @@ function load_customer_cards()
     {    
       all_cards = "";
       if(response.all_cards)
-      { 
-        all_cards += '<option value=""   > Select </option>';
-        $(response.all_cards).each(function(index,object){ 
-          all_cards += '<option value="' + object.id  +  '"   > ' + object.brand  + ' </option>';
+      {  
+        $(response.all_cards).each(function(index,object)
+        {  
+          all_cards += '<label style="display: block;"><input style="margin-right: 7px;" type="radio" name="customer_card"  ><strong>' + object.brand  + '</strong>  ending in  ' + object.last4  + '</label>';
         });
 
         $('#customer_card').html(all_cards)

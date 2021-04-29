@@ -14,6 +14,8 @@ class Shipstation_api_service {
         if( !empty($orders_list) )
         {
 
+            $free_ship = 0;
+
             $weight_object = 0;
             $dimensions_length = 0;
             $dimensions_width  = 0;
@@ -21,15 +23,18 @@ class Shipstation_api_service {
             foreach($orders_list as $key => $value)
             {
                 $product        = $value->product_detail;  
+                $free_ship      = $product->free_ship;
                 
-                if ($product->free_ship != 1) 
-                {
+                // if ($product->free_ship != 1) 
+                // {
                     $weight_object     += $product->weight;
                     $dimensions_length += $product->length;
                     $dimensions_width  += $product->width;
                     $dimensions_height += $product->height;
-                } 
+                // } 
+
             }
+ 
         
             /**
              * ShipStation API
@@ -110,33 +115,44 @@ class Shipstation_api_service {
                     $value = (object) $value;
                     $myDate = Date('Y-m-d'); 
 
+                    echo "<pre>";
+                    print_r($response);
+                    die();
+                     
                     $value->expected_date = "";
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_express_saver') 
                     {
-                        $value->expected_date = "Expected Delivery Date " . date('d-m-Y', strtotime($myDate . ' +3 Weekday'));;
+                        $value->expected_date = "Expected Delivery Date " . date('F d, Y', strtotime($myDate . ' +3 Weekday'));
+                    }
+
+                    if (isset($value->serviceCode) && $value->serviceCode == 'fedex_ground' && $free_ship == 1) 
+                    {
+                        $value->serviceName  = $value->serviceName . " Free Shipping";
+                        $value->shipmentCost = 0;
+                        $value->otherCost    = 0;
                     }
 
 
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_2day') 
                     {
-                        $value->expected_date = "Expected Delivery Date " . date('d-m-Y', strtotime($myDate . ' +2 Weekday'));;
+                        $value->expected_date = "Expected Delivery Date " . date('F d, Y', strtotime($myDate . ' +2 Weekday'));
                     }
 
 
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_2day_am') 
                     {
-                        $value->expected_date = "Expected Delivery Date " . date('d-m-Y', strtotime($myDate . ' +2 Weekday'));;
+                        $value->expected_date = "Expected Delivery Date " . date('F d, Y', strtotime($myDate . ' +2 Weekday'));
                     }
 
 
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_priority_overnight') 
                     {
-                        $value->expected_date = "Expected Delivery Date " . date('d-m-Y', strtotime($myDate . ' +1 Weekday'));;
+                        $value->expected_date = "Expected Delivery Date " . date('F d, Y', strtotime($myDate . ' +1 Weekday'));
                     }
 
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_first_overnight') 
                     {
-                        $value->expected_date = "Expected Delivery Date " . date('d-m-Y', strtotime($myDate . ' +1 Weekday'));;
+                        $value->expected_date = "Expected Delivery Date " . date('F d, Y', strtotime($myDate . ' +1 Weekday'));
                     }    
                 }
             }

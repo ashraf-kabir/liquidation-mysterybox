@@ -91,6 +91,9 @@
                     <span>payment method</span>
                </div>
                <div class="second-box"> 
+                    <div id="customer_card">
+                         
+                    </div>
                     <p>
                          <span>Billing Address:</span> 
                          <p id="msg_billing_address"><?php echo $customer->billing_address; ?></p>
@@ -104,30 +107,16 @@
                          <div class="modal-container">
                               <div class="payments-details">
                                    <div class="account-details">
-                                        <div class="heading">Add Payement Details</div>
-                                        <div class="inputs-container">
-
-                                             <div  class="select_card_div">
-                                                  <label for="account-no">Select Card:</label>
-                                                   
-                                                  <select name="customer_card" id="customer_card"  class="form-control">
-                                                       <option value="">Select Month</option> 
-                                                  </select> 
-                                             </div>
-
-                                             <div  class="select_card_div">
-                                                  <button type="button" class="add_card_btn_show btn btn-primary">Add New</button>
-                                             </div>
- 
-                                                  
+                                        <div class="heading">Add Payment Details</div>
+                                        <div class="inputs-container">  
                                              
-                                             <div class="add_card_div" style="display: none;">
-                                                  <label for="account-no">account-no:</label>
+                                             <div class="add_card_div" >
+                                                  <label for="account-no">credit-card-no:</label>
                                                   <input name="number" id="account_no" type="text" placeholder="your account-no" />
                                              </div>
-                                             <div class="add_card_div"  style="display: none;">
+                                             <div class="add_card_div"  >
                                                   <label for="month">month:</label>
-                                                  <select name="exp_month" id="exp_month"  class="form-control">
+                                                  <select style="height: 60px;" name="exp_month" id="exp_month"  class="form-control">
                                                        <option value="">Select Month</option> 
                                                        <option value="01">01 - January</option> 
                                                        <option value="02">02 - February</option> 
@@ -143,30 +132,23 @@
                                                        <option value="12">12 - December</option> 
                                                   </select>
                                              </div>
-                                             <div class="add_card_div"  style="display: none;">
+                                             <div class="add_card_div"  >
                                                   <label for="year">year:</label>
                                                   <?php  
                                                   $year  = Date('Y');
                                                   $limit = $year + 25;
                                                   ?>
-                                                  <select name="exp_year" id="exp_year"  class="form-control">
+                                                  <select style="height: 60px;" name="exp_year" id="exp_year"  class="form-control">
                                                        <option value="">Select Year</option>
                                                        <?php for($i = $year; $i <= $limit ; $i++) {
                                                             echo "<option value='" . $i . "' > " . $i . " </option>";
                                                        } ?>
                                                   </select>
                                              </div>
-                                             <div class="add_card_div"  style="display: none;">
+                                             <div class="add_card_div"  >
                                                   <label for="CVC">CVC:</label>
                                                   <input pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" id="cvc_numb" name="cvc"  min-length="3" type="text" placeholder="your CVC" />
-                                             </div>
-
-                                             <div class="add_card_div"  style="display: none;text-align: right;">
-                                                  <button  style="display: none;" type="button" class="add_new_card btn btn-primary add_card_div">Save</button>
-
-                                                  <button  style="display: none;" type="button" class="close_new_card_div btn btn-info add_card_div">Close</button>
-                                             </div>
-                                             
+                                             </div> 
  
                                         </div>
                                    </div>
@@ -202,6 +184,8 @@
                                    </div>
                               </div>
                               <div class="checkout-info-add-btn">
+                                   <button   type="button" style="margin-right: 39.5%;" class="add_new_card btn btn-primary ">Save</button>
+ 
                                    <button type="button"  class="close-btn btn btn-secondary on_click_billing_modal">Close</button>
                                    <button type="button"  class="btn btn-primary  add-billing-address">Save</button>
                               </div>
@@ -269,6 +253,11 @@
 
                                              <?php if ($value->free_ship == 1): ?>
                                                   <p>Free Shipping</p>
+
+                                                  <p>$<span class="selected_item_shipping_cost">0.00</span></p>
+
+                                                 
+                                                  <button style="display: none;" type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
                                              <?php else: ?>
                                                   <p>Shipping Cost:</p>
                                                   <p>$<span class="selected_item_shipping_cost">0.00</span></p>
