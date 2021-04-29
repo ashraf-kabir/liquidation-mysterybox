@@ -13,7 +13,7 @@
                 </li>
                 <li class="my-3 d-flex">
                     <i class="fas fa-envelope"></i>
-                    <div> <?php echo $contact_us_email; ?></div>
+                    <div> <?php echo $support_email; ?></div>
                 </li>
             </ul>
         </div>
