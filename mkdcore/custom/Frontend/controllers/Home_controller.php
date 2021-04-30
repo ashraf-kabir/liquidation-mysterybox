@@ -26,6 +26,30 @@ class Home_controller extends Manaknight_Controller
         $this->load->model('category_model');
         $this->load->model('inventory_model'); 
         $this->load->model('physical_location_model'); 
+
+        if ( $this->input->get('showshow', TRUE)  ) 
+        {
+            $showshow = $this->input->get('showshow', TRUE);
+            if ( strtolower($showshow) == 'facebook') 
+            {
+                $this->set_session('referrer', 2);  
+            }
+
+
+            if ( strtolower($showshow) == 'instagram') 
+            {
+                $this->set_session('referrer', 3);  
+            }
+
+
+
+            if (strtolower($showshow) == 'tiktok') 
+            {
+                $this->set_session('referrer', 4);  
+            }
+
+
+        }
     }
 
     public function index($offset = 0)
@@ -639,7 +663,13 @@ class Home_controller extends Manaknight_Controller
                     $tax_amount = $tax_data->tax/100;
                 }  
             }
-             
+            
+
+            $referrer = 1;
+            if ($this->session->userdata('referrer')) 
+            {
+                $referrer = $this->session->userdata('referrer');
+            }
  
             // $customer_data->shipping_service_name  = $shipping_cost_name;
             // $customer_data->shipping_service_id    = $shipping_service_id;
@@ -659,6 +689,9 @@ class Home_controller extends Manaknight_Controller
             $customer_data->shipping_state                = $shipping_state;
             $customer_data->shipping_zip                  = $shipping_zip;
             $customer_data->shipping_city                 = $shipping_city;
+            $customer_data->referrer                      = $referrer;
+
+
 
             /**
             * Create Order 

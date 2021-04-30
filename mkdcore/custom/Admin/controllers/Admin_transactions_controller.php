@@ -18,6 +18,7 @@ class Admin_transactions_controller extends Admin_controller
     {
         parent::__construct(); 
         $this->load->model('customer_model'); 
+        $this->load->model('pos_user_model'); 
         $this->load->library('names_helper_service');
     }
 

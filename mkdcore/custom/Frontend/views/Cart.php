@@ -93,7 +93,7 @@
 
             <h5 class="my-3">  <?php echo  isset($customer->shipping_address) ? $customer->shipping_address : '' ; ?>  </h5>
             <p class="w-75 my-2">
-               <?php echo isset($customer->shipping_city) ? $customer->shipping_city : '' ; ?>, <?php echo isset($customer->shipping_state) ? $customer->shipping_state : '' ; ?>
+               <?php echo isset($customer->shipping_city) ? $customer->shipping_city . ", " : '' ; ?><?php echo isset($customer->shipping_state) ? $customer->shipping_state : '' ; ?>
                <?php echo isset($customer->shipping_zip) ? $customer->shipping_zip : '' ; ?>
             </p>
           </div>

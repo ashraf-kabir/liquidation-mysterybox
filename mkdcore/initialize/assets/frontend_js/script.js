@@ -358,9 +358,10 @@ check_cart_total_items();
           } 
         },
         error: function()
-        {
-          p_object.find('.shipping-cost-options').html('');
+        { 
+          
           toastr.error('Error! Try again later.'); 
+          window.location.reload(true);
         } 
       })
     }
@@ -921,7 +922,9 @@ function load_customer_cards()
     },
     error: function()
     { 
+
       toastr.error('Error! Connection timeout.'); 
+      window.location.reload(true);
     } 
   });
 }

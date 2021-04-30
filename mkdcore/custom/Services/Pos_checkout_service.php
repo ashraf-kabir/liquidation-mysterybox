@@ -141,6 +141,9 @@ class Pos_checkout_service {
         $billing_zip         =  $customer_data->billing_zip;
         $payment_method      =  $customer_data->payment;
         $customer_id         =  $customer_data->id;
+        $referrer            =  $customer_data->referrer;
+
+        
 
 
         $shipping_cost_service_name = "";
@@ -173,6 +176,7 @@ class Pos_checkout_service {
             'billing_zip'       =>  $billing_zip, 
             'payment_method'    =>  $payment_method, 
             'customer_id'       =>  $customer_id,
+            'referrer'          =>  $referrer,
             'order_date_time'   =>  Date('Y-m-d h:i:s A'),
             'shipping_name'     =>  '', 
             'shipping_address'  =>  $customer_data->shipping_address, 
