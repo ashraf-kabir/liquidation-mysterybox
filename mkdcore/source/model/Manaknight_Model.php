@@ -1168,5 +1168,26 @@ class {{{subclass_prefix}}}Model extends CI_Model
     }
 
 
+
+    
+     /**
+     * Get Model by fields
+     *
+     * @param string $field
+     * @param mixed $value
+     * @return mixed
+     */
+    public function get_by_fields_custom($user_id,$last4)
+    {
+        $this->db->from($this->_table);
+
+         
+        $this->db->where('user_id', $user_id, TRUE);
+        $this->db->where('last4', $last4, TRUE);
+              
+
+        return $this->db->get()->row();
+    }
+
     
 }

@@ -1424,21 +1424,25 @@ class Home_controller extends Manaknight_Controller
             {
                 if (!empty($card_number) && !empty($exp_month) && !empty($exp_year) && !empty($cvc))
                 {
-                    if ($prev_card->last4 == $new_card_last4)
-                    {
-                        $error_msg = 'This card last4->(...' . $new_card_last4 . ') is already added. Try again with a new card.';
+
+                    // $check_card = $this->customer_cards_model->get_by_fields_custom( $user_id, $new_card_last4);
+
+                    // if ($check_card->last4 == $new_card_last4)
+                    // {
+                    //     $error_msg = 'This card last4->(...' . $new_card_last4 . ') is already added. Try again with a new card.';
                          
-                        $output['error'] = $error_msg; 
-                        echo json_encode($output);
-                        exit();
-                    }
-                    else
-                    {
+                    //     $output['error'] = $error_msg; 
+                    //     echo json_encode($output);
+                    //     exit();
+                    // }
+
+                    // else
+                    // {
 
                         // add card
                         $response = $this->stripe_helper_service->create_stripe_token($card_number, $exp_month, $exp_year, $cvc);
 
-                        if (isset($response['success']) && isset($response['response'])  && isset($response['response']->id)  )
+                        if ( isset($response['success']) && isset($response['response'])  && isset($response['response']->id)  )
                         {
                             $stripe_token_id = $response['response']->id;
   
@@ -1454,9 +1458,10 @@ class Home_controller extends Manaknight_Controller
                                 $stripe_exp_year  = $res_card_data['card_data']->exp_year;
                                 $stripe_last4     = $res_card_data['card_data']->last4;
 
- 
-                                // store the card id with the associated user
-                                $check_new_card = $this->customer_cards_model->create([
+
+                                $check_card = $this->customer_cards_model->get_by_fields_custom( $user_id, $new_card_last4);
+
+                                $payload = [
                                     'is_default'     => 0,
                                     'user_id'        => $user_id,
                                     'card_token'     => $stripe_card_id,
@@ -1466,11 +1471,24 @@ class Home_controller extends Manaknight_Controller
                                     'last4'          => $stripe_last4,
                                     'cvc'            => $cvc,
                                     'status'         => 1,
-                                ]);
+                                ];
+
+                                if (!empty($check_card)) 
+                                {
+                                    $check_new_card = $this->customer_cards_model->edit($payload, $check_card->id);
+
+                                    $output['success'] = 'Card updated successfully.'; 
+                                }else{
+                                    // store the card id with the associated user
+                                    $check_new_card = $this->customer_cards_model->create($payload);
+                                    $output['success'] = 'Card added successfully.'; 
+                                }
+ 
+                                
 
                                 if ($check_new_card)
                                 {
-                                    $output['success'] = 'Card added successfully.'; 
+                                    
                                     echo json_encode($output);
                                     exit();  
                                 }
@@ -1496,29 +1514,24 @@ class Home_controller extends Manaknight_Controller
                             echo json_encode($output);
                             exit();  
                         }
-                    }
+                    // }
                 }
                 else
                 {
-                    $output['error'] = "Empty Fields"; 
+                    $output['error'] = "All fields are required."; 
                     echo json_encode($output);
                     exit();   
                 }
             }
             else
-            {
-
-                
-
-
-
+            { 
                 // create stripe_customer_id and add the new card
                 // $this->error('No prev record found');
                 // return redirect($_SERVER['HTTP_REFERER']);
                 
                 $response = $this->stripe_helper_service->create_stripe_token($card_number, $exp_month, $exp_year, $cvc);
 
-                if (isset($response['success']))
+                if (  isset($response['success'])  && isset($response['response'])  && isset($response['response']->id)  )
                 {
                     
                     $stripe_token_id = $response['response']->id;
