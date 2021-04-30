@@ -9,6 +9,26 @@
      .add_card_div{
           display: none;
      }
+
+     @media  screen and (min-width:1351px){
+
+          .hide_modal_button{
+               display: none !important;
+          }
+          .save_modal_button{
+               display: block !important;
+          }
+     }
+
+     @media  screen and (max-width:1350px){
+
+          .hide_modal_button{ 
+               display: block !important;
+          }
+          .save_modal_button{
+               display: none !important;
+          }
+     }
 </style>
 <?php echo form_open('',array('class' => 'send_checkout' )); ?>
 <section class="checkout-section" id="checkout-section">
@@ -149,7 +169,13 @@
                                                   <label for="CVC">CVC:</label>
                                                   <input pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" id="cvc_numb" name="cvc"  min-length="3" type="text" placeholder="your CVC" />
                                              </div> 
- 
+
+
+                                             <div class="add_card_div" style="float: right;"  >
+                                                  <button   type="button" style="margin-right: 39.5%;" class="hide_modal_button add_new_card btn btn-primary ">Save</button>
+                                             </div>
+                                             
+                                             
                                         </div>
                                    </div>
 
@@ -184,7 +210,10 @@
                                    </div>
                               </div>
                               <div class="checkout-info-add-btn">
-                                   <button   type="button" style="margin-right: 39.5%;" class="add_new_card btn btn-primary ">Save</button>
+                                   <div style="float: left;margin-left: 40.5%;">
+                                       <button   type="button"   class="save_modal_button add_new_card btn btn-primary ">Save</button> 
+                                   </div>
+                                   
  
                                    <button type="button"  class="close-btn btn btn-secondary on_click_billing_modal">Close</button>
                                    <button type="button"  class="btn btn-primary  add-billing-address">Save</button>
