@@ -17,8 +17,7 @@ class Admin_transactions_controller extends Admin_controller
     public function __construct()
     {
         parent::__construct(); 
-        $this->load->model('customer_model'); 
-        $this->load->model('pos_user_model'); 
+        $this->load->model('customer_model');  
         $this->load->library('names_helper_service');
     }
 
@@ -39,13 +38,10 @@ class Admin_transactions_controller extends Admin_controller
             '/admin/transactions/0');
         $this->_data['view_model']->set_heading('Transactions');
         $this->_data['view_model']->set_transaction_date(($this->input->get('transaction_date', TRUE) != NULL) ? $this->input->get('transaction_date', TRUE) : NULL);
-		$this->_data['view_model']->set_pos_user_id(($this->input->get('pos_user_id', TRUE) != NULL) ? $this->input->get('pos_user_id', TRUE) : NULL);
-		$this->_data['view_model']->set_customer_id(($this->input->get('customer_id', TRUE) != NULL) ? $this->input->get('customer_id', TRUE) : NULL);
+		  
 		
         $where = [
-            'transaction_date'  => $this->_data['view_model']->get_transaction_date(),
-			'pos_user_id'       => $this->_data['view_model']->get_pos_user_id(),
-			'customer_id'       => $this->_data['view_model']->get_customer_id(), 
+            'transaction_date'  => $this->_data['view_model']->get_transaction_date(),  
         ];
 
         $this->_data['view_model']->set_total_rows($this->transactions_model->count($where));
@@ -109,11 +105,9 @@ class Admin_transactions_controller extends Admin_controller
 		}
 
 
-        $this->names_helper_service->set_customer_model($this->customer_model); 
-        $this->names_helper_service->set_pos_user_model($this->pos_user_model); 
+        $this->names_helper_service->set_customer_model($this->customer_model);  
 
-       
-        $model->pos_user_id = $this->names_helper_service->get_pos_user_real_name( $model->pos_user_id ); 
+         
         $model->customer_id = $this->names_helper_service->get_customer_real_name( $model->customer_id );
 
         include_once __DIR__ . '/../../view_models/Transactions_admin_view_view_model.php';
