@@ -34,6 +34,11 @@ class Admin_category_wise_controller extends Admin_controller
         $session = $this->get_session();
         $format = $this->input->get('format', TRUE) ?? 'view';
         $order_by = $this->input->get('order_by', TRUE) ?? 'id';
+
+        if ($order_by == 'name') 
+        {
+            $order_by = 'product_name';
+        }
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
 
         $this->_data['view_model'] = new Category_wise_admin_list_paginate_view_model(

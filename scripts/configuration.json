@@ -2087,7 +2087,7 @@
 			"custom_view_view": "",
 			"listing_fields_api": ["id", "name"],
 			"listing_headers": ["xyzID", "xyzName", "xyzSKU",  "xyzQuantity Sold", "xyzAmount" ],
-			"listing_rows": ["id|integer", "name|string", "name|string",   "name|string", "name|string" ],
+			"listing_rows": ["id|integer", "name|string", "sku|string",   "name|string", "name|string" ],
 			"listing_actions": [],
 			"filter_fields": ["name"],
 			"add_fields": [],

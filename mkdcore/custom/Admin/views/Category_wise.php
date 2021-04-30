@@ -117,6 +117,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
         foreach ($view_model->get_column() as $key => $data) {
             $data_field = $field_column[$key];
+ 
+             
             if ($data == 'Action') 
             {
                 continue;
@@ -131,16 +133,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 {
                     if ($direction == 'ASC')
                     {
-                        echo "<th scope='col' class='paragraphText text-left'><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=DESC'>{$data} <i class='fas fa-sort-up' style='vertical-align: -0.35em;'></i></a></th>";
+
+                        if ($data == "Quantity Sold" || $data == "Amount" ) 
+                        {
+                            echo "<th scope='col' class='paragraphText text-left'> {$data}  </th>";
+                        }else{
+                            echo "<th scope='col' class='paragraphText text-left'><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=DESC'>{$data} <i class='fas fa-sort-up' style='vertical-align: -0.35em;'></i></a></th>";
+                        }
+                         
                     }
                     else
                     {
-                        echo "<th scope='col' class='paragraphText text-left' ><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=ASC'>{$data} <i class='fas fa-sort-down' style='margin-bottom:3px;'></i></a></th>";
+                        if ($data == "Quantity Sold" || $data == "Amount" ) 
+                        {
+                            echo "<th scope='col' class='paragraphText text-left'> {$data}  </th>";
+                        }else{
+                            echo "<th scope='col' class='paragraphText text-left' ><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=ASC'>{$data} <i class='fas fa-sort-down' style='margin-bottom:3px;'></i></a></th>";
+                        }
+                        
                     }
                 }
                 else
                 {
-                    echo "<th  scope='col' class='paragraphText text-left'><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=ASC'>{$data} <i class='fas fa-sort-down'  style='margin-bottom:3px;color:#e2e2e2;'></i></a></th>";
+                    if ($data == "Quantity Sold" || $data == "Amount" ) 
+                    {
+                        echo "<th  scope='col' class='paragraphText text-left'> {$data}  </th>";
+                    }else{
+                        echo "<th  scope='col' class='paragraphText text-left'><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=ASC'>{$data} <i class='fas fa-sort-down'  style='margin-bottom:3px;color:#e2e2e2;'></i></a></th>";
+                    }
+                    
                 }
             }
         } ?>
