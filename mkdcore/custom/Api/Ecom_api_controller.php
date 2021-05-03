@@ -331,6 +331,8 @@ class Ecom_api_controller extends Manaknight_Controller
     {
 
         $params = json_decode(file_get_contents('php://input'), TRUE);   
+
+
         if(isset($params) and !empty($params))
         { 
             if(isset($params['sale_order_id']) and empty($params['sale_order_id']))
@@ -343,17 +345,21 @@ class Ecom_api_controller extends Manaknight_Controller
 
 
             $this->load->model('pos_order_model'); 
+            $this->load->model('pos_order_items_model'); 
             if(isset($params['tracking_no']) and !empty($params['tracking_no']))
             {
                 $tracking_no    = $params['tracking_no'];
                 $sale_order_id  = $params['sale_order_id'];
+                $item_id        = $params['item_id'];
 
 
-                $order_data    = $this->pos_order_model->get($sale_order_id);
+                $order_data      = $this->pos_order_model->get($sale_order_id);
+                $order_detail    = $this->pos_order_items_model->get_by_fields(['product_id' => $item_id, 'order_id' => $sale_order_id]);
+ 
 
-                if ($order_data) 
+                if ($order_detail) 
                 {
-                    $order_update = $this->pos_order_model->edit( [  'tracking_no' => $tracking_no ], $order_data->id);
+                    $order_update = $this->pos_order_items_model->edit( [  'ship_station_tracking_no' => $tracking_no ], $order_detail->id);
 
                     if(!$order_update)
                     {
@@ -364,6 +370,13 @@ class Ecom_api_controller extends Manaknight_Controller
                     } 
                     exit(); 
                 }
+
+
+                $output['error'] = TRUE;
+                $output['error_msg'] = "Error! Order not found.";
+                echo json_encode($output);
+                exit(); 
+                 
                      
             } 
 
@@ -447,4 +460,19 @@ class Ecom_api_controller extends Manaknight_Controller
 
     }
     
+
+
+
+    public function update_order_on_shipping_system()
+    {
+        $this->load->model('pos_order_model');
+
+        $list = $this->pos_order_model->get_all();
+
+        foreach ($list as $key => $value) 
+        {
+            $this->send_order_to_shipper($value->id);
+        }
+
+    }
 }

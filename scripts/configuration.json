@@ -768,6 +768,8 @@
 				["product_id", "integer", [], "xyzProduct", "required|integer", "required|integer"],
 				["category_id", "integer", [], "xyzCategory", "required|integer", "required|integer"],
 				["product_name", "string", [{ "limit": 255 }], "xyzProduct", "", ""],
+				["ship_station_tracking_no", "string", [{ "limit": 255 }], "Ship Station Tracking", "", ""],
+				["ship_station_shipping_date", "string", [{ "limit": 255 }], "Ship Station Shipping Date", "", ""],
 				["shipping_service_name", "string", [{ "limit": 255 }], "xyzShipping Service Name", "", ""],
 				["shipping_service_code", "string", [{ "limit": 255 }], "xyzShipping Service Code", "", ""],
 				["shipping_cost_name", "string", [{ "limit": 255 }], "Shipping Cost Name", "", ""],

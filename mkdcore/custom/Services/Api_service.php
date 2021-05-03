@@ -104,6 +104,10 @@ class Api_service{
                         'barcode_image'      =>  $inventory_detail->barcode_image,
                         'tax_amount'         =>  0,
                         'unit_price'         =>  $value->product_unit_price,
+
+                        'shipping_cost_name'  =>  $value->shipping_cost_name,
+                        'shipping_cost_value' =>  $value->shipping_cost_value,
+                        'shipping_service_id' =>  $value->shipping_service_id,
                 
                     ) );
             }
