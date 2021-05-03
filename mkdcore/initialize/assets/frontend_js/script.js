@@ -274,6 +274,7 @@ check_cart_total_items();
             toastr.error(response.error);
             $('.remove_able_loader_gif').remove();
             show_qty_btns();
+
           }
 
           // if success add data to cart front pos
@@ -290,10 +291,12 @@ check_cart_total_items();
         { 
           
           toastr.error('Error! Connection timeout.'); 
-          
+          $('.place-order-btn').show();
           show_qty_btns();
         }  
       });
+    } else{
+      $('.place-order-btn').show();
     }
   }
 
@@ -325,7 +328,8 @@ check_cart_total_items();
     let id_item         = $(this).attr('data-id');
     let quantity_minus  = $(this).attr('data-product_qty') - 1;
     $('.place-order-btn').hide(); 
-    update_create_cart(quantity_minus, id_item)
+    update_create_cart(quantity_minus, id_item);
+
   });
 
 
