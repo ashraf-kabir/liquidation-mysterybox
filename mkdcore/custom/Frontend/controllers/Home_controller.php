@@ -516,7 +516,21 @@ class Home_controller extends Manaknight_Controller
             */ 
             $checkout_type = 2;
             foreach ($cart_items as $key => $cart_item_value) 
-            {
+            { 
+
+                $this->form_validation->set_rules('shipping_service_id_' . $cart_item_value->id, "", "required", array('required' => 'Shipping service must be selected for all items.')); 
+
+                if ($this->form_validation->run() === FALSE)
+                {
+                    $error_msg = validation_errors();
+                    $output['status'] = 0;
+                    $output['error']  = $error_msg;
+                    echo json_encode($output);
+                    exit();  
+                }
+
+
+
                 $cart_item_value = (object) $cart_item_value;
                  
                 $check_quantity = $this->helpers_service->check_item_in_inventory($cart_item_value->product_id, $cart_item_value->product_qty, $cart_item_value->product_name, $checkout_type);
@@ -529,6 +543,8 @@ class Home_controller extends Manaknight_Controller
                     exit(); 
                 }
             }
+
+ 
 
 
             $data['cart_items']  = $cart_items;

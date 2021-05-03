@@ -70,7 +70,9 @@ function initialize() {
                {
                     document.getElementById('billing_zip').value = val;
                } 
-          }    
+          } 
+
+          $('#billing_state').trigger( "keyup" );   
      });
      
 

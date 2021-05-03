@@ -187,6 +187,9 @@ check_cart_total_items();
       var serialized_data = [];  
       serialized_data.push({ name: 'quantity', value :  quantity });
       serialized_data.push({ name: 'id', value :  id }); 
+
+      hide_qty_btns();
+
       $.ajax({
         type: 'POST',
         url: '../v1/api/add_product_to_cart_by_customer',
@@ -198,6 +201,8 @@ check_cart_total_items();
           if (response.error) 
           {
             toastr.error(response.error);
+            show_qty_btns();
+
           }
 
           // if success add data to cart front pos
@@ -205,13 +210,41 @@ check_cart_total_items();
           {
             check_cart_total_items();
             toastr.success(response.success);
+            show_qty_btns();
+
           } 
-        }
+        },
+        error: function()
+        { 
+          
+          toastr.error('Error! Connection timeout.'); 
+          show_qty_btns();
+        } 
       });
     }
   });
 
 
+  function hide_qty_btns()
+  {
+    $('.edit_to_cart_button').hide();
+    $('.add_to_cart_button').hide();
+    $('.minus_to_cart_button').hide();
+
+    $('.edit_to_cart_button').parent().append('<img class="remove_able_loader_gif" style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
+    $('.minus_to_cart_button').parent().parent().find('.product-quantity').append('<img class="remove_able_loader_gif" style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
+     
+  }
+
+
+  function show_qty_btns()
+  {
+    $('.edit_to_cart_button').show();
+    $('.add_to_cart_button').show();
+    $('.minus_to_cart_button').show();
+
+    $('.remove_able_loader_gif').remove();
+  }
 
   function update_create_cart(quantity, id)
   {
@@ -223,6 +256,10 @@ check_cart_total_items();
       serialized_data.push({ name: 'quantity', value :  quantity });
       serialized_data.push({ name: 'id', value :  id }); 
       serialized_data.push({ name: 'force_update', value :  true }); 
+
+      hide_qty_btns();
+      
+ 
       $.ajax({
         type: 'POST',
         url: '../v1/api/add_product_to_cart_by_customer',
@@ -235,6 +272,8 @@ check_cart_total_items();
           {
             $('.place-order-btn').show();
             toastr.error(response.error);
+            $('.remove_able_loader_gif').remove();
+            show_qty_btns();
           }
 
           // if success add data to cart front pos
@@ -246,7 +285,14 @@ check_cart_total_items();
               window.location.reload(true);
             }, 2000); 
           } 
-        }
+        },
+        error: function()
+        { 
+          
+          toastr.error('Error! Connection timeout.'); 
+          
+          show_qty_btns();
+        }  
       });
     }
   }
@@ -375,6 +421,8 @@ check_cart_total_items();
   $(document).on('keyup','#billing_state', function(){ 
     calculate_cost();
   });
+
+
 
 
 
