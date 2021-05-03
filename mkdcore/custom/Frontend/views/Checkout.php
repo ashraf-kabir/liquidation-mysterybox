@@ -41,7 +41,7 @@
                <div class="second-box">
                     <p id="msg_full_name"><?php echo $customer->name; ?></p>
                     <p id="msg_shipping_address"><?php echo $customer->shipping_address; ?></p>
-                    <p> <span id="msg_shipping_city"><?php echo $customer->shipping_city; ?></span>, <span id="msg_shipping_state"><?php echo $customer->shipping_state; ?></span></p>
+                    <p> <span id="msg_shipping_city"><?php echo $customer->shipping_city; ?></span> <?php if (!empty($customer->shipping_state)): ?>,<?php endif ?> <span id="msg_shipping_state"><?php echo $customer->shipping_state; ?></span></p>
                     <p id="msg_shipping_zip"><?php echo $customer->shipping_zip; ?></p>
                </div>
                <div class="third-box">
@@ -117,7 +117,7 @@
                     <p>
                          <span>Billing Address:</span> 
                          <p id="msg_billing_address"><?php echo $customer->billing_address; ?></p>
-                         <p> <span id="msg_billing_city"><?php echo $customer->billing_city; ?></span>, <span id="msg_billing_state"><?php echo $customer->billing_state; ?></span> </p>
+                         <p> <span id="msg_billing_city"><?php echo $customer->billing_city; ?></span> <?php if (!empty($customer->billing_state)): ?>  , <?php endif ?><span id="msg_billing_state"><?php echo $customer->billing_state; ?></span> </p>
                          <p><span id="msg_billing_zip"><?php echo $customer->billing_zip; ?></span></p> 
                     </p> 
                </div>

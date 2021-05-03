@@ -1441,16 +1441,23 @@ class Home_controller extends Manaknight_Controller
                 if (!empty($card_number) && !empty($exp_month) && !empty($exp_year) && !empty($cvc))
                 {
 
-                    // $check_card = $this->customer_cards_model->get_by_fields_custom( $user_id, $new_card_last4);
 
-                    // if ($check_card->last4 == $new_card_last4)
-                    // {
-                    //     $error_msg = 'This card last4->(...' . $new_card_last4 . ') is already added. Try again with a new card.';
-                         
-                    //     $output['error'] = $error_msg; 
-                    //     echo json_encode($output);
-                    //     exit();
-                    // }
+
+                    $check_card = $this->customer_cards_model->get_all(['user_id' => $user_id]);
+
+                    foreach ($check_card as $check_card_key => $check_card_value) 
+                    {
+                        if ($check_card_value->last4 == $new_card_last4 && $check_card_value->account_no == $card_number && !empty($check_card_value->account_no))
+                        {
+                            $error_msg = 'This card last4->(...' . $new_card_last4 . ') is already added. Try again with a new card.';
+                             
+                            $output['error'] = $error_msg; 
+                            echo json_encode($output);
+                            exit();
+                        }
+                    }
+
+                     
 
                     // else
                     // {
@@ -1479,6 +1486,7 @@ class Home_controller extends Manaknight_Controller
 
                                 $payload = [
                                     'is_default'     => 0,
+                                    'account_no'     => $card_number,
                                     'user_id'        => $user_id,
                                     'card_token'     => $stripe_card_id,
                                     'brand'          => $stripe_brand,
@@ -1579,6 +1587,7 @@ class Home_controller extends Manaknight_Controller
                             // store the card id with the associated user
                             $check_new_card = $this->customer_cards_model->create([
                                 'is_default'     => 0,
+                                'account_no'     => $card_number,
                                 'user_id'        => $user_id,
                                 'card_token'     => $stripe_card_id,
                                 'brand'          => $stripe_brand,

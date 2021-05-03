@@ -942,7 +942,7 @@
 			"field": [
 				["id", "integer", [], "ID", "", ""], 
 				["user_id", "id", [], "User ID", "required|numeric", "required|numeric"],
-				["account_no", "integer", [], "Account#", "required|numeric", "required|numeric"],
+				["account_no", "string", [{"limit": 255}], "Account#", "required|numeric", "required|numeric"],
 				["cvc", "id", [], "CVC", "required|numeric", "required|numeric"],
 				["month", "id", [], "Month", "required|numeric", "required|numeric"],
 				["year", "id", [], "Year", "required|numeric", "required|numeric"],
