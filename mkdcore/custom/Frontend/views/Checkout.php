@@ -190,7 +190,7 @@
                                              </div>
                                              <div>
                                                   <label for="country">Country:</label>
-                                                  <input   id="billing_country" name="billing_country"  type="text" value="<?php echo set_value('country', "US"); ?>" placeholder="your country" />
+                                                  <input  readonly=""  style="background: #9eb2ab"   id="billing_country" name="billing_country"  type="text" value="<?php echo set_value('country', "US"); ?>" placeholder="your country" />
                                              </div>
                                              
                                              <div>
@@ -288,7 +288,7 @@
                                                   <p>$<span class="selected_item_shipping_cost">0.00</span></p>
 
                                                   
-                                                  <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date"></span></strong></p>
+                                                  <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date">N/A</span></strong></p>
                                                    
                                                   <button style="display: none;" type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
                                              <?php else: ?>

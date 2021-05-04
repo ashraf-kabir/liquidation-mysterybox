@@ -29,7 +29,7 @@
 
                                    <div class="col-md-6 col-12 my-2">
                                         <label for="password2">Billing Country</label>
-                                        <input type="text" id="billing_country" name="billing_country"   class="form-control" value="<?php echo $customer->billing_country ?>" >
+                                        <input   readonly=""  style="background: #9eb2ab"  type="text" id="billing_country" name="billing_country"   class="form-control" value="<?php echo $customer->billing_country ?>" >
                                    </div>
 
 
