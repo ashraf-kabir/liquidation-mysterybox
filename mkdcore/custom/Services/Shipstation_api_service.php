@@ -127,6 +127,7 @@ class Shipstation_api_service {
                     {
                         $expected_date_only = date('F d, Y', strtotime($myDate . ' +3 Weekday'));
                         $value->expected_date = "Expected Delivery Date " . $expected_date_only;
+                        $value->expected_date_only =  $expected_date_only;
                     }
 
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_ground' && $free_ship == 1) 
