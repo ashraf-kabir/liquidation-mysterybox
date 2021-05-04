@@ -60,7 +60,7 @@
 
                                    <div class="col-md-6 col-12 my-2">
                                         <label for="shipping_country">Shipping Country</label>
-                                        <input type="text" id="shipping_country" name="shipping_country"   class="form-control" value="<?php echo $customer->shipping_country ?>" >
+                                        <input  readonly=""  style="background: #9eb2ab" type="text" id="shipping_country" name="shipping_country"   class="form-control" value="<?php echo $customer->shipping_country ?>" >
                                    </div>
 
 

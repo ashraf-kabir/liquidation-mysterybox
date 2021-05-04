@@ -76,7 +76,7 @@
                                         </div>
                                         <div>
                                              <label for="country">Country:</label>
-                                             <input name="shipping_country" id="shipping_country"  value="<?php echo set_value('country', $customer->shipping_country); ?>" type="text" placeholder="your country" />
+                                             <input readonly=""  style="background: #9eb2ab" name="shipping_country" id="shipping_country"  value="<?php echo set_value('country', $customer->shipping_country); ?>" type="text" placeholder="your country" />
                                         </div>
                                         
                                         <div>
