@@ -130,6 +130,14 @@ class Shipstation_api_service {
                         $value->expected_date_only =  $expected_date_only;
                     }
 
+
+                    if (isset($value->serviceCode) && $value->serviceCode == 'fedex_standard_overnight') 
+                    {
+                        $expected_date_only = date('F d, Y', strtotime($myDate . ' +1 Weekday'));
+                        $value->expected_date = "Expected Delivery Date " . $expected_date_only;
+                        $value->expected_date_only =  $expected_date_only;
+                    }
+
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_ground' && $free_ship == 1) 
                     {
                         $value->serviceName  = $value->serviceName . " Free Shipping";
@@ -170,6 +178,22 @@ class Shipstation_api_service {
                         $value->expected_date_only =  $expected_date_only;
                     }    
 
+
+
+                    if (isset($value->serviceCode) && $value->serviceCode == 'fedex_home_delivery') 
+                    {
+                        $expected_date_only = date('F d, Y', strtotime($myDate . ' +7 days '));
+                        $value->expected_date = "Expected Delivery Date " . $expected_date_only;
+                        $value->expected_date_only =  $expected_date_only;
+                    }
+
+
+                    if (isset($value->serviceCode) && $value->serviceCode == 'fedex_ground') 
+                    {
+                        $expected_date_only = date('F d, Y', strtotime($myDate . ' +7 days'));
+                        $value->expected_date = "Expected Delivery Date " . $expected_date_only;
+                        $value->expected_date_only =  $expected_date_only;
+                    }
 
                     // 2 for business and 1 for home
                     //If business address remove home delivery and make ground shipping $0 free delivery
