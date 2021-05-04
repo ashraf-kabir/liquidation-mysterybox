@@ -337,6 +337,7 @@ class Home_controller extends Manaknight_Controller
                 $shipping_city          =  $this->input->post('shipping_city', TRUE);
                 $shipping_zip           =  $this->input->post('shipping_zip', TRUE);
                 $shipping_address       =  $this->input->post('shipping_address', TRUE);
+                $address_type       =  $this->input->post('address_type', TRUE);
                  
                 $response = $this->customer_model->edit([
                     'name' => $name,
@@ -347,6 +348,7 @@ class Home_controller extends Manaknight_Controller
                     'billing_country' => $billing_country,
                     'phone' => $phone,
                     'shipping_address' => $shipping_address,
+                    'address_type' => $address_type,
                     'shipping_zip' => $shipping_zip,
                     'shipping_city' => $shipping_city,
                     'shipping_state' => $shipping_state,
@@ -1342,6 +1344,7 @@ class Home_controller extends Manaknight_Controller
                 $shipping_state      =   $this->input->post('shipping_state', TRUE);
                 $shipping_city       =   $this->input->post('shipping_city', TRUE);
                 $shipping_zip        =   $this->input->post('shipping_zip', TRUE);
+                $address_type        =   $this->input->post('address_type', TRUE);
                 
                 $response = $this->customer_model->edit([
                     'shipping_address'  => $shipping_address, 
@@ -1349,6 +1352,7 @@ class Home_controller extends Manaknight_Controller
                     'shipping_state'    => $shipping_state, 
                     'shipping_city'     => $shipping_city, 
                     'shipping_zip'      => $shipping_zip,  
+                    'address_type'      => $address_type,  
                 ], $user_id); 
 
                 $output['success'] = "Success! Shipping address has been updated."; 

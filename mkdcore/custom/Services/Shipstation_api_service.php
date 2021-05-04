@@ -9,8 +9,9 @@ class Shipstation_api_service {
         $this->_config = $config;
     }
 
-    public function get_shipping_cost($orders_list, $postal_code, $city, $state, $country, $from_postal)
+    public function get_shipping_cost($orders_list, $postal_code, $city, $state, $country, $from_postal, $address_type)
     {
+
         if( !empty($orders_list) )
         {
 
@@ -136,6 +137,7 @@ class Shipstation_api_service {
                     }
 
 
+
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_2day') 
                     {
                         $expected_date_only = date('F d, Y', strtotime($myDate . ' +2 Weekday'));
@@ -166,9 +168,45 @@ class Shipstation_api_service {
                         $value->expected_date = "Expected Delivery Date " . $expected_date_only;
                         $value->expected_date_only =  $expected_date_only;
                     }    
+
+
+                    // 2 for business and 1 for home
+                    //If business address remove home delivery and make ground shipping $0 free delivery
+                    if (isset($value->serviceCode) && $value->serviceCode == 'fedex_home_delivery'  && $address_type == 2 ) 
+                    {
+                        unset($response[$key]);
+                    }
+
+                    if (isset($value->serviceCode) && $value->serviceCode == 'fedex_ground'  && $address_type == 2 ) 
+                    {
+                        $value->serviceName  = $value->serviceName . " Free Shipping";
+                        $value->shipmentCost = 0;
+                        $value->otherCost    = 0;
+                    }
+
+
+
+
+                    //If address is home or house remove ground shipping and make home delivery $0 free shipping
+                    if (isset($value->serviceCode) && $value->serviceCode == 'fedex_ground'  && $address_type == 1  ) 
+                    {
+
+                        unset($response[$key]);
+                    }
+
+                    if (isset($value->serviceCode) && $value->serviceCode == 'fedex_home_delivery'  && $address_type == 1 ) 
+                    {
+                        $value->serviceName  = $value->serviceName . " Free Shipping";
+                        $value->shipmentCost = 0;
+                        $value->otherCost    = 0;
+                    } 
                 }
+                $response = array_values($response);
+
             }
-            return $response;
+
+             
+            return  $response;
             exit();
         } 
     }

@@ -97,6 +97,8 @@
                                    </div>
                               </div>
 
+                              <input type="hidden" id="address_type" name="address_type" value="<?php echo set_value('address_type', $customer->address_type); ?>">
+
                               <div class="checkout-info-add-btn">
                                    <button type="button"  class="close-btn btn btn-secondary on_click_shipping_modal">Close</button>
                                    <button type="button" class="btn btn-primary add-shipping-address">Save</button>

@@ -53,3 +53,8 @@ ALTER TABLE `customer` CHANGE `stripe_id` `stripe_id` VARCHAR(255) CHARACTER SET
 ALTER TABLE `pos_order_items` CHANGE `ship_station_tracking_no` `ship_station_tracking_no` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `ship_station_shipping_date` `ship_station_shipping_date` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
  
 ALTER TABLE `pos_order` ADD `referrer` INT NOT NULL AFTER `store_id`;
+
+
+
+
+ALTER TABLE `customer` ADD `address_type` INT NOT NULL AFTER `shipping_state`;

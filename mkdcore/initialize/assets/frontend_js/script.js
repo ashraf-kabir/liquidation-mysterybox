@@ -343,6 +343,7 @@ check_cart_total_items();
     var city         =  $('#shipping_city').val();
     var state        =  $('#shipping_state').val();
     var country      =  $('#shipping_country').val(); 
+    var address_type =  $('#address_type').val(); 
     var id           =  $(this).attr('data-id'); 
 
 
@@ -380,17 +381,15 @@ check_cart_total_items();
         timeout: 30000,
         method: 'POST',
         dataType: 'JSON',  
-        data : {'postal_code' : postal_code, 'city' : city, 'state' : state, 'country' : country, 'id' : id  },
+        data : {'postal_code' : postal_code, 'city' : city, 'state' : state, 'country' : country, 'id' : id, 'address_type' : address_type,  },
         success: function (response)  
-        {   
-
+        {    
           if(response.list_all)
-          {
-
+          { 
             let shipping_options = '<input type="hidden" class="shipping-cost-name" name="shipping_cost_name_' + id + '" value=""  /><input type="hidden" class="shipping-cost-price-value" name="shipping_cost_value_' + id + '" value="0"  />';
 
 
-            $(response.list_all).each(function(index,object){
+            $(response.list_all).each(function(index,object){  
               var shipping_cost_total = object.shipmentCost + object.otherCost;
               shipping_cost_total = parseFloat(shipping_cost_total).toFixed(2);
               shipping_options += '<label><input name="shipping_service_id_' + id + '" class="mr-2 shipping-cost-change" type="radio" value="' + object.serviceCode + '" data-expected-date="' + object.expected_date_only + '"  data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  />' + object.serviceName + '  ( $' + shipping_cost_total + ' ) ' + object.expected_date + ' </label>';
@@ -600,6 +599,7 @@ $(document).on('click','.add-shipping-address',function(e){
   var shipping_zip     = $('#shipping_zip').val();
   var shipping_state   = $('#shipping_state').val();
   var shipping_city    = $('#shipping_city').val();
+  var address_type     = $('#address_type').val(); 
 
   if(shipping_address == '' || shipping_address == 0) 
   {
@@ -659,7 +659,7 @@ $(document).on('click','.add-shipping-address',function(e){
       timeout: 30000,
       method: 'POST',
       dataType: 'JSON',  
-      data : {shipping_address, shipping_country, shipping_city, shipping_state, shipping_zip },
+      data : {shipping_address, shipping_country, shipping_city, shipping_state, shipping_zip , address_type },
       success: function (response)  
       {     
         if(response.success)

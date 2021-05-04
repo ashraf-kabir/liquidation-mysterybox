@@ -81,7 +81,7 @@
                                         <input type="text" id="shipping_zip" name="shipping_zip"  class="form-control"  value="<?php echo $customer->shipping_zip ?>" >
                                    </div>
 
-
+                                   <input type="hidden" id="address_type" name="address_type" value="<?php echo set_value('address_type', $customer->address_type); ?>">
 
 
                               </div> 

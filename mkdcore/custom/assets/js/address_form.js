@@ -6,7 +6,7 @@
           route: 'long_name',
           locality: 'long_name',
           administrative_area_level_1: 'short_name',
-          country: 'long_name',
+          country: 'short_name',
           postal_code: 'short_name'
      };
 
@@ -33,6 +33,7 @@ function initialize() {
         
           reset_billing_address();
 
+          console.log(place) 
 
           for (var i = 0; i < place.address_components.length; i++) 
           { 
@@ -53,7 +54,7 @@ function initialize() {
 
                if (addressType == 'country') 
                {
-                    document.getElementById('billing_country').value = "US";
+                    document.getElementById('billing_country').value = val ;
                }
 
                if (addressType == 'locality') 
@@ -110,7 +111,7 @@ function initialize() {
 
                if (addressType == 'country') 
                {
-                    document.getElementById('shipping_country').value = "US";
+                    document.getElementById('shipping_country').value = val;
                }
 
                if (addressType == 'locality') 
@@ -127,9 +128,28 @@ function initialize() {
                {
                     document.getElementById('shipping_zip').value = val;
                } 
-          }    
+          }   
+
+          var isResidental = 3;
+          for (var i = 0; i < place.types.length; i++) 
+          { 
+               var address_type = place.types[i]; 
+               console.log(address_type)
+                
+               if (address_type == 'street_address' ) 
+               {
+                    isResidental = 1;
+               }
+
+               if (address_type == 'premise' || address_type == 'restaurant' || address_type == 'food' || address_type == 'shopping_mall' || address_type == 'store' || address_type == 'health') 
+               {
+                    isResidental = 2;
+               }
+          }
+
+          $('#address_type').val(isResidental); 
      });
-     
+
 } 
 
 function reset_billing_address()

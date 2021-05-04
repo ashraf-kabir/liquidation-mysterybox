@@ -1645,14 +1645,16 @@ class Custom_api_controller extends Manaknight_Controller
             $city        =  $this->input->post('city', TRUE);
             $state       =  $this->input->post('state', TRUE);
             $country     =  $this->input->post('country', TRUE);
-            $from_postal =  $this->config->item('from_postal');
+            $address_type=  $this->input->post('address_type', TRUE);
+            $from_postal =  $this->config->item('from_postal'); 
 
 
             
-            $result = $this->shipstation_api_service->get_shipping_cost($orders_list, $postal_code, $city, $state, $country, $from_postal);
+            $result = $this->shipstation_api_service->get_shipping_cost($orders_list, $postal_code, $city, $state, $country, $from_postal, $address_type);
             
             if (!isset($result->Message)  )
             {
+                 
                 $output['list_all'] = $result;
                 $output['status']   = 200; 
                 echo json_encode($output);
