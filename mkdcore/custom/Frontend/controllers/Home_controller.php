@@ -1586,7 +1586,7 @@ class Home_controller extends Manaknight_Controller
                         {
                             // store the card id with the associated user
                             $check_new_card = $this->customer_cards_model->create([
-                                'is_default'     => 0,
+                                'is_default'     => 1,
                                 'account_no'     => $card_number,
                                 'user_id'        => $user_id,
                                 'card_token'     => $stripe_card_id,

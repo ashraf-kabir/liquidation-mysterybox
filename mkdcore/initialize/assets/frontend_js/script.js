@@ -393,7 +393,7 @@ check_cart_total_items();
             $(response.list_all).each(function(index,object){
               var shipping_cost_total = object.shipmentCost + object.otherCost;
               shipping_cost_total = parseFloat(shipping_cost_total).toFixed(2);
-              shipping_options += '<label><input name="shipping_service_id_' + id + '" class="mr-3 shipping-cost-change" type="radio" value="' + object.serviceCode + '" data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  />' + object.serviceName + '  ( $' + shipping_cost_total + ' ) ' + object.expected_date + ' </label>';
+              shipping_options += '<label><input name="shipping_service_id_' + id + '" class="mr-2 shipping-cost-change" type="radio" value="' + object.serviceCode + '" data-expected-date="' + object.expected_date_only + '"  data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  />' + object.serviceName + '  ( $' + shipping_cost_total + ' ) ' + object.expected_date + ' </label>';
             }) 
             // shipping_options += '</select>';
 
@@ -805,7 +805,8 @@ $(document).on('click','.add_new_card',function(e){
 
 
 
-$(document).on('click','.shipping-cost-change', function(){    
+$(document).on('click','.shipping-cost-change', function(){  
+  $('.selected_item_expected_shipping_date').text($(this).attr('data-expected-date'));  
   calculate_cost();
 });
 
@@ -957,9 +958,15 @@ function load_customer_cards()
       all_cards = "";
       if(response.all_cards)
       {  
+        let card_selected = ""
         $(response.all_cards).each(function(index,object)
         {  
-          all_cards += '<label style="display: block;"><input style="margin-right: 7px;" type="radio" name="customer_card" value="' + object.id  + '" ><strong>' + object.brand  + '</strong>  ending in  ' + object.last4  + '</label>';
+          card_selected = "";
+          if (object.is_default == 1) 
+          {
+            card_selected = " checked ";
+          }
+          all_cards += '<label style="display: block;"><input ' + card_selected + '  style="margin-right: 7px;" type="radio" name="customer_card" value="' + object.id  + '" ><strong>' + object.brand  + '</strong>  ending in  ' + object.last4  + '</label>';
         });
 
         $('#customer_card').html(all_cards)

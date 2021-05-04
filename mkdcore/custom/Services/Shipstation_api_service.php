@@ -27,14 +27,18 @@ class Shipstation_api_service {
                 
                 // if ($product->free_ship != 1) 
                 // {
-                    $weight_object     += $product->weight;
+                    $weight_object     += $product->weight ;
                     $dimensions_length += $product->length;
                     $dimensions_width  += $product->width;
                     $dimensions_height += $product->height;
-                // } 
 
-            }
+
+                    $weight_object = $value->product_qty * $weight_object;
+
+                // } 
  
+            }
+    
         
             /**
              * ShipStation API
@@ -117,9 +121,11 @@ class Shipstation_api_service {
 
                     
                     $value->expected_date = "";
+                    $value->expected_date_only = "";
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_express_saver') 
                     {
-                        $value->expected_date = "Expected Delivery Date " . date('F d, Y', strtotime($myDate . ' +3 Weekday'));
+                        $expected_date_only = date('F d, Y', strtotime($myDate . ' +3 Weekday'));
+                        $value->expected_date = "Expected Delivery Date " . $expected_date_only;
                     }
 
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_ground' && $free_ship == 1) 
@@ -132,24 +138,33 @@ class Shipstation_api_service {
 
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_2day') 
                     {
-                        $value->expected_date = "Expected Delivery Date " . date('F d, Y', strtotime($myDate . ' +2 Weekday'));
+                        $expected_date_only = date('F d, Y', strtotime($myDate . ' +2 Weekday'));
+                        $value->expected_date = "Expected Delivery Date " . $expected_date_only;
+                        $value->expected_date_only =  $expected_date_only;
+ 
                     }
 
 
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_2day_am') 
-                    {
-                        $value->expected_date = "Expected Delivery Date " . date('F d, Y', strtotime($myDate . ' +2 Weekday'));
+                    { 
+                        $expected_date_only = date('F d, Y', strtotime($myDate . ' +2 Weekday'));
+                        $value->expected_date = "Expected Delivery Date " . $expected_date_only;
+                        $value->expected_date_only =  $expected_date_only;
                     }
 
 
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_priority_overnight') 
-                    {
-                        $value->expected_date = "Expected Delivery Date " . date('F d, Y', strtotime($myDate . ' +1 Weekday'));
+                    { 
+                        $expected_date_only = date('F d, Y', strtotime($myDate . ' +1 Weekday'));
+                        $value->expected_date = "Expected Delivery Date " . $expected_date_only;
+                        $value->expected_date_only =  $expected_date_only;
                     }
 
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_first_overnight') 
-                    {
-                        $value->expected_date = "Expected Delivery Date " . date('F d, Y', strtotime($myDate . ' +1 Weekday'));
+                    { 
+                        $expected_date_only = date('F d, Y', strtotime($myDate . ' +1 Weekday'));
+                        $value->expected_date = "Expected Delivery Date " . $expected_date_only;
+                        $value->expected_date_only =  $expected_date_only;
                     }    
                 }
             }

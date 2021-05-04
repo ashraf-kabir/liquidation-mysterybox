@@ -1,9 +1,9 @@
 <link rel="stylesheet" type="text/css" href="./assets/css/checkout.css">
 <style type="text/css">
      .custom-pricing-div{
-          margin-right: 5px;
+          margin-right: 2px;
           text-align: start;
-          padding-left: 113px;
+          padding-left: 25px;
           display: grid;
      }
      .add_card_div{
@@ -285,13 +285,16 @@
 
                                                   <p>$<span class="selected_item_shipping_cost">0.00</span></p>
 
-                                                 
+                                                  
+                                                  <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date"></span></strong></p>
+                                                   
                                                   <button style="display: none;" type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
                                              <?php else: ?>
-                                                  <p>Shipping Cost:</p>
+                                                  <p>Shipping Cost:</p> 
                                                   <p>$<span class="selected_item_shipping_cost">0.00</span></p>
 
-                                                 
+                                                  <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date"></span></strong></p>
+
                                                   <button style="display: none;" type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
                                              <?php endif; ?> 
                                         <?php endif; ?> 
