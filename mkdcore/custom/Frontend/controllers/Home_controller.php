@@ -460,7 +460,7 @@ class Home_controller extends Manaknight_Controller
             
             $this->form_validation->set_rules('full_name', "Name", "required|max_length[255]");
             $this->form_validation->set_rules('email_address', "Email", "valid_email"); 
-            $this->form_validation->set_rules('billing_zip', "Billing Postal Code", "integer");
+            $this->form_validation->set_rules('billing_zip', "Billing Postal Code", "required|integer");
             $this->form_validation->set_rules('billing_city', "Billing City", "max_length[255]");
             $this->form_validation->set_rules('billing_country', "Billing Country", "max_length[255]");
             $this->form_validation->set_rules('billing_state', "Billing State", "max_length[255]"); 
@@ -471,10 +471,10 @@ class Home_controller extends Manaknight_Controller
             // $this->form_validation->set_rules('exp_year', "Expiry Year", "required");
             // $this->form_validation->set_rules('cvc', "CVC", "required");
 
-            $this->form_validation->set_rules('shipping_zip', "Shipping Zip", "integer");
-            $this->form_validation->set_rules('shipping_city', "Shipping City", "max_length[255]");
-            $this->form_validation->set_rules('shipping_country', "Shipping Country", "max_length[255]");
-            $this->form_validation->set_rules('shipping_state', "Shipping State", "max_length[255]"); 
+            $this->form_validation->set_rules('shipping_zip', "Shipping Zip", "required|integer");
+            $this->form_validation->set_rules('shipping_city', "Shipping City", "required|max_length[255]");
+            $this->form_validation->set_rules('shipping_country', "Shipping Country", "required|max_length[255]");
+            $this->form_validation->set_rules('shipping_state', "Shipping State", "required|max_length[255]"); 
             $this->form_validation->set_rules('shipping_address', "Shipping Address", "required|min_length[5]"); 
             $this->form_validation->set_rules('customer_card', "Card is required", "required"); 
               
