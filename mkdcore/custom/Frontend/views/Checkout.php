@@ -30,6 +30,22 @@
           }
      }
 
+
+     .child {  
+          order:1;
+     }
+
+     @media (max-width:992px) {
+           
+          .topper { 
+               order:0; 
+               margin-bottom: 30px;
+          }
+          .topper .box{
+               width: 100% !important;
+          }
+     }
+
      .custom-shipping-div{
           display: -webkit-box;
           display: -ms-flexbox;
@@ -45,7 +61,7 @@
 </style>
 <?php echo form_open('',array('class' => 'send_checkout' )); ?>
 <section class="checkout-section" id="checkout-section">
-     <div class="checkout-left">
+     <div class="checkout-left child">
           <div class="checkout-row">
                <div class="first-box">
                     <span>1</span>
@@ -218,7 +234,7 @@
                                              </div>
                                              <div>
                                                   <label for="country">Country:</label>
-                                                  <input  readonly=""  style="background: #9eb2ab"   id="billing_country" name="billing_country"  type="text" value="<?php echo set_value('country'); ?>" placeholder="your country" />
+                                                  <input  readonly=""  style="background: #9eb2ab"   id="billing_country" name="billing_country"  type="text" value="<?php echo set_value('country', "US"); ?>" placeholder="your country" />
                                              </div>
                                              
                                              <div>
@@ -339,7 +355,7 @@
                </div>
           </div>
      </div>
-     <div class="checkout-right">
+     <div class="checkout-right child topper">
           <div class="box">
                <?php 
                $tax_amount  = 0;
