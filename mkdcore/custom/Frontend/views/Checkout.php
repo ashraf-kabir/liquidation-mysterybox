@@ -173,6 +173,15 @@
                                              </div> 
 
 
+                                             <div class="add_card_div"  >
+                                                  <label for="card_default">Default:</label>
+                                                  
+                                                  <select style="height: 60px;" name="card_default" id="card_default"  class="form-control">
+                                                       <option value="0">No</option>
+                                                       <option value="1">Yes</option> 
+                                                  </select>
+                                             </div>
+
                                              <div class="add_card_div" style="float: right;"  >
                                                   <button   type="button" style="margin-right: 39.5%;" class="hide_modal_button add_new_card btn btn-primary ">Save</button>
                                              </div>
@@ -255,11 +264,11 @@
                               <div class="details">
                                    <h4><?php echo $value->product_name; ?></h4>
                                    <p>Details: <?php echo $value->description; ?></p>
-                                   <p>Price: $<?php echo $value->total_price; ?></p>
+                                   <p>Price: $<span class="current_item_total_price"><?php echo $value->total_price; ?></span></p>
                                    <div class="product-quantity">
                                         <p>Quantity:</p>
                                         <button data-id="<?php echo $value->product_id; ?>"  data-product_qty="<?php echo $value->product_qty; ?>"  type="button" class="btn btn-secondary add_to_cart_button">+</button>
-                                        <span style="margin-left: 11px;"><?php echo $value->product_qty; ?></span>
+                                        <span class="quantity_for_item" style="margin-left: 11px;"><?php echo $value->product_qty; ?></span>
                                         <button data-id="<?php echo $value->product_id; ?>" data-product_qty="<?php echo $value->product_qty; ?>" type="button"  class="btn btn-secondary minus_to_cart_button">-</button>
                                    </div>
 
@@ -283,7 +292,7 @@
                                         <?php else: ?>  
 
                                              <?php if ($value->free_ship == 1): ?>
-                                                  <p>Free Shipping</p>
+                                                  <p>Free Shipping:</p>
 
                                                   <p>$<span class="selected_item_shipping_cost">0.00</span></p>
 
@@ -295,7 +304,7 @@
                                                   <p>Shipping Cost:</p> 
                                                   <p>$<span class="selected_item_shipping_cost">0.00</span></p>
 
-                                                  <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date"></span></strong></p>
+                                                  <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date">N/A</span></strong></p>
 
                                                   <button style="display: none;" type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
                                              <?php endif; ?> 
@@ -331,7 +340,7 @@
                     <div class="details">
                          <div>
                               <p>Items(<?php echo count($cart_items) ?>):</p>
-                              <p>$<?php echo number_format($sub_total,2); ?></p>
+                              <p>$<span class="sub_total_value"><?php echo number_format($sub_total,2); ?></span></p>
                          </div>
                          <div>
                               <p>shipping & handling:</p>
@@ -339,7 +348,7 @@
                          </div>
                          <div>
                               <p>Total before tax:</p>
-                              <p>$<?php echo number_format($sub_total,2); ?></p>
+                              <p>$<span class="total_without_tax_value"><?php echo number_format($sub_total,2); ?></span></p>
                          </div>
                          <div>
                               <p>tax:</p>

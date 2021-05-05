@@ -246,7 +246,7 @@ check_cart_total_items();
     $('.remove_able_loader_gif').remove();
   }
 
-  function update_create_cart(quantity, id)
+  function update_create_cart(quantity, id, redirect_after = false, checkout_this_object = null)
   {
 
     if (quantity > 0) 
@@ -280,11 +280,32 @@ check_cart_total_items();
           // if success add data to cart front pos
           if (response.success) 
           {
-            check_cart_total_items();
-            toastr.success(response.success);
-            setInterval(function() {
-              window.location.reload(true);
-            }, 2000); 
+            check_cart_total_items(); 
+            if (!redirect_after) 
+            {
+              toastr.success(response.success);
+              setInterval(function() {
+                window.location.reload(true);
+              }, 2000); 
+            }
+
+
+
+            if (redirect_after) 
+            { 
+               
+              checkout_this_object.parent().find('.quantity_for_item').text(quantity);
+              checkout_this_object.parent().find('.add_to_cart_button').attr('data-product_qty', quantity);
+              checkout_this_object.parent().find('.minus_to_cart_button').attr('data-product_qty', quantity);
+              
+               
+              load_checkout_calculations(id, checkout_this_object);
+              $('.remove_able_loader_gif').remove();
+              
+            }
+
+            
+            
           } 
         },
         error: function()
@@ -318,7 +339,7 @@ check_cart_total_items();
     let quantity_add   = Number($(this).attr('data-product_qty')) + 1;
     let id_product     = $(this).attr('data-id');
     $('.place-order-btn').hide();
-    update_create_cart(quantity_add, id_product);
+    update_create_cart(quantity_add, id_product, true, $(this));
 
   });
 
@@ -328,7 +349,7 @@ check_cart_total_items();
     let id_item         = $(this).attr('data-id');
     let quantity_minus  = $(this).attr('data-product_qty') - 1;
     $('.place-order-btn').hide(); 
-    update_create_cart(quantity_minus, id_item);
+    update_create_cart(quantity_minus, id_item, true, $(this));
 
   });
 
@@ -487,7 +508,7 @@ check_cart_total_items();
     e.preventDefault();
 
     $('.place-order-btn').hide();
-    $('.place-order-btn').parent().append('<img src="' + loading_gif + '" class="image-on-submit" style="width: 6%;">');
+    $('.place-order-btn').parent().append('<div style="text-align: center;" class="image-on-submit"><img src="' + loading_gif + '"  style="width: 20%;"></div>');
 
 
     if (!$('#terms1').is(':checked')) 
@@ -773,19 +794,21 @@ $(document).on('click','.add_new_card',function(e){
   var card_number  = $('#account_no').val();
   var exp_year     = $('#exp_year').val();
   var cvc          = $('#cvc_numb').val(); 
+  var card_default = $('#card_default').val(); 
 
   $.ajax({
     url: '../v1/api/add_new_card',
     timeout: 30000,
     method: 'POST',
     dataType: 'JSON',  
-    data : {exp_month, card_number, exp_year, cvc },
+    data : {exp_month, card_number, exp_year, cvc, card_default },
     success: function (response)  
     {     
       if(response.success)
       {
         toastr.success(response.success); 
-         load_customer_cards();
+        load_customer_cards();
+        $('.on_click_shipping_modal').trigger('click');
       } 
 
 
@@ -944,6 +967,47 @@ $(document).on('change','.shipping_service_name_change', function(){
 
 
 
+
+ 
+function load_checkout_calculations(id, checkout_this_object)
+{ 
+  $.ajax({
+    url: '../v1/api/load_checkout_calculations',
+    timeout: 30000,
+    method: 'POST',
+    data: {id},
+    dataType: 'JSON',   
+    success: function (response)  
+    {     
+      if (response.success) 
+      {
+        $('.total_of_all').val(response.total_value);
+        $('.tax_amount_val').val(response.tax_amount_value);
+        $('.total_without_tax').val(response.total_without_tax); 
+        $('.sub_total_value').text(response.sub_total_value); 
+        $('.total_without_tax_value').text(response.total_without_tax); 
+
+        checkout_this_object.parent().parent().find('.current_item_total_price').text(response.current_itemprice); 
+        calculate_cost();
+        show_qty_btns();
+
+        checkout_this_object.parent().parent().find('.calculate-shipping-cost').trigger('click');
+        toastr.success("Your data has been updated successfully.");
+        $('.place-order-btn').show();
+      }
+
+      if(response.error)
+      { 
+        toastr.error(response.error); 
+      } 
+    },
+    error: function()
+    {  
+      toastr.error('Error! Connection timeout.'); 
+      window.location.reload(true);
+    } 
+  });
+}
 
  
 function load_customer_cards()

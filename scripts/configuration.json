@@ -3069,6 +3069,7 @@
 		"v1/api/sale_order/update_status": "Guest/Ecom_api_controller/update_order_status",
 		"v1/api/add_alert_notification": "Guest/Home_controller/add_alert_notification",
 		"v1/api/update_customer_address": "Guest/Home_controller/update_customer_address",
+		"v1/api/load_checkout_calculations": "Guest/Home_controller/load_checkout_calculations",
 		
 		
 		"admin/scan/scan_product_view": "Admin/Admin_inventory_controller/scan_product_view",

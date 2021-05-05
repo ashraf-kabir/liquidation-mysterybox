@@ -1429,10 +1429,11 @@ class Home_controller extends Manaknight_Controller
             
 
             // stripe_helper_service
-            $card_number = $this->input->post('card_number', TRUE);
-            $exp_month   = $this->input->post('exp_month', TRUE);
-            $exp_year    = $this->input->post('exp_year', TRUE);
-            $cvc         = $this->input->post('cvc', TRUE); 
+            $card_number  = $this->input->post('card_number', TRUE);
+            $exp_month    = $this->input->post('exp_month', TRUE);
+            $exp_year     = $this->input->post('exp_year', TRUE);
+            $cvc          = $this->input->post('cvc', TRUE); 
+            $card_default = $this->input->post('card_default', TRUE); 
 
             $new_card_last4 = substr($card_number, 12);
 
@@ -1458,6 +1459,11 @@ class Home_controller extends Manaknight_Controller
                             $output['error'] = $error_msg; 
                             echo json_encode($output);
                             exit();
+                        }
+
+                        if ($card_default == 1) 
+                        {
+                            $this->customer_cards_model->edit(['is_default' => 0], $check_card_value->id);
                         }
                     }
 
@@ -1489,7 +1495,7 @@ class Home_controller extends Manaknight_Controller
                                 $check_card = $this->customer_cards_model->get_by_fields_custom( $user_id, $new_card_last4);
 
                                 $payload = [
-                                    'is_default'     => 0,
+                                    'is_default'     => $card_default,
                                     'account_no'     => $card_number,
                                     'user_id'        => $user_id,
                                     'card_token'     => $stripe_card_id,
@@ -1590,7 +1596,7 @@ class Home_controller extends Manaknight_Controller
                         {
                             // store the card id with the associated user
                             $check_new_card = $this->customer_cards_model->create([
-                                'is_default'     => 1,
+                                'is_default'     => $card_default,
                                 'account_no'     => $card_number,
                                 'user_id'        => $user_id,
                                 'card_token'     => $stripe_card_id,
@@ -1652,6 +1658,66 @@ class Home_controller extends Manaknight_Controller
         }
         
     }
+
+
+
+    public function load_checkout_calculations()
+    {
+        if($this->session->userdata('customer_login') && $this->session->userdata('user_id') && $this->input->post('id'))
+        {
+             
+            $user_id    = $this->session->userdata('user_id');
+            $product_id = $this->input->post('id', TRUE);
+            $this->load->model('pos_cart_model'); 
+            $this->load->model('tax_model'); 
+
+            $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+            $tax        =  $this->tax_model->get(1); 
+
+            $total = 0;
+            $current_itemprice = 0;
+            if (!empty($cart_items)) 
+            {                     
+                foreach ($cart_items as $key => &$value)
+                {
+                    $total = $total + $value->total_price;   
+
+                    if ($value->product_id == $product_id) 
+                    {
+                        $current_itemprice = $value->total_price;
+                    }
+                }
+            } 
+
+            $sub_total = $total;
+
+            $tax_amount  = 0;
+            if(isset($tax->tax) and $total != 0)
+            {
+                $tax_amount = $tax->tax/100 * $total;
+            }
+
+            $total_without_tax = $total;
+            $total             = $total + $tax_amount;
+
+
+            $output['sub_total_value']   = number_format($sub_total,2);
+            $output['total_value']       = number_format($total,2);
+            $output['tax_amount_value']  = number_format($tax_amount,2);
+            $output['total_without_tax'] = number_format($total_without_tax,2);
+            $output['current_itemprice'] = number_format($current_itemprice,2);
+            $output['success']           = true;
+            echo json_encode($output);
+            exit();
+        }
+
+        $output['error'] = "Error! Login to continue.";
+        echo json_encode($output);
+        exit();
+    }
+
+
+
 
 
 }
