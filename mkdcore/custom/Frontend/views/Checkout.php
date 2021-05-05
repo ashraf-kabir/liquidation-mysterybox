@@ -29,6 +29,19 @@
                display: none !important;
           }
      }
+
+     .custom-shipping-div{
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-box-pack: justify;
+          -ms-flex-pack: justify;
+          justify-content: space-between;
+          margin: 1rem 0;
+     }
 </style>
 <?php echo form_open('',array('class' => 'send_checkout' )); ?>
 <section class="checkout-section" id="checkout-section">
@@ -44,61 +57,67 @@
                     <p> <span id="msg_shipping_city"><?php echo $customer->shipping_city; ?></span> <?php if (!empty($customer->shipping_state)): ?>,<?php endif ?> <span id="msg_shipping_state"><?php echo $customer->shipping_state; ?></span></p>
                     <p id="msg_shipping_zip"><?php echo $customer->shipping_zip; ?></p>
                </div>
+              
+
                <div class="third-box">
-                    <button  type="button"  class="dropdown-btn btn btn-secondary">change/add</button>
+                    <button type="button" class="dropdown-btn btn btn-secondary shipping-btn ">change/add</button>
                     <div class="dropdown-box" style="overflow-y: auto;">
                          <div class="modal-container">
-                              <div class="shipping-address">
-                                   <div class="heading">Add shipping Address</div>
-                                   <div class="inputs-container">
-  
-                                        <div>
-                                             <label for="name">Full Name</label>
-                                             <input  type="text" name="full_name" id="full_name"  value="<?php echo set_value('full_name', $customer->name); ?>" placeholder="Enter your full name"  />
+                              <div class="payments-details">
+                                   <div class="account-details">
+                                        <div class="heading">Basic Information</div>
+                                        <div class="inputs-container">  
+                                                  
+                                             <div>
+                                                  <label for="name">Full Name</label>
+                                                  <input  type="text" name="full_name" id="full_name"  value="<?php echo set_value('full_name', $customer->name); ?>" placeholder="Enter your full name"  />
+                                             </div>
+
+
+                                             <div>
+                                                  <label for="name">Email Address</label>
+                                                  <input  type="email" name="email_address" id="email_address"  value="<?php echo set_value('email_address', $customer->email); ?>" placeholder="abc@example.com"   />
+                                             </div>
+                                             
+
+                                             <div>
+                                                  <label for="number">Phone Number</label>
+                                                  <input  type="text" name="phone_number" id="phone_number"  value="<?php echo set_value('phone_number', $customer->phone); ?>" placeholder="+123-456-789" />
+                                             </div>                                            
                                         </div>
+                                   </div>
+
+                                   <div class="billing-address">
+                                        <div class="heading">Add Shipping Address</div>
+                                        <div class="inputs-container">
+                                             <div class="custom-shipping-div">
+                                                  <label for="address">Address:</label>
+                                                  <input name="shipping_address" id="shipping_address"  value="<?php echo set_value('address_1', $customer->shipping_address); ?>" type="text" placeholder="your address" />
+                                             </div>
+                                             <div class="custom-shipping-div">
+                                                  <label for="country">Country:</label>
+                                                  <input readonly=""  style="background: #9eb2ab" name="shipping_country" id="shipping_country"  value="<?php echo set_value('country', $customer->shipping_country); ?>" type="text" placeholder="your country" />
+                                             </div>
+                                             
+                                             <div class="custom-shipping-div">
+                                                  <label for="state">State:</label>
+                                                  <input name="shipping_state" id="shipping_state"  value="<?php echo set_value('state', $customer->shipping_state); ?>" type="text" placeholder="your state" />
+                                             </div>
+
+                                             <div class="custom-shipping-div">
+                                                  <label for="city">City:</label>
+                                                  <input name="shipping_city" id="shipping_city" value="<?php echo set_value('city', $customer->shipping_city); ?>" type="text" placeholder="your city" />
+                                             </div class="custom-shipping-div">
 
 
-                                        <div>
-                                             <label for="name">Email Address</label>
-                                             <input  type="email" name="email_address" id="email_address"  value="<?php echo set_value('email_address', $customer->email); ?>" placeholder="abc@example.com"   />
-                                        </div>
-                                        
-
-                                        <div>
-                                             <label for="number">Phone Number</label>
-                                             <input  type="text" name="phone_number" id="phone_number"  value="<?php echo set_value('phone_number', $customer->phone); ?>" placeholder="+123-456-789" />
-                                        </div>
-
-
-                                        <div>
-                                             <label for="address">Address:</label>
-                                             <input name="shipping_address" id="shipping_address"  value="<?php echo set_value('address_1', $customer->shipping_address); ?>" type="text" placeholder="your address" />
-                                        </div>
-                                        <div>
-                                             <label for="country">Country:</label>
-                                             <input readonly=""  style="background: #9eb2ab" name="shipping_country" id="shipping_country"  value="<?php echo set_value('country', $customer->shipping_country); ?>" type="text" placeholder="your country" />
-                                        </div>
-                                        
-                                        <div>
-                                             <label for="state">State:</label>
-                                             <input name="shipping_state" id="shipping_state"  value="<?php echo set_value('state', $customer->shipping_state); ?>" type="text" placeholder="your state" />
-                                        </div>
-
-                                        <div>
-                                             <label for="city">City:</label>
-                                             <input name="shipping_city" id="shipping_city" value="<?php echo set_value('city', $customer->shipping_city); ?>" type="text" placeholder="your city" />
-                                        </div>
-
-
-                                        <div>
-                                             <label for="zip-code">Zip-Code:</label>
-                                             <input id="shipping_zip" name="shipping_zip" value="<?php echo set_value('postal_code', $customer->shipping_zip); ?>" type="text" placeholder="your zip-code" />
+                                             <div>
+                                                  <label for="zip-code">Zip-Code:</label>
+                                                  <input id="shipping_zip" name="shipping_zip" value="<?php echo set_value('postal_code', $customer->shipping_zip); ?>" type="text" placeholder="your zip-code" />
+                                             </div>
+                                             <input type="hidden" id="address_type" name="address_type" value="<?php echo set_value('address_type', $customer->address_type); ?>">
                                         </div>
                                    </div>
                               </div>
-
-                              <input type="hidden" id="address_type" name="address_type" value="<?php echo set_value('address_type', $customer->address_type); ?>">
-
                               <div class="checkout-info-add-btn">
                                    <button type="button"  class="close-btn btn btn-secondary on_click_shipping_modal">Close</button>
                                    <button type="button" class="btn btn-primary add-shipping-address">Save</button>

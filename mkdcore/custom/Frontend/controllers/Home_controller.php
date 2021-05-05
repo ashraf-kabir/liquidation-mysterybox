@@ -1118,7 +1118,7 @@ class Home_controller extends Manaknight_Controller
             {
                 $this->customer_model->edit([ 'password' => $password ], $result);
                 $output['status']   = 200;
-                $output['success']  =  "Your account has been registered successfully,you can login now.";  
+                $output['success']  =  "Your account has been registered successfully. You can login now.";  
                 echo json_encode($output);
                 exit();
             }else{

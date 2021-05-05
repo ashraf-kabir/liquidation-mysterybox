@@ -367,10 +367,16 @@ check_cart_total_items();
     var address_type =  $('#address_type').val(); 
     var id           =  $(this).attr('data-id'); 
 
+    if(  (postal_code == '' || postal_code == 0 )  && (city == '' || city == 0 ) && (state == '' || state == 0 )  && (country == '' || country == 0 ) )
+    {   
+      error_for_shipping = 1;
+      return false;
+      exit; 
+    }
 
     if(postal_code == '' || postal_code == 0) 
     {  
-      toastr.error('Postal Code is required.');
+      toastr.error('Shipping postal code is required to get shipping services.');
       error_for_shipping = 1;
       return false;
       exit; 
@@ -380,7 +386,7 @@ check_cart_total_items();
 
     if(country == '' || country == 0) 
     {
-      toastr.error('Country is required.'); 
+      toastr.error('Shipping country is required to get shipping services.'); 
       error_for_shipping = 1;
       return false;
       exit;
@@ -853,9 +859,7 @@ $(document).on('click','.close_new_card_div', function(){
 
 
 
-
-
-calculate_cost()
+ 
 
 function calculate_cost()
 {
@@ -1053,4 +1057,20 @@ function load_customer_cards()
 }
 
 
-load_customer_cards();
+if ($('button').hasClass('place-order-btn')) 
+{ 
+    calculate_cost();
+    load_customer_cards();
+
+    var postal_code  =  $('#shipping_zip').val();
+  var city         =  $('#shipping_city').val();
+  var state        =  $('#shipping_state').val();
+  var country      =  $('#shipping_country').val(); 
+  var address_type =  $('#address_type').val(); 
+    if(  (postal_code == '' || postal_code == 0 )  && (city == '' || city == 0 ) && (state == '' || state == 0 )  && (country == '' || country == 0 ) )
+  {   
+    $('.shipping-btn').trigger('click');
+  }
+
+
+}
