@@ -218,7 +218,7 @@
                                              </div>
                                              <div>
                                                   <label for="country">Country:</label>
-                                                  <input  readonly=""  style="background: #9eb2ab"   id="billing_country" name="billing_country"  type="text" value="<?php echo set_value('country', "US"); ?>" placeholder="your country" />
+                                                  <input  readonly=""  style="background: #9eb2ab"   id="billing_country" name="billing_country"  type="text" value="<?php echo set_value('country'); ?>" placeholder="your country" />
                                              </div>
                                              
                                              <div>
