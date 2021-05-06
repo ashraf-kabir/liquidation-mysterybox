@@ -709,6 +709,7 @@ $(document).on('click','.add-shipping-address',function(e){
             $('#shipping_coma').hide();
           }
 
+          $('.close-btn').trigger('click');
           $('.calculate-shipping-cost').trigger('click');
 
         } 
