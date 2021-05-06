@@ -627,6 +627,8 @@ $(document).on('click','.add-shipping-address',function(e){
   var shipping_state   = $('#shipping_state').val();
   var shipping_city    = $('#shipping_city').val();
   var address_type     = $('#address_type').val(); 
+  var full_name        = $('#full_name').val(); 
+  var phone_number     = $('#phone_number').val(); 
 
   if(shipping_address == '' || shipping_address == 0) 
   {
@@ -686,7 +688,7 @@ $(document).on('click','.add-shipping-address',function(e){
       timeout: 30000,
       method: 'POST',
       dataType: 'JSON',  
-      data : {shipping_address, shipping_country, shipping_city, shipping_state, shipping_zip , address_type },
+      data : {full_name, phone_number, shipping_address, shipping_country, shipping_city, shipping_state, shipping_zip , address_type },
       success: function (response)  
       {     
         if(response.success)
@@ -694,12 +696,18 @@ $(document).on('click','.add-shipping-address',function(e){
           $('.on_click_shipping_modal').trigger('click');
           toastr.success(response.success); 
 
-          $('#msg_full_name').text($('#full_name').val())
-          $('#msg_shipping_address').text(shipping_address)
-   
-          $('#msg_shipping_zip').text(shipping_zip)
-          $('#msg_shipping_state').text(shipping_state)
-          $('#msg_shipping_city').text(shipping_city) 
+          $('#msg_full_name').text($('#full_name').val());
+          $('#msg_shipping_address').text(shipping_address);
+          $('#msg_shipping_zip').text(shipping_zip);
+          $('#msg_shipping_state').text(shipping_state);
+          $('#msg_shipping_city').text(shipping_city);
+
+          if (shipping_state != "" ) 
+          {
+            $('#shipping_coma').show();
+          } else {
+            $('#shipping_coma').hide();
+          }
 
           $('.calculate-shipping-cost').trigger('click');
 
@@ -731,13 +739,7 @@ $(document).on('click','.add-billing-address',function(e){
   var billing_city    = $('#billing_city').val();
 
   
-  if(billing_zip == '' || billing_zip == 0) 
-  {  
-    toastr.error('Zip Code is required.');
-    error_for_updating_billing = 1;
-    return false;
-    exit; 
-  }
+  
 
 
 
@@ -749,6 +751,16 @@ $(document).on('click','.add-billing-address',function(e){
     exit;
   }
 
+
+  if(billing_zip == '' || billing_zip == 0) 
+  {  
+    toastr.error('Zip Code is required.');
+    error_for_updating_billing = 1;
+    return false;
+    exit; 
+  }
+
+  
   if (error_for_updating_billing == 0) 
   {
     $.ajax({
@@ -764,11 +776,18 @@ $(document).on('click','.add-billing-address',function(e){
           $('.on_click_billing_modal').trigger('click');
           toastr.success(response.success); 
 
-          $('#msg_billing_address').text(billing_address)
+          $('#msg_billing_address').text(billing_address);
    
-          $('#msg_billing_zip').text(billing_zip)
-          $('#msg_billing_state').text(billing_state)
-          $('#msg_billing_city').text(billing_city) 
+          $('#msg_billing_zip').text(billing_zip);
+          $('#msg_billing_state').text(billing_state);
+          $('#msg_billing_city').text(billing_city);
+
+          if (billing_state != "" ) 
+          {
+            $('#billing_coma').show();
+          } else {
+            $('#billing_coma').hide();
+          }
         } 
 
 
@@ -975,6 +994,11 @@ $(document).on('change','.shipping_service_name_change', function(){
  
 function load_checkout_calculations(id, checkout_this_object)
 { 
+  checkout_this_object.parent().parent().parent().find('.selected_item_shipping_cost').text('0.00');
+  checkout_this_object.parent().parent().find('.selected_item_expected_shipping_date').text('N/A');
+  checkout_this_object.parent().parent().parent().find('.shipping-cost-name').val('');
+  checkout_this_object.parent().parent().parent().find('.shipping-cost-price-value').val('0'); 
+  checkout_this_object.parent().parent().parent().find('.shipping-cost-change').prop('checked', false); 
   $.ajax({
     url: '../v1/api/load_checkout_calculations',
     timeout: 30000,
@@ -992,6 +1016,7 @@ function load_checkout_calculations(id, checkout_this_object)
         $('.total_without_tax_value').text(response.total_without_tax); 
 
         checkout_this_object.parent().parent().find('.current_item_total_price').text(response.current_itemprice); 
+         
         calculate_cost();
         show_qty_btns();
 
@@ -1074,3 +1099,20 @@ if ($('button').hasClass('place-order-btn'))
 
 
 }
+
+
+
+$(document).on('click','.if_click_check',function(e)
+{
+  e.preventDefault(); 
+  var postal_code  =  $('#shipping_zip').val();
+  var city         =  $('#shipping_city').val();
+  var state        =  $('#shipping_state').val();
+  var country      =  $('#shipping_country').val(); 
+  var address_type =  $('#address_type').val(); 
+    if(  (postal_code == '' || postal_code == 0 )  && (city == '' || city == 0 ) && (state == '' || state == 0 )  && (country == '' || country == 0 ) )
+  {   
+    $('.shipping-btn').trigger('click');
+    toastr.error('Shipping details are required to continue.');
+  }
+})

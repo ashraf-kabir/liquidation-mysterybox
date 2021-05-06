@@ -258,6 +258,11 @@ class Inventory_model extends Manaknight_Model
         {
             foreach ($parameters as $key => $value)
             {
+            	if ($key == 'product_name' or $key == 'sku' ) 
+            	{
+            		continue;
+            	}
+            	
                 if (is_numeric($key) && strlen($value) > 0)
                 {
                     $this->db->where($value);
@@ -285,6 +290,14 @@ class Inventory_model extends Manaknight_Model
 
                     $this->db->where($key, $value);
                 }
+            }
+
+            if (isset($parameters['product_name']) and !empty($parameters['product_name'])) 
+            {
+            	$this->db->group_start();
+            	$this->db->or_like('product_name', $parameters['product_name'], 'both'); 
+            	$this->db->or_like('sku', $parameters['sku'], 'both'); 
+            	$this->db->group_end();
             }
         }
 
@@ -320,6 +333,10 @@ class Inventory_model extends Manaknight_Model
         {
             foreach($where as $field => $value)
             {
+            	if ($field == 'product_name' or $field == 'sku' ) 
+            	{
+            		continue;
+            	}
                 if (is_numeric($field) && strlen($value) > 0)
                 {
                     $this->db->where($value);
@@ -348,6 +365,17 @@ class Inventory_model extends Manaknight_Model
                     $this->db->where($field, $value);
 				}
             }
+
+
+            if (isset($where['product_name']) and !empty($where['product_name'])) 
+            {
+            	$this->db->group_start();
+            	$this->db->or_like('product_name', $where['product_name'], 'both'); 
+            	$this->db->or_like('sku', $where['sku'], 'both'); 
+            	$this->db->group_end();
+            }
+
+             
         }
 
         $query = $this->db->get($this->_table);

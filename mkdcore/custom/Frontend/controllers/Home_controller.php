@@ -65,8 +65,8 @@ class Home_controller extends Manaknight_Controller
         $this->load->library('pagination');
 
 
-        $this->_data['category']    =     $this->input->get('category', TRUE) != NULL  ? $this->input->get('category', TRUE) : NULL ;
-        $this->_data['search_query']   =     $this->input->get('search_query', TRUE) != NULL  ? $this->input->get('search_query', TRUE) : NULL ; 
+        $this->_data['category']       =     $this->input->get('category', TRUE) != NULL  ? $this->input->get('category', TRUE) : NULL ;
+        $this->_data['search_query']   =     $this->input->get('search_term', TRUE) != NULL  ? $this->input->get('search_term', TRUE) : NULL ; 
         $this->_data['type']           =     $this->input->get('type', TRUE) != NULL  ? $this->input->get('type', TRUE) : NULL ;
         
         $where = [ 
@@ -78,6 +78,8 @@ class Home_controller extends Manaknight_Controller
         ];
   
         $rows_data = $this->inventory_model->get_custom_count($where);
+        
+
        
  
         $total_rows = $rows_data; 
@@ -112,7 +114,7 @@ class Home_controller extends Manaknight_Controller
 
         $data['products_list']  = $this->inventory_model->get_custom_paginated($offset , $limit, $where );  
          
-
+         
         $data['type']            = $this->_data['type'];  
         $data['category']        = $this->_data['category'];  
         $data['all_categories']  = $this->category_model->get_all(['status' => 1]); 
@@ -309,12 +311,22 @@ class Home_controller extends Manaknight_Controller
 
             if($this->input->post('name', TRUE)  )
             {
+ 
+                 
+                $this->form_validation->set_rules('name', "Name", "required|max_length[255]");
+                $this->form_validation->set_rules('phone', 'Phone', 'numeric|max_length[15]'); 
+                $this->form_validation->set_rules('billing_address', "Billing Address", "required|min_length[5]");
+                $this->form_validation->set_rules('billing_zip', "Billing Zip Code", "required|integer|max_length[10]");
+                $this->form_validation->set_rules('billing_city', "Billing City", "max_length[255]");
+                $this->form_validation->set_rules('billing_country', "Billing Country", "max_length[255]");
+                $this->form_validation->set_rules('billing_state', "Billing State", "max_length[255]");  
 
-                $this->form_validation->set_rules('name', 'First Name', 'required');
-                $this->form_validation->set_rules('phone', 'Phone', 'numeric');
-                $this->form_validation->set_rules('billing_zip', 'Billing Zip', 'numeric');
-                $this->form_validation->set_rules('shipping_zip', 'Shipping Zip', 'numeric');
-                
+                $this->form_validation->set_rules('shipping_address', "Shipping Address", "required|min_length[5]");
+                $this->form_validation->set_rules('shipping_zip', "Shipping Zip", "required|integer|max_length[10]");
+                $this->form_validation->set_rules('shipping_city', "Shipping City", "required|max_length[255]");
+                $this->form_validation->set_rules('shipping_country', "Shipping Country", "required|max_length[255]");
+                $this->form_validation->set_rules('shipping_state', "Shipping State", "required|max_length[255]"); 
+                  
 
                 if ($this->form_validation->run() === FALSE)
                 {
@@ -674,7 +686,7 @@ class Home_controller extends Manaknight_Controller
             $tax_amount  = 0;
             
 
-            if (strtolower($state) == 'nv' or strtolower($state) == 'nevada') 
+            if (strtolower($customer_data->shipping_state) == 'nv' or strtolower($customer_data->shipping_state) == 'nevada') 
             {
                 if(isset($tax_data->tax) )
                 {
@@ -691,23 +703,24 @@ class Home_controller extends Manaknight_Controller
  
             // $customer_data->shipping_service_name  = $shipping_cost_name;
             // $customer_data->shipping_service_id    = $shipping_service_id;
-            $customer_data->name                   = $full_name;
-            $customer_data->email                  = $email_address;
-            $customer_data->phone                  = $phone_number;
-            $customer_data->city                   = $city;
-            $customer_data->state                  = $state;
-            $customer_data->country                = $country;
-            $customer_data->billing_zip            = $postal_code;
-            $customer_data->billing_address        = $address_1;
-            $customer_data->payment                = $payment;
+            // $customer_data->name                   = $full_name;
+            // $customer_data->email                  = $email_address;
+            // $customer_data->phone                  = $phone_number;
+            // $customer_data->city                   = $city;
+            // $customer_data->state                  = $state;
+            // $customer_data->country                = $country;
+            // $customer_data->billing_zip            = $postal_code;
+            // $customer_data->billing_address        = $address_1;
+            
 
 
-            $customer_data->shipping_address              = $shipping_address;
-            $customer_data->shipping_country              = $shipping_country;
-            $customer_data->shipping_state                = $shipping_state;
-            $customer_data->shipping_zip                  = $shipping_zip;
-            $customer_data->shipping_city                 = $shipping_city;
-            $customer_data->referrer                      = $referrer;
+            // $customer_data->shipping_address              = $shipping_address;
+            // $customer_data->shipping_country              = $shipping_country;
+            // $customer_data->shipping_state                = $shipping_state;
+            // $customer_data->shipping_zip                  = $shipping_zip;
+            // $customer_data->shipping_city                 = $shipping_city;
+            $customer_data->payment  = $payment;
+            $customer_data->referrer = $referrer;
 
 
 
@@ -1338,15 +1351,37 @@ class Home_controller extends Manaknight_Controller
             
 
             if ( $this->input->post('shipping_address', TRUE) ) 
-            { 
+            {  
+                $this->form_validation->set_rules('full_name', "Name", "required|max_length[255]");
+                $this->form_validation->set_rules('phone_number', 'Phone', 'numeric|max_length[15]'); 
+
+                $this->form_validation->set_rules('shipping_address', "Shipping Address", "required|min_length[5]");
+                $this->form_validation->set_rules('shipping_zip', "Shipping Zip", "required|integer|max_length[10]");
+                $this->form_validation->set_rules('shipping_city', "Shipping City", "required|max_length[255]");
+                $this->form_validation->set_rules('shipping_country', "Shipping Country", "required|max_length[255]");
+                $this->form_validation->set_rules('shipping_state', "Shipping State", "required|max_length[255]"); 
+
+                if ($this->form_validation->run() === FALSE)
+                {
+                    $error_msg = validation_errors(); 
+                    $output['error'] = $error_msg;
+                    echo json_encode($output);
+                    exit(); 
+                }
+
                 $shipping_address    =   $this->input->post('shipping_address', TRUE);
                 $shipping_country    =   $this->input->post('shipping_country', TRUE);
                 $shipping_state      =   $this->input->post('shipping_state', TRUE);
                 $shipping_city       =   $this->input->post('shipping_city', TRUE);
                 $shipping_zip        =   $this->input->post('shipping_zip', TRUE);
                 $address_type        =   $this->input->post('address_type', TRUE);
+                $full_name           =   $this->input->post('full_name', TRUE);
+                $phone_number        =   $this->input->post('phone_number', TRUE);
                 
+
                 $response = $this->customer_model->edit([
+                    'name'              => $full_name, 
+                    'phone'             => $phone_number,
                     'shipping_address'  => $shipping_address, 
                     'shipping_country'  => $shipping_country, 
                     'shipping_state'    => $shipping_state, 
@@ -1361,6 +1396,21 @@ class Home_controller extends Manaknight_Controller
 
             if ( $this->input->post('billing_address', TRUE) ) 
             { 
+                $this->form_validation->set_rules('billing_address', "Billing Address", "required|min_length[5]");
+                $this->form_validation->set_rules('billing_zip', "Billing Zip Code", "required|integer|max_length[10]");
+                $this->form_validation->set_rules('billing_city', "Billing City", "max_length[255]");
+                $this->form_validation->set_rules('billing_country', "Billing Country", "max_length[255]");
+                $this->form_validation->set_rules('billing_state', "Billing State", "max_length[255]");  
+
+                if ($this->form_validation->run() === FALSE)
+                {
+                    $error_msg = validation_errors(); 
+                    $output['error'] = $error_msg;
+                    echo json_encode($output);
+                    exit(); 
+                }
+
+
                 $billing_address    =   $this->input->post('billing_address', TRUE);
                 $billing_country    =   $this->input->post('billing_country', TRUE);
                 $billing_state      =   $this->input->post('billing_state', TRUE);

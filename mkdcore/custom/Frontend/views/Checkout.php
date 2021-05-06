@@ -58,7 +58,10 @@
           justify-content: space-between;
           margin: 1rem 0;
      }
-</style>
+     .required-must{
+          color: red;
+     }
+</style> 
 <?php echo form_open('',array('class' => 'send_checkout' )); ?>
 <section class="checkout-section" id="checkout-section">
      <div class="checkout-left child">
@@ -70,14 +73,21 @@
                <div class="second-box">
                     <p id="msg_full_name"><?php echo $customer->name; ?></p>
                     <p id="msg_shipping_address"><?php echo $customer->shipping_address; ?></p>
-                    <p> <span id="msg_shipping_city"><?php echo $customer->shipping_city; ?></span> <?php if (!empty($customer->shipping_state)): ?>,<?php endif ?> <span id="msg_shipping_state"><?php echo $customer->shipping_state; ?></span></p>
+                    <p> 
+                         <span id="msg_shipping_city"><?php echo $customer->shipping_city; ?></span>
+                         <span id="shipping_coma"  
+                              <?php if (empty($customer->shipping_state)): ?> 
+                                   style="display: none;" 
+                              <?php endif ?> >,</span>   
+                         <span id="msg_shipping_state"><?php echo $customer->shipping_state; ?></span>
+                    </p>
                     <p id="msg_shipping_zip"><?php echo $customer->shipping_zip; ?></p>
                </div>
               
 
                <div class="third-box">
                     <button type="button" class="dropdown-btn btn btn-secondary shipping-btn ">change/add</button>
-                    <div class="dropdown-box" style="overflow-y: auto;">
+                    <div class="dropdown-box if_click_check" style="overflow-y: auto;">
                          <div class="modal-container">
                               <div class="payments-details">
                                    <div class="account-details">
@@ -85,14 +95,14 @@
                                         <div class="inputs-container">  
                                                   
                                              <div>
-                                                  <label for="name">Full Name</label>
+                                                  <label for="name">Full Name <span class="required-must">*</span></label>
                                                   <input  type="text" name="full_name" id="full_name"  value="<?php echo set_value('full_name', $customer->name); ?>" placeholder="Enter your full name"  />
                                              </div>
 
 
                                              <div>
                                                   <label for="name">Email Address</label>
-                                                  <input  type="email" name="email_address" id="email_address"  value="<?php echo set_value('email_address', $customer->email); ?>" placeholder="abc@example.com"   />
+                                                  <input  readonly=""  style="background: #e9ecef"   type="email" name="email_address" id="email_address"  value="<?php echo set_value('email_address', $customer->email); ?>" placeholder="abc@example.com"   />
                                              </div>
                                              
 
@@ -107,27 +117,27 @@
                                         <div class="heading">Add Shipping Address</div>
                                         <div class="inputs-container">
                                              <div class="custom-shipping-div">
-                                                  <label for="address">Address:</label>
+                                                  <label for="address">Address <span class="required-must">*</span></label>
                                                   <input name="shipping_address" id="shipping_address"  value="<?php echo set_value('address_1', $customer->shipping_address); ?>" type="text" placeholder="your address" />
                                              </div>
                                              <div class="custom-shipping-div">
-                                                  <label for="country">Country:</label>
-                                                  <input readonly=""  style="background: #9eb2ab" name="shipping_country" id="shipping_country"  value="<?php echo set_value('country', $customer->shipping_country); ?>" type="text" placeholder="your country" />
+                                                  <label for="country">Country <span class="required-must">*</span></label>
+                                                  <input readonly=""  style="background: #e9ecef" name="shipping_country" id="shipping_country"  value="<?php echo set_value('country', $customer->shipping_country); ?>" type="text" placeholder="your country" />
                                              </div>
                                              
                                              <div class="custom-shipping-div">
-                                                  <label for="state">State:</label>
+                                                  <label for="state">State <span class="required-must">*</span></label>
                                                   <input name="shipping_state" id="shipping_state"  value="<?php echo set_value('state', $customer->shipping_state); ?>" type="text" placeholder="your state" />
                                              </div>
 
                                              <div class="custom-shipping-div">
-                                                  <label for="city">City:</label>
+                                                  <label for="city">City <span class="required-must">*</span></label>
                                                   <input name="shipping_city" id="shipping_city" value="<?php echo set_value('city', $customer->shipping_city); ?>" type="text" placeholder="your city" />
                                              </div class="custom-shipping-div">
 
 
                                              <div>
-                                                  <label for="zip-code">Zip-Code:</label>
+                                                  <label for="zip-code">Zip-Code <span class="required-must">*</span></label>
                                                   <input id="shipping_zip" name="shipping_zip" value="<?php echo set_value('postal_code', $customer->shipping_zip); ?>" type="text" placeholder="your zip-code" />
                                              </div>
                                              <input type="hidden" id="address_type" name="address_type" value="<?php echo set_value('address_type', $customer->address_type); ?>">
@@ -154,7 +164,14 @@
                     <p>
                          <span>Billing Address:</span> 
                          <p id="msg_billing_address"><?php echo $customer->billing_address; ?></p>
-                         <p> <span id="msg_billing_city"><?php echo $customer->billing_city; ?></span> <?php if (!empty($customer->billing_state)): ?>  , <?php endif ?><span id="msg_billing_state"><?php echo $customer->billing_state; ?></span> </p>
+                         <p> 
+                              <span id="msg_billing_city"><?php echo $customer->billing_city; ?></span> 
+                              <span id="billing_coma"  
+                              <?php if (empty($customer->billing_state)): ?> 
+                                   style="display: none;" 
+                              <?php endif ?> >,</span> 
+                              <span id="msg_billing_state"><?php echo $customer->billing_state; ?></span> 
+                         </p>
                          <p><span id="msg_billing_zip"><?php echo $customer->billing_zip; ?></span></p> 
                     </p> 
                </div>
@@ -168,11 +185,11 @@
                                         <div class="inputs-container">  
                                              
                                              <div class="add_card_div" >
-                                                  <label for="account-no">credit-card-no:</label>
+                                                  <label for="account-no">credit-card-no </label>
                                                   <input name="number" id="account_no" type="text" placeholder="your account-no" />
                                              </div>
                                              <div class="add_card_div"  >
-                                                  <label for="month">month:</label>
+                                                  <label for="month">month </label>
                                                   <select style="height: 60px;" name="exp_month" id="exp_month"  class="form-control">
                                                        <option value="">Select Month</option> 
                                                        <option value="01">01 - January</option> 
@@ -190,7 +207,7 @@
                                                   </select>
                                              </div>
                                              <div class="add_card_div"  >
-                                                  <label for="year">year:</label>
+                                                  <label for="year">year </label>
                                                   <?php  
                                                   $year  = Date('Y');
                                                   $limit = $year + 25;
@@ -203,17 +220,17 @@
                                                   </select>
                                              </div>
                                              <div class="add_card_div"  >
-                                                  <label for="CVC">CVC:</label>
+                                                  <label for="CVC">CVC </label>
                                                   <input pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" id="cvc_numb" name="cvc"  min-length="3" type="text" placeholder="your CVC" />
                                              </div> 
 
 
                                              <div class="add_card_div"  >
-                                                  <label for="card_default">Default:</label>
+                                                  <label for="card_default">Default </label>
                                                   
-                                                  <select style="height: 60px;" name="card_default" id="card_default"  class="form-control">
-                                                       <option value="0">No</option>
-                                                       <option value="1">Yes</option> 
+                                                  <select style="height: 60px;" name="card_default" id="card_default"  class="form-control"> 
+                                                       <option value="1">Yes</option>
+                                                       <option value="0">No</option> 
                                                   </select>
                                              </div>
 
@@ -229,27 +246,27 @@
                                         <div class="heading">Add Billing Address</div>
                                         <div class="inputs-container">
                                              <div>
-                                                  <label for="address">Address:</label>
+                                                  <label for="address">Address <span class="required-must">*</span></label>
                                                   <input id="billing_address" name="billing_address"  value="<?php echo set_value('address_1', $customer->billing_address); ?>" type="text" placeholder="your address" />
                                              </div>
                                              <div>
-                                                  <label for="country">Country:</label>
-                                                  <input  readonly=""  style="background: #9eb2ab"   id="billing_country" name="billing_country"  type="text" value="<?php echo set_value('country', "US"); ?>" placeholder="your country" />
+                                                  <label for="country">Country </label>
+                                                  <input  readonly=""  style="background: #e9ecef"   id="billing_country" name="billing_country"  type="text" value="<?php echo set_value('country', "US"); ?>" placeholder="your country" />
                                              </div>
                                              
                                              <div>
-                                                  <label for="state">State:</label>
+                                                  <label for="state">State </label>
                                                   <input  id="billing_state" name="billing_state"   value="<?php echo set_value('state', $customer->billing_state); ?>" type="text" placeholder="your state" />
                                              </div>
 
                                              <div>
-                                                  <label for="city">City:</label>
+                                                  <label for="city">City </label>
                                                   <input  id="billing_city" name="billing_city"  value="<?php echo set_value('city', $customer->billing_city); ?>" type="text" placeholder="your city" />
                                              </div>
 
 
                                              <div>
-                                                  <label for="zip-code">Zip-Code:</label>
+                                                  <label for="zip-code">Zip-Code <span class="required-must">*</span></label>
                                                   <input name="billing_zip"  id="billing_zip"  value="<?php echo set_value('postal_code', $customer->billing_zip); ?>" type="text" placeholder="your zip-code" />
                                              </div>
                                         </div>
