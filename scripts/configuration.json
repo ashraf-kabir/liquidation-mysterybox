@@ -3040,6 +3040,7 @@
 		"../mkdcore/custom/Frontend/views/Order_Confirmation.php" : "../release/application/views/Guest/Order_Confirmation.php",
 		"../mkdcore/custom/Frontend/views/Profile.php" : "../release/application/views/Guest/Profile.php",
 		"../mkdcore/custom/Frontend/views/ChangePassword.php" : "../release/application/views/Guest/ChangePassword.php",
+		"../mkdcore/custom/Frontend/views/AddressDetails.php" : "../release/application/views/Guest/AddressDetails.php",
 
 		"../mkdcore/custom/Services/Stripe_terminal_service.php" : "../release/application/libraries/Stripe_terminal_service.php",
 
@@ -3137,6 +3138,7 @@
 		"v1/api/do_checkout" : "Guest/Home_controller/do_checkout", 
 		"product/(:num)": "Guest/Home_controller/product/$1",
 		"order_confirmation": "Guest/Home_controller/order_confirmation",
+		"address_details": "Guest/Home_controller/address_details",
 		"profile": "Guest/Home_controller/profile" 
 	},
 	"reverse_copy": {

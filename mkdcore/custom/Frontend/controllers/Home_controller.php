@@ -304,17 +304,21 @@ class Home_controller extends Manaknight_Controller
     public function profile()
     {    
 
-        if($this->session->userdata('customer_login'))
+        if($this->session->userdata('customer_login') && $this->session->userdata('user_id'))
         {
             $this->load->model('customer_model');
             $customer = $this->customer_model->get($this->session->userdata('user_id'));
 
-            if($this->input->post('name', TRUE)  )
+            if( $this->input->post('name', TRUE)  || $this->input->post('address_fill_form', TRUE)  )
             {
- 
-                 
-                $this->form_validation->set_rules('name', "Name", "required|max_length[255]");
-                $this->form_validation->set_rules('phone', 'Phone', 'numeric|max_length[15]'); 
+                
+                if (!$this->input->post('address_fill_form', TRUE) ) 
+                {
+                    $this->form_validation->set_rules('name', "Name", "required|max_length[255]");
+                    $this->form_validation->set_rules('phone', 'Phone', 'numeric|max_length[15]');
+                }
+                
+
                 $this->form_validation->set_rules('billing_address', "Billing Address", "required|min_length[5]");
                 $this->form_validation->set_rules('billing_zip', "Billing Zip Code", "required|integer|max_length[10]");
                 $this->form_validation->set_rules('billing_city', "Billing City", "max_length[255]");
@@ -349,9 +353,10 @@ class Home_controller extends Manaknight_Controller
                 $shipping_city          =  $this->input->post('shipping_city', TRUE);
                 $shipping_zip           =  $this->input->post('shipping_zip', TRUE);
                 $shipping_address       =  $this->input->post('shipping_address', TRUE);
-                $address_type       =  $this->input->post('address_type', TRUE);
-                 
-                $response = $this->customer_model->edit([
+                $address_type           =  $this->input->post('address_type', TRUE);
+
+
+                $payload = [
                     'name' => $name,
                     'billing_zip' => $billing_zip,
                     'billing_address' => $billing_address,
@@ -365,13 +370,27 @@ class Home_controller extends Manaknight_Controller
                     'shipping_city' => $shipping_city,
                     'shipping_state' => $shipping_state,
                     'shipping_country' => $shipping_country,
-                ], $this->session->userdata('user_id'));
+                ];
+
+                if (!$this->input->post('address_fill_form', TRUE) ) 
+                {
+                    unset($payload['name']);
+                    unset($payload['phone']); 
+                }
+                 
+                $response = $this->customer_model->edit($payload, $this->session->userdata('user_id'));
 
 
                 if( $response )
                 {
                     $output['status'] = 0;
                     $output['success']  = 'Profile has been updated successfully.'; 
+                    if ($this->input->post('address_fill_form', TRUE) ) 
+                    {
+                        $output['success']       = 'Data has been updated successfully.';  
+                        $output['redirect_url']  = base_url() . 'checkout';  
+                    }
+
                     echo json_encode($output);
                     exit();
                     
@@ -958,58 +977,76 @@ class Home_controller extends Manaknight_Controller
 
     public function checkout()
     {   
-        if($this->session->userdata('customer_login'))
+        if( $this->session->userdata('customer_login') && $this->session->userdata('user_id') )
         {
+            $user_id = $this->session->userdata('user_id');
+            $this->load->model('customer_model');
+
+            $customer     =  $this->customer_model->get($user_id);
+
+            if ( empty($customer->shipping_address) || empty($customer->shipping_state)  || empty($customer->shipping_zip)  || empty($customer->shipping_city)  || empty($customer->shipping_country)  || empty($customer->billing_address)  || empty($customer->billing_zip) )
+            {
+                redirect('/address_details');
+            }
+
             $data['active'] = 'checkout';
             $data['layout_clean_mode'] = FALSE;
             $data['no_detail'] = TRUE;
     
 
-            if($this->session->userdata('customer_login'))
-            { 
-                $user_id = $this->session->userdata('user_id');
-                $this->load->model('pos_cart_model');
-                $this->load->model('customer_model');
-                $this->load->model('tax_model');
- 
-
-
+             
             
+            $this->load->model('pos_cart_model');
+            
+            $this->load->model('tax_model');
 
-                $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
 
-                if (!empty($cart_items)) 
-                {                     
-                    foreach ($cart_items as $key => &$value)
-                    {
-                        $item_data = $this->inventory_model->get($value->product_id);
 
-                        $value->free_ship     = $item_data->free_ship;
-                        $value->can_ship      = $item_data->can_ship;
-                        $value->feature_image = $item_data->feature_image;
-                        $value->description   = $item_data->inventory_note; 
-                    }
+        
+
+            $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+
+            if (!empty($cart_items)) 
+            {                     
+                foreach ($cart_items as $key => &$value)
+                {
+                    $item_data = $this->inventory_model->get($value->product_id);
+
+                    $value->free_ship     = $item_data->free_ship;
+                    $value->can_ship      = $item_data->can_ship;
+                    $value->feature_image = $item_data->feature_image;
+                    $value->description   = $item_data->inventory_note; 
                 }
-
-                
-                $data['cart_items']   =  $cart_items; 
-                $data['customer']     =  $this->customer_model->get($user_id); 
-                $data['tax']          =  $this->tax_model->get(1);
-
-
-                $this->load->library('shipstation_api_service');
-                $this->shipstation_api_service->set_config($this->config);
-
-                // $data['services'] =  $this->shipstation_api_service->get_list_of_services();
-
-
-
             }
 
+            
+            $data['cart_items']   =  $cart_items; 
+            $data['customer']     =  $customer; 
+            $data['tax']          =  $this->tax_model->get(1); 
 
             $this->_render('Guest/Checkout',$data);
         }
         else{
+            redirect('');
+        }
+    }
+
+
+    public function address_details()
+    {   
+        if( $this->session->userdata('customer_login') && $this->session->userdata('user_id') )
+        {
+            $this->load->model('customer_model');
+
+            $user_id = $this->session->userdata('user_id');
+            $data['customer']     =  $this->customer_model->get($user_id); 
+            $data['active'] = 'checkout';
+            $data['layout_clean_mode'] = FALSE;
+            
+            $this->_render('Guest/AddressDetails',$data);
+        }
+        else
+        {
             redirect('');
         }
     }

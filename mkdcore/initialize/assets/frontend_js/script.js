@@ -46,6 +46,12 @@ check_cart_total_items();
         if(response.success)
         {
           toastr.success(response.success);  
+          if (response.redirect_url) 
+          {
+            setInterval(function() {
+              window.location.href = response.redirect_url;
+            }, 2000);
+          }
         } 
 
         if(response.error)
@@ -710,6 +716,17 @@ $(document).on('click','.add-shipping-address',function(e){
           }
 
           $('.close-btn').trigger('click');
+
+          $('.selected_item_shipping_cost').text('0.00');
+          $('.selected_item_expected_shipping_date').text('N/A');
+          $('.shipping-cost-name').val('');
+          $('.shipping-cost-price-value').val('0'); 
+          $('.shipping-cost-change').prop('checked', false);
+          $('.current_item_total_price').text(response.current_itemprice); 
+           
+          calculate_cost();
+
+
           $('.calculate-shipping-cost').trigger('click');
 
         } 

@@ -9,23 +9,8 @@
           <div class="col-md-12">
                <div class="card"> 
                     <form action="" id="update__form">
-                         <div class="container mt-3 mb-3">
-                              <div class="form-row justify-content-center">
-                                   <div class="col-md-4 col-12 my-2">
-                                        <label for="name">Full Name <span class="required-must">*</span></label>
-                                        <input type="text" id="name" name="name" placeholder="Your full name here" class="form-control" value="<?php echo $customer->name ?>" >
-                                   </div>
-
-                                   <div class="col-md-4 col-12 my-2">
-                                        <label for="email">Email Address</label>
-                                        <input type="email" readonly placeholder="example@google.com" class="form-control" value="<?php echo $customer->email ?>" >
-                                   </div>
-
-                                   <div class="col-md-4 col-12 my-2">
-                                        <label for="password1">Phone</label>
-                                        <input type="text" id="phone" name="phone" placeholder="*********" class="form-control" value="<?php echo $customer->phone ?>" >
-                                   </div>
- 
+                         <div class="container  mb-3">
+                              <div class="form-row justify-content-center"> 
 
                                    <div class="col-md-12 col-12 my-2 mt-5">
                                         <label for="password2">Billing Address <span class="required-must">*</span></label>
@@ -88,14 +73,14 @@
                                    </div>
 
                                    <input type="hidden" id="address_type" name="address_type" value="<?php echo set_value('address_type', $customer->address_type); ?>">
-
-
+                                   <input type="hidden" id="address_fill_form" name="address_fill_form" value="true">
+ 
                               </div> 
 
                               <div class="form-row justify-content-center"> 
-                                   <div class="col-md-3 col-12  mt-4">
+                                   <div class="col-md-3 col-12 mt-4">
                                         <button type="submit" class="btn btn-secondary update__form_submit w-100">
-                                             Update
+                                             Save & Proceed to checkout
                                         </button>
                                    </div>
                               </div>
