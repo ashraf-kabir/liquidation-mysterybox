@@ -473,7 +473,7 @@ class Home_controller extends Manaknight_Controller
 
     public function do_checkout()
     {  
-        if($this->session->userdata('customer_login'))
+        if($this->session->userdata('customer_login') && $this->session->userdata('user_id'))
         { 
              
             $user_id = $this->session->userdata('user_id');
@@ -1400,7 +1400,7 @@ class Home_controller extends Manaknight_Controller
 
     public function update_customer_address()
     {
-        if($this->session->userdata('customer_login'))
+        if($this->session->userdata('customer_login') && $this->session->userdata('user_id'))
         {
             $user_id = $this->session->userdata('user_id');
             $this->load->model('customer_model');

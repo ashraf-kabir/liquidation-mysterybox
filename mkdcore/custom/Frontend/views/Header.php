@@ -122,7 +122,7 @@
                          </li>
 
                          
-                         <?php if( !$this->session->userdata('customer_login') ){ ?> 
+                         <?php if( !$this->session->userdata('customer_login') && !$this->session->userdata('user_id') ){ ?> 
 
                               
 
