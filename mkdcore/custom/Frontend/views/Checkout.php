@@ -185,11 +185,11 @@
                                         <div class="inputs-container">  
                                              
                                              <div class="add_card_div" >
-                                                  <label for="account-no">credit-card-no </label>
+                                                  <label for="account-no">credit-card-no <span class="required-must">*</span></label>
                                                   <input name="number" id="account_no" type="text" placeholder="your account-no" />
                                              </div>
                                              <div class="add_card_div"  >
-                                                  <label for="month">month </label>
+                                                  <label for="month">month <span class="required-must">*</span></label>
                                                   <select style="height: 60px;" name="exp_month" id="exp_month"  class="form-control">
                                                        <option value="">Select Month</option> 
                                                        <option value="01">01 - January</option> 
@@ -207,7 +207,7 @@
                                                   </select>
                                              </div>
                                              <div class="add_card_div"  >
-                                                  <label for="year">year </label>
+                                                  <label for="year">year <span class="required-must">*</span></label>
                                                   <?php  
                                                   $year  = Date('Y');
                                                   $limit = $year + 25;
@@ -220,7 +220,7 @@
                                                   </select>
                                              </div>
                                              <div class="add_card_div"  >
-                                                  <label for="CVC">CVC </label>
+                                                  <label for="CVC">CVC <span class="required-must">*</span></label>
                                                   <input pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" id="cvc_numb" name="cvc"  min-length="3" type="text" placeholder="your CVC" />
                                              </div> 
 
@@ -250,7 +250,7 @@
                                                   <input id="billing_address" name="billing_address"  value="<?php echo set_value('address_1', $customer->billing_address); ?>" type="text" placeholder="your address" />
                                              </div>
                                              <div>
-                                                  <label for="country">Country </label>
+                                                  <label for="country">Country <span class="required-must">*</span></label>
                                                   <input  readonly=""  style="background: #e9ecef"   id="billing_country" name="billing_country"  type="text" value="<?php echo set_value('country', "US"); ?>" placeholder="your country" />
                                              </div>
                                              
