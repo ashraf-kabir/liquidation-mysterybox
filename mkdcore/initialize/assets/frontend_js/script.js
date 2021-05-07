@@ -851,7 +851,7 @@ $(document).on('click','.add_new_card',function(e){
       {
         toastr.success(response.success); 
         load_customer_cards();
-        $('.on_click_shipping_modal').trigger('click');
+        $('.close-btn').trigger('click');
       } 
 
 
