@@ -44,6 +44,20 @@
           .topper .box{
                width: 100% !important;
           }
+
+          .box .header{
+               position: fixed;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              top: unset !important;
+              z-index: 1000;
+              background: #101010;
+          }
+          .box .header label{
+               color: white;
+               margin-left: 15px;
+          }
      }
 
      .custom-shipping-div{

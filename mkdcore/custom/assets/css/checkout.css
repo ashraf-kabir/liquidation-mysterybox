@@ -239,6 +239,12 @@
           }
      }
 
+     @media (max-width: 416px) {
+          .checkout-section .checkout-left .checkout-row .third-box .dropdown-box .modal-container .inputs-container input {
+               width: 100%;
+          }
+     }
+
      .checkout-section .checkout-left .checkout-row .third-box .dropdown-box .modal-container .checkout-info-add-btn {
           text-align: right;
      }
