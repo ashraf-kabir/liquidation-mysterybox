@@ -35,6 +35,10 @@
           order:1;
      }
 
+     .btn2-place_order{
+           display: none !important;
+          }
+
      @media (max-width:992px) {
            
           .topper { 
@@ -45,7 +49,7 @@
                width: 100% !important;
           }
 
-          .box .header{
+          /*.box .header{
                position: fixed;
               bottom: 0;
               left: 0;
@@ -57,9 +61,29 @@
           .box .header label{
                color: white;
                margin-left: 15px;
+          }*/
+
+          .btn2-place_order{
+               display: block !important;
+          }
+
+          .btn1-place_order{
+               display: none !important;
           }
      }
 
+
+     /*@media (max-width:993px) {
+          
+
+          .btn2-place_order{
+               display: none !important;
+          }
+
+          .btn1-place_order{
+               display: block !important;
+          }
+     }*/
      .custom-shipping-div{
           display: -webkit-box;
           display: -ms-flexbox;
@@ -458,6 +482,10 @@
                <input type="hidden" value="<?php echo number_format($tax_amount,2); ?>" class="tax_amount_val" />
                <input type="hidden" value="<?php echo number_format($total-$tax_amount,2); ?>" class="total_without_tax" />
 
+               <div class="header btn2-place_order  mb-3"> 
+                    <button class="btn btn-warning place-order-btn btn2-place_order" type="button">Place your Order</button> 
+               </div>
+
                <div class="summary">
                     <p>Order summary</p>
                     <div class="details">
@@ -488,7 +516,7 @@
                         <input type="checkbox" required name="terms" id="terms1" class="mr-2" />
                         I’ve read and accept the <a href="">Terms & Conditions</a>
                     </label> 
-                    <button class="btn btn-warning place-order-btn" type="button">Place your Order</button> 
+                    <button class="btn btn-warning place-order-btn btn1-place_order" type="button">Place your Order</button> 
                </div>
           </div>
      </div>
