@@ -1098,7 +1098,26 @@ class Home_controller extends Manaknight_Controller
     public function contact_us()
     {
         $data['layout_clean_mode'] = FALSE; 
-        $data['no_detail'] = TRUE; 
+        $data['no_detail'] = TRUE;
+
+        if($this->input->post('email', TRUE))
+        {
+            $name         =  $this->input->post('name', TRUE);
+            $from_email   =  $this->input->post('email', TRUE);
+            $subject      =  $this->input->post('subject', TRUE);
+            $subject      =  $subject . ' - ' . $name;
+            $message      =  $this->input->post('message', TRUE); 
+
+            if( $this->_send_email($from_email, $subject, $message, $name) )
+            {
+                $this->session->set_flashdata('success2','Your message has been sent successfully.');
+            } else{
+                $this->session->set_flashdata('error2','Error! Please try again later.');
+            }  
+
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+         
 
         $this->_render('Guest/ContactUs',$data);
     }

@@ -30,8 +30,8 @@
         <div class="col-10 col-md-2 footer__col my-4">
             <h5 class="footer__header">SITE MAP</h5>
             <ul class="p-0 site__mapUl">
-                <li><a href="<?php echo base_url(); ?>about-us/">About Us</a></li>
-                <li><a href="<?php echo base_url(); ?>contacts/">Contacts</a></li>
+                <li><a href="<?php echo base_url(); ?>about_us/">About Us</a></li>
+                <li><a href="<?php echo base_url(); ?>contact_us/">Contacts</a></li>
                 <li><a href="<?php echo base_url(); ?>categories">Home</a></li> 
             </ul>
         </div>

@@ -6,6 +6,9 @@ body {
   background-color: #1b1c1d !important;
 }
 
+.pb-4, .py-4{
+  padding-bottom: 0px !important;
+}
 .bg-light {
   background: #e1e1e1 !important;
 }
