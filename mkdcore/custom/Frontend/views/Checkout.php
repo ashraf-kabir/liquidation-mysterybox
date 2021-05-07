@@ -61,6 +61,50 @@
      .required-must{
           color: red;
      }
+
+     
+/*
+     @media only screen and (min-width:1091px) {
+           
+          .show-text-only{
+               white-space: nowrap;
+               width: 475px;
+               overflow: hidden;
+               text-overflow: ellipsis;
+          }
+     }
+
+     @media  only screen and (max-width:1090px) {
+           
+          .show-text-only{
+               white-space: nowrap;
+               width: 475px;
+               overflow: hidden;
+               text-overflow: ellipsis;
+          }
+     }
+
+     @media  only screen and (max-width:767px) {
+           
+          .show-text-only{
+               white-space: nowrap;
+               width: 276px;
+               overflow: hidden;
+               text-overflow: ellipsis;
+          }
+     }
+
+     @media only screen and (max-width: 495px)
+     {*/
+          .show-text-only {
+              word-wrap: break-word;
+          }
+     /*}*/
+
+     .second-box{
+          width: 26%;
+     }
+     
 </style> 
 <?php echo form_open('',array('class' => 'send_checkout' )); ?>
 <section class="checkout-section" id="checkout-section">
@@ -72,8 +116,8 @@
                </div>
                <div class="second-box">
                     <p id="msg_full_name"><?php echo $customer->name; ?></p>
-                    <p id="msg_shipping_address"><?php echo $customer->shipping_address; ?></p>
-                    <p> 
+                    <p class="show-text-only" id="msg_shipping_address"><?php echo $customer->shipping_address; ?></p>
+                    <p class="show-text-only" > 
                          <span id="msg_shipping_city"><?php echo $customer->shipping_city; ?></span>
                          <span id="shipping_coma"  
                               <?php if (empty($customer->shipping_state)): ?> 
@@ -163,8 +207,8 @@
                     </div>
                     <p>
                          <span>Billing Address:</span> 
-                         <p id="msg_billing_address"><?php echo $customer->billing_address; ?></p>
-                         <p> 
+                         <p  class="show-text-only"  id="msg_billing_address"><?php echo $customer->billing_address; ?></p>
+                         <p  class="show-text-only" > 
                               <span id="msg_billing_city"><?php echo $customer->billing_city; ?></span> 
                               <span id="billing_coma"  
                               <?php if (empty($customer->billing_state)): ?> 

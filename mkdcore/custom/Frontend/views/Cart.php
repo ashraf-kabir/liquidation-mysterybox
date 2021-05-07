@@ -19,6 +19,10 @@
       max-height: 200px;
       object-fit: cover;
   }
+
+  .show-text-only{
+    word-wrap: break-word;
+  }
 </style>
 <section>
   <div class="container-fluid my-5" id="cart">
@@ -91,8 +95,8 @@
           <div class="cart__address p-4">
             <h4 class="my-4"><i class="fas fa-truck"></i> Shipping</h4>
 
-            <h5 class="my-3">  <?php echo  isset($customer->shipping_address) ? $customer->shipping_address : '' ; ?>  </h5>
-            <p class="w-75 my-2">
+            <h5 class="my-3 show-text-only">  <?php echo  isset($customer->shipping_address) ? $customer->shipping_address : '' ; ?>  </h5>
+            <p class="w-75 my-2 show-text-only">
                <?php echo isset($customer->shipping_city) ? $customer->shipping_city . ", " : '' ; ?><?php echo isset($customer->shipping_state) ? $customer->shipping_state : '' ; ?>
                <?php echo isset($customer->shipping_zip) ? $customer->shipping_zip : '' ; ?>
             </p>
