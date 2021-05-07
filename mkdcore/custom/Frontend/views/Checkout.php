@@ -76,8 +76,21 @@
           color: red;
      }
 
+
+     @media only screen and (max-width:566px) {
+           
+          .shipping-cost p{
+               font-size: 10px;
+          }
+     } 
+
+
+
+
      
 /*
+     
+
      @media only screen and (min-width:1091px) {
            
           .show-text-only{
