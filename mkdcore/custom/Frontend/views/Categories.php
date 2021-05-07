@@ -43,9 +43,16 @@
           max-height: 200px;
           object-fit: cover;
      }
-    
-</style>
 
+     @media only screen and (max-width: 767px) {
+           
+          #tz_categories-2{
+               width: 100% !important;
+               margin-bottom: 26px;
+          }
+     } 
+    
+</style> 
      <div class="container-fluid  " style="min-height:650px"> 
           <div class="row">
                <div class="col-md-12 my-4 col-sm-12 product__pathLink">
