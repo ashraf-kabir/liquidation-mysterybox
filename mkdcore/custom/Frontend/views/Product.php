@@ -22,14 +22,14 @@ $total_images =  count($gallery_lists) + 1;
 ?>
     <main class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-10 my-4">
+            <div style="padding-left: 0px" class="col-12 col-md-10 mt-4">
                 <div class="product__pathLink"><a href="<?php echo base_url() ?>categories">Home ></a> 
                 <!-- <a href="">Truckloads > </a> -->
                 <span><?php echo $product->product_name; ?></span></div>
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-7 bg-white p-2 p-md-4">
+            <div class="col-md-7 bg-white p-2 p-md-4  mt-4 ">
                 <h2 class="product__title"><?php echo $product->product_name; ?></h2> 
 
                 <div class="row">
@@ -87,7 +87,7 @@ $total_images =  count($gallery_lists) + 1;
                     </div>
                 </div> 
             </div>
-            <div class="col-md-3 ">
+            <div class="col-md-3  mt-4 ">
                 <div class="bg-white w-100 p-2 p-md-4"> 
                     <ul class="list-unstyled">
                         <li class="my-4">Price <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li> 
