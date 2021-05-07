@@ -483,7 +483,7 @@
                <input type="hidden" value="<?php echo number_format($total-$tax_amount,2); ?>" class="total_without_tax" />
 
                <div class="header btn2-place_order  mb-3"> 
-                    <button class="btn btn-warning place-order-btn btn2-place_order" type="button">Place your Order</button> 
+                    <button style="    margin-top: 0px;" class="btn btn-warning place-order-btn btn2-place_order" type="button">Place your Order</button> 
                </div>
 
                <div class="summary">
