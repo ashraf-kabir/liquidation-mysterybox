@@ -138,7 +138,7 @@ class Shipstation_api_service {
                         $value->expected_date_only =  $expected_date_only;
                     }
 
-                    if (isset($value->serviceCode) && $value->serviceCode == 'fedex_ground' && $free_ship == 1) 
+                    if (isset($value->serviceCode) && $value->serviceCode == 'fedex_ground' && ( $free_ship == 1   || $address_type == 2 ) ) 
                     {
                         $value->serviceName  = $value->serviceName . " Free Shipping";
                         $value->shipmentCost = 0;
@@ -202,12 +202,12 @@ class Shipstation_api_service {
                         unset($response[$key]);
                     }
 
-                    if (isset($value->serviceCode) && $value->serviceCode == 'fedex_ground'  && $address_type == 2 ) 
-                    {
-                        $value->serviceName  = $value->serviceName . " Free Shipping";
-                        $value->shipmentCost = 0;
-                        $value->otherCost    = 0;
-                    }
+                    // if (isset($value->serviceCode) && $value->serviceCode == 'fedex_ground'  && $address_type == 2 ) 
+                    // {
+                    //     $value->serviceName  = $value->serviceName . " Free Shipping";
+                    //     $value->shipmentCost = 0;
+                    //     $value->otherCost    = 0;
+                    // }
 
 
 
