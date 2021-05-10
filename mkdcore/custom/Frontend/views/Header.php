@@ -77,7 +77,7 @@
                          </li>
 
 
-                         <li class="dropdown-submenu nav-item d-none d-md-block">
+                         <li class="dropdown-submenu nav-item  d-md-block">
                               <a  class="dropdown-item nav-link" tabindex="-1" href="<?php echo base_url(); ?>categories">Shop</a>
                               <ul class="dropdown-menu"> 
                                    <li class="dropdown-submenu">
