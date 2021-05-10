@@ -16,6 +16,20 @@
         object-fit: contain;
         height: 200px;
     }
+
+    @media only screen and (max-width:767px) {
+           
+        .add_margin_mobile{
+            margin-left: 15px !important;
+            margin-right: 15px !important;
+        } 
+
+        .remove_margin_mobile{
+            padding: 0px !important;
+            margin: 0px !important;
+        }
+    } 
+
 </style>
 <?php 
 $total_images =  count($gallery_lists) + 1; 
@@ -29,7 +43,7 @@ $total_images =  count($gallery_lists) + 1;
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-7 bg-white p-2 p-md-4  mt-4 ">
+            <div class="col-md-7 bg-white p-2 p-md-4  mt-4 add_margin_mobile">
                 <h2 class="product__title"><?php echo $product->product_name; ?></h2> 
 
                 <div class="row">
@@ -157,7 +171,7 @@ $total_images =  count($gallery_lists) + 1;
         
         <?php if ($total_videos != 0 ): ?> 
         
-        <div class="row justify-content-center bg-white mx-md-5 ">
+        <div class="row justify-content-center bg-white mx-md-5 remove_margin_mobile ">
             <div class="col-10 p-0 py-3 bg-white">
                 <h4 style="text-align: center;">Review Videos</h4> 
             </div> 
@@ -165,7 +179,7 @@ $total_images =  count($gallery_lists) + 1;
 
         <?php endif ?>
 
-        <div class="row justify-content-center bg-white mx-md-5 ">  
+        <div class="row justify-content-center bg-white mx-md-5 remove_margin_mobile ">  
             <div class="col-10 p-0 bg-white"> 
                 <div class="row justify-content-between">  
                     
@@ -226,7 +240,7 @@ $total_images =  count($gallery_lists) + 1;
             </div> 
         </div>
 
-        <div class="row justify-content-center bg-white mx-md-5 ">
+        <div class="row justify-content-center bg-white mx-md-5 remove_margin_mobile">
             <div class="col-10 p-0 py-3 bg-white">
                 <h4>Terms and Conditions</h4>
                 <ul>

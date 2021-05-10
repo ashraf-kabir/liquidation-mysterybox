@@ -108,6 +108,21 @@
           }
      } 
 
+     @media only screen and (max-width:450px) {
+           
+          .inputs-container div{
+               display: block !important;
+          }
+
+          .inputs-container div label{
+               width: 100% !important;
+               text-align: center !important;
+          }
+          .inputs-container div input{
+               width: 100% !important;
+          }
+     } 
+
 
 
 
@@ -186,7 +201,7 @@
                          <div class="modal-container">
                               <div class="payments-details">
                                    <div class="account-details">
-                                        <div class="heading">Basic Information</div>
+                                        <div class="heading"><strong>Basic Information</strong></div>
                                         <div class="inputs-container">  
                                                   
                                              <div>
@@ -209,7 +224,7 @@
                                    </div>
 
                                    <div class="billing-address">
-                                        <div class="heading">Add Shipping Address</div>
+                                        <div class="heading"><strong>Shipping Address</strong></div>
                                         <div class="inputs-container">
                                              <div class="custom-shipping-div">
                                                   <label for="address">Address <span class="required-must">*</span></label>
@@ -276,7 +291,7 @@
                          <div class="modal-container">
                               <div class="payments-details">
                                    <div class="account-details">
-                                        <div class="heading">Add Payment Details</div>
+                                        <div class="heading"><strong>Add Payment Details</strong></div>
                                         <div class="inputs-container">  
                                              
                                              <div class="add_card_div" >
@@ -338,7 +353,7 @@
                                    </div>
 
                                    <div class="billing-address">
-                                        <div class="heading">Add Billing Address</div>
+                                        <div class="heading"><strong>Billing Address</strong></div>
                                         <div class="inputs-container">
                                              <div>
                                                   <label for="address">Address <span class="required-must">*</span></label>
