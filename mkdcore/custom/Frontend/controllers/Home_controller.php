@@ -356,14 +356,12 @@ class Home_controller extends Manaknight_Controller
                 $address_type           =  $this->input->post('address_type', TRUE);
 
 
-                $payload = [
-                    'name' => $name,
+                $payload = [ 
                     'billing_zip' => $billing_zip,
                     'billing_address' => $billing_address,
                     'billing_city' => $billing_city,
                     'billing_state' => $billing_state,
-                    'billing_country' => $billing_country,
-                    'phone' => $phone,
+                    'billing_country' => $billing_country, 
                     'shipping_address' => $shipping_address,
                     'address_type' => $address_type,
                     'shipping_zip' => $shipping_zip,
@@ -374,8 +372,8 @@ class Home_controller extends Manaknight_Controller
 
                 if (!$this->input->post('address_fill_form', TRUE) ) 
                 {
-                    unset($payload['name']);
-                    unset($payload['phone']); 
+                    $payload['name']  =  $name;
+                    $payload['phone'] =  $phone; 
                 }
                  
                 $response = $this->customer_model->edit($payload, $this->session->userdata('user_id'));
