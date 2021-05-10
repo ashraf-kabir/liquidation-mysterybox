@@ -1158,6 +1158,19 @@ class Home_controller extends Manaknight_Controller
 
         if($this->input->post('email', TRUE))
         {
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+            $this->form_validation->set_rules('first_name', 'Name', 'required|max_length[255]'); 
+            $this->form_validation->set_rules('password', 'Password', 'required|max_length[255]'); 
+
+            if ($this->form_validation->run() === FALSE)
+            {
+                $error_msg = validation_errors(); 
+                $output['error'] = $error_msg;
+                echo json_encode($output);
+                exit(); 
+            }
+
+
             $name       = $this->input->post('first_name', TRUE);
             $email      = $this->input->post('email', TRUE);
             $password   = $this->input->post('password', TRUE); 
