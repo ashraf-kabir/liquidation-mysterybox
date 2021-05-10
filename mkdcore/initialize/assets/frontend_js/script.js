@@ -872,7 +872,7 @@ $(document).on('click','.add_new_card',function(e){
 
 
 $(document).on('click','.shipping-cost-change', function(){  
-  $(this).parent().parent().find('.selected_item_expected_shipping_date').text($(this).attr('data-expected-date'));  
+  $(this).parent().parent().parent().find('.selected_item_expected_shipping_date').text($(this).attr('data-expected-date'));  
   calculate_cost();
 });
 
