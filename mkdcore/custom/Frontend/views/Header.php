@@ -42,6 +42,18 @@
               vertical-align: top;
               margin-left: -4px;
           }
+
+          
+          @media  screen and (max-width:767px){
+
+               .dropdown-submenu ul{
+                    background-color: #6f6d6d !important;
+               }
+               .dropdown-menu .dropdown-submenu a
+               {
+                    color: white !important;
+               }
+          }
      </style>
 </head>
 <body>
@@ -77,7 +89,7 @@
                          </li>
 
 
-                         <li class="dropdown-submenu nav-item  d-md-block">
+                         <li class="dropdown-submenu nav-item ">
                               <a  class="dropdown-item nav-link" tabindex="-1" href="<?php echo base_url(); ?>categories">Shop</a>
                               <ul class="dropdown-menu"> 
                                    <li class="dropdown-submenu">
