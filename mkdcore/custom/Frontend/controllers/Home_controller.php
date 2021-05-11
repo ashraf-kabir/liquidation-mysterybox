@@ -703,7 +703,7 @@ class Home_controller extends Manaknight_Controller
             $tax_amount  = 0;
             
 
-            if (strtolower($customer_data->shipping_state) == 'nv' or strtolower($customer_data->shipping_state) == 'nevada') 
+            if (strtolower($customer_data->billing_state) == 'nv' or strtolower($customer_data->billing_state) == 'nevada') 
             {
                 if(isset($tax_data->tax) )
                 {
@@ -718,16 +718,16 @@ class Home_controller extends Manaknight_Controller
                 $referrer = $this->session->userdata('referrer');
             }
  
-            // $customer_data->shipping_service_name  = $shipping_cost_name;
-            // $customer_data->shipping_service_id    = $shipping_service_id;
+            $customer_data->shipping_service_name  = $shipping_cost_name;
+            $customer_data->shipping_service_id    = $shipping_service_id;
             // $customer_data->name                   = $full_name;
             // $customer_data->email                  = $email_address;
             // $customer_data->phone                  = $phone_number;
-            // $customer_data->city                   = $city;
-            // $customer_data->state                  = $state;
-            // $customer_data->country                = $country;
-            // $customer_data->billing_zip            = $postal_code;
-            // $customer_data->billing_address        = $address_1;
+            $customer_data->city                   = $customer_data->billing_city;
+            $customer_data->state                  = $customer_data->billing_state;
+            $customer_data->country                = $customer_data->billing_country;
+            $customer_data->billing_zip            = $customer_data->billing_zip;
+            $customer_data->billing_address        = $customer_data->billing_address;
             
 
 
