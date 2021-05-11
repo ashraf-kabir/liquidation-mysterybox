@@ -28,6 +28,9 @@
             padding: 0px !important;
             margin: 0px !important;
         }
+        .padding-left-0-custom{
+            padding-left: 15px !important;
+        }
     } 
 
 </style>
@@ -36,7 +39,7 @@ $total_images =  count($gallery_lists) + 1;
 ?>
     <main class="container-fluid">
         <div class="row justify-content-center">
-            <div style="padding-left: 0px" class="col-12 col-md-10 mt-4">
+            <div style="padding-left: 0px" class="col-12 col-md-10 mt-4 padding-left-0-custom">
                 <div class="product__pathLink"><a href="<?php echo base_url() ?>categories">Home ></a> 
                 <!-- <a href="">Truckloads > </a> -->
                 <span><?php echo $product->product_name; ?></span></div>
