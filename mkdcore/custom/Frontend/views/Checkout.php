@@ -429,7 +429,7 @@
                                    <p>Price: $<span class="current_item_total_price"><?php echo $value->total_price; ?></span></p>
                                    <div class="product-quantity">
                                         <p>Quantity:</p>
-                                        <button data-id="<?php echo $value->product_id; ?>"  data-product_qty="<?php echo $value->product_qty; ?>"  type="button" class="btn btn-secondary add_to_cart_button">+</button>
+                                        <button data-id="<?php echo $value->product_id; ?>"  data-product_qty="<?php echo $value->product_qty; ?>"  type="button" class="btn btn-secondary add_to_cart_button_checkout">+</button>
                                         <span class="quantity_for_item" style="margin-left: 11px;"><?php echo $value->product_qty; ?></span>
                                         <button data-id="<?php echo $value->product_id; ?>" data-product_qty="<?php echo $value->product_qty; ?>" type="button"  class="btn btn-secondary minus_to_cart_button">-</button>
                                    </div>

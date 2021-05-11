@@ -235,6 +235,7 @@ check_cart_total_items();
   {
     $('.edit_to_cart_button').hide();
     $('.add_to_cart_button').hide();
+    $('.add_to_cart_button_checkout').hide();
     $('.minus_to_cart_button').hide();
 
     $('.edit_to_cart_button').parent().append('<img class="remove_able_loader_gif" style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
@@ -247,12 +248,13 @@ check_cart_total_items();
   {
     $('.edit_to_cart_button').show();
     $('.add_to_cart_button').show();
+    $('.add_to_cart_button_checkout').show();
     $('.minus_to_cart_button').show();
 
     $('.remove_able_loader_gif').remove();
   }
 
-  function update_create_cart(quantity, id, redirect_after = false, checkout_this_object = null)
+  function update_create_cart(quantity, id, redirect_after = false, checkout_this_object = null, is_add = false)
   {
 
     if (quantity > 0) 
@@ -262,6 +264,15 @@ check_cart_total_items();
       serialized_data.push({ name: 'quantity', value :  quantity });
       serialized_data.push({ name: 'id', value :  id }); 
       serialized_data.push({ name: 'force_update', value :  true }); 
+      if (redirect_after) 
+      {
+        serialized_data.push({ name: 'checkout_page', value :  true });
+      }
+
+      if (is_add) 
+      {
+        serialized_data.push({ name: 'is_add', value :  true });
+      }
 
       hide_qty_btns();
       
@@ -299,13 +310,16 @@ check_cart_total_items();
 
             if (redirect_after) 
             { 
-               
+              if (response.product_qty) 
+              {
+                quantity = response.product_qty;
+              } 
               checkout_this_object.parent().find('.quantity_for_item').text(quantity);
-              checkout_this_object.parent().find('.add_to_cart_button').attr('data-product_qty', quantity);
+              checkout_this_object.parent().find('.add_to_cart_button_checkout').attr('data-product_qty', quantity);
               checkout_this_object.parent().find('.minus_to_cart_button').attr('data-product_qty', quantity);
               
                
-              load_checkout_calculations(id, checkout_this_object);
+              load_checkout_calculations(id, checkout_this_object, response.success);
               $('.remove_able_loader_gif').remove();
               
             }
@@ -340,12 +354,12 @@ check_cart_total_items();
 
 
 
-  $(document).on('click','.add_to_cart_button',function(e){
+  $(document).on('click','.add_to_cart_button_checkout',function(e){
     e.preventDefault(); 
     let quantity_add   = Number($(this).attr('data-product_qty')) + 1;
     let id_product     = $(this).attr('data-id');
     $('.place-order-btn').hide();
-    update_create_cart(quantity_add, id_product, true, $(this));
+    update_create_cart(quantity_add, id_product, true, $(this), true);
 
   });
 
@@ -1010,7 +1024,7 @@ $(document).on('change','.shipping_service_name_change', function(){
 
 
  
-function load_checkout_calculations(id, checkout_this_object)
+function load_checkout_calculations(id, checkout_this_object, msg_success)
 { 
   checkout_this_object.parent().parent().parent().find('.selected_item_shipping_cost').text('0.00');
   checkout_this_object.parent().parent().find('.selected_item_expected_shipping_date').text('N/A');
@@ -1039,7 +1053,7 @@ function load_checkout_calculations(id, checkout_this_object)
         show_qty_btns();
 
         checkout_this_object.parent().parent().find('.calculate-shipping-cost').trigger('click');
-        toastr.success("Your data has been updated successfully.");
+        toastr.success(msg_success);
         $('.place-order-btn').show();
       }
 

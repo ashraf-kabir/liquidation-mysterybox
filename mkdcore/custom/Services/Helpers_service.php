@@ -92,7 +92,7 @@ class Helpers_service {
      *  Post error if quantity is less
      * 
     */
-    public function check_item_in_inventory($product_id, $product_qty, $product_name, $checkout_type = false)
+    public function check_item_in_inventory($product_id, $product_qty, $product_name, $checkout_type = false,$checkout_page)
     {
         $inventory_data =  $this->_inventory_model->get_by_fields(['id' => $product_id]);
 
@@ -105,8 +105,8 @@ class Helpers_service {
         */
 
         
-        if($inventory_data->product_type != 2)
-        { 
+        // if($inventory_data->product_type != 2)
+        // { 
             if( $product_qty > $inventory_data->quantity )
             { 
                 if($inventory_data->quantity == 0)
@@ -115,25 +115,31 @@ class Helpers_service {
                 }
                 else
                 {
-                    $output['error']  = $product_name . " quantity can't be greater than be available quantity.";
+                    if (!$checkout_page) 
+                    {
+                        $output['error']  = $product_name . " quantity can't be greater than be available quantity."; 
+                    }else{
+                        $output['error2']  = true;
+                    }
+                    
                 } 
                 return  (object)$output;
             }
-        }
+        // }
         /**
          * checkout type 2 =  Delivery
          * 
          * if we can't delivery show error
          *  
         */
-        if($checkout_type == 2)
-        {
-            // if($inventory_data->can_ship == 2)
-            // {
-            //     $output['error']  = "Error! " . $product_name . " can't be shipped."; 
-            //     return  (object)$output; 
-            // }
-        }
+        // if($checkout_type == 2)
+        // {
+        //     // if($inventory_data->can_ship == 2)
+        //     // {
+        //     //     $output['error']  = "Error! " . $product_name . " can't be shipped."; 
+        //     //     return  (object)$output; 
+        //     // }
+        // }
         
         
     }
