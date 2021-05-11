@@ -718,8 +718,8 @@ class Home_controller extends Manaknight_Controller
                 $referrer = $this->session->userdata('referrer');
             }
  
-            $customer_data->shipping_service_name  = $shipping_cost_name;
-            $customer_data->shipping_service_id    = $shipping_service_id;
+            // $customer_data->shipping_service_name  = $shipping_cost_name;
+            // $customer_data->shipping_service_id    = $shipping_service_id;
             // $customer_data->name                   = $full_name;
             // $customer_data->email                  = $email_address;
             // $customer_data->phone                  = $phone_number;
