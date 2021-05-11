@@ -92,7 +92,7 @@ class Helpers_service {
      *  Post error if quantity is less
      * 
     */
-    public function check_item_in_inventory($product_id, $product_qty, $product_name, $checkout_type = false,$checkout_page)
+    public function check_item_in_inventory($product_id, $product_qty, $product_name, $checkout_type = false,$checkout_page = false)
     {
         $inventory_data =  $this->_inventory_model->get_by_fields(['id' => $product_id]);
 
