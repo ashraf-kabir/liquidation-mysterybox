@@ -2198,7 +2198,7 @@
 			"is_list": true,
 			"is_view": true,
 			"import": false,
-			"export": false,
+			"export": true,
 			"is_filter": false,
 			"all_records": true,
 			"active_only": false,
@@ -2982,6 +2982,7 @@
 		"../mkdcore/custom/Admin/controllers/Admin_customer_report_controller.php" : "../release/application/controllers/Admin/Admin_customer_report_controller.php", 
 		"../mkdcore/custom/Admin/controllers/Admin_inventory_report_controller.php" : "../release/application/controllers/Admin/Admin_inventory_report_controller.php", 
 		"../mkdcore/custom/Admin/controllers/Admin_pos_user_controller.php" : "../release/application/controllers/Admin/Admin_pos_user_controller.php", 
+		"../mkdcore/custom/Admin/controllers/Admin_traffic_link_report_controller.php" : "../release/application/controllers/Admin/Admin_traffic_link_report_controller.php", 
 		 
 		"../mkdcore/custom/Admin/views/Pos_userAdd.php" : "../release/application/views/Admin/Pos_userAdd.php",
 		"../mkdcore/custom/Admin/views/Pos_userEdit.php" : "../release/application/views/Admin/Pos_userEdit.php",
@@ -3073,6 +3074,13 @@
 		"v1/api/load_checkout_calculations": "Guest/Home_controller/load_checkout_calculations",
 		
 		
+		"admin/sales_report/to_csv": "Admin/Admin_category_wise_controller/to_csv",
+		"admin/inventory_report/to_csv": "Admin/Admin_inventory_report_controller/to_csv",
+		"admin/customer_report/to_csv": "Admin/Admin_customer_report_controller/to_csv",
+		"admin/shipping_cost_report/to_csv": "Admin/Admin_shipping_cost_report_controller/to_csv", 
+		"admin/transactions/to_csv": "Admin/Admin_transactions_controller/to_csv",
+		"admin/traffic_link_report/to_csv": "Admin/Admin_traffic_link_report_controller/to_csv",
+
 		"admin/scan/scan_product_view": "Admin/Admin_inventory_controller/scan_product_view",
 
 		

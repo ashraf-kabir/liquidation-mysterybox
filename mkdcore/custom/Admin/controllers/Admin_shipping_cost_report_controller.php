@@ -142,7 +142,106 @@ class Admin_shipping_cost_report_controller extends Admin_controller
     
 
     
-    
+    public function to_csv()
+    { 
+
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="Shipping_cost_report.csv"');
+
+        $this->load->model('pos_order_items_report_model');
+        $this->load->model('pos_order_model');
+        $this->load->model('pos_order_items_model');
+
+        $order_by = $this->input->get('order_by', TRUE) ?? '';
+        $direction = $this->input->get('direction', TRUE) ?? 'ASC';
+
+
+        $name          = $this->input->get('name', TRUE) != NULL ? $this->input->get('name', TRUE) : NULL; 
+        $email         = $this->input->get('email', TRUE) != NULL ? $this->input->get('email', TRUE) : NULL; 
+        $from_date     = $this->input->get('from_date', TRUE) != NULL ? $this->input->get('from_date', TRUE) : NULL; 
+        $to_date       = $this->input->get('to_date', TRUE) != NULL ? $this->input->get('to_date', TRUE) : NULL; 
+
+
+        $where = [
+            'name' => $name,
+            'email' => $email, 
+        ];
+
+        
+        $list = $this->pos_order_items_report_model->get_csv_shipping_cost_report( 
+            $where,
+            $order_by,
+            $direction, $from_date, $to_date);
+
+        if ( !empty( $list ) ) 
+        { 
+            foreach ($list as $key => &$value) 
+            {
+                $total_qty  = 0;
+                $total_sale = 0;
+                $where_2 = [ 
+                    'shipping_state' =>  $value->shipping_state
+                ]; 
+
+                // , $from_date , $to_date
+                $order_data = $this->pos_order_model->get_all( $where_2, null); 
+                if ( !empty( $order_data ) ) 
+                {
+                    foreach ($order_data as $key_item => $item) 
+                    {
+                        // , $from_date , $to_date
+                        $order_details = $this->pos_order_items_model->get_all( ['order_id' => $item->id ], null);
+                        
+                        foreach ($order_details as $key_order_detail => $order_detail) 
+                        {
+                            $total_sale += $order_detail->amount;
+                            $total_qty  += $order_detail->quantity;
+                        }
+                    }
+                } 
+
+                $value->total_sale    =  $total_sale;
+                $value->total_qty     =  $total_qty; 
+                $value->total_avg     =  $total_sale / $total_qty;; 
+
+            }
+        }
+ 
+ 
+        $clean_list = []; 
+        $i = 1;
+        foreach ($list as $key => $value)
+        {  
+            $clean_list_entry               = [];
+            $clean_list_entry['id']         = $i++;
+            $clean_list_entry['state']      = $value->shipping_state; 
+            $clean_list_entry['total_qty']  = $value->total_qty; 
+            $clean_list_entry['total_sale'] = number_format($value->total_sale,2); 
+            $clean_list_entry['total_avg']  = number_format($value->total_avg,2); 
+            $clean_list[]                   = $clean_list_entry;
+        }
+ 
+ 
+        $column_fields = ['ID', 'State', 'Quantity', 'Total', 'Average'];
+       
+        $csv = implode(",", $column_fields) . "\n";
+        // $fields = array_filter($this->get_field_column());
+        foreach($clean_list as $row)
+        {
+            $row_csv = [];
+            foreach($row as $key =>$column)
+            {
+                // if (in_array($key, $fields))
+                // {
+                    $row_csv[] = '"' . $column . '"';
+                // }
+            }
+            $csv = $csv . implode(',', $row_csv) . "\n";
+        }   
+ 
+        echo $csv; 
+        exit(); 
+    }
     
     
     

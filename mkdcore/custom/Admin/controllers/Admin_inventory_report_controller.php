@@ -24,8 +24,8 @@ class Admin_inventory_report_controller extends Admin_controller
 
     
 
-    	public function index($page)
-	{
+    public function index($page)
+    {
         $this->load->library('pagination');
         include_once __DIR__ . '/../../view_models/InventoryReport_admin_list_paginate_view_model.php';
         $session = $this->get_session();
@@ -39,14 +39,14 @@ class Admin_inventory_report_controller extends Admin_controller
             '/admin/inventory_report/0');
         $this->_data['view_model']->set_heading('Inventory Report');
         $this->_data['view_model']->set_category_id(($this->input->get('category_id', TRUE) != NULL) ? $this->input->get('category_id', TRUE) : NULL);
-		$this->_data['view_model']->set_product_name(($this->input->get('product_name', TRUE) != NULL) ? $this->input->get('product_name', TRUE) : NULL);
-		$this->_data['view_model']->set_sku(($this->input->get('sku', TRUE) != NULL) ? $this->input->get('sku', TRUE) : NULL);
-		
+        $this->_data['view_model']->set_product_name(($this->input->get('product_name', TRUE) != NULL) ? $this->input->get('product_name', TRUE) : NULL);
+        $this->_data['view_model']->set_sku(($this->input->get('sku', TRUE) != NULL) ? $this->input->get('sku', TRUE) : NULL);
+        
         $where = [
             'category_id' => $this->_data['view_model']->get_category_id(),
-			'product_name' => $this->_data['view_model']->get_product_name(),
-			'sku' => $this->_data['view_model']->get_sku(),
-			
+            'product_name' => $this->_data['view_model']->get_product_name(),
+            'sku' => $this->_data['view_model']->get_sku(),
+            
             
         ];
 
@@ -58,7 +58,7 @@ class Admin_inventory_report_controller extends Admin_controller
         $this->_data['view_model']->set_sort($direction);
         $this->_data['view_model']->set_sort_base_url('/admin/inventory_report/0');
         $this->_data['view_model']->set_page($page);
-		$this->_data['view_model']->set_list($this->inventory_model->get_paginated(
+        $this->_data['view_model']->set_list($this->inventory_model->get_paginated(
             $this->_data['view_model']->get_page(),
             $this->_data['view_model']->get_per_page(),
             $where,
@@ -94,11 +94,86 @@ class Admin_inventory_report_controller extends Admin_controller
         $this->_data['categories'] = $this->category_model->get_all();
 
         return $this->render('Admin/InventoryReport', $this->_data);
-	}
+    }
 
     
 
-    
+    public function to_csv()
+    { 
+
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="Inventory_Report.csv"');
+
+        $this->load->model('inventory_model');
+        $this->load->model('category_model');
+
+ 
+         
+
+        $order_by = $this->input->get('order_by', TRUE) ?? '';
+        $direction = $this->input->get('direction', TRUE) ?? 'ASC';
+
+        $category_id      = $this->input->get('category_id', TRUE) != NULL ? $this->input->get('category_id', TRUE) : NULL; 
+        $product_name     = $this->input->get('product_name', TRUE) != NULL ? $this->input->get('product_name', TRUE) : NULL; 
+        $sku              = $this->input->get('sku', TRUE) != NULL ? $this->input->get('sku', TRUE) : NULL; 
+
+
+        
+        $where = [
+            'category_id'  => $category_id,
+            'product_name' => $product_name,
+            'sku'          => $sku, 
+        ];
+        $list = $this->inventory_model->get_all_for_csv( 
+            $where,
+            $order_by,
+            $direction);
+
+        $this->load->library('names_helper_service');
+        if ( !empty( $list ) ) 
+        { 
+            $this->names_helper_service->set_category_model($this->category_model);  
+            foreach ($list as $key => &$value) 
+            { 
+                $value->category_id       = $this->names_helper_service->get_category_real_name( $value->category_id );   
+            }
+        }
+ 
+  
+
+        $clean_list = []; 
+        foreach ($list as $key => $value)
+        {  
+            $clean_list_entry              = [];
+            $clean_list_entry['id']        = $value->id;
+            $clean_list_entry['name']      = $value->product_name;
+            $clean_list_entry['sku']       = $value->sku;
+            $clean_list_entry['category']  = $value->category_id;
+            $clean_list_entry['quantity']  = $value->quantity; 
+            $clean_list[]                  = $clean_list_entry;
+        }
+ 
+ 
+        $column_fields = ['ID' , 'Name', 'SKU', 'Category', 'Quantity'];
+       
+        $csv = implode(",", $column_fields) . "\n";
+        // $fields = array_filter($this->get_field_column());
+        foreach($clean_list as $row)
+        {
+            $row_csv = [];
+            foreach($row as $key =>$column)
+            {
+                // if (in_array($key, $fields))
+                // {
+                    $row_csv[] = '"' . $column . '"';
+                // }
+            }
+            $csv = $csv . implode(',', $row_csv) . "\n";
+        }   
+ 
+        echo $csv; 
+        exit(); 
+    }
 
     
 

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2020*/
-
+$QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
 ?>
 <div class="tab-content mx-4" id="nav-tabContent">
 <br>
@@ -79,6 +79,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
   <?php echo $view_model->get_heading();?>
   <span class="d-none"></span>
+
+  <span class="add-part d-flex justify-content-md-end  "><a class="btn btn-info btn-sm ml-2" href="<?php echo base_url() . 'admin/inventory_report/to_csv?' . $QUERY_STRING; ?>"><i class="fas fa-file-download" style="color:white;"></i></a></span>
 </h5>
 
   <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4 pt-4" style='height:auto;'>

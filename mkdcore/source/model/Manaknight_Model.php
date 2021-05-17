@@ -794,6 +794,81 @@ class {{{subclass_prefix}}}Model extends CI_Model
         return $result;
     }
 
+
+
+
+
+    /**
+     * Get CSV model
+     *
+     * @access public
+     * @param integer $page default 0
+     * @param integer $limit default 10
+     * @return array
+     */
+    public function get_all_for_csv($where=[], $order_by='', $direction='ASC')
+    { 
+
+        if ($order_by === '')
+        {
+            $order_by = $this->_primary_key;
+        }
+
+        $this->db->order_by($this->clean_alpha_num_field($order_by), $this->clean_alpha_field($direction));
+
+        if (!empty($where))
+        {
+            foreach($where as $field => $value)
+            {
+                if (is_numeric($field) && strlen($value) > 0)
+                {
+                    $this->db->where($value);
+                    continue;
+                }
+
+                if ($field === NULL && $value === NULL)
+                {
+                    continue;
+                }
+
+                if ($value !== NULL)
+                {
+                    if(is_numeric($value))
+                    {
+                        $this->db->where($field, $value);
+                        continue;
+                    }
+
+                    if(is_string($value))
+                    {
+                        $this->db->like($field, $value);
+                        continue;
+                    }
+
+                    $this->db->where($field, $value);
+                }
+            }
+        }
+
+        $query = $this->db->get($this->_table);
+        $result = [];
+
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $row)
+            {
+                $result[] = $row;
+            }
+        }
+
+        return $result;
+    }
+
+
+
+
+
+
     public function _join ($table, $field, $where, $custom_duplicate_names=[])
     {
         $select_statement = '`a`.id as a_id, `b`.id as b_id,' ;

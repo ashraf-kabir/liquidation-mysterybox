@@ -109,7 +109,7 @@ class Pos_order_items_report_model extends Manaknight_Model
 
     public function get_all_pos_order($where = array(),$order_by = array(), $from_date = "", $to_date = "")
     {
-        $this->db->select('pos_order_items.*');
+        $this->db->select('pos_order_items.*, transactions.tax as transaction_tax');
         $this->db->from($this->_table);
 
 
@@ -157,7 +157,7 @@ class Pos_order_items_report_model extends Manaknight_Model
 
 
 
-    public function get_all_tax($where = array(),$order_by = array(), $from_date = "", $to_date = "")
+    public function get_all_tax($where = array(),$where2 = array(),$order_by = array(), $from_date = "", $to_date = "")
     {  
         $this->db->from('transactions'); 
         $this->db->select_sum('tax');
@@ -184,6 +184,15 @@ class Pos_order_items_report_model extends Manaknight_Model
                  
             }
         }
+
+        if ( !empty($where2) ) 
+        {
+            foreach($where2 as $field => $value)
+            {
+                $this->db->or_where('transactions.pos_order_id', $value); 
+            }
+        }
+
 
         if (!empty($from_date) && !empty($to_date)) 
         {
@@ -300,6 +309,80 @@ class Pos_order_items_report_model extends Manaknight_Model
 
         
         $this->db->limit($limit, $page);
+
+        if ($order_by === '')
+        {
+            $order_by = $this->_primary_key;
+        }
+
+        $this->db->order_by($this->clean_alpha_num_field($order_by), $this->clean_alpha_field($direction));
+
+        if (!empty($where))
+        {
+            foreach($where as $field => $value)
+            {
+                if (is_numeric($field) && strlen($value) > 0)
+                {
+                    $this->db->where($value);
+                    continue;
+                }
+
+                if ($field === NULL && $value === NULL)
+                {
+                    continue;
+                }
+
+                if ($value !== NULL)
+                {
+                    if(is_numeric($value))
+                    {
+                        $this->db->where($field, $value);
+                        continue;
+                    }
+
+                    if(is_string($value))
+                    {
+                        $this->db->like($field, $value);
+                        continue;
+                    }
+
+                    $this->db->where($field, $value);
+                }
+            }
+        }
+
+        if (!empty($from_date) && !empty($to_date)) 
+        {
+            $this->db->group_start();
+
+            $this->db->where('pos_order.created_at >= ', $from_date); 
+            $this->db->where('pos_order.created_at <= ', $to_date);
+            $this->db->group_end();
+        }
+
+        
+        $this->db->group_by('pos_order.shipping_state');
+        $query = $this->db->get('pos_order');
+        
+        $result = [];
+
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $row)
+            {
+                $result[] = $row;
+            }
+        }
+
+        return $result;
+    }
+
+
+
+
+     public function get_csv_shipping_cost_report($where=[], $order_by='', $direction='ASC', $from_date = '', $to_date = '')
+    {
+
 
         if ($order_by === '')
         {

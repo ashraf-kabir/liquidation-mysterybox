@@ -112,6 +112,93 @@ class Admin_customer_report_controller extends Admin_controller
 
     
 
+
+
+    public function to_csv()
+    { 
+
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="Customer_Report.csv"');
+
+
+
+
+        $this->load->model('customer_model');
+        $this->load->model('pos_order_items_report_model');
+
+
+        $order_by  = $this->input->get('order_by', TRUE) ?? '';
+        $direction = $this->input->get('direction', TRUE) ?? 'ASC';
+
+
+
+        $name        = $this->input->get('name', TRUE) != NULL ? $this->input->get('name', TRUE) : NULL; 
+        $email       = $this->input->get('email', TRUE) != NULL ? $this->input->get('email', TRUE) : NULL; 
+        $from_date   = $this->input->get('from_date', TRUE) != NULL ? $this->input->get('from_date', TRUE) : NULL; 
+        $to_date     = $this->input->get('to_date', TRUE) != NULL ? $this->input->get('to_date', TRUE) : NULL; 
+
+ 
+         
+        $where = [
+            'name'  => $name,
+            'email' => $email, 
+        ];
+
+
+        $list = $this->customer_model->get_all_for_csv(
+            $where,
+            $order_by,
+            $direction);
+
+        if ( !empty( $list ) ) 
+        {
+            
+            foreach ($list as $key => &$value) 
+            {   
+                $total_sale = $this->pos_order_items_report_model->get_income_from_customer( $value->id, $from_date , $to_date); 
+                $total_qty = $this->pos_order_items_report_model->get_total_qty_sold_to_customer( $value->id, $from_date , $to_date);
+                $value->total_sale    =  $total_sale;
+                $value->total_qty     =  $total_qty; 
+            }
+        }
+
+ 
+
+ 
+        $clean_list = []; 
+        foreach ($list as $key => $value)
+        {  
+            $clean_list_entry              = [];
+            $clean_list_entry['id']        = $value->id;
+            $clean_list_entry['name']      = $value->name;
+            $clean_list_entry['email']     = $value->email;
+            $clean_list_entry['phone']     = $value->phone;
+            $clean_list_entry['total_qty'] = $value->total_qty; 
+            $clean_list_entry['total_sale']= number_format($value->total_sale,2); 
+            $clean_list[]                  = $clean_list_entry;
+        }
+ 
+ 
+        $column_fields = ['ID', 'Name', 'Email', 'Phone', 'Quantity Sold', 'Income'];
+       
+        $csv = implode(",", $column_fields) . "\n";
+        // $fields = array_filter($this->get_field_column());
+        foreach($clean_list as $row)
+        {
+            $row_csv = [];
+            foreach($row as $key =>$column)
+            {
+                // if (in_array($key, $fields))
+                // {
+                    $row_csv[] = '"' . $column . '"';
+                // }
+            }
+            $csv = $csv . implode(',', $row_csv) . "\n";
+        }   
+ 
+        echo $csv; 
+        exit(); 
+    }
     
 
     

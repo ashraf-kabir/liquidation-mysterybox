@@ -95,3 +95,30 @@ Customer report -Date range -Customer name, Qty sold and total income from custo
 
 "sale_email": "sales@vegasliqudation.com",
             "support_email": "support@vegasLiquidation.com",
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------
+
+Add traffic ref table crud and these rolls can be used in the traffic link reports 
+
+Grand total on sales reports isnt working  (filters not working)
+
+Add CSV download link on reports 
+
+Add sales person to items listed. Should default to sales person that is login. Add sales report by person.
+
+
+@The Ghost for the image portal, can you confirm the logic for me:
+1.you will add image gallery to every system
+2.if user email matches, you show their image list
+3.every 48 hours images saved get deleted?
+
+https://www.google.com/search?q=9400111108400103579626
