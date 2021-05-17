@@ -66,7 +66,9 @@ check_cart_total_items();
     })
   })
 
-  $(document).on('click','.signup__form_submit',function(e){
+  $(document).on('submit','.signup__form_submit_c',function(e){
+
+    e.preventDefault();
 
     let first_name         = $('#name').val();
     let email              = $('#email').val();
@@ -132,8 +134,8 @@ check_cart_total_items();
 
 
 
-  $(document).on('click','.login__form_submit',function(e){
-
+  $(document).on('submit','.login__form_submit_c',function(e){
+    e.preventDefault();
     let email              = $('#email_login').val();
     let password           = $('#password1_login').val();
 
@@ -439,7 +441,7 @@ check_cart_total_items();
             $(response.list_all).each(function(index,object){  
               var shipping_cost_total = object.shipmentCost + object.otherCost;
               shipping_cost_total = parseFloat(shipping_cost_total).toFixed(2);
-              shipping_options += '<label><input name="shipping_service_id_' + id + '" class="mr-2 shipping-cost-change" type="radio" value="' + object.serviceCode + '" data-expected-date="' + object.expected_date_only + '"  data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  />' + object.serviceName + '  ( $' + shipping_cost_total + ' ) ' + object.expected_date + ' </label>';
+              shipping_options += '<label><input name="shipping_service_id_' + id + '" class="mr-2 shipping-cost-change" type="radio" ' + object.selected + ' value="' + object.serviceCode + '" data-expected-date="' + object.expected_date_only + '"  data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '" data-service-code="' + object.serviceCode + '" data-service-name="' + object.serviceName + '"  />' + object.serviceName + '  ( $' + shipping_cost_total + ' ) ' + object.expected_date + ' </label>';
             }) 
             // shipping_options += '</select>';
 

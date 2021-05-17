@@ -77,7 +77,7 @@
                         <h2><strong>SIGN UP</strong></h2>
                     </div>
                 </div>
-                <form action="" id="signup__form">
+                <form action="" id="signup__form" class="signup__form_submit_c">
                     <div class="form-row justify-content-center">
                         <div class="col-md-9 col-12 my-2">
                             <label for="name">Full Name</label>
@@ -142,7 +142,7 @@
                         </div>
 
                         <div class="col-md-9 col-12 mb-5">
-                            <button type="button" class="btn btn-secondary signup__form_submit w-100">
+                            <button type="submit" class="btn btn-secondary signup__form_submit w-100">
                                 Create Account
                             </button>
                         </div>
@@ -188,7 +188,7 @@
                         <h2><strong>LOGIN</strong></h2>
                     </div>
                 </div>
-                <form action="" id="loginsignup__form">
+                <form action="" id="loginsignup__form" class="login__form_submit_c">
                     <div class="form-row justify-content-center">
 
 
@@ -217,7 +217,7 @@
                         </div>
 
                         <div class="col-md-9 col-12 mb-5">
-                            <button type="button" class="btn btn-secondary login__form_submit w-100">
+                            <button type="submit" class="btn btn-secondary login__form_submit w-100">
                                 Login
                             </button> 
                             <a href="<?php echo base_url() ?>forgot_password">Forgot my password</a>  

@@ -177,7 +177,7 @@ class Helpers_service {
 
             foreach ($list_data as $key => $value) 
             {
-                $content = $value->product_name . " having sku " . $value->product_sku . " is available in stock now.";
+                $content = $value->product_name . " having sku " . $value->product_sku . " is available in stock now " . "<a href='" . base_url() . "product/" . $value->product_id . "' >Buy Now</a>.";
 
                 $this->_mail_service->send($from, $value->email, $value->product_name . " new stock has been added", $content);
 

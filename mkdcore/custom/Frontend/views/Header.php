@@ -134,9 +134,18 @@
                          </li>
 
                          
-                         <?php if( !$this->session->userdata('customer_login') && !$this->session->userdata('user_id') ){ ?> 
-
+                         <?php if($this->session->userdata('customer_login') && $this->session->userdata('user_id') ){ ?>  
                               
+                              <li class="nav-item <?php if( isset($active) and $active == 'profile' ){ echo 'active'; } ?>">
+                                   <a  href="<?php echo base_url(); ?>profile" class="nav-link <?php if( isset($active)  and $active == 'profile'  ){ echo 'active'; } ?>"    >Profile</a>
+                              </li> 
+
+
+                              <li class="nav-item <?php if( isset($active) and $active == 'contact' ){ echo 'active'; } ?>">
+                                   <a class="nav-link <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>"  href="<?php echo base_url(); ?>logout" >Logout</a>
+                              </li>   
+
+                         <?php }else { ?> 
 
                               <li class="nav-item <?php if( isset($active) and $active == 'contact' ){ echo 'active'; } ?>">
                                    <a class="nav-link <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>"   data-target="#loginModal" data-toggle="modal">Login</a>
@@ -146,17 +155,7 @@
                                    <a class="nav-link <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>"  data-target="#signupModal" data-toggle="modal">Register</a>
                               </li> 
 
-
-                         <?php }else { ?> 
-
-                              <li class="nav-item <?php if( isset($active) and $active == 'profile' ){ echo 'active'; } ?>">
-                                   <a  href="<?php echo base_url(); ?>profile" class="nav-link <?php if( isset($active)  and $active == 'profile'  ){ echo 'active'; } ?>"    >Profile</a>
-                              </li> 
-
-
-                              <li class="nav-item <?php if( isset($active) and $active == 'contact' ){ echo 'active'; } ?>">
-                                   <a class="nav-link <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>"  href="<?php echo base_url(); ?>logout" >Logout</a>
-                              </li>  
+                              
                          <?php } ?>
                     </ul>
                </div>

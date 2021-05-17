@@ -22,7 +22,9 @@ class Home_controller extends Manaknight_Controller
 
     public function __construct()
     {
-        parent::__construct();  
+        parent::__construct(); 
+
+         
         $this->load->model('category_model');
         $this->load->model('inventory_model'); 
         $this->load->model('physical_location_model'); 
@@ -46,10 +48,12 @@ class Home_controller extends Manaknight_Controller
             if (strtolower($showshow) == 'tiktok') 
             {
                 $this->set_session('referrer', 4);  
-            }
-
-
+            } 
         }
+
+        // echo "<pre>";
+        // print_r($_SESSION);
+        // die();
     }
 
     public function index($offset = 0)

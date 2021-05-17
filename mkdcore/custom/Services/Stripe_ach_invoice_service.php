@@ -68,37 +68,215 @@ class Stripe_ach_invoice_service {
                         {
                             
                             $output['invoice_id'] = $invoice_detail->id;
-                            return $output;
-                            
+                            return $output; 
                             // Invoice::sendInvoice(array($invoice_detail->id));
-                        } catch (Exception $e) {
+                        } 
+                        catch (\Stripe\Exception\CardException $e)
+                        { 
+                            $output['error']   = $e->getError()->message;
+                            return $output;
+                            exit();
+
+                        }
+                        catch (\Stripe\Exception\RateLimitException $e)
+                        {  
+                            $output['error']   = $e->getError()->message;
+                            return $output;
+                            exit();
+                        }
+                        catch (\Stripe\Exception\InvalidRequestException $e)
+                        {  
+                            $output['error']   = $e->getError()->message;
+                            return $output;
+                            exit();
+                        }
+                        catch (\Stripe\Exception\AuthenticationException $e)
+                        {  
+                            $output['error']   = $e->getError()->message;
+                            return $output;
+                            exit();
+                        }
+                        catch (\Stripe\Exception\ApiConnectionException $e)
+                        {  
+                            $output['error']   = $e->getError()->message;
+                            return $output;
+                            exit();
+                        }
+                        catch (\Stripe\Exception\ApiErrorException $e)
+                        { 
+                             
+                            $output['error']   = $e->getError()->message;
+                            return $output;
+                            exit();
+                        }
+                        catch (Exception $e)
+                        {  
+                            $output['error']   = $e->getError()->message;
+                            return $output;
+                            exit();
+                        }
+                        catch (Exception $e) {
                             $output['error'] = $e;
                             return $output; 
-                        } 
-                        // # status (error: 0, success: 1)
-                        // echo json_encode(['status' => 1]);
-                        // exit();
-                    } catch (Exception $e) {
+                        }  
+
+
+                    } 
+                    catch (\Stripe\Exception\CardException $e)
+                    { 
+                        $output['error']   = $e->getError()->message;
+                        return $output;
+                        exit();
+
+                    }
+                    catch (\Stripe\Exception\RateLimitException $e)
+                    {  
+                        $output['error']   = $e->getError()->message;
+                        return $output;
+                        exit();
+                    }
+                    catch (\Stripe\Exception\InvalidRequestException $e)
+                    {  
+                        $output['error']   = $e->getError()->message;
+                        return $output;
+                        exit();
+                    }
+                    catch (\Stripe\Exception\AuthenticationException $e)
+                    {  
+                        $output['error']   = $e->getError()->message;
+                        return $output;
+                        exit();
+                    }
+                    catch (\Stripe\Exception\ApiConnectionException $e)
+                    {  
+                        $output['error']   = $e->getError()->message;
+                        return $output;
+                        exit();
+                    }
+                    catch (\Stripe\Exception\ApiErrorException $e)
+                    { 
+                         
+                        $output['error']   = $e->getError()->message;
+                        return $output;
+                        exit();
+                    }
+                    catch (Exception $e)
+                    {  
+                        $output['error']   = $e->getError()->message;
+                        return $output;
+                        exit();
+                    }
+                    catch (Exception $e) {
                         $output['error'] = $e;
                         return $output; 
-                    } 
+                    }  
                 }
                 else
                 {
                     $output['error'] = $e;
                     return $output; 
                 } 
-            } catch (Exception $e) {
+            } 
+            catch (\Stripe\Exception\CardException $e)
+            { 
+                $output['error']   = $e->getError()->message;
+                return $output;
+                exit();
+
+            }
+            catch (\Stripe\Exception\RateLimitException $e)
+            {  
+                $output['error']   = $e->getError()->message;
+                return $output;
+                exit();
+            }
+            catch (\Stripe\Exception\InvalidRequestException $e)
+            {  
+                $output['error']   = $e->getError()->message;
+                return $output;
+                exit();
+            }
+            catch (\Stripe\Exception\AuthenticationException $e)
+            {  
+                $output['error']   = $e->getError()->message;
+                return $output;
+                exit();
+            }
+            catch (\Stripe\Exception\ApiConnectionException $e)
+            {  
+                $output['error']   = $e->getError()->message;
+                return $output;
+                exit();
+            }
+            catch (\Stripe\Exception\ApiErrorException $e)
+            { 
+                 
+                $output['error']   = $e->getError()->message;
+                return $output;
+                exit();
+            }
+            catch (Exception $e)
+            {  
+                $output['error']   = $e->getError()->message;
+                return $output;
+                exit();
+            }
+            catch (Exception $e) {
                 $output['error'] = $e;
                 return $output; 
-            } 
+            }  
 
             // echo json_encode(['status' => 0]);
             // exit();
-        } catch (Exception $e) {
+        } 
+        catch (\Stripe\Exception\CardException $e)
+        { 
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+
+        }
+        catch (\Stripe\Exception\RateLimitException $e)
+        {  
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (\Stripe\Exception\InvalidRequestException $e)
+        {  
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (\Stripe\Exception\AuthenticationException $e)
+        {  
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (\Stripe\Exception\ApiConnectionException $e)
+        {  
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (\Stripe\Exception\ApiErrorException $e)
+        { 
+             
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (Exception $e)
+        {  
+            $output['error']   = $e->getError()->message;
+            return $output;
+            exit();
+        }
+        catch (Exception $e) {
             $output['error'] = $e;
             return $output; 
-        } 
+        }  
     }
  
 

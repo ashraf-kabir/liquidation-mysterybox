@@ -54,10 +54,17 @@ class {{{ucname}}}_login_controller extends {{{subclass_prefix}}}Controller
                 $this->error('xyzWrong email or password.');
                 return $this->redirect('{{{name}}}/login');
             }
+ 
+
+
             $this->set_session('credential_id', (int) $authenticated_user->id);
             $this->set_session('user_id', (int) $user_obj->id);
             $this->set_session('email', (string) $authenticated_user->email);
             $this->set_session('role', (string) $authenticated_user->role_id);
+
+            unset($_SESSION['customer_login']);
+
+            
             return $this->redirect($redirect);
         }
 
