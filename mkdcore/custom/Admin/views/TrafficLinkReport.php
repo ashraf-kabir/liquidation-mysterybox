@@ -42,9 +42,11 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
 								<label for="Referrer">Referrer </label>
 								<select name="referrer" class="form-control">
 									<option value="">All</option>
-									<?php foreach ($view_model->referrer_mapping() as $key => $value) {
-										echo "<option value='{$key}' " . (($view_model->get_referrer() == $key && $view_model->get_referrer() != '') ? 'selected' : '') . "> {$value} </option>";
-									}?>
+                                     
+									<?php foreach ($traffic_referrers as $key => $value) 
+                                    {
+										echo "<option value='{$value->id}' " . (($view_model->get_referrer() == $value->id && $view_model->get_referrer() != '') ? 'selected' : '') . "> {$value->referrer_name} </option>";
+									} ?>
 								</select>
 							</div>
 						</div>
@@ -129,7 +131,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
 							echo "<td>{$data->id}</td>";
 							echo "<td>" . date('F d Y h:i A', strtotime($data->order_date_time)) . "</td>";
 							echo "<td>$" . number_format($data->total,2) . "</td>";
-							echo "<td>" . ucfirst($view_model->referrer_mapping()[$data->referrer]) ."</td>";
+							echo "<td>" . ucfirst($data->referrer) . "</td>";
 							 
                     echo '</tr>';
                 ?>

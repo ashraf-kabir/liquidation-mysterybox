@@ -15,6 +15,7 @@ class Inventory_model extends Manaknight_Model
 	protected $_return_type = 'array';
 	protected $_allowed_fields = [
     	'id',
+		'sale_person_id',
 		'product_name',
 		'sku',
 		'category_id',
@@ -54,6 +55,8 @@ class Inventory_model extends Manaknight_Model
 	protected $_validation_rules = [
     ['id', 'ID', ''],
 		['product_name', 'Product Name', 'required'],
+		['sale_person_id', 'Sale Person', 'required'],
+		['item_tax', 'Item Tax', ''],
 		['sku', 'SKU', ''],
 		['category_id', 'Category', ''],
 		['manifest_id', 'Manifest', ''],
@@ -86,6 +89,8 @@ class Inventory_model extends Manaknight_Model
 	protected $_validation_edit_rules = [
     	['id', 'ID', ''],
 		['product_name', 'Product Name', 'required'],
+		['sale_person_id', 'Sale Person', 'required'],
+		['item_tax', 'Item Tax', ''],
 		['sku', 'SKU', ''],
 		['category_id', 'Category', ''],
 		['manifest_id', 'Manifest', ''],

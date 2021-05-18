@@ -18,7 +18,7 @@ class Admin_traffic_link_report_controller extends Admin_controller
     {
         parent::__construct();
         
-        
+        $this->load->model('traffic_referrer_model');
         
     }
 
@@ -39,11 +39,12 @@ class Admin_traffic_link_report_controller extends Admin_controller
             '/admin/traffic_link_report/0');
         $this->_data['view_model']->set_heading('Traffic Link Report');
         $this->_data['view_model']->set_referrer(($this->input->get('referrer', TRUE) != NULL) ? $this->input->get('referrer', TRUE) : NULL);
+
+
+        
 		
         $where = [
-            'referrer' => $this->_data['view_model']->get_referrer(),
-			
-            
+            'referrer' => $this->_data['view_model']->get_referrer(),  
         ];
 
         $this->_data['view_model']->set_total_rows($this->pos_order_model->count($where));
@@ -77,6 +78,25 @@ class Admin_traffic_link_report_controller extends Admin_controller
                 ->set_output(json_encode($this->_data['view_model']->to_json()));
         }
 
+        $this->_data['traffic_referrers'] = $this->traffic_referrer_model->get_all();
+
+
+
+        if ( !empty( $this->_data['view_model']->get_list() ) ) 
+        {
+            foreach ($this->_data['view_model']->get_list() as $key => $value) 
+            {  
+                $referrer_data   = $this->traffic_referrer_model->get( $value->referrer );
+
+                if (isset($referrer_data->referrer_name)) 
+                {
+                    $value->referrer = $referrer_data->referrer_name;
+                }else{
+                    $value->referrer = "";
+                }
+                
+            }
+        }
         return $this->render('Admin/TrafficLinkReport', $this->_data);
 	}
 
@@ -109,7 +129,21 @@ class Admin_traffic_link_report_controller extends Admin_controller
             $order_by,
             $direction);
   
+        if ( !empty( $list ) ) 
+        {
+            foreach ($list as $key => $value) 
+            {  
+                $referrer_data   = $this->traffic_referrer_model->get( $value->referrer );
 
+                if (isset($referrer_data->referrer_name)) 
+                {
+                    $value->referrer = $referrer_data->referrer_name;
+                }else{
+                    $value->referrer = "";
+                }
+                
+            }
+        }
          
  
  
@@ -122,7 +156,7 @@ class Admin_traffic_link_report_controller extends Admin_controller
             $clean_list_entry['order']      = $value->id;   
             $clean_list_entry['date_time']  = date('F d Y h:i A', strtotime($value->order_date_time)); 
             $clean_list_entry['total_sale'] = "$" . number_format($value->total,2);  
-            $clean_list_entry['referrer']   = $value->referrer; 
+            $clean_list_entry['referrer']   = ucfirst($value->referrer); 
             $clean_list[]                   = $clean_list_entry;
         }
  

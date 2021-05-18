@@ -107,11 +107,11 @@ Customer report -Date range -Customer name, Qty sold and total income from custo
 
 ---------------------------------------------------------
 
-Add traffic ref table crud and these rolls can be used in the traffic link reports 
+Add traffic ref table crud and these rolls can be used in the traffic link reports //
 
-Grand total on sales reports isnt working  (filters not working)
+Grand total on sales reports isnt working  (filters not working)   //
 
-Add CSV download link on reports 
+Add CSV download link on reports                                   //
 
 Add sales person to items listed. Should default to sales person that is login. Add sales report by person.
 

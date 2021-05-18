@@ -22,6 +22,8 @@ class Manager_inventory_controller extends Manager_controller
         $this->load->model('category_model');
         $this->load->model('store_model');
         $this->load->model('physical_location_model');
+        $this->load->model('user_model'); 
+        
         $this->load->model('customer_model'); 
         $this->load->library('names_helper_service');
         
@@ -117,7 +119,7 @@ class Manager_inventory_controller extends Manager_controller
         $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
         $this->_data['stores']              =   $this->store_model->get_all();
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
-
+        $this->_data['sale_persons']        =   $this->user_model->get_all_users();
 
         if ($this->input->post('can_ship') == 1) 
         {
@@ -163,6 +165,7 @@ class Manager_inventory_controller extends Manager_controller
         $increment_id  =  $this->inventory_model->get_auto_increment_id();
         $sku           =  sprintf("%05d", $increment_id); 
 
+        $sale_person_id = $this->input->post('sale_person_id', TRUE); 
         $product_name = $this->input->post('product_name', TRUE); 
 		$category_id = $this->input->post('category_id', TRUE);
 		$manifest_id = $this->input->post('manifest_id', TRUE);
@@ -200,6 +203,7 @@ class Manager_inventory_controller extends Manager_controller
         $youtube_thumbnail_4 = $this->input->post('youtube_thumbnail_4', TRUE);
 		
         $result = $this->inventory_model->create([
+            'sale_person_id' => $sale_person_id,
             'product_name' => $product_name,
 			'sku' => $sku,
 			'category_id' => $category_id,
@@ -286,7 +290,7 @@ class Manager_inventory_controller extends Manager_controller
         $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
         $this->_data['stores']              =   $this->store_model->get_all();
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
-        
+        $this->_data['sale_persons']        =   $this->user_model->get_all_users();
 
         if ($this->input->post('can_ship') == 1) 
         {
@@ -329,6 +333,7 @@ class Manager_inventory_controller extends Manager_controller
 			return $this->render('Admin/InventoryEdit', $this->_data);
         }
 
+        $sale_person_id = $this->input->post('sale_person_id', TRUE);
         $product_name = $this->input->post('product_name', TRUE);
 		$sku = $this->input->post('sku', TRUE);
 		$category_id = $this->input->post('category_id', TRUE);
@@ -367,6 +372,7 @@ class Manager_inventory_controller extends Manager_controller
         $youtube_thumbnail_4 = $this->input->post('youtube_thumbnail_4', TRUE);
         
         $result = $this->inventory_model->edit([
+            'sale_person_id' => $sale_person_id,
             'product_name' => $product_name,
 			'sku' => $sku,
 			'category_id' => $category_id,

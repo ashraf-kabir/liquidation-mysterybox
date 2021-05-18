@@ -23,6 +23,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->load->model('store_model');
         $this->load->model('physical_location_model');
         $this->load->model('customer_model'); 
+        $this->load->model('user_model'); 
         $this->load->library('names_helper_service');
         $this->load->library('barcode_service');
         
@@ -120,6 +121,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
         $this->_data['stores']              =   $this->store_model->get_all();
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
+        $this->_data['sale_persons']        =   $this->user_model->get_all_users();
 
 
         if ($this->input->post('can_ship') == 1) 
@@ -167,6 +169,7 @@ class Admin_inventory_controller extends Admin_controller
         $sku           =  sprintf("%05d", $increment_id); 
  
 
+        $sale_person_id = $this->input->post('sale_person_id', TRUE); 
         $product_name = $this->input->post('product_name', TRUE); 
         $category_id = $this->input->post('category_id', TRUE);
         $manifest_id = $this->input->post('manifest_id', TRUE);
@@ -225,6 +228,7 @@ class Admin_inventory_controller extends Admin_controller
 
         
         $result = $this->inventory_model->create([
+            'sale_person_id' => $sale_person_id,
             'product_name' => $product_name,
             'sku' => $sku,
             'barcode_image' => $barcode_image,
@@ -311,7 +315,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
         $this->_data['stores']              =   $this->store_model->get_all();
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
-        
+        $this->_data['sale_persons']        =   $this->user_model->get_all_users();
 
         if ($this->input->post('can_ship') == 1) 
         {
@@ -374,6 +378,7 @@ class Admin_inventory_controller extends Admin_controller
         $status = $this->input->post('status', TRUE);
         $store_location_id = $this->input->post('store_location_id', TRUE);
          
+        $sale_person_id = $this->input->post('sale_person_id', TRUE);
         $can_ship = $this->input->post('can_ship', TRUE);
         $free_ship = $this->input->post('free_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
@@ -393,6 +398,7 @@ class Admin_inventory_controller extends Admin_controller
 
         
         $result = $this->inventory_model->edit([
+            'sale_person_id' => $sale_person_id,
             'product_name' => $product_name,
             'sku' => $sku,
             'category_id' => $category_id,

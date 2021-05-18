@@ -9,6 +9,81 @@
           country: 'short_name',
           postal_code: 'short_name'
      };
+ 
+
+     var list_types = 
+     [
+          "premise", 
+          "restaurant", 
+          "food", 
+          "shopping_mall", 
+          "store", 
+          "health", 
+          "airport", 
+          "art_gallery", 
+          "atm", 
+          "bakery", 
+          "bank", 
+          "bar", 
+          "beauty_salon", 
+          "book_store", 
+          "bowling_alley", 
+          "bus_station", 
+          "cafe", 
+          "zoo", 
+          "university", 
+          "travel_agency", 
+          "transit_station", 
+          "train_station", 
+          "supermarket", 
+          "subway_station", 
+          "stadium", 
+          "spa", 
+          "shopping_mall", 
+          "shoe_store", 
+          "secondary_school", 
+          "school", 
+          "rv_park", 
+          "real_estate_agency", 
+          "primary_school", 
+          "post_office", 
+          "pharmacy", 
+          "pet_store", 
+          "park", 
+          "night_club", 
+          "museum", 
+          "moving_company", 
+          "movie_theater", 
+          "local_government_office", 
+          "liquor_store", 
+          "light_rail_station", 
+          "library", 
+          "laundry", 
+          "jewelry_store", 
+          "insurance_agency", 
+          "hospital", 
+          "home_goods_store", 
+          "hindu_temple", 
+          "hardware_store", 
+          "hair_care", 
+          "gym", 
+          "gas_station", 
+          "furniture_store", 
+          "fire_station", 
+          "embassy", 
+          "electronics_store", 
+          "drugstore", 
+          "department_store", 
+          "courthouse", 
+          "convenience_store", 
+          "clothing_store", 
+          "city_hall", 
+          "casino", 
+          "car_wash", 
+          "car_repair" 
+     ];
+
+     
 
 function initialize() {  
      
@@ -140,8 +215,9 @@ function initialize() {
                {
                     isResidental = 1;
                }
+ 
 
-               if (address_type == 'premise' || address_type == 'restaurant' || address_type == 'food' || address_type == 'shopping_mall' || address_type == 'store' || address_type == 'health') 
+               if (list_types.includes(address_type)) 
                {
                     isResidental = 2;
                }

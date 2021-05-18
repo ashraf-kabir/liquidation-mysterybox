@@ -1,4 +1,4 @@
-F<?php 
+<?php 
 class Shipstation_api_service { 
     
     private $_config;
@@ -111,7 +111,7 @@ class Shipstation_api_service {
             $response = curl_exec($curl); 
             curl_close($curl); 
             $response = json_decode( $response );
-
+ 
 
             if(!empty($response) and !isset($response->ExceptionMessage))
             { 

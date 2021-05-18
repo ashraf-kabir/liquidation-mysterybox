@@ -89,6 +89,17 @@ if ($layout_clean_mode) {
                         }?>
                     </select> 
                 </div>
+
+
+                <div class="form-group col-md-5 col-sm-12 ">
+                    <label for="sale_person_id"> Sale Person </label> 
+                    <select  class="form-control data-input" id="sale_person_id" name="sale_person_id">
+                        <option value="" >Select</option>
+                        <?php foreach ($sale_persons as $key => $value) {
+                            echo "<option value='{$value->id}'> {$value->first_name}  {$value->last_name} </option>";
+                        }?>
+                    </select> 
+                </div>
  
 
                 <div class="form-group col-md-5 col-sm-12 ">

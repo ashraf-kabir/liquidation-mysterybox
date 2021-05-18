@@ -28,26 +28,18 @@ class Home_controller extends Manaknight_Controller
         $this->load->model('category_model');
         $this->load->model('inventory_model'); 
         $this->load->model('physical_location_model'); 
+        $this->load->model('traffic_referrer_model'); 
 
         if ( $this->input->get('showshow', TRUE)  ) 
         {
             $showshow = $this->input->get('showshow', TRUE);
-            if ( strtolower($showshow) == 'facebook') 
+            $showshow = strtolower($showshow);
+
+            $referrer_data = $this->traffic_referrer_model->get_by_fields(['referrer_key' => $showshow ]);
+ 
+            if ( isset($referrer_data->id)) 
             {
-                $this->set_session('referrer', 2);  
-            }
-
-
-            if ( strtolower($showshow) == 'instagram') 
-            {
-                $this->set_session('referrer', 3);  
-            }
-
-
-
-            if (strtolower($showshow) == 'tiktok') 
-            {
-                $this->set_session('referrer', 4);  
+                $this->set_session('referrer', $referrer_data->id);  
             } 
         }
 
@@ -769,6 +761,10 @@ class Home_controller extends Manaknight_Controller
                     $inventory_data = $this->inventory_model->get($cart_item_value->product_id);   
                     $total_amount   = $cart_item_value->unit_price  * $cart_item_value->product_qty;
 
+                    $total_item_tax = $tax_amount * $total_amount;
+
+
+
 
                     $shipping_cost_name         =  $this->input->post('shipping_cost_name_' . $cart_item_value->id, TRUE);
                     $shipping_cost_value        =  $this->input->post('shipping_cost_value_' . $cart_item_value->id, TRUE);
@@ -783,6 +779,9 @@ class Home_controller extends Manaknight_Controller
                         'product_id'         => $cart_item_value->product_id,
                         'product_name'       => $cart_item_value->product_name, 
                         'amount'             => $total_amount, 
+                        'item_tax'           => $total_item_tax, 
+                        'sale_person_id'     => $inventory_data->sale_person_id, 
+                        'store_id'           => $inventory_data->store_location_id, 
                         'quantity'           => $cart_item_value->product_qty, 
                         'order_id'           => $order_id, 
                         'manifest_id'        => $inventory_data->manifest_id, 

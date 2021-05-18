@@ -446,6 +446,8 @@ check_cart_total_items();
             // shipping_options += '</select>';
 
             p_object.find('.shipping-cost-options').html(shipping_options);
+
+            select_expected_date();
           }
 
 
@@ -458,8 +460,8 @@ check_cart_total_items();
         error: function()
         { 
           
-          toastr.error('Error! Try again later.'); 
-          window.location.reload(true);
+          toastr.error('Error! Connection timeout.'); 
+          // window.location.reload(true);
         } 
       })
     }
@@ -551,7 +553,7 @@ check_cart_total_items();
       dataForm = $('.send_checkout').serializeArray();
       $.ajax({
         url: '../v1/api/do_checkout',
-        timeout: 30000,
+        timeout: 90000,
         method: 'POST',
         dataType: 'JSON', 
         data : {'dataForm' : dataForm },
@@ -911,7 +913,15 @@ $(document).on('click','.close_new_card_div', function(){
 
 
 
-
+function select_expected_date()
+{
+  $('.shipping-cost-change').each(function(index, obj){
+    if($(this).is(':checked'))
+    { 
+      $(this).trigger('click'); 
+    }
+  });
+}
  
 
 function calculate_cost()

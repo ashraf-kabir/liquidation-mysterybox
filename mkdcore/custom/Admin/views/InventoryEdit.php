@@ -97,6 +97,16 @@ if($this->session->userdata('role') == 1)
                     </select>  
                 </div>
 
+
+                <div class="form-group col-md-5 col-sm-12 ">
+                    <label for="sale_person_id"> Sale Person </label> 
+                    <select  class="form-control data-input" id="sale_person_id" name="sale_person_id">
+                        <option value="" >Select</option>
+                        <?php foreach ($sale_persons as $key => $value) {
+                            echo "<option " . (($view_model->get_sale_person_id() == $value->id && $view_model->get_sale_person_id() != '') ? 'selected' : '') . " value='{$value->id}'> {$value->first_name}  {$value->last_name} </option>";
+                        }?>
+                    </select> 
+                </div>
                 <div class="form-group col-md-5 col-sm-12">
                     <label for="Store Location">Store </label>
                     <select   class="form-control data-input" id="form_store_location_id" name="store_location_id">
