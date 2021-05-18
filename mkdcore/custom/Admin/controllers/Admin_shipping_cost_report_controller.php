@@ -95,7 +95,7 @@ class Admin_shipping_cost_report_controller extends Admin_controller
 
         if ( !empty( $this->_data['view_model']->get_list() ) ) 
         { 
-            foreach ($this->_data['view_model']->get_list() as $key => &$value) 
+            foreach ($this->_data['view_model']->get_list() as $key => $value) 
             {
                 $total_qty  = 0;
                 $total_sale = 0;
@@ -175,7 +175,7 @@ class Admin_shipping_cost_report_controller extends Admin_controller
 
         if ( !empty( $list ) ) 
         { 
-            foreach ($list as $key => &$value) 
+            foreach ($list as $key => $value) 
             {
                 $total_qty  = 0;
                 $total_sale = 0;
@@ -209,15 +209,18 @@ class Admin_shipping_cost_report_controller extends Admin_controller
  
  
         $clean_list = []; 
+        $row_total  = 0;
         $i = 1;
         foreach ($list as $key => $value)
         {  
+            $row_total += $value->total_sale;
+
             $clean_list_entry               = [];
             $clean_list_entry['id']         = $i++;
             $clean_list_entry['state']      = $value->shipping_state; 
             $clean_list_entry['total_qty']  = $value->total_qty; 
-            $clean_list_entry['total_sale'] = number_format($value->total_sale,2); 
-            $clean_list_entry['total_avg']  = number_format($value->total_avg,2); 
+            $clean_list_entry['total_sale'] = "$" . number_format($value->total_sale,2); 
+            $clean_list_entry['total_avg']  = "$" . number_format($value->total_avg,2); 
             $clean_list[]                   = $clean_list_entry;
         }
  
@@ -238,7 +241,21 @@ class Admin_shipping_cost_report_controller extends Admin_controller
             }
             $csv = $csv . implode(',', $row_csv) . "\n";
         }   
- 
+
+
+        $grand_total = 'Grand Total $' . number_format($row_total,2);
+        $grand_total = str_replace(",", "", $grand_total);
+
+
+        $row_csv   = [];
+        $row_csv[] = '';
+        $row_csv[] = '';
+        $row_csv[] = '';
+        $row_csv[] = $grand_total;
+
+        $csv = $csv . implode(',', $row_csv) . "\n";
+
+
         echo $csv; 
         exit(); 
     }

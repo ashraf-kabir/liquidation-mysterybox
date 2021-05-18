@@ -1,9 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2020*/
-
 $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
-
 ?>
 <div class="tab-content mx-4" id="nav-tabContent">
 <br>
@@ -30,22 +28,17 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
 <section>
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="card" id="TrafficLinkReport_filter_listing">
+        <div class="card" id="transactions_filter_listing">
             <div class="card-body">
               <h5 class="primaryHeading2 text-md-left">
                     <?php echo $view_model->get_heading();?> Search
               </h5>
-                <?= form_open('/admin/traffic_link_report/0', ['method' => 'get']) ?>
+                <?= form_open('/admin/transactions/0', ['method' => 'get']) ?>
                     <div class="row">
                     						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
 							<div class="form-group">
-								<label for="Referrer">Referrer </label>
-								<select name="referrer" class="form-control">
-									<option value="">All</option>
-									<?php foreach ($view_model->referrer_mapping() as $key => $value) {
-										echo "<option value='{$key}' " . (($view_model->get_referrer() == $key && $view_model->get_referrer() != '') ? 'selected' : '') . "> {$value} </option>";
-									}?>
-								</select>
+								<label for="Transaction Date">Transaction Date </label>
+								<input type="date" class="form-control" id="transaction_date" name="transaction_date" value="<?php echo $this->_data['view_model']->get_transaction_date();?>"/>
 							</div>
 						</div>
 
@@ -66,7 +59,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
   <?php echo $view_model->get_heading();?>
   <span class="d-none"></span>
 
-  <span class="add-part d-flex justify-content-md-end  "><a class="btn btn-info btn-sm ml-2" href="<?php echo base_url().'admin/traffic_link_report/to_csv?'.$QUERY_STRING; ?>"><i class="fas fa-file-download" style="color:white;"></i></a></span>
+  <span class="add-part d-flex justify-content-md-end  "><a class="btn btn-info btn-sm ml-2" href="<?php echo base_url().'admin/transactions/to_csv?' . $QUERY_STRING; ?>"><i class="fas fa-file-download" style="color:white;"></i></a></span>
 </h5>
 
   <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4 pt-4" style='height:auto;'>
@@ -90,12 +83,6 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
             $format_mode = '&layout_clean_mode=1';
         }
         foreach ($view_model->get_column() as $key => $data) {
-
-            if ($data == 'Action') 
-            {
-                continue;
-            } 
-
             $data_field = $field_column[$key];
             if (strlen($order_by) < 1 || $data_field == '')
             {
@@ -125,12 +112,18 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
             <?php foreach ($view_model->get_list() as $data) { ?>
                 <?php
                     echo '<tr>';
-                        	echo "<td>{$data->id}</td>";
 							echo "<td>{$data->id}</td>";
-							echo "<td>" . date('F d Y h:i A', strtotime($data->order_date_time)) . "</td>";
-							echo "<td>$" . number_format($data->total,2) . "</td>";
-							echo "<td>" . ucfirst($view_model->referrer_mapping()[$data->referrer]) ."</td>";
-							 
+							echo "<td>{$data->pos_order_id}</td>";
+							echo "<td>" . date('F d Y', strtotime($data->transaction_date)) . "</td>";
+							echo "<td>{$data->customer_id}</td>";
+							echo "<td>" . ucfirst($view_model->payment_type_mapping()[$data->payment_type]) ."</td>";
+							echo "<td>$" . number_format($data->tax,2) . "</td>";
+                            echo "<td>$" . number_format($data->discount,2) . "</td>";
+                            echo "<td>$" . number_format($data->subtotal,2) . "</td>";
+                            echo "<td>$" . number_format($data->total,2) . "</td>"; 
+							echo '<td>';
+							echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/transactions/view/' . $data->id . '">View</a>';
+							echo '</td>';
                     echo '</tr>';
                 ?>
             <?php } ?>

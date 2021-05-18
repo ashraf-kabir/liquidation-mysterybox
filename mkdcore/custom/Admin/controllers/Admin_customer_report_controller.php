@@ -94,7 +94,7 @@ class Admin_customer_report_controller extends Admin_controller
         if ( !empty( $this->_data['view_model']->get_list() ) ) 
         {
             
-            foreach ($this->_data['view_model']->get_list() as $key => &$value) 
+            foreach ($this->_data['view_model']->get_list() as $key => $value) 
             {  
                 
                 $total_sale = $this->pos_order_items_report_model->get_income_from_customer( $value->id, $from_date , $to_date); 
@@ -153,7 +153,7 @@ class Admin_customer_report_controller extends Admin_controller
         if ( !empty( $list ) ) 
         {
             
-            foreach ($list as $key => &$value) 
+            foreach ($list as $key => $value) 
             {   
                 $total_sale = $this->pos_order_items_report_model->get_income_from_customer( $value->id, $from_date , $to_date); 
                 $total_qty = $this->pos_order_items_report_model->get_total_qty_sold_to_customer( $value->id, $from_date , $to_date);
@@ -174,7 +174,7 @@ class Admin_customer_report_controller extends Admin_controller
             $clean_list_entry['email']     = $value->email;
             $clean_list_entry['phone']     = $value->phone;
             $clean_list_entry['total_qty'] = $value->total_qty; 
-            $clean_list_entry['total_sale']= number_format($value->total_sale,2); 
+            $clean_list_entry['total_sale']= "$" . number_format($value->total_sale,2); 
             $clean_list[]                  = $clean_list_entry;
         }
  

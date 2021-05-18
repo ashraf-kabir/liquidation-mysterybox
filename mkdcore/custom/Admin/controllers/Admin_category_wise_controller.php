@@ -309,7 +309,7 @@ class Admin_category_wise_controller extends Admin_controller
         if ( !empty( $list ) ) 
         {
             
-            foreach ($list as $key => &$value) 
+            foreach ($list as $key => $value) 
             {
                 $total_items    =  0;
                 $total_sale     =  0;
@@ -400,7 +400,7 @@ class Admin_category_wise_controller extends Admin_controller
             $clean_list_entry['name']      = $value->product_name;
             $clean_list_entry['sku']       = $value->sku;
             $clean_list_entry['qty_sold']  = $value->total_qty;
-            $clean_list_entry['amount']    = number_format($value->total_sale,2);
+            $clean_list_entry['amount']    = "$" . number_format($value->total_sale,2);
             $clean_list[]                  = $clean_list_entry;
         }
  
@@ -421,9 +421,9 @@ class Admin_category_wise_controller extends Admin_controller
             $csv = $csv . implode(',', $row_csv) . "\n";
         } 
 
-        $total_wout_tax_text = " Total = " . number_format($total_wout_tax,2);
-        $total_tax_text      = " Tax = " . number_format($total_tax,2);
-        $grand_total_text    = " Grand Total = " . number_format($grand_total,2);
+        $total_wout_tax_text = " Total = $" . number_format($total_wout_tax,2);
+        $total_tax_text      = " Tax = $" . number_format($total_tax,2);
+        $grand_total_text    = " Grand Total = $" . number_format($grand_total,2);
 
 
         $total_wout_tax_text = str_replace(",", "", $total_wout_tax_text);

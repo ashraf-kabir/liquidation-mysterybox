@@ -121,13 +121,13 @@ class Admin_traffic_link_report_controller extends Admin_controller
             $clean_list_entry['id']         = $value->id;
             $clean_list_entry['order']      = $value->id;   
             $clean_list_entry['date_time']  = date('F d Y h:i A', strtotime($value->order_date_time)); 
-            $clean_list_entry['total_sale'] = number_format($value->total,2);  
+            $clean_list_entry['total_sale'] = "$" . number_format($value->total,2);  
             $clean_list_entry['referrer']   = $value->referrer; 
             $clean_list[]                   = $clean_list_entry;
         }
  
  
-        $column_fields = ['ID', 'Order ID', 'Date Time', 'Total Sale', 'Referrer'];
+        $column_fields = ['ID', 'Order ID', 'Order On', 'Total', 'Referrer'];
        
         $csv = implode(",", $column_fields) . "\n";
         // $fields = array_filter($this->get_field_column());

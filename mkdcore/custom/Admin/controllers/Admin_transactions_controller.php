@@ -120,7 +120,83 @@ class Admin_transactions_controller extends Admin_controller
 	}
 
     
-    
+    public function to_csv()
+    { 
+
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="Transaction_report.csv"');
+
+        $this->load->model('transactions_model');
+        $this->load->model('customer_model'); 
+
+        $order_by = $this->input->get('order_by', TRUE) ?? '';
+        $direction = $this->input->get('direction', TRUE) ?? 'ASC';
+
+
+        $transaction_date          = $this->input->get('transaction_date', TRUE) != NULL ? $this->input->get('transaction_date', TRUE) : NULL; 
+
+        $where = [
+            'transaction_date'  => $transaction_date,  
+        ];
+
+        $list = $this->transactions_model->get_all_for_csv( 
+            $where,
+            $order_by,
+            $direction);
+         
+        $this->names_helper_service->set_customer_model($this->customer_model); 
+        
+
+        if ( !empty( $list ) ) 
+        {
+            foreach ($list as $key => &$value) 
+            {  
+                $value->customer_id = $this->names_helper_service->get_customer_real_name( $value->customer_id );   
+            }
+        }
+
+ 
+
+ 
+        $clean_list = [];   
+        foreach ($list as $key => $value)
+        {   
+
+            $clean_list_entry                      = [];
+            $clean_list_entry['id']                = $value->id;
+            $clean_list_entry['pos_order_id']      = $value->pos_order_id; 
+            $clean_list_entry['transaction_date']  = date('F d Y', strtotime($value->transaction_date)); 
+            $clean_list_entry['customer_id']       = $value->customer_id;
+            $clean_list_entry['payment_type']      = $this->transactions_model->payment_type_mapping()[$value->payment_type]; 
+            $clean_list_entry['tax']               = "$" . number_format($value->tax,2); 
+            $clean_list_entry['discount']          = "$" . number_format($value->discount,2); 
+            $clean_list_entry['subtotal']          = "$" . number_format($value->subtotal,2); 
+            $clean_list_entry['total']             = "$" . number_format($value->total,2); 
+            $clean_list[]                          = $clean_list_entry;
+        }
+ 
+ 
+        $column_fields = ['ID', 'Order ID', 'Transaction On', 'Customer', 'Type', 'Tax', 'Discount', 'Sub Total', 'Total'];
+       
+        $csv = implode(",", $column_fields) . "\n";
+        // $fields = array_filter($this->get_field_column());
+        foreach($clean_list as $row)
+        {
+            $row_csv = [];
+            foreach($row as $key =>$column)
+            {
+                // if (in_array($key, $fields))
+                // {
+                    $row_csv[] = '"' . $column . '"';
+                // }
+            }
+            $csv = $csv . implode(',', $row_csv) . "\n";
+        }    
+
+
+        echo $csv; 
+        exit(); 
+    }
     
     
     

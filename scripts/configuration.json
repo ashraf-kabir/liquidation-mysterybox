@@ -3002,6 +3002,7 @@
 		"../mkdcore/custom/Admin/views/CustomerReport.php" : "../release/application/views/Admin/CustomerReport.php",
 		"../mkdcore/custom/Admin/views/ShippingCostReport.php" : "../release/application/views/Admin/ShippingCostReport.php",
 		"../mkdcore/custom/Admin/views/TrafficLinkReport.php" : "../release/application/views/Admin/TrafficLinkReport.php",
+		"../mkdcore/custom/Admin/views/Transactions.php" : "../release/application/views/Admin/Transactions.php",
 
 		"../mkdcore/custom/Admin/views/Customer.php" : "../release/application/views/Admin/Customer.php",
 		"../mkdcore/custom/Admin/views/CustomerAdd.php" : "../release/application/views/Admin/CustomerAdd.php",

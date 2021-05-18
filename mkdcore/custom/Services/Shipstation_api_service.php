@@ -1,4 +1,4 @@
-<?php 
+F<?php 
 class Shipstation_api_service { 
     
     private $_config;
@@ -230,6 +230,10 @@ class Shipstation_api_service {
                         $value->otherCost    = 0;
 
                         $value->selected = " checked ";
+
+                        $expected_date_only = date('F d, Y', strtotime($myDate . ' +7 days '));
+                        $value->expected_date = "Expected Delivery Date <strong>" . $expected_date_only . "</strong>";
+                        $value->expected_date_only =  $expected_date_only;
                     } 
                 }
                 $response = array_values($response);

@@ -85,7 +85,7 @@ class Admin_inventory_report_controller extends Admin_controller
         if ( !empty( $this->_data['view_model']->get_list() ) ) 
         { 
             $this->names_helper_service->set_category_model($this->category_model);  
-            foreach ($this->_data['view_model']->get_list() as $key => &$value) 
+            foreach ($this->_data['view_model']->get_list() as $key => $value) 
             { 
                 $value->category_id       = $this->names_helper_service->get_category_real_name( $value->category_id );   
             }
@@ -128,17 +128,18 @@ class Admin_inventory_report_controller extends Admin_controller
             $where,
             $order_by,
             $direction);
+ 
 
         $this->load->library('names_helper_service');
         if ( !empty( $list ) ) 
         { 
             $this->names_helper_service->set_category_model($this->category_model);  
-            foreach ($list as $key => &$value) 
+            foreach ($list as $key => $value) 
             { 
                 $value->category_id       = $this->names_helper_service->get_category_real_name( $value->category_id );   
             }
         }
- 
+         
   
 
         $clean_list = []; 
@@ -152,7 +153,8 @@ class Admin_inventory_report_controller extends Admin_controller
             $clean_list_entry['quantity']  = $value->quantity; 
             $clean_list[]                  = $clean_list_entry;
         }
- 
+    
+        
  
         $column_fields = ['ID' , 'Name', 'SKU', 'Category', 'Quantity'];
        
