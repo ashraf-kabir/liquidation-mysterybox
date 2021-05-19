@@ -80,6 +80,7 @@
           "city_hall", 
           "casino", 
           "car_wash", 
+          "establishment", 
           "car_repair" 
      ];
 
