@@ -165,7 +165,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                 <?php
                     $row_total += $data->total_sale;
                     echo '<tr>';
-                            echo "<td>" . $i++ . "</td>";
+                            echo "<td>" . $data->id . "</td>";
                             echo "<td>{$data->shipping_state}</td>";
                             echo "<td>{$data->total_qty}</td>";
                             echo "<td>$" . number_format($data->total_sale,2) . "</td>";
