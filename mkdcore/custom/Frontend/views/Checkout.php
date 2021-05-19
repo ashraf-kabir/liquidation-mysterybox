@@ -530,6 +530,9 @@
                     <label for="terms" style="margin-top: 13px;">
                         <input type="checkbox" required name="terms" id="terms1" class="mr-2" />
                         I’ve read and accept the <a href="">Terms & Conditions</a>
+                        <br>
+                        <input type="checkbox" required name="sales_are_final" id="sales_are_final" class="mr-2" />
+                        All sales are final. Product is sold As-Is.
                     </label> 
                     <button class="btn btn-warning place-order-btn btn1-place_order" type="button">Place your Order</button> 
                </div>

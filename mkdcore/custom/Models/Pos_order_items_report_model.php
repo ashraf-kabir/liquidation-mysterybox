@@ -516,7 +516,7 @@ class Pos_order_items_report_model extends Manaknight_Model
 
 
 
-    public function get_paginated_for_sale_person($page = 0, $limit=10, $where=[], $order_by='', $direction='ASC')
+    public function get_paginated_for_sale_person($page = 0, $limit=10, $where=[], $order_by='', $direction='ASC',$from_date='',$to_date='')
     {
         $this->db->limit($limit, $page);
         $this->db->group_by("sale_person_id");
@@ -563,6 +563,14 @@ class Pos_order_items_report_model extends Manaknight_Model
             }
         }
 
+        if (!empty($from_date) && !empty($to_date)) 
+        {
+            $this->db->group_start(); 
+            $this->db->where('pos_order_items.created_at >= ', $from_date); 
+            $this->db->where('pos_order_items.created_at <= ', $to_date);
+            $this->db->group_end();
+        }
+
         $query = $this->db->get($this->_table);
         $result = [];
 
@@ -579,7 +587,7 @@ class Pos_order_items_report_model extends Manaknight_Model
 
 
 
-    public function get_paginated_for_sale_person_to_csv($where=[], $order_by='', $direction='ASC')
+    public function get_paginated_for_sale_person_to_csv($where=[], $order_by='', $direction='ASC',$from_date='',$to_date='')
     { 
         $this->db->group_by("sale_person_id");
         $this->db->where(" (`sale_person_id` != '0' && `sale_person_id` IS NOT NULL ) ");
@@ -625,6 +633,15 @@ class Pos_order_items_report_model extends Manaknight_Model
             }
         }
 
+        if (!empty($from_date) && !empty($to_date)) 
+        {
+            $this->db->group_start(); 
+            $this->db->where('pos_order_items.created_at >= ', $from_date); 
+            $this->db->where('pos_order_items.created_at <= ', $to_date);
+            $this->db->group_end();
+        }
+
+        
         $query = $this->db->get($this->_table);
         $result = [];
 
@@ -639,7 +656,7 @@ class Pos_order_items_report_model extends Manaknight_Model
         return $result;
     }
 
-    public function count_for_sale_person($parameters)
+    public function count_for_sale_person($parameters,$from_date='',$to_date='')
     {
         if (!empty($parameters))
         {
@@ -673,6 +690,14 @@ class Pos_order_items_report_model extends Manaknight_Model
                     $this->db->where($key, $value);
                 }
             }
+        }
+
+        if (!empty($from_date) && !empty($to_date)) 
+        {
+            $this->db->group_start(); 
+            $this->db->where('pos_order_items.created_at >= ', $from_date); 
+            $this->db->where('pos_order_items.created_at <= ', $to_date);
+            $this->db->group_end();
         }
 
         $this->db->group_by("sale_person_id");

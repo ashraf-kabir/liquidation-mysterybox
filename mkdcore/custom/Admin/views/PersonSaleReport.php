@@ -48,6 +48,20 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                                 </select> 
                             </div>
                         </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label for="from_date">From </label>
+                                <input type="date" class="form-control" id="from_date" name="from_date" value="<?php echo $from_date;?>"/>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label for="to_date">To </label>
+                                <input type="date" class="form-control" id="to_date" name="to_date" value="<?php echo $to_date;?>"/>
+                            </div>
+                        </div>
                          
 
                         <div style="width:100%;height:10px;display:block;float:none;"></div>

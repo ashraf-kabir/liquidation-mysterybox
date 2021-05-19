@@ -39,11 +39,22 @@ class Admin_person_sale_report_controller extends Admin_controller
             '/admin/person_sale_report/0');
         $this->_data['view_model']->set_heading('Person Sale Report');
         $this->_data['view_model']->set_sale_person_id(($this->input->get('sale_person_id', TRUE) != NULL) ? $this->input->get('sale_person_id', TRUE) : NULL);
-        $this->_data['view_model']->set_product_name(($this->input->get('product_name', TRUE) != NULL) ? $this->input->get('product_name', TRUE) : NULL);
+         
+
+        $this->_data['from_date']      =     $this->input->get('from_date', TRUE) != NULL  ? $this->input->get('from_date', TRUE) : NULL ;
+        $this->_data['to_date']        =     $this->input->get('to_date', TRUE) != NULL  ? $this->input->get('to_date', TRUE) : NULL ;
+
+        $from_date = $this->_data['from_date'];
+        $to_date   = $this->_data['to_date'];
+
+        if($from_date > $to_date)
+        {  
+            $this->session->set_flashdata('error2', 'Error! From date must be greater then to date.');
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
         
         $where = [
-            'sale_person_id' => $this->_data['view_model']->get_sale_person_id(),
-            'product_name' => $this->_data['view_model']->get_product_name(), 
+            'sale_person_id' => $this->_data['view_model']->get_sale_person_id(), 
         ];
 
 
@@ -63,7 +74,7 @@ class Admin_person_sale_report_controller extends Admin_controller
             $this->_data['view_model']->get_per_page(),
             $where,
             $order_by,
-            $direction));
+            $direction,$from_date,$to_date));
 
         if ($format == 'csv')
         {
@@ -157,16 +168,19 @@ class Admin_person_sale_report_controller extends Admin_controller
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
 
         $sale_person_id  = $this->input->get('sale_person_id', TRUE) != NULL ? $this->input->get('sale_person_id', TRUE) : NULL; 
+        $from_date       = $this->input->get('from_date', TRUE) != NULL ? $this->input->get('from_date', TRUE) : NULL; 
+        $to_date         = $this->input->get('to_date', TRUE) != NULL ? $this->input->get('to_date', TRUE) : NULL; 
           
          
         
         $where = [
             'sale_person_id' => $sale_person_id,  
         ];
+        
         $list = $this->pos_order_items_report_model->get_paginated_for_sale_person_to_csv(
             $where,
             $order_by,
-            $direction);
+            $direction,$from_date ,$to_date );
 
 
 

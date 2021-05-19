@@ -550,38 +550,46 @@ check_cart_total_items();
     } 
     else 
     { 
-      dataForm = $('.send_checkout').serializeArray();
-      $.ajax({
-        url: '../v1/api/do_checkout',
-        timeout: 90000,
-        method: 'POST',
-        dataType: 'JSON', 
-        data : {'dataForm' : dataForm },
-        success: function (response)  
-        {    
-          if(response.success)
-          {
-            toastr.success(response.success); 
-            setInterval(function() {
-              window.location.href = response.redirect_url;
-            }, 2000);
-          } 
+      if (!$('#sales_are_final').is(':checked')) 
+      { 
+        toastr.error("Please accept all sales are final."); 
+        $('.image-on-submit').remove();
+        $('.place-order-btn').show(); 
+      }
+      else
+      { 
+        dataForm = $('.send_checkout').serializeArray();
+        $.ajax({
+          url: '../v1/api/do_checkout',
+          timeout: 90000,
+          method: 'POST',
+          dataType: 'JSON', 
+          data : {'dataForm' : dataForm },
+          success: function (response)  
+          {    
+            if(response.success)
+            {
+              toastr.success(response.success); 
+              setInterval(function() {
+                window.location.href = response.redirect_url;
+              }, 2000);
+            } 
 
-          if(response.error)
-          {
+            if(response.error)
+            {
+              $('.image-on-submit').remove();
+              $('.place-order-btn').show();
+              toastr.error(response.error); 
+            } 
+          },
+          error: function()
+          { 
             $('.image-on-submit').remove();
             $('.place-order-btn').show();
-            toastr.error(response.error); 
+            toastr.error('Error! Connection timeout.'); 
           } 
-        },
-        error: function()
-        { 
-          $('.image-on-submit').remove();
-          $('.place-order-btn').show();
-          toastr.error('Error! Connection timeout.'); 
-        } 
-      })
-
+        });
+      }
     }
   })
 
