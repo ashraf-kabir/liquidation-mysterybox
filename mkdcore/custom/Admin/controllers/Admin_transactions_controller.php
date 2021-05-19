@@ -149,7 +149,7 @@ class Admin_transactions_controller extends Admin_controller
 
         if ( !empty( $list ) ) 
         {
-            foreach ($list as $key => &$value) 
+            foreach ($list as $key => $value) 
             {  
                 $value->customer_id = $this->names_helper_service->get_customer_real_name( $value->customer_id );   
             }

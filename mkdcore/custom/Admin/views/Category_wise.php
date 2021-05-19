@@ -127,7 +127,10 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
         foreach ($view_model->get_column() as $key => $data) {
             $data_field = $field_column[$key];
  
-             
+            if ($data_field == 'name') 
+            {
+                $data_field = "product_name";
+            }
             if ($data == 'Action') 
             {
                 continue;
