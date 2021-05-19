@@ -2,6 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2020*/
 
+$QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
+
 ?>
 <div class="tab-content mx-4" id="nav-tabContent">
 <br>
@@ -35,25 +37,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </h5>
                 <?= form_open('/admin/person_sale_report/0', ['method' => 'get']) ?>
                     <div class="row">
-						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-							<div class="form-group">
-								<label for="Store">Sale Person </label> 
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                            <div class="form-group">
+                                <label for="Store">Sale Person </label> 
                                 <select name="sale_person_id" class="form-control">
                                     <option value="">All</option>
                                     <?php foreach ($all_users as $key => $value) {
                                         echo "<option value='{$value->id}' " . (($view_model->get_sale_person_id() == $value->id && $view_model->get_sale_person_id() != '') ? 'selected' : '') . "> {$value->first_name}  {$value->last_name}  </option>";
                                     }?>
                                 </select> 
-							</div>
-						</div>
-						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-							<div class="form-group">
-								<label for="xyzProduct">Product Name </label>
-								<input type="text" class="form-control" id="product_name" name="product_name" value="<?php echo $this->_data['view_model']->get_product_name();?>"/>
-							</div>
-						</div>
+                            </div>
+                        </div>
+                         
 
-                    <div style="width:100%;height:10px;display:block;float:none;"></div>
+                        <div style="width:100%;height:10px;display:block;float:none;"></div>
                         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                            <div class="form-group">
                                 <input type="submit" name="submit" class="btn btn-primary" value="Search">
@@ -69,6 +66,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
   <?php echo $view_model->get_heading();?>
   <span class="d-none"></span>
+
+  <span class="add-part d-flex justify-content-md-end  "><a class="btn btn-info btn-sm ml-2" href="<?php echo base_url().'admin/sale_person_report/to_csv?' . $QUERY_STRING; ?>"><i class="fas fa-file-download" style="color:white;"></i></a></span>
 </h5>
 
   <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4 pt-4" style='height:auto;'>
@@ -110,16 +109,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 {
                     if ($direction == 'ASC')
                     {
-                        echo "<th scope='col' class='paragraphText text-left'><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=DESC'>{$data} <i class='fas fa-sort-up' style='vertical-align: -0.35em;'></i></a></th>";
+                        if ($data == "Sale Person" || $data == "Phone" || $data == "Quantity Sold" || $data == "Total Amount" ) 
+                        {
+                            echo "<th scope='col' class='paragraphText text-left'> {$data}  </th>";
+                        }else{
+                            echo "<th scope='col' class='paragraphText text-left'><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=DESC'>{$data} <i class='fas fa-sort-up' style='vertical-align: -0.35em;'></i></a></th>";
+                        } 
                     }
                     else
                     {
-                        echo "<th scope='col' class='paragraphText text-left' ><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=ASC'>{$data} <i class='fas fa-sort-down' style='margin-bottom:3px;'></i></a></th>";
+                        if ($data == "Sale Person" || $data == "Phone" || $data == "Quantity Sold" || $data == "Total Amount" ) 
+                        {
+                            echo "<th scope='col' class='paragraphText text-left'> {$data}  </th>";
+                        }else{
+                            echo "<th scope='col' class='paragraphText text-left' ><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=ASC'>{$data} <i class='fas fa-sort-down' style='margin-bottom:3px;'></i></a></th>";
+                        }
                     }
                 }
                 else
                 {
-                    echo "<th  scope='col' class='paragraphText text-left'><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=ASC'>{$data} <i class='fas fa-sort-down'  style='margin-bottom:3px;color:#e2e2e2;'></i></a></th>";
+                    if ($data == "Sale Person" || $data == "Phone" || $data == "Quantity Sold" || $data == "Total Amount" ) 
+                    {
+                        echo "<th  scope='col' class='paragraphText text-left'> {$data}  </th>";
+                    }else{
+                        echo "<th  scope='col' class='paragraphText text-left'><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=ASC'>{$data} <i class='fas fa-sort-down'  style='margin-bottom:3px;color:#e2e2e2;'></i></a></th>";
+                    }
                 }
             }
         } ?>
@@ -128,11 +142,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php foreach ($view_model->get_list() as $data) { ?>
                 <?php
                     echo '<tr>';
-							echo "<td>{$data->id}</td>";
-							echo "<td>{$data->sale_person_id}</td>";
-							echo "<td>{$data->product_name}</td>";
-							echo "<td>{$data->quantity}</td>";
-							echo "<td>$" . number_format($data->amount,2) ."</td>"; 
+                            echo "<td>{$data->id}</td>";
+                            echo "<td>{$data->sale_person_id}</td>"; 
+                            echo "<td>{$data->phone}</td>";
+                            echo "<td>{$data->total_quantity}</td>";
+                            echo "<td>$" . number_format($data->total_amount,2) ."</td>"; 
                     echo '</tr>';
                 ?>
             <?php } ?>

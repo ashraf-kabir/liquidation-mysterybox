@@ -514,4 +514,187 @@ class Pos_order_items_report_model extends Manaknight_Model
     }
 
 
+
+
+    public function get_paginated_for_sale_person($page = 0, $limit=10, $where=[], $order_by='', $direction='ASC')
+    {
+        $this->db->limit($limit, $page);
+        $this->db->group_by("sale_person_id");
+        $this->db->where(" (`sale_person_id` != '0' && `sale_person_id` IS NOT NULL ) ");
+
+        if ($order_by === '')
+        {
+            $order_by = $this->_primary_key;
+        }
+
+        $this->db->order_by($this->clean_alpha_num_field($order_by), $this->clean_alpha_field($direction));
+
+        if (!empty($where))
+        {
+            foreach($where as $field => $value)
+            {
+                if (is_numeric($field) && strlen($value) > 0)
+                {
+                    $this->db->where($value);
+                    continue;
+                }
+
+                if ($field === NULL && $value === NULL)
+                {
+                    continue;
+                }
+
+                if ($value !== NULL)
+                {
+                    if(is_numeric($value))
+                    {
+                        $this->db->where($field, $value);
+                        continue;
+                    }
+
+                    if(is_string($value))
+                    {
+                        $this->db->like($field, $value);
+                        continue;
+                    }
+
+                    $this->db->where($field, $value);
+                }
+            }
+        }
+
+        $query = $this->db->get($this->_table);
+        $result = [];
+
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $row)
+            {
+                $result[] = $row;
+            }
+        }
+
+        return $result;
+    }
+
+
+
+    public function get_paginated_for_sale_person_to_csv($where=[], $order_by='', $direction='ASC')
+    { 
+        $this->db->group_by("sale_person_id");
+        $this->db->where(" (`sale_person_id` != '0' && `sale_person_id` IS NOT NULL ) ");
+
+        if ($order_by === '')
+        {
+            $order_by = $this->_primary_key;
+        }
+
+        $this->db->order_by($this->clean_alpha_num_field($order_by), $this->clean_alpha_field($direction));
+
+        if (!empty($where))
+        {
+            foreach($where as $field => $value)
+            {
+                if (is_numeric($field) && strlen($value) > 0)
+                {
+                    $this->db->where($value);
+                    continue;
+                }
+
+                if ($field === NULL && $value === NULL)
+                {
+                    continue;
+                }
+
+                if ($value !== NULL)
+                {
+                    if(is_numeric($value))
+                    {
+                        $this->db->where($field, $value);
+                        continue;
+                    }
+
+                    if(is_string($value))
+                    {
+                        $this->db->like($field, $value);
+                        continue;
+                    }
+
+                    $this->db->where($field, $value);
+                }
+            }
+        }
+
+        $query = $this->db->get($this->_table);
+        $result = [];
+
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $row)
+            {
+                $result[] = $row;
+            }
+        }
+
+        return $result;
+    }
+
+    public function count_for_sale_person($parameters)
+    {
+        if (!empty($parameters))
+        {
+            foreach ($parameters as $key => $value)
+            {
+                if (is_numeric($key) && strlen($value) > 0)
+                {
+                    $this->db->where($value);
+                    continue;
+                }
+
+                if ($key === NULL && $value === NULL)
+                {
+                    continue;
+                }
+
+                if (!is_null($value))
+                {
+                    if(is_numeric($value))
+                    {
+                        $this->db->where($key, $value);
+                        continue;
+                    }
+
+                    if(is_string($value))
+                    {
+                        $this->db->like($key, $value);
+                        continue;
+                    }
+
+                    $this->db->where($key, $value);
+                }
+            }
+        }
+
+        $this->db->group_by("sale_person_id");
+        $this->db->where(" (`sale_person_id` != '0' && `sale_person_id` IS NOT NULL ) ");
+
+        $this->_custom_counting_conditions($this->db);
+        $this->db->from($this->_table);
+        return $this->db->count_all_results();
+    }
+
+
+
+
+    public function get_total_for_sale_person($sale_person_id)
+    {   
+        $this->db->from($this->_table);
+        $this->db->select(' SUM(amount) as total_amount,  SUM(quantity) as total_quantity,  SUM(shipping_cost_value) as total_shipping_cost_value,  SUM(item_tax) as total_item_tax ');
+        $this->db->where('sale_person_id', $sale_person_id);  
+
+        return $this->db->get()->row();
+        
+    }
+
+
 }

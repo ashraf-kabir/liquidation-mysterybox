@@ -11,7 +11,7 @@ include_once 'Admin_controller.php';
  */
 class Admin_person_sale_report_controller extends Admin_controller
 {
-    protected $_model_file = 'pos_order_items_model';
+    protected $_model_file = 'pos_order_items_report_model';
     public $_page_name = 'Person Sale Report';
 
     public function __construct()
@@ -24,7 +24,7 @@ class Admin_person_sale_report_controller extends Admin_controller
 
     
 
-        public function index($page)
+    public function index($page)
     {
         $this->load->library('pagination');
         include_once __DIR__ . '/../../view_models/PersonSaleReport_admin_list_paginate_view_model.php';
@@ -34,7 +34,7 @@ class Admin_person_sale_report_controller extends Admin_controller
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
 
         $this->_data['view_model'] = new PersonSaleReport_admin_list_paginate_view_model(
-            $this->pos_order_items_model,
+            $this->pos_order_items_report_model,
             $this->pagination,
             '/admin/person_sale_report/0');
         $this->_data['view_model']->set_heading('Person Sale Report');
@@ -50,7 +50,7 @@ class Admin_person_sale_report_controller extends Admin_controller
         $this->_data['all_users'] = $this->user_model->get_all_users();
 
         
-        $this->_data['view_model']->set_total_rows($this->pos_order_items_model->count($where));
+        $this->_data['view_model']->set_total_rows($this->pos_order_items_report_model->count_for_sale_person($where));
 
         $this->_data['view_model']->set_format_layout($this->_data['layout_clean_mode']);
         $this->_data['view_model']->set_per_page(25);
@@ -58,7 +58,7 @@ class Admin_person_sale_report_controller extends Admin_controller
         $this->_data['view_model']->set_sort($direction);
         $this->_data['view_model']->set_sort_base_url('/admin/person_sale_report/0');
         $this->_data['view_model']->set_page($page);
-        $this->_data['view_model']->set_list($this->pos_order_items_model->get_paginated(
+        $this->_data['view_model']->set_list($this->pos_order_items_report_model->get_paginated_for_sale_person(
             $this->_data['view_model']->get_page(),
             $this->_data['view_model']->get_per_page(),
             $where,
@@ -88,16 +88,48 @@ class Admin_person_sale_report_controller extends Admin_controller
             foreach ($this->_data['view_model']->get_list() as $key => $value) 
             {   
                 $user_data = $this->user_model->get( $value->sale_person_id);  
+                
 
                 $name = "N/A";
+                $total_amount = 0;
+                $total_quantity = 0;
+                $total_shipping_cost_value = 0;
+                $total_item_tax = 0;
                 if (isset($user_data->first_name)) 
                 {
+                    $total_data = $this->pos_order_items_report_model->get_total_for_sale_person( $value->sale_person_id);   
+
+                    if (isset($total_data->total_amount)) 
+                    {
+                        $total_amount               = $total_data->total_amount;
+                        $total_quantity             = $total_data->total_quantity;
+                        $total_shipping_cost_value  = $total_data->total_shipping_cost_value;
+                        $total_item_tax             = $total_data->total_item_tax;
+                    }
+
+                    $value->total_amount               = $total_amount;
+                    $value->total_quantity             = $total_quantity;
+                    $value->total_shipping_cost_value  = $total_shipping_cost_value;
+                    $value->total_item_tax             = $total_item_tax;
+                   
+                    $value->phone  =   $user_data->phone;
                     $name = $user_data->first_name ." " .  $user_data->last_name; 
+                }
+                else
+                {
+                    $value->total_amount               = $total_amount;
+                    $value->total_quantity             = $total_quantity;
+                    $value->total_shipping_cost_value  = $total_shipping_cost_value;
+                    $value->total_item_tax             = $total_item_tax;
+                    $value->phone                      = "";
                 }
 
                 $value->sale_person_id = $name;
             }
         } 
+
+
+
 
         
         return $this->render('Admin/PersonSaleReport', $this->_data);
@@ -109,7 +141,118 @@ class Admin_person_sale_report_controller extends Admin_controller
 
     
 
+    public function to_csv()
+    { 
+
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="Person_Sale_Report.csv"');
+
+        $this->load->model('user_model');
+        $this->load->model('pos_order_items_report_model');
+
+ 
+         
+
+        $order_by = $this->input->get('order_by', TRUE) ?? '';
+        $direction = $this->input->get('direction', TRUE) ?? 'ASC';
+
+        $sale_person_id  = $this->input->get('sale_person_id', TRUE) != NULL ? $this->input->get('sale_person_id', TRUE) : NULL; 
+          
+         
+        
+        $where = [
+            'sale_person_id' => $sale_person_id,  
+        ];
+        $list = $this->pos_order_items_report_model->get_paginated_for_sale_person_to_csv(
+            $where,
+            $order_by,
+            $direction);
+
+
+
+        
+
+        if ( !empty( $list ) ) 
+        { 
+            foreach ($list as $key => $value) 
+            {   
+                $user_data = $this->user_model->get( $value->sale_person_id);  
+                
+
+                $name = "N/A";
+                $total_amount              = 0;
+                $total_quantity            = 0;
+                $total_shipping_cost_value = 0;
+                $total_item_tax            = 0;
+                if (isset($user_data->first_name)) 
+                {
+                    $total_data = $this->pos_order_items_report_model->get_total_for_sale_person( $value->sale_person_id);   
+
+                    if (isset($total_data->total_amount)) 
+                    {
+                        $total_amount               = $total_data->total_amount;
+                        $total_quantity             = $total_data->total_quantity;
+                        $total_shipping_cost_value  = $total_data->total_shipping_cost_value;
+                        $total_item_tax             = $total_data->total_item_tax;
+                    }
+
+                    $value->total_amount               = $total_amount;
+                    $value->total_quantity             = $total_quantity;
+                    $value->total_shipping_cost_value  = $total_shipping_cost_value;
+                    $value->total_item_tax             = $total_item_tax;
+                   
+                    $value->phone  =   $user_data->phone;
+                    $name = $user_data->first_name ." " .  $user_data->last_name; 
+                }
+                else
+                {
+                    $value->total_amount               = $total_amount;
+                    $value->total_quantity             = $total_quantity;
+                    $value->total_shipping_cost_value  = $total_shipping_cost_value;
+                    $value->total_item_tax             = $total_item_tax;
+                    $value->phone                      = "";
+                }
+
+                $value->sale_person_id = $name;
+            }
+        } 
+  
+
+        $clean_list = []; 
+        foreach ($list as $key => $value)
+        {  
+            $clean_list_entry                    = [];
+            $clean_list_entry['id']              = $value->id;
+            $clean_list_entry['sale_person_id']  = $value->sale_person_id;
+            $clean_list_entry['phone']           = $value->phone;
+            $clean_list_entry['total_quantity']  = $value->total_quantity;
+            $clean_list_entry['total_amount']    = number_format($value->total_amount,2); 
+            $clean_list[]                        = $clean_list_entry;
+        }
     
+        
+ 
+        $column_fields = ['ID' , 'Name', 'Phone', 'Quantity Sold', 'Total Amount'];
+       
+        $csv = implode(",", $column_fields) . "\n";
+        // $fields = array_filter($this->get_field_column());
+        foreach($clean_list as $row)
+        {
+            $row_csv = [];
+            foreach($row as $key =>$column)
+            {
+                // if (in_array($key, $fields))
+                // {
+                    $row_csv[] = '"' . $column . '"';
+                // }
+            }
+            $csv = $csv . implode(',', $row_csv) . "\n";
+        }   
+     
+        echo $csv; 
+        exit(); 
+    }
+
     
     
     

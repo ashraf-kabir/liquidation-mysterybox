@@ -2697,7 +2697,7 @@
 			"custom_view_list": "",
 			"custom_view_view": "",
 			"listing_fields_api": ["id", "tax"],
-			"listing_headers": ["xyzID", "Sale Person", "Product Name", "Quantity", "Amount" ],
+			"listing_headers": ["xyzID", "Sale Person", "Phone", "Quantity Sold", "Total Amount" ],
 			"listing_rows": ["id|integer", "sale_person_id|string", "product_name|string", "quantity|integer", "amount|integer" ],
 			"listing_actions": [],
 			"filter_fields": ["sale_person_id" , "product_name" ],
@@ -3237,6 +3237,7 @@
 		"admin/shipping_cost_report/to_csv": "Admin/Admin_shipping_cost_report_controller/to_csv", 
 		"admin/transactions/to_csv": "Admin/Admin_transactions_controller/to_csv",
 		"admin/traffic_link_report/to_csv": "Admin/Admin_traffic_link_report_controller/to_csv",
+		"admin/sale_person_report/to_csv": "Admin/Admin_person_sale_report_controller/to_csv",
 
 		"admin/scan/scan_product_view": "Admin/Admin_inventory_controller/scan_product_view",
 
