@@ -393,12 +393,13 @@ class Admin_category_wise_controller extends Admin_controller
         $clean_list = []; 
         foreach ($list as $key => $value)
         {
+            $sku = preg_replace('~\G0~', 'O', $value->sku);
             // $list[$key]->status       = $this->status_mapping()[$value->status];
             $list[$key]->status       = 1;
             $clean_list_entry              = [];
             $clean_list_entry['id']        = $value->id;
             $clean_list_entry['name']      = $value->product_name;
-            $clean_list_entry['sku']       = $value->sku;
+            $clean_list_entry['sku']       = $sku;
             $clean_list_entry['qty_sold']  = $value->total_qty;
             $clean_list_entry['amount']    = "$" . number_format($value->total_sale,2);
             $clean_list[]                  = $clean_list_entry;

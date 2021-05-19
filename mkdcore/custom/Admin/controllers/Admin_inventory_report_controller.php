@@ -145,10 +145,12 @@ class Admin_inventory_report_controller extends Admin_controller
         $clean_list = []; 
         foreach ($list as $key => $value)
         {  
+            // $sku = str_replace("0", "O", $value->sku);
+            $sku = preg_replace('~\G0~', 'O', $value->sku);
             $clean_list_entry              = [];
             $clean_list_entry['id']        = $value->id;
             $clean_list_entry['name']      = $value->product_name;
-            $clean_list_entry['sku']       = $value->sku;
+            $clean_list_entry['sku']       = $sku;
             $clean_list_entry['category']  = $value->category_id;
             $clean_list_entry['quantity']  = $value->quantity; 
             $clean_list[]                  = $clean_list_entry;
