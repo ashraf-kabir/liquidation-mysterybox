@@ -1053,6 +1053,20 @@ class Home_controller extends Manaknight_Controller
     }
 
     
+    public function terms_and_conditions()
+    {   
+         
+        $this->load->model('terms_and_conditions_model');
+ 
+        $data['terms']     =  $this->terms_and_conditions_model->get(1); 
+        $data['active'] = 'checkout';
+        $data['layout_clean_mode'] = FALSE;
+        
+        $this->_render('Guest/TermsAndConditions',$data);
+         
+    }
+
+    
 
     public function product($id = 0)
     { 
@@ -1237,6 +1251,7 @@ class Home_controller extends Manaknight_Controller
                     $this->set_session('user_id', (int) $user->id); 
                     $this->set_session('email', (string) $user->email); 
                     $this->set_session('customer_login', 1);  
+                    $this->set_session('role', 5);  
 
                     $this->add_user_id_for_orders();
                     $output['status'] = 0;

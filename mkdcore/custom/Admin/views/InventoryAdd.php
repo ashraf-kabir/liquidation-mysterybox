@@ -96,7 +96,13 @@ if ($layout_clean_mode) {
                     <select  class="form-control data-input" id="sale_person_id" name="sale_person_id">
                         <option value="" >Select</option>
                         <?php foreach ($sale_persons as $key => $value) {
-                            echo "<option value='{$value->id}'> {$value->first_name}  {$value->last_name} </option>";
+
+                            $selected = "";
+                            if ($this->session->userdata('role') != 2 && $value->id == $this->session->userdata('user_id')) 
+                            {  
+                                $selected = " selected ";
+                            }
+                            echo "<option  " . $selected . " value='{$value->id}'> {$value->first_name}  {$value->last_name} </option>";
                         }?>
                     </select> 
                 </div>

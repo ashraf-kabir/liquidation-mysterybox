@@ -529,7 +529,7 @@
                <div class="header">
                     <label for="terms" style="margin-top: 13px;">
                         <input type="checkbox" required name="terms" id="terms1" class="mr-2" />
-                        I’ve read and accept the <a href="">Terms & Conditions</a>
+                        I’ve read and accept the <a href="<?php echo base_url(); ?>terms_and_conditions">Terms & Conditions</a>
                         <br>
                         <input type="checkbox" required name="sales_are_final" id="sales_are_final" class="mr-2" />
                         All sales are final. Product is sold As-Is.
