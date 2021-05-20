@@ -244,7 +244,7 @@
 
                 <tr>
                     <td style="text-align: center;">
-                        <p id="footer-txt"> <b>Copyright © 2019 All rights reserved</b>
+                        <p id="footer-txt"> <b>Copyright © <?php echo Date('Y') ?> All rights reserved</b>
 
                         </p>
                     </td>
