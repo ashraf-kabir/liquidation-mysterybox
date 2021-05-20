@@ -1033,6 +1033,7 @@
 				"xyzCoupon": "/coupon/0?order_by=id&direction=DESC",
 				"xyzURL Redirect": "/url_redirect/0?order_by=id&direction=DESC",
 				"Orders": "/orders/0?order_by=id&direction=DESC",
+				"Emails": "/emails/0?order_by=id&direction=DESC",
 				"xyzReports": {
 					"xyzTransactions": "/transactions/0?order_by=id&direction=DESC",
 					"xyzSales Report": "/category_wise/0?order_by=id&direction=DESC",
@@ -1041,9 +1042,10 @@
 					"xyzCustomer Report": "/customer_report/0?order_by=id&direction=DESC",
 					"xyzShipping Cost Report": "/shipping_cost_report/0?order_by=id&direction=DESC",
 					"xyzTraffic Link Report": "/traffic_link_report/0?order_by=id&direction=DESC"
-				},
-				"Change Password": "/me",
+				}, 
+				"Users": "/users/0?order_by=id&direction=DESC",
 				"Profile": "/profile",
+				"Change Password": "/me",
 				"Logout": "/logout"
 			}
 		}, 
@@ -2745,6 +2747,7 @@
 		"css": ["/assets/css/guest.css"]
 	},
 	"translations": {
+		"xyzSubject": "Subject",
 		"xyzReferrer": "Referrer",
 		"xyzTraffic Link Report": "Traffic Link Report",
 		"xyzAverage": "Average",
