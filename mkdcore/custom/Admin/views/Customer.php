@@ -90,7 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </section>
 
 <h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
-  <?php echo $view_model->get_heading();?>
+  <?php echo $view_model->get_heading();?>  (<?php echo $view_model->get_total_rows();?> results found)
 
     <?php if($this->session->userdata('role') == 2) { ?>
         <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/admin/customer/add"><i class="fas fa-plus-circle"></i></a></span>  

@@ -167,22 +167,38 @@ class Image_portal_controller extends Manaknight_Controller
             $image_name_url  =  $this->input->post('image_url'); 
             $image_name_id   =  $this->input->post('image_id');
 
-            $user_id  = $this->session->userdata('user_id');
 
-            $this->load->model('image_model');
+            $data = base64_encode(file_get_contents($image_name_url)); 
+            $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data)); 
+            $image_name = "/uploads/" . uniqid() . '.png';
+            file_put_contents(__DIR__ . '/../../../' . $image_name, $data); 
+            $image_name_url  = (object) $this->upload_image_with_s3($image_name, true);
 
 
-            $image_id = $this->image_model->create([
-                'url'     => $image_name_url,
-                'type'    => 0,
-                'user_id' => $user_id,
-                'width'   => 0,
-                'caption' => '',
-                'height'  => 0
-            ]);
+            if (isset($image_name_url->image_url)) 
+            {
+                $output[ 'id' ]     = $image_name_url->image_id;
+                $output[ 'image' ]  = $image_name_url->image_url;
+                unlink(__DIR__ . '/../../../' . $image_name);
+            }
+            else
+            {
+                $output[ 'error' ]      = false;
+                $output[ 'error_msg' ]  = "An error occurred while uploading image please try again later.";
+            }
 
-            $output[ 'id' ]     = $image_id;
-            $output[ 'image' ]  = $image_name_url;
+            // $user_id  = $this->session->userdata('user_id'); 
+            // $this->load->model('image_model'); 
+            // $image_id = $this->image_model->create([
+            //     'url'     => $image_name_url,
+            //     'type'    => 0,
+            //     'user_id' => $user_id,
+            //     'width'   => 0,
+            //     'caption' => '',
+            //     'height'  => 0
+            // ]);
+
+            
               
 
             echo json_encode($output);

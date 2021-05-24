@@ -415,7 +415,7 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
 
     
 
-    public function upload_image_with_s3($file_name)
+    public function upload_image_with_s3($file_name,$image_portal = false)
     { 
         $output = $this->image_upload_using_s3($file_name);
         $out_image = '';
@@ -424,7 +424,17 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
             $result = json_decode( $output->final_output );
             if(isset($result->image))
             {
-                $out_image = $result->image;
+                if ($image_portal) 
+                {
+                    $out_image = array();
+                    $out_image['image_url'] = $result->image;
+                    $out_image['image_id']  = $result->id;
+                }
+                else
+                {
+                    $out_image = $result->image;
+                }
+                
             } 
             return $out_image;
         } else{

@@ -28,18 +28,30 @@ document.addEventListener('DOMContentLoaded',function(){
 
 		    var image_name_url  = $('.add-image-form-portal').attr('data-url');
 		    var image_name_id   = $('.add-image-form-portal').attr('data-id'); 
+		    var image_preview   = $('.add-image-form-portal').attr('data-preview'); 
 	 
 
 		  	$.ajax({
 				type: "POST",
 				url: ajax_url_path + "v1/api/upload_image_portal_image_to_s3",
-				timeout: 30000,
+				timeout: 55000,
 				dataType: "JSON", 
 				data: {'image_url' : image_url, 'image_id' : image_id},
 				success: function (response) 
 				{	 
-				    $('#' + image_name_url).val(response.image);
-				    $('#' + image_name_id).val(response.id);
+					if (response.image) 
+					{
+						$('#' + image_name_url).val(response.image);
+				    	$('#' + image_name_id).val(response.id);
+				    	$('#' + image_preview).attr('src', response.image);
+				    	alert('Image has been uploaded.');
+					} 
+				    
+					if (response.error_msg) 
+					{
+						alert(response.error_msg)
+					}
+				    
 				},
 				error: function()
 				{

@@ -210,7 +210,7 @@ if ($layout_clean_mode) {
                     <input type="hidden" id="feature_image" data-srcid="output_feature_image" class="check_change_event" name="feature_image" value=""/>
                     <input type="hidden" id="feature_image_id" name="feature_image_id" value=""/>
 
-                    <button type="button"  data-url="feature_image" data-id="feature_image_id"  class="btn btn-primary btn-sm add-image-form-portal create-image-portal-modal">+</button>
+                    <button type="button" data-preview="output_feature_image"  data-url="feature_image" data-id="feature_image_id"  class="btn btn-primary btn-sm add-image-form-portal create-image-portal-modal">+</button>
                     <span id="feature_image_complete" style="display: block;"></span>
  
                 </div>              

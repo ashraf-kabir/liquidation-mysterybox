@@ -26,7 +26,7 @@ if ($layout_clean_mode) {
 <?php endif; ?>
 
 <h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
-  <?php echo $view_model->get_heading();?>
+  <?php echo $view_model->get_heading();?>  (<?php echo $view_model->get_total_rows();?> results found)
 </h5>
 
 <section class='p-3'>

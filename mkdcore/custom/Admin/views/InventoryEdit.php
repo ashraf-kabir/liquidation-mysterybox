@@ -223,6 +223,9 @@ if($this->session->userdata('role') == 1)
                     <input type="hidden" id="feature_image_id" name="feature_image_id" value="<?php echo set_value('feature_image_id', $this->_data['view_model']->get_feature_image_id());?>"/>
                     
                     <span id="feature_image_complete" style="display: block;"></span>
+
+                    <button type="button" data-preview="output_feature_image"  data-url="feature_image" data-id="feature_image_id"  class="btn btn-primary btn-sm add-image-form-portal create-image-portal-modal">+</button>
+                    <span id="feature_image_complete" style="display: block;"></span>
                 </div>
                 
  

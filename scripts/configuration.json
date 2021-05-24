@@ -2832,7 +2832,7 @@
 		"js": ["/assets/js/guest.js"],
 		"css": ["/assets/css/guest.css"]
 	},
-	"translations": {
+	"translations": { 
 		"xyzSubject": "Subject",
 		"xyzReferrer": "Referrer",
 		"xyzTraffic Link Report": "Traffic Link Report",

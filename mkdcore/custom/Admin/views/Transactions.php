@@ -56,7 +56,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
 </section>
 
 <h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
-  <?php echo $view_model->get_heading();?>
+  <?php echo $view_model->get_heading();?>  (<?php echo $view_model->get_total_rows();?> results found)
   <span class="d-none"></span>
 
   <span class="add-part d-flex justify-content-md-end  "><a class="btn btn-info btn-sm ml-2" href="<?php echo base_url().'admin/transactions/to_csv?' . $QUERY_STRING; ?>"><i class="fas fa-file-download" style="color:white;"></i></a></span>

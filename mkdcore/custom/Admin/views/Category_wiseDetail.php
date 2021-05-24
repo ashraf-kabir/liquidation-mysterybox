@@ -71,7 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </section>
 
 <h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
-    <?php echo $heading; ?> Sale Report
+    <?php echo $heading; ?> Sale Report  (<?php echo $view_model->get_total_rows();?> results found)
   <span class="d-none"></span>
 </h5>
 
