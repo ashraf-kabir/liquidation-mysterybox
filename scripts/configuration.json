@@ -477,6 +477,9 @@
 			"migration": true,
 			"field": [
 				["id", "integer", [], "xyzID", "", ""],
+				["feature_image", "image|250|250|500|500", [{
+					"limit": 255
+				}], "xyzImage", "", ""], 
 				["name", "string", [{ "limit": 255 }], "xyzName", "required|max_length[255]", "required|max_length[255]"],
 				["sku_prefix", "string", [{ "limit": 255 }], "SKU Prefix", "max_length[255]", "max_length[255]"],
 				["parent_category_id", "integer", [], "xyzParent Category", "", ""],
@@ -1010,6 +1013,44 @@
 			"seed": [
 				{"terms_and_condition_text" : "Test"}
 			]
+		},
+		{ 
+			"name": "carosal_slider",
+			"timestamp": true,
+			"migration": true,
+			"unique": [],
+			"field": [
+				["id", "integer", [], "ID", "", ""],
+				["feature_image", "image|250|250|500|500", [{ "limit": 255 }], "xyzImage", "required", "required"] 
+			],
+			"join": [],
+			"method": "",
+			"mapping": {},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"override": "",
+			"seed": []
+		}, 
+		{ 
+			"name": "home_page_setting",
+			"timestamp": true,
+			"migration": true,
+			"unique": [],
+			"field": [
+				["id", "integer", [], "ID", "", ""],
+				["home_page_top_text", "string", [{"limit": 255}], "Top Bar Text", "max_length[255]", "max_length[255]"],
+				["home_page_top_color", "string", [{"limit": 255}], "Top Bar Color", "max_length[255]", "max_length[255]"],
+				["home_page_top_bg", "string", [{"limit": 255}], "Top Bar Background Color", "max_length[255]", "max_length[255]"]
+			],
+			"join": [],
+			"method": "",
+			"mapping": {},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"override": "",
+			"seed": []
 		}
 
 	],
@@ -1043,15 +1084,20 @@
 			"menu": {
 				"Dashboard": "/dashboard", 
 				"xyzInventory" : "/inventory/0?order_by=id&direction=DESC", 
-				"Scan Inventory" : "/scan/scan_product_view", 
-				
+				"Scan Inventory" : "/scan/scan_product_view",  
 				"xyzCategory" : "/category/0?order_by=id&direction=DESC", 
 				"xyzStore" : "/store/0?order_by=id&direction=DESC", 
 				"xyzInventory Location" : "/inventory_location/0?order_by=id&direction=DESC",  
 				"xyzCustomer" : "/customer/0?order_by=id&direction=DESC", 
 				"xyzTax": "/tax/0?order_by=id&direction=DESC",
 				"Traffic Referrer": "/traffic_referrer/0?order_by=id&direction=DESC", 
-				"Terms And Conditions": "/terms_and_conditions/edit", 
+				"Setting": {
+					"Top Bar": "/top_bar_setting", 
+					"Carosal Slider": "/carosal_slider/0?order_by=id&direction=DESC", 
+					"Terms And Conditions": "/terms_and_conditions/edit"
+				},
+				
+				
 				"Orders": "/orders/0?order_by=id&direction=DESC", 
 				"xyzReports": {
 					"xyzTransactions": "/transactions/0?order_by=id&direction=DESC",
@@ -1839,14 +1885,14 @@
 			"custom_view_edit": "",
 			"custom_view_list": "",
 			"custom_view_view": "",
-			"listing_fields_api": ["id", "name", "parent_category_id", "status"],
-			"listing_headers": ["xyzID", "xyzName", "xyzParent Category", "SKU Prefix", "xyzStatus"],
-			"listing_rows": ["id|integer", "name|string", "parent_category_id|integer", "sku_prefix|string", "status|integer"],
+			"listing_fields_api": ["id", "feature_image", "name", "parent_category_id", "status"],
+			"listing_headers": ["xyzID", "xyzName", "Image", "xyzParent Category", "SKU Prefix", "xyzStatus"],
+			"listing_rows": ["id|integer", "name|string", "feature_image|image", "parent_category_id|integer", "sku_prefix|string", "status|integer"],
 			"listing_actions": [],
 			"filter_fields": ["name", "status"],
-			"add_fields": ["name", "parent_category_id", "sku_prefix", "status"],
-			"edit_fields": ["name", "parent_category_id", "sku_prefix", "status"],
-			"view_fields": ["id", "name", "parent_category_id", "sku_prefix", "status"],
+			"add_fields": ["name", "feature_image", "parent_category_id", "sku_prefix", "status"],
+			"edit_fields": ["name", "feature_image", "parent_category_id", "sku_prefix", "status"],
+			"view_fields": ["id", "name", "feature_image", "parent_category_id", "sku_prefix", "status"],
 			"autocomplete": "",
 			"dynamic_mapping_add": {},
 			"dynamic_mapping_edit": {},
@@ -2798,6 +2844,71 @@
 			"dynamic_mapping_view": {},
 			"dynamic_mapping": {},
 			"load_libraries": []
+		},
+		{
+			"route": "/carosal_slider",
+			"name": "CarosalSlider",
+			"page_name": "Carosal Slider",
+			"model": "carosal_slider",
+			"controller": "Admin_carosal_slider_controller.php",
+			"api_controller": "Admin_carosal_slider_api_controller.php",
+			"activity_log": false,
+			"override": "",
+			"override_add": "",
+			"override_edit": "",
+			"override_view": "",
+			"override_list": "",
+			"override_add_view_model": "",
+			"override_edit_view_model": "",
+			"override_view_view_model": "",
+			"override_list_view_model": "",
+			"api": false,
+			"frontend": false,
+			"paginate": true,
+			"paginate_join": "",
+			"portal": "admin",
+			"is_crud": true,
+			"method_edit_pre": "",
+			"is_add": true,
+			"is_edit": true,
+			"is_delete": false,
+			"is_real_delete": true,
+			"is_list": true,
+			"is_view": true,
+			"import": false,
+			"export": false,
+			"is_filter": false,
+			"all_records": true,
+			"active_only": false,
+			"middleware": [],
+			"method": "",
+			"method_add": "",
+			"method_edit": "",
+			"method_list": "",
+			"method_view": "",
+			"method_add_success": "",
+			"method_edit_success": "",
+			"method_list_success": "",
+			"method_view_success": "",
+			"method_delete_success": "",
+			"custom_view_add": "",
+			"custom_view_edit": "",
+			"custom_view_list": "",
+			"custom_view_view": "",
+			"listing_fields_api": ["id", "feature_image"],
+			"listing_headers": ["xyzID", "Image"],
+			"listing_rows": ["id|integer", "feature_image|image"],
+			"listing_actions": [],
+			"filter_fields": [],
+			"add_fields": ["feature_image"],
+			"edit_fields": ["feature_image"],
+			"view_fields": ["feature_image"],
+			"autocomplete": "",
+			"dynamic_mapping_add": {},
+			"dynamic_mapping_edit": {},
+			"dynamic_mapping_view": {},
+			"dynamic_mapping": {},
+			"load_libraries": []
 		}
 	],
 	"packages": {
@@ -3201,6 +3312,8 @@
 		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css",
 		
 		"../mkdcore/custom/assets/js/address_form.js": "../release/assets/js/address_form.js",
+		"../mkdcore/custom/assets/js/swiper-bundle.min.js": "../release/assets/frontend_js/swiper-bundle.min.js",
+		"../mkdcore/custom/assets/css/swiper-bundle.min.css": "../release/assets/frontend_css/swiper-bundle.min.css",
 		"../mkdcore/custom/assets/css/checkout.css": "../release/assets/css/checkout.css",
 
 		"../mkdcore/custom/Services/Api_service.php" : "../release/application/libraries/Api_service.php",
@@ -3227,7 +3340,10 @@
 		"../mkdcore/custom/Admin/controllers/Admin_traffic_referrer_controller.php" : "../release/application/controllers/Admin/Admin_traffic_referrer_controller.php", 
 		"../mkdcore/custom/Admin/controllers/Admin_person_sale_report_controller.php" : "../release/application/controllers/Admin/Admin_person_sale_report_controller.php", 
 		"../mkdcore/custom/Admin/controllers/Admin_terms_and_conditions_controller.php" : "../release/application/controllers/Admin/Admin_terms_and_conditions_controller.php", 
+		"../mkdcore/custom/Admin/controllers/Admin_carosal_slider_controller.php" : "../release/application/controllers/Admin/Admin_carosal_slider_controller.php", 
 		 
+		"../mkdcore/custom/Admin/views/CarosalSliderAdd.php" : "../release/application/views/Admin/CarosalSliderAdd.php",
+		"../mkdcore/custom/Admin/views/CarosalSliderEdit.php" : "../release/application/views/Admin/CarosalSliderEdit.php",
 		"../mkdcore/custom/Admin/views/Pos_userAdd.php" : "../release/application/views/Admin/Pos_userAdd.php",
 		"../mkdcore/custom/Admin/views/Pos_userEdit.php" : "../release/application/views/Admin/Pos_userEdit.php",
 		"../mkdcore/custom/Admin/controllers/Admin_user_controller.php" : "../release/application/controllers/Admin/Admin_user_controller.php",
@@ -3248,6 +3364,7 @@
 		"../mkdcore/custom/Admin/views/TrafficLinkReport.php" : "../release/application/views/Admin/TrafficLinkReport.php",
 		"../mkdcore/custom/Admin/views/Transactions.php" : "../release/application/views/Admin/Transactions.php",
 		"../mkdcore/custom/Admin/views/PersonSaleReport.php" : "../release/application/views/Admin/PersonSaleReport.php",
+		"../mkdcore/custom/Admin/views/TopBarSettingEdit.php" : "../release/application/views/Admin/TopBarSettingEdit.php",
 
 		"../mkdcore/custom/Admin/views/Customer.php" : "../release/application/views/Admin/Customer.php",
 		"../mkdcore/custom/Admin/views/CustomerAdd.php" : "../release/application/views/Admin/CustomerAdd.php",
@@ -3331,6 +3448,7 @@
 
 		"admin/scan/scan_product_view": "Admin/Admin_inventory_controller/scan_product_view",
 		"admin/terms_and_conditions/edit": "Admin/Admin_terms_and_conditions_controller/edit/$1",
+		"admin/top_bar_setting": "Admin/Admin_carosal_slider_controller/top_bar_setting/$1",
 
 		
 		"admin/inventory/delete_gallery_image/(:num)": "Admin/Admin_inventory_controller/delete_gallery_image/$1",

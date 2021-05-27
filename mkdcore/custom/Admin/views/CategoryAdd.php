@@ -62,6 +62,23 @@ if ($layout_clean_mode) {
 					<label for="Name">Name </label>
 					<input type="text" class="form-control data-input" id="form_name" name="name" value="<?php echo set_value('name'); ?>"/>
 				</div>
+
+
+
+                <div class="form-group col-md-5 col-sm-12">
+                    <label for="Image">Feature Image </label>
+                    <img id="output_feature_image" style="max-height:100px" onerror="if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';"/>
+                    <div class="btn uppload-button image_id_uppload_library btn-primary btn-sm  " data-image-url="feature_image" data-image-id="feature_image_id" data-image-preview="output_feature_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
+                    <input type="hidden" id="feature_image" data-srcid="output_feature_image" class="check_change_event" name="feature_image" value=""/>
+                    <input type="hidden" id="feature_image_id" name="feature_image_id" value=""/>
+
+                    <button type="button" data-preview="output_feature_image"  data-url="feature_image" data-id="feature_image_id"  class="btn btn-primary btn-sm add-image-form-portal create-image-portal-modal">+</button>
+                    <span id="feature_image_complete" style="display: block;"></span>
+ 
+                </div>  
+
+
+
 				<div class="form-group col-md-5 col-sm-12 ">
 					<label for="Parent Category">Parent Category </label> 
                     <select class="form-control data-input" id="form_parent_category_id" name="parent_category_id">
@@ -97,3 +114,25 @@ if ($layout_clean_mode) {
     </div>
 </div>
 </div>
+
+
+
+<?php 
+    $this->load->view('Guest/ImagePortalModal.php');
+?>
+
+
+
+ 
+
+<script type="text/javascript" src="<?php echo base_url() ?>assets/js/image-portal.js"></script> 
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function(){  
+        $(function(){ 
+            $("body").on("change",".check_change_event",function(){
+                var current_src_id = $(this).attr('data-srcid'); 
+                $('#' + current_src_id).attr('src', $(this).val());
+            });
+        });
+    }, false)
+</script>

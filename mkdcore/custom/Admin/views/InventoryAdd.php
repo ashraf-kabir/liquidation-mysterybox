@@ -354,14 +354,4 @@ if ($layout_clean_mode) {
 
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/image-portal.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/multiple-gallery-image-upload.js"></script>
-
-<script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function(){  
-        $(function(){ 
-            $("body").on("change",".check_change_event",function(){
-                var current_src_id = $(this).attr('data-srcid'); 
-                $('#' + current_src_id).attr('src', $(this).val());
-            });
-        });
-    }, false)
-</script>
+ 

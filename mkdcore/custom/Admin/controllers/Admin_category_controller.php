@@ -112,11 +112,13 @@ class Admin_category_controller extends Admin_controller
 		$parent_category_id = $this->input->post('parent_category_id', TRUE);
 		$status = $this->input->post('status', TRUE);
         $sku_prefix = $this->input->post('sku_prefix', TRUE);
+        $feature_image = $this->input->post('feature_image', TRUE);
 		
         $result = $this->category_model->create([
             'name' => $name,
 			'parent_category_id' => $parent_category_id,
 			'status' => $status,
+            'feature_image' => $feature_image,
             'sku_prefix' => $sku_prefix,
 			
         ]);
@@ -160,12 +162,14 @@ class Admin_category_controller extends Admin_controller
         $parent_category_id = $this->input->post('parent_category_id', TRUE);
         $status = $this->input->post('status', TRUE);
         $sku_prefix = $this->input->post('sku_prefix', TRUE);
+        $feature_image = $this->input->post('feature_image', TRUE);
 		
         $result = $this->category_model->edit([
             'name' => $name,
 			'parent_category_id' => $parent_category_id,
 			'status' => $status,
             'sku_prefix' => $sku_prefix,
+            'feature_image' => $feature_image,
 			
         ], $id);
 
@@ -197,6 +201,7 @@ class Admin_category_controller extends Admin_controller
         
         $this->names_helper_service->set_category_model($this->category_model);  
         $model->parent_category_id = $this->names_helper_service->get_category_real_name( $model->parent_category_id ); 
+        $model->feature_image = "<img style='width:100%' src='" .$model->feature_image . "' />"; 
          
         $this->_data['view_model']->set_model($model);
          

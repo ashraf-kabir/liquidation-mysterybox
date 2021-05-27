@@ -51,6 +51,9 @@ class Home_controller extends Manaknight_Controller
     public function index($offset = 0)
     {  
         $data['layout_clean_mode'] = FALSE;
+
+        $this->load->model('carosal_slider_model'); 
+        $data['carosal_sliders'] = $this->carosal_slider_model->get_all(); 
         $this->_render('Guest/Home',$data);
     }
 
@@ -1141,14 +1144,16 @@ class Home_controller extends Manaknight_Controller
 
     protected function _render($template, $data)
     {
-        
+        $this->load->model('home_page_setting_model');
+
         $all_categories  = $this->category_model->get_all(['status' => 1]);
          
 
         $data['all_categories']   = $all_categories;
         $data['page_section']     = $template;
         $data['support_email']    = $this->config->item('support_email'); 
-         
+        
+        $data['home_page_setting'] = $this->home_page_setting_model->get(1);
 
         $this->load->view('Guest/Header', $data);
         $this->load->view($template, $data);

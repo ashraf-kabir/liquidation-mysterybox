@@ -143,3 +143,8 @@ Add 2nd check box that is required on checkout. "All sales are final. Product is
 3.every 48 hours images saved get deleted?
 
 https://www.google.com/search?q=9400111108400103579626
+
+
+----------------
+
+ALTER TABLE `category` ADD `feature_image` TEXT NOT NULL AFTER `name`;

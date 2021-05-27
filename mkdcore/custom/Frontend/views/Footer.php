@@ -1,6 +1,6 @@
 <footer class="container-fluid">
-    <div class="row justify-content-start offset-md-1">
-        <div class="col-10 col-md-3 pr-md-5 footer__col my-4">
+    <div class="row justify-content-start  ">
+        <div class="col-10 col-md-4 pr-md-5 footer__col my-4">
             <ul class="list-unstyled">
                 <li class="my-3 d-flex">
                     <i class="fas fa-map-marker-alt"></i>
@@ -17,8 +17,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-10 col-md-2 footer__col my-4">
-            <h5 class="footer__header">FOLLOW US</h5>
+        <div class="col-10 col-md-6 footer__col my-4"> 
             <div class="follow__buttons">
                 <a href="https://facebook.com"><i class="fab fa-facebook-f fb-icon"></i></a>
                 <a href="https://facebook.com"><i class="fab fa-twitter tw-icon"></i></a>
@@ -27,8 +26,7 @@
                 <a href="https://facebook.com"><i class="fab fa-pinterest pi-icon"></i></a>
             </div>
         </div>
-        <div class="col-10 col-md-2 footer__col my-4">
-            <h5 class="footer__header">SITE MAP</h5>
+        <div class="col-10 col-md-2 footer__col my-4"> 
             <ul class="p-0 site__mapUl">
                 <li><a href="<?php echo base_url(); ?>about_us/">About Us</a></li>
                 <li><a href="<?php echo base_url(); ?>contact_us/">Contacts</a></li>
@@ -37,9 +35,9 @@
         </div>
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-10 mt-4 mb-5">
-            <p class="copyright__text">Copyright &copy; <?php echo Date('Y') ?>  VegasLiquidation.com</p>
+    <div class="row justify-content-center" style="text-align: center;">
+        <div class="col-12 col-md-10 ">
+            <p class="copyright__text" style="margin: 0px;">Copyright &copy; <?php echo Date('Y') ?>  VegasLiquidation.com</p>
         </div>
     </div>
 
@@ -277,8 +275,48 @@ crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
+<script src="<?php echo base_url(); ?>/assets/frontend_js/swiper-bundle.min.js"></script>
+
 <script src="<?php echo base_url(); ?>/assets/frontend_js/script.js"></script>
 
+  <!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+    });
+
+    var swiper_mysterybox = new Swiper(".mySwiper-mysterybox", {
+        slidesPerView: 3,
+        centeredSlides: false,
+        spaceBetween: 30,
+        pagination: {
+            el: ".swiper-pagination-mysterybox-card",
+            type: "fraction",
+        },
+        navigation: {
+          nextEl: ".swiper-button-next-mysterybox-card",
+          prevEl: ".swiper-button-prev-mysterybox-card",
+        },
+      }); 
+
+    var swiper_liquidation = new Swiper(".mySwiper-liquidation", {
+        slidesPerView: 3,
+        centeredSlides: false,
+        spaceBetween: 30,
+        pagination: {
+            el: ".swiper-pagination-liquidation-card",
+            type: "fraction",
+        },
+        navigation: {
+          nextEl: ".swiper-button-next-liquidation-card",
+          prevEl: ".swiper-button-prev-liquidation-card",
+        },
+      }); 
+     
+</script>
 
 <script>
     $(document).ready(function(){

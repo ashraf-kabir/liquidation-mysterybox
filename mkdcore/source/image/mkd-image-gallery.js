@@ -22,8 +22,7 @@ var picture = new window.uppload_Uppload({
 
 $(document).on('click','.image_id_uppload_library',function(){
   image_id_uppload_library  = $(this).attr('data-image-id'); 
-  image_url_uppload_library  = $(this).attr('data-image-url'); 
-
+  image_url_uppload_library  = $(this).attr('data-image-url');  
 });
  
 
@@ -61,6 +60,56 @@ picture.use([
   new window.uppload_Sepia(),  
   new window.uppload_Saturate(),  
 ]);
+
+
+
+
+
+let image_id_uppload_library_only_image = '';
+let image_url_uppload_library_only_image = '';
+
+
+var picture_only = new window.uppload_Uppload({
+    call: ".uppload-button-only-image",
+    bind: ".uppload-image-only-image",
+    lang: window.uppload_en,
+    uploader: window.uppload_fetchUploader({
+      endpoint: "/v1/api/file/upload",
+      responseFunction: json => {   
+          $("#" + image_url_uppload_library_only_image).val(json.file).trigger('change');
+          $("#" + image_url_uppload_library_only_image + "_id").val(json.id);
+          $("#" + image_url_uppload_library_only_image + "_text").html(json.file); 
+          $("#" + image_url_uppload_library_only_image + "_complete").text("Upload Complete"); 
+      }
+    })
+});
+
+$(document).on('click','.image_id_uppload_library_only_image',function(){
+  image_id_uppload_library_only_image  = $(this).attr('data-image-id'); 
+  image_url_uppload_library_only_image  = $(this).attr('data-image-url');  
+});
+ 
+
+ 
+
+picture_only.use([
+  new window.uppload_Local(),
+  new window.uppload_Camera(), 
+  new window.uppload_Instagram(),
+  new window.uppload_Facebook(),  
+  new window.uppload_URL(), 
+  new window.uppload_Screenshot(),   
+  new window.uppload_Pinterest(),
+  new window.uppload_Flickr(),
+  new window.uppload_NineGag(),
+  new window.uppload_DeviantArt(),
+  new window.uppload_ArtStation(),
+  new window.uppload_Twitter(),
+  new window.uppload_Flipboard(),
+  new window.uppload_Fotki(),
+  new window.uppload_LinkedIn(), 
+]);
+
 
 
 
