@@ -55,7 +55,7 @@
 
 <?php if (!empty($carosal_sliders)): ?> 
 
-<div class="swiper-container" style="min-height: 200px;max-height: 300px">
+<div class="swiper-container" style="min-height: 200px;max-height: 500px">
     <div class="swiper-wrapper">
         <?php foreach ($carosal_sliders as $key => $value): ?>  
             <div class="swiper-slide swiper-slide-slider-custom"><img src="<?php echo $value->feature_image ?>"></div> 
