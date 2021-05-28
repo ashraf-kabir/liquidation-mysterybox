@@ -281,45 +281,51 @@ crossorigin="anonymous"></script>
 
   <!-- Initialize Swiper -->
 <script>
-    var swiper = new Swiper('.swiper-container', {
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-    });
 
-    var swiper_mysterybox = new Swiper(".mySwiper-mysterybox", {
-        slidesPerView: 3,
-        spaceBetween: 30,
-        slidesPerGroup: 3,
-        loop: false,
-        loopFillGroupWithBlank: true,
-        pagination: {
-            el: ".swiper-pagination-mysterybox-card",
-            clickable: true,
-        },
-        navigation: {
-            nextEl: ".swiper-button-next-mysterybox-card",
-            prevEl: ".swiper-button-prev-mysterybox-card",
-        },
-    });
+    document.addEventListener('DOMContentLoaded', function()
+    {
 
-    var swiper_liquidation = new Swiper(".mySwiper-liquidation", {
-        slidesPerView: 3,
-        spaceBetween: 30,
-        slidesPerGroup: 3,
-        loop: false,
-        loopFillGroupWithBlank: true,
-        pagination: {
-            el: ".swiper-pagination-liquidation-card",
-            clickable: true,
-        },
-        navigation: {
-            nextEl: ".swiper-button-next-liquidation-card",
-            prevEl: ".swiper-button-prev-liquidation-card",
-        },
-    });  
- 
+
+        var swiper = new Swiper('.swiper-container', {
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+        var swiper_mysterybox = new Swiper(".mySwiper-mysterybox", {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            slidesPerGroup: 3,
+            loop: false,
+            loopFillGroupWithBlank: true,
+            pagination: {
+                el: ".swiper-pagination-mysterybox-card",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next-mysterybox-card",
+                prevEl: ".swiper-button-prev-mysterybox-card",
+            },
+        });
+
+        var swiper_liquidation = new Swiper(".mySwiper-liquidation", {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            slidesPerGroup: 3,
+            loop: false,
+            loopFillGroupWithBlank: true,
+            pagination: {
+                el: ".swiper-pagination-liquidation-card",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next-liquidation-card",
+                prevEl: ".swiper-button-prev-liquidation-card",
+            },
+        }); 
+
+    },false);
 </script>
 
 <script>
