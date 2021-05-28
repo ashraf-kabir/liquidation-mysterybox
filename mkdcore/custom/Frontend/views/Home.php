@@ -131,7 +131,7 @@
             <?php if (!empty($liquidation_lot)): ?>
             <?php foreach ($liquidation_lot as $key => $value): ?>
             <div class="swiper-slide swiper-slide-liquidation">
-                <a href="<?php echo base_url() ?>categories/?category=<?php echo $value->id; ?>">
+                <a href="<?php echo $liquidation_url ?>detail/<?php echo $value->id; ?>">
                     <?php if (empty($value->feature_image)): ?>
                         <img class="img-thumbnail"  src="./uploads/placeholder.jpg">
                     <?php else: ?>
@@ -147,7 +147,7 @@
             <?php if (!empty($liquidation_pal)): ?>
             <?php foreach ($liquidation_pal as $key => $value): ?>
             <div class="swiper-slide swiper-slide-liquidation">
-                <a href="<?php echo base_url() ?>categories/?category=<?php echo $value->id; ?>">
+                <a href="<?php echo $liquidation_url ?>detail/<?php echo $value->id; ?>">
                     <?php if (empty($value->feature_image)): ?>
                         <img class="img-thumbnail"  src="./uploads/placeholder.jpg">
                     <?php else: ?>
@@ -165,7 +165,7 @@
             
             <?php foreach ($liquidation_trk as $key => $value): ?>
             <div class="swiper-slide swiper-slide-liquidation">
-                <a href="<?php echo base_url() ?>categories/?category=<?php echo $value->id; ?>">
+                <a href="<?php echo $liquidation_url ?>detail/<?php echo $value->id; ?>">
                     <?php if (empty($value->feature_image)): ?>
                         <img class="img-thumbnail"  src="./uploads/placeholder.jpg">
                     <?php else: ?>

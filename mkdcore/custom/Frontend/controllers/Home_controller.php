@@ -1155,6 +1155,7 @@ class Home_controller extends Manaknight_Controller
         $data['liquidation_lot']  = $this->get_liquidation_lots();
         $data['liquidation_pal']  = $this->get_liquidation_pallets();
         $data['liquidation_trk']  = $this->get_liquidation_truckloads();
+        $data['liquidation_url']  = "https://development.vegasliquidationstore.com/";
 
          
         $data['page_section']     = $template;
