@@ -65,9 +65,90 @@
           .make-dropdown-menu-full{
                width: 100% !important;
           }
+
+          .submenu-anchor{
+              display: block !important;
+              background: #fff !important;
+              color: #212121 !important;
+              font-family: inherit !important;
+              font-size: 14px !important;
+              font-weight: normal !important;
+              padding: 5px 0px 5px 0px !important;
+              line-height: 26px !important;
+              text-decoration: none !important;
+              text-transform: none !important;
+              vertical-align: baseline !important;
+          }
+
+          .submenu-anchor-l2{
+              display: block !important;
+              background: #fff !important;
+              color: #212121 !important;
+              font-family: inherit !important;
+              font-size: 14px !important;
+              font-weight: normal !important; 
+              line-height: 18px !important;
+              text-decoration: none !important;
+              text-transform: none !important;
+              vertical-align: baseline !important;
+              padding: 0px 18px 0px 10px !important;
+          }
+
+          .submenu-li{
+             border-bottom: 1px solid #d4dde2
+          }
+
+
+
+
+
+ 
+          .dropdown-submenu-c {
+              position: relative;
+              padding: 0px 18px 0px 10px;
+          }
+
+          .dropdown-submenu-c>.dropdown-menu {
+              top: 0;
+              left: 100%;
+              margin-top: -6px;
+              margin-left: -1px;
+              -webkit-border-radius: 0 6px 6px 6px;
+              -moz-border-radius: 0 6px 6px;
+              border-radius: 0 6px 6px 6px;
+          }
+
+          .dropdown:hover>.dropdown-menu {
+              display: block;
+          }
+
+          .dropdown-submenu-c:hover>.dropdown-menu {
+              display: block;
+          }
+
+          .dropdown-submenu-c>a:after {
+              display: block;
+              content: " ";
+              float: right;
+              width: 0;
+              height: 0;
+              border-color: transparent;
+              border-style: solid;
+              border-width: 5px 0 5px 5px;
+              border-left-color: #ccc;
+              margin-top: 5px;
+              margin-right: -10px;
+          }
+
+          .dropdown-submenu-c:hover>a:after {
+              border-left-color: #fff;
+          }
+
+
      </style>
 </head>
 <body>
+
 
      <?php if (!empty($home_page_setting->home_page_top_text) ): ?>   
      <header class="container-fluid top_header_css" >
@@ -82,25 +163,27 @@
                     <span class="navbar-toggler-icon"><i class="fas fa-bars mt-1"></i></span>
                </button>
                <div class="collapse navbar-collapse col-md-12" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                          
-
+                     
+                    <ul class="nav navbar-nav">
+                         
+                           
                          <li class="dropdown-submenu nav-item ">
-                              <a  class="dropdown-item nav-link" tabindex="-1" href="<?php echo base_url(); ?>categories">Shop Mysterybox</a>
+                              <a  class="dropdown-item nav-link" tabindex="-1"  >Shop Mysterybox<b class="caret"></b></a>
                               <ul class="dropdown-menu make-dropdown-menu-full"> 
                                    <li class="dropdown-submenu">
-                                   <a class="main-item" href="">
-                                        Mystery Box
-                                   </a> <br>
-
+                                   <a class="main-item"  style="text-align: center; padding: 4px 9px;">
+                                        Mystery Box 
+                                   </a> 
+                                   <div class="dropdown-divider"></div>  
                                    <?php 
                                    foreach ($all_categories as $key => $category): 
                                         if (!empty($category->parent_category_id) ) 
                                         { 
                                              ?>
-                                             <a class="sub-item" href="<?php echo base_url(); ?>categories/?category=<?php echo $category->id; ?>">
+                                             <a class="sub-item submenu-anchor-l2" href="<?php echo base_url(); ?>categories/?category=<?php echo $category->id; ?>">
                                                   <?php echo $category->name; ?>
-                                             </a> <br> 
+                                             </a> 
+                                             <div class="dropdown-divider"></div> 
                                         <?php } ?>
                                    <?php endforeach ?>
                                    
@@ -109,36 +192,48 @@
                          </li>
 
 
-                         <li class="dropdown-submenu nav-item ">
-                              <a  class="dropdown-item nav-link" tabindex="-1" href="<?php echo base_url(); ?>categories">View Current Inventory</a>
-                              <ul class="dropdown-menu make-dropdown-menu-full"> 
-                                   <li class="dropdown-submenu">
-                                   <a class="main-item" href="">
-                                        Mystery Box
-                                   </a> <br>
+                         <li class="dropdown nav-item ">
+                              <a href="#" class="dropdown-toggle dropdown-item nav-link" data-toggle="dropdown">View Current Inventory <b class="caret"></b></a>
+                              <ul class="dropdown-menu multi-level" style="width: 100%;top: 89%;">                        
+                                   <li class="dropdown-submenu dropdown-submenu-c">
+                                        <a   class="dropdown-toggle submenu-anchor" data-toggle="dropdown">Liquidation Pallets</a>
+                                      
+                                        <ul class="dropdown-menu">
+                                             <?php foreach ($liquidation_pal as $key => $value): ?>
+                                                  <li><a class="submenu-anchor-l2" href="#"><?php echo $value->item_name ?></a><div class="dropdown-divider"></div></li>
+                                             <?php endforeach ?>  
+                                        </ul>
+                                        <div class="dropdown-divider"></div>
+                                   </li>
 
-                                   <?php 
-                                   foreach ($all_categories as $key => $category): 
-                                        if (!empty($category->parent_category_id) ) 
-                                        { 
-                                             ?>
-                                             <a class="sub-item" href="<?php echo base_url(); ?>categories/?category=<?php echo $category->id; ?>">
-                                                  <?php echo $category->name; ?>
-                                             </a> <br> 
-                                        <?php } ?>
-                                   <?php endforeach ?>
-                                   
-                                   </li> 
+
+                                   <li class="dropdown-submenu dropdown-submenu-c">
+                                        <a   class="dropdown-toggle submenu-anchor" data-toggle="dropdown">Liquidation Lots</a>
+                                      
+                                        <ul class="dropdown-menu">
+                                             <?php foreach ($liquidation_lot as $key => $value): ?>
+                                                  <li><a class="submenu-anchor-l2" href="#"><?php echo $value->item_name ?></a><div class="dropdown-divider"></div></li>
+                                             <?php endforeach ?> 
+                                        </ul>
+                                        <div class="dropdown-divider"></div>
+                                   </li>
+
+                                   <li class="dropdown-submenu dropdown-submenu-c">
+                                        <a   class="dropdown-toggle submenu-anchor" data-toggle="dropdown">Liquidation Truckloads</a>
+                                      
+                                        <ul class="dropdown-menu">
+                                             <?php foreach ($liquidation_trk as $key => $value): ?>
+                                                  <li><a class="submenu-anchor-l2" href="#"><?php echo $value->item_name ?></a><div class="dropdown-divider"></div></li>
+                                             <?php endforeach ?> 
+                                        </ul>
+                                        <div class="dropdown-divider"></div>
+                                   </li>
                               </ul>
-                         </li>
- 
-                          
+                         </li>  
+                    </ul>
 
-
-
-                         
-
-                         
+                    <ul class="navbar-nav ml-auto">
+                           
                          <?php if($this->session->userdata('customer_login') && $this->session->userdata('user_id') ){ ?>  
                               
                               <li class="nav-item <?php if( isset($active) and $active == 'profile' ){ echo 'active'; } ?>">
@@ -168,7 +263,8 @@
                                    <i class="fa" style="font-size:15px">&#xf07a;</i>
                                    <span class='badge badge-warning' id='lblCartCount'> 0 </span>
                               </a>
-                         </li>
+                         </li> 
+                         
                     </ul>
                </div>
           </nav>

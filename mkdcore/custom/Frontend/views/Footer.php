@@ -290,32 +290,36 @@ crossorigin="anonymous"></script>
 
     var swiper_mysterybox = new Swiper(".mySwiper-mysterybox", {
         slidesPerView: 3,
-        centeredSlides: false,
         spaceBetween: 30,
+        slidesPerGroup: 3,
+        loop: false,
+        loopFillGroupWithBlank: true,
         pagination: {
             el: ".swiper-pagination-mysterybox-card",
-            type: "fraction",
+            clickable: true,
         },
         navigation: {
-          nextEl: ".swiper-button-next-mysterybox-card",
-          prevEl: ".swiper-button-prev-mysterybox-card",
+            nextEl: ".swiper-button-next-mysterybox-card",
+            prevEl: ".swiper-button-prev-mysterybox-card",
         },
-      }); 
+    });
 
     var swiper_liquidation = new Swiper(".mySwiper-liquidation", {
         slidesPerView: 3,
-        centeredSlides: false,
         spaceBetween: 30,
+        slidesPerGroup: 3,
+        loop: false,
+        loopFillGroupWithBlank: true,
         pagination: {
             el: ".swiper-pagination-liquidation-card",
-            type: "fraction",
+            clickable: true,
         },
         navigation: {
-          nextEl: ".swiper-button-next-liquidation-card",
-          prevEl: ".swiper-button-prev-liquidation-card",
+            nextEl: ".swiper-button-next-liquidation-card",
+            prevEl: ".swiper-button-prev-liquidation-card",
         },
-      }); 
-     
+    });  
+ 
 </script>
 
 <script>

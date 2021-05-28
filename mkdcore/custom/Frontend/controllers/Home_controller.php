@@ -54,6 +54,8 @@ class Home_controller extends Manaknight_Controller
 
         $this->load->model('carosal_slider_model'); 
         $data['carosal_sliders'] = $this->carosal_slider_model->get_all(); 
+
+
         $this->_render('Guest/Home',$data);
     }
 
@@ -1150,6 +1152,11 @@ class Home_controller extends Manaknight_Controller
          
 
         $data['all_categories']   = $all_categories;
+        $data['liquidation_lot']  = $this->get_liquidation_lots();
+        $data['liquidation_pal']  = $this->get_liquidation_pallets();
+        $data['liquidation_trk']  = $this->get_liquidation_truckloads();
+
+         
         $data['page_section']     = $template;
         $data['support_email']    = $this->config->item('support_email'); 
         
@@ -1857,7 +1864,61 @@ class Home_controller extends Manaknight_Controller
     }
 
 
+    private function get_liquidation_pallets()
+    {
+        $connection = $this->_get_liquidation_connection();
+        $sql = "SELECT inventory.*, shipper_products.product_name as item_name FROM inventory LEFT JOIN shipper_products on  inventory.product_name = shipper_products.id  where `inventory`.`status`= 1 and `inventory`.`type` = 1 order by `inventory`.`id` DESC ";
+        $statement =  $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_OBJ);
+
+        return (object) $results; 
+    }
 
 
+    private function get_liquidation_lots()
+    {
+        $connection = $this->_get_liquidation_connection();
+        $sql = "SELECT inventory.*, shipper_products.product_name as item_name FROM inventory LEFT JOIN shipper_products on  inventory.product_name = shipper_products.id  where `inventory`.`status`= 1 and `inventory`.`type` = 2 order by `inventory`.`id` DESC ";
+        $statement =  $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_OBJ);
+
+        return (object) $results; 
+    }
+
+    private function get_liquidation_truckloads()
+    {
+        $connection = $this->_get_liquidation_connection();
+        $sql = "SELECT inventory.*, shipper_products.product_name as item_name FROM inventory LEFT JOIN shipper_products on  inventory.product_name = shipper_products.id  where `inventory`.`status`= 1 and `inventory`.`type` = 3 order by `inventory`.`id` DESC ";
+        $statement =  $connection->prepare($sql);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_OBJ);
+
+        return (object) $results; 
+    }
+    
+
+
+
+
+    private function _get_liquidation_connection()
+    {
+
+        $dbname_cron   = "manaknight_ecommerce";
+        $host_cron     = "localhost";
+        $username_cron = "root";
+        $password_cron = "";
+
+        $dbname_cron   = "vegaliquidation_dev";
+        $host_cron     = "liquidationstore.ck4ulp7qclrl.us-west-1.rds.amazonaws.com";
+        $username_cron = "admin";
+        $password_cron = "jw4l_nxqnnpeHwcy4ieklrzI7sjgi3zbqaY2";
+
+
+        $conn = new PDO("mysql:host=" . $host_cron . ";dbname=" . $dbname_cron , $username_cron, $password_cron);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $conn;
+    }
 
 }
