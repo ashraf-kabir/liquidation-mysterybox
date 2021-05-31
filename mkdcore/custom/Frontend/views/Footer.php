@@ -283,8 +283,7 @@ crossorigin="anonymous"></script>
   <!-- Initialize Swiper -->
 <script>
 
-    document.addEventListener('DOMContentLoaded', function()
-    {
+    $(document).ready(function(){
 
 
         var swiper = new Swiper('.swiper-container', {
@@ -326,7 +325,7 @@ crossorigin="anonymous"></script>
             },
         }); 
 
-    },false);
+    });
 </script>
 
 <script>
