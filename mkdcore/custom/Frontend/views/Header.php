@@ -137,6 +137,7 @@
                padding-left: 20px;
                padding-right: 20px;
                font-weight: 100;
+               text-transform: uppercase;
           }
           .search-wrapper.hidden{
                display: none;
@@ -155,7 +156,7 @@
      </header>
      <?php endif ?>
 
-     <div class="search-wrapper">
+     <div class="search-wrapper hidden">
           <div class="search-input-container pt-5 pb-1 px-2">
                <a href="#" class="search-icon icon">
                <i class="fas fa-search"></i>
