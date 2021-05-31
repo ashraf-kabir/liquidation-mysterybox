@@ -117,6 +117,9 @@
                justify-content: center;
                z-index: 999;
           }
+          .search-wrapper .search-input-container{
+               border-bottom: 1px solid #979797;
+          }
           .search-wrapper .search-input-container a{
                text-decoration: none;
                color: #000000;
@@ -130,6 +133,7 @@
                font-size: 35px;
                padding-left: 20px;
                padding-right: 20px;
+               font-weight: 100;
           }
 
      </style>
@@ -146,7 +150,7 @@
      <?php endif ?>
 
      <div class="search-wrapper">
-          <div class="search-input-container">
+          <div class="search-input-container py-5 px-2">
                <a href="#" class="search-icon icon">
                <i class="fas fa-search"></i>
                </a>
