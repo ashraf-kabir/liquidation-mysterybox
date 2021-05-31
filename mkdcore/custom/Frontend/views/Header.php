@@ -170,11 +170,11 @@
 
 
      <header class="container-fluid "> 
-          <nav class="navbar navbar-expand-md row py-3 py-md-0 justify-content-md-center" style="margin-top: 0px;background: none !important;">
+          <nav class="navbar navbar-expand-lg row py-3 py-md-0 justify-content-lg-center" style="margin-top: 0px;background: none !important;">
                <button class="navbar-toggler ml-3" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"><i class="fas fa-bars mt-1"></i></span>
                </button>
-               <div class="collapse navbar-collapse col-lg-12" id="navbarNavDropdown">
+               <div class="collapse navbar-collapse col-md-12" id="navbarNavDropdown">
                      
                     <ul class="nav navbar-nav">
                          

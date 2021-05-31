@@ -51,7 +51,7 @@ $total_images =  count($gallery_lists) + 1;
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-7 bg-white p-2 p-md-4  mt-4 add_margin_mobile">
+            <div class="col-lg-7 bg-white p-2 p-lg-4 mt-4 add_margin_mobile">
                 <h2 class="product__title"><?php echo $product->product_name; ?></h2> 
 
                 <div class="row">
@@ -109,7 +109,7 @@ $total_images =  count($gallery_lists) + 1;
                     </div>
                 </div> 
             </div>
-            <div class="col-md-3  mt-4 ">
+            <div class="col-lg-3  mt-4 ">
                 <div class="bg-white w-100 p-2 p-md-4"> 
                     <ul class="list-unstyled">
                         <li class="my-4">Price <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li> 
