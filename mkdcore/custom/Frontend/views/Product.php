@@ -16,6 +16,11 @@
         object-fit: contain;
         height: 200px;
     }
+    .quantity-to-cart{
+        display: flex;
+        flex-direction: row;
+        align-items: center
+    }
 
     @media only screen and (max-width:767px) {
            
@@ -113,7 +118,7 @@ $total_images =  count($gallery_lists) + 1;
                 </div>
 
                 <?php  if ($product->quantity > 0)  { ?>
-                    <div class="col-12 bg-white w-100 p-2 p-md-4 ">
+                    <div class="col-12 quantity-to-cart bg-white w-100 p-2 p-md-4 ">
                         <label for="quantity" >Qty 
                             <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity w-75 w-md-50"  > 
                                 <option value="">Select</option>
