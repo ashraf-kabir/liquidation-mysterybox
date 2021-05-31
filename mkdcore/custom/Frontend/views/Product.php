@@ -119,7 +119,8 @@ $total_images =  count($gallery_lists) + 1;
 
                 <?php  if ($product->quantity > 0)  { ?>
                     <div class="col-12 quantity-to-cart bg-white w-100 p-2 p-md-4 ">
-                        <label for="quantity" >Qty 
+                        <label for="quantity" >Qty </label>
+                             
                             <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity w-75 w-md-50"  > 
                                 <option value="">Select</option>
                                 <?php  
@@ -134,10 +135,11 @@ $total_images =  count($gallery_lists) + 1;
                                 ?>
                                 
                             </select> 
-                        </label> 
 
                         <input type="hidden" class="product_id" name="product_id" value="<?= $product->id; ?>" />
-                        <button style="width: 100%" class="btn add_to_cart_button btn-success addToCartBtn">Add To Cart</button>
+                        <a href="#" style="width: 100%" class="btn add_to_cart_button btn-success addToCartBtn">
+                        <i class="fas fa-shopping-cart cart-icon"></i>
+                        </a>
                     </div>
                 <?php }else{ ?>
                     <div class="col-12 bg-white w-100 p-2 p-md-4 ">
