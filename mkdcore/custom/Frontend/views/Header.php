@@ -115,6 +115,9 @@
                background-color: #ffffff;
                display: flex;
                justify-content: center;
+               align-items: flex-start;
+               top: 0;
+               left: 0;
                z-index: 999;
           }
           .search-wrapper .search-input-container{
@@ -135,6 +138,9 @@
                padding-right: 20px;
                font-weight: 100;
           }
+          .search-wrapper.hidden{
+               display: none;
+          }
 
      </style>
 </head>
@@ -150,7 +156,7 @@
      <?php endif ?>
 
      <div class="search-wrapper">
-          <div class="search-input-container py-5 px-2">
+          <div class="search-input-container pt-5 pb-1 px-2">
                <a href="#" class="search-icon icon">
                <i class="fas fa-search"></i>
                </a>

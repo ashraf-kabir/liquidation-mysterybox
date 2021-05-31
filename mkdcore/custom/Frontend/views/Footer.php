@@ -380,7 +380,11 @@ crossorigin="anonymous"></script>
 
 
     document.querySelector(".search-nav-link").addEventListener('click', function(){
-        console.log("search clicked")
+        document.querySelector(".search-wrapper").classList.remove("hidden");
+    })
+
+    document.querySelector(".search-wrapper .close-icon").addEventListener('click', function(){
+        document.querySelector(".search-wrapper").classList.add("hidden");
     })
 
 </script>
