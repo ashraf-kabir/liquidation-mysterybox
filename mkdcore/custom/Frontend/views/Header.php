@@ -108,6 +108,15 @@
           .search-nav-link{
                cursor: pointer;
           }
+          .search-wrapper{
+               position: fixed;
+               height: 100vh;
+               width: 100%;
+               background-color: #ffffff;
+               display: flex;
+               justify-content: center;
+               z-index: 999;
+          }
 
      </style>
 </head>
@@ -121,6 +130,18 @@
           <?php echo $home_page_setting->home_page_top_text; ?>
      </header>
      <?php endif ?>
+
+     <div class="search-wrapper">
+          <div class="search-input-container">
+               <a href="#" class="search-icon icon">
+               <i class="fas fa-search"></i>
+               </a>
+               <input type="text" placeholder="SEARCH" />
+               <a href="#" class="close-icon icon">
+               <i class="fas fa-times"></i>
+               </a>
+          </div>
+     </div>
 
 
      <header class="container-fluid "> 
