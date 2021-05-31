@@ -162,3 +162,13 @@ current inventory
 brand on view page
 
 category_pen
+
+
+@The Ghost feedback for category page:
+category page
+3 rows of 3 before 2nd page
+All mystery boxes category option in filter. The filter should be 30% of width, rest is 3 boxes
+product page
+breadcrumb Home -> Category -> product
+Qty and add to cart on same line. With dropdown
+Price larger font

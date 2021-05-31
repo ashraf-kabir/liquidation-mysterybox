@@ -111,6 +111,8 @@
 <body>
 
 
+
+
      <?php if (!empty($home_page_setting->home_page_top_text) ): ?>   
      <header class="container-fluid top_header_css" >
           <?php echo $home_page_setting->home_page_top_text; ?>
@@ -168,6 +170,10 @@
                                         </a>   
                                    </li>
                               </ul>
+                         </li>
+
+                         <li class="dropdown-submenu nav-item ">
+                              <a  class="dropdown-item nav-link"   ><i class="fa fa-search"></i>Search </a> 
                          </li>
  
                     </ul>
