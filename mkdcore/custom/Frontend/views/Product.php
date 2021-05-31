@@ -121,7 +121,7 @@ $total_images =  count($gallery_lists) + 1;
                     <div class="col-12 quantity-to-cart bg-white w-100 p-2 p-md-4 ">
                         <label for="quantity" >Qty </label>
                              
-                            <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity w-75 w-md-50"  > 
+                            <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity mx-3"  > 
                                 <option value="">Select</option>
                                 <?php  
                                 for ($i=1; $i <= $product->quantity; $i++) 
@@ -137,7 +137,7 @@ $total_images =  count($gallery_lists) + 1;
                             </select> 
 
                         <input type="hidden" class="product_id" name="product_id" value="<?= $product->id; ?>" />
-                        <a href="#" style="width: 100%" class="btn add_to_cart_button btn-success addToCartBtn">
+                        <a href="#" class="btn add_to_cart_button btn-success addToCartBtn">
                         <i class="fas fa-shopping-cart cart-icon"></i>
                         </a>
                     </div>
