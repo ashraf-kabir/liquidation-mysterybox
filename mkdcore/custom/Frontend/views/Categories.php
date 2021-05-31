@@ -56,7 +56,7 @@
      <div class="container-fluid  " style="min-height:650px"> 
           <div class="row">
                <div class="col-md-12 my-4 col-sm-12 product__pathLink">
-                    <nav class="woocommerce-breadcrumb"><a href="http://vegasliquidation.com">Home</a><span><i class="fa fa-angle-right" aria-hidden="true"></i>
+                    <nav class="woocommerce-breadcrumb"><a href="<?php echo base_url(); ?>">Home</a><span><i class="fa fa-angle-right" aria-hidden="true"></i>
                          </span><a >Shop</a><span><i class="fa fa-angle-right" aria-hidden="true"></i> </span><?php if( isset($_GET['search_term']) AND !empty($_GET['search_term']) ){ ?>  Search results for “<?php echo $_GET['search_term']; ?>” <?php } ?> 
                     </nav>
                </div>

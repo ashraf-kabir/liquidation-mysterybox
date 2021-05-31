@@ -128,7 +128,7 @@
         <div class="swiper-wrapper">
  
             <div class="swiper-slide swiper-slide-liquidation">
-                <a href="<?php echo $liquidation_url ?>type=1"> 
+                <a href="<?php echo $liquidation_url ?>?type=1"> 
                     <img class="img-thumbnail"  src="./uploads/shop_pallet.jpg"> 
                 </a>
             </div>
@@ -138,7 +138,7 @@
 
             
             <div class="swiper-slide swiper-slide-liquidation">
-                <a href="<?php echo $liquidation_url ?>type=2"> 
+                <a href="<?php echo $liquidation_url ?>?type=2"> 
                     <img class="img-thumbnail"  src="./uploads/placeholder.jpg"> 
                     
                 </a>
@@ -148,7 +148,7 @@
 
  
             <div class="swiper-slide swiper-slide-liquidation">
-                <a href="<?php echo $liquidation_url ?>type=3"> 
+                <a href="<?php echo $liquidation_url ?>?type=3"> 
                     <img class="img-thumbnail"  src="./uploads/truckload.jpg"> 
                 </a>
             </div>

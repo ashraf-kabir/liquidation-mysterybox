@@ -43,15 +43,17 @@
 $total_images =  count($gallery_lists) + 1; 
 ?>
     <main class="container-fluid">
-        <div class="row justify-content-center">
-            <div style="padding-left: 0px" class="col-12 col-md-10 mt-4 padding-left-0-custom">
+        <div class="row "  style="margin: 15px 0px;" >
+            <div style="padding-left: 0px" class="col-12 col-md-12 mt-4 padding-left-0-custom">
                 <div class="product__pathLink"><a href="<?php echo base_url() ?>categories">Home ></a> 
-                <!-- <a href="">Truckloads > </a> -->
+                <a href="<?php echo base_url() ?>categories/?category=<?php echo $product->category_id;  ?>"><?php echo $product->category_real_name;  ?> > </a>
                 <span><?php echo $product->product_name; ?></span></div>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-7 bg-white p-2 p-lg-4 mt-4 add_margin_mobile">
+    </main>
+    <main class="container-fluid">
+        <div class="row  " style="margin: 15px 0px;" >
+            <div class="col-lg-9 bg-white p-2 p-lg-4 mt-4 add_margin_mobile">
                 <h2 class="product__title"><?php echo $product->product_name; ?></h2> 
 
                 <div class="row">
@@ -162,7 +164,7 @@ $total_images =  count($gallery_lists) + 1;
         </div>
     </main>
 
-    <section class="container-fluid mt-5 px-md-5 my-5" id="product__description">
+    <section class="container-fluid mt-5 mb-5" id="product__description">
         
         <?php 
         $video_url = json_decode($product->video_url);  
@@ -181,16 +183,16 @@ $total_images =  count($gallery_lists) + 1;
         
         <?php if ($total_videos != 0 ): ?> 
         
-        <div class="row justify-content-center bg-white mx-md-5 remove_margin_mobile ">
-            <div class="col-10 p-0 py-3 bg-white">
+        <div class="row  bg-white   remove_margin_mobile " style="margin: 15px 0px;">
+            <div class="col-12 p-0 py-3 bg-white">
                 <h4 style="text-align: center;">Review Videos</h4> 
             </div> 
         </div>
 
         <?php endif ?>
 
-        <div class="row justify-content-center bg-white mx-md-5 remove_margin_mobile ">  
-            <div class="col-10 p-0 bg-white"> 
+        <div class="row  bg-white   remove_margin_mobile " style="margin: 15px 0px;">  
+            <div class="col-12 p-0 bg-white"> 
                 <div class="row justify-content-between">  
                     
                     <?php  
@@ -250,10 +252,10 @@ $total_images =  count($gallery_lists) + 1;
             </div> 
         </div>
 
-        <div class="row justify-content-center bg-white mx-md-5 remove_margin_mobile">
-            <div class="col-10 p-0 py-3 bg-white">
-                <h4>Terms and Conditions</h4>
-                <ul>
+        <div class="row  bg-white   remove_margin_mobile" style="margin: 15px 0px;">
+            <div class="col-12 p-0 py-3 bg-white">
+                <h4 class="pl-3">Terms and Conditions</h4>
+                <ul  class="pr-5">
                     <li>publishing any Website material in any other media;</li>
                     <li>selling, sublicensing and/or otherwise commercializing any Website material;</li>
                     <li>publicly performing and/or showing any Website material;</li>

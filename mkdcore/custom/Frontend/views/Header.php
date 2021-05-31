@@ -157,15 +157,17 @@
      <?php endif ?>
 
      <div class="search-wrapper hidden">
+          <form action="<?php echo base_url() ?>categories">
           <div class="search-input-container pt-5 pb-1 px-2">
                <a href="#" class="search-icon icon">
                <i class="fas fa-search"></i>
                </a>
-               <input type="text" placeholder="SEARCH" />
+               <input type="text" name="search_term" placeholder="SEARCH" />
                <a href="#" class="close-icon icon">
                <i class="fas fa-times"></i>
                </a>
           </div>
+          </form>
      </div>
 
 
@@ -202,19 +204,19 @@
                               <a  class="dropdown-item nav-link" tabindex="-1"  >View Current Inventory<b class="caret"></b></a>
                               <ul class="dropdown-menu make-dropdown-menu-full"> 
                                    <li class="dropdown-submenu">
-                                        <a class="sub-item submenu-anchor-l2" href="<?php echo $liquidation_url ?>type=1"  >
+                                        <a class="sub-item submenu-anchor-l2" href="<?php echo $liquidation_url ?>?type=1"  >
                                              Liquidation Pallet
                                         </a>   
                                    </li> 
 
                                    <li class="dropdown-submenu">
-                                        <a class="sub-item submenu-anchor-l2" href="<?php echo $liquidation_url ?>type=2" >
+                                        <a class="sub-item submenu-anchor-l2" href="<?php echo $liquidation_url ?>?type=2" >
                                              Liquidation Lots
                                         </a>   
                                    </li>
 
                                    <li class="dropdown-submenu">
-                                        <a class="sub-item submenu-anchor-l2"   href="<?php echo $liquidation_url ?>type=3">
+                                        <a class="sub-item submenu-anchor-l2"   href="<?php echo $liquidation_url ?>?type=3">
                                              Liquidation Truckloads
                                         </a>   
                                    </li>
@@ -235,28 +237,25 @@
 
                     <ul class="navbar-nav ml-auto">
                            
-                         <?php if($this->session->userdata('customer_login') && $this->session->userdata('user_id') ){ ?>  
-                              
-                              <li class="nav-item <?php if( isset($active) and $active == 'profile' ){ echo 'active'; } ?>">
-                                   <a  href="<?php echo base_url(); ?>profile" class="nav-link <?php if( isset($active)  and $active == 'profile'  ){ echo 'active'; } ?>"    >Profile</a>
-                              </li> 
-
-
-                              <li class="nav-item <?php if( isset($active) and $active == 'contact' ){ echo 'active'; } ?>">
-                                   <a class="nav-link <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>"  href="<?php echo base_url(); ?>logout" >Logout</a>
-                              </li>   
-
-                         <?php }else { ?>  
-                              <li class="dropdown-submenu nav-item ">
-                                   <a  class="dropdown-item nav-link" tabindex="-1"  >My Account</a>
-                                   <ul class="dropdown-menu make-dropdown-menu-full"> 
+                         <li class="dropdown-submenu nav-item ">
+                              <a  class="dropdown-item nav-link" tabindex="-1"  >My Account</a>
+                              <ul class="dropdown-menu make-dropdown-menu-full"> 
+                                   <?php if($this->session->userdata('customer_login') && $this->session->userdata('user_id') ){ ?>  
+                                        <li class="dropdown-submenu">  
+                                             <a style="font-size: 16px;cursor: pointer;"    href="<?php echo base_url(); ?>profile" class="sub-item  <?php if( isset($active)  and $active == 'profile'  ){ echo 'active'; } ?>" >Profile</a> |  
+                                             <a style="font-size: 16px;cursor: pointer;"   
+                                             class=" sub-item <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>"  href="<?php echo base_url(); ?>logout" 
+                                             >Logout</a> 
+                                        </li> 
+                                   <?php }else { ?>  
+                                        
                                         <li class="dropdown-submenu">  
                                              <a class="sub-item" style="font-size: 16px;cursor: pointer;" data-target="#signupModal" data-toggle="modal">Register</a> |  
                                              <a class="sub-item" style="font-size: 16px;cursor: pointer;"  data-target="#loginModal" data-toggle="modal">Login</a> 
                                         </li> 
-                                   </ul>
-                              </li> 
-                         <?php } ?>
+                                   <?php } ?>
+                              </ul>
+                         </li> 
 
                          <li class="nav-item <?php if( isset($active) and $active == 'cart' ){ echo 'active'; } ?>">
 
