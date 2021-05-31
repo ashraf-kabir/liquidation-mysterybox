@@ -105,6 +105,9 @@
           .submenu-anchor-l2:hover {
               background-color: #E0E0E0 !important;
           }
+          .search-nav-link{
+               cursor: pointer;
+          }
 
      </style>
 </head>
@@ -172,8 +175,8 @@
                               </ul>
                          </li>
 
-                         <li class="dropdown-submenu nav-item ">
-                              <a  class="dropdown-item nav-link"   ><i class="fa fa-search"></i>Search </a> 
+                         <li class="dropdown-submenu nav-item search-nav-link">
+                              <a  class="dropdown-item nav-link"><i class="fa fa-search mr-2"></i>Search </a> 
                          </li>
  
                     </ul>

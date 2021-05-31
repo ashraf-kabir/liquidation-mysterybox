@@ -377,4 +377,10 @@ crossorigin="anonymous"></script>
         $('#loginModal').modal('show');
         $('.modal').css('overflow-y', 'auto');
     })
+
+
+    document.querySelector(".search-nav-link").addEventListener('click', function(){
+        console.log("search clicked")
+    })
+
 </script>
