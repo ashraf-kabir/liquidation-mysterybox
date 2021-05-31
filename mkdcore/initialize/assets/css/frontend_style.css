@@ -136,8 +136,8 @@ header .fas.fa-phone-alt {
   color: #000 !important;
 }
 .navbar .nav-item .nav-link:hover {
-  background: #000;
-  color: #fff !important;
+  background: #e0e0e0;
+  color: black !important;
 }
 .navbar-toggler,
 .navbar-toggler-icon {
