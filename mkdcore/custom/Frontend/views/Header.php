@@ -117,6 +117,20 @@
                justify-content: center;
                z-index: 999;
           }
+          .search-wrapper .search-input-container a{
+               text-decoration: none;
+               color: #000000;
+          }
+          .search-wrapper .search-input-container a i{
+               font-size: 35px;
+          }
+          .search-wrapper .search-input-container input{
+               border: none;
+               outline: none;
+               font-size: 35px;
+               padding-left: 20px;
+               padding-right: 20px;
+          }
 
      </style>
 </head>
