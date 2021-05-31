@@ -47,13 +47,14 @@
           
           @media  screen and (max-width:767px){
 
-               .dropdown-submenu ul{
-                    background-color: #6f6d6d !important;
+               .dropdown-submenu > .dropdown-menu {
+                   top: 0; 
+                   margin-top: 0px;
                }
-               .dropdown-menu .dropdown-submenu a
-               {
-                    color: white !important;
+               .remove-margin-left{
+                   margin-left: 0px !important;
                }
+                
           }
 
           .top_header_css{
@@ -91,59 +92,19 @@
               text-decoration: none !important;
               text-transform: none !important;
               vertical-align: baseline !important;
-              padding: 0px 18px 0px 10px !important;
+               padding: 10px 18px 10px 10px !important;
           }
 
           .submenu-li{
              border-bottom: 1px solid #d4dde2
           }
 
-
-
-
-
- 
-          .dropdown-submenu-c {
-              position: relative;
-              padding: 0px 18px 0px 10px;
+          .dropdown-menu{
+               border-radius: 0px !important;
           }
-
-          .dropdown-submenu-c>.dropdown-menu {
-              top: 0;
-              left: 100%;
-              margin-top: -6px;
-              margin-left: -1px;
-              -webkit-border-radius: 0 6px 6px 6px;
-              -moz-border-radius: 0 6px 6px;
-              border-radius: 0 6px 6px 6px;
+          .submenu-anchor-l2:hover {
+              background-color: #E0E0E0 !important;
           }
-
-          .dropdown:hover>.dropdown-menu {
-              display: block;
-          }
-
-          .dropdown-submenu-c:hover>.dropdown-menu {
-              display: block;
-          }
-
-          .dropdown-submenu-c>a:after {
-              display: block;
-              content: " ";
-              float: right;
-              width: 0;
-              height: 0;
-              border-color: transparent;
-              border-style: solid;
-              border-width: 5px 0 5px 5px;
-              border-left-color: #ccc;
-              margin-top: 5px;
-              margin-right: -10px;
-          }
-
-          .dropdown-submenu-c:hover>a:after {
-              border-left-color: #fff;
-          }
-
 
      </style>
 </head>
@@ -169,67 +130,52 @@
                            
                          <li class="dropdown-submenu nav-item ">
                               <a  class="dropdown-item nav-link" tabindex="-1"  >Shop Mysterybox<b class="caret"></b></a>
-                              <ul class="dropdown-menu make-dropdown-menu-full"> 
-                                   <li class="dropdown-submenu">
-                                   <a class="main-item"  style="text-align: center; padding: 4px 9px;">
-                                        Mystery Box 
-                                   </a> 
-                                   <div class="dropdown-divider"></div>  
+                              <ul class="dropdown-menu make-dropdown-menu-full">   
                                    <?php 
                                    foreach ($all_categories as $key => $category): 
                                         if (!empty($category->parent_category_id) ) 
                                         { 
                                              ?>
+                                             <li class="dropdown-submenu"> 
                                              <a class="sub-item submenu-anchor-l2" href="<?php echo base_url(); ?>categories/?category=<?php echo $category->id; ?>">
                                                   <?php echo $category->name; ?>
                                              </a> 
-                                             <div class="dropdown-divider"></div> 
+                                             </li>
                                         <?php } ?>
-                                   <?php endforeach ?>
-                                   
-                                   </li> 
+                                   <?php endforeach ?> 
                               </ul>
                          </li>
 
 
-                         <li class="dropdown nav-item ">
-                              <a href="#" class="dropdown-toggle dropdown-item nav-link" data-toggle="dropdown">View Current Inventory <b class="caret"></b></a>
-                              <ul class="dropdown-menu multi-level" style="width: 100%;top: 89%;">                        
-                                   <li class="dropdown-submenu dropdown-submenu-c">
-                                        <a   class="dropdown-toggle submenu-anchor" data-toggle="dropdown">Liquidation Pallets</a>
-                                      
-                                        <ul class="dropdown-menu">
-                                             <?php foreach ($liquidation_pal as $key => $value): ?>
-                                                  <li><a class="submenu-anchor-l2" href="#"><?php echo $value->item_name ?></a><div class="dropdown-divider"></div></li>
-                                             <?php endforeach ?>  
-                                        </ul>
-                                        <div class="dropdown-divider"></div>
+                         <li class="dropdown-submenu nav-item ">
+                              <a  class="dropdown-item nav-link" tabindex="-1"  >View Current Inventory<b class="caret"></b></a>
+                              <ul class="dropdown-menu make-dropdown-menu-full"> 
+                                   <li class="dropdown-submenu">
+                                        <a class="sub-item submenu-anchor-l2" href="<?php echo $liquidation_url ?>type=1"  >
+                                             Liquidation Pallet
+                                        </a>   
+                                   </li> 
+
+                                   <li class="dropdown-submenu">
+                                        <a class="sub-item submenu-anchor-l2" href="<?php echo $liquidation_url ?>type=2" >
+                                             Liquidation Lots
+                                        </a>   
                                    </li>
 
-
-                                   <li class="dropdown-submenu dropdown-submenu-c">
-                                        <a   class="dropdown-toggle submenu-anchor" data-toggle="dropdown">Liquidation Lots</a>
-                                      
-                                        <ul class="dropdown-menu">
-                                             <?php foreach ($liquidation_lot as $key => $value): ?>
-                                                  <li><a class="submenu-anchor-l2" href="#"><?php echo $value->item_name ?></a><div class="dropdown-divider"></div></li>
-                                             <?php endforeach ?> 
-                                        </ul>
-                                        <div class="dropdown-divider"></div>
-                                   </li>
-
-                                   <li class="dropdown-submenu dropdown-submenu-c">
-                                        <a   class="dropdown-toggle submenu-anchor" data-toggle="dropdown">Liquidation Truckloads</a>
-                                      
-                                        <ul class="dropdown-menu">
-                                             <?php foreach ($liquidation_trk as $key => $value): ?>
-                                                  <li><a class="submenu-anchor-l2" href="#"><?php echo $value->item_name ?></a><div class="dropdown-divider"></div></li>
-                                             <?php endforeach ?> 
-                                        </ul>
-                                        <div class="dropdown-divider"></div>
+                                   <li class="dropdown-submenu">
+                                        <a class="sub-item submenu-anchor-l2"   href="<?php echo $liquidation_url ?>type=3">
+                                             Liquidation Truckloads
+                                        </a>   
                                    </li>
                               </ul>
-                         </li>  
+                         </li>
+ 
+                    </ul>
+
+                    <ul class="navbar-nav justify-content-center remove-margin-left" style="margin-left: 5%;">
+                         <li class="dropdown-submenu nav-item ">
+                              <a  class="dropdown-item nav-link" tabindex="-1" href="<?php echo base_url(); ?>" >   Vegas Liquidation</a> 
+                         </li>
                     </ul>
 
                     <ul class="navbar-nav ml-auto">

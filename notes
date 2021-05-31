@@ -148,3 +148,17 @@ https://www.google.com/search?q=9400111108400103579626
 ----------------
 
 ALTER TABLE `category` ADD `feature_image` TEXT NOT NULL AFTER `name`;
+
+on hover grey 
+remove divider
+
+hover grey
+
+logo  middle
+
+current inventory
+
+
+brand on view page
+
+category_pen

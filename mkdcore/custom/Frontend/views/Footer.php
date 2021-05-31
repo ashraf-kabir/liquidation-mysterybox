@@ -28,9 +28,10 @@
         </div>
         <div class="col-10 col-md-2 footer__col my-4"> 
             <ul class="p-0 site__mapUl">
+                <li><a href="<?php echo base_url(); ?>">Home</a></li> 
                 <li><a href="<?php echo base_url(); ?>about_us/">About Us</a></li>
                 <li><a href="<?php echo base_url(); ?>contact_us/">Contacts</a></li>
-                <li><a href="<?php echo base_url(); ?>categories">Home</a></li> 
+                
             </ul>
         </div>
     </div>

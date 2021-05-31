@@ -120,70 +120,45 @@
 <?php endif ?>
 
 
-
-<?php if (!empty($liquidation_lot) or !empty($liquidation_pal) or !empty($liquidation_trk)): ?> 
-<h5 class="heading-padding-liquidation pl-5">Current Pallets</h5>
+ 
+<h5 class="heading-padding-liquidation pl-5">Current Inventory</h5>
 <div class="container"> 
 
     <div class="swiper-container swiper-container-liquidation mySwiper mySwiper-liquidation"  style="min-height: 200px;max-height: 300px">
         <div class="swiper-wrapper">
-
-            <?php if (!empty($liquidation_lot)): ?>
-            <?php foreach ($liquidation_lot as $key => $value): ?>
+ 
             <div class="swiper-slide swiper-slide-liquidation">
-                <a href="<?php echo $liquidation_url ?>detail/<?php echo $value->id; ?>">
-                    <?php if (empty($value->feature_image)): ?>
-                        <img class="img-thumbnail"  src="./uploads/placeholder.jpg">
-                    <?php else: ?>
-                        <img class="img-thumbnail"  src="<?php echo $value->feature_image; ?>">
-                    <?php endif ?> 
+                <a href="<?php echo $liquidation_url ?>type=1"> 
+                    <img class="img-thumbnail"  src="./uploads/shop_pallet.jpg"> 
                 </a>
             </div>
-            <?php endforeach ?>
-            <?php endif ?>    
-
-
-
-            <?php if (!empty($liquidation_pal)): ?>
-            <?php foreach ($liquidation_pal as $key => $value): ?>
-            <div class="swiper-slide swiper-slide-liquidation">
-                <a href="<?php echo $liquidation_url ?>detail/<?php echo $value->id; ?>">
-                    <?php if (empty($value->feature_image)): ?>
-                        <img class="img-thumbnail"  src="./uploads/placeholder.jpg">
-                    <?php else: ?>
-                        <img class="img-thumbnail"  src="<?php echo $value->feature_image; ?>">
-                    <?php endif ?> 
-                </a>
-            </div>
-            <?php endforeach ?>
-            <?php endif ?>  
-
-
-
-
-            <?php if (!empty($liquidation_trk)): ?> 
             
-            <?php foreach ($liquidation_trk as $key => $value): ?>
+
+
+
+            
             <div class="swiper-slide swiper-slide-liquidation">
-                <a href="<?php echo $liquidation_url ?>detail/<?php echo $value->id; ?>">
-                    <?php if (empty($value->feature_image)): ?>
-                        <img class="img-thumbnail"  src="./uploads/placeholder.jpg">
-                    <?php else: ?>
-                        <img class="img-thumbnail"  src="<?php echo $value->feature_image; ?>">
-                    <?php endif ?> 
+                <a href="<?php echo $liquidation_url ?>type=2"> 
+                    <img class="img-thumbnail"  src="./uploads/placeholder.jpg"> 
+                    
                 </a>
             </div>
-            <?php endforeach ?>  
+             
 
-            <?php endif ?>
+
+ 
+            <div class="swiper-slide swiper-slide-liquidation">
+                <a href="<?php echo $liquidation_url ?>type=3"> 
+                    <img class="img-thumbnail"  src="./uploads/truckload.jpg"> 
+                </a>
+            </div>
+            
         </div>
         <div class="swiper-button-next swiper-button-next-liquidation-card"></div>
         <div class="swiper-button-prev swiper-button-prev-liquidation-card"></div>
         <div class="swiper-pagination swiper-pagination-liquidation-card"></div>
     </div>
-</div>
-<?php endif ?>
-
+</div> 
 
 
 
