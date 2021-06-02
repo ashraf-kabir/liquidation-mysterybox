@@ -2,12 +2,11 @@ body {
   font-family: "Poppins", sans-serif;
   background: rgb(246, 246, 246);
 }
-.btn-secondary {
+.btn-secondary{
   background-color: #1b1c1d !important;
 }
 
-.pb-4,
-.py-4 {
+.pb-4, .py-4{
   padding-bottom: 0px !important;
 }
 .bg-light {
@@ -25,7 +24,7 @@ body {
 .dropdown-submenu > .dropdown-menu {
   top: 0;
   left: 0;
-  margin-top: 50px;
+  margin-top: 55px;
   margin-left: -1px;
   -webkit-border-radius: 0 6px 6px 6px;
   -moz-border-radius: 0 6px 6px;
@@ -123,18 +122,18 @@ header .fas.fa-phone-alt {
 }
 .navbar .nav-item .nav-link {
   text-transform: uppercase;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: #000 !important;
-  padding: 15px 20px;
+  padding: 28px 20px;
   transition: 0.2s;
 }
 .navbar .nav-item .nav-link.active {
   background: #c5c5c5;
 }
 .navbar .nav-item .nav-link.active:hover {
-  background: #c5c5c5;
-  color: #000 !important;
+  background: #e0e0e0;
+  color: black !important;
 }
 .navbar .nav-item .nav-link:hover {
   background: #e0e0e0;
