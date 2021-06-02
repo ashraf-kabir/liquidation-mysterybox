@@ -84,7 +84,7 @@ class Home_controller extends Manaknight_Controller
        
  
         $total_rows = $rows_data; 
-        $limit = 3;
+        $limit = 6;
 
         $this->pagination->initialize([
             'reuse_query_string' => TRUE,
