@@ -241,7 +241,7 @@
                          </li>
 
                          <li class="dropdown-submenu nav-item ">
-                              <a  style="    padding: 0px;"  class="dropdown-item nav-link" tabindex="-1" href="<?php echo base_url(); ?>" ><img style="width:198px;height:80px;padding-bottom: 9px;" src="<?php echo base_url() ?>uploads/vegas-liquidation.png"></a> 
+                              <a  style="    padding: 0px;"  class="dropdown-item nav-link" tabindex="-1" href="<?php echo base_url(); ?>" ><img style="width:198px; padding-bottom: 9px;" src="<?php echo base_url() ?>uploads/vegas-liquidation.png"></a> 
                          </li>
  
                     </ul>
