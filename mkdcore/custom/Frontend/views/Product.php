@@ -21,6 +21,9 @@
         flex-direction: row;
         align-items: center
     }
+    .numbertext{
+        color: black !important;
+    }
 
     @media only screen and (max-width:767px) {
            
@@ -36,9 +39,7 @@
         .padding-left-0-custom{
             padding-left: 15px !important;
         }
-        .numbertext{
-            color: black !important;
-        }
+        
     } 
 
 </style>
@@ -180,19 +181,17 @@ $total_images =  count($gallery_lists) + 1;
         }
         ?>
         
-        <?php if ($total_videos != 0 ): ?> 
         
-        <div class="row  bg-white   remove_margin_mobile " style="margin: 15px 0px;">
+        <?php if ($total_videos != 0 ): ?>
+        <div class="row  bg-white   remove_margin_mobile " style="margin: 15px 0px;">  
+
+              
             <div class="col-12 p-0 py-3 bg-white">
                 <h4 style="text-align: center;">Review Videos</h4> 
-            </div> 
-        </div>
-
-        <?php endif ?>
-
-        <div class="row  bg-white   remove_margin_mobile " style="margin: 15px 0px;">  
+            </div>  
+            
             <div class="col-12 p-0 bg-white"> 
-                <div class="row justify-content-between">  
+                <div class="row justify-content-between" style="margin: 0px 0px;">  
                     
                     <?php  
                     if (!empty($video_url)) 
@@ -250,7 +249,9 @@ $total_images =  count($gallery_lists) + 1;
                 
             </div> 
         </div>
+        <?php endif ?>
 
+        
         <div class="row  bg-white   remove_margin_mobile" style="margin: 15px 0px;">
             <div class="col-12 p-0 py-3 bg-white">
                 <h4 class="pl-3">Terms and Conditions</h4>

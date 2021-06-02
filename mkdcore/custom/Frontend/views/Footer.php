@@ -279,10 +279,8 @@ crossorigin="anonymous"></script>
 <script src="<?php echo base_url(); ?>/assets/frontend_js/swiper-bundle.min.js"></script>
 
 <script src="<?php echo base_url(); ?>/assets/frontend_js/script.js"></script>
-
-  <!-- Initialize Swiper -->
-<script>
-
+ 
+<script> 
     $(document).ready(function(){
 
 
@@ -325,11 +323,7 @@ crossorigin="anonymous"></script>
             },
         }); 
 
-    });
-</script>
-
-<script>
-    $(document).ready(function(){
+    
         $('.slider').slick({
             centerMode: true,
             centerPadding: '20px',
