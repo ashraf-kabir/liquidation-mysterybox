@@ -68,6 +68,9 @@
                         <section  id="tz_categories-2" style="width: 100%;" class="widget widget_tz_categories"><h3 class="widget-title" itemprop="name"><span>Mystery Box</span></h3>
 
                               <ul class="pt-categories">
+                                   <li class="cat-item cat-item-116">
+                                        <a href="<?php echo base_url(); ?>categories">All</a>  
+                                   </li>
                                    <?php if( !empty($all_categories) ){ ?>
                                         <?php foreach($all_categories as $key => $value){ 
                                              if (!empty($value->parent_category_id) ) 

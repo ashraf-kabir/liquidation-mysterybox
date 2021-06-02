@@ -207,6 +207,7 @@ class Admin_carosal_slider_controller extends Admin_controller
 
     public function top_bar_setting()
     {
+        $this->_page_name = "Top Bar";
         $id = 1;
         $this->load->model('home_page_setting_model');
         $model = $this->home_page_setting_model->get($id);
@@ -247,7 +248,7 @@ class Admin_carosal_slider_controller extends Admin_controller
         {
             
             $this->success("Success! Data has been updated successfully.");
-            return $this->redirect('/admin/top_bar_setting/edit', 'refresh');
+            return $this->redirect('/admin/top_bar_setting', 'refresh');
         }
 
         $this->_data['error'] = 'Error';

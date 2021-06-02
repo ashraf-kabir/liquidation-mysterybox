@@ -250,7 +250,7 @@
                                    <?php }else { ?>  
                                         
                                         <li class="dropdown-submenu">  
-                                             <a class="sub-item" style="font-size: 16px;cursor: pointer;" data-target="#signupModal" data-toggle="modal">Register</a> |  
+                                             <a class="sub-item" style="font-size: 16px;cursor: pointer;padding-left: 5px;" data-target="#signupModal" data-toggle="modal">Register</a> |  
                                              <a class="sub-item" style="font-size: 16px;cursor: pointer;"  data-target="#loginModal" data-toggle="modal">Login</a> 
                                         </li> 
                                    <?php } ?>
