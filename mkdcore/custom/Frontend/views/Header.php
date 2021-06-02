@@ -57,6 +57,19 @@
                 
           }
 
+          @media  screen and (max-width:767px){
+
+               .search-wrapper .search-input-container input
+               {
+                    width: 80% !important;
+                    border-bottom: 1px solid #979797 !important;
+               }
+               .search-wrapper .search-input-container{
+                    border-bottom: 0px !important;
+               }
+                
+          }
+
           .top_header_css{
                background: <?php echo $home_page_setting->home_page_top_bg; ?>;
               color: <?php echo $home_page_setting->home_page_top_color; ?>;

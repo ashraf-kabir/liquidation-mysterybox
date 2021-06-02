@@ -3313,6 +3313,7 @@
 
 		"../mkdcore/custom/assets/images/shop_pallet.jpg" : "../release/uploads/shop_pallet.jpg",
 		"../mkdcore/custom/assets/images/truckload.jpg" : "../release/uploads/truckload.jpg",
+		"../mkdcore/custom/assets/images/vegas-liquidation.png" : "../release/uploads/vegas-liquidation.png",
 		
 		"../mkdcore/custom/assets/js/address_form.js": "../release/assets/js/address_form.js",
 		"../mkdcore/custom/assets/js/swiper-bundle.min.js": "../release/assets/frontend_js/swiper-bundle.min.js",
