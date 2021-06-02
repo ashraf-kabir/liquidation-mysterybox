@@ -36,6 +36,9 @@
         .padding-left-0-custom{
             padding-left: 15px !important;
         }
+        .numbertext{
+            color: black !important;
+        }
     } 
 
 </style>
@@ -61,11 +64,11 @@ $total_images =  count($gallery_lists) + 1;
 
                         <?php if(!empty($product->feature_image)){   ?>
                             <div class="column w-75">
-                                <img class="demo cursor slider_img_css" src="<?php echo $product->feature_image; ?>" style="width:100%; object-fit: contain;" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>" >
+                                <img class="img-thumbnail demo cursor slider_img_css" src="<?php echo $product->feature_image; ?>" style="width:100%; object-fit: contain;" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>" >
                             </div> 
                         <?php }else{ ?>
                             <div class="column w-75">
-                                <img class="demo cursor slider_img_css" src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%;object-fit: contain;" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>"  >
+                                <img class="img-thumbnail demo cursor slider_img_css" src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%;object-fit: contain;" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>"  >
                             </div>  
                         <?php } ?> 
 
@@ -74,7 +77,7 @@ $total_images =  count($gallery_lists) + 1;
                             <?php foreach ($gallery_lists as $key => $value): ?>
 
                                 <div class="column w-75">
-                                    <img class="demo cursor slider_img_css" src="<?php echo $value->image_name; ?>" style="width:100%" onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
+                                    <img class="img-thumbnail demo cursor slider_img_css" src="<?php echo $value->image_name; ?>" style="width:100%" onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
                                 </div>
                                  
                             <?php endforeach ?> 
@@ -85,29 +88,25 @@ $total_images =  count($gallery_lists) + 1;
                         <?php if(!empty($product->feature_image)){   ?>
                             <div class="mySlides">
                                 <div class="numbertext">1 / <?php echo $total_images ?></div>
-                                <img src="<?php echo $product->feature_image; ?>" style="width:100%" alt="<?php echo $product->product_name; ?>">
+                                <img class="img-thumbnail" src="<?php echo $product->feature_image; ?>" style="width:100%" alt="<?php echo $product->product_name; ?>">
                             </div> 
                         <?php }else{ ?>
                             <div class="mySlides">
                                 <div class="numbertext">1 / <?php echo $total_images ?></div>
-                                <img src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%"  alt="<?php echo $product->product_name; ?>">
+                                <img class="img-thumbnail" src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%"  alt="<?php echo $product->product_name; ?>">
                             </div> 
                         <?php } ?> 
                         <?php if (!empty($gallery_lists)): ?> 
                             <?php foreach ($gallery_lists as $key => $value): ?>
                                 <div class="mySlides">
                                     <div class="numbertext"><?php echo $key+2 ?> / <?php echo $total_images ?></div>
-                                    <img src="<?php echo $value->image_name; ?>" style="width:100%" alt="<?php echo $product->product_name; ?>">
+                                    <img class="img-thumbnail" src="<?php echo $value->image_name; ?>" style="width:100%" alt="<?php echo $product->product_name; ?>">
                                 </div>
                             <?php endforeach ?> 
                         <?php endif ?> 
                         
                         <a class="prev" onclick="plusSlides(-1)">❮</a>
-                        <a class="next" onclick="plusSlides(1)">❯</a>
-                    
-                        <div class="caption-container" style="padding: 11px 0px;">
-                            <p id="caption" style=" margin: 0px;"></p>
-                        </div>
+                        <a class="next" onclick="plusSlides(1)">❯</a> 
                     </div>
                 </div> 
             </div>
