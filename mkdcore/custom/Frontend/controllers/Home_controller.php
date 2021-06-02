@@ -119,6 +119,7 @@ class Home_controller extends Manaknight_Controller
         $data['type']            = $this->_data['type'];  
         $data['category']        = $this->_data['category'];  
         $data['all_categories']  = $this->category_model->get_all(['status' => 1]); 
+        $data['category']        = $this->category_model->get($this->_data['category']); 
         
         
        
