@@ -59,7 +59,7 @@
                     <nav class="woocommerce-breadcrumb"><a href="<?php echo base_url(); ?>">Home</a><span><i class="fa fa-angle-right" aria-hidden="true"></i></span>
 
                          <?php if (isset($category->name)): ?>
-                              <a ><b><?php echo $category->name ?><b></a><span><i class="fa fa-angle-right" aria-hidden="true">
+                              <a ><b  style="color: black;"><?php echo $category->name ?><b></a><span><i class="fa fa-angle-right" aria-hidden="true">
                          <?php else: ?>
                               <a >Shop</a><span><i class="fa fa-angle-right" aria-hidden="true">
                          <?php endif; ?>
