@@ -50,8 +50,8 @@ $total_images =  count($gallery_lists) + 1;
         <div class="row "  style="margin: 15px 0px;" >
             <div style="padding-left: 0px" class="col-12 col-md-12 mt-4 padding-left-0-custom">
                 <div class="product__pathLink"><a href="<?php echo base_url() ?>categories">Home ></a> 
-                <a href="<?php echo base_url() ?>categories/?category=<?php echo $product->category_id;  ?>"><?php echo $product->category_real_name;  ?> > </a>
-                <span><?php echo $product->product_name; ?></span></div>
+                <a href="<?php echo base_url() ?>categories/?category=<?php echo $product->category_id;  ?>"><b><?php echo $product->category_real_name;  ?> > </b></a>
+                <b><?php echo $product->product_name; ?></b></div>
             </div>
         </div>
     </main>
