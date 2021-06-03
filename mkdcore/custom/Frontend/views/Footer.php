@@ -295,6 +295,7 @@ crossorigin="anonymous"></script>
             slidesPerView: 3,
             spaceBetween: 30,
             slidesPerGroup: 3,
+            observer: true,
             loop: false,
             loopFillGroupWithBlank: true,
             pagination: {
@@ -311,6 +312,7 @@ crossorigin="anonymous"></script>
             slidesPerView: 3,
             spaceBetween: 30,
             slidesPerGroup: 3,
+            observer: true,
             loop: false,
             loopFillGroupWithBlank: true,
             pagination: {
