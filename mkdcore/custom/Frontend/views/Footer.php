@@ -45,7 +45,7 @@
             <div class="follow__buttons">
                 <a target="_blank" href="<?php echo $home_page_setting->home_page_fb_link ?>"><i class="fab fa-facebook-f facebook-icon-color"></i></a>
                 <?php if (!empty($home_page_setting->home_page_pintrest_link)): ?> 
-                    <a  target="_blank" href="<?php echo $home_page_setting->home_page_pintrest_link ?>"><i class="fab fa-pintrest pintrest-icon-color"></i></a>
+                    <a  target="_blank" href="<?php echo $home_page_setting->home_page_pintrest_link ?>"><i class="fab fa-pinterest pintrest-icon-color"></i></a>
                 <?php endif ?>
                 <a target="_blank"  href="<?php echo $home_page_setting->home_page_tiktok_link ?>"><i class="fab fa-twitter twitter-icon-color"></i></a> 
                 <a target="_blank"  href="<?php echo $home_page_setting->home_page_insta_link ?>"><i class="fab fa-instagram in-icon"></i></a>
