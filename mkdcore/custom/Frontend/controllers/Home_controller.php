@@ -1361,7 +1361,7 @@ class Home_controller extends Manaknight_Controller
         $this->load->model('pos_cart_model');
           
 
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id') && $this->session->userdata('customer_login')) 
         { 
             $user_id = $this->session->userdata('user_id');
             $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
