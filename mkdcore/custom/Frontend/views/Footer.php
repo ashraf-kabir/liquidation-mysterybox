@@ -72,7 +72,7 @@
             
         </div>
 
-        <div class="col-12 col-md-5 pr-md-5 footer__col my-4" style=" text-align: left;">
+        <div class="col-12 col-md-7 pr-md-5 footer__col my-4" style=" text-align: left;">
             <p  style="margin: 0px;">Copyright &copy; <?php echo Date('Y') ?>  VegasLiquidation.com</p>
         </div>
     </div>
