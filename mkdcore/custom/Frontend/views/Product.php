@@ -61,7 +61,7 @@ $total_images =  count($gallery_lists) + 1;
                 <h2 class="product__title"><?php echo $product->product_name; ?></h2> 
 
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-4"  style="max-height: 500px; overflow: scroll;overflow-x: hidden;">
 
                         <?php if(!empty($product->feature_image)){   ?>
                             <div class="column w-75">
@@ -114,8 +114,13 @@ $total_images =  count($gallery_lists) + 1;
             <div class="col-lg-3  mt-4 ">
                 <div class="bg-white w-100 p-2 p-md-4"> 
                     <ul class="list-unstyled">
-                        <li class="my-4">Price <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li> 
+                        <li class="my-4">Price:  <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li> 
+                        <li class="my-4">SKU: <span class="product__price"> <?php echo $product->sku; ?></span></li>
+
+                        <li class="my-4">Quantity:  <span class="product__price"> <?php echo $product->quantity; ?></span></li>
                          
+                        <li class="my-4">Category:   <span class="product__price"> <?php echo $product->category_real_name; ?></span></li>
+                        <li class="my-4">Dimension:   <span class="product__price"> <?php echo $product->width; ?> x <?php echo $product->height; ?></span></li>
                     </ul> 
                 </div>
 
@@ -151,6 +156,7 @@ $total_images =  count($gallery_lists) + 1;
                     </div>
                 <?php } ?> 
 
+
                 <div class="row mt-4">
                     <div class="col-12  ">
                         <div class="col-12 p-2 p-md-4 bg-white">
@@ -159,7 +165,7 @@ $total_images =  count($gallery_lists) + 1;
                              
                         </div> 
                     </div> 
-                </div>
+                </div> 
             </div>
         </div>
     </main>
@@ -187,10 +193,10 @@ $total_images =  count($gallery_lists) + 1;
 
               
             <div class="col-12 p-0 py-3 bg-white">
-                <h4 style="text-align: center;">Review Videos</h4> 
+                <h4 class="pl-3">Review Videos</h4> 
             </div>  
             
-            <div class="col-12 p-0 bg-white"> 
+            <div class="col-12 p-0 bg-white  pl-2"> 
                 <div class="row justify-content-between" style="margin: 0px 0px;">  
                     
                     <?php  
