@@ -258,7 +258,7 @@
                               <a  class="dropdown-item nav-link" tabindex="-1"  >My Account</a>
                               <ul class="dropdown-menu make-dropdown-menu-full"> 
                                    <?php if($this->session->userdata('customer_login') && $this->session->userdata('user_id') ){ ?>  
-                                        <li class="dropdown-submenu">  
+                                        <li class="dropdown-submenu" style="padding-top: 5px;padding-bottom: 5px;">  
                                              <a style="font-size: 16px;cursor: pointer;"    href="<?php echo base_url(); ?>profile" class="sub-item  <?php if( isset($active)  and $active == 'profile'  ){ echo 'active'; } ?>" >Profile</a> |  
                                              <a style="font-size: 16px;cursor: pointer;"   
                                              class=" sub-item <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>"  href="<?php echo base_url(); ?>logout" 
@@ -266,7 +266,7 @@
                                         </li> 
                                    <?php }else { ?>  
                                         
-                                        <li class="dropdown-submenu">  
+                                        <li class="dropdown-submenu"  style="padding-top: 5px;padding-bottom: 5px;">  
                                              <a class="sub-item" style="font-size: 16px;cursor: pointer;padding-left: 5px;" data-target="#signupModal" data-toggle="modal">Register</a> |  
                                              <a class="sub-item" style="font-size: 16px;cursor: pointer;"  data-target="#loginModal" data-toggle="modal">Login</a> 
                                         </li> 
