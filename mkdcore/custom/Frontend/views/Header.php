@@ -192,7 +192,7 @@
                <button class="navbar-toggler ml-3" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"><i class="fas fa-bars mt-1"></i></span>
                </button>
-               <div class="collapse navbar-collapse col-md-12" id="navbarNavDropdown">
+               <div class="collapse navbar-collapse col-md-12" id="navbarNavDropdown" style="justify-content: space-between;">
                      
                     <ul class="nav navbar-nav">
                          
@@ -241,14 +241,14 @@
                     </ul>
 
 
-                    <ul class="nav navbar-nav mx-auto">
+                    <ul class="nav navbar-nav ">
                          <li class="nav-item">
                               <a  style="    padding: 0px;"  class="dropdown-item nav-link" tabindex="-1" href="<?php echo base_url(); ?>" ><img style="width:198px; padding-bottom: 9px;" src="<?php echo base_url() ?>uploads/vegas-liquidation.png"></a> 
                          </li>
                     </ul>
                     
 
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ">
 
                          <li class="dropdown-submenu nav-item search-nav-link">
                               <a  class="dropdown-item nav-link"><i class="fa fa-search mr-2"></i>Search </a> 

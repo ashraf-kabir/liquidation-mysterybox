@@ -63,18 +63,18 @@ if ($layout_clean_mode) {
                 </h5>
                 <?= form_open() ?>
                     <div class="form-group col-md-5 col-sm-12 ">
-    					<label for="home_page_address">Address </label>
-    					<input type="text" class="form-control data-input" id="home_page_address" name="home_page_address" value="<?php echo set_value('home_page_address', $home_page_address); ?>"/>
-    				</div>
-    				<div class="form-group col-md-5 col-sm-12 ">
-    					<label for="home_page_phone_no">Phone# </label>
-    					<input type="text" class="form-control data-input" id="home_page_phone_no" name="home_page_phone_no" value="<?php echo set_value('home_page_phone_no', $home_page_phone_no); ?>"/>
-    				</div>
+                        <label for="home_page_address">Address </label>
+                        <input type="text" class="form-control data-input" id="home_page_address" name="home_page_address" value="<?php echo set_value('home_page_address', $home_page_address); ?>"/>
+                    </div>
+                    <div class="form-group col-md-5 col-sm-12 ">
+                        <label for="home_page_phone_no">Phone# </label>
+                        <input type="text" class="form-control data-input" id="home_page_phone_no" name="home_page_phone_no" value="<?php echo set_value('home_page_phone_no', $home_page_phone_no); ?>"/>
+                    </div>
 
                     <div class="form-group col-md-5 col-sm-12">
-    					<label for="home_page_time">Office Timing </label>
-    					<input type="text" class="form-control data-input" id="home_page_time" name="home_page_time" value="<?php echo set_value('home_page_time', $home_page_time); ?>"/>
-    				</div>
+                        <label for="home_page_time">Office Timing </label>
+                        <input type="text" class="form-control data-input" id="home_page_time" name="home_page_time" value="<?php echo set_value('home_page_time', $home_page_time); ?>"/>
+                    </div>
 
 
 
@@ -115,7 +115,7 @@ if ($layout_clean_mode) {
                         <label for="product_text_note">Text about how to buy item</label> 
                         <input type="text" class="form-control data-input" id="product_text_note" name="product_text_note" value="<?php echo set_value('product_text_note', $product_text_note); ?>"/>
                     </div>
-    				 
+                     
                         
                     <div class="form-group  col-md-5 col-sm-12">
                         <input type="submit" class="btn btn-primary text-white mr-4 my-4" value="Submit">
