@@ -16,6 +16,9 @@
     .footer__col .list-unstyled li{
         line-height: 14px;
     }
+     .footer_move{
+        padding-left: 99px !important;
+    }
 </style>
 
 <footer class="container-fluid">
@@ -41,7 +44,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-10 col-md-5 footer__col my-4" style="padding:0px"> 
+        <div class="col-10 col-md-5 footer__col my-4  " style="padding:0px"> 
             <div class="follow__buttons">
                 <a target="_blank" href="<?php echo $home_page_setting->home_page_fb_link ?>"><i class="fab fa-facebook-f facebook-icon-color"></i></a>
                 <?php if (!empty($home_page_setting->home_page_pintrest_link)): ?> 
@@ -64,9 +67,13 @@
         </div>
     </div>
 
-    <div class="row justify-content-center" style="text-align: center;">
-        <div class="col-12 col-md-10 ">
-            <p class="copyright__text" style="margin: 0px;">Copyright &copy; <?php echo Date('Y') ?>  VegasLiquidation.com</p>
+    <div class="row justify-content-start" style="text-align: center;">
+        <div class="col-12 col-md-5 ">
+            
+        </div>
+
+        <div class="col-12 col-md-5 pr-md-5 footer__col my-4" style=" text-align: left;">
+            <p  style="margin: 0px;">Copyright &copy; <?php echo Date('Y') ?>  VegasLiquidation.com</p>
         </div>
     </div>
 

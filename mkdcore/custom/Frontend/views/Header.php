@@ -169,6 +169,9 @@
                { 
                     margin-top: 0px !important;
                }
+               .footer_move{
+                    padding-left: 0px !important;
+               }
           }
 
 
