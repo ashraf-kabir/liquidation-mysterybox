@@ -51,6 +51,15 @@
                margin-bottom: 26px;
           }
      } 
+
+     .active_category{
+        background: #F6F6F6 !important;
+        padding: 7px 10px !important;
+     }
+
+     .widget.widget_tz_categories ul li{
+        padding: 5px 11px !important;
+     }
     
 </style> 
      <div class="container-fluid  " style="min-height:650px"> 
@@ -73,7 +82,7 @@
           <div class="row">
                <div class="col-md-3">  
                     <aside id="sidebar-shop" class="widget-area site-sidebar style-2" role="complementary">
-                        <section  id="tz_categories-2" style="width: 100%;" class="widget widget_tz_categories"><h3 class="widget-title" itemprop="name"><span>Mystery Box</span></h3>
+                        <section  id="tz_categories-2" style="width: 100%;" class="widget widget_tz_categories"><h3 style="margin: 0px;" class="widget-title" itemprop="name"><span>Mystery Box</span></h3>
 
                               <ul class="pt-categories">
                                    <li class="cat-item cat-item-116">
@@ -84,7 +93,12 @@
                                              if (!empty($value->parent_category_id) ) 
                                              {
                                              ?>  
-                                             <li class="cat-item cat-item-116"><a href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>"><?php echo $value->name; ?></a> 
+                                             <li class="cat-item cat-item-116 
+
+                                             <?php if (isset($_GET['category']) and $_GET['category'] == $value->id): ?> active_category <?php endif; ?>    
+
+
+                                             "><a href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>"><?php echo $value->name; ?></a> 
                                              </li>
                                         <?php } } ?>
                                    <?php } ?>            

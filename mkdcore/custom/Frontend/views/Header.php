@@ -158,6 +158,22 @@
           }
 
 
+          @media screen and (max-width: 991px)
+          {
+               .navbar .nav-item .nav-link 
+               { 
+                   padding: 13px 0px !important;
+               }
+          }
+
+
+          @media screen and (max-width: 1023px)
+          {
+               .navbar .nav-item .nav-link
+               { 
+                       padding: 52px  7px;
+               }
+          }
 
      </style>
 </head>
@@ -198,7 +214,7 @@
                          
                            
                          <li class="dropdown-submenu nav-item ">
-                              <a  class="dropdown-item nav-link" tabindex="-1"  >Shop Mysterybox<b class="caret"></b></a>
+                              <a  class="dropdown-item  nav-link" tabindex="-1"  >Shop Mysterybox<b class="caret"></b></a>
                               <ul class="dropdown-menu make-dropdown-menu-full">   
                                    <?php 
                                    foreach ($all_categories as $key => $category): 
@@ -217,7 +233,7 @@
 
 
                          <li class="dropdown-submenu nav-item ">
-                              <a  class="dropdown-item nav-link" tabindex="-1"  >View Current Inventory<b class="caret"></b></a>
+                              <a  class="dropdown-item  nav-link" tabindex="-1"  >View Current Inventory<b class="caret"></b></a>
                               <ul class="dropdown-menu make-dropdown-menu-full"> 
                                    <li class="dropdown-submenu">
                                         <a class="sub-item submenu-anchor-l2" href="<?php echo $liquidation_url ?>?type=1"  >
@@ -243,7 +259,7 @@
 
                     <ul class="nav navbar-nav ">
                          <li class="nav-item">
-                              <a  style="    padding: 0px;"  class="dropdown-item nav-link" tabindex="-1" href="<?php echo base_url(); ?>" ><img style="width:198px; padding-bottom: 9px;" src="<?php echo base_url() ?>uploads/vegas-liquidation.png"></a> 
+                              <a  style="    padding: 0px;"  class="dropdown-item  nav-link" tabindex="-1" href="<?php echo base_url(); ?>" ><img style="width:198px; padding-bottom: 9px;" src="<?php echo base_url() ?>uploads/vegas-liquidation.png"></a> 
                          </li>
                     </ul>
                     
@@ -251,11 +267,11 @@
                     <ul class="navbar-nav ">
 
                          <li class="dropdown-submenu nav-item search-nav-link">
-                              <a  class="dropdown-item nav-link"><i class="fa fa-search mr-2"></i>Search </a> 
+                              <a  class="dropdown-item  nav-link"><i class="fa fa-search mr-2"></i>Search </a> 
                          </li>
                            
                          <li class="dropdown-submenu nav-item ">
-                              <a  class="dropdown-item nav-link" tabindex="-1"  >My Account</a>
+                              <a  class="dropdown-item  nav-link" tabindex="-1"  >My Account</a>
                               <ul class="dropdown-menu make-dropdown-menu-full"> 
                                    <?php if($this->session->userdata('customer_login') && $this->session->userdata('user_id') ){ ?>  
                                         <li class="dropdown-submenu" style="padding-top: 5px;padding-bottom: 5px;">  

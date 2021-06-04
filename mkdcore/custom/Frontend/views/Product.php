@@ -47,6 +47,8 @@
         width: 100% !important;
     }
 
+    
+
 </style>
 <?php 
 $total_images =  count($gallery_lists) + 1; 
@@ -121,13 +123,7 @@ $total_images =  count($gallery_lists) + 1;
                     <ul class="list-unstyled">
                         <li class="my-4">Price:  <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li> 
                         <li class="my-4">SKU: <span class="product__price"> <?php echo $product->sku; ?></span></li>
-
-                        <li class="my-4">Quantity:  <span class="product__price"> <?php echo $product->quantity; ?></span></li>
-                         
-                        <li class="my-4">Category:   <span class="product__price"> <?php echo $product->category_real_name; ?></span></li>
-                        <li class="my-4">Dimension:   <span class="product__price"> <?php echo $product->width; ?> x <?php echo $product->height; ?></span></li>
-
-
+  
                         <li class="my-4"><?php echo $home_page_setting->product_text_note; ?> </li>
                     </ul> 
                 </div>
@@ -165,6 +161,7 @@ $total_images =  count($gallery_lists) + 1;
                 <?php } ?> 
 
 
+                <?php if (!empty($product->inventory_note)): ?>
                 <div class="row mt-4">
                     <div class="col-12  ">
                         <div class="col-12 p-2 p-md-4 bg-white">
@@ -174,6 +171,7 @@ $total_images =  count($gallery_lists) + 1;
                         </div> 
                     </div> 
                 </div> 
+                <?php endif ?>
             </div>
         </div>
     </main>
