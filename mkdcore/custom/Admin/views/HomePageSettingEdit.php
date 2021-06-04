@@ -104,6 +104,17 @@ if ($layout_clean_mode) {
                         <input type="text" class="form-control data-input" id="home_page_twitter_link" name="home_page_twitter_link" value="<?php echo set_value('home_page_twitter_link', $home_page_twitter_link); ?>"/>
                     </div>
 
+
+                    <div class="form-group col-md-5 col-sm-12">
+                        <label for="home_page_pintrest_link">Pintrest Link</label>
+                        <input type="text" class="form-control data-input" id="home_page_pintrest_link" name="home_page_pintrest_link" value="<?php echo set_value('home_page_pintrest_link', $home_page_pintrest_link); ?>"/>
+                    </div>
+
+
+                    <div class="form-group col-md-5 col-sm-12">
+                        <label for="product_text_note">Text about how to buy item</label> 
+                        <input type="text" class="form-control data-input" id="product_text_note" name="product_text_note" value="<?php echo set_value('product_text_note', $product_text_note); ?>"/>
+                    </div>
     				 
                         
                     <div class="form-group  col-md-5 col-sm-12">

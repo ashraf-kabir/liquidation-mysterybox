@@ -42,6 +42,11 @@
         
     } 
 
+    .videos-thumbnail{
+        max-height: 300px !important;
+        width: 100% !important;
+    }
+
 </style>
 <?php 
 $total_images =  count($gallery_lists) + 1; 
@@ -121,11 +126,14 @@ $total_images =  count($gallery_lists) + 1;
                          
                         <li class="my-4">Category:   <span class="product__price"> <?php echo $product->category_real_name; ?></span></li>
                         <li class="my-4">Dimension:   <span class="product__price"> <?php echo $product->width; ?> x <?php echo $product->height; ?></span></li>
+
+
+                        <li class="my-4"><?php echo $home_page_setting->product_text_note; ?> </li>
                     </ul> 
                 </div>
 
                 <?php  if ($product->quantity > 0)  { ?>
-                    <div class="col-12 quantity-to-cart bg-white w-100 p-2 p-md-4 ">
+                    <div class="col-12 quantity-to-cart bg-white w-100 p-2 p-md-4 " style="padding-top: 0px !important;">
                         <label for="quantity" >Qty </label>
                              
                             <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity mx-3"  > 
@@ -149,7 +157,7 @@ $total_images =  count($gallery_lists) + 1;
                         </a>
                     </div>
                 <?php }else{ ?>
-                    <div class="col-12 bg-white w-100 p-2 p-md-4 ">
+                    <div class="col-12 bg-white w-100 p-2 p-md-4 "  style="padding-top: 0px !important;">
                         <label style="color: red;" for="quantity" ><strong>Out of stock</strong> 
                             <a href="" class="on_click_notification btn btn-primary" data-product-title="<?php echo $product->product_name; ?>"> Notify me when available</a>
                         </label>  
@@ -192,11 +200,11 @@ $total_images =  count($gallery_lists) + 1;
         <div class="row  bg-white   remove_margin_mobile " style="margin: 15px 0px;">  
 
               
-            <div class="col-12 p-0 py-3 bg-white">
+            <div class="col-12 p-0 py-3 bg-white" style="padding-bottom: 0px !important;">
                 <h4 class="pl-3">Review Videos</h4> 
             </div>  
             
-            <div class="col-12 p-0 bg-white  pl-2"> 
+            <div class="col-12 p-0 bg-white  pl-2" style="padding-top: 0px !important;"> 
                 <div class="row justify-content-between" style="margin: 0px 0px;">  
                     
                     <?php  
@@ -222,7 +230,7 @@ $total_images =  count($gallery_lists) + 1;
                                     <a href="<?php echo $video; ?>" target="_blank"> 
                                         <img  
 
-                                        class="img-thumbnail image-fit-in-div"
+                                        class="img-thumbnail image-fit-in-div videos-thumbnail"
 
                                         <?php if ($key == 0): ?>
                                             src="<?php echo $product->youtube_thumbnail_1; ?>"

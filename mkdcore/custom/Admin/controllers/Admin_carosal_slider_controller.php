@@ -286,6 +286,8 @@ class Admin_carosal_slider_controller extends Admin_controller
         $this->_data['home_page_tiktok_link']     = $model->home_page_tiktok_link;
         $this->_data['home_page_insta_link']      = $model->home_page_insta_link;
         $this->_data['home_page_twitter_link']    = $model->home_page_twitter_link;
+        $this->_data['home_page_pintrest_link']   = $model->home_page_pintrest_link;
+        $this->_data['product_text_note']         = $model->product_text_note;
         $this->_data['heading']                   = "Home Page Setting"; 
         
         
@@ -302,16 +304,20 @@ class Admin_carosal_slider_controller extends Admin_controller
         $home_page_tiktok_link      = $this->input->post('home_page_tiktok_link', TRUE);
         $home_page_insta_link       = $this->input->post('home_page_insta_link', TRUE);
         $home_page_twitter_link     = $this->input->post('home_page_twitter_link', TRUE);
+        $home_page_pintrest_link    = $this->input->post('home_page_pintrest_link', TRUE);
+        $product_text_note          = $this->input->post('product_text_note', TRUE);
         
         $result = $this->home_page_setting_model->edit([
-            'home_page_address' => $home_page_address,
-            'home_page_phone_no' => $home_page_phone_no,
-            'home_page_time' => $home_page_time, 
+            'home_page_address'       => $home_page_address,
+            'home_page_phone_no'      => $home_page_phone_no,
+            'home_page_time'          => $home_page_time, 
             'home_page_support_email' => $home_page_support_email, 
-            'home_page_fb_link' => $home_page_fb_link, 
-            'home_page_tiktok_link' => $home_page_tiktok_link, 
-            'home_page_insta_link' => $home_page_insta_link, 
-            'home_page_twitter_link' => $home_page_twitter_link, 
+            'home_page_fb_link'       => $home_page_fb_link, 
+            'home_page_tiktok_link'   => $home_page_tiktok_link, 
+            'home_page_insta_link'    => $home_page_insta_link, 
+            'home_page_twitter_link'  => $home_page_twitter_link, 
+            'home_page_pintrest_link' => $home_page_pintrest_link, 
+            'product_text_note'       => $product_text_note, 
         ], $id);
 
         if ($result)

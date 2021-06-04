@@ -1049,6 +1049,8 @@
 				["home_page_fb_link", "string", [{"limit": 255}], "Facebook Link", "max_length[255]|valid_url", "max_length[255]|valid_url"],
 				["home_page_tiktok_link", "string", [{"limit": 255}], "Tiktok Link", "max_length[255]|valid_url", "max_length[255]|valid_url"],
 				["home_page_insta_link", "string", [{"limit": 255}], "Instagram Link", "max_length[255]|valid_url", "max_length[255]|valid_url"],
+				["home_page_pintrest_link", "string", [{"limit": 255}], "Pinterest Link", "max_length[255]|valid_url", "max_length[255]|valid_url"],
+				["product_text_note", "string", [{"limit": 255}], "Text about how to buy item", "max_length[255]", "max_length[255]"],
 				["home_page_twitter_link", "string", [{"limit": 255}], "Twitter Link", "max_length[255]|valid_url", "max_length[255]|valid_url"]
 			],
 			"join": [],
