@@ -164,6 +164,11 @@
                { 
                    padding: 13px 0px !important;
                }
+
+               .dropdown-submenu > .dropdown-menu 
+               { 
+                    margin-top: 0px !important;
+               }
           }
 
 
