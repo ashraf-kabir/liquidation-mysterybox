@@ -1,36 +1,55 @@
+<style type="text/css">
+    .facebook-icon-color{
+        background-color: #3b5998 !important;
+    }
+    .twitter-icon-color{
+        background-color: #00acee !important;
+    }
+
+    .tiktok-icon-color{
+        background-color: #ff0050 !important;
+    }
+    .footer__col .list-unstyled li{
+        line-height: 14px;
+    }
+</style>
+
 <footer class="container-fluid">
     <div class="row justify-content-start  ">
-        <div class="col-10 col-md-4 pr-md-5 footer__col my-4">
+        <div class="col-10 col-md-5 pr-md-5 footer__col my-4">
             <ul class="list-unstyled">
                 <li class="my-3 d-flex">
                     <i class="fas fa-map-marker-alt"></i>
-                    <div>4460 E Cheyenne Ave.
-                    Las Vegas, NV 89115</div>
+                    <div><?php echo $home_page_setting->home_page_address ?></div>
                 </li>
                 <li class="my-3 d-flex">
                     <i class="fas fa-phone"></i>
-                    <div>702-451-1000 <br> <span> Mon-Fri 8:30am - 4:30pm</span></div>
+                    <div><?php echo $home_page_setting->home_page_phone_no ?></div>
+                </li>
+
+                <li class="my-3 d-flex">
+                    <i class="fas fa-clock"></i>
+                    <div><?php echo $home_page_setting->home_page_time ?></div>
                 </li>
                 <li class="my-3 d-flex">
                     <i class="fas fa-envelope"></i>
-                    <div> <?php echo $support_email; ?></div>
+                    <div><?php echo $home_page_setting->home_page_support_email ?></div>
                 </li>
             </ul>
         </div>
-        <div class="col-10 col-md-6 footer__col my-4"> 
+        <div class="col-10 col-md-5 footer__col my-4" style="padding:0px"> 
             <div class="follow__buttons">
-                <a href="https://facebook.com"><i class="fab fa-facebook-f fb-icon"></i></a>
-                <a href="https://facebook.com"><i class="fab fa-twitter tw-icon"></i></a>
-                <a href="https://facebook.com"><i class="fab fa-google-plus-g gp-icon"></i></a>
-                <a href="https://facebook.com"><i class="fab fa-instagram in-icon"></i></a>
-                <a href="https://facebook.com"><i class="fab fa-pinterest pi-icon"></i></a>
+                <a target="_blank" href="<?php echo $home_page_setting->home_page_fb_link ?>"><i class="fab fa-facebook-f facebook-icon-color"></i></a>
+                <a target="_blank"  href="<?php echo $home_page_setting->home_page_tiktok_link ?>"><i class="fab fa-twitter twitter-icon-color"></i></a> 
+                <a target="_blank"  href="<?php echo $home_page_setting->home_page_insta_link ?>"><i class="fab fa-instagram in-icon"></i></a>
+                <a  target="_blank" href="<?php echo $home_page_setting->home_page_twitter_link ?>"><i class="fab fa-tiktok tiktok-icon-color"></i></a>
             </div>
         </div>
         <div class="col-10 col-md-2 footer__col my-4"> 
             <ul class="p-0 site__mapUl">
                 <li><a href="<?php echo base_url(); ?>">Home</a></li> 
                 <li><a href="<?php echo base_url(); ?>about_us/">About Us</a></li>
-                <li><a href="<?php echo base_url(); ?>contact_us/">Contacts</a></li>
+                <li><a href="<?php echo base_url(); ?>contact_us/">Contact Us</a></li>
                 
             </ul>
         </div>
@@ -296,6 +315,8 @@ crossorigin="anonymous"></script>
             spaceBetween: 30,
             slidesPerGroup: 3,
             observer: true,
+            observeParents: true,
+            parallax:true,
             loop: false,
             loopFillGroupWithBlank: true,
             pagination: {
@@ -313,6 +334,8 @@ crossorigin="anonymous"></script>
             spaceBetween: 30,
             slidesPerGroup: 3,
             observer: true,
+            observeParents: true,
+            parallax:true,
             loop: false,
             loopFillGroupWithBlank: true,
             pagination: {

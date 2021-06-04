@@ -1041,7 +1041,15 @@
 				["id", "integer", [], "ID", "", ""],
 				["home_page_top_text", "string", [{"limit": 255}], "Top Bar Text", "max_length[255]", "max_length[255]"],
 				["home_page_top_color", "string", [{"limit": 255}], "Top Bar Color", "max_length[255]", "max_length[255]"],
-				["home_page_top_bg", "string", [{"limit": 255}], "Top Bar Background Color", "max_length[255]", "max_length[255]"]
+				["home_page_top_bg", "string", [{"limit": 255}], "Top Bar Background Color", "max_length[255]", "max_length[255]"],
+				["home_page_address", "string", [{"limit": 255}], "Address", "max_length[255]", "max_length[255]"],
+				["home_page_phone_no", "string", [{"limit": 255}], "Phone#", "max_length[255]", "max_length[255]"],
+				["home_page_time", "string", [{"limit": 255}], "Office Timing", "max_length[255]", "max_length[255]"],
+				["home_page_support_email", "string", [{"limit": 255}], "Support Email", "max_length[255]|valid_email", "max_length[255]|valid_email"],
+				["home_page_fb_link", "string", [{"limit": 255}], "Facebook Link", "max_length[255]|valid_url", "max_length[255]|valid_url"],
+				["home_page_tiktok_link", "string", [{"limit": 255}], "Tiktok Link", "max_length[255]|valid_url", "max_length[255]|valid_url"],
+				["home_page_insta_link", "string", [{"limit": 255}], "Instagram Link", "max_length[255]|valid_url", "max_length[255]|valid_url"],
+				["home_page_twitter_link", "string", [{"limit": 255}], "Twitter Link", "max_length[255]|valid_url", "max_length[255]|valid_url"]
 			],
 			"join": [],
 			"method": "",
@@ -1093,7 +1101,8 @@
 				"Traffic Referrer": "/traffic_referrer/0?order_by=id&direction=DESC", 
 				"Setting": {
 					"Top Bar": "/top_bar_setting", 
-					"Carosal Slider": "/carosal_slider/0?order_by=id&direction=DESC", 
+					"Home Page Setting": "/home_page_setting", 
+					"Carousel Slider": "/carousel_slider/0?order_by=id&direction=DESC", 
 					"Terms And Conditions": "/terms_and_conditions/edit"
 				},
 				
@@ -2846,7 +2855,7 @@
 			"load_libraries": []
 		},
 		{
-			"route": "/carosal_slider",
+			"route": "/carousel_slider",
 			"name": "CarosalSlider",
 			"page_name": "Carosal Slider",
 			"model": "carosal_slider",
@@ -3346,6 +3355,7 @@
 		"../mkdcore/custom/Admin/controllers/Admin_terms_and_conditions_controller.php" : "../release/application/controllers/Admin/Admin_terms_and_conditions_controller.php", 
 		"../mkdcore/custom/Admin/controllers/Admin_carosal_slider_controller.php" : "../release/application/controllers/Admin/Admin_carosal_slider_controller.php", 
 		 
+		"../mkdcore/custom/Admin/views/HomePageSettingEdit.php" : "../release/application/views/Admin/HomePageSettingEdit.php",
 		"../mkdcore/custom/Admin/views/CarosalSliderAdd.php" : "../release/application/views/Admin/CarosalSliderAdd.php",
 		"../mkdcore/custom/Admin/views/CarosalSliderEdit.php" : "../release/application/views/Admin/CarosalSliderEdit.php",
 		"../mkdcore/custom/Admin/views/Pos_userAdd.php" : "../release/application/views/Admin/Pos_userAdd.php",
@@ -3453,6 +3463,7 @@
 		"admin/scan/scan_product_view": "Admin/Admin_inventory_controller/scan_product_view",
 		"admin/terms_and_conditions/edit": "Admin/Admin_terms_and_conditions_controller/edit/$1",
 		"admin/top_bar_setting": "Admin/Admin_carosal_slider_controller/top_bar_setting/$1",
+		"admin/home_page_setting": "Admin/Admin_carosal_slider_controller/home_page_setting",
 
 		
 		"admin/inventory/delete_gallery_image/(:num)": "Admin/Admin_inventory_controller/delete_gallery_image/$1",

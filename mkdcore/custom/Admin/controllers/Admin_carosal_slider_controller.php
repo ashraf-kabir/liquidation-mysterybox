@@ -256,5 +256,75 @@ class Admin_carosal_slider_controller extends Admin_controller
     }
     
     
+
+
+
+
+    public function home_page_setting()
+    {
+        $this->_page_name = "Home Page Setting";
+        $id = 1;
+        $this->load->model('home_page_setting_model');
+        $model = $this->home_page_setting_model->get($id);
+        $session = $this->get_session();
+        if (!$model)
+        {
+            $this->error('Error! Please try again later.');
+            return redirect('/admin/dashboard');
+        }
+ 
+
+        $this->form_validation = $this->home_page_setting_model->set_form_validation(
+        $this->form_validation, $this->home_page_setting_model->get_all_edit_validation_rule());
+
+
+        $this->_data['home_page_address']  = $model->home_page_address;
+        $this->_data['home_page_phone_no'] = $model->home_page_phone_no;
+        $this->_data['home_page_time']     = $model->home_page_time;
+        $this->_data['home_page_support_email']   = $model->home_page_support_email;
+        $this->_data['home_page_fb_link']         = $model->home_page_fb_link;
+        $this->_data['home_page_tiktok_link']     = $model->home_page_tiktok_link;
+        $this->_data['home_page_insta_link']      = $model->home_page_insta_link;
+        $this->_data['home_page_twitter_link']    = $model->home_page_twitter_link;
+        $this->_data['heading']                   = "Home Page Setting"; 
+        
+        
+        if ($this->form_validation->run() === FALSE)
+        {
+            return $this->render('Admin/HomePageSettingEdit', $this->_data);
+        }
+
+        $home_page_address  = $this->input->post('home_page_address', TRUE);
+        $home_page_phone_no = $this->input->post('home_page_phone_no', TRUE);
+        $home_page_time     = $this->input->post('home_page_time', TRUE);
+        $home_page_support_email    = $this->input->post('home_page_support_email', TRUE);
+        $home_page_fb_link          = $this->input->post('home_page_fb_link', TRUE);
+        $home_page_tiktok_link      = $this->input->post('home_page_tiktok_link', TRUE);
+        $home_page_insta_link       = $this->input->post('home_page_insta_link', TRUE);
+        $home_page_twitter_link     = $this->input->post('home_page_twitter_link', TRUE);
+        
+        $result = $this->home_page_setting_model->edit([
+            'home_page_address' => $home_page_address,
+            'home_page_phone_no' => $home_page_phone_no,
+            'home_page_time' => $home_page_time, 
+            'home_page_support_email' => $home_page_support_email, 
+            'home_page_fb_link' => $home_page_fb_link, 
+            'home_page_tiktok_link' => $home_page_tiktok_link, 
+            'home_page_insta_link' => $home_page_insta_link, 
+            'home_page_twitter_link' => $home_page_twitter_link, 
+        ], $id);
+
+        if ($result)
+        {
+            
+            $this->success("Success! Data has been updated successfully.");
+            return $this->redirect('/admin/home_page_setting', 'refresh');
+        }
+
+        $this->_data['error'] = 'Error';
+        return $this->render('Admin/HomePageSettingEdit', $this->_data);
+    }
+    
+    
     
 }

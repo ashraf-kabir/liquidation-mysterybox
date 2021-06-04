@@ -78,6 +78,7 @@
           }
           .make-dropdown-menu-full{
                width: 100% !important;
+               padding: 0px !important;
           }
 
           .submenu-anchor{
@@ -155,6 +156,8 @@
           .search-wrapper.hidden{
                display: none;
           }
+
+
 
      </style>
 </head>
@@ -234,21 +237,22 @@
                                         </a>   
                                    </li>
                               </ul>
+                         </li> 
+                    </ul>
+
+
+                    <ul class="nav navbar-nav mx-auto">
+                         <li class="nav-item">
+                              <a  style="    padding: 0px;"  class="dropdown-item nav-link" tabindex="-1" href="<?php echo base_url(); ?>" ><img style="width:198px; padding-bottom: 9px;" src="<?php echo base_url() ?>uploads/vegas-liquidation.png"></a> 
                          </li>
+                    </ul>
+                    
+
+                    <ul class="navbar-nav ml-auto">
 
                          <li class="dropdown-submenu nav-item search-nav-link">
                               <a  class="dropdown-item nav-link"><i class="fa fa-search mr-2"></i>Search </a> 
                          </li>
-
-                         <li class="dropdown-submenu nav-item ">
-                              <a  style="    padding: 0px;"  class="dropdown-item nav-link" tabindex="-1" href="<?php echo base_url(); ?>" ><img style="width:198px; padding-bottom: 9px;" src="<?php echo base_url() ?>uploads/vegas-liquidation.png"></a> 
-                         </li>
- 
-                    </ul>
-
-                    
-
-                    <ul class="navbar-nav ml-auto">
                            
                          <li class="dropdown-submenu nav-item ">
                               <a  class="dropdown-item nav-link" tabindex="-1"  >My Account</a>
