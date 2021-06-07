@@ -162,7 +162,7 @@
           {
                .navbar .nav-item .nav-link 
                { 
-                   padding: 13px 0px !important;
+                   padding: 13px 4px !important;
                }
 
                .dropdown-submenu > .dropdown-menu 
@@ -171,6 +171,10 @@
                }
                .footer_move{
                     padding-left: 0px !important;
+               }
+
+               .logo-hide-mbl{
+                    display: none !important;
                }
           }
 
@@ -199,11 +203,11 @@
      <div class="search-wrapper hidden">
           <form action="<?php echo base_url() ?>categories">
           <div class="search-input-container pt-5 pb-1 px-2">
-               <a href="#" class="search-icon icon">
+               <a href="" class="search-icon icon">
                <i class="fas fa-search"></i>
                </a>
                <input type="text" name="search_term" placeholder="SEARCH" />
-               <a href="#" class="close-icon icon">
+               <a href="" class="close-icon icon">
                <i class="fas fa-times"></i>
                </a>
           </div>
@@ -224,6 +228,11 @@
                          <li class="dropdown-submenu nav-item ">
                               <a  class="dropdown-item  nav-link" tabindex="-1"  >Shop Mysterybox<b class="caret"></b></a>
                               <ul class="dropdown-menu make-dropdown-menu-full">   
+                                   <li class="dropdown-submenu"> 
+                                        <a class="sub-item submenu-anchor-l2" href="<?php echo base_url(); ?>categories">
+                                             All
+                                        </a> 
+                                   </li>
                                    <?php 
                                    foreach ($all_categories as $key => $category): 
                                         if (!empty($category->parent_category_id) ) 
@@ -243,6 +252,13 @@
                          <li class="dropdown-submenu nav-item ">
                               <a  class="dropdown-item  nav-link" tabindex="-1"  >View Current Inventory<b class="caret"></b></a>
                               <ul class="dropdown-menu make-dropdown-menu-full"> 
+
+                                   <li class="dropdown-submenu">
+                                        <a class="sub-item submenu-anchor-l2" href="<?php echo $liquidation_url ?>"  >
+                                             All
+                                        </a>   
+                                   </li>
+
                                    <li class="dropdown-submenu">
                                         <a class="sub-item submenu-anchor-l2" href="<?php echo $liquidation_url ?>?type=1"  >
                                              Liquidation Pallet
@@ -265,7 +281,7 @@
                     </ul>
 
 
-                    <ul class="nav navbar-nav ">
+                    <ul class="nav navbar-nav logo-hide-mbl ">
                          <li class="nav-item">
                               <a  style="    padding: 0px;"  class="dropdown-item  nav-link" tabindex="-1" href="<?php echo base_url(); ?>" ><img style="width:198px; padding-bottom: 9px;" src="<?php echo base_url() ?>uploads/vegas-liquidation.png"></a> 
                          </li>

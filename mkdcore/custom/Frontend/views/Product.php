@@ -11,11 +11,7 @@
         object-fit: cover;
     }
 
-    .slider_img_css{
-        width: 100%;
-        object-fit: contain;
-        height: 200px;
-    }
+     
     .quantity-to-cart{
         display: flex;
         flex-direction: row;
@@ -47,6 +43,24 @@
         width: 100% !important;
     }
 
+
+    .slider-image-custom{
+        width:100% !important;
+        object-fit: contain;
+        border: none !important;
+    }
+
+    .play_icon{
+        z-index: 100;
+        position: absolute;
+        width: 35%;
+        top: 15%;
+        left: 32%;
+    }
+
+    .video-container{
+        position: relative;
+    }
     
 
 </style>
@@ -65,18 +79,18 @@ $total_images =  count($gallery_lists) + 1;
     <main class="container-fluid">
         <div class="row  " style="margin: 15px 0px;" >
             <div class="col-lg-9 bg-white p-2 p-lg-4 mt-4 add_margin_mobile">
-                <h2 class="product__title"><?php echo $product->product_name; ?></h2> 
+                 
 
                 <div class="row">
-                    <div class="col-4"  style="max-height: 500px; overflow: scroll;overflow-x: hidden;">
+                    <div class="col-2 col-sm-1 padding-left-0-custom" style="max-height: 500px; padding: 0px;">
 
                         <?php if(!empty($product->feature_image)){   ?>
-                            <div class="column w-75">
-                                <img class="img-thumbnail demo cursor slider_img_css" src="<?php echo $product->feature_image; ?>" style="width:100%; object-fit: contain;" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>" >
+                            <div class="column w-100">
+                                <img class="img-thumbnail demo cursor slider-image-custom " src="<?php echo $product->feature_image; ?>"  onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>" >
                             </div> 
                         <?php }else{ ?>
-                            <div class="column w-75">
-                                <img class="img-thumbnail demo cursor slider_img_css" src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%;object-fit: contain;" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>"  >
+                            <div class="column w-100">
+                                <img class="img-thumbnail demo cursor slider-image-custom " src="/assets/frontend_images/noun_pallet_box_1675914.png"  onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>"  >
                             </div>  
                         <?php } ?> 
 
@@ -84,15 +98,15 @@ $total_images =  count($gallery_lists) + 1;
                         <?php if (!empty($gallery_lists)): $k= 2; ?> 
                             <?php foreach ($gallery_lists as $key => $value): ?>
 
-                                <div class="column w-75">
-                                    <img class="img-thumbnail demo cursor slider_img_css" src="<?php echo $value->image_name; ?>" style="width:100%" onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
+                                <div class="column w-100">
+                                    <img class="img-thumbnail demo cursor slider-image-custom " src="<?php echo $value->image_name; ?>"  onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
                                 </div>
                                  
                             <?php endforeach ?> 
                         <?php endif ?>  
                        
                     </div>
-                    <div class="col-8">
+                    <div class="col-10 col-sm-11">
                         <?php if(!empty($product->feature_image)){   ?>
                             <div class="mySlides">
                                 <div class="numbertext">1 / <?php echo $total_images ?></div>
@@ -119,12 +133,14 @@ $total_images =  count($gallery_lists) + 1;
                 </div> 
             </div>
             <div class="col-lg-3  mt-4 ">
-                <div class="bg-white w-100 p-2 p-md-4"> 
+                <div class="bg-white w-100 p-2 p-md-4" style="padding-bottom: 1px !important;"> 
                     <ul class="list-unstyled">
-                        <li class="my-4">Price:  <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li> 
-                        <li class="my-4">SKU: <span class="product__price"> <?php echo $product->sku; ?></span></li>
+                        <li class="my-1"><span class="product__price"><?php echo $product->product_name; ?></span></li> 
+
+                        <li class="my-1">Price:  <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li> 
+                        <li class="my-1">SKU: <span class="product__price"> <?php echo $product->sku; ?></span></li>
   
-                        <li class="my-4"><?php echo $home_page_setting->product_text_note; ?> </li>
+                        <li class="my-1"><?php echo $home_page_setting->product_text_note; ?> </li>
                     </ul> 
                 </div>
 
@@ -225,6 +241,9 @@ $total_images =  count($gallery_lists) + 1;
                             {
                                 ?>
                                 <div class="video-container" style="padding: 20px 10px;width: <?php echo $total_percentage; ?>%"> 
+
+                                    <img src="<?php echo base_url() ?>assets/image/play_circle.png" class="play_icon" />
+                                    
                                     <a href="<?php echo $video; ?>" target="_blank"> 
                                         <img  
 
