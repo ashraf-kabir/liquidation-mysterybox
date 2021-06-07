@@ -211,7 +211,7 @@ $total_images =  count($gallery_lists) + 1;
         
         
         <?php if ($total_videos != 0 ): ?>
-        <div class="row  bg-white   remove_margin_mobile " style="margin: 15px 0px;">  
+        <div class="row  bg-white   add_margin_mobile " style="margin: 15px 0px;">  
 
               
             <div class="col-12 p-0 py-3 bg-white" style="padding-bottom: 0px !important;">
@@ -283,7 +283,7 @@ $total_images =  count($gallery_lists) + 1;
         <?php endif ?>
 
         
-        <div class="row  bg-white   remove_margin_mobile" style="margin: 15px 0px;">
+        <div class="row  bg-white   add_margin_mobile" style="margin: 15px 0px;">
             <div class="col-12 p-0 py-3 bg-white">
                 <h4 class="pl-3">Terms and Conditions</h4>
                 <ul  class="pr-5">
