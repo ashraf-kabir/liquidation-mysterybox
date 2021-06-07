@@ -23,11 +23,69 @@
     .footer__col .list-unstyled li i{
             font-size: 13px !important;
     }
+
+    .footer__col .list-unstyled li i{
+            font-size: 13px !important;
+    }
+
+    .footer__col_custom{
+        padding-left: 23px;
+    }
+
+    @media  screen and (max-width:  1491px)
+    {
+        .footer__col_custom{
+            padding-left: 57px;
+        }
+    }
+
+    @media  screen and (max-width:  1711px)
+    {
+        .footer__col_custom{
+            padding-left: 105px;
+        }
+    }
+
+    @media  screen and (min-width:  1712px)
+    {
+        .footer__col_custom{
+            padding-left: 105px;
+        }
+    }
+
+    @media  screen and (min-width:  1924px)
+    {
+        .footer__col_custom{
+            padding-left: 126px;
+        }
+    } 
+
+    @media  screen and (min-width:  2462px)
+    {
+        .footer__col_custom{
+            padding-left: 199px;
+        }
+    }
+
+
+    @media  screen and (max-width:  1191px)
+    {
+        .footer__col_custom{
+            padding-left: 0px;
+        }
+    }
+
+    @media  screen and (max-width:  1484px)
+    {
+        .footer__col_custom{
+            padding-left: 24px;
+        }
+    }
 </style>
 
 <footer class="container-fluid">
     <div class="row justify-content-start  ">
-        <div class="col-10 col-md-6 pr-md-5 footer__col my-4">
+        <div class="col-10 col-md-4 pr-md-5 footer__col my-4">
             <ul class="list-unstyled">
                 <li class="my-3 d-flex">
                     <i class="fas fa-map-marker-alt"></i>
@@ -48,7 +106,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-10 col-md-4 footer__col my-4  " style="padding:0px"> 
+        <div class="col-10 col-md-6 footer__col footer__col_custom my-4  "  > 
             <div class="follow__buttons">
                 <a target="_blank" href="<?php echo $home_page_setting->home_page_fb_link ?>"><i class="fab fa-facebook-f facebook-icon-color"></i></a>
                 <?php if (!empty($home_page_setting->home_page_pintrest_link)): ?> 
@@ -71,12 +129,8 @@
         </div>
     </div>
 
-    <div class="row justify-content-start" style="text-align: center;">
-        <div class="col-12 col-md-6 ">
-            
-        </div>
-
-        <div class="col-12 col-md-6 pr-md-5 footer__col my-4" style=" text-align: left;">
+    <div class="row justify-content-start"  > 
+        <div class="col-12 col-md-12 pr-md-5 footer__col my-4" style=" text-align: center;">
             <p  style="margin: 0px;">Copyright &copy; <?php echo Date('Y') ?>  VegasLiquidation.com</p>
         </div>
     </div>

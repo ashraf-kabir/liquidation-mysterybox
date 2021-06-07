@@ -46,6 +46,46 @@
         }
     } 
 
+    @media only screen and (min-width:1400px) { 
+
+        .delete_btn_c { 
+            right: -49px; 
+        }
+        .margin-left-0{
+            padding: 0px !important;
+        }
+    }
+
+    @media only screen and (min-width:1500px) { 
+
+        .delete_btn_c { 
+            right: -56px; 
+        }
+         
+    }
+
+    @media only screen and (min-width:1710px) { 
+
+        .delete_btn_c { 
+            right: -66px; 
+        }
+         
+    } 
+
+    @media only screen and (min-width:2012px) { 
+
+        .delete_btn_c { 
+            right: -71px;
+        } 
+    } 
+
+    @media only screen and (min-width:2370px) { 
+
+        .delete_btn_c { 
+            right: -84px;
+        } 
+    } 
+
 
 
 </style>
