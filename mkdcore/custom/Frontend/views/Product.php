@@ -8,7 +8,9 @@
         width: 100%;
         min-height: 200px;
         max-height: 200px;
+        max-height: 100vh;
         object-fit: cover;
+        border: none !important;
     }
 
      
@@ -57,6 +59,61 @@
         top: 15%;
         left: 32%;
     }
+
+
+    @media only screen and (min-width:1632px) {
+           
+        .play_icon{
+            width: 35%;
+            top: 19%;
+            left: 32%;
+        }  
+    } 
+
+    @media only screen and (max-width:1631px) {
+           
+        .play_icon{
+            width: 35%;
+            top: 19%;
+            left: 32%;
+        }  
+    } 
+
+    @media only screen and (min-width:1030px) {
+           
+        .play_icon{
+            width: 35%;
+            top: 31%;
+            left: 32%;
+        }  
+    } 
+
+    @media only screen and (min-width:992px) {
+           
+        .play_icon{
+            width: 23%;
+            top: 40%;
+            left: 32%;
+        }  
+    } 
+
+    @media only screen and (max-width:991px) {
+           
+        .play_icon{
+            width: 14%;
+            top: 41%;
+            left: 40%;
+        }  
+    } 
+    @media only screen and (max-width:845px) {
+           
+        .play_icon{
+            width: 14%;
+            top: 36%;
+            left: 40%;
+        }  
+    } 
+
 
     .video-container{
         position: relative;
@@ -211,7 +268,7 @@ $total_images =  count($gallery_lists) + 1;
         
         
         <?php if ($total_videos != 0 ): ?>
-        <div class="row  bg-white   add_margin_mobile " style="margin: 15px 0px;">  
+        <div class="row  bg-white   remove_margin_mobile " style="margin: 15px 0px;">  
 
               
             <div class="col-12 p-0 py-3 bg-white" style="padding-bottom: 0px !important;">
@@ -219,7 +276,7 @@ $total_images =  count($gallery_lists) + 1;
             </div>  
             
             <div class="col-12 p-0 bg-white  pl-2" style="padding-top: 0px !important;"> 
-                <div class="row justify-content-between" style="margin: 0px 0px;">  
+                <div class="row  " style="margin: 0px 0px;">  
                     
                     <?php  
                     if (!empty($video_url)) 
@@ -240,7 +297,7 @@ $total_images =  count($gallery_lists) + 1;
                             if (!empty($video)) 
                             {
                                 ?>
-                                <div class="video-container" style="padding: 20px 10px;width: <?php echo $total_percentage; ?>%"> 
+                                <div class="video-container col-12 col-md-6 col-lg-4" style="padding: 20px 10px; "> 
 
                                     <img src="<?php echo base_url() ?>assets/image/play_circle.png" class="play_icon" />
                                     
@@ -283,7 +340,7 @@ $total_images =  count($gallery_lists) + 1;
         <?php endif ?>
 
         
-        <div class="row  bg-white   add_margin_mobile" style="margin: 15px 0px;">
+        <div class="row  bg-white   remove_margin_mobile" style="margin: 15px 0px;">
             <div class="col-12 p-0 py-3 bg-white">
                 <h4 class="pl-3">Terms and Conditions</h4>
                 <ul  class="pr-5">
