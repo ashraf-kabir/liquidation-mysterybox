@@ -297,7 +297,7 @@ $total_images =  count($gallery_lists) + 1;
                             if (!empty($video)) 
                             {
                                 ?>
-                                <div class="video-container col-12 col-md-6 col-lg-4" style="padding: 20px 10px; "> 
+                                <div class="video-container col-12 col-md-6 col-lg-3" style="padding: 20px 10px; "> 
 
                                     <img src="<?php echo base_url() ?>assets/image/play_circle.png" class="play_icon" />
                                     
