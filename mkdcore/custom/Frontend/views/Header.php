@@ -23,6 +23,15 @@
      <title>Vegas Liquidation</title>
 
      <style type="text/css">
+
+           .swiper-button-next:hover{
+               background-color: #949599;
+                   color: black;
+          }
+          .swiper-button-prev:hover{
+               background-color: #949599;
+                   color: black;
+          }
           .badge {
                padding-left: 9px;
                padding-right: 9px;
