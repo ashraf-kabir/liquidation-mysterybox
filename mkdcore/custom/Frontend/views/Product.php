@@ -93,7 +93,7 @@
         .play_icon{
             width: 23%;
             top: 40%;
-            left: 32%;
+            left: 38%;
         }  
     } 
 
@@ -114,6 +114,9 @@
         }  
     } 
 
+    .img-thumbnail{
+        border: none !important;
+    }
 
     .video-container{
         position: relative;
