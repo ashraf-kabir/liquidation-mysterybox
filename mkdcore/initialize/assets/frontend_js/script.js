@@ -233,20 +233,33 @@ check_cart_total_items();
   });
 
 
-  function hide_qty_btns()
+  function hide_qty_btns(checkout_this_object = null)
   {
-    $('.edit_to_cart_button').hide();
-    $('.add_to_cart_button').hide();
-    $('.add_to_cart_button_checkout').hide();
-    $('.minus_to_cart_button').hide();
+    if ( checkout_this_object )
+    { 
+      checkout_this_object.parent().find('.edit_to_cart_button').hide(); 
+      
+      $('.add_to_cart_button').hide();
+      $('.add_to_cart_button_checkout').hide();
+      $('.minus_to_cart_button').hide();
 
-    $('.edit_to_cart_button').parent().append('<img class="remove_able_loader_gif" style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
-    $('.minus_to_cart_button').parent().parent().find('.product-quantity').append('<img class="remove_able_loader_gif" style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
+      checkout_this_object.parent().find('.edit_to_cart_button').parent().append('<img class="remove_able_loader_gif" style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
+      $('.minus_to_cart_button').parent().parent().find('.product-quantity').append('<img class="remove_able_loader_gif" style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
+    } else {
+      $('.edit_to_cart_button').hide();
+      
+      $('.add_to_cart_button').hide();
+      $('.add_to_cart_button_checkout').hide();
+      $('.minus_to_cart_button').hide();
+
+      $('.edit_to_cart_button').parent().append('<img class="remove_able_loader_gif" style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
+      $('.minus_to_cart_button').parent().parent().find('.product-quantity').append('<img class="remove_able_loader_gif" style="width:60px;object-fit: cover;" src="'+  loading_gif  +'"   alt="loading" />');
+    }
      
   }
 
 
-  function show_qty_btns()
+  function show_qty_btns(checkout_this_object = null)
   {
     $('.edit_to_cart_button').show();
     $('.add_to_cart_button').show();
@@ -276,7 +289,7 @@ check_cart_total_items();
         serialized_data.push({ name: 'is_add', value :  true });
       }
 
-      hide_qty_btns();
+      hide_qty_btns(checkout_this_object);
       
  
       $.ajax({
@@ -348,7 +361,10 @@ check_cart_total_items();
     e.preventDefault(); 
     let quantity   = $(this).parent().parent().find('.quantity_value').val();
     let id         = $(this).attr('data-id'); 
-    update_create_cart(quantity, id)
+
+
+    var this_object_now = $(this); 
+    update_create_cart(quantity, id , false, $(this))
   });
 
 
