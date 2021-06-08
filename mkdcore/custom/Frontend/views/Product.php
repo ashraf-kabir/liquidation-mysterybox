@@ -4,6 +4,18 @@
         object-fit: contain;
     }
 
+
+    .numbertext {
+        color: black !important; 
+    }
+
+    .quantity-to-cart{
+        display: flex;
+        flex-direction: row;
+        align-items: center
+    }
+    
+
     .image-fit-in-div{
         width: 100%;
         min-height: 200px;
@@ -13,43 +25,9 @@
         border: none !important;
     }
 
-     
-    .quantity-to-cart{
-        display: flex;
-        flex-direction: row;
-        align-items: center
-    }
-    .numbertext{
-        color: black !important;
-    }
-
-    @media only screen and (max-width:767px) {
-           
-        .add_margin_mobile{
-            margin-left: 15px !important;
-            margin-right: 15px !important;
-        } 
-
-        .remove_margin_mobile{
-            padding: 0px !important;
-            margin: 0px !important;
-        }
-        .padding-left-0-custom{
-            padding-left: 15px !important;
-        }
-        
-    } 
-
     .videos-thumbnail{
         max-height: 300px !important;
         width: 100% !important;
-    }
-
-
-    .slider-image-custom{
-        width:100% !important;
-        object-fit: contain;
-        border: none !important;
     }
 
     .play_icon{
@@ -61,6 +39,7 @@
     }
 
 
+    
     @media only screen and (min-width:2144px) {
            
         .play_icon{ 
@@ -126,6 +105,12 @@
             top: 41%;
             left: 40%;
         }  
+        .col-991-p-0{
+            padding: 0px !important;
+        }
+        .product_quantity{
+            width: 35%;
+        }
     } 
     @media only screen and (max-width:845px) {
            
@@ -136,55 +121,80 @@
         }  
     } 
 
-    .img-thumbnail{
-        border: none !important;
-    }
 
     .video-container{
         position: relative;
     }
-    
 
+    @media only screen and (max-width:767px) {
+           
+        .add_margin_mobile{
+            margin-left: 15px !important;
+            margin-right: 15px !important;
+        } 
+        .product_quantity{
+            width: 35%;
+        }
+        .remove_margin_mobile{
+            padding: 0px !important;
+            margin: 0px !important;
+        }
+        .padding-left-0-custom{
+            padding-left: 15px !important;
+        }
+        .col-991-p-0{
+            padding: 15px !important;
+        }
+        
+    } 
+
+
+    .img-thumbnail{
+        border: none !important;
+    }
 </style>
 <?php 
-$total_images =  count($gallery_lists) + 1; 
-?>
+ 
+$gallery_image_count = count($gallery_lists) + 1;
+ ?>
     <main class="container-fluid">
-        <div class="row "  style="margin: 15px 0px;" >
-            <div style="padding-left: 0px" class="col-12 col-md-12 mt-4 padding-left-0-custom">
-                <div class="product__pathLink"><a href="<?php echo base_url() ?>categories">Home ></a>
+        <div class="row ">
+            <div class="col-12 col-md-10 mt-4 padding-left-0-custom add_margin_mobile">
+                <div class="product__pathLink"><a href="<?php echo base_url() ?>">Home ></a> 
 
                 <?php if ($product->category_real_name != "N/A"): ?> 
-                    <a href="<?php echo base_url() ?>categories/?category=<?php echo $product->category_id;  ?>"><b  style="color: black;"><?php echo $product->category_real_name;  ?> > </b></a>
-                <?php endif ?>  
-                <b style="color: black;"><?php echo $product->product_name; ?></b></div>
+                    <a href="<?php echo base_url(); ?>?category=<?php echo $product->category_id; ?>"><b style="color: black;"><?php echo $product->category_real_name; ?> > </b></a>
+                <?php endif ?>
+                
+
+
+                <b style="color:black;"><?php echo $product->product_name; ?></b></div>
             </div>
         </div>
     </main>
-    <main class="container-fluid">
-        <div class="row  " style="margin: 15px 0px;" >
-            <div class="col-lg-9 bg-white p-2 p-lg-4 mt-4 add_margin_mobile">
-                 
+    <div class="container-fluid">
+        <div class="row " style="margin: 15px 0px;">
+            <div class="col-lg-9 bg-white p-2 p-md-4 mt-4 add_margin_mobile "  style="padding-top: 0.5rem !important;">
+                
 
-                <div class="row">
+                <div class="row ">
                     <div class="col-2 col-sm-1 padding-left-0-custom" style="max-height: 500px; padding: 0px;">
 
                         <?php if(!empty($product->feature_image)){   ?>
                             <div class="column w-100">
-                                <img class="img-thumbnail demo cursor slider-image-custom " src="<?php echo $product->feature_image; ?>"  onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>" >
+                                <img style="border: none;" class="demo cursor img-thumbnail" src="<?php echo $product->feature_image; ?>" style="width:100%" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>">
                             </div> 
                         <?php }else{ ?>
                             <div class="column w-100">
-                                <img class="img-thumbnail demo cursor slider-image-custom " src="/assets/frontend_images/noun_pallet_box_1675914.png"  onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>"  >
+                                <img  style="border: none;" class="demo cursor  img-thumbnail" src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>">
                             </div>  
                         <?php } ?> 
-
 
                         <?php if (!empty($gallery_lists)): $k= 2; ?> 
                             <?php foreach ($gallery_lists as $key => $value): ?>
 
                                 <div class="column w-100">
-                                    <img class="img-thumbnail demo cursor slider-image-custom " src="<?php echo $value->image_name; ?>"  onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
+                                    <img  style="border: none;" class="demo cursor img-thumbnail" src="<?php echo $value->image_name; ?>" style="width:100%" onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
                                 </div>
                                  
                             <?php endforeach ?> 
@@ -194,38 +204,41 @@ $total_images =  count($gallery_lists) + 1;
                     <div class="col-10 col-sm-11">
                         <?php if(!empty($product->feature_image)){   ?>
                             <div class="mySlides">
-                                <div class="numbertext">1 / <?php echo $total_images ?></div>
-                                <img class="img-thumbnail" src="<?php echo $product->feature_image; ?>" style="width:100%" alt="<?php echo $product->product_name; ?>">
+                                <div class="numbertext">1 / <?php echo $gallery_image_count ?></div>
+                                <img src="<?php echo $product->feature_image; ?>" class="img-thumbnail" style="width:100%" alt="<?php echo $product->product_name; ?>">
                             </div> 
                         <?php }else{ ?>
                             <div class="mySlides">
-                                <div class="numbertext">1 / <?php echo $total_images ?></div>
-                                <img class="img-thumbnail" src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%"  alt="<?php echo $product->product_name; ?>">
+                                <div class="numbertext">1 / <?php echo $gallery_image_count ?></div>
+                                <img  class="img-thumbnail"  src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%"  alt="<?php echo $product->product_name; ?>">
                             </div> 
                         <?php } ?> 
-                        <?php if (!empty($gallery_lists)): ?> 
+                        <?php if (!empty($gallery_lists)): $k =2; ?> 
                             <?php foreach ($gallery_lists as $key => $value): ?>
                                 <div class="mySlides">
-                                    <div class="numbertext"><?php echo $key+2 ?> / <?php echo $total_images ?></div>
-                                    <img class="img-thumbnail" src="<?php echo $value->image_name; ?>" style="width:100%" alt="<?php echo $product->product_name; ?>">
+                                    <div class="numbertext"><?php echo $k++ ?> / <?php echo $gallery_image_count ?></div>
+                                    <img  class="img-thumbnail"  src="<?php echo $value->image_name; ?>" style="width:100%" alt="<?php echo $product->product_name; ?>">
                                 </div>
                             <?php endforeach ?> 
                         <?php endif ?> 
                         
                         <a class="prev" onclick="plusSlides(-1)">❮</a>
-                        <a class="next" onclick="plusSlides(1)">❯</a> 
+                        <a class="next" onclick="plusSlides(1)">❯</a>
+                    
+                         
                     </div>
-                </div> 
+                </div>
             </div>
-            <div class="col-lg-3  mt-4 ">
-                <div class="bg-white w-100 p-2 p-md-4" style="padding-bottom: 1px !important;"> 
+            <div class="col-lg-3 col-991-p-0 mt-4">
+                <div class="bg-white w-100 p-2 p-md-4 "  style="padding-top: 0.5rem !important;"> 
                     <ul class="list-unstyled">
-                        <li class="my-1"><span class="product__price"><?php echo $product->product_name; ?></span></li> 
+                        <li class="my-1"><span class="product__price"><?php echo $product->product_name; ?></span></li>
 
-                        <li class="my-1">Price:  <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li> 
-                        <li class="my-1">SKU: <span class="product__price"> <?php echo $product->sku; ?></span></li>
-  
+                        <li class="my-1">Price: <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li>
+                        <li class="my-1">SKU: <span class="product__price"> <?php echo $product->sku; ?></span></li> 
+
                         <li class="my-1"><?php echo $home_page_setting->product_text_note; ?> </li>
+                        
                     </ul> 
                 </div>
 
@@ -261,7 +274,6 @@ $total_images =  count($gallery_lists) + 1;
                     </div>
                 <?php } ?> 
 
-
                 <?php if (!empty($product->inventory_note)): ?>
                 <div class="row mt-4">
                     <div class="col-12  ">
@@ -273,9 +285,12 @@ $total_images =  count($gallery_lists) + 1;
                     </div> 
                 </div> 
                 <?php endif ?>
+                 
             </div>
         </div>
-    </main>
+    </div>
+
+    
 
     <section class="container-fluid mt-5 mb-5" id="product__description">
         
@@ -293,18 +308,15 @@ $total_images =  count($gallery_lists) + 1;
             }
         }
         ?>
-        
-        
+         
+       
         <?php if ($total_videos != 0 ): ?>
-        <div class="row  bg-white   remove_margin_mobile " style="margin: 15px 0px;">  
-
-              
+        <div class="row  bg-white  add_margin_mobile" style="margin: 15px 0px;">
             <div class="col-12 p-0 py-3 bg-white" style="padding-bottom: 0px !important;">
-                <h4 class="pl-3">Review Videos</h4> 
-            </div>  
-            
-            <div class="col-12 p-0 bg-white  pl-2" style="padding-top: 0px !important;"> 
-                <div class="row  " style="margin: 0px 0px;">  
+                <h4  class="pl-3" >Review Videos</h4> 
+            </div>   
+            <div class="col-12  pl-2  p-0 bg-white"> 
+                <div class="row   p-3 " style="padding-top: 0px !important;">  
                     
                     <?php  
                     if (!empty($video_url)) 
@@ -326,12 +338,11 @@ $total_images =  count($gallery_lists) + 1;
                             {
                                 ?>
                                 <div class="video-container col-12 col-md-6 col-lg-3" style="padding: 20px 10px; "> 
-
-                                    <img src="<?php echo base_url() ?>assets/image/play_circle.png" class="play_icon" />
                                     
                                     <a href="<?php echo $video; ?>" target="_blank"> 
+                                        <img src="<?php echo base_url() ?>assets/image/play_circle.png" class="play_icon" />
                                         <img  
-
+                                         style="border: none;"
                                         class="img-thumbnail image-fit-in-div videos-thumbnail"
 
                                         <?php if ($key == 0): ?>
@@ -364,11 +375,13 @@ $total_images =  count($gallery_lists) + 1;
                 </div>
                 
             </div> 
-        </div>
+        </div> 
         <?php endif ?>
 
-        
-        <div class="row  bg-white   remove_margin_mobile" style="margin: 15px 0px;">
+
+      
+
+        <div class="row  bg-white add_margin_mobile" style="margin: 15px 0px;">
             <div class="col-12 p-0 py-3 bg-white">
                 <h4 class="pl-3">Terms and Conditions</h4>
                 <ul  class="pr-5">
@@ -380,38 +393,6 @@ $total_images =  count($gallery_lists) + 1;
             </div> 
         </div>
     </section>
-
-<div class="modal on_click_notification_modal" tabindex="-1">
-    <div class="modal-dialog">
-        <form id="add_alert_notification">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title product__title_on_modal">Product name</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                
-                        
-                   
-                    <p>Enter your email address and we will let you know when it's back.</p>
-
-                    <input type="email" class="form-control" name="email" value=""  required placeholder="xyz@gmail.com" />
-                    <input type="hidden" name="product_id" value="<?php echo $product->id ?>"   />
-                    <input type="hidden" name="product_name" value="<?php echo $product->product_name ?>"    />
-                    <input type="hidden" name="product_sku" value="<?php echo $product->sku ?>"    />
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary add_alert_notification">Add</button>
-            </div>
-        </div> 
-        </form>
-    </div>
-</div>
- 
     
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" defer></script>
 <script>
@@ -445,3 +426,4 @@ $total_images =  count($gallery_lists) + 1;
     }
 </script>
 
+ 
