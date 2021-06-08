@@ -188,7 +188,7 @@
           }
 
 
-          @media screen and (max-width: 1023px)
+          @media screen and (max-width: 1033px)
           {
                .navbar .nav-item .nav-link
                { 
