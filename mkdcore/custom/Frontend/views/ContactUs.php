@@ -2,25 +2,18 @@
         
 
         <div class="row justify-content-center py-5 contact__row">
-           <div class="col-11 col-lg-3 bg-white ml-md-4 p-3 p-lg-5 my-4">
+           <div class="col-11 col-lg-3 bg-white ml-md-4 p-1 p-lg-3 my-4">
                 <h2 class="section__header">Get in touch</h2>
                 <p class="mb-4">Feel free to contact us with any questions you might have.</p>
 
-                <h5><strong>4460 E Cheyenne Ave, Las Vegas, NV 89115</strong></h5>
+                <h5><strong><?php echo $home_page_setting->home_page_address ?></strong></h5>
 
                 <ul class="list-unstyled my-5   ">
-                    <li class="my-3"><i class="fas fa-phone"></i> 702-451-1000</li>
-                    <li class="my-3"><i class="fas fa-clock"></i> Monday – Friday  8:30am - 4:30pm</li>
-                    <li class="my-3"><i class="fas fa-envelope"></i> <?php echo $support_email; ?></li>
+                    <li class="my-3"><i class="fas fa-phone"></i> <?php echo $home_page_setting->home_page_phone_no ?></li>
+                    <li class="my-3"><i class="fas fa-clock"></i> <?php echo $home_page_setting->home_page_time ?></li>
+                    <li class="my-3"><i class="fas fa-envelope"></i> <?php echo $home_page_setting->home_page_support_email ?></li>
                 </ul>
-
-                <div class="contact-links">
-                    <a href="https://facebook.com"><i class="fab fa-facebook-f fb-icon"></i></a>
-                    <a href="https://facebook.com"><i class="fab fa-twitter tw-icon"></i></a>
-                    <a href="https://facebook.com"><i class="fab fa-google-plus-g gp-icon"></i></a>
-                    <a href="https://facebook.com"><i class="fab fa-instagram in-icon"></i></a>
-                    <a href="https://facebook.com"><i class="fab fa-pinterest pi-icon"></i></a>
-                </div>
+ 
            </div>
             <div class="col-11 col-lg-7 bg-white ml-md-4 p-4 my-4">
                 <h2 class="section__header">Contact us:</h2>
