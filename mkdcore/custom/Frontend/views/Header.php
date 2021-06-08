@@ -27,10 +27,12 @@
            .swiper-button-next:hover{
                background-color: #949599;
                    color: black;
+                       padding: 44px 21px;
           }
           .swiper-button-prev:hover{
                background-color: #949599;
                    color: black;
+                       padding: 44px 21px;
           }
           .badge {
                padding-left: 9px;
