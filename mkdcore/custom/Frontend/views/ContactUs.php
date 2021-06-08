@@ -2,7 +2,7 @@
         
 
         <div class="row justify-content-center py-5 contact__row">
-           <div class="col-11 col-lg-3 bg-white ml-md-4 p-1 p-lg-3 my-4">
+           <div class="col-11 col-lg-3 bg-white ml-md-4  p-4 p-lg-3 my-4">
                 <h2 class="section__header">Get in touch</h2>
                 <p class="mb-4">Feel free to contact us with any questions you might have.</p>
 
