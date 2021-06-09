@@ -236,6 +236,9 @@
                font-size: 20px;
                
           }
+          .search-wrapper .search-input-container {
+    border-bottom: 1px !important;
+}
      }
 
      </style>
