@@ -7,6 +7,12 @@
     margin-left: 5px;
     padding: 35px 19px;
 }
+.list-swiper-button-next{
+    padding: 35px 19px;
+}
+.list-swiper-button-prev{
+    padding: 35px 19px;
+}
 .slide-list-box{
     min-width: 290px;
 }
@@ -80,6 +86,14 @@
     padding: 35px 19px;
     transform: scale(0.8);
 }
+.list-swiper-button-next:hover {
+    padding: 35px 19px;
+    transform: scale(0.8);
+}
+.list-swiper-button-prev:hover {
+    padding: 35px 19px;
+    transform: scale(0.8);
+}
     }
 </style>
 
@@ -143,8 +157,8 @@
                 </div>
             <?php endforeach ?> 
         </div>
-        <div class="swiper-button-next swiper-button-next-mysterybox-card"></div>
-        <div class="swiper-button-prev swiper-button-prev-mysterybox-card"></div>
+        <div class="swiper-button-next list-swiper-button-next swiper-button-next-mysterybox-card"></div>
+        <div class="swiper-button-prev list-swiper-button-prev swiper-button-prev-mysterybox-card"></div>
         <div class="swiper-pagination swiper-pagination-mysterybox-card"></div>
     </div>
 </div>
@@ -185,8 +199,8 @@
             </div>
             
         </div>
-        <div class="swiper-button-next swiper-button-next-liquidation-card"></div>
-        <div class="swiper-button-prev swiper-button-prev-liquidation-card"></div>
+        <div class="swiper-button-next list-swiper-button-next swiper-button-next-liquidation-card"></div>
+        <div class="swiper-button-prev list-swiper-button-prev swiper-button-prev-liquidation-card"></div>
         <div class="swiper-pagination swiper-pagination-liquidation-card"></div>
     </div>
 </div> 
