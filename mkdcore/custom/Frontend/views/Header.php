@@ -173,11 +173,16 @@
 
           .logo-nav{
                position: absolute;
-               left: calc(50% -99px);
+               left: calc(50% - 99px);
           }
 
           .mobile-icons{
                display: none;
+               color: #000000;
+               text-decoration: none;
+          }
+
+          .mobile-icons a{
                color: #000000;
                text-decoration: none;
           }
@@ -252,7 +257,7 @@
 
      <header class="container-fluid "> 
           <nav class="navbar navbar-expand-lg row py-3 py-md-0 justify-lg-content-between" style="margin-top: 0px;background: none !important;">
-               <div class="mobile-nav-list">
+               <div class="mobile-nav-list flex-css">
                     <button class="navbar-toggler ml-3" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="navbar-toggler-icon"><i class="fas fa-bars mt-1"></i></span>
                     </button>
