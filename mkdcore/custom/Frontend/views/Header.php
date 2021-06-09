@@ -222,6 +222,8 @@ font-size: 20px;
 .search-wrapper .search-input-container input{
 
 font-size: 20px;
+padding-left: 10px;
+padding-right: 10px;
 
 }
 
