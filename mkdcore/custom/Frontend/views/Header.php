@@ -261,15 +261,15 @@
                     <button class="navbar-toggler ml-3" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="navbar-toggler-icon"><i class="fas fa-bars mt-1"></i></span>
                     </button>
-                    <a href="#" class="mobile-icons">
+                    <!-- <a href="#" class="mobile-icons">
                          <i class="fa fa-search"></i>
-                    </a>
+                    </a> -->
                </div>
 
-               <div class="account-icon mobile-icons account-icon">
+               <!-- <div class="account-icon mobile-icons account-icon">
                <a href="#">
                <i class="fas fa-user"></i></a>
-               </div>
+               </div> -->
                
                <div class="collapse navbar-collapse col-md-12" id="navbarNavDropdown" style="justify-content: space-between;">
                      
