@@ -68,21 +68,20 @@
                .remove-margin-left{
                    margin-left: 0px !important;
                }
+
+          .search-wrapper .search-input-container a i{
+               font-size: 20px;
+          }
+          .search-wrapper .search-input-container input{
+               
+               font-size: 20px;
+               
+          }
+
                 
           }
 
-          @media  screen and (max-width:767px){
-
-               .search-wrapper .search-input-container input
-               {
-                    width: 80% !important;
-                    border-bottom: 1px solid #979797 !important;
-               }
-               .search-wrapper .search-input-container{
-                    border-bottom: 0px !important;
-               }
-                
-          }
+          
 
           .top_header_css{
                background: <?php echo $home_page_setting->home_page_top_bg; ?>;
@@ -227,19 +226,7 @@
                }
           }
           
-          @media screen and (max-width: 767px){
-          .search-wrapper .search-input-container a i{
-               font-size: 20px;
-          }
-          .search-wrapper .search-input-container input{
-               
-               font-size: 20px;
-               
-          }
-          .search-wrapper .search-input-container {
-    border-bottom: 1px !important;
-}
-     }
+    
 
      </style>
 </head>
