@@ -109,6 +109,17 @@
             padding-left: 0px;
         }
     }
+
+    @media  screen and (max-width:  991px)
+    {
+        .follow__buttons{
+            justify-content: flex-start;
+            margin-left: -8px !important;
+        } 
+        .footer-links{
+            justify-content: flex-start;
+        }
+    }
     
 
     @media  screen and (max-width:  768px)

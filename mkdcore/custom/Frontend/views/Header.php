@@ -25,6 +25,8 @@
 
      <style type="text/css">
 
+
+
            .swiper-button-next:hover{
                background-color: #949599;
                    color: black;

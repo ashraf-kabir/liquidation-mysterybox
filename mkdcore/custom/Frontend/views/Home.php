@@ -8,6 +8,9 @@
 .slide-list-box{
     min-width: 290px;
 }
+.slider-container{
+    margin-left: 0;
+}
     .swiper-slide-slider-custom img {
         display: block;
         width: 100%;
@@ -120,7 +123,7 @@
 
 <?php if (!empty($all_categories)): ?> 
 <h5 class="heading-padding-mysterybox pl-3">Shop Mysteryboxes</h5>
-<div class="container"> 
+<div class="container slider-container"> 
 
     <div class="swiper-container swiper-container-mysterybox mySwiper mySwiper-mysterybox"  style="min-height: 200px;max-height: 300px">
         <div class="swiper-wrapper">
@@ -148,7 +151,7 @@
 
  
 <h5 class="heading-padding-liquidation pl-3">Current Inventory</h5>
-<div class="container"> 
+<div class="container slider-container"> 
 
     <div class="swiper-container swiper-container-liquidation mySwiper mySwiper-liquidation"  style="min-height: 200px;max-height: 300px">
         <div class="swiper-wrapper">
