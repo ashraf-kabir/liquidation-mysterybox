@@ -1,9 +1,11 @@
 <style type="text/css">
-.swiper-button-next{
+.main-swiper-button-next{
     margin-right: 25px;
+    padding: 35px 0;
 }
-.swiper-button-prev{
+.main-swiper-button-prev{
     margin-left: 25px;
+    padding: 35px 0;
 }
 .slide-list-box{
     min-width: 290px;
@@ -64,17 +66,17 @@
     }
 
     @media (max-width: 991px){
-        .swiper-button-next{
+        .main-swiper-button-next{
     margin-right: 0px;
 }
-.swiper-button-prev{
+.main-swiper-button-prev{
     margin-left: 0px;
 }
-.swiper-button-next:hover {
+.main-swiper-button-next:hover {
     padding: 35px 19px;
     transform: scale(0.8);
 }
-.swiper-button-prev:hover {
+.main-swiper-button-prev:hover {
     padding: 35px 19px;
     transform: scale(0.8);
 }
@@ -84,15 +86,15 @@
 
 <?php if (!empty($carosal_sliders)): ?> 
 
-<div class="swiper-container" style="min-height: 200px;max-height: 500px">
+<div class="swiper-container" style="min-height: 200px;max-height: auto">
     <div class="swiper-wrapper">
         <?php foreach ($carosal_sliders as $key => $value): ?>  
             <div class="swiper-slide swiper-slide-slider-custom"><img src="<?php echo $value->feature_image ?>"></div> 
         <?php endforeach ?>
     </div>
      
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next main-swiper-button-next"></div>
+    <div class="swiper-button-prev main-swiper-button-prev"></div>
 </div>
 
 <?php endif ?>
@@ -122,8 +124,8 @@
 
 
 <?php if (!empty($all_categories)): ?> 
-<h5 class="heading-padding-mysterybox pl-3">Shop Mysteryboxes</h5>
-<div class="container slider-container"> 
+<h5 class="heading-padding-mysterybox pl-4">Shop Mysteryboxes</h5>
+<div class="container slider-container pl-4"> 
 
     <div class="swiper-container swiper-container-mysterybox mySwiper mySwiper-mysterybox"  style="min-height: 200px;max-height: 300px">
         <div class="swiper-wrapper">
@@ -150,8 +152,8 @@
 
 
  
-<h5 class="heading-padding-liquidation pl-3">Current Inventory</h5>
-<div class="container slider-container"> 
+<h5 class="heading-padding-liquidation pl-4">Current Inventory</h5>
+<div class="container slider-container pl-4"> 
 
     <div class="swiper-container swiper-container-liquidation mySwiper mySwiper-liquidation"  style="min-height: 200px;max-height: 300px">
         <div class="swiper-wrapper">
