@@ -176,6 +176,18 @@
                left: calc(50% -99px);
           }
 
+          .mobile-icons{
+               display: none;
+               color: #000000;
+               text-decoration: none;
+          }
+
+
+          .mobile-icons.account-icon{
+               position: absolute;
+               right: 1rem;
+          }
+
 
           @media screen and (max-width: 991px)
           {
@@ -194,6 +206,10 @@
 
                .logo-hide-mbl{
                     display: none !important;
+               }
+
+               .mobile-icons{
+                    display: block;
                }
           }
 
@@ -235,17 +251,17 @@
 
 
      <header class="container-fluid "> 
-          <nav class="navbar navbar-expand-lg row py-3 py-md-0 justify-content-between" style="margin-top: 0px;background: none !important;">
+          <nav class="navbar navbar-expand-lg row py-3 py-md-0 justify-lg-content-between" style="margin-top: 0px;background: none !important;">
                <div class="mobile-nav-list">
                     <button class="navbar-toggler ml-3" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                          <span class="navbar-toggler-icon"><i class="fas fa-bars mt-1"></i></span>
                     </button>
-                    <a href="#">
+                    <a href="#" class="mobile-icons">
                          <i class="fa fa-search"></i>
                     </a>
                </div>
 
-               <div class="account-icon">
+               <div class="account-icon mobile-icons account-icon">
                <a href="#">
                <i class="fas fa-user"></i></a>
                </div>
