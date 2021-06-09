@@ -223,9 +223,20 @@
           {
                .navbar .nav-item .nav-link
                { 
-                       padding: 52px  7px;
+                    padding: 52px  7px;
                }
           }
+          
+          @media screen and (max-width: 767px){
+          .search-wrapper .search-input-container a i{
+               font-size: 20px;
+          }
+          .search-wrapper .search-input-container input{
+               
+               font-size: 20px;
+               
+          }
+     }
 
      </style>
 </head>
