@@ -59,27 +59,7 @@
           }
 
           
-          @media  screen and (max-width:767px){
 
-               .dropdown-submenu > .dropdown-menu {
-                   top: 0; 
-                   margin-top: 0px;
-               }
-               .remove-margin-left{
-                   margin-left: 0px !important;
-               }
-
-          .search-wrapper .search-input-container a i{
-               font-size: 20px;
-          }
-          .search-wrapper .search-input-container input{
-               
-               font-size: 20px;
-               
-          }
-
-                
-          }
 
           
 
@@ -225,6 +205,28 @@
                     padding: 52px  7px;
                }
           }
+
+          @media  screen and (max-width:767px){
+
+.dropdown-submenu > .dropdown-menu {
+    top: 0; 
+    margin-top: 0px;
+}
+.remove-margin-left{
+    margin-left: 0px !important;
+}
+
+.search-wrapper .search-input-container a i{
+font-size: 20px;
+}
+.search-wrapper .search-input-container input{
+
+font-size: 20px;
+
+}
+
+ 
+}
           
     
 
