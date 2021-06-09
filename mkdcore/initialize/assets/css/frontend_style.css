@@ -2,11 +2,12 @@ body {
   font-family: "Poppins", sans-serif;
   background: rgb(246, 246, 246);
 }
-.btn-secondary{
+.btn-secondary {
   background-color: #1b1c1d !important;
 }
 
-.pb-4, .py-4{
+.pb-4,
+.py-4 {
   padding-bottom: 0px !important;
 }
 .bg-light {
@@ -219,6 +220,7 @@ footer {
   text-decoration: none;
   transition: 0.3s;
   width: 40px;
+  margin-right: 10px;
 }
 .follow__buttons a:hover i {
   opacity: 0.8;

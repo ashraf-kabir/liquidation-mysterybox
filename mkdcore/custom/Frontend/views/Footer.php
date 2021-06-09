@@ -131,7 +131,7 @@
 </style>
 
 <footer class="container-fluid">
-    <div class="row justify-content-start  ">
+    <div class="row justify-content-start px-2">
         <div class="col-10 col-lg-4 p-0 footer__col order-xl-0 order-lg-0 order-md-1 order-sm-1 order-1 my-4">
             <ul class="list-unstyled">
                 <li class="my-3 d-flex">
