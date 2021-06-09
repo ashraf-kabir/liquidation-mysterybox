@@ -1,4 +1,13 @@
 <style type="text/css">
+.swiper-button-next{
+    margin-right: 25px;
+}
+.swiper-button-prev{
+    margin-left: 25px;
+}
+.slide-list-box{
+    min-width: 290px;
+}
     .swiper-slide-slider-custom img {
         display: block;
         width: 100%;
@@ -50,6 +59,23 @@
         right: 41%; 
         top: 44%;
     }
+
+    @media (max-width: 991px){
+        .swiper-button-next{
+    margin-right: 0px;
+}
+.swiper-button-prev{
+    margin-left: 0px;
+}
+.swiper-button-next:hover {
+    padding: 35px 19px;
+    transform: scale(0.8);
+}
+.swiper-button-prev:hover {
+    padding: 35px 19px;
+    transform: scale(0.8);
+}
+    }
 </style>
 
 
@@ -93,13 +119,13 @@
 
 
 <?php if (!empty($all_categories)): ?> 
-<h5 class="heading-padding-mysterybox pl-5">Shop Mysteryboxes</h5>
+<h5 class="heading-padding-mysterybox pl-3">Shop Mysteryboxes</h5>
 <div class="container"> 
 
     <div class="swiper-container swiper-container-mysterybox mySwiper mySwiper-mysterybox"  style="min-height: 200px;max-height: 300px">
         <div class="swiper-wrapper">
             <?php foreach ($all_categories as $key => $value): ?>
-                <div class="swiper-slide swiper-slide-mysterybox"> 
+                <div class="swiper-slide swiper-slide-mysterybox slide-list-box"> 
                     <a href="<?php echo base_url() ?>categories/?category=<?php echo $value->id; ?>">
                     <?php if (empty($value->feature_image)): ?>
                         <img class="img-thumbnail" src="./uploads/placeholder.jpg">
@@ -121,13 +147,13 @@
 
 
  
-<h5 class="heading-padding-liquidation pl-5">Current Inventory</h5>
+<h5 class="heading-padding-liquidation pl-3">Current Inventory</h5>
 <div class="container"> 
 
     <div class="swiper-container swiper-container-liquidation mySwiper mySwiper-liquidation"  style="min-height: 200px;max-height: 300px">
         <div class="swiper-wrapper">
  
-            <div class="swiper-slide swiper-slide-liquidation">
+            <div class="swiper-slide swiper-slide-liquidation slide-list-box">
                 <a href="<?php echo $liquidation_url ?>?type=1"> 
                     <img class="img-thumbnail"  src="./uploads/shop_pallet.jpg"> 
                 </a>

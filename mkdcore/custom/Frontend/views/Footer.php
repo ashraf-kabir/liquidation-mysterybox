@@ -121,7 +121,7 @@
 
 <footer class="container-fluid">
     <div class="row justify-content-start  ">
-        <div class="col-10 col-md-4 pr-md-5 footer__col my-4">
+        <div class="col-10 col-lg-4 p-0 footer__col order-xl-0 order-lg-0 order-md-1 order-sm-1 order-1 my-4">
             <ul class="list-unstyled">
                 <li class="my-3 d-flex">
                     <i class="fas fa-map-marker-alt"></i>
@@ -142,8 +142,8 @@
                 </li>
             </ul>
         </div>
-        <div class="col-10 col-md-6 footer__col footer__col_custom my-4  "  > 
-            <div class="follow__buttons">
+        <div class="col-10 col-lg-4 footer__col my-4 footer__col_custom order-xl-1 order-lg-1 order-md-2 order-sm-2 order-2 p-0 "  > 
+            <div class="follow__buttons flex-css">
                 <a target="_blank" href="<?php echo $home_page_setting->home_page_fb_link ?>"><i class="fab fa-facebook-f facebook-icon-color"></i></a>
                 <?php if (!empty($home_page_setting->home_page_pintrest_link)): ?> 
                     <a  target="_blank" href="<?php echo $home_page_setting->home_page_pintrest_link ?>"><i class="fab fa-pinterest pintrest-icon-color"></i></a>
@@ -155,18 +155,19 @@
                 
             </div>
         </div>
-        <div class="col-10 col-md-2 footer__col my-4"> 
+        <div class="col-10 col-lg-4 footer__col my-4 order-xl-2 order-lg-2 order-md-0 order-sm-0 order-0 p-0"> 
+        <div class="footer-links flex-top-row-end">
             <ul class="p-0 site__mapUl">
                 <li><a href="<?php echo base_url(); ?>">Home</a></li> 
                 <li><a href="<?php echo base_url(); ?>about_us/">About Us</a></li>
-                <li><a href="<?php echo base_url(); ?>contact_us/">Contact Us</a></li>
-                
+                <li><a href="<?php echo base_url(); ?>contact_us/">Contact Us</a></li>        
             </ul>
+        </div>
         </div>
     </div>
 
-    <div class="row justify-content-start"  > 
-        <div class="col-12 col-md-12 pr-md-5 footer__col my-4" style=" text-align: center;">
+    <div class="row justify-content-center"  > 
+        <div class="col-12 col-md-12 p-0 footer__col my-4" style=" text-align: center;">
             <p  style="margin: 0px;">Copyright &copy; <?php echo Date('Y') ?>  VegasLiquidation.com</p>
         </div>
     </div>

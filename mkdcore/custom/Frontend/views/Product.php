@@ -38,6 +38,10 @@
         left: 32%;
     }
 
+    .img-thumbnail{
+        padding: 0 !important;
+    }
+
 
     
     @media only screen and (min-width:2144px) {
@@ -244,7 +248,7 @@ $gallery_image_count = count($gallery_lists) + 1;
                     <div class="col-12 quantity-to-cart bg-white w-100 p-2 p-md-4 " style="padding-top: 0px !important;">
                         <label for="quantity" >Qty </label>
                              
-                            <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity mx-3"  > 
+                            <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity mx-3"  style="font-size: 13px; padding: 0px; width: 75px; height: 38px;"> 
                                 <option value="">Select</option>
                                 <?php  
                                 for ($i=1; $i <= $product->quantity; $i++) 
@@ -260,7 +264,7 @@ $gallery_image_count = count($gallery_lists) + 1;
                             </select> 
 
                         <input type="hidden" class="product_id" name="product_id" value="<?= $product->id; ?>" />
-                        <a href="#" class="btn add_to_cart_button btn-success addToCartBtn">
+                        <a href="#" class="btn add_to_cart_button btn-success addToCartBtn" style="width: 100%">
                         <i class="fas fa-shopping-cart cart-icon"></i>
                         </a>
                     </div>

@@ -41,7 +41,7 @@
           width: 100%;
           min-height: 200px;
           max-height: 200px;
-          object-fit: cover;
+          object-fit: contain;
      }
 
      @media only screen and (max-width: 767px) {
