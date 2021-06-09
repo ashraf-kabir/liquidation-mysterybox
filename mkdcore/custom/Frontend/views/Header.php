@@ -171,6 +171,11 @@
                display: none;
           }
 
+          .logo-nav{
+               position: absolute;
+               left: calc(50% -99px);
+          }
+
 
           @media screen and (max-width: 991px)
           {
@@ -230,10 +235,21 @@
 
 
      <header class="container-fluid "> 
-          <nav class="navbar navbar-expand-lg row py-3 py-md-0 justify-content-lg-center" style="margin-top: 0px;background: none !important;">
-               <button class="navbar-toggler ml-3" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"><i class="fas fa-bars mt-1"></i></span>
-               </button>
+          <nav class="navbar navbar-expand-lg row py-3 py-md-0 justify-content-between" style="margin-top: 0px;background: none !important;">
+               <div class="mobile-nav-list">
+                    <button class="navbar-toggler ml-3" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                         <span class="navbar-toggler-icon"><i class="fas fa-bars mt-1"></i></span>
+                    </button>
+                    <a href="#">
+                         <i class="fa fa-search"></i>
+                    </a>
+               </div>
+
+               <div class="account-icon">
+               <a href="#">
+               <i class="fas fa-user"></i></a>
+               </div>
+               
                <div class="collapse navbar-collapse col-md-12" id="navbarNavDropdown" style="justify-content: space-between;">
                      
                     <ul class="nav navbar-nav">
@@ -295,7 +311,7 @@
                     </ul>
 
 
-                    <ul class="nav navbar-nav logo-hide-mbl ">
+                    <ul class="nav navbar-nav logo-nav logo-hide-mbl ">
                          <li class="nav-item">
                               <a  style="    padding: 0px;"  class="dropdown-item  nav-link" tabindex="-1" href="<?php echo base_url(); ?>" ><img style="width:198px; padding-bottom: 9px;" src="<?php echo base_url() ?>uploads/vegas-liquidation.png"></a> 
                          </li>

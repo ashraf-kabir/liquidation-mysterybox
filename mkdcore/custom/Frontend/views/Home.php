@@ -1,11 +1,11 @@
 <style type="text/css">
 .main-swiper-button-next{
-    margin-right: 25px;
-    padding: 35px 0;
+    margin-right: 5px;
+    padding: 35px 19px;
 }
 .main-swiper-button-prev{
-    margin-left: 25px;
-    padding: 35px 0;
+    margin-left: 5px;
+    padding: 35px 19px;
 }
 .slide-list-box{
     min-width: 290px;
