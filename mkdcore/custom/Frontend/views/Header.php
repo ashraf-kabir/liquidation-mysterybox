@@ -28,8 +28,12 @@
           .navbar-toggler{
                border: none;
                outline: none;
-               padding: 0;
+               padding: 0.25rem 0;
                padding-left: 2px;
+          }
+
+          .navbar-toggler:focus{
+               outline: none;
           }
 
            .swiper-button-next:hover{
