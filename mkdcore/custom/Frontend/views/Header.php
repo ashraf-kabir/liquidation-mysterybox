@@ -25,7 +25,12 @@
 
      <style type="text/css">
 
-
+          .navbar-toggler{
+               border: none;
+               outline: none;
+               padding: 0;
+               padding-left: 2px;
+          }
 
            .swiper-button-next:hover{
                background-color:  #94959957;

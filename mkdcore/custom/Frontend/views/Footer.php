@@ -177,7 +177,7 @@
         </div>
     </div>
 
-    <div class="row justify-content-center"  > 
+    <div class="row justify-content-center px-4"  > 
         <div class="col-12 col-md-12 p-0 footer__col my-4" style=" text-align: center;">
             <p  style="margin: 0px;">Copyright &copy; <?php echo Date('Y') ?>  VegasLiquidation.com</p>
         </div>

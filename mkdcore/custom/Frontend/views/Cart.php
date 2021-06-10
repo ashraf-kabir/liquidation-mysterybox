@@ -1,5 +1,8 @@
 
 <style type="text/css">
+.cart-main-container{
+    height: calc(100vh - 320px + 50px + 130px);
+}
     .delete_btn_c {
         z-index: 2;
         position: absolute;
@@ -90,7 +93,7 @@
 
 </style>
 <section>
-    <div class="container-fluid my-5" id="cart">
+    <div class="container-fluid cart-main-container my-5" id="cart">
         <div class="row justify-content-center">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <?php if ($this->session->flashdata('success1')): ?> 
