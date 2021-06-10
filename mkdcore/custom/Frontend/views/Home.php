@@ -184,7 +184,7 @@
 
 
             
-            <div class="swiper-slide swiper-slide-liquidation">
+            <div class="swiper-slide swiper-slide-liquidation slide-list-box">
                 <a href="<?php echo $liquidation_url ?>?type=2"> 
                     <img class="img-thumbnail"  src="./uploads/placeholder.jpg"> 
                     
@@ -194,7 +194,7 @@
 
 
  
-            <div class="swiper-slide swiper-slide-liquidation">
+            <div class="swiper-slide swiper-slide-liquidation slide-list-box">
                 <a href="<?php echo $liquidation_url ?>?type=3"> 
                     <img class="img-thumbnail"  src="./uploads/truckload.jpg"> 
                 </a>
