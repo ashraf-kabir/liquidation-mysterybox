@@ -425,7 +425,17 @@ crossorigin="anonymous"></script>
     $(document).ready(function(){
 
 
-        var swiper = new Swiper('.swiper-container', {
+        var swiper = new Swiper('.swiper-container-sliders-custom', {
+            speed: 700,
+            autoplay: {
+                delay: 4000, 
+            },
+            slidesPerView: 1, 
+            spaceBetween: 30,
+            slidesPerGroup: 1,
+            observer: true,
+            observeParents: true,
+            parallax:true, 
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
@@ -433,12 +443,29 @@ crossorigin="anonymous"></script>
         });
 
         var swiper_mysterybox = new Swiper(".mySwiper-mysterybox", {
-            slidesPerView: 3,
+            slidesPerView: 3, 
             spaceBetween: 30,
             slidesPerGroup: 3,
             observer: true,
             observeParents: true,
-            parallax:true,
+            parallax:true, 
+            breakpoints: {
+                992: {
+                    slidesPerView: 3, 
+                    spaceBetween: 30, 
+                    slidesPerGroup: 1,
+                }, 
+                768: {
+                    slidesPerView: 2, 
+                    spaceBetween: 30, 
+                    slidesPerGroup: 2,
+                }, 
+                200: {
+                    slidesPerView: 1, 
+                    spaceBetween: 30, 
+                    slidesPerGroup: 1,
+                }, 
+            },
             loop: false,
             loopFillGroupWithBlank: true,
             pagination: {
@@ -459,7 +486,24 @@ crossorigin="anonymous"></script>
             observeParents: true,
             parallax:true,
             loop: false,
-            loopFillGroupWithBlank: true,
+            loopFillGroupWithBlank: true, 
+            breakpoints: {
+                992: {
+                    slidesPerView: 3, 
+                    spaceBetween: 30,
+                    slidesPerGroup: 3,
+                }, 
+                768: {
+                    slidesPerView: 2, 
+                    spaceBetween: 30, 
+                    slidesPerGroup: 2,
+                }, 
+                200: {
+                    slidesPerView: 1, 
+                    spaceBetween: 30, 
+                    slidesPerGroup: 1,
+                }, 
+            },
             pagination: {
                 el: ".swiper-pagination-liquidation-card",
                 clickable: true,
