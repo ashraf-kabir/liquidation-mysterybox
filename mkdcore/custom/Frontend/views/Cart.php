@@ -1,7 +1,7 @@
 
 <style type="text/css">
 .cart-main-container{
-    height: calc(100vh - 320px + 50px + 130px);
+    min-height: calc(100vh - 320px + 50px + 130px);
 }
     .delete_btn_c {
         z-index: 2;
@@ -20,7 +20,7 @@
         width: 100%;
         min-height: 200px;
         max-height: 200px;
-        object-fit: cover;
+        object-fit: contain;
     }
 
     .show-text-only{
