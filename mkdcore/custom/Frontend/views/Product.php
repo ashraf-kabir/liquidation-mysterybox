@@ -239,7 +239,8 @@ $gallery_image_count = count($gallery_lists) + 1;
                         <li class="my-1"><span class="product__price"><?php echo $product->product_name; ?></span></li>
 
                         <li class="my-1">Price: <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li>
-                        
+
+                        <li class="my-1"><?php echo $home_page_setting->product_text_note; ?></li> 
                         
                     </ul> 
                 </div>
