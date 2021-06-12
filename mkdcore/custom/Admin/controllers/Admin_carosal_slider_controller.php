@@ -227,6 +227,7 @@ class Admin_carosal_slider_controller extends Admin_controller
         $this->_data['home_page_top_color'] = $model->home_page_top_color;
         $this->_data['home_page_top_bg']    = $model->home_page_top_bg;
         $this->_data['heading']             = "Top Bar"; 
+        $this->_data['page_name']           = $this->_page_name;
         
         
         if ($this->form_validation->run() === FALSE)
@@ -289,6 +290,7 @@ class Admin_carosal_slider_controller extends Admin_controller
         $this->_data['home_page_pintrest_link']   = $model->home_page_pintrest_link;
         $this->_data['product_text_note']         = $model->product_text_note;
         $this->_data['heading']                   = "Home Page Setting"; 
+        $this->_data['page_name']                 = $this->_page_name; 
         
         
         if ($this->form_validation->run() === FALSE)
