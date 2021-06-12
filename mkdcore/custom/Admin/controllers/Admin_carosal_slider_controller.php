@@ -12,7 +12,7 @@ include_once 'Admin_controller.php';
 class Admin_carosal_slider_controller extends Admin_controller
 {
     protected $_model_file = 'carosal_slider_model';
-    public $_page_name = 'Carosal Slider';
+    public $_page_name = 'Carousel Slider';
 
     public function __construct()
     {
@@ -37,7 +37,7 @@ class Admin_carosal_slider_controller extends Admin_controller
             $this->carosal_slider_model,
             $this->pagination,
             '/admin/carosal_slider/0');
-        $this->_data['view_model']->set_heading('Carosal Slider');
+        $this->_data['view_model']->set_heading('Carousel Slider');
         $this->_data['view_model']->set_total_rows($this->carosal_slider_model->count($where));
 
         $this->_data['view_model']->set_per_page(25);
@@ -78,7 +78,7 @@ class Admin_carosal_slider_controller extends Admin_controller
         $this->form_validation = $this->carosal_slider_model->set_form_validation(
         $this->form_validation, $this->carosal_slider_model->get_all_validation_rule());
         $this->_data['view_model'] = new CarosalSlider_admin_add_view_model($this->carosal_slider_model);
-        $this->_data['view_model']->set_heading('Carosal Slider');
+        $this->_data['view_model']->set_heading('Carousel Slider');
         
 
 		if ($this->form_validation->run() === FALSE)
@@ -121,7 +121,7 @@ class Admin_carosal_slider_controller extends Admin_controller
         $this->form_validation, $this->carosal_slider_model->get_all_edit_validation_rule());
         $this->_data['view_model'] = new CarosalSlider_admin_edit_view_model($this->carosal_slider_model);
         $this->_data['view_model']->set_model($model);
-        $this->_data['view_model']->set_heading('Carosal Slider');
+        $this->_data['view_model']->set_heading('Carousel Slider');
         
         
 		if ($this->form_validation->run() === FALSE)
@@ -167,7 +167,7 @@ class Admin_carosal_slider_controller extends Admin_controller
 
         include_once __DIR__ . '/../../view_models/CarosalSlider_admin_view_view_model.php';
 		$this->_data['view_model'] = new CarosalSlider_admin_view_view_model($this->carosal_slider_model);
-		$this->_data['view_model']->set_heading('Carosal Slider');
+		$this->_data['view_model']->set_heading('Carousel Slider');
         $this->_data['view_model']->set_model($model);
         
 		return $this->render('Admin/CarosalSliderView', $this->_data);
