@@ -3465,8 +3465,8 @@
 
 		"admin/scan/scan_product_view": "Admin/Admin_inventory_controller/scan_product_view",
 		"admin/terms_and_conditions/edit": "Admin/Admin_terms_and_conditions_controller/edit/$1",
-		"admin/top_bar_setting": "Admin/Admin_carosal_slider_controller/top_bar_setting/$1",
-		"admin/home_page_setting": "Admin/Admin_carosal_slider_controller/home_page_setting",
+		"admin/top_bar_setting": "Admin/Admin_carousel_slider_controller/top_bar_setting/$1",
+		"admin/home_page_setting": "Admin/Admin_carousel_slider_controller/home_page_setting",
 
 
 		"admin/inventory/delete_gallery_image/(:num)": "Admin/Admin_inventory_controller/delete_gallery_image/$1",
