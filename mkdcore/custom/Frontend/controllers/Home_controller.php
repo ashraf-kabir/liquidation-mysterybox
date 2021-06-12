@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); 
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 include_once __DIR__ . '/../../services/User_service.php';
 /**
  * Home Controller to Manage all Frontend pages
@@ -14,7 +14,7 @@ include_once __DIR__ . '/../../services/User_service.php';
 
 class Home_controller extends Manaknight_Controller
 {
-     
+
     public $_data = [
         'error' => '',
         'success' => ''
@@ -22,25 +22,25 @@ class Home_controller extends Manaknight_Controller
 
     public function __construct()
     {
-        parent::__construct(); 
+        parent::__construct();
 
-         
+
         $this->load->model('category_model');
-        $this->load->model('inventory_model'); 
-        $this->load->model('physical_location_model'); 
-        $this->load->model('traffic_referrer_model'); 
+        $this->load->model('inventory_model');
+        $this->load->model('physical_location_model');
+        $this->load->model('traffic_referrer_model');
 
-        if ( $this->input->get('showshow', TRUE)  ) 
+        if ( $this->input->get('showshow', TRUE)  )
         {
             $showshow = $this->input->get('showshow', TRUE);
             $showshow = strtolower($showshow);
 
             $referrer_data = $this->traffic_referrer_model->get_by_fields(['referrer_key' => $showshow ]);
- 
-            if ( isset($referrer_data->id)) 
+
+            if ( isset($referrer_data->id))
             {
-                $this->set_session('referrer', $referrer_data->id);  
-            } 
+                $this->set_session('referrer', $referrer_data->id);
+            }
         }
 
         // echo "<pre>";
@@ -49,41 +49,41 @@ class Home_controller extends Manaknight_Controller
     }
 
     public function index($offset = 0)
-    {  
+    {
         $data['layout_clean_mode'] = FALSE;
 
-        $this->load->model('carosal_slider_model'); 
-        $data['carosal_sliders'] = $this->carosal_slider_model->get_all(); 
+        $this->load->model('carousel_slider_model');
+        $data['carousel_sliders'] = $this->carousel_slider_model->get_all();
 
 
         $this->_render('Guest/Home',$data);
     }
 
     public function categories($offset = 0)
-    {   
- 
+    {
+
 
         $this->load->library('pagination');
 
 
         $this->_data['category']       =     $this->input->get('category', TRUE) != NULL  ? $this->input->get('category', TRUE) : NULL ;
-        $this->_data['search_query']   =     $this->input->get('search_term', TRUE) != NULL  ? $this->input->get('search_term', TRUE) : NULL ; 
+        $this->_data['search_query']   =     $this->input->get('search_term', TRUE) != NULL  ? $this->input->get('search_term', TRUE) : NULL ;
         $this->_data['type']           =     $this->input->get('type', TRUE) != NULL  ? $this->input->get('type', TRUE) : NULL ;
-        
-        $where = [ 
-            'product_type'       => $this->_data['type'], 
-            'category_id'        => $this->_data['category'], 
-            'product_name'       => $this->_data['search_query'],  
-            'sku'                => $this->_data['search_query'], 
+
+        $where = [
+            'product_type'       => $this->_data['type'],
+            'category_id'        => $this->_data['category'],
+            'product_name'       => $this->_data['search_query'],
+            'sku'                => $this->_data['search_query'],
             'status'             => 1
         ];
-  
-        $rows_data = $this->inventory_model->get_custom_count($where);
-        
 
-       
- 
-        $total_rows = $rows_data; 
+        $rows_data = $this->inventory_model->get_custom_count($where);
+
+
+
+
+        $total_rows = $rows_data;
         $limit = 6;
 
         $this->pagination->initialize([
@@ -113,29 +113,29 @@ class Home_controller extends Manaknight_Controller
             'num_tag_close' => '</li>'
         ]);
 
-        $data['products_list']  = $this->inventory_model->get_custom_paginated($offset , $limit, $where );  
-         
-         
-        $data['type']            = $this->_data['type'];  
-        $data['category']        = $this->_data['category'];  
-        $data['all_categories']  = $this->category_model->get_all(['status' => 1]); 
-        $data['category']        = $this->category_model->get($this->_data['category']); 
-        
-        
-       
+        $data['products_list']  = $this->inventory_model->get_custom_paginated($offset , $limit, $where );
+
+
+        $data['type']            = $this->_data['type'];
+        $data['category']        = $this->_data['category'];
+        $data['all_categories']  = $this->category_model->get_all(['status' => 1]);
+        $data['category']        = $this->category_model->get($this->_data['category']);
+
+
+
 
         $data['layout_clean_mode'] = FALSE;
         $data['active'] = 'home';
- 
+
         $this->_render('Guest/Categories',$data);
-             
+
     }
-    
+
 
 
 
     public function contacts()
-    {  
+    {
 
         if($this->input->post('email', TRUE))
         {
@@ -143,18 +143,18 @@ class Home_controller extends Manaknight_Controller
             $from_email   =  $this->input->post('email', TRUE);
             $subject      =  $this->input->post('subject', TRUE);
             $subject      =  $subject . ' - ' . $name;
-            $message      =  $this->input->post('message', TRUE); 
+            $message      =  $this->input->post('message', TRUE);
 
             if( $this->_send_email($from_email, $subject, $message, $name) )
             {
                 $this->session->set_flashdata('success1','Your message has been sent successfully.');
             } else{
                 $this->session->set_flashdata('error1','Error! Please try again later.');
-            }  
+            }
 
             redirect($_SERVER['HTTP_REFERER']);
         }
-        
+
 
         $data['active'] = 'contact';
         $data['layout_clean_mode'] = FALSE;
@@ -164,19 +164,19 @@ class Home_controller extends Manaknight_Controller
 
 
     public function forgot_password()
-    {  
-        
+    {
+
 
         if($this->input->post('email', TRUE))
         {
             $email         =  $this->input->post('email', TRUE);
-             
- 
-            $this->load->model('customer_model'); 
+
+
+            $this->load->model('customer_model');
             $model = $this->customer_model->get_by_fields(['email' => $email ]);
 
             if ($model)
-            {     
+            {
 
                 $this->load->library('mail_service');
                 $this->mail_service->set_adapter('smtp');
@@ -189,16 +189,16 @@ class Home_controller extends Manaknight_Controller
 
                 $output = $this->customer_model->edit(['token' => $token_b], $model->id );
 
-                if ($output) 
-                { 
-                    ob_start();  
-                    $this->load->view('Guest/ResetPasswordTemplate', $data); 
-                    $content = ob_get_contents(); 
-                    ob_end_clean(); 
+                if ($output)
+                {
+                    ob_start();
+                    $this->load->view('Guest/ResetPasswordTemplate', $data);
+                    $content = ob_get_contents();
+                    ob_end_clean();
 
-                     
+
                     $from = $this->config->item('from_email');
-                    
+
 
                     $response = $this->mail_service->send($from, $email, "Reset your password", $content);
 
@@ -206,43 +206,43 @@ class Home_controller extends Manaknight_Controller
                     {
                         $this->session->set_flashdata('success1','Success! Please check your mail for further instructions.');
                         redirect($_SERVER['HTTP_REFERER']);
-                    }   
+                    }
                 }
 
                 $this->session->set_flashdata('error1','Error! Please try again later.');
                 redirect($_SERVER['HTTP_REFERER']);
-            }  
+            }
 
-              
-            $this->session->set_flashdata('error1','Error! Invalid Email/Password.'); 
+
+            $this->session->set_flashdata('error1','Error! Invalid Email/Password.');
             redirect($_SERVER['HTTP_REFERER']);
         }
-        
- 
+
+
         $data['layout_clean_mode'] = FALSE;
         $this->_render('Guest/ForgotPassword',$data);
     }
 
 
     public function update_password($token)
-    {  
-        
+    {
+
 
         if($token)
         {
-            $token         =  $token;  
-            $this->load->model('customer_model'); 
+            $token         =  $token;
+            $this->load->model('customer_model');
             $model = $this->customer_model->get_by_fields(['token' => $token]);
 
             if (!$model)
-            {     
+            {
                 return redirect('/forgot_password');
-            }  
-              
+            }
+
             $data['layout_clean_mode'] = FALSE;
             $data['token'] = $token;
             $this->_render('Guest/ChangePassword',$data);
-        } 
+        }
         else
         {
             return redirect('');
@@ -252,8 +252,8 @@ class Home_controller extends Manaknight_Controller
 
 
     public function set_new_password()
-    {  
-        
+    {
+
 
         if($this->input->post('token_b', TRUE))
         {
@@ -262,31 +262,31 @@ class Home_controller extends Manaknight_Controller
             $password2         =  $this->input->post('password2', TRUE);
 
 
-            if ($password != $password2) 
+            if ($password != $password2)
             {
-                $this->session->set_flashdata('error1','Error! Both password should be same.'); 
+                $this->session->set_flashdata('error1','Error! Both password should be same.');
                 redirect($_SERVER['HTTP_REFERER']);
             }
 
-            $this->load->model('customer_model'); 
+            $this->load->model('customer_model');
             $model = $this->customer_model->get_by_fields(['token' => $token]);
 
-            if ($model) 
+            if ($model)
             {
-                $password   = password_hash($password, PASSWORD_BCRYPT); 
+                $password   = password_hash($password, PASSWORD_BCRYPT);
                 $response = $this->customer_model->edit([ 'password' => $password ,'token' => '' ], $model->id);
 
-                if ($response) 
+                if ($response)
                 {
                     $this->session->set_flashdata('success1','Success! Your password has been updated successfully.');
-                    
+
                     redirect('');
-                } 
+                }
             }
-            
-            $this->session->set_flashdata('error1','Error! Please try again later.'); 
+
+            $this->session->set_flashdata('error1','Error! Please try again later.');
             redirect($_SERVER['HTTP_REFERER']);
-        } 
+        }
         else
         {
             return redirect('');
@@ -296,7 +296,7 @@ class Home_controller extends Manaknight_Controller
 
 
     public function order_confirmation()
-    {   
+    {
         $data['layout_clean_mode'] = FALSE;
         $this->_render('Guest/Order_Confirmation',$data);
     }
@@ -304,7 +304,7 @@ class Home_controller extends Manaknight_Controller
 
 
     public function profile()
-    {    
+    {
 
         if($this->session->userdata('customer_login') && $this->session->userdata('user_id'))
         {
@@ -313,34 +313,34 @@ class Home_controller extends Manaknight_Controller
 
             if( $this->input->post('name', TRUE)  || $this->input->post('address_fill_form', TRUE)  )
             {
-                
-                if (!$this->input->post('address_fill_form', TRUE) ) 
+
+                if (!$this->input->post('address_fill_form', TRUE) )
                 {
                     $this->form_validation->set_rules('name', "Name", "required|max_length[255]");
                     $this->form_validation->set_rules('phone', 'Phone', 'numeric|max_length[15]');
                 }
-                
+
 
                 $this->form_validation->set_rules('billing_address', "Billing Address", "required|min_length[5]");
                 $this->form_validation->set_rules('billing_zip', "Billing Zip Code", "required|integer|max_length[10]");
                 $this->form_validation->set_rules('billing_city', "Billing City", "max_length[255]");
                 $this->form_validation->set_rules('billing_country', "Billing Country", "max_length[255]");
-                $this->form_validation->set_rules('billing_state', "Billing State", "max_length[255]");  
+                $this->form_validation->set_rules('billing_state', "Billing State", "max_length[255]");
 
                 $this->form_validation->set_rules('shipping_address', "Shipping Address", "required|min_length[5]");
                 $this->form_validation->set_rules('shipping_zip', "Shipping Zip", "required|integer|max_length[10]");
                 $this->form_validation->set_rules('shipping_city', "Shipping City", "required|max_length[255]");
                 $this->form_validation->set_rules('shipping_country', "Shipping Country", "required|max_length[255]");
-                $this->form_validation->set_rules('shipping_state', "Shipping State", "required|max_length[255]"); 
-                  
+                $this->form_validation->set_rules('shipping_state', "Shipping State", "required|max_length[255]");
+
 
                 if ($this->form_validation->run() === FALSE)
                 {
-                    $error_msg = validation_errors(); 
+                    $error_msg = validation_errors();
                     $output['error'] = $error_msg;
                     echo json_encode($output);
                     exit();
-                } 
+                }
 
                 $name            =  $this->input->post('name', TRUE);
                 $billing_zip     =  $this->input->post('billing_zip', TRUE);
@@ -358,12 +358,12 @@ class Home_controller extends Manaknight_Controller
                 $address_type           =  $this->input->post('address_type', TRUE);
 
 
-                $payload = [ 
+                $payload = [
                     'billing_zip' => $billing_zip,
                     'billing_address' => $billing_address,
                     'billing_city' => $billing_city,
                     'billing_state' => $billing_state,
-                    'billing_country' => $billing_country, 
+                    'billing_country' => $billing_country,
                     'shipping_address' => $shipping_address,
                     'address_type' => $address_type,
                     'shipping_zip' => $shipping_zip,
@@ -372,28 +372,28 @@ class Home_controller extends Manaknight_Controller
                     'shipping_country' => $shipping_country,
                 ];
 
-                if (!$this->input->post('address_fill_form', TRUE) ) 
+                if (!$this->input->post('address_fill_form', TRUE) )
                 {
                     $payload['name']  =  $name;
-                    $payload['phone'] =  $phone; 
+                    $payload['phone'] =  $phone;
                 }
-                 
+
                 $response = $this->customer_model->edit($payload, $this->session->userdata('user_id'));
 
 
                 if( $response )
                 {
                     $output['status'] = 0;
-                    $output['success']  = 'Profile has been updated successfully.'; 
-                    if ($this->input->post('address_fill_form', TRUE) ) 
+                    $output['success']  = 'Profile has been updated successfully.';
+                    if ($this->input->post('address_fill_form', TRUE) )
                     {
-                        $output['success']       = 'Data has been updated successfully.';  
-                        $output['redirect_url']  = base_url() . 'checkout';  
+                        $output['success']       = 'Data has been updated successfully.';
+                        $output['redirect_url']  = base_url() . 'checkout';
                     }
 
                     echo json_encode($output);
                     exit();
-                    
+
                 }
                 else
                 {
@@ -401,8 +401,8 @@ class Home_controller extends Manaknight_Controller
                     $output['error']  = "Error! Please try again later.";
                     echo json_encode($output);
                     exit();
-                } 
-                     
+                }
+
             }
 
             $data['customer'] = $customer;
@@ -413,7 +413,7 @@ class Home_controller extends Manaknight_Controller
         else
         {
             redirect('');
-        } 
+        }
     }
 
 
@@ -421,81 +421,81 @@ class Home_controller extends Manaknight_Controller
 
 
     public function cart()
-    { 
+    {
         $data['active'] = 'cart';
         $data['layout_clean_mode'] = FALSE;
         $data['no_detail'] = TRUE;
-        
+
         // if($this->session->userdata('customer_login'))
-        // { 
+        // {
             $user_id = $this->session->userdata('user_id');
             $this->load->model('pos_cart_model');
             $this->load->model('customer_model');
             $this->load->model('inventory_model');
             $this->load->model('tax_model');
 
-            
 
-            if ($this->session->userdata('user_id')) 
-            { 
-                $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+
+            if ($this->session->userdata('user_id'))
+            {
+                $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]);
             }
             else
             {
-                $ip_address_user = $_SERVER['REMOTE_ADDR']; 
-                $cart_items =  $this->pos_cart_model->get_all(['secret_key' => $ip_address_user]); 
-            } 
+                $ip_address_user = $_SERVER['REMOTE_ADDR'];
+                $cart_items =  $this->pos_cart_model->get_all(['secret_key' => $ip_address_user]);
+            }
 
             if(!empty($cart_items))
             {
-                foreach ($cart_items as $cart_key => &$cart) 
+                foreach ($cart_items as $cart_key => &$cart)
                 {
                     $data_i = $this->inventory_model->get($cart->product_id);
-                    
+
                     $cart->feature_image = $data_i->feature_image;
                 }
             }
 
             $data['cart_items'] = $cart_items;
-            $data['customer']   =  $this->customer_model->get($user_id);  
+            $data['customer']   =  $this->customer_model->get($user_id);
 
-            
-            $data['tax']   =  $this->tax_model->get(1); 
 
-            $this->_render('Guest/Cart',$data);  
-        // }  
+            $data['tax']   =  $this->tax_model->get(1);
+
+            $this->_render('Guest/Cart',$data);
+        // }
         // else
         // {
         //     redirect('');
         // }
-    } 
+    }
 
 
     public function do_checkout()
-    {  
+    {
         if($this->session->userdata('customer_login') && $this->session->userdata('user_id'))
-        { 
-             
+        {
+
             $user_id = $this->session->userdata('user_id');
 
 
-            $form_data = $this->input->post('dataForm', TRUE); 
+            $form_data = $this->input->post('dataForm', TRUE);
             $customer_data = array();
-            foreach ($form_data as $form_data_key => $form_data_value) 
+            foreach ($form_data as $form_data_key => $form_data_value)
             {
                 $form_data_value = (object) $form_data_value;
                 $customer_data[$form_data_value->name] = $form_data_value->value;
-            } 
+            }
             $_POST = $customer_data;
-             
-            
+
+
             $this->form_validation->set_rules('full_name', "Name", "required|max_length[255]");
-            $this->form_validation->set_rules('email_address', "Email", "valid_email"); 
+            $this->form_validation->set_rules('email_address', "Email", "valid_email");
             $this->form_validation->set_rules('billing_zip', "Billing Postal Code", "required|integer");
             $this->form_validation->set_rules('billing_city', "Billing City", "max_length[255]");
             $this->form_validation->set_rules('billing_country', "Billing Country", "max_length[255]");
-            $this->form_validation->set_rules('billing_state', "Billing State", "max_length[255]"); 
-            $this->form_validation->set_rules('billing_address', "Billing Address", "required|min_length[5]"); 
+            $this->form_validation->set_rules('billing_state', "Billing State", "max_length[255]");
+            $this->form_validation->set_rules('billing_address', "Billing Address", "required|min_length[5]");
             $this->form_validation->set_rules('payment', "Payment Method", "integer");
             // $this->form_validation->set_rules('number', "Account Number", "required|integer");
             // $this->form_validation->set_rules('exp_month', "Expiry Month", "required");
@@ -505,10 +505,10 @@ class Home_controller extends Manaknight_Controller
             $this->form_validation->set_rules('shipping_zip', "Shipping Zip", "required|integer");
             $this->form_validation->set_rules('shipping_city', "Shipping City", "required|max_length[255]");
             $this->form_validation->set_rules('shipping_country', "Shipping Country", "required|max_length[255]");
-            $this->form_validation->set_rules('shipping_state', "Shipping State", "required|max_length[255]"); 
-            $this->form_validation->set_rules('shipping_address', "Shipping Address", "required|min_length[5]"); 
-            $this->form_validation->set_rules('customer_card', "Card is required", "required"); 
-              
+            $this->form_validation->set_rules('shipping_state', "Shipping State", "required|max_length[255]");
+            $this->form_validation->set_rules('shipping_address', "Shipping Address", "required|min_length[5]");
+            $this->form_validation->set_rules('customer_card', "Card is required", "required");
+
 
 
             $this->load->model('pos_cart_model');
@@ -518,13 +518,13 @@ class Home_controller extends Manaknight_Controller
 
 
 
-            $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+            $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]);
             if( empty($cart_items) )
-            {   
+            {
                 $output['status'] = 0;
                 $output['error']  = 'Error! Please add item in cart first.';
                 echo json_encode($output);
-                exit();  
+                exit();
             }
 
 
@@ -534,24 +534,24 @@ class Home_controller extends Manaknight_Controller
                 $output['status'] = 0;
                 $output['error']  = $error_msg;
                 echo json_encode($output);
-                exit();  
+                exit();
             }
 
 
 
-            
-            
+
+
 
 
             /**
             * Validate Items Quantity
-            * and Item supports shipment 
-            */ 
+            * and Item supports shipment
+            */
             $checkout_type = 2;
-            foreach ($cart_items as $key => $cart_item_value) 
-            { 
+            foreach ($cart_items as $key => $cart_item_value)
+            {
 
-                $this->form_validation->set_rules('shipping_service_id_' . $cart_item_value->id, "", "required", array('required' => 'Shipping service must be selected for all items.')); 
+                $this->form_validation->set_rules('shipping_service_id_' . $cart_item_value->id, "", "required", array('required' => 'Shipping service must be selected for all items.'));
 
                 if ($this->form_validation->run() === FALSE)
                 {
@@ -559,29 +559,29 @@ class Home_controller extends Manaknight_Controller
                     $output['status'] = 0;
                     $output['error']  = $error_msg;
                     echo json_encode($output);
-                    exit();  
+                    exit();
                 }
 
 
 
                 $cart_item_value = (object) $cart_item_value;
-                 
+
                 $check_quantity = $this->helpers_service->check_item_in_inventory($cart_item_value->product_id, $cart_item_value->product_qty, $cart_item_value->product_name, $checkout_type);
 
                 if( isset($check_quantity->error) )
-                {  
+                {
                     $output['status'] = 0;
                     $output['error']  = $check_quantity->error;
                     echo json_encode($output);
-                    exit(); 
+                    exit();
                 }
             }
 
- 
+
 
 
             $data['cart_items']  = $cart_items;
-             
+
 
 
             $full_name      =  $this->input->post('full_name', TRUE);
@@ -591,12 +591,12 @@ class Home_controller extends Manaknight_Controller
             $state          =  $this->input->post('billing_state', TRUE);
             $country        =  $this->input->post('billing_country', TRUE);
             $postal_code    =  $this->input->post('billing_zip', TRUE);
-            $address_1      =  $this->input->post('billing_address', TRUE); 
+            $address_1      =  $this->input->post('billing_address', TRUE);
             $payment        =  $this->input->post('payment', TRUE);
             $payment        =  2;
             $coupon_code    =  $this->input->post('coupon_code', TRUE);
 
-            
+
 
 
             $shipping_country        =  $this->input->post('shipping_country', TRUE);
@@ -604,55 +604,55 @@ class Home_controller extends Manaknight_Controller
             $shipping_zip            =  $this->input->post('shipping_zip', TRUE);
             $shipping_city           =  $this->input->post('shipping_city', TRUE);
             $shipping_address        =  $this->input->post('shipping_address', TRUE);
- 
- 
-             
-            
-            $this->load->model('customer_model');  
+
+
+
+
+            $this->load->model('customer_model');
             $this->load->model('pos_order_model');
             $this->load->model('pos_order_note_model');
-            $this->load->model('pos_order_items_model'); 
+            $this->load->model('pos_order_items_model');
             $this->load->model('transactions_model');
-            
-            $this->load->model('customer_model'); 
-            $this->load->model('customer_cards_model'); 
-            $this->load->model('coupon_model'); 
-            $this->load->model('coupon_orders_log_model'); 
-            $this->load->model('tax_model'); 
+
+            $this->load->model('customer_model');
+            $this->load->model('customer_cards_model');
+            $this->load->model('coupon_model');
+            $this->load->model('coupon_orders_log_model');
+            $this->load->model('tax_model');
 
             $this->load->library('pos_checkout_service');
             $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
             $this->pos_checkout_service->set_coupon_model($this->coupon_model);
 
             $this->db->trans_begin();
- 
+
 
             /**
              * IF Coupon is used then validate
              * If Coupon is successful then use amount
-             * 
+             *
             */
-            $coupon_amount    = 0; 
-            $coupon_condition = FALSE; 
+            $coupon_amount    = 0;
+            $coupon_condition = FALSE;
             // if(!empty($coupon_code))
             // {
             //     $coupon_response = (object) $this->pos_checkout_service->checkout_verify_and_update_coupon( $coupon_code );
-                     
+
             //     if( $coupon_response->success )
-            //     {  
-            //         $coupon_amount    = $coupon_response->coupon_amount;   
-            //         $coupon_condition = TRUE; 
+            //     {
+            //         $coupon_amount    = $coupon_response->coupon_amount;
+            //         $coupon_condition = TRUE;
             //     }
             //     else
-            //     { 
+            //     {
             //         $output['status'] = 0;
             //         $output['error']  = $coupon_response->error_msg;
             //         echo json_encode($output);
-            //         exit(); 
-            //     } 
+            //         exit();
+            //     }
             // }
 
-            $this->load->library('stripe_helper_service'); 
+            $this->load->library('stripe_helper_service');
             $this->stripe_helper_service->set_config($this->config);
             $this->stripe_helper_service->set_customer_model($this->customer_model);
             $this->stripe_helper_service->set_customer_cards_model($this->customer_cards_model);
@@ -664,62 +664,62 @@ class Home_controller extends Manaknight_Controller
             //     $exp_month      =  $this->input->post('exp_month', TRUE);
             //     $exp_year       =  $this->input->post('exp_year', TRUE);
             //     $cvc            =  $this->input->post('cvc', TRUE);
-    
+
             //     $this->load->library('stripe_helper_service');
-    
+
             //     $this->stripe_helper_service->set_config($this->config);
             //     $response = $this->stripe_helper_service->create_stripe_token($acc_number, $exp_month, $exp_year, $cvc);
-    
-                
+
+
             //     if( isset($response['success']) )
             //     {
             //         $token_id = $response['response']->id;
             //     }
             //     else
-            //     { 
+            //     {
             //         $output['status'] = 0;
             //         $output['error']  = $response['error_msg'];
             //         echo json_encode($output);
-            //         exit();  
-            //     } 
+            //         exit();
+            //     }
             // }
- 
 
 
 
-            $data['customer']       =  $this->customer_model->get($user_id);   
-            $data['customer']->name =  $full_name; 
+
+            $data['customer']       =  $this->customer_model->get($user_id);
+            $data['customer']->name =  $full_name;
 
 
             /**
-            * Cart Items  
+            * Cart Items
             */
-            $cart_items     =  $this->pos_cart_model->get_all(['customer_id' => $user_id ]); 
-            $customer_data  =  $this->customer_model->get( $user_id ); 
+            $cart_items     =  $this->pos_cart_model->get_all(['customer_id' => $user_id ]);
+            $customer_data  =  $this->customer_model->get( $user_id );
             $shipping_cost  =  0;
             $discount       =  0;
             $tax            =  0;
-             
-            $tax_data       =  $this->tax_model->get(1); 
+
+            $tax_data       =  $this->tax_model->get(1);
 
             $tax_amount  = 0;
-            
 
-            if (strtolower($customer_data->billing_state) == 'nv' or strtolower($customer_data->billing_state) == 'nevada') 
+
+            if (strtolower($customer_data->billing_state) == 'nv' or strtolower($customer_data->billing_state) == 'nevada')
             {
                 if(isset($tax_data->tax) )
                 {
                     $tax_amount = $tax_data->tax/100;
-                }  
+                }
             }
-            
+
 
             $referrer = 1;
-            if ($this->session->userdata('referrer')) 
+            if ($this->session->userdata('referrer'))
             {
                 $referrer = $this->session->userdata('referrer');
             }
- 
+
             // $customer_data->shipping_service_name  = $shipping_cost_name;
             // $customer_data->shipping_service_id    = $shipping_service_id;
             // $customer_data->name                   = $full_name;
@@ -730,7 +730,7 @@ class Home_controller extends Manaknight_Controller
             $customer_data->country                = $customer_data->billing_country;
             $customer_data->billing_zip            = $customer_data->billing_zip;
             $customer_data->billing_address        = $customer_data->billing_address;
-            
+
 
 
             // $customer_data->shipping_address              = $shipping_address;
@@ -744,27 +744,27 @@ class Home_controller extends Manaknight_Controller
 
 
             /**
-            * Create Order 
-            */ 
+            * Create Order
+            */
 
-             
+
             $result = $this->pos_checkout_service->customer_create_order($customer_data,$tax,$discount,$user_id,$shipping_cost, $checkout_type);
 
 
-            if ($result) 
-            { 
+            if ($result)
+            {
                 /**
-                * Store order items detail 
-                * 
-                */ 
+                * Store order items detail
+                *
+                */
                 $order_id    = $result;
                 $sub_total   = 0;
                 $grand_total = 0;
                 $shipping_cost_total = 0;
 
-                foreach ($cart_items as $cart_item_key => $cart_item_value) 
+                foreach ($cart_items as $cart_item_key => $cart_item_value)
                 {
-                    $inventory_data = $this->inventory_model->get($cart_item_value->product_id);   
+                    $inventory_data = $this->inventory_model->get($cart_item_value->product_id);
                     $total_amount   = $cart_item_value->unit_price  * $cart_item_value->product_qty;
 
                     $total_item_tax = $tax_amount * $total_amount;
@@ -780,45 +780,45 @@ class Home_controller extends Manaknight_Controller
                     $shipping_service_code        =  $this->input->post('shipping_service_name_code_' . $cart_item_value->id, TRUE);
                     $shipping_service_name        =  $this->input->post('shipping_service_name_' . $cart_item_value->id, TRUE);
 
-                    $shipping_cost_total += (Float) $shipping_cost_value; 
+                    $shipping_cost_total += (Float) $shipping_cost_value;
                     $data_order_detail = array(
                         'product_id'         => $cart_item_value->product_id,
-                        'product_name'       => $cart_item_value->product_name, 
-                        'amount'             => $total_amount, 
-                        'item_tax'           => $total_item_tax, 
-                        'sale_person_id'     => $inventory_data->sale_person_id, 
-                        'store_id'           => $inventory_data->store_location_id, 
-                        'quantity'           => $cart_item_value->product_qty, 
-                        'order_id'           => $order_id, 
-                        'manifest_id'        => $inventory_data->manifest_id, 
-                        'category_id'        => $inventory_data->category_id,  
-                        'pos_user_id'        => 0, 
+                        'product_name'       => $cart_item_value->product_name,
+                        'amount'             => $total_amount,
+                        'item_tax'           => $total_item_tax,
+                        'sale_person_id'     => $inventory_data->sale_person_id,
+                        'store_id'           => $inventory_data->store_location_id,
+                        'quantity'           => $cart_item_value->product_qty,
+                        'order_id'           => $order_id,
+                        'manifest_id'        => $inventory_data->manifest_id,
+                        'category_id'        => $inventory_data->category_id,
+                        'pos_user_id'        => 0,
                         'product_unit_price' => $cart_item_value->unit_price,
                         'shipping_cost_name'  => $shipping_cost_name,
                         'shipping_cost_value' => $shipping_cost_value,
                         'shipping_service_id' => $shipping_service_id,
-                        
+
                         'shipping_service_code' => $shipping_service_code,
                         'shipping_service_name' => $shipping_service_name,
                     );
                     $sub_total += $total_amount;
-                    $detail_id = $this->pos_order_items_model->create($data_order_detail); 
+                    $detail_id = $this->pos_order_items_model->create($data_order_detail);
 
                     /**
                      *
-                     * Product Type 2 = Generic 
-                     * If 2 then don't decrease quantity 
-                     * 
+                     * Product Type 2 = Generic
+                     * If 2 then don't decrease quantity
+                     *
                     */
                     if($detail_id and $inventory_data->product_type != 2 )
                     {
                         $quantity_left = $inventory_data->quantity - $cart_item_value->product_qty;
                         $this->inventory_model->edit([
                             'quantity' => $quantity_left
-                        ], $inventory_data->id ); 
+                        ], $inventory_data->id );
                     }
                 }
-                
+
 
 
                 // //if coupon used then save log
@@ -831,77 +831,77 @@ class Home_controller extends Manaknight_Controller
 
 
                 /**
-                * Update prices  
-                */ 
+                * Update prices
+                */
                 $tax              =  $tax_amount * $sub_total;
 
 
                 $grand_total =   $tax + $sub_total - $discount - $coupon_amount  +  $shipping_cost_total;
-                $data_order_prices = array( 
+                $data_order_prices = array(
                     'total'         =>  $grand_total,
                     'tax'           =>  $tax,
-                    'subtotal'      =>  $sub_total,  
-                    'coupon_log_id' =>  $coupon_log_id,  
-                    'shipping_cost' =>  $shipping_cost_total,  
+                    'subtotal'      =>  $sub_total,
+                    'coupon_log_id' =>  $coupon_log_id,
+                    'shipping_cost' =>  $shipping_cost_total,
                 );
                 $result = $this->pos_order_model->edit($data_order_prices, $order_id);
 
 
                 /**
-                * Add Transaction  
-                */    
+                * Add Transaction
+                */
                 $add_transaction = array(
                     'payment_type'      =>  $payment,
-                    'customer_id'       =>  $user_id, 
-                    'pos_user_id'       =>  0, 
-                    'transaction_date'  =>  Date('Y-m-d'), 
-                    'transaction_time'  =>  Date('g:i:s A'), 
-                    'pos_order_id'      =>  $order_id, 
-                    'tax'               =>  $tax,  
-                    'discount'          =>  $discount, 
-                    'subtotal'          =>  $sub_total, 
-                    'total'             =>  $grand_total, 
+                    'customer_id'       =>  $user_id,
+                    'pos_user_id'       =>  0,
+                    'transaction_date'  =>  Date('Y-m-d'),
+                    'transaction_time'  =>  Date('g:i:s A'),
+                    'pos_order_id'      =>  $order_id,
+                    'tax'               =>  $tax,
+                    'discount'          =>  $discount,
+                    'subtotal'          =>  $sub_total,
+                    'total'             =>  $grand_total,
                 );
                 $transaction_id = $this->transactions_model->create($add_transaction);
-                
-                
+
+
 
                 if($transaction_id)
                 {
-                    $user_id = $this->session->userdata('user_id');  
-                    // $output['order_id']      = $order_id;  
-                     
+                    $user_id = $this->session->userdata('user_id');
+                    // $output['order_id']      = $order_id;
+
 
 
                     if($payment == 2)
-                    { 
+                    {
                         $grand_total = number_format($grand_total,2);
                         $response = $this->stripe_helper_service->create_stripe_charge($user_id, $token_id, $grand_total, "Ecom Order");
-             
+
                         if( isset($response['success']) )
-                        { 
+                        {
                             $this->pos_order_model->edit(['intent_data' => json_encode($response['response']) ], $order_id);
-                            $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]); 
+                            $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]);
                         }
                         else
-                        { 
+                        {
                             $this->db->trans_rollback();
                             $output['status'] = 0;
                             $output['error']  = $response['error_msg'];
                             echo json_encode($output);
-                            exit(); 
-                        }  
+                            exit();
+                        }
                     }
 
 
 
-                    $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]); 
+                    $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]);
 
 
                     /**
                      * Send Order to Accounting System
-                     *  
-                    */ 
+                     *
+                    */
                     $accounting_response = $this->send_order_to_accounting( $order_id );
                     if( isset( $accounting_response->error_msg ) )
                     {
@@ -914,8 +914,8 @@ class Home_controller extends Manaknight_Controller
 
                     /**
                      * Send Transaction to Accounting System
-                     *  
-                    */ 
+                     *
+                    */
                     $accounting_trans_response = $this->send_transaction_to_accounting( $transaction_id );
                     if( isset( $accounting_trans_response->error_msg ) )
                     {
@@ -929,8 +929,8 @@ class Home_controller extends Manaknight_Controller
 
                     /**
                      * Send Order to Shipping System
-                     *  
-                    */ 
+                     *
+                    */
                     $order_data = $this->send_order_to_shipper($order_id);
 
                     if( isset( $order_data->error_msg ) )
@@ -953,7 +953,7 @@ class Home_controller extends Manaknight_Controller
                     $output['success']  = 'Order has been created successfully.';
                     $output['redirect_url']  = base_url() . 'order_confirmation';
                     echo json_encode($output);
-                    exit(); 
+                    exit();
                 }
                 else
                 {
@@ -961,11 +961,11 @@ class Home_controller extends Manaknight_Controller
                     $output['status'] = 0;
                     $output['error']  = 'Error! Please try again later.';
                     echo json_encode($output);
-                    exit();   
+                    exit();
                 }
- 
-                
-                
+
+
+
             }
             else
             {
@@ -973,7 +973,7 @@ class Home_controller extends Manaknight_Controller
                 $output['status'] = 0;
                 $output['error']  = 'Error! Please try again later.';
                 echo json_encode($output);
-                exit(); 
+                exit();
             }
         }
     }
@@ -983,7 +983,7 @@ class Home_controller extends Manaknight_Controller
 
 
     public function checkout()
-    {   
+    {
         if( $this->session->userdata('customer_login') && $this->session->userdata('user_id') )
         {
             $user_id = $this->session->userdata('user_id');
@@ -999,22 +999,22 @@ class Home_controller extends Manaknight_Controller
             $data['active'] = 'checkout';
             $data['layout_clean_mode'] = FALSE;
             $data['no_detail'] = TRUE;
-    
 
-             
-            
+
+
+
             $this->load->model('pos_cart_model');
-            
+
             $this->load->model('tax_model');
 
 
 
-        
 
-            $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
 
-            if (!empty($cart_items)) 
-            {                     
+            $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]);
+
+            if (!empty($cart_items))
+            {
                 foreach ($cart_items as $key => &$value)
                 {
                     $item_data = $this->inventory_model->get($value->product_id);
@@ -1022,14 +1022,14 @@ class Home_controller extends Manaknight_Controller
                     $value->free_ship     = $item_data->free_ship;
                     $value->can_ship      = $item_data->can_ship;
                     $value->feature_image = $item_data->feature_image;
-                    $value->description   = $item_data->inventory_note; 
+                    $value->description   = $item_data->inventory_note;
                 }
             }
 
-            
-            $data['cart_items']   =  $cart_items; 
-            $data['customer']     =  $customer; 
-            $data['tax']          =  $this->tax_model->get(1); 
+
+            $data['cart_items']   =  $cart_items;
+            $data['customer']     =  $customer;
+            $data['tax']          =  $this->tax_model->get(1);
 
             $this->_render('Guest/Checkout',$data);
         }
@@ -1040,16 +1040,16 @@ class Home_controller extends Manaknight_Controller
 
 
     public function address_details()
-    {   
+    {
         if( $this->session->userdata('customer_login') && $this->session->userdata('user_id') )
         {
             $this->load->model('customer_model');
 
             $user_id = $this->session->userdata('user_id');
-            $data['customer']     =  $this->customer_model->get($user_id); 
+            $data['customer']     =  $this->customer_model->get($user_id);
             $data['active'] = 'checkout';
             $data['layout_clean_mode'] = FALSE;
-            
+
             $this->_render('Guest/AddressDetails',$data);
         }
         else
@@ -1058,29 +1058,29 @@ class Home_controller extends Manaknight_Controller
         }
     }
 
-    
+
     public function terms_and_conditions()
-    {   
-         
+    {
+
         $this->load->model('terms_and_conditions_model');
- 
-        $data['terms']     =  $this->terms_and_conditions_model->get(1); 
+
+        $data['terms']     =  $this->terms_and_conditions_model->get(1);
         $data['active'] = 'checkout';
         $data['layout_clean_mode'] = FALSE;
-        
+
         $this->_render('Guest/TermsAndConditions',$data);
-         
+
     }
 
-    
+
 
     public function product($id = 0)
-    { 
+    {
         $data['layout_clean_mode'] = FALSE;
         $this->load->model('inventory_gallery_list_model');
-        
-         
-        $model  = $this->inventory_model->get_by_fields(['id' =>$id, 'status' => 1]); 
+
+
+        $model  = $this->inventory_model->get_by_fields(['id' =>$id, 'status' => 1]);
         if (!$model)
         {
             $this->error('Error');
@@ -1089,10 +1089,10 @@ class Home_controller extends Manaknight_Controller
 
         $this->load->library('names_helper_service');
         $this->load->model('category_model');
-        $this->load->model('physical_location_model'); 
+        $this->load->model('physical_location_model');
 
 
-        
+
         $this->names_helper_service->set_category_model($this->category_model);
         $this->names_helper_service->set_physical_location_model($this->physical_location_model);
 
@@ -1101,24 +1101,24 @@ class Home_controller extends Manaknight_Controller
 
         $data['product']        =   $model;
         $data['gallery_lists']  =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
- 
-        $data['no_detail'] = TRUE; 
+
+        $data['no_detail'] = TRUE;
 
         $this->_render('Guest/Product',$data);
     }
 
-    
+
     public function about_us()
     {
-        $data['layout_clean_mode'] = FALSE; 
-        $data['no_detail'] = TRUE; 
+        $data['layout_clean_mode'] = FALSE;
+        $data['no_detail'] = TRUE;
 
         $this->_render('Guest/AboutUs',$data);
     }
-     
+
     public function contact_us()
     {
-        $data['layout_clean_mode'] = FALSE; 
+        $data['layout_clean_mode'] = FALSE;
         $data['no_detail'] = TRUE;
 
         if($this->input->post('email', TRUE))
@@ -1127,30 +1127,30 @@ class Home_controller extends Manaknight_Controller
             $from_email   =  $this->input->post('email', TRUE);
             $subject      =  $this->input->post('subject', TRUE);
             $subject      =  $subject . ' - ' . $name;
-            $message      =  $this->input->post('message', TRUE); 
+            $message      =  $this->input->post('message', TRUE);
 
             if( $this->_send_email($from_email, $subject, $message, $name) )
             {
                 $this->session->set_flashdata('success2','Your message has been sent successfully.');
             } else{
                 $this->session->set_flashdata('error2','Error! Please try again later.');
-            }  
+            }
 
             return redirect($_SERVER['HTTP_REFERER']);
         }
-         
+
 
         $this->_render('Guest/ContactUs',$data);
     }
 
-     
+
 
     protected function _render($template, $data)
     {
         $this->load->model('home_page_setting_model');
 
         $all_categories  = $this->category_model->get_all(['status' => 1]);
-         
+
 
         $data['all_categories']   = $all_categories;
         // $data['liquidation_lot']  = $this->get_liquidation_lots();
@@ -1158,10 +1158,10 @@ class Home_controller extends Manaknight_Controller
         // $data['liquidation_trk']  = $this->get_liquidation_truckloads();
         $data['liquidation_url']  = "https://development.vegasliquidationstore.com/";
 
-         
+
         $data['page_section']     = $template;
-        $data['support_email']    = $this->config->item('support_email'); 
-        
+        $data['support_email']    = $this->config->item('support_email');
+
         $data['home_page_setting'] = $this->home_page_setting_model->get(1);
 
         $this->load->view('Guest/Header', $data);
@@ -1170,12 +1170,12 @@ class Home_controller extends Manaknight_Controller
     }
 
     protected function _send_email( $from_email ,$subject, $template, $name)
-    { 
+    {
         $this->load->library('mail_service');
-        $this->mail_service->set_adapter('smtp'); 
-         
-        $support_email = $this->config->item('support_email'); 
-        return $this->mail_service->send($from_email, $support_email, $subject, $template); 
+        $this->mail_service->set_adapter('smtp');
+
+        $support_email = $this->config->item('support_email');
+        return $this->mail_service->send($from_email, $support_email, $subject, $template);
         return FALSE;
     }
 
@@ -1183,32 +1183,32 @@ class Home_controller extends Manaknight_Controller
 
 
     public function sign_up()
-    { 
+    {
 
         if($this->input->post('email', TRUE))
         {
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-            $this->form_validation->set_rules('first_name', 'Name', 'required|max_length[255]'); 
-            $this->form_validation->set_rules('password', 'Password', 'required|max_length[255]'); 
+            $this->form_validation->set_rules('first_name', 'Name', 'required|max_length[255]');
+            $this->form_validation->set_rules('password', 'Password', 'required|max_length[255]');
 
             if ($this->form_validation->run() === FALSE)
             {
-                $error_msg = validation_errors(); 
+                $error_msg = validation_errors();
                 $output['error'] = $error_msg;
                 echo json_encode($output);
-                exit(); 
+                exit();
             }
 
 
             $name       = $this->input->post('first_name', TRUE);
             $email      = $this->input->post('email', TRUE);
-            $password   = $this->input->post('password', TRUE); 
-            $password   = password_hash($password, PASSWORD_BCRYPT); 
-            
+            $password   = $this->input->post('password', TRUE);
+            $password   = password_hash($password, PASSWORD_BCRYPT);
+
             $this->load->model('customer_model');
 
             $user = $this->customer_model->get_by_fields([
-                'email'  => $email,  
+                'email'  => $email,
             ]);
 
             if ($user)
@@ -1221,15 +1221,15 @@ class Home_controller extends Manaknight_Controller
 
             $result = $this->customer_model->create([
                 'name'      => $name,
-                'email'     => $email,   
-                'status'    => 1,  
+                'email'     => $email,
+                'status'    => 1,
             ]);
-    
+
             if($result)
             {
                 $this->customer_model->edit([ 'password' => $password ], $result);
                 $output['status']   = 200;
-                $output['success']  =  "Your account has been registered successfully. You can login now.";  
+                $output['success']  =  "Your account has been registered successfully. You can login now.";
                 echo json_encode($output);
                 exit();
             }else{
@@ -1238,7 +1238,7 @@ class Home_controller extends Manaknight_Controller
                 echo json_encode($output);
                 exit();
             }
-        } 
+        }
     }
 
 
@@ -1246,26 +1246,26 @@ class Home_controller extends Manaknight_Controller
     public function login_customer()
     {
         if($this->input->post('email', TRUE))
-        { 
+        {
             $email      = $this->input->post('email', TRUE);
-            $password   = $this->input->post('password', TRUE); 
+            $password   = $this->input->post('password', TRUE);
 
             $this->load->model('customer_model');
 
             $user = $this->customer_model->get_by_fields([
-                'email'  => $email, 
+                'email'  => $email,
                 'status' => 1,
             ]);
 
             if ($user)
-            {    
+            {
                 if( password_verify($password, $user->password) )
-                {  
+                {
 
-                    $this->set_session('user_id', (int) $user->id); 
-                    $this->set_session('email', (string) $user->email); 
-                    $this->set_session('customer_login', 1);  
-                    $this->set_session('role', 5);  
+                    $this->set_session('user_id', (int) $user->id);
+                    $this->set_session('email', (string) $user->email);
+                    $this->set_session('customer_login', 1);
+                    $this->set_session('role', 5);
 
                     $this->add_user_id_for_orders();
                     $output['status'] = 0;
@@ -1280,7 +1280,7 @@ class Home_controller extends Manaknight_Controller
                     $output['error'] = 'Error! Invalid email or password.';
                     echo json_encode($output);
                     exit();
-                } 
+                }
             }
             else
             {
@@ -1288,28 +1288,28 @@ class Home_controller extends Manaknight_Controller
                 $output['error'] = 'Error! Invalid password or email.';
                 echo json_encode($output);
                 exit();
-            } 
+            }
         }
     }
 
 
     public function cart_remove($cart_id)
     {
-        if ( $cart_id ) 
-        {  
+        if ( $cart_id )
+        {
             $this->load->model('pos_cart_model');
-            $this->load->model('inventory_model');  
-            $cart_id = $cart_id; 
+            $this->load->model('inventory_model');
+            $cart_id = $cart_id;
 
 
             // $model  = $this->pos_cart_model->get($cart_id);
 
 
 
-            $result  = $this->pos_cart_model->real_delete_by_fields([ 'id' => $cart_id ]); 
+            $result  = $this->pos_cart_model->real_delete_by_fields([ 'id' => $cart_id ]);
 
-            if ($result) 
-            {  
+            if ($result)
+            {
                 // if($model)
                 // {
                 //     $inventory = $this->inventory_model->get($model->product_id);
@@ -1320,9 +1320,9 @@ class Home_controller extends Manaknight_Controller
 
                 $this->session->set_flashdata('success1', 'Item has been deleted successfully.');
             }else{
-                $this->session->set_flashdata('error1','Error! Please try again later.'); 
-            }  
-            return redirect($_SERVER['HTTP_REFERER']); 
+                $this->session->set_flashdata('error1','Error! Please try again later.');
+            }
+            return redirect($_SERVER['HTTP_REFERER']);
         }
     }
 
@@ -1342,11 +1342,11 @@ class Home_controller extends Manaknight_Controller
         $ip_address_user = $_SERVER['REMOTE_ADDR'];
         $user_id         = $this->session->userdata('user_id');
 
-        $cart_items =  $this->pos_cart_model->get_all(['secret_key' => $ip_address_user]); 
+        $cart_items =  $this->pos_cart_model->get_all(['secret_key' => $ip_address_user]);
 
-        foreach ($cart_items as $cart_item_key => $cart_item_value) 
+        foreach ($cart_items as $cart_item_key => $cart_item_value)
         {
-            $this->pos_cart_model->edit(['customer_id' => $user_id], $cart_item_value->id); 
+            $this->pos_cart_model->edit(['customer_id' => $user_id], $cart_item_value->id);
         }
     }
 
@@ -1357,30 +1357,30 @@ class Home_controller extends Manaknight_Controller
     public function check_cart_total_items()
     {
 
-        
-        $this->load->model('pos_cart_model');
-          
 
-        if ($this->session->userdata('user_id') && $this->session->userdata('customer_login')) 
-        { 
+        $this->load->model('pos_cart_model');
+
+
+        if ($this->session->userdata('user_id') && $this->session->userdata('customer_login'))
+        {
             $user_id = $this->session->userdata('user_id');
-            $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+            $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]);
         }
         else
         {
-            $ip_address_user = $_SERVER['REMOTE_ADDR']; 
-            $cart_items =  $this->pos_cart_model->get_all(['secret_key' => $ip_address_user]); 
-        }  
+            $ip_address_user = $_SERVER['REMOTE_ADDR'];
+            $cart_items =  $this->pos_cart_model->get_all(['secret_key' => $ip_address_user]);
+        }
 
         $quantity = 0;
-        foreach ($cart_items as $key => $value) 
-        { 
+        foreach ($cart_items as $key => $value)
+        {
             $quantity += $value->product_qty;
         }
         $output['cart_items'] = $quantity;
 
         echo json_encode($output);
-        exit();  
+        exit();
     }
 
 
@@ -1391,27 +1391,27 @@ class Home_controller extends Manaknight_Controller
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('product_name', 'Product Name', 'required');
         $this->form_validation->set_rules('product_sku', 'Product Sku', 'required');
-        $this->form_validation->set_rules('product_id', 'Product ID', 'required|integer'); 
-        
+        $this->form_validation->set_rules('product_id', 'Product ID', 'required|integer');
+
         if ($this->form_validation->run() === FALSE)
         {
-            $error_msg = validation_errors(); 
+            $error_msg = validation_errors();
             $output['error'] = $error_msg;
             echo json_encode($output);
-            exit(); 
+            exit();
         }
-        
+
         $this->load->model('notification_system_model');
-        
+
         $product_id    =   $this->input->post('product_id', TRUE);
         $email         =   $this->input->post('email', TRUE);
         $product_name  =   $this->input->post('product_name', TRUE);
         $product_sku   =   $this->input->post('product_sku', TRUE);
         $product_upc   =   $this->input->post('product_upc', TRUE);
-        
-        $already_exist = $this->notification_system_model->get_by_fields(['email' => $email , 'product_id' => $product_id , 'is_notified' => 0 ]); 
 
-        if (empty($already_exist)) 
+        $already_exist = $this->notification_system_model->get_by_fields(['email' => $email , 'product_id' => $product_id , 'is_notified' => 0 ]);
+
+        if (empty($already_exist))
         {
             $response =  $this->notification_system_model->create([
                 'product_id'   => $product_id,
@@ -1423,21 +1423,21 @@ class Home_controller extends Manaknight_Controller
             ]);
 
 
-            if ($response) 
+            if ($response)
             {
-                $output['success'] = "Success! Your notification has been added successfully."; 
+                $output['success'] = "Success! Your notification has been added successfully.";
                 echo json_encode($output);
-                exit(); 
+                exit();
             }
 
-            $output['error'] = "Error! Please try again later."; 
+            $output['error'] = "Error! Please try again later.";
             echo json_encode($output);
-            exit(); 
+            exit();
         }
-  
-        $output['error'] = "Error! Your notification is already there."; 
+
+        $output['error'] = "Error! Your notification is already there.";
         echo json_encode($output);
-        exit();  
+        exit();
     }
 
 
@@ -1447,25 +1447,25 @@ class Home_controller extends Manaknight_Controller
         {
             $user_id = $this->session->userdata('user_id');
             $this->load->model('customer_model');
-            
 
-            if ( $this->input->post('shipping_address', TRUE) ) 
-            {  
+
+            if ( $this->input->post('shipping_address', TRUE) )
+            {
                 $this->form_validation->set_rules('full_name', "Name", "required|max_length[255]");
-                $this->form_validation->set_rules('phone_number', 'Phone', 'numeric|max_length[15]'); 
+                $this->form_validation->set_rules('phone_number', 'Phone', 'numeric|max_length[15]');
 
                 $this->form_validation->set_rules('shipping_address', "Shipping Address", "required|min_length[5]");
                 $this->form_validation->set_rules('shipping_zip', "Shipping Zip", "required|integer|max_length[10]");
                 $this->form_validation->set_rules('shipping_city', "Shipping City", "required|max_length[255]");
                 $this->form_validation->set_rules('shipping_country', "Shipping Country", "required|max_length[255]");
-                $this->form_validation->set_rules('shipping_state', "Shipping State", "required|max_length[255]"); 
+                $this->form_validation->set_rules('shipping_state', "Shipping State", "required|max_length[255]");
 
                 if ($this->form_validation->run() === FALSE)
                 {
-                    $error_msg = validation_errors(); 
+                    $error_msg = validation_errors();
                     $output['error'] = $error_msg;
                     echo json_encode($output);
-                    exit(); 
+                    exit();
                 }
 
                 $shipping_address    =   $this->input->post('shipping_address', TRUE);
@@ -1476,37 +1476,37 @@ class Home_controller extends Manaknight_Controller
                 $address_type        =   $this->input->post('address_type', TRUE);
                 $full_name           =   $this->input->post('full_name', TRUE);
                 $phone_number        =   $this->input->post('phone_number', TRUE);
-                
+
 
                 $response = $this->customer_model->edit([
-                    'name'              => $full_name, 
+                    'name'              => $full_name,
                     'phone'             => $phone_number,
-                    'shipping_address'  => $shipping_address, 
-                    'shipping_country'  => $shipping_country, 
-                    'shipping_state'    => $shipping_state, 
-                    'shipping_city'     => $shipping_city, 
-                    'shipping_zip'      => $shipping_zip,  
-                    'address_type'      => $address_type,  
-                ], $user_id); 
+                    'shipping_address'  => $shipping_address,
+                    'shipping_country'  => $shipping_country,
+                    'shipping_state'    => $shipping_state,
+                    'shipping_city'     => $shipping_city,
+                    'shipping_zip'      => $shipping_zip,
+                    'address_type'      => $address_type,
+                ], $user_id);
 
-                $output['success'] = "Success! Shipping address has been updated."; 
+                $output['success'] = "Success! Shipping address has been updated.";
             }
 
 
-            if ( $this->input->post('billing_address', TRUE) ) 
-            { 
+            if ( $this->input->post('billing_address', TRUE) )
+            {
                 $this->form_validation->set_rules('billing_address', "Billing Address", "required|min_length[5]");
                 $this->form_validation->set_rules('billing_zip', "Billing Zip Code", "required|integer|max_length[10]");
                 $this->form_validation->set_rules('billing_city', "Billing City", "max_length[255]");
                 $this->form_validation->set_rules('billing_country', "Billing Country", "max_length[255]");
-                $this->form_validation->set_rules('billing_state', "Billing State", "max_length[255]");  
+                $this->form_validation->set_rules('billing_state', "Billing State", "max_length[255]");
 
                 if ($this->form_validation->run() === FALSE)
                 {
-                    $error_msg = validation_errors(); 
+                    $error_msg = validation_errors();
                     $output['error'] = $error_msg;
                     echo json_encode($output);
-                    exit(); 
+                    exit();
                 }
 
 
@@ -1515,35 +1515,35 @@ class Home_controller extends Manaknight_Controller
                 $billing_state      =   $this->input->post('billing_state', TRUE);
                 $billing_city       =   $this->input->post('billing_city', TRUE);
                 $billing_zip        =   $this->input->post('billing_zip', TRUE);
-                
+
                 $response = $this->customer_model->edit([
-                    'billing_address'  => $billing_address, 
-                    'billing_country'  => $billing_country, 
-                    'billing_state'    => $billing_state, 
-                    'billing_city'     => $billing_city, 
-                    'billing_zip'      => $billing_zip,  
-                ], $user_id); 
+                    'billing_address'  => $billing_address,
+                    'billing_country'  => $billing_country,
+                    'billing_state'    => $billing_state,
+                    'billing_city'     => $billing_city,
+                    'billing_zip'      => $billing_zip,
+                ], $user_id);
 
-                $output['success'] = "Success! Billing address has been updated."; 
+                $output['success'] = "Success! Billing address has been updated.";
             }
 
 
 
-            
 
-             
 
-            if (isset($response) && $response) 
-            { 
+
+
+            if (isset($response) && $response)
+            {
                 echo json_encode($output);
-                exit(); 
+                exit();
             }
 
-            $output['error'] = "Error! Please try again later."; 
+            $output['error'] = "Error! Please try again later.";
             echo json_encode($output);
-            exit(); 
-             
-        } 
+            exit();
+
+        }
     }
 
 
@@ -1556,8 +1556,8 @@ class Home_controller extends Manaknight_Controller
         $user_id = $this->session->userdata('user_id');
 
         if (empty($user_id))
-        { 
-            $output['error'] = 'Error! Login to continue.'; 
+        {
+            $output['error'] = 'Error! Login to continue.';
             echo json_encode($output);
             exit();
         }
@@ -1565,30 +1565,30 @@ class Home_controller extends Manaknight_Controller
         {
             $this->load->model('customer_model');
             $this->load->model('customer_cards_model');
-            
-            $this->load->library('stripe_helper_service'); 
+
+            $this->load->library('stripe_helper_service');
             $this->stripe_helper_service->set_config($this->config);
             $this->stripe_helper_service->set_customer_model($this->customer_model);
 
-            
-            $this->load->library('helpers_service'); 
+
+            $this->load->library('helpers_service');
             $this->helpers_service->set_customer_model($this->customer_model);
 
 
-            
+
 
             // stripe_helper_service
             $card_number  = $this->input->post('card_number', TRUE);
             $exp_month    = $this->input->post('exp_month', TRUE);
             $exp_year     = $this->input->post('exp_year', TRUE);
-            $cvc          = $this->input->post('cvc', TRUE); 
-            $card_default = $this->input->post('card_default', TRUE); 
+            $cvc          = $this->input->post('cvc', TRUE);
+            $card_default = $this->input->post('card_default', TRUE);
 
             $new_card_last4 = substr($card_number, 12);
 
             // check card already added or not
             $prev_card = $this->customer_cards_model->get_by_field('user_id', $user_id);
-     
+
 
             if (!empty($prev_card))
             {
@@ -1599,24 +1599,24 @@ class Home_controller extends Manaknight_Controller
 
                     $check_card = $this->customer_cards_model->get_all(['user_id' => $user_id]);
 
-                    foreach ($check_card as $check_card_key => $check_card_value) 
+                    foreach ($check_card as $check_card_key => $check_card_value)
                     {
                         if ($check_card_value->last4 == $new_card_last4 && $check_card_value->account_no == $card_number && !empty($check_card_value->account_no))
                         {
                             $error_msg = 'This card last4->(...' . $new_card_last4 . ') is already added. Try again with a new card.';
-                             
-                            $output['error'] = $error_msg; 
+
+                            $output['error'] = $error_msg;
                             echo json_encode($output);
                             exit();
                         }
 
-                        if ($card_default == 1) 
+                        if ($card_default == 1)
                         {
                             $this->customer_cards_model->edit(['is_default' => 0], $check_card_value->id);
                         }
                     }
 
-                     
+
 
                     // else
                     // {
@@ -1627,7 +1627,7 @@ class Home_controller extends Manaknight_Controller
                         if ( isset($response['success']) && isset($response['response'])  && isset($response['response']->id)  )
                         {
                             $stripe_token_id = $response['response']->id;
-  
+
 
                             // pass token_id to assign card to user
                             $res_card_data = $this->stripe_helper_service->add_new_card($stripe_token_id, $user_id);
@@ -1656,74 +1656,74 @@ class Home_controller extends Manaknight_Controller
                                     'status'         => 1,
                                 ];
 
-                                if (!empty($check_card)) 
+                                if (!empty($check_card))
                                 {
                                     $check_new_card = $this->customer_cards_model->edit($payload, $check_card->id);
 
-                                    $output['success'] = 'Card updated successfully.'; 
+                                    $output['success'] = 'Card updated successfully.';
                                 }else{
                                     // store the card id with the associated user
                                     $check_new_card = $this->customer_cards_model->create($payload);
-                                    $output['success'] = 'Card added successfully.'; 
+                                    $output['success'] = 'Card added successfully.';
                                 }
- 
-                                
+
+
 
                                 if ($check_new_card)
                                 {
-                                    
+
                                     echo json_encode($output);
-                                    exit();  
+                                    exit();
                                 }
                                 else
                                 {
-                                    $output['error'] = "Error! Card add failed. Try Again."; 
+                                    $output['error'] = "Error! Card add failed. Try Again.";
                                     echo json_encode($output);
-                                    exit();  
-                                } 
+                                    exit();
+                                }
                             }
                             else
                             {
                                 // when user do not have the user->stripe_id
-                                
-                                $output['error'] = $res_card_data['error_msg']; 
+
+                                $output['error'] = $res_card_data['error_msg'];
                                 echo json_encode($output);
-                                exit(); 
+                                exit();
                             }
                         }
                         else
                         {
-                            $output['error'] = $response['error_msg']; 
+                            $output['error'] = $response['error_msg'];
                             echo json_encode($output);
-                            exit();  
+                            exit();
                         }
                     // }
                 }
                 else
                 {
-                    $output['error'] = "All fields are required."; 
+                    $output['error'] = "All fields are required.";
                     echo json_encode($output);
-                    exit();   
+                    exit();
                 }
             }
             else
-            { 
+            {
                 // create stripe_customer_id and add the new card
                 // $this->error('No prev record found');
                 // return redirect($_SERVER['HTTP_REFERER']);
-                
+
                 $response = $this->stripe_helper_service->create_stripe_token($card_number, $exp_month, $exp_year, $cvc);
 
                 if (  isset($response['success'])  && isset($response['response'])  && isset($response['response']->id)  )
                 {
-                    
+
                     $stripe_token_id = $response['response']->id;
-                    
+
 
                     // get user email from credential model
                     $customer_email = $this->helpers_service->get_customer_email($user_id);
 
-                    
+
                     $res_customer = $this->stripe_helper_service->create_stripe_customer_with_card($customer_email, $stripe_token_id);
 
                     if (isset($res_customer['success']))
@@ -1759,32 +1759,32 @@ class Home_controller extends Manaknight_Controller
 
                             if ($check_new_card)
                             {
-                                $output['success'] = 'Card added successfully and set to default.'; 
+                                $output['success'] = 'Card added successfully and set to default.';
                                 echo json_encode($output);
-                                exit(); 
+                                exit();
                             }
                             else
                             {
-                                $output['error'] = "Card add failed. Try Again. (Y)"; 
+                                $output['error'] = "Card add failed. Try Again. (Y)";
                                 echo json_encode($output);
-                                exit();   
-                            } 
+                                exit();
+                            }
                         }
                     }
                     else
                     {
-                        $output['error'] = $res_customer['error_msg']; 
+                        $output['error'] = $res_customer['error_msg'];
                         echo json_encode($output);
-                        exit();  
+                        exit();
                     }
 
                 }
                 else
                 {
                     // when new card validation failed
-                    $output['error'] = $response['error_msg']; 
+                    $output['error'] = $response['error_msg'];
                     echo json_encode($output);
-                    exit();  
+                    exit();
                 }
             }
         }
@@ -1793,19 +1793,19 @@ class Home_controller extends Manaknight_Controller
 
     public function load_customer_cards()
     {
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id'))
         {
-            $user_id = $this->session->userdata('user_id'); 
+            $user_id = $this->session->userdata('user_id');
             $this->load->model('customer_cards_model');
             $all_cards = $this->customer_cards_model->get_all(['user_id' => $user_id]);
 
 
-            $output['all_cards'] = $all_cards; 
+            $output['all_cards'] = $all_cards;
             echo json_encode($output);
             exit();
 
         }
-        
+
     }
 
 
@@ -1814,29 +1814,29 @@ class Home_controller extends Manaknight_Controller
     {
         if($this->session->userdata('customer_login') && $this->session->userdata('user_id') && $this->input->post('id'))
         {
-             
+
             $user_id    = $this->session->userdata('user_id');
             $product_id = $this->input->post('id', TRUE);
-            $this->load->model('pos_cart_model'); 
-            $this->load->model('tax_model'); 
+            $this->load->model('pos_cart_model');
+            $this->load->model('tax_model');
 
-            $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
-            $tax        =  $this->tax_model->get(1); 
+            $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]);
+            $tax        =  $this->tax_model->get(1);
 
             $total = 0;
             $current_itemprice = 0;
-            if (!empty($cart_items)) 
-            {                     
+            if (!empty($cart_items))
+            {
                 foreach ($cart_items as $key => &$value)
                 {
-                    $total = $total + $value->total_price;   
+                    $total = $total + $value->total_price;
 
-                    if ($value->product_id == $product_id) 
+                    if ($value->product_id == $product_id)
                     {
                         $current_itemprice = $value->total_price;
                     }
                 }
-            } 
+            }
 
             $sub_total = $total;
 
@@ -1874,7 +1874,7 @@ class Home_controller extends Manaknight_Controller
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_OBJ);
 
-        return (object) $results; 
+        return (object) $results;
     }
 
 
@@ -1886,7 +1886,7 @@ class Home_controller extends Manaknight_Controller
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_OBJ);
 
-        return (object) $results; 
+        return (object) $results;
     }
 
     private function get_liquidation_truckloads()
@@ -1897,9 +1897,9 @@ class Home_controller extends Manaknight_Controller
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_OBJ);
 
-        return (object) $results; 
+        return (object) $results;
     }
-    
+
 
 
 
