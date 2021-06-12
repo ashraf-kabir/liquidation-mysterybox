@@ -64,7 +64,7 @@ if ($layout_clean_mode) {
 					<input type="hidden" id="feature_image_id" name="feature_image_id" value="<?php echo set_value('feature_image_id', $this->_data['view_model']->get_feature_image_id());?>"/>
 				    <span id="feature_image_complete" class="image_complete_uppload" ></span>
                 </div>
-                    
+
                 <div class="form-group col-md-5 col-sm-12">
                     <input type="submit" class="btn btn-primary ext-white mr-4 my-4" value="Submit">
                 </div>
@@ -76,10 +76,10 @@ if ($layout_clean_mode) {
 
 
 <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function(){  
-        $(function(){ 
+    document.addEventListener('DOMContentLoaded', function(){
+        $(function(){
             $("body").on("change",".check_change_event",function(){
-                var current_src_id = $(this).attr('data-srcid'); 
+                var current_src_id = $(this).attr('data-srcid');
                 $('#' + current_src_id).attr('src', $(this).val());
             });
         });

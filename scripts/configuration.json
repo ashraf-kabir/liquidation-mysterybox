@@ -13,7 +13,7 @@
 		{
 			"name": "admin",
 			"id": 2
-		}, 
+		},
 		{
 			"name": "manager",
 			"id": 4
@@ -126,7 +126,7 @@
 			"unique": [],
 			"seed":[
 				{"email": "member@manaknight.com", "password": "str_replace('$2y$', '$2b$', password_hash('a123456', PASSWORD_BCRYPT))","type": "n","verify": 1,"role_id": 1,"status": 1},
-				{"email": "admin@manaknight.com", "password": "str_replace('$2y$', '$2b$', password_hash('a123456', PASSWORD_BCRYPT))","type": "n","verify": 1,"role_id": 2,"status": 1}, 
+				{"email": "admin@manaknight.com", "password": "str_replace('$2y$', '$2b$', password_hash('a123456', PASSWORD_BCRYPT))","type": "n","verify": 1,"role_id": 2,"status": 1},
 				{"email": "manager@manaknight.com", "password": "str_replace('$2y$', '$2b$', password_hash('a123456', PASSWORD_BCRYPT))","type": "n","verify": 1,"role_id": 4,"status": 1}
 			]
 		},
@@ -386,35 +386,35 @@
 				["width", "float", [], "xyzWidth", "", ""],
 				["feature_image", "image|250|250|500|500", [{
 					"limit": 255
-				}], "xyzImage", "", ""], 
+				}], "xyzImage", "", ""],
 				["selling_price", "float", [], "xyzSelling Price", "", ""],
 				["quantity", "integer", [], "xyzQuantity", "greater_than_equal_to[1]", ""],
 				["inventory_note", "text", [], "xyzInventory Note", "", ""],
 				["barcode_image", "text", [], "xyzBarcode Image", "", ""],
 				["cost_price", "float", [], "xyzCost Price", "", ""],
-				["admin_inventory_note", "text", [], "xyzAdmin Inventory Note", "", ""], 
-				["can_ship", "integer", [], "xyzCan Ship", "", ""],  
-				["free_ship", "integer", [], "xyzFree Shipping", "", ""],  
+				["admin_inventory_note", "text", [], "xyzAdmin Inventory Note", "", ""],
+				["can_ship", "integer", [], "xyzCan Ship", "", ""],
+				["free_ship", "integer", [], "xyzFree Shipping", "", ""],
 				["pin_item_top", "integer", [{"default" : 1}], "xyzPin Item", "", ""],
 				["available_in_shelf", "integer", [{"default" : 1}], "xyzAvailable In Shelf", "", ""],
 				["product_type", "integer", [ ], "xyzProduct Type", "", ""],
-				["video_url", "text", [], "xyzVideo URL", "", ""], 
+				["video_url", "text", [], "xyzVideo URL", "", ""],
 				["youtube_thumbnail_1", "image|250|250|500|500", [{
 					"limit": 255
-				}], "Youtube Thumbnail 1", "", ""], 
+				}], "Youtube Thumbnail 1", "", ""],
 
 				["youtube_thumbnail_2", "image|250|250|500|500", [{
 					"limit": 255
-				}], "Youtube Thumbnail 2", "", ""], 
+				}], "Youtube Thumbnail 2", "", ""],
 
 				["youtube_thumbnail_3", "image|250|250|500|500", [{
 					"limit": 255
-				}], "Youtube Thumbnail 3", "", ""], 
+				}], "Youtube Thumbnail 3", "", ""],
 
 				["youtube_thumbnail_4", "image|250|250|500|500", [{
 					"limit": 255
-				}], "Youtube Thumbnail 4", "", ""], 
-				
+				}], "Youtube Thumbnail 4", "", ""],
+
 				["status", "integer", [], "xyzStatus", "", ""]
 			],
 			"method": [],
@@ -423,15 +423,15 @@
 				"status": {
 					"1": "Active",
 					"0": "Inactive"
-				}, 
+				},
 				"can_ship": {
 					"1": "Yes",
-					"2": "No" 
+					"2": "No"
 				},
 
 				"free_ship": {
 					"1": "Yes",
-					"2": "No" 
+					"2": "No"
 				},
 				"product_type": {
 					"1": "Inventory",
@@ -470,7 +470,7 @@
 			"count": "",
 			"unique": [],
 			"seed": []
-		}, 
+		},
 		{
 			"name": "category",
 			"timestamp": true,
@@ -479,7 +479,7 @@
 				["id", "integer", [], "xyzID", "", ""],
 				["feature_image", "image|250|250|500|500", [{
 					"limit": 255
-				}], "xyzImage", "", ""], 
+				}], "xyzImage", "", ""],
 				["name", "string", [{ "limit": 255 }], "xyzName", "required|max_length[255]", "required|max_length[255]"],
 				["sku_prefix", "string", [{ "limit": 255 }], "SKU Prefix", "max_length[255]", "max_length[255]"],
 				["parent_category_id", "integer", [], "xyzParent Category", "", ""],
@@ -488,7 +488,7 @@
 			"method": "",
 			"join": [],
 			"mapping": {
-				"status": { 
+				"status": {
 					"1": "Active",
 					"0": "Inactive"
 				}
@@ -566,15 +566,15 @@
 				["customer_type", "integer", [], "xyzCustomer Type", "", ""],
 				["company_name", "string", [{
 					"limit": 255
-				}], "xyzCompany Name", "", ""], 
+				}], "xyzCompany Name", "", ""],
 
 				["token", "string", [{
 					"limit": 255
-				}], "Token", "", ""], 
+				}], "Token", "", ""],
 
 				["token_expiry", "string", [{
 					"limit": 255
-				}], "Token Expiry", "", ""], 
+				}], "Token Expiry", "", ""],
 
 				["status", "integer", [], "xyzStatus", "required|integer", "required|integer"]
 			],
@@ -594,7 +594,7 @@
 					"1": "Home",
 					"2": "Business",
 					"3": ""
-				} 
+				}
 			},
 			"pre": "if(isset($data['password']))\n\t\t{\n\t\t\t $data['password'] = str_replace('$2y$', '$2b$', password_hash($data['password'], PASSWORD_BCRYPT)); \n\t\t}\n",
 			"post": "if(isset($data['tax_exempt']) and $data['tax_exempt'] == 1)\n\t\t{\n\t\t\t $data['tax_exempt_status'] = 3; \n\t\t}\n",
@@ -704,9 +704,9 @@
 				["tracking_no", "string", [{ "limit": 255 }], "xyzTracking No", "", ""],
 				["shipping_country", "string", [{ "limit": 255 }], "xyzShipping Country", "", ""],
 				["shipping_state", "string", [{ "limit": 255 }], "xyzShipping State", "", ""],
-				["shipping_city", "string", [{ "limit": 255 }], "xyzShipping City", "", ""], 
+				["shipping_city", "string", [{ "limit": 255 }], "xyzShipping City", "", ""],
 				["shipping_cost_service_name", "string", [{ "limit": 255 }], "xyzShipping Service", "", ""],
-				["shipping_cost_service_code", "string", [{ "limit": 255 }], "xyzShipping Service Code", "", ""], 
+				["shipping_cost_service_code", "string", [{ "limit": 255 }], "xyzShipping Service Code", "", ""],
 				["shipping_zip", "string", [{ "limit": 255 }], "xyzShipping Zip", "", ""],
 				["subtotal", "float", [], "xyzSubtotal", "required", "required"],
 				["cash_amount", "float", [], "xyzSubtotal", "", ""],
@@ -730,7 +730,7 @@
 				"status": {"0": "Canceled","1": "Purchased", "2" : "Refunded"},
 				"order_type": {"1": "Online", "2" : "POS"},
 				"pos_pickup_status": {"1": "Pending", "2" : "Picked"},
-				"checkout_type": {"1": "Pickup", "2" : "Delivery"}, 
+				"checkout_type": {"1": "Pickup", "2" : "Delivery"},
 				"is_picked": {"1": "Yes", "0" : "No"},
 				"is_shipped": {"1": "Yes", "0" : "No"},
 				"is_split": {"1": "Yes", "0" : "No"},
@@ -751,16 +751,16 @@
 				["id", "integer", [], "xyzid", "", ""],
 				["employee_name", "string", [{"limit": 255}], "xyzName", "", ""],
 				["message_note", "text", [], "xyzMessage Note", "", ""],
-				["order_id", "integer", [], "xyzOrder ID", "", ""], 
-				["msg_type", "integer", [], "xyzMessage Type", "", ""]  
+				["order_id", "integer", [], "xyzOrder ID", "", ""],
+				["msg_type", "integer", [], "xyzMessage Type", "", ""]
 			],
 			"method": [],
 			"join": [],
 			"mapping": {
 				"msg_type": {
 					"1": "Public",
-					"2": "Private" 
-				} 
+					"2": "Private"
+				}
 			},
 			"pre": "",
 			"post": "",
@@ -832,17 +832,17 @@
 			"count": "",
 			"unique": [],
 			"seed": []
-		}, 
+		},
 		{
 			"name": "coupon_orders_log",
 			"timestamp": true,
 			"migration": true,
 			"field": [
 				["id", "integer", [], "xyzID", "", ""],
-				["code", "string", [{ "limit": 255 }], "xyzCode", "required|max_length[255]", "required|max_length[255]"], 
-				["order_id", "integer", [], "xyzOrder", "required|integer", "required|integer"], 
-				["user_id", "integer", [], "xyzUser", "required|integer", "required|integer"], 
-				["user_ip", "string", [{ "limit": 255 }], "xyzCode", "required|max_length[255]", "required|max_length[255]"], 
+				["code", "string", [{ "limit": 255 }], "xyzCode", "required|max_length[255]", "required|max_length[255]"],
+				["order_id", "integer", [], "xyzOrder", "required|integer", "required|integer"],
+				["user_id", "integer", [], "xyzUser", "required|integer", "required|integer"],
+				["user_ip", "string", [{ "limit": 255 }], "xyzCode", "required|max_length[255]", "required|max_length[255]"],
 				["amount", "float", [], "xyzAmount", "required", "required"]
 			],
 			"method": "",
@@ -865,11 +865,11 @@
 				["transaction_date", "date", [], "xyzTransaction Date", "", ""],
 				["transaction_time", "text", [], "xyzTransaction Time", "", ""],
 				["pos_user_id", "integer", [], "xyzPOS User", "", ""],
-				["customer_id", "integer", [], "xyzCustomer", "", ""], 
-				["tax", "float", [{"default" : 0}], "xyzTax", "", ""], 
-				["discount", "float", [{"default" : 0}], "xyzDiscount", "", ""], 
-				["subtotal", "float", [], "xyzSubtotal", "", ""], 
-				["total", "float", [], "xyzTotal", "", ""], 
+				["customer_id", "integer", [], "xyzCustomer", "", ""],
+				["tax", "float", [{"default" : 0}], "xyzTax", "", ""],
+				["discount", "float", [{"default" : 0}], "xyzDiscount", "", ""],
+				["subtotal", "float", [], "xyzSubtotal", "", ""],
+				["total", "float", [], "xyzTotal", "", ""],
 				["status", "integer", [], "xyzStatus", "", ""]
 			],
 			"method": "",
@@ -901,13 +901,13 @@
 			"unique": [],
 			"seed": []
 		},
-		{ 
+		{
 			"name": "tax",
 			"timestamp": true,
 			"migration": true,
 			"unique": [],
 			"field": [
-				["id", "integer", [], "ID", "", ""], 
+				["id", "integer", [], "ID", "", ""],
 				["tax", "float", [], "xyzTax %", "required|numeric|greater_than_equal_to[0]", "required|numeric|greater_than_equal_to[0]"]
 			],
 			"join": [],
@@ -919,13 +919,13 @@
 			"override": "",
 			"seed": [{ "tax": 8 }]
 		},
-		{ 
+		{
 			"name": "notification_system",
 			"timestamp": true,
 			"migration": true,
 			"unique": [],
 			"field": [
-				["id", "integer", [], "ID", "", ""], 
+				["id", "integer", [], "ID", "", ""],
 				["product_id", "id", [], "Product ID", "required|numeric", "required|numeric"],
 				["email", "string", [{"limit": 255}], "Email", "required|valid_email", "required|valid_email"],
 				["is_notified", "id", [], "Is Notified", "required|numeric", "required|numeric"],
@@ -935,7 +935,7 @@
 			],
 			"join": [],
 			"method": "",
-			"mapping": { 
+			"mapping": {
 				"is_notified": {"1": "Yes","0": "No"}
 			},
 			"pre": "if(!isset($data['is_notified']))\n\t\t{\n\t\t\t $data['is_notified'] = 0; \n\t\t}\n\t\t\t",
@@ -944,13 +944,13 @@
 			"override": "",
 			"seed": []
 		},
-		{ 
+		{
 			"name": "customer_cards",
 			"timestamp": true,
 			"migration": true,
 			"unique": [],
 			"field": [
-				["id", "integer", [], "ID", "", ""], 
+				["id", "integer", [], "ID", "", ""],
 				["user_id", "id", [], "User ID", "required|numeric", "required|numeric"],
 				["account_no", "string", [{"limit": 255}], "Account#", "required|numeric", "required|numeric"],
 				["cvc", "id", [], "CVC", "required|numeric", "required|numeric"],
@@ -965,7 +965,7 @@
 			],
 			"join": [],
 			"method": "",
-			"mapping": {  
+			"mapping": {
 			},
 			"pre": "",
 			"post": "",
@@ -973,13 +973,13 @@
 			"override": "",
 			"seed": []
 		},
-		{ 
+		{
 			"name": "traffic_referrer",
 			"timestamp": true,
 			"migration": true,
 			"unique": [],
 			"field": [
-				["id", "integer", [], "ID", "", ""],  
+				["id", "integer", [], "ID", "", ""],
 				["referrer_key", "string", [{"limit": 255}], "Referrer Key", "required|max_length[255]|is_unique[traffic_referrer.referrer_key]", "required|max_length[255]"],
 				["referrer_name", "string", [{"limit": 255}], "Referrer Name", "required|max_length[255]", "required|max_length[255]"]
 			],
@@ -994,14 +994,14 @@
 				{"referrer_name" : "None", "referrer_key" : "none"}
 			]
 		},
-		{ 
+		{
 			"name": "terms_and_conditions",
 			"timestamp": true,
 			"migration": true,
 			"unique": [],
 			"field": [
-				["id", "integer", [], "ID", "", ""],  
-				["terms_and_condition_text", "text", [], "Terms And Conditions", "required", "required"] 
+				["id", "integer", [], "ID", "", ""],
+				["terms_and_condition_text", "text", [], "Terms And Conditions", "required", "required"]
 			],
 			"join": [],
 			"method": "",
@@ -1014,14 +1014,14 @@
 				{"terms_and_condition_text" : "Test"}
 			]
 		},
-		{ 
-			"name": "carosal_slider",
+		{
+			"name": "carousel_slider",
 			"timestamp": true,
 			"migration": true,
 			"unique": [],
 			"field": [
 				["id", "integer", [], "ID", "", ""],
-				["feature_image", "image|250|250|500|500", [{ "limit": 255 }], "xyzImage", "required", "required"] 
+				["feature_image", "image|250|250|500|500", [{ "limit": 255 }], "xyzImage", "required", "required"]
 			],
 			"join": [],
 			"method": "",
@@ -1031,8 +1031,8 @@
 			"count": "",
 			"override": "",
 			"seed": []
-		}, 
-		{ 
+		},
+		{
 			"name": "home_page_setting",
 			"timestamp": true,
 			"migration": true,
@@ -1076,40 +1076,40 @@
 			"api": true,
 			"profile_page_fields": [],
 			"middleware": ["auth", "acl"],
-			"js": [ 
+			"js": [
 				"/assets/js/media.js",
 				"/assets/js/core.js",
-				"/assets/js/setting.js", 
+				"/assets/js/setting.js",
 				"/assets/js/app.js",
 				"/assets/js/admin.js",
 				"/assets/js/mkd-image-uppload.js",
 				"/assets/js/mkd-image-gallery.js"
 			],
 			"css": [
-				"/assets/css/styles.css", 
+				"/assets/css/styles.css",
 				"/assets/css/easy-autocomplete.min.css",
 				"/assets/css/mkd-image-uppload.css",
-				"/assets/css/mkd-image-uppload-light-theme.css" 
+				"/assets/css/mkd-image-uppload-light-theme.css"
 			],
 			"menu": {
-				"Dashboard": "/dashboard", 
-				"xyzInventory" : "/inventory/0?order_by=id&direction=DESC", 
-				"Scan Inventory" : "/scan/scan_product_view",  
-				"xyzCategory" : "/category/0?order_by=id&direction=DESC", 
-				"xyzStore" : "/store/0?order_by=id&direction=DESC", 
-				"xyzInventory Location" : "/inventory_location/0?order_by=id&direction=DESC",  
-				"xyzCustomer" : "/customer/0?order_by=id&direction=DESC", 
+				"Dashboard": "/dashboard",
+				"xyzInventory" : "/inventory/0?order_by=id&direction=DESC",
+				"Scan Inventory" : "/scan/scan_product_view",
+				"xyzCategory" : "/category/0?order_by=id&direction=DESC",
+				"xyzStore" : "/store/0?order_by=id&direction=DESC",
+				"xyzInventory Location" : "/inventory_location/0?order_by=id&direction=DESC",
+				"xyzCustomer" : "/customer/0?order_by=id&direction=DESC",
 				"xyzTax": "/tax/0?order_by=id&direction=DESC",
-				"Traffic Referrer": "/traffic_referrer/0?order_by=id&direction=DESC", 
+				"Traffic Referrer": "/traffic_referrer/0?order_by=id&direction=DESC",
 				"Setting": {
-					"Top Bar": "/top_bar_setting", 
-					"Home Page Setting": "/home_page_setting", 
-					"Carousel Slider": "/carousel_slider/0?order_by=id&direction=DESC", 
+					"Top Bar": "/top_bar_setting",
+					"Home Page Setting": "/home_page_setting",
+					"Carousel Slider": "/carousel_slider/0?order_by=id&direction=DESC",
 					"Terms And Conditions": "/terms_and_conditions/edit"
 				},
-				
-				
-				"Orders": "/orders/0?order_by=id&direction=DESC", 
+
+
+				"Orders": "/orders/0?order_by=id&direction=DESC",
 				"xyzReports": {
 					"xyzTransactions": "/transactions/0?order_by=id&direction=DESC",
 					"xyzSales Report": "/category_wise/0?order_by=id&direction=DESC",
@@ -1119,14 +1119,14 @@
 					"xyzShipping Cost Report": "/shipping_cost_report/0?order_by=id&direction=DESC",
 					"xyzTraffic Link Report": "/traffic_link_report/0?order_by=id&direction=DESC"
 				},
-				"Emails": "/emails/0?order_by=id&direction=DESC", 
+				"Emails": "/emails/0?order_by=id&direction=DESC",
 				"xyzURL Redirect": "/url_redirect/0?order_by=id&direction=DESC",
 				"Users": "/users/0?order_by=id&direction=DESC",
 				"Profile": "/profile",
 				"Change Password": "/me",
 				"Logout": "/logout"
 			}
-		}, 
+		},
 		{
 			"name": "manager",
 			"role": "manager",
@@ -1144,22 +1144,22 @@
 				"/assets/js/core.js",
 				"/assets/js/setting.js",
 				"/assets/js/mkd-image-uppload.js",
-				"/assets/js/mkd-image-gallery.js", 
+				"/assets/js/mkd-image-gallery.js",
 				"/assets/js/app.js",
 				"/assets/js/admin.js"
 			],
 			"css": [
-				"/assets/css/styles.css", 
-				"/assets/css/mkd-image-uppload.css", 
-				"/assets/css/mkd-image-uppload-light-theme.css" 
+				"/assets/css/styles.css",
+				"/assets/css/mkd-image-uppload.css",
+				"/assets/css/mkd-image-uppload-light-theme.css"
 			],
 			"menu": {
-				"xyzDashboard": "/dashboard", 
+				"xyzDashboard": "/dashboard",
 				"xyzProfile": "/profile",
-				"xyzInventory" : "/inventory/0?order_by=id&direction=DESC",  
-				"xyzCustomer" : "/customer/0?order_by=id&direction=DESC",  
+				"xyzInventory" : "/inventory/0?order_by=id&direction=DESC",
+				"xyzCustomer" : "/customer/0?order_by=id&direction=DESC",
 				"xyzReports": {
-					"xyzTransactions": "/transactions/0?order_by=id&direction=DESC" 
+					"xyzTransactions": "/transactions/0?order_by=id&direction=DESC"
 				},
 				"Change Password": "/me",
 				"Profile": "/profile",
@@ -1733,7 +1733,7 @@
 			"dynamic_mapping_view": {},
 			"dynamic_mapping": {},
 			"load_libraries": []
-		}, 
+		},
 		{
 			"route": "/customer",
 			"name": "customer",
@@ -2859,9 +2859,9 @@
 		{
 			"route": "/carousel_slider",
 			"name": "CarosalSlider",
-			"page_name": "Carosal Slider",
+			"page_name": "Carousel Slider",
 			"model": "carosal_slider",
-			"controller": "Admin_carosal_slider_controller.php",
+			"controller": "Admin_carousel_slider_controller.php",
 			"api_controller": "Admin_carosal_slider_api_controller.php",
 			"activity_log": false,
 			"override": "",
@@ -2954,7 +2954,7 @@
 		"js": ["/assets/js/guest.js"],
 		"css": ["/assets/css/guest.css"]
 	},
-	"translations": { 
+	"translations": {
 		"xyzSubject": "Subject",
 		"xyzReferrer": "Referrer",
 		"xyzTraffic Link Report": "Traffic Link Report",
@@ -3060,7 +3060,7 @@
 		"xyzImage Type": "Image Type",
 		"xyzReplacement Tags": "Replacement Tags",
 		"xyzSMS Body": "SMS Body",
-		"xyzEmail Type": "Email Type", 
+		"xyzEmail Type": "Email Type",
 		"xyzForgot_token": "Forgot_token",
 		"xyzAccess_token": "Access token",
 		"xyzEmail Body": "Email Body",
@@ -3144,38 +3144,38 @@
 		"xyzWeight": "Weight",
 		"xyzLength": "Length",
 		"xyzLogged in": "Logged in",
-		"xyzTotal sale": "Total sale", 
-		"xyzPOS Users": "POS Users", 
-		"xyzInventory": "Inventory", 
-		"xyzStore": "Store", 
-		"xyzLast Order": "Last Order", 
-		"xyzNum Orders": "Num Orders", 
-		"xyzCompany Name": "Company Name", 
-		"xyzTax ID Number": "Tax ID Number", 
-		"xyzTax Exempt": "Tax Exempt", 
-		"xyzTax Document": "Tax Document",  
-		"xyzState": "State",  
-		"xyzZip": "Zip",  
-		"xyzRewrite URL": "Rewrite URL",  
-		"xyzParent Category": "Parent Category",  
-		"xyzPin Item": "Pin Item",  
-		"xyzTransactions": "Transactions",  
-		"xyzTransaction Date": "Transaction Date",  
-		"xyzTax": "Tax",  
-		"xyzPOS User": "POS User",  
-		"xyzOrder ID": "Order ID",  
-		"xyzSubtotal": "Subtotal",  
-		"xyzTotal": "Total",  
-		"xyzDiscount": "Discount",  
-		"xyzTransaction On": "Transaction On",  
-		"xyzReports": "Reports",  
-		"xyzItem Name": "Item Name",  
-		"xyzQuantity": "Quantity",  
-		"xyzCredit": "Credit",  
-		"xyzCash": "Cash",  
-		"xyzTotal Items": "Total Items",   
-		"xyzProduct Name": "Product Name",   
-		"xyzCan Ship": "Can Ship" 
+		"xyzTotal sale": "Total sale",
+		"xyzPOS Users": "POS Users",
+		"xyzInventory": "Inventory",
+		"xyzStore": "Store",
+		"xyzLast Order": "Last Order",
+		"xyzNum Orders": "Num Orders",
+		"xyzCompany Name": "Company Name",
+		"xyzTax ID Number": "Tax ID Number",
+		"xyzTax Exempt": "Tax Exempt",
+		"xyzTax Document": "Tax Document",
+		"xyzState": "State",
+		"xyzZip": "Zip",
+		"xyzRewrite URL": "Rewrite URL",
+		"xyzParent Category": "Parent Category",
+		"xyzPin Item": "Pin Item",
+		"xyzTransactions": "Transactions",
+		"xyzTransaction Date": "Transaction Date",
+		"xyzTax": "Tax",
+		"xyzPOS User": "POS User",
+		"xyzOrder ID": "Order ID",
+		"xyzSubtotal": "Subtotal",
+		"xyzTotal": "Total",
+		"xyzDiscount": "Discount",
+		"xyzTransaction On": "Transaction On",
+		"xyzReports": "Reports",
+		"xyzItem Name": "Item Name",
+		"xyzQuantity": "Quantity",
+		"xyzCredit": "Credit",
+		"xyzCash": "Cash",
+		"xyzTotal Items": "Total Items",
+		"xyzProduct Name": "Product Name",
+		"xyzCan Ship": "Can Ship"
 	},
 	"reporting": [{
 		"name": "Num_users",
@@ -3208,7 +3208,7 @@
 		"twilio_token": "",
 		"stripe_publish_key": "pk_test_51HILPKHTzTBkVfvyxLxh4wYxX0ziE94zeYOUekuDFhk6XPqDnfWmFO8hgpjAMGPaqRmMXtKtqwItCSShHLmx3zaX00ygr8e9kG",
 		"stripe_secret_key": "sk_test_51HILPKHTzTBkVfvy2Rq0XKXJmUhIuZJJ0BR79q0pPcVqMd1yz9P7wAlb1Ii2NhwRKmZzD6hV4BalEl29TaTozcQa00So5k1Ub0",
-		"stripe_endpoint_secret": "whsec_QO0cYt4LlGEx3dc1yNooNJxUkmnxV4oe", 
+		"stripe_endpoint_secret": "whsec_QO0cYt4LlGEx3dc1yNooNJxUkmnxV4oe",
 		"copyright": "Copyright © 2019 Manaknightdigital Inc. All rights reserved.",
 		"powered_by": "Powered By <a href=\"https://manaknightdigital.com\" target=\"__blank\">Manaknightdigital Inc.</a>",
 		"email_smtp": {
@@ -3261,7 +3261,7 @@
 			"twilio_verification_service" : "",
 			"google_api_key" : "AIzaSyAvAC8FDN_ab5rd0TNdrJ9t_GnP_1p7ZQg",
             "shipstation_user_name_as_key" : "6c15dc6d7bea48ed9a490f2515bd7a8e",
-            "shipstation_password_as_secret" : "e583d48514674abfbd85bb9ecabb4f5f", 
+            "shipstation_password_as_secret" : "e583d48514674abfbd85bb9ecabb4f5f",
             "jwt_key" : "544e68498c28710b10af9dc9c7c9530951438f23",
             "from_postal" : 89115,
             "jwt_expire_at" : 3600,
@@ -3319,7 +3319,7 @@
 		"../mkdcore/custom/logout.svg" : "../release/assets/image/logout.svg",
 		"../mkdcore/custom/collapse-category.svg" : "../release/assets/image/collapse-category.svg",
 		"../mkdcore/custom/styles.css": "../release/assets/css/styles.css",
-		"../mkdcore/custom/app.js": "../release/assets/js/app.js", 
+		"../mkdcore/custom/app.js": "../release/assets/js/app.js",
 		"../mkdcore/custom/auth.css" : "../release/assets/css/auth.css",
 
 		"../mkdcore/custom/assets/images/shop_pallet.jpg" : "../release/uploads/shop_pallet.jpg",
@@ -3342,22 +3342,22 @@
 		"../mkdcore/custom/Services/Customer_service.php" : "../release/application/libraries/Customer_service.php",
 		"../mkdcore/custom/Services/Accounting_api_service.php" : "../release/application/libraries/Accounting_api_service.php",
 		"../mkdcore/custom/Services/Helpers_service.php" : "../release/application/libraries/Helpers_service.php",
-		"../mkdcore/custom/Custom404.php" : "../release/application/controllers/Custom404.php",  
+		"../mkdcore/custom/Custom404.php" : "../release/application/controllers/Custom404.php",
 
 
 		"../mkdcore/custom/Api/Ecom_api_controller.php" : "../release/application/controllers/Guest/Ecom_api_controller.php",
 		"../mkdcore/custom/Api/Item.php" : "../release/application/controllers/Guest/Item.php",
 
-		"../mkdcore/custom/Admin/controllers/Admin_shipping_cost_report_controller.php" : "../release/application/controllers/Admin/Admin_shipping_cost_report_controller.php", 
-		"../mkdcore/custom/Admin/controllers/Admin_customer_report_controller.php" : "../release/application/controllers/Admin/Admin_customer_report_controller.php", 
-		"../mkdcore/custom/Admin/controllers/Admin_inventory_report_controller.php" : "../release/application/controllers/Admin/Admin_inventory_report_controller.php", 
-		"../mkdcore/custom/Admin/controllers/Admin_pos_user_controller.php" : "../release/application/controllers/Admin/Admin_pos_user_controller.php", 
-		"../mkdcore/custom/Admin/controllers/Admin_traffic_link_report_controller.php" : "../release/application/controllers/Admin/Admin_traffic_link_report_controller.php", 
-		"../mkdcore/custom/Admin/controllers/Admin_traffic_referrer_controller.php" : "../release/application/controllers/Admin/Admin_traffic_referrer_controller.php", 
-		"../mkdcore/custom/Admin/controllers/Admin_person_sale_report_controller.php" : "../release/application/controllers/Admin/Admin_person_sale_report_controller.php", 
-		"../mkdcore/custom/Admin/controllers/Admin_terms_and_conditions_controller.php" : "../release/application/controllers/Admin/Admin_terms_and_conditions_controller.php", 
-		"../mkdcore/custom/Admin/controllers/Admin_carosal_slider_controller.php" : "../release/application/controllers/Admin/Admin_carosal_slider_controller.php", 
-		 
+		"../mkdcore/custom/Admin/controllers/Admin_shipping_cost_report_controller.php" : "../release/application/controllers/Admin/Admin_shipping_cost_report_controller.php",
+		"../mkdcore/custom/Admin/controllers/Admin_customer_report_controller.php" : "../release/application/controllers/Admin/Admin_customer_report_controller.php",
+		"../mkdcore/custom/Admin/controllers/Admin_inventory_report_controller.php" : "../release/application/controllers/Admin/Admin_inventory_report_controller.php",
+		"../mkdcore/custom/Admin/controllers/Admin_pos_user_controller.php" : "../release/application/controllers/Admin/Admin_pos_user_controller.php",
+		"../mkdcore/custom/Admin/controllers/Admin_traffic_link_report_controller.php" : "../release/application/controllers/Admin/Admin_traffic_link_report_controller.php",
+		"../mkdcore/custom/Admin/controllers/Admin_traffic_referrer_controller.php" : "../release/application/controllers/Admin/Admin_traffic_referrer_controller.php",
+		"../mkdcore/custom/Admin/controllers/Admin_person_sale_report_controller.php" : "../release/application/controllers/Admin/Admin_person_sale_report_controller.php",
+		"../mkdcore/custom/Admin/controllers/Admin_terms_and_conditions_controller.php" : "../release/application/controllers/Admin/Admin_terms_and_conditions_controller.php",
+		"../mkdcore/custom/Admin/controllers/Admin_carosal_slider_controller.php" : "../release/application/controllers/Admin/Admin_carosal_slider_controller.php",
+
 		"../mkdcore/custom/Admin/views/HomePageSettingEdit.php" : "../release/application/views/Admin/HomePageSettingEdit.php",
 		"../mkdcore/custom/Admin/views/CarosalSliderAdd.php" : "../release/application/views/Admin/CarosalSliderAdd.php",
 		"../mkdcore/custom/Admin/views/CarosalSliderEdit.php" : "../release/application/views/Admin/CarosalSliderEdit.php",
@@ -3390,8 +3390,8 @@
 
 		"../mkdcore/custom/Models/Inventory_model.php" : "../release/application/models/Inventory_model.php",
 		"../mkdcore/custom/Models/Pos_order_items_report_model.php" : "../release/application/models/Pos_order_items_report_model.php",
- 
-		
+
+
 		"../mkdcore/custom/Admin/controllers/Admin_category_controller.php" : "../release/application/controllers/Admin/Admin_category_controller.php",
 		"../mkdcore/custom/Admin/views/CategoryAdd.php" : "../release/application/views/Admin/CategoryAdd.php",
 		"../mkdcore/custom/Admin/views/CategoryEdit.php" : "../release/application/views/Admin/CategoryEdit.php",
@@ -3402,8 +3402,8 @@
 		"../mkdcore/custom/Admin/views/Category_wiseDetail.php" : "../release/application/views/Admin/Category_wiseDetail.php",
 
 		"../mkdcore/custom/Pos/Custom_api_controller.php" : "../release/application/controllers/Guest/Custom_api_controller.php",
-		  
-		
+
+
 
 
 		"../mkdcore/custom/Frontend/controllers/Home_controller.php" : "../release/application/controllers/Guest/Home_controller.php",
@@ -3442,23 +3442,23 @@
 		"v1/api/get_images": "Guest/Image_portal_controller/get_images",
 		"v1/api/upload_image_portal_image_to_s3": "Guest/Image_portal_controller/upload_image_portal_image_to_s3",
 
-		
+
 		"migrate": "Migrate",
 		"v1/api/product/add_product"    : "Guest/Ecom_api_controller/add_product",
 		"v1/api/product/get_stores"     : "Guest/Ecom_api_controller/get_stores",
-		"v1/api/product/get_categories" : "Guest/Ecom_api_controller/get_categories", 
+		"v1/api/product/get_categories" : "Guest/Ecom_api_controller/get_categories",
 		"v1/api/product/scan_product"   : "Guest/Ecom_api_controller/scan_product",
 		"try_printer"                   : "Guest/Ecom_api_controller/try_printer",
 		"v1/api/sale_order/update_status": "Guest/Ecom_api_controller/update_order_status",
 		"v1/api/add_alert_notification": "Guest/Home_controller/add_alert_notification",
 		"v1/api/update_customer_address": "Guest/Home_controller/update_customer_address",
 		"v1/api/load_checkout_calculations": "Guest/Home_controller/load_checkout_calculations",
-		
-		
+
+
 		"admin/sales_report/to_csv": "Admin/Admin_category_wise_controller/to_csv",
 		"admin/inventory_report/to_csv": "Admin/Admin_inventory_report_controller/to_csv",
 		"admin/customer_report/to_csv": "Admin/Admin_customer_report_controller/to_csv",
-		"admin/shipping_cost_report/to_csv": "Admin/Admin_shipping_cost_report_controller/to_csv", 
+		"admin/shipping_cost_report/to_csv": "Admin/Admin_shipping_cost_report_controller/to_csv",
 		"admin/transactions/to_csv": "Admin/Admin_transactions_controller/to_csv",
 		"admin/traffic_link_report/to_csv": "Admin/Admin_traffic_link_report_controller/to_csv",
 		"admin/sale_person_report/to_csv": "Admin/Admin_person_sale_report_controller/to_csv",
@@ -3468,10 +3468,10 @@
 		"admin/top_bar_setting": "Admin/Admin_carosal_slider_controller/top_bar_setting/$1",
 		"admin/home_page_setting": "Admin/Admin_carosal_slider_controller/home_page_setting",
 
-		
+
 		"admin/inventory/delete_gallery_image/(:num)": "Admin/Admin_inventory_controller/delete_gallery_image/$1",
 		"manager/inventory/delete_gallery_image/(:num)": "Manager/Manager_inventory_controller/delete_gallery_image/$1",
-		
+
 		"admin/category_wise/view/(:num)" : "Admin/Admin_category_wise_controller/view/$1",
 		"v1/api/preview_csv" : "Guest/Image_controller/preview_csv",
 		"v1/api/pos_get_all_inventory_items" : "Guest/Custom_api_controller/pos_get_all_inventory_items",
@@ -3491,29 +3491,29 @@
 		"v1/api/pos_mark_order_pickup" : "Guest/Custom_api_controller/pos_mark_order_pickup",
 		"v1/api/pos_past_order" : "Guest/Custom_api_controller/pos_past_order",
 		"v1/api/pos_summary_report" : "Guest/Custom_api_controller/pos_summary_report",
-		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory", 
-		"v1/api/scan_barcode_in_inventory" : "Guest/Custom_api_controller/scan_barcode_in_inventory", 
+		"v1/api/check_barcode_in_inventory" : "Guest/Custom_api_controller/check_barcode_in_inventory",
+		"v1/api/scan_barcode_in_inventory" : "Guest/Custom_api_controller/scan_barcode_in_inventory",
 		"v1/api/add_product_to_cart_by_customer" : "Guest/Custom_api_controller/add_product_to_cart_by_customer",
 		"v1/api/pos_invoice_data" : "Guest/Custom_api_controller/pos_invoice_data",
 		"v1/api/apply_coupon" : "Guest/Custom_api_controller/apply_coupon",
 		"v1/api/load_tax_value" : "Guest/Custom_api_controller/load_tax_value",
- 
-		"v1/api/get_shipping_cost" : "Guest/Custom_api_controller/get_shipping_cost", 
+
+		"v1/api/get_shipping_cost" : "Guest/Custom_api_controller/get_shipping_cost",
 
 		"v1/api/ship_station_endpoint" : "Guest/Shipstation_controller/ship_station_endpoint",
-		
+
 		"v1/api/stripe_terminal_connection_token" : "Guest/Custom_api_controller/stripe_terminal_connection_token",
 		"v1/api/stripe_collect_payment" : "Guest/Custom_api_controller/stripe_collect_payment",
-		"v1/api/stripe_capture_payment" : "Guest/Custom_api_controller/stripe_capture_payment", 
-		"v1/api/profile" : "Guest/Home_controller/profile", 
-		"v1/api/check_cart_total_items" : "Guest/Home_controller/check_cart_total_items", 
-		"v1/api/add_new_card" : "Guest/Home_controller/add_new_card", 
-		"v1/api/load_customer_cards" : "Guest/Home_controller/load_customer_cards", 
-		
+		"v1/api/stripe_capture_payment" : "Guest/Custom_api_controller/stripe_capture_payment",
+		"v1/api/profile" : "Guest/Home_controller/profile",
+		"v1/api/check_cart_total_items" : "Guest/Home_controller/check_cart_total_items",
+		"v1/api/add_new_card" : "Guest/Home_controller/add_new_card",
+		"v1/api/load_customer_cards" : "Guest/Home_controller/load_customer_cards",
+
 
 		"/(:num)": "Guest/Home_controller/categories/$1",
 		"/": "Guest/Home_controller/categories/0",
-		
+
 		"home": "Guest/Home_controller/home",
 		"checkout": "Guest/Home_controller/checkout",
 		"cart": "Guest/Home_controller/cart",
@@ -3528,12 +3528,12 @@
 		"v1/api/sign_up" : "Guest/Home_controller/sign_up",
 		"v1/api/login_customer" : "Guest/Home_controller/login_customer",
 		"cart_remove/(:num)" : "Guest/Home_controller/cart_remove/$1",
-		"v1/api/do_checkout" : "Guest/Home_controller/do_checkout", 
+		"v1/api/do_checkout" : "Guest/Home_controller/do_checkout",
 		"product/(:num)": "Guest/Home_controller/product/$1",
 		"order_confirmation": "Guest/Home_controller/order_confirmation",
 		"address_details": "Guest/Home_controller/address_details",
 		"terms_and_conditions": "Guest/Home_controller/terms_and_conditions",
-		"profile": "Guest/Home_controller/profile" 
+		"profile": "Guest/Home_controller/profile"
 	},
 	"reverse_copy": {
 	},
