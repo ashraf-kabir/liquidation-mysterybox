@@ -1639,6 +1639,7 @@ class Controller_builder extends Builder
             }
         }
 
+         
         if ($model['mapping'])
         {
             $mapping = $model['mapping'];

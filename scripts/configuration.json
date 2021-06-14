@@ -2860,7 +2860,7 @@
 			"route": "/carousel_slider",
 			"name": "CarosalSlider",
 			"page_name": "Carousel Slider",
-			"model": "carosal_slider",
+			"model": "carousel_slider",
 			"controller": "Admin_carousel_slider_controller.php",
 			"api_controller": "Admin_carosal_slider_api_controller.php",
 			"activity_log": false,
