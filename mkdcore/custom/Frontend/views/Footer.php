@@ -170,8 +170,8 @@
         <div class="footer-links flex-top-row-end">
             <ul class="p-0 site__mapUl">
                 <li><a href="<?php echo base_url(); ?>">Home</a></li> 
-                <li><a href="<?php echo base_url(); ?>about_us/">About Us</a></li>
-                <li><a href="<?php echo base_url(); ?>contact_us/">Contact Us</a></li>        
+                <li><a href="<?php echo base_url(); ?>about_us/">About&nbsp;Us</a></li>
+                <li><a href="<?php echo base_url(); ?>contact_us/">Contact&nbsp;Us</a></li>        
             </ul>
         </div>
         </div>
