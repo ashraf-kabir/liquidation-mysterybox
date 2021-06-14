@@ -505,8 +505,8 @@ crossorigin="anonymous"></script>
                 }, 
             },
             pagination: {
-                el: ".swiper-pagination-liquidation-card",
-                clickable: true,
+                el: ".swiper-paginatio ",
+                clickable: false,
             },
             navigation: {
                 nextEl: ".swiper-button-next-liquidation-card",

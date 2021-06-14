@@ -8,13 +8,13 @@
      <div class="row d-flex justify-content-center">
           <div class="col-md-12">
                <div class="card"> 
-                    <form action="" id="update__form">
+                    <form action="" id="update__form" autocomplete="off" autofill="off">
                          <div class="container  mb-3">
                               <div class="form-row justify-content-center"> 
 
                                    <div class="col-md-12 col-12 my-2 mt-5">
                                         <label for="password2">Billing Address <span class="required-must">*</span></label>
-                                        <input type="text" id="billing_address" name="billing_address"   class="form-control"   value="<?php echo $customer->billing_address ?>" >
+                                        <input type="search" id="billing_address" name="billing_address"   class="form-control"   value="<?php echo $customer->billing_address ?>" >
                                    </div>
 
 
@@ -46,7 +46,7 @@
 
                                    <div class="col-md-12 col-12 my-2  mt-5">
                                         <label for="shipping_address">Shipping Address <span class="required-must">*</span></label>
-                                        <input type="text" id="shipping_address" name="shipping_address"   class="form-control"   value="<?php echo $customer->shipping_address ?>" >
+                                        <input type="search" id="shipping_address" name="shipping_address"   class="form-control"   value="<?php echo $customer->shipping_address ?>" >
                                    </div> 
 
                                    <div class="col-md-6 col-12 my-2">

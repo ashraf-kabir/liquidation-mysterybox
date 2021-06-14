@@ -286,7 +286,7 @@
                     </p> 
                </div>
                <div class="third-box">
-                    <button type="button" class="dropdown-btn btn btn-secondary">change/add</button>
+                    <button type="button" class="dropdown-btn btn btn-secondary">change/add <br>Credit Card</br></button>
                     <div class="dropdown-box" style="overflow-y: auto;">
                          <div class="modal-container">
                               <div class="payments-details">

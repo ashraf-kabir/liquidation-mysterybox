@@ -111,11 +111,11 @@ if ($layout_clean_mode) {
                     </div>
 
 
-                    <div class="form-group col-md-5 col-sm-12">
+                    <!-- <div class="form-group col-md-5 col-sm-12">
                         <label for="product_text_note">Text about how to buy item</label> 
                         <input type="text" class="form-control data-input" id="product_text_note" name="product_text_note" value="<?php echo set_value('product_text_note', $product_text_note); ?>"/>
                     </div>
-                     
+                      -->
                         
                     <div class="form-group  col-md-5 col-sm-12">
                         <input type="submit" class="btn btn-primary text-white mr-4 my-4" value="Submit">
