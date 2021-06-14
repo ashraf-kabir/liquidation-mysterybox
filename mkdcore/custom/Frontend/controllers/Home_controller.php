@@ -52,8 +52,8 @@ class Home_controller extends Manaknight_Controller
     {  
         $data['layout_clean_mode'] = FALSE;
 
-        $this->load->model('carosal_slider_model'); 
-        $data['carosal_sliders'] = $this->carosal_slider_model->get_all(); 
+        $this->load->model('carousel_slider_model'); 
+        $data['carosal_sliders'] = $this->carousel_slider_model->get_all(); 
 
 
         $this->_render('Guest/Home',$data);
