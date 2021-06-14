@@ -1101,7 +1101,7 @@
 				"xyzCustomer" : "/customer/0?order_by=id&direction=DESC",
 				"xyzTax": "/tax/0?order_by=id&direction=DESC",
 				"Traffic Referrer": "/traffic_referrer/0?order_by=id&direction=DESC",
-				"Setting": {
+				"Settings": {
 					"Top Bar": "/top_bar_setting",
 					"Home Page Setting": "/home_page_setting",
 					"Carousel Slider": "/carousel_slider/0?order_by=id&direction=DESC",
