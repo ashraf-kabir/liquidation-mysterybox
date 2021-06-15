@@ -38,30 +38,29 @@ class Image_portal_controller extends Manaknight_Controller
             ); 
 
 
+
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
                 CURLOPT_URL => $image_site_url .'v1/api/get_images',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_SSL_VERIFYPEER => false,
-                CURLOPT_SSL_VERIFYHOST => false,
+                CURLOPT_RETURNTRANSFER => true, 
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
                 CURLOPT_TIMEOUT => 40,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($post_data),
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: text/plain', 
-                ),
+                CURLOPT_POSTFIELDS => json_encode($post_data) 
             )); 
 
-            $response = curl_exec($curl);  
-            curl_close($curl);   
+
+
+
+            $response  = curl_exec($curl);   
             $data_list =  json_decode($response); 
-             
-            
+
+ 
+            curl_close($curl);  
             if (isset($data_list->images_list)) 
             {
                 // $total_rows   =  $data_list->total_rows;
@@ -96,7 +95,9 @@ class Image_portal_controller extends Manaknight_Controller
             }
             else
             {
-
+                $output['content_div']    =  "<div class='col-12 alert alert-danger' style='text-align: center;padding-bottom: 0px;' ><p>No Data found.<p></div>"; 
+                echo json_encode($output); 
+                exit();
             } 
 
         }
