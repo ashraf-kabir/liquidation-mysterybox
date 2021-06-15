@@ -228,7 +228,7 @@
                                         <div class="inputs-container">
                                              <div class="custom-shipping-div">
                                                   <label for="address">Address <span class="required-must">*</span></label>
-                                                  <input name="shipping_address" id="shipping_address"  value="<?php echo set_value('address_1', $customer->shipping_address); ?>" type="text" placeholder="your address" />
+                                                  <input name="shipping_address" id="shipping_address"  value="<?php echo set_value('address_1', $customer->shipping_address); ?>" type="search" placeholder="your address" />
                                              </div>
                                              <div class="custom-shipping-div">
                                                   <label for="country">Country <span class="required-must">*</span></label>
@@ -357,7 +357,7 @@
                                         <div class="inputs-container">
                                              <div>
                                                   <label for="address">Address <span class="required-must">*</span></label>
-                                                  <input id="billing_address" name="billing_address"  value="<?php echo set_value('address_1', $customer->billing_address); ?>" type="text" placeholder="your address" />
+                                                  <input id="billing_address" name="billing_address"  value="<?php echo set_value('address_1', $customer->billing_address); ?>" type="search" placeholder="your address" />
                                              </div>
                                              <div>
                                                   <label for="country">Country <span class="required-must">*</span></label>

@@ -436,7 +436,7 @@ class Home_controller extends Manaknight_Controller
 
             
 
-            if ($this->session->userdata('user_id')) 
+            if ($this->session->userdata('user_id') && $this->session->userdata('customer_login') ) 
             { 
                 $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
             }
@@ -1563,6 +1563,14 @@ class Home_controller extends Manaknight_Controller
         }
         else
         {
+ 
+            if (!$this->session->userdata('customer_login'))
+            { 
+                $output['error'] = 'Error! Login as customer to continue.'; 
+                echo json_encode($output);
+                exit();
+            }
+
             $this->load->model('customer_model');
             $this->load->model('customer_cards_model');
             
@@ -1793,7 +1801,7 @@ class Home_controller extends Manaknight_Controller
 
     public function load_customer_cards()
     {
-        if ($this->session->userdata('user_id')) 
+        if ($this->session->userdata('user_id') && $this->session->userdata('customer_login') ) 
         {
             $user_id = $this->session->userdata('user_id'); 
             $this->load->model('customer_cards_model');

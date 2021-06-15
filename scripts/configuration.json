@@ -2322,7 +2322,7 @@
 			"custom_view_list": "",
 			"custom_view_view": "",
 			"listing_fields_api": ["id", "tax"],
-			"listing_headers": ["xyzID", "xyzTax" ],
+			"listing_headers": ["xyzID", "Tax %" ],
 			"listing_rows": ["id|integer", "tax|integer"  ],
 			"listing_actions": [],
 			"filter_fields": [],
@@ -3382,6 +3382,7 @@
 		"../mkdcore/custom/Admin/views/Transactions.php" : "../release/application/views/Admin/Transactions.php",
 		"../mkdcore/custom/Admin/views/PersonSaleReport.php" : "../release/application/views/Admin/PersonSaleReport.php",
 		"../mkdcore/custom/Admin/views/TopBarSettingEdit.php" : "../release/application/views/Admin/TopBarSettingEdit.php",
+		"../mkdcore/custom/Admin/views/Email.php" : "../release/application/views/Admin/Email.php",
 
 		"../mkdcore/custom/Admin/views/Customer.php" : "../release/application/views/Admin/Customer.php",
 		"../mkdcore/custom/Admin/views/CustomerAdd.php" : "../release/application/views/Admin/CustomerAdd.php",

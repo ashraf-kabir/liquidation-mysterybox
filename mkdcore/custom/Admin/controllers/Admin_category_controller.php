@@ -201,7 +201,11 @@ class Admin_category_controller extends Admin_controller
         
         $this->names_helper_service->set_category_model($this->category_model);  
         $model->parent_category_id = $this->names_helper_service->get_category_real_name( $model->parent_category_id ); 
-        $model->feature_image = "<img style='width:100%' src='" .$model->feature_image . "' />"; 
+
+        if(empty($model->feature_image))
+        {
+            $model->feature_image = "/uploads/placeholder.jpg";
+        } 
          
         $this->_data['view_model']->set_model($model);
          

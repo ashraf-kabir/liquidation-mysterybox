@@ -276,7 +276,7 @@
                                 required
                                 />
                                 Yes, I have read the Vegas Liquidation Ecom user
-                                agreement and agree to be bound by its <a href="">Terms and
+                                agreement and agree to be bound by its <a href="<?php echo base_url(); ?>terms_and_conditions">Terms and
                                 conditions.</a>
                             </label>
                         </div>
@@ -505,7 +505,7 @@ crossorigin="anonymous"></script>
                 }, 
             },
             pagination: {
-                el: ".swiper-paginatio ",
+                el: ".swiper-pagination-liquidation-card",
                 clickable: false,
             },
             navigation: {

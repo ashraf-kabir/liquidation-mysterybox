@@ -28,51 +28,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <section>
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="card" id="customer_filter_listing">
+        <div class="card" id="email_filter_listing">
             <div class="card-body">
               <h5 class="primaryHeading2 text-md-left">
                     <?php echo $view_model->get_heading();?> Search
               </h5>
-                <?php if($this->session->userdata('role') == 2) {  ?>
-                    <?= form_open('/admin/customer/0', ['method' => 'get']) ?>
-                <?php } elseif($this->session->userdata('role') == 4) {  ?>  
-                    <?= form_open('/manager/customer/0', ['method' => 'get']) ?>
-                <?php }  ?> 
-                
+                <?= form_open('/admin/emails/0', ['method' => 'get']) ?>
                     <div class="row">
-                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
 							<div class="form-group">
-								<label for="Name">Name </label>
-								<input type="text" class="form-control" id="name" name="name" value="<?php echo $this->_data['view_model']->get_name();?>"/>
+								<label for="Email Type">Email Type </label>
+								<input type="text" class="form-control" id="slug" name="slug" value="<?php echo $this->_data['view_model']->get_slug();?>"/>
 							</div>
 						</div>
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
 							<div class="form-group">
-								<label for="Email">Email </label>
-								<input type="text" class="form-control" id="email" name="email" value="<?php echo $this->_data['view_model']->get_email();?>"/>
+								<label for="Subject">Subject </label>
+                                <input type="text" class="form-control" id="subject" name="subject" value="<?php echo $this->_data['view_model']->get_subject();?>"/> 
 							</div>
 						</div>
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
 							<div class="form-group">
-								<label for="Phone">Phone </label>
-								<input type="text" class="form-control" id="phone" name="phone" value="<?php echo $this->_data['view_model']->get_phone();?>"/>
+								<label for="Replacement Tags">Replacement Tags </label>
+
+                                <input type="text" class="form-control" id="tag" name="tag" value="<?php echo $this->_data['view_model']->get_tag();?>"/>
+
+
+								 
 							</div>
 						</div>
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
 							<div class="form-group">
-								<label for="Customer Since">Customer Since </label>
-								<input type="date" class="form-control" id="customer_since" name="customer_since" value="<?php echo $this->_data['view_model']->get_customer_since();?>"/>
-							</div>
-						</div>
-						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-							<div class="form-group">
-								<label for="Status">Status </label>
-								<select name="status" class="form-control">
-									<option value="">All</option>
-									<?php foreach ($view_model->status_mapping() as $key => $value) {
-										echo "<option value='{$key}' " . (($view_model->get_status() == $key && $view_model->get_status() != '') ? 'selected' : '') . "> {$value} </option>";
-									}?>
-								</select>
+								<label for="Email Body">Email Body </label>
+
+                                <input type="text" class="form-control" id="html" name="html" value="<?php echo $this->_data['view_model']->get_html();?>"/>
+
+
 							</div>
 						</div>
 
@@ -91,13 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
   <?php echo $view_model->get_heading();?>  (<?php echo $view_model->get_total_rows();?> results found)
-
-    <?php if($this->session->userdata('role') == 2) { ?>
-        <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/admin/customer/add"><i class="fas fa-plus-circle"></i></a></span>  
-    <?php }elseif($this->session->userdata('role') == 4) { ?>
-        <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/manager/customer/add"><i class="fas fa-plus-circle"></i></a></span>
-    <?php } ?>
-  
+  <span class="add-part d-flex justify-content-md-end  "><a class="btn btn-primary btn-sm" target="_blank" href="/admin/emails/add"><i class="fas fa-plus-circle"></i></a><a class="btn btn-info btn-sm ml-2" onclick='mkd_export_table(window.location.href);return false;'><i class="fas fa-file-download" style="color:white;"></i></a></span>
 </h5>
 
   <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4 pt-4" style='height:auto;'>
@@ -149,34 +134,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <tbody class="tbody-light">
             <?php foreach ($view_model->get_list() as $data) { ?>
                 <?php
-                    $customer_since = "";
-                    if (!empty($data->customer_since)) 
-                    {
-                        $customer_since = date('F d Y', strtotime($data->customer_since));
-                    }
-
-                    
                     echo '<tr>';
-                            echo "<td>{$data->id}</td>";
-							echo "<td>{$data->name}</td>";
-							echo "<td>{$data->email}</td>";
-							echo "<td>{$data->phone}</td>";
-							echo "<td>" . $customer_since . "</td>";
-							echo "<td>{$data->last_order}</td>";
-							echo "<td>{$data->num_orders}</td>";
-							echo "<td>" . ucfirst($view_model->status_mapping()[$data->status]) ."</td>";
-                            echo '<td>';
-                            
-                            if($this->session->userdata('role') == 2) {  
-                                echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/admin/customer/edit/' . $data->id . '">Edit</a>';
-							    echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/customer/view/' . $data->id . '">View</a>';
-							     
-                            }
-                            elseif($this->session->userdata('role') == 4) {  
-                                echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/manager/customer/edit/' . $data->id . '">Edit</a>';
-							    echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/manager/customer/view/' . $data->id . '">View</a>';
-							     
-                            }  
+                        							echo "<td>{$data->slug}</td>";
+							echo "<td>{$data->subject}</td>";
+							echo "<td>{$data->tag}</td>";
+							echo '<td>';
+							echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/admin/emails/edit/' . $data->id . '">Edit</a>';
+							echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/emails/view/' . $data->id . '">View</a>';
 							echo '</td>';
                     echo '</tr>';
                 ?>
