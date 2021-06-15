@@ -383,17 +383,18 @@ $gallery_image_count = count($gallery_lists) + 1;
 
       
 
-        <div class="row  bg-white add_margin_mobile" style="margin: 15px 0px;">
-            <div class="col-12 p-0 py-3 bg-white">
-                <h4 class="pl-3">Terms and Conditions</h4>
-                <ul  class="pr-5">
-                    <li>publishing any Website material in any other media;</li>
-                    <li>selling, sublicensing and/or otherwise commercializing any Website material;</li>
-                    <li>publicly performing and/or showing any Website material;</li>
-                    <li>using this Website in any way that is or may be damaging to this Website;</li>
-                </ul>
-            </div> 
-        </div>
+        <?php if (!empty($terms_and_con)): ?> 
+            <div class="row  bg-white add_margin_mobile" style="margin: 15px 0px;">
+                <div class="col-12 p-0 py-3 bg-white">
+                    <h4 class="pl-3">Terms and Conditions</h4>
+                    <ul  class="pr-5">
+                        <?php foreach ($terms_and_con as $key => $value): ?>
+                            <li><?php echo $value->description; ?></li>
+                        <?php endforeach ?> 
+                    </ul>
+                </div> 
+            </div>
+        <?php endif ?>
     </section>
     
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" defer></script>

@@ -1090,6 +1090,7 @@ class Home_controller extends Manaknight_Controller
         $this->load->library('names_helper_service');
         $this->load->model('category_model');
         $this->load->model('physical_location_model'); 
+        $this->load->model('product_terms_and_condition_model'); 
 
 
         
@@ -1101,6 +1102,7 @@ class Home_controller extends Manaknight_Controller
 
         $data['product']        =   $model;
         $data['gallery_lists']  =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
+        $data['terms_and_con']  =   $this->product_terms_and_condition_model->get_all(['status' => 1]);
  
         $data['no_detail'] = TRUE; 
 
