@@ -108,10 +108,9 @@
     display: none;
 }
 
-@media (max-width: 767px) {
+@media (min-width: 767px) {
     .swiper-pagination-liquidation-card{
         display: none !important;
-        background-color: red;
     }
 
 }
