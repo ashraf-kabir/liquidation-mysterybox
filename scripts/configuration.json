@@ -399,9 +399,7 @@
 				["available_in_shelf", "integer", [{"default" : 1}], "xyzAvailable In Shelf", "", ""],
 				["product_type", "integer", [ ], "xyzProduct Type", "", ""],
 				["video_url", "text", [], "xyzVideo URL", "", ""],
-				["youtube_thumbnail_1", "image|250|250|500|500", [{
-					"limit": 255
-				}], "Youtube Thumbnail 1", "", ""],
+				["youtube_thumbnail_1", "text", [], "Youtube Thumbnail 1", "", ""],
 
 				["youtube_thumbnail_2", "image|250|250|500|500", [{
 					"limit": 255
@@ -2799,8 +2797,8 @@
 			"custom_view_list": "",
 			"custom_view_view": "",
 			"listing_fields_api": ["id", "tax"],
-			"listing_headers": ["xyzID", "Sale Person", "Phone", "Quantity Sold", "Total Amount" ],
-			"listing_rows": ["id|integer", "sale_person_id|string", "product_name|string", "quantity|integer", "amount|integer" ],
+			"listing_headers": ["xyzID", "Sale Person", "Quantity Sold", "Total Amount" ],
+			"listing_rows": ["id|integer", "sale_person_id|string", "quantity|integer", "amount|integer" ],
 			"listing_actions": [],
 			"filter_fields": ["sale_person_id" , "product_name" ],
 			"add_fields": [],
@@ -3416,6 +3414,7 @@
 
 		"../mkdcore/custom/assets/js/address_form.js": "../release/assets/js/address_form.js",
 		"../mkdcore/custom/assets/js/swiper-bundle.min.js": "../release/assets/frontend_js/swiper-bundle.min.js",
+		"../mkdcore/custom/assets/js/video_image_script.js": "../release/assets/js/video_image_script.js",
 		"../mkdcore/custom/assets/css/swiper-bundle.min.css": "../release/assets/frontend_css/swiper-bundle.min.css",
 		"../mkdcore/custom/assets/css/checkout.css": "../release/assets/css/checkout.css",
 
@@ -3511,6 +3510,7 @@
 		"../mkdcore/custom/Frontend/views/ChangePassword.php" : "../release/application/views/Guest/ChangePassword.php",
 		"../mkdcore/custom/Frontend/views/AddressDetails.php" : "../release/application/views/Guest/AddressDetails.php",
 		"../mkdcore/custom/Frontend/views/TermsAndConditions.php" : "../release/application/views/Guest/TermsAndConditions.php",
+		"../mkdcore/custom/Frontend/views/ImageThumbnailModel.php" : "../release/application/views/Guest/ImageThumbnailModel.php",
 
 		"../mkdcore/custom/Services/Stripe_terminal_service.php" : "../release/application/libraries/Stripe_terminal_service.php",
 
@@ -3527,6 +3527,7 @@
 
 	},
 	"routes": {
+		"v1/api/images/get_thumbnails_list": "Guest/Ecom_api_controller/get_thumbnails_list",
 		"v1/api/get_images": "Guest/Image_portal_controller/get_images",
 		"v1/api/upload_image_portal_image_to_s3": "Guest/Image_portal_controller/upload_image_portal_image_to_s3",
 

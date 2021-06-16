@@ -157,8 +157,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                 <?php
                     echo '<tr>';
                             echo "<td>{$data->id}</td>";
-                            echo "<td>{$data->sale_person_id}</td>"; 
-                            echo "<td>{$data->phone}</td>";
+                            echo "<td>{$data->sale_person_id}</td>";  
                             echo "<td>{$data->total_quantity}</td>";
                             echo "<td>$" . number_format($data->total_amount,2) ."</td>"; 
                     echo '</tr>';

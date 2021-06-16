@@ -133,30 +133,7 @@ class Admin_inventory_controller extends Admin_controller
         }
 
 
-        if ( isset($_POST['video_url'][0]) && !empty($_POST['video_url'][0]) ) 
-        {
-            $this->form_validation->set_rules('youtube_thumbnail_1', 'Youtube Thumbnail 1', 'required'); 
-        }
-
-
-        if (  isset($_POST['video_url'][1]) && !empty($_POST['video_url'][1]) ) 
-        {
-            $this->form_validation->set_rules('youtube_thumbnail_2', 'Youtube Thumbnail 2', 'required'); 
-        }
-
-
-
-        if (  isset($_POST['video_url'][2]) && !empty($_POST['video_url'][2])  ) 
-        {
-            $this->form_validation->set_rules('youtube_thumbnail_3', 'Youtube Thumbnail 3', 'required'); 
-        }
-
-
-
-        if (  isset($_POST['video_url'][3]) && !empty($_POST['video_url'][3]) ) 
-        {
-            $this->form_validation->set_rules('youtube_thumbnail_4', 'Youtube Thumbnail 4', 'required'); 
-        }
+         
 
         if ($this->form_validation->run() === FALSE)
         { 
@@ -194,14 +171,9 @@ class Admin_inventory_controller extends Admin_controller
         $free_ship = $this->input->post('free_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
         $pin_item_top = $this->input->post('pin_item_top', TRUE);
-        $video_url = json_encode($this->input->post('video_url', TRUE));
-        
-
-
-        $youtube_thumbnail_1 = $this->input->post('youtube_thumbnail_1', TRUE);
-        $youtube_thumbnail_2 = $this->input->post('youtube_thumbnail_2', TRUE);
-        $youtube_thumbnail_3 = $this->input->post('youtube_thumbnail_3', TRUE);
-        $youtube_thumbnail_4 = $this->input->post('youtube_thumbnail_4', TRUE);
+        $video_url = json_encode($this->input->post('video_url', TRUE)); 
+        $youtube_thumbnail_1 = json_encode($this->input->post('youtube_thumbnail_1', TRUE));
+         
 
 
         //SKU for category
@@ -255,9 +227,6 @@ class Admin_inventory_controller extends Admin_controller
             'pin_item_top' => $pin_item_top,
             'video_url' => $video_url, 
             'youtube_thumbnail_1' => $youtube_thumbnail_1, 
-            'youtube_thumbnail_2' => $youtube_thumbnail_2, 
-            'youtube_thumbnail_3' => $youtube_thumbnail_3, 
-            'youtube_thumbnail_4' => $youtube_thumbnail_4, 
         ]);
  
         if ($result)
@@ -326,31 +295,7 @@ class Admin_inventory_controller extends Admin_controller
         }
 
 
-        if ( isset($_POST['video_url'][0]) && !empty($_POST['video_url'][0]) ) 
-        {
-            $this->form_validation->set_rules('youtube_thumbnail_1', 'Youtube Thumbnail 1', 'required'); 
-        }
-
-
-        if (  isset($_POST['video_url'][1]) && !empty($_POST['video_url'][1]) ) 
-        {
-            $this->form_validation->set_rules('youtube_thumbnail_2', 'Youtube Thumbnail 2', 'required'); 
-        }
-
-
-
-        if (  isset($_POST['video_url'][2]) && !empty($_POST['video_url'][2])  ) 
-        {
-            $this->form_validation->set_rules('youtube_thumbnail_3', 'Youtube Thumbnail 3', 'required'); 
-        }
-
-
-
-        if (  isset($_POST['video_url'][3]) && !empty($_POST['video_url'][3]) ) 
-        {
-            $this->form_validation->set_rules('youtube_thumbnail_4', 'Youtube Thumbnail 4', 'required'); 
-        }
-         
+     
 
         if ($this->form_validation->run() === FALSE)
         { 
@@ -386,10 +331,8 @@ class Admin_inventory_controller extends Admin_controller
         $video_url = json_encode($this->input->post('video_url', TRUE));
         
  
-        $youtube_thumbnail_1 = $this->input->post('youtube_thumbnail_1', TRUE);
-        $youtube_thumbnail_2 = $this->input->post('youtube_thumbnail_2', TRUE);
-        $youtube_thumbnail_3 = $this->input->post('youtube_thumbnail_3', TRUE);
-        $youtube_thumbnail_4 = $this->input->post('youtube_thumbnail_4', TRUE);
+        $youtube_thumbnail_1 = json_encode($this->input->post('youtube_thumbnail_1', TRUE));
+        
 
         if($product_type == 2)
         {
@@ -423,10 +366,7 @@ class Admin_inventory_controller extends Admin_controller
             'product_type' => $product_type,
             'pin_item_top' => $pin_item_top,
             'video_url' => $video_url,
-            'youtube_thumbnail_1' => $youtube_thumbnail_1, 
-            'youtube_thumbnail_2' => $youtube_thumbnail_2, 
-            'youtube_thumbnail_3' => $youtube_thumbnail_3, 
-            'youtube_thumbnail_4' => $youtube_thumbnail_4,
+            'youtube_thumbnail_1' => $youtube_thumbnail_1,  
             
         ], $id);
        

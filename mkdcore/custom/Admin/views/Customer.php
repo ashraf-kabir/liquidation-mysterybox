@@ -161,7 +161,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							echo "<td>{$data->name}</td>";
 							echo "<td>{$data->email}</td>";
 							echo "<td>{$data->phone}</td>";
-							echo "<td>" . $customer_since . "</td>";
+							echo "<td class='table-td-with-date'> " . $customer_since . "</td>";
 							echo "<td>{$data->last_order}</td>";
 							echo "<td>{$data->num_orders}</td>";
 							echo "<td>" . ucfirst($view_model->status_mapping()[$data->status]) ."</td>";

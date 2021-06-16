@@ -514,6 +514,45 @@ crossorigin="anonymous"></script>
             },
         }); 
 
+
+
+
+        var swiper_mysterybox = new Swiper(".myvideos-videos-list", {
+            slidesPerView: 3, 
+            spaceBetween: 30,
+            slidesPerGroup: 3,
+            observer: true,
+            observeParents: true,
+            parallax:true, 
+            breakpoints: {
+                992: {
+                    slidesPerView: 3, 
+                    spaceBetween: 30, 
+                    slidesPerGroup: 1,
+                }, 
+                768: {
+                    slidesPerView: 2, 
+                    spaceBetween: 30, 
+                    slidesPerGroup: 2,
+                }, 
+                200: {
+                    slidesPerView: 1, 
+                    spaceBetween: 30, 
+                    slidesPerGroup: 1,
+                }, 
+            },
+            loop: false,
+            loopFillGroupWithBlank: true,
+            pagination: {
+                el: ".swiper-pagination-videos-card",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next-videos-card",
+                prevEl: ".swiper-button-prev-videos-card",
+            },
+        });
+
     
         $('.slider').slick({
             centerMode: true,

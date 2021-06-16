@@ -114,7 +114,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                     echo '<tr>';
 							echo "<td>{$data->id}</td>";
 							echo "<td>{$data->pos_order_id}</td>";
-							echo "<td>" . date('F d Y', strtotime($data->transaction_date)) . "</td>";
+							echo "<td class='table-td-with-date'>" . date('F d Y', strtotime($data->transaction_date)) . "</td>";
 							echo "<td>{$data->customer_id}</td>";
 							echo "<td>" . ucfirst($view_model->payment_type_mapping()[$data->payment_type]) ."</td>";
 							echo "<td>$" . number_format($data->tax,2) . "</td>";

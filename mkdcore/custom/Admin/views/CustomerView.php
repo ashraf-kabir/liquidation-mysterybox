@@ -125,7 +125,14 @@ if ($layout_clean_mode) {
 						Customer Since
 					</div>
 					<div class='col'>
-						<?php echo $view_model->get_customer_since();?>
+						<?php
+						$customer_since = "";
+	                    if (!empty($data->customer_since)) 
+	                    {
+	                        $customer_since = date('F d Y', strtotime($view_model->get_customer_since()));
+	                    }
+	                	?>
+						<?php echo $customer_since;?>
 					</div>
 				</div>
 

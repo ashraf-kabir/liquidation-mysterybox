@@ -297,87 +297,76 @@ $gallery_image_count = count($gallery_lists) + 1;
     <section class="container-fluid mt-5 mb-5" id="product__description">
         
         <?php 
-        $video_url = json_decode($product->video_url);  
-        $total_videos = 0;
-        if (!empty($video_url)) 
-        {  
-            foreach ($video_url as $key => $video)
-            {
-                if (!empty($video)) 
-                {
-                    $total_videos++;
-                }
-            }
-        }
+        $videos_data = json_decode($product->video_url);   
+        $images_data = json_decode($product->youtube_thumbnail_1);
+        
+ 
         ?>
          
        
-        <?php if ($total_videos != 0 ): ?>
-        <div class="row  bg-white  add_margin_mobile" style="margin: 15px 0px;">
-            <div class="col-12 p-0 py-3 bg-white" style="padding-bottom: 0px !important;">
-                <h4  class="pl-3 m-0" >Review Videos</h4> 
+        <?php if (!empty($videos_data)): ?> 
+         
+       
+
+        <div class="row  bg-white   add_margin_mobile " style="margin: 15px 0px;">
+            <div class="col-12 p-0 py-3 bg-white"  style="padding-bottom: 0px !important;" >
+                <h4  class="pl-3 mb-1">Review Videos</h4> 
             </div>   
-            <div class="col-12  pl-2  p-0 bg-white"> 
-                <div class="row   p-3 " style="padding-top: 0px !important;">  
-                    
-                    <?php  
-                    if (!empty($video_url)) 
-                    {  
-                        if ($total_videos == 1) 
-                        {
-                            $total_videos = 2;
-                        }
-
-                        if ($total_videos != 0 ) 
-                        {
-                            $total_percentage = 100/$total_videos;
-                        }
-
-                        
-
-                        foreach ($video_url as $key => $video):
-                            if (!empty($video)) 
-                            {
-                                ?>
-                                <div class="video-container col-12 col-md-6 col-lg-3" style="padding: 20px 10px; "> 
-                                    
-                                    <a href="<?php echo $video; ?>" target="_blank"> 
-                                        <img src="<?php echo base_url() ?>assets/image/play_circle.png" class="play_icon" />
-                                        <img  
-                                         style="border: none;"
-                                        class="img-thumbnail image-fit-in-div videos-thumbnail"
-
-                                        <?php if ($key == 0): ?>
-                                            src="<?php echo $product->youtube_thumbnail_1; ?>"
-                                        <?php endif ?>
-                                        
-
-                                        <?php if ($key == 1): ?>
-                                            src="<?php echo $product->youtube_thumbnail_2; ?>"
-                                        <?php endif ?>
+            <div class="col-12  pl-2 p-0 bg-white"> 
+                <div class="row   p-3 " style="padding-top: 0px !important;">   
 
 
-                                        <?php if ($key == 2): ?>
-                                            src="<?php echo $product->youtube_thumbnail_3; ?>"
-                                        <?php endif ?>
+                    <div class="container">  
+                        <div class="swiper-container swiper-container-liquidation mySwiper myvideos-videos-list"   >
+                            <div class="swiper-wrapper">  
+
+                                <?php  
+                                if (!empty($videos_data)) 
+                                {  
+                                     
+                                    foreach ($videos_data as $key => $video):
+                                        if (!empty($video)) 
+                                        {
+                                            ?>
+                                            <div class="swiper-slide swiper-slide-liquidation">
+
+                                                <div class="video-container col-12 col-md-12 col-lg-12" style="padding: 20px 10px; "> 
+                                                          
+                                                    <a href="<?php echo $videos_data[$key]; ?>" target="_blank"> 
+                                                        <img src="<?php echo base_url() ?>assets/image/play_circle.png" class="play_icon" />
+                                                        <img  
+                                                        style="border: none;"
+                                                        class="img-thumbnail image-fit-in-div videos-thumbnail"
+
+                                                         
+                                                        src="<?php echo $images_data[$key]; ?>"
+                                                         
+                                                        /> 
+                                                    </a> 
+                                                </div> 
+
+                                            </div> 
+
+                                            <?php
+                                        }   
+                                    endforeach ;
+                                }
+                                ?>   
+                            </div>
+                            <div class="swiper-button-next list-swiper-button-next swiper-button-next-videos-card"></div>
+                            <div class="swiper-button-prev list-swiper-button-prev swiper-button-prev-videos-card"></div>
+                            <div class="swiper-pagination swiper-pagination-videos-card"></div>
+                        </div>
+                    </div> 
 
 
-                                        <?php if ($key == 3): ?>
-                                            src="<?php echo $product->youtube_thumbnail_4; ?>"
-                                        <?php endif ?>
-                                        /> 
-                                    </a> 
-                                </div> 
 
-                                <?php
-                            }   
-                        endforeach ;
-                    }
-                    ?>   
                 </div>
                 
             </div> 
-        </div> 
+        </div>
+
+
         <?php endif ?>
 
 

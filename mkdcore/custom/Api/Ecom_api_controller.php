@@ -475,4 +475,36 @@ class Ecom_api_controller extends Manaknight_Controller
         }
 
     }
+
+
+
+
+
+
+    public function get_thumbnails_list()
+    {
+        $this->load->model('inventory_model');
+
+
+        $category_id  = $this->input->get('form_category_id');
+        $list_of_data = $this->inventory_model->get_all(['category_id' => $category_id ]);
+
+
+        $array_with_images = array();
+        foreach($list_of_data as $value)
+        {
+            $images_list = json_decode($value->youtube_thumbnail_1);
+            foreach($images_list as $img)
+            {
+                $ilist['url'] = $img;
+                $ilist['id']  = 0;
+                array_push($array_with_images, $ilist);
+            }
+        }  
+
+        $output['item'] = $array_with_images;
+        echo json_encode($output); 
+        exit();
+    }
+
 }
