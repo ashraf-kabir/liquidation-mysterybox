@@ -156,6 +156,12 @@
     .img-thumbnail{
         border: none !important;
     }
+
+
+    .myvideos-videos-list .swiper-button-disabled
+    {
+        display: none;
+    }
 </style>
 <?php 
  
