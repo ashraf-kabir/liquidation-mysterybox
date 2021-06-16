@@ -234,9 +234,10 @@ $gallery_image_count = count($gallery_lists) + 1;
                 </div>
             </div>
             <div class="col-lg-3 col-991-p-0 mt-4 pr-md-0">
-                <div class="bg-white w-100 p-2 px-md-4 "  style="padding-top: 0.5rem !important;"> 
-                    <ul class="list-unstyled">
-                        <li class="my-1"><span class="product__price"><?php echo $product->product_name; ?></span></li>
+                <div class="bg-white w-100 p-2 px-md-4 "  style="padding-top: 0.5rem !important;    padding-bottom: 1px !important;"> 
+                    <ul class="list-unstyled" style="margin: 0px;">
+
+                        <li class="my-1"><h4  style="width: 100%;text-align: left;"><?php echo $product->product_name; ?></h4> </li>
 
                         <li class="my-1">Price: <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li>
  
