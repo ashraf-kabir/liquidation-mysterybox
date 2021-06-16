@@ -264,7 +264,7 @@ $gallery_image_count = count($gallery_lists) + 1;
                             </select> 
 
                         <input type="hidden" class="product_id" name="product_id" value="<?= $product->id; ?>" />
-                        <a href="#" class="btn add_to_cart_button btn-success addToCartBtn" style="width: 100%">
+                        <a href="#" class="btn add_to_cart_button btn-success addToCartBtn" style="width: 100px;">
                         <i class="fas fa-shopping-cart cart-icon"></i>
                         </a>
                     </div>
