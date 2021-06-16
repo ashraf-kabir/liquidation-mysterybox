@@ -110,7 +110,7 @@
 
 @media screen (min-width: 767px) {
     .swiper-pagination-liquidation-card.current-inventory{
-        display: none;
+        display: none !important;
     }
 
 }
