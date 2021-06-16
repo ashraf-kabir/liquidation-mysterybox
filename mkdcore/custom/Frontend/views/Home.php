@@ -108,7 +108,7 @@
     display: none;
 }
 
-@media screen (min-width: 767px) {
+@media screen (max-width: 767px) {
     .swiper-pagination-liquidation-card{
         display: none !important;
         background-color: red;
