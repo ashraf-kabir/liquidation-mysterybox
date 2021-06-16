@@ -298,9 +298,10 @@ $gallery_image_count = count($gallery_lists) + 1;
         
         <?php 
         $videos_data = json_decode($product->video_url);   
-        $images_data = json_decode($product->youtube_thumbnail_1);
-        
- 
+        $images_data = json_decode($product->youtube_thumbnail_1);  
+
+        $count = count($videos_data)-1;
+
         ?>
          
        
@@ -325,21 +326,22 @@ $gallery_image_count = count($gallery_lists) + 1;
                                 {  
                                      
                                     foreach ($videos_data as $key => $video):
-                                        if (!empty($video)) 
+
+                                        if (!empty($videos_data[$count])) 
                                         {
                                             ?>
                                             <div class="swiper-slide swiper-slide-liquidation">
 
                                                 <div class="video-container col-12 col-md-12 col-lg-12" style="padding: 20px 10px; "> 
                                                           
-                                                    <a href="<?php echo $videos_data[$key]; ?>" target="_blank"> 
+                                                    <a href="<?php echo $videos_data[$count]; ?>" target="_blank"> 
                                                         <img src="<?php echo base_url() ?>assets/image/play_circle.png" class="play_icon" />
                                                         <img  
                                                         style="border: none;"
                                                         class="img-thumbnail image-fit-in-div videos-thumbnail"
 
                                                          
-                                                        src="<?php echo $images_data[$key]; ?>"
+                                                        src="<?php echo $images_data[$count]; ?>"
                                                          
                                                         /> 
                                                     </a> 
@@ -348,7 +350,9 @@ $gallery_image_count = count($gallery_lists) + 1;
                                             </div> 
 
                                             <?php
-                                        }   
+                                        }  
+
+                                        $count--; 
                                     endforeach ;
                                 }
                                 ?>   
