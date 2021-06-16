@@ -239,7 +239,10 @@ padding-right: 10px;
  
 }
           
-    
+    .swiper-button-disabled
+    {
+      display: none !important;
+    }
 
      </style>
 </head>
