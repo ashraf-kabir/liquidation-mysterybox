@@ -234,7 +234,7 @@ $gallery_image_count = count($gallery_lists) + 1;
                 </div>
             </div>
             <div class="col-lg-3 col-991-p-0 mt-4 pr-md-0">
-                <div class="bg-white w-100 p-2 p-md-4 "  style="padding-top: 0.5rem !important;"> 
+                <div class="bg-white w-100 p-2 px-md-4 "  style="padding-top: 0.5rem !important;"> 
                     <ul class="list-unstyled">
                         <li class="my-1"><span class="product__price"><?php echo $product->product_name; ?></span></li>
 
@@ -315,7 +315,7 @@ $gallery_image_count = count($gallery_lists) + 1;
         <?php if ($total_videos != 0 ): ?>
         <div class="row  bg-white  add_margin_mobile" style="margin: 15px 0px;">
             <div class="col-12 p-0 py-3 bg-white" style="padding-bottom: 0px !important;">
-                <h4  class="pl-3" >Review Videos</h4> 
+                <h4  class="pl-3 m-0" >Review Videos</h4> 
             </div>   
             <div class="col-12  pl-2  p-0 bg-white"> 
                 <div class="row   p-3 " style="padding-top: 0px !important;">  
@@ -386,7 +386,7 @@ $gallery_image_count = count($gallery_lists) + 1;
         <?php if (!empty($terms_and_con)): ?> 
             <div class="row  bg-white add_margin_mobile" style="margin: 15px 0px;">
                 <div class="col-12 p-0 py-3 bg-white">
-                    <h4 class="pl-3">Terms and Conditions</h4>
+                    <h4 class="pl-3 mb-3">Terms and Conditions</h4>
                     <ul  class="pr-5">
                         <?php foreach ($terms_and_con as $key => $value): ?>
                             <li><?php echo $value->description; ?></li>

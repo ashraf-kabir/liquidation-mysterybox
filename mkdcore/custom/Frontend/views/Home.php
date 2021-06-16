@@ -50,7 +50,7 @@
         display: block;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
     }
     .swiper-container-liquidation {
         width: 100%;
@@ -107,12 +107,19 @@
 {
     display: none;
 }
+
+@media screen (min-width: 767px) {
+    .swiper-pagination-liquidation-card.current-inventory{
+        display: none;
+    }
+
+}
 </style>
 
 
 <?php if (!empty($carosal_sliders)): ?> 
 
-<div class="swiper-container swiper-container-sliders-custom" style="min-height: 200px;max-height: auto">
+<div class="swiper-container swiper-container-sliders-custom" style="min-height: 200px;max-height: 620px">
     <div class="swiper-wrapper">
         <?php foreach ($carosal_sliders as $key => $value): ?>  
             <div class="swiper-slide swiper-slide-slider-custom"><img src="<?php echo $value->feature_image ?>"></div> 
@@ -213,7 +220,7 @@
         </div>
         <div class="swiper-button-next list-swiper-button-next swiper-button-next-liquidation-card"></div>
         <div class="swiper-button-prev list-swiper-button-prev swiper-button-prev-liquidation-card"></div>
-        <div class="swiper-pagination swiper-pagination-liquidation-card"></div>
+        <div class="swiper-pagination swiper-pagination-liquidation-card current-inventory"></div>
     </div>
 </div> 
 
