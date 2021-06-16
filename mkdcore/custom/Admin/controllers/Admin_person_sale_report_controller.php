@@ -232,6 +232,7 @@ class Admin_person_sale_report_controller extends Admin_controller
         } 
   
 
+        $total_amount = 0; 
         $clean_list = []; 
         foreach ($list as $key => $value)
         {  
@@ -242,6 +243,7 @@ class Admin_person_sale_report_controller extends Admin_controller
             $clean_list_entry['total_quantity']  = $value->total_quantity;
             $clean_list_entry['total_amount']    = number_format($value->total_amount,2); 
             $clean_list[]                        = $clean_list_entry;
+            $total_amount                        = $value->total_amount + $total_amount;
         }
     
         
@@ -261,7 +263,14 @@ class Admin_person_sale_report_controller extends Admin_controller
                 // }
             }
             $csv = $csv . implode(',', $row_csv) . "\n";
-        }   
+        } 
+        $row_csv = [];
+        $row_csv[] = '';
+        $row_csv[] = '';
+        $row_csv[] = '';
+        $row_csv[] = 'Total';
+        $row_csv[] = '"$' . number_format($total_amount,2). '"';  
+        $csv = $csv . implode(',', $row_csv) . "\n";
      
         echo $csv; 
         exit(); 

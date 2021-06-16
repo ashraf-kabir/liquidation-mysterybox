@@ -5,6 +5,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
 
 ?>
+
+<style type="text/css">
+    .tbody-light2 {
+        color: #495057;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+    }
+</style>
 <div class="tab-content mx-4" id="nav-tabContent">
 <br>
 <div class="clear"></div>
@@ -95,6 +103,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
     <table class="table br w-100">
         <thead class='thead-light'>
         <?php
+        $total_amount = 0;
         $order_by = $view_model->get_order_by();
         $direction = $view_model->get_sort();
         $model_base_url = $view_model->get_sort_base_url();
@@ -155,6 +164,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
         <tbody class="tbody-light">
             <?php foreach ($view_model->get_list() as $data) { ?>
                 <?php
+                    $total_amount = $data->total_amount + $total_amount;
                     echo '<tr>';
                             echo "<td>{$data->id}</td>";
                             echo "<td>{$data->sale_person_id}</td>";  
@@ -164,6 +174,18 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                 ?>
             <?php } ?>
         </tbody>
+
+
+        <tfoot class="tbody-light">
+            <?php   
+                    echo "<tr>";
+                        echo "<th class='tbody-light2'></th>";
+                        echo "<th class='tbody-light2'></th>";  
+                        echo "<th class='tbody-light2'>Total </th>";
+                        echo "<th class='tbody-light2'>$" . number_format($total_amount,2) ."</th>"; 
+                    echo "</tr>";
+             ?>
+        </tfoot>
     </table>
      <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
     </div>
