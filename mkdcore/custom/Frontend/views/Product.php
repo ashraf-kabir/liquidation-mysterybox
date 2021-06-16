@@ -307,12 +307,12 @@ $gallery_image_count = count($gallery_lists) + 1;
         $videos_data = json_decode($product->video_url);   
         $images_data = json_decode($product->youtube_thumbnail_1);  
 
-        $count = count($videos_data)-1;
+        
 
         ?>
          
        
-        <?php if (!empty($videos_data)): ?> 
+        <?php if (!empty($videos_data)): $count = count($videos_data)-1; ?> 
          
        
 
