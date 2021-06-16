@@ -109,8 +109,9 @@
 }
 
 @media screen (min-width: 767px) {
-    .swiper-pagination-liquidation-card.current-inventory{
+    .swiper-pagination-liquidation-card{
         display: none !important;
+        background-color: red;
     }
 
 }
@@ -220,7 +221,7 @@
         </div>
         <div class="swiper-button-next list-swiper-button-next swiper-button-next-liquidation-card"></div>
         <div class="swiper-button-prev list-swiper-button-prev swiper-button-prev-liquidation-card"></div>
-        <div class="swiper-pagination swiper-pagination-liquidation-card current-inventory"></div>
+        <div class="swiper-pagination swiper-pagination-liquidation-card"></div>
     </div>
 </div> 
 
