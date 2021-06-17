@@ -13,6 +13,14 @@ if ($layout_clean_mode) {
         max-height: 150px;
         min-height: 150px;
     }
+    .label-full{
+        width: 100%;
+
+    }
+    .delete-full
+    {
+        float: right;
+    }
 </style>
 <div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
@@ -251,7 +259,12 @@ if ($layout_clean_mode) {
 
                             <div class="row thumbnail_video_row">
                                 <div class="form-group col-md-12 col-sm-12">
-                                    <label for="Video URL 1">Video URL 1</label> 
+                                    <label class="label-full" for="Video URL 1">
+                                        <span class="label-text-is">Video URL 1 </span>
+
+
+                                        <span class="delete-full "  style="display: none;"   ><i class="fa fa-trash img-wrapper-delete-close"></i></span>
+                                    </label> 
                                     <input type="text" class="form-control validate_url_field width-75 data-input"  name="video_url[]" value=""/>
                                 </div>
 
@@ -337,15 +350,21 @@ if ($layout_clean_mode) {
         $(document).on('click','.add_more_link',function(){
             var row_th = $('.thumbnail_video_row').eq(0).clone();
 
-            row_th.find('label').eq(0).text('Video URL ' + number_counter);
+            row_th.find('.label-text-is').eq(0).text('Video URL ' + number_counter);
             row_th.find('label').eq(1).text('Choose Thumbnail ' + number_counter);
+            row_th.find('.delete-full').show();
+            row_th.find('.validate_url_field').val('');
+            row_th.find('.validate_img_field').val("");
+            row_th.find('.output_youtube_thumbnail_1').attr('src',"");
 
             number_counter++;
             $('.card-body-add-row').append(row_th);
 
         });
 
-
-        
+        $(document).on('click','.delete-full',function(){
+            $(this).parent().parent().parent().remove(); 
+        });
+  
     }, false)
 </script>

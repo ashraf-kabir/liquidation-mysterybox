@@ -22,6 +22,14 @@ if($this->session->userdata('role') == 1)
         max-height: 150px;
         min-height: 150px;
     }
+    .label-full{
+        width: 100%;
+
+    }
+    .delete-full
+    {
+        float: right;
+    }
 </style>
 <div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
@@ -279,13 +287,21 @@ if($this->session->userdata('role') == 1)
                             <?php if (!empty($videos_data)): ?>
                                 
                            
+
                             <?php foreach ($videos_data as $key => $value): ?>
                                 
                                 <?php if (empty($videos_data[$key])): continue; endif; $counter++; $index_i++; ?>
                             
                                 <div class="row thumbnail_video_row">
                                     <div class="form-group col-md-12 col-sm-12">
-                                        <label >Video URL <?php echo $index_i; ?></label> 
+                                        <label class="label-full" ><span class="label-text-is">Video URL <?php echo $index_i; ?> </span> 
+
+
+                                        
+                                        <span class="delete-full " <?php if ($key == 0): ?> style="display: none;"  <?php endif ?> ><i class="fa fa-trash img-wrapper-delete-close"></i></span>
+                                       
+
+                                        </label> 
                                         <input type="text" class="form-control validate_url_field width-75 data-input"  name="video_url[]" value="<?php echo $videos_data[$key] ?>"/>
                                     </div>
 
@@ -311,7 +327,12 @@ if($this->session->userdata('role') == 1)
                             <?php if ($counter == 2): ?>
                                 <div class="row thumbnail_video_row">
                                     <div class="form-group col-md-12 col-sm-12">
-                                        <label >Video URL 1</label> 
+                                        <label  class="label-full"  > <span class="label-text-is">Video URL 1 </span>
+
+
+                                            <span class="delete-full "  style="display: none;"   ><i class="fa fa-trash img-wrapper-delete-close"></i></span>
+
+                                        </label> 
                                         <input type="text" class="form-control validate_url_field width-75 data-input"  name="video_url[]" value=""/>
                                     </div>
 
@@ -382,16 +403,24 @@ if($this->session->userdata('role') == 1)
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/video_image_script.js"></script>
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded',function(){
-        number_counter = <?php echo $counter ?>;
+        number_counter = <?php echo $counter -1 ?>;
         $(document).on('click','.add_more_link',function(){
             var row_th = $('.thumbnail_video_row').eq(0).clone();
 
-            row_th.find('label').eq(0).text('Video URL ' + number_counter);
+            row_th.find('.label-text-is').eq(0).text('Video URL ' + number_counter);
             row_th.find('label').eq(1).text('Choose Thumbnail ' + number_counter);
+            row_th.find('.delete-full').show();
+            row_th.find('.validate_url_field').val('');
+            row_th.find('.validate_img_field').val("");
+            row_th.find('.output_youtube_thumbnail_1').attr('src',"");
 
             number_counter++;
             $('.card-body-add-row').append(row_th);
 
+        });
+
+        $(document).on('click','.delete-full',function(){
+            $(this).parent().parent().parent().remove(); 
         });
   
     }, false)
