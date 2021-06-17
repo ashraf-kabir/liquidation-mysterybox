@@ -13,6 +13,16 @@ if($this->session->userdata('role') == 1)
     $delete_link = '/admin/';  
 } 
 ?>
+
+<style type="text/css">
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+        width: 100%;
+        max-height: 150px;
+        min-height: 150px;
+    }
+</style>
 <div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
 <div aria-label="breadcrumb">

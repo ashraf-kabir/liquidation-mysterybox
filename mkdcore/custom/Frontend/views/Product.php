@@ -188,7 +188,7 @@ $gallery_image_count = count($gallery_lists) + 1;
                 
 
                 <div class="row ">
-                    <div class="col-2 col-sm-1 padding-left-0-custom" style="max-height: 500px; padding: 0px;">
+                    <div class="col-2 col-sm-1 padding-left-0-custom" style="max-height: 350px; padding: 0px; overflow: auto;">
 
                         <?php if(!empty($product->feature_image)){   ?>
                             <div class="column w-100">
