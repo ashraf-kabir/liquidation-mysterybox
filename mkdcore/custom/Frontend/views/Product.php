@@ -26,7 +26,8 @@
     }
 
     .videos-thumbnail{
-        max-height: 300px !important;
+        max-height: 250px !important;
+        min-height: 250px !important;
         width: 100% !important;
     }
 
@@ -154,7 +155,7 @@
 
 
     .img-thumbnail{
-        border: none !important;
+        border: none !important;  
     }
 
 

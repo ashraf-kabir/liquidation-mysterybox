@@ -138,17 +138,7 @@ if ($layout_clean_mode) {
 					</div>
 				</div>
 
-				<?php 
-                	$video_url = json_decode($this->_data['view_model']->get_video_url()); 
-			 		foreach ($video_url as $key => $video): 
-			 	?> 
-				<div class='row mb-4'>
-					<div class='col'> 
-					 	<span class='d-block'>Youtube URL <?php echo ++$key ?> </span>
-					 	<a href='<?php echo $video ?>' target='_blank' >Watch Video</a>  
-					</div>
-				</div>
-				<?php  endforeach; ?>
+				
  
 
 				<div class='row mb-4'>
@@ -260,6 +250,25 @@ if ($layout_clean_mode) {
 					<div class='col'>
 						<?php echo $view_model->pin_item_top_mapping()[$view_model->get_pin_item_top()];?>
 					</div>
+				</div>
+
+
+				<div class='row mb-4'> 
+					<div class='col-lg-12'>
+						Videos
+					</div>
+					<?php 
+	            	$video_url = json_decode($this->_data['view_model']->get_video_url()); 
+	            	$image_url = json_decode($this->_data['view_model']->get_youtube_thumbnail_1()); 
+			 		foreach ($video_url as $key => $video): 
+				 	?>  
+						<div class=" col-lg-3 col-md-4 col-sm-12">
+							<a href="<?php echo $video ?>" target='_blank'>
+								<img class="img-thumbnail" src="<?php echo $image_url[$key] ?>">
+							</a>
+						</div> 
+					
+					<?php  endforeach; ?>
 				</div>
 				
 
