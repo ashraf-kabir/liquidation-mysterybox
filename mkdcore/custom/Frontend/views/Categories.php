@@ -89,10 +89,7 @@
                                         <a href="<?php echo base_url(); ?>categories">All</a>
                                    </li>
                                    <?php if( !empty($all_categories) ){ ?>
-                                        <?php foreach($all_categories as $key => $value){
-                                             if (!empty($value->parent_category_id) )
-                                             {
-                                             ?>
+                                        <?php foreach($all_categories as $key => $value){ ?>
                                              <li class="cat-item cat-item-116
 
                                              <?php if (isset($_GET['category']) and $_GET['category'] == $value->id): ?> active_category <?php endif; ?>
@@ -100,7 +97,7 @@
 
                                              "><a href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>"><?php echo $value->name; ?></a>
                                              </li>
-                                        <?php } } ?>
+                                        <?php  } ?>
                                    <?php } ?>
                               </ul>
                         </section>
