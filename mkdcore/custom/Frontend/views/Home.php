@@ -29,7 +29,7 @@
         display: block;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: fill;
     }
     .swiper-container-mysterybox {
         width: 100%;
@@ -50,7 +50,7 @@
         display: block;
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        object-fit: fill;
     }
     .swiper-container-liquidation {
         width: 100%;
@@ -119,7 +119,7 @@
 
 <?php if (!empty($carosal_sliders)): ?> 
 
-<div class="swiper-container swiper-container-sliders-custom" style="min-height: 200px;max-height: 550px">
+<div class="swiper-container swiper-container-sliders-custom" style="min-height: 266px;max-height: 266px">
     <div class="swiper-wrapper">
         <?php foreach ($carosal_sliders as $key => $value): ?>  
             <div class="swiper-slide swiper-slide-slider-custom"><img src="<?php echo $value->feature_image ?>"></div> 
