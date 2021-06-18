@@ -192,11 +192,11 @@ $gallery_image_count = count($gallery_lists) + 1;
                     <div class="col-2 col-sm-1 padding-left-0-custom" style="max-height: 350px; padding: 0px; overflow: auto;">
 
                         <?php if(!empty($product->feature_image)){   ?>
-                            <div class="column w-100">
+                            <div class="column  pt-2 pb-2  w-100">
                                 <img style="border: none;" class="demo cursor img-thumbnail" src="<?php echo $product->feature_image; ?>" style="width:100%" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>">
                             </div> 
                         <?php }else{ ?>
-                            <div class="column w-100">
+                            <div class="column  pt-2 pb-2  w-100">
                                 <img  style="border: none;" class="demo cursor  img-thumbnail" src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>">
                             </div>  
                         <?php } ?> 
@@ -204,7 +204,7 @@ $gallery_image_count = count($gallery_lists) + 1;
                         <?php if (!empty($gallery_lists)): $k= 2; ?> 
                             <?php foreach ($gallery_lists as $key => $value): ?>
 
-                                <div class="column w-100">
+                                <div class="column  pt-2 pb-2  w-100">
                                     <img  style="border: none;" class="demo cursor img-thumbnail" src="<?php echo $value->image_name; ?>" style="width:100%" onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
                                 </div>
                                  
@@ -308,12 +308,20 @@ $gallery_image_count = count($gallery_lists) + 1;
         $videos_data = json_decode($product->video_url);   
         $images_data = json_decode($product->youtube_thumbnail_1);  
 
-        
+
+        $jkl = 0;
+        foreach ($videos_data as $key => $video)
+        {
+            if (!empty($video)) 
+            {
+                $jkl = 2;
+            }
+        }
 
         ?>
          
        
-        <?php if (!empty($videos_data)): $count = count($videos_data)-1; ?> 
+        <?php if ($jkl == 2): $count = count($videos_data)-1; ?> 
          
        
 
