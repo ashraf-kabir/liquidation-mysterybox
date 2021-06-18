@@ -79,15 +79,7 @@ if ($layout_clean_mode) {
                         <span id="feature_image_complete" style="display: block;"></span>
                     </div>
 
-                    <div class="form-group col-md-5 col-sm-12">
-                        <label for="Parent Category">Parent Category </label>
-                        <select class="form-control data-input" id="form_parent_category_id" name="parent_category_id">
-                            <option value="" >Select</option>
-                            <?php foreach ($parent_categories as $key => $value) {
-                                echo "<option  " . (($view_model->get_parent_category_id() == $value->id && $view_model->get_parent_category_id() != '') ? 'selected' : '') . "  value='{$value->id}'> {$value->name} </option>";
-                            }?>
-                        </select>  
-                    </div>
+                     
 
 
                     <div class="form-group col-md-5 col-sm-12 ">

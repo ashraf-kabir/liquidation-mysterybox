@@ -1151,9 +1151,9 @@ class Home_controller extends Manaknight_Controller
     {
         $this->load->model('home_page_setting_model');
 
-        $all_categories  = $this->category_model->get_all(['status' => 1]);
-         
-
+        $all_categories  = $this->category_model->get_all_with_sort_by(['status' => 1],'name');
+        
+       
         $data['all_categories']   = $all_categories;
         // $data['liquidation_lot']  = $this->get_liquidation_lots();
         // $data['liquidation_pal']  = $this->get_liquidation_pallets();

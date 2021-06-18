@@ -301,17 +301,12 @@ padding-right: 10px;
                                              All
                                         </a> 
                                    </li>
-                                   <?php 
-                                   foreach ($all_categories as $key => $category): 
-                                        if (!empty($category->parent_category_id) ) 
-                                        { 
-                                             ?>
+                                   <?php  foreach ($all_categories as $key => $category): ?>
                                              <li class="dropdown-submenu"> 
                                              <a class="sub-item submenu-anchor-l2" href="<?php echo base_url(); ?>categories/?category=<?php echo $category->id; ?>">
                                                   <?php echo $category->name; ?>
                                              </a> 
-                                             </li>
-                                        <?php } ?>
+                                             </li> 
                                    <?php endforeach ?> 
                               </ul>
                          </li>

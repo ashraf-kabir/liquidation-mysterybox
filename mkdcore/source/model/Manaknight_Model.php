@@ -168,6 +168,45 @@ class {{{subclass_prefix}}}Model extends CI_Model
 	}
 
 
+
+    /**
+     * Get all Model
+     *
+     * @return array
+     */
+    public function get_all_with_sort_by($where = array(),$order_by = "", $direction = "ASC")
+    {
+        $this->db->from($this->_table);
+
+
+        if(!empty($order_by))
+        {
+            $this->db->order_by($this->clean_alpha_num_field($order_by), $this->clean_alpha_field($direction)); 
+        }
+        
+
+        foreach($where as $field => $value)
+        {
+            if (is_numeric($field) && strlen($value) > 0)
+            {
+                $this->db->where($value);
+                continue;
+            }
+
+            if ($field === NULL && $value === NULL)
+            {
+                continue;
+            }
+
+            if ($value !== NULL)
+            {
+                $this->db->where($this->clean_alpha_field($field), $value, TRUE);
+            }
+        }
+
+        return $this->db->get()->result();
+    }
+
     
 
     /**
