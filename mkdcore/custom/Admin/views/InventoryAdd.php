@@ -300,7 +300,7 @@ if ($layout_clean_mode) {
  
                 <div class="form-group col-md-5 col-sm-12">
                     <label for="Inventory Note">Description </label>
-                    <textarea id='form_inventory_note' name='inventory_note' class='form-control data-input' rows='5'><?php echo set_value('inventory_note'); ?></textarea>
+                    <textarea id='subeditor_inventory_note' name='inventory_note' class='form-control subeditor_inventory_note data-input' rows='5'><?php echo set_value('inventory_note'); ?></textarea>
                 </div>
 
                 <div class="form-group col-md-5 col-sm-12">
@@ -335,7 +335,12 @@ if ($layout_clean_mode) {
 ?>
 
 
-
+<link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
+<!-- <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/assets/css/suneditor.css" rel="stylesheet"> -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/assets/css/suneditor-contents.css" rel="stylesheet"> -->
+<script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
+<!-- languages (Basic Language: English/en) -->
+<script src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/ko.js"></script>
  
 
 <script type="text/javascript" src="<?php echo base_url() ?>assets/js/image-portal.js"></script>
@@ -375,6 +380,29 @@ if ($layout_clean_mode) {
                 row_th.find('label').eq(1).text('Choose Thumbnail ' + number_counter);
                 number_counter++;
             });
+        });
+
+        const editor = SUNEDITOR.create(('subeditor_inventory_note') ,{ 
+            buttonList: [
+                ['undo', 'redo'],
+                ['font', 'fontSize', 'formatBlock'],
+                ['paragraphStyle', 'blockquote'],
+                ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                ['fontColor', 'hiliteColor', 'textStyle'],
+                ['removeFormat'],
+                '/', // Line break
+                ['outdent', 'indent'],
+                ['align', 'horizontalRule', 'list', 'lineHeight'],
+                ['table', 'link', 'image', 'video', 'audio' /** ,'math' */], // You must add the 'katex' library at options to use the 'math' plugin.
+                /** ['imageGallery'] */ // You must add the "imageGalleryUrl".
+                ['fullScreen', 'showBlocks', 'codeView'],
+                ['preview', 'print'],
+                ['save']
+            ],
+            // All of the plugins are loaded in the "window.SUNEDITOR" object in dist/suneditor.min.js file
+            // Insert options
+            // Language global object (default: en)
+            lang: SUNEDITOR_LANG['en']
         });
   
     }, false)
