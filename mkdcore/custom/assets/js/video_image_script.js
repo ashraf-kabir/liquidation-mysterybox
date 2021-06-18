@@ -104,7 +104,7 @@ let this_image_object = "";
         $(document).on('click','.img-delete-close',function(){ 
             $(this).parent().find('.check_change_event').val(''); 
             $(this).parent().find('.edit-preview-image').attr('src','');  
-            $(this).parent().find('#feature_image_complete').text('');  
+            $('#feature_image_complete').text('');  
             $(this).hide(); 
         });
 
