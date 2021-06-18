@@ -119,7 +119,7 @@
 
 <?php if (!empty($carosal_sliders)): ?> 
 
-<div class="swiper-container swiper-container-sliders-custom" style="min-height: 266px;max-height: 266px">
+<div class="swiper-container swiper-container-sliders-custom" style="min-height: 200px;max-height: 550px">
     <div class="swiper-wrapper">
         <?php foreach ($carosal_sliders as $key => $value): ?>  
             <div class="swiper-slide swiper-slide-slider-custom"><img src="<?php echo $value->feature_image ?>"></div> 
@@ -188,7 +188,7 @@
 <h5 class="heading-padding-liquidation pl-4">Current Inventory</h5>
 <div class="container   pl-4"> 
 
-    <div class="swiper-container swiper-container-liquidation mySwiper mySwiper-liquidation"  style="min-height: 200px;max-height: 300px">
+    <div class="swiper-container swiper-container-liquidation mySwiper mySwiper-liquidation"  style="min-height: 250px;max-height: 250px">
         <div class="swiper-wrapper">
  
             <div class="swiper-slide swiper-slide-liquidation slide-list-box">

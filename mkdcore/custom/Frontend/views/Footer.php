@@ -469,7 +469,7 @@ crossorigin="anonymous"></script>
             loop: false,
             loopFillGroupWithBlank: true,
             pagination: {
-                el: ".swiper-pagination-mysterybox-card",
+                el: ".swiper-pagination-mysterybox-card-removed",
                 clickable: true,
             },
             navigation: {
@@ -505,7 +505,7 @@ crossorigin="anonymous"></script>
                 }, 
             },
             pagination: {
-                el: ".swiper-pagination-liquidation-card",
+                el: ".swiper-pagination-liquidation-card-removed",
                 clickable: false,
             },
             navigation: {
@@ -544,7 +544,7 @@ crossorigin="anonymous"></script>
             loop: false,
             loopFillGroupWithBlank: true,
             pagination: {
-                el: ".swiper-pagination-videos-card",
+                el: ".swiper-pagination-videos-card-removed",
                 clickable: true,
             },
             navigation: {
