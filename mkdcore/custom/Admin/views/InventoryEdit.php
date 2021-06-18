@@ -233,8 +233,11 @@ if($this->session->userdata('role') == 1)
                 <div class="form-group col-md-5 col-sm-12 mb-4  img-wrapper-delete">
 
                     <label for="Image" style="display: block;">Feature Image </label>
-                    <span class="img-delete-close "  ><i class="fa fa-trash img-wrapper-delete-close"></i></span>
-                    <img class='edit-preview-image ' style="max-height:100px" id="output_feature_image" src="<?php echo set_value('feature_image', $this->_data['view_model']->get_feature_image());?>" onerror=\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\"/>
+
+                    <span class="img-delete-close " <?php if (empty($this->_data['view_model']->get_feature_image())): ?>
+                        style="display: none;"
+                    <?php endif ?>  ><i class="fa fa-trash img-wrapper-delete-close"></i></span>
+                    <img class='edit-preview-image ' style="max-height:100px" id="output_feature_image" src="<?php echo set_value('feature_image', $this->_data['view_model']->get_feature_image());?>"  />
 
                     
 

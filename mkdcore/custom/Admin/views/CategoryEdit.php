@@ -64,7 +64,11 @@ if ($layout_clean_mode) {
 
 
                     <div class="form-group col-md-5 col-sm-12 mb-4">
-                        <label for="Image">Feature Image </label>
+                        <label for="Image" style="display:block;">Feature Image </label>
+
+                        <span class="img-delete-close " <?php if (empty($this->_data['view_model']->get_feature_image())): ?>
+                        style="display: none;" <?php endif ?>  ><i class="fa fa-trash img-wrapper-delete-close"></i></span>
+
                         <img class='edit-preview-image ' style="max-height:100px" id="output_feature_image" src="<?php echo set_value('feature_image', $this->_data['view_model']->get_feature_image());?>" onerror=\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\"/>
 
 
@@ -123,6 +127,8 @@ if ($layout_clean_mode) {
             $("body").on("change",".check_change_event",function(){
                 var current_src_id = $(this).attr('data-srcid'); 
                 $('#' + current_src_id).attr('src', $(this).val());
+
+                $(this).parent().find(".img-delete-close").show(); 
             });
         });
     }, false)

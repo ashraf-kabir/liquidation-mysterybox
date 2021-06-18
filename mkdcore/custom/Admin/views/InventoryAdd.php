@@ -223,7 +223,7 @@ if ($layout_clean_mode) {
                     <label for="Image"  style="display: block;">Feature Image </label>
 
                     <span class="img-delete-close " style="display:none" ><i class="fa fa-trash img-wrapper-delete-close"></i></span>
-                    <img  class="edit-preview-image" id="output_feature_image" style="max-height:100px" onerror="if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';"/>
+                    <img  class="edit-preview-image" id="output_feature_image" style="max-height:100px"  />
                     <div class="btn uppload-button image_id_uppload_library btn-primary btn-sm  " data-image-url="feature_image" data-image-id="feature_image_id" data-image-preview="output_feature_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
                     <input type="hidden" id="feature_image" data-srcid="output_feature_image" class="check_change_event" name="feature_image" value=""/>
                     <input type="hidden" id="feature_image_id" name="feature_image_id" value=""/>

@@ -101,16 +101,15 @@ let this_image_object = "";
             this_image_object.parent().find('.file_to_upload_class').trigger('click'); 
         });
 
-
-        $(document).on('click','.mkd-gallery-image-image',function()
-        { 
-            $("#mkd-media-image-thumbnail").modal("hide");
-            var src_thumbnail = $(this).attr('src');
-
-            this_image_object.parent().find('.output_youtube_thumbnail_1').attr('src',src_thumbnail);
-            this_image_object.parent().find('.youtube_thumbnail_1').val(src_thumbnail);
-            this_image_object.parent().find('.youtube_thumbnail_1_id').val('0'); 
+        $(document).on('click','.img-delete-close',function(){ 
+            $(this).parent().find('.check_change_event').val(''); 
+            $(this).parent().find('.edit-preview-image').attr('src','');  
+            $(this).parent().find('#feature_image_complete').text('');  
+            $(this).hide(); 
         });
+
+
+        
 
     }, false);
  
