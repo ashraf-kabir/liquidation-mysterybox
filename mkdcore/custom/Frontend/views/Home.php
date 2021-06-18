@@ -114,6 +114,12 @@
     }
 
 }
+
+
+.swiper-button-prev, .swiper-container-rtl .swiper-button-next {
+    left: 21px;
+    right: auto;
+}
 </style>
 
 
@@ -160,6 +166,8 @@
 <h5 class="heading-padding-mysterybox pl-4">Shop Mysteryboxes</h5>
 <div class="container   pl-4"> 
 
+    <div class="swiper-button-next list-swiper-button-next swiper-button-next-mysterybox-card"></div>
+    <div class="swiper-button-prev list-swiper-button-prev swiper-button-prev-mysterybox-card"></div>
     <div class="swiper-container swiper-container-mysterybox mySwiper mySwiper-mysterybox"  style="min-height: 200px;max-height: 300px">
         <div class="swiper-wrapper">
             <?php foreach ($all_categories as $key => $value): ?>
@@ -176,8 +184,7 @@
                 </div>
             <?php endforeach ?> 
         </div>
-        <div class="swiper-button-next list-swiper-button-next swiper-button-next-mysterybox-card"></div>
-        <div class="swiper-button-prev list-swiper-button-prev swiper-button-prev-mysterybox-card"></div>
+       
         <div class="swiper-pagination swiper-pagination-mysterybox-card"></div>
     </div>
 </div>
