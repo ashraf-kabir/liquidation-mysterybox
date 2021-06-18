@@ -404,6 +404,10 @@ if ($layout_clean_mode) {
             // Language global object (default: en)
             lang: SUNEDITOR_LANG['en']
         });
+
+        editor.onChange = (contents, core) => {
+            $('._se_command_save').trigger('click')
+        }
   
     }, false)
  
