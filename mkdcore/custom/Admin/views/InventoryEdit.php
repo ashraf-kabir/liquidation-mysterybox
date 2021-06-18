@@ -230,9 +230,15 @@ if($this->session->userdata('role') == 1)
                 </div>
 
 
-                <div class="form-group col-md-5 col-sm-12 mb-4">
-                    <label for="Image">Feature Image </label>
+                <div class="form-group col-md-5 col-sm-12 mb-4  img-wrapper-delete">
+
+                    <label for="Image" style="display: block;">Feature Image </label>
+                    <span class="img-delete-close "  ><i class="fa fa-trash img-wrapper-delete-close"></i></span>
                     <img class='edit-preview-image ' style="max-height:100px" id="output_feature_image" src="<?php echo set_value('feature_image', $this->_data['view_model']->get_feature_image());?>" onerror=\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\"/>
+
+                    
+
+
                     <br/><div class="btn btn-primary image_id_uppload_library btn-sm uppload-button  " data-image-url="feature_image" data-image-id="feature_image_id" data-image-preview="output_feature_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
                     <input type="hidden" id="feature_image" name="feature_image" value="<?php echo set_value('feature_image', $this->_data['view_model']->get_feature_image());?>"
                         class="check_change_event"  data-srcid="output_feature_image" 
@@ -420,8 +426,21 @@ if($this->session->userdata('role') == 1)
         });
 
         $(document).on('click','.delete-full',function(){
-            $(this).parent().parent().parent().remove(); 
+            $(this).parent().parent().parent().remove();
+
+            number_counter = 1;
+
+            $('.thumbnail_video_row').each(function(index, obj)
+            {
+                var row_th = $(this);
+                row_th.find('.label-text-is').eq(0).text('Video URL ' + number_counter);
+                row_th.find('label').eq(1).text('Choose Thumbnail ' + number_counter);
+                number_counter++;
+            });
+ 
         });
+
+        
   
     }, false)
 </script>
@@ -433,6 +452,8 @@ if($this->session->userdata('role') == 1)
             $("body").on("change",".check_change_event",function(){
                 var current_src_id = $(this).attr('data-srcid'); 
                 $('#' + current_src_id).attr('src', $(this).val());
+
+                $(this).parent().find(".img-delete-close").show(); 
             });
         });
     }, false)

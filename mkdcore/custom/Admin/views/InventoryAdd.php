@@ -220,8 +220,10 @@ if ($layout_clean_mode) {
 
 
                 <div class="form-group col-md-5 col-sm-12">
-                    <label for="Image">Feature Image </label>
-                    <img id="output_feature_image" style="max-height:100px" onerror="if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';"/>
+                    <label for="Image"  style="display: block;">Feature Image </label>
+
+                    <span class="img-delete-close " style="display:none" ><i class="fa fa-trash img-wrapper-delete-close"></i></span>
+                    <img  class="edit-preview-image" id="output_feature_image" style="max-height:100px" onerror="if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';"/>
                     <div class="btn uppload-button image_id_uppload_library btn-primary btn-sm  " data-image-url="feature_image" data-image-id="feature_image_id" data-image-preview="output_feature_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
                     <input type="hidden" id="feature_image" data-srcid="output_feature_image" class="check_change_event" name="feature_image" value=""/>
                     <input type="hidden" id="feature_image_id" name="feature_image_id" value=""/>
@@ -364,7 +366,29 @@ if ($layout_clean_mode) {
 
         $(document).on('click','.delete-full',function(){
             $(this).parent().parent().parent().remove(); 
+
+            number_counter = 1
+            $('.thumbnail_video_row').each(function(index, obj)
+            {
+                var row_th = $(this);
+                row_th.find('.label-text-is').eq(0).text('Video URL ' + number_counter);
+                row_th.find('label').eq(1).text('Choose Thumbnail ' + number_counter);
+                number_counter++;
+            });
         });
   
     }, false)
+ 
+    document.addEventListener('DOMContentLoaded', function(){  
+        $(function(){ 
+            $("body").on("change",".check_change_event",function(){
+                var current_src_id = $(this).attr('data-srcid'); 
+                $('#' + current_src_id).attr('src', $(this).val());
+
+                $(this).parent().find(".img-delete-close").show(); 
+            });
+        });
+    }, false)
+
+
 </script>

@@ -16,6 +16,7 @@ var picture = new window.uppload_Uppload({
           $("#" + image_url_uppload_library + "_id").val(json.id);
           $("#" + image_url_uppload_library + "_text").html(json.file); 
           $("#" + image_url_uppload_library + "_complete").text("Upload Complete"); 
+         
       }
     })
 });
@@ -26,6 +27,12 @@ $(document).on('click','.image_id_uppload_library',function(){
 });
  
 
+$(document).on('click','.img-delete-close',function(){
+    $(this).parent().find('.edit-preview-image').attr('src',''); 
+    $(this).parent().find('.check_change_event').val(''); 
+    $(this).parent().find('.feature_image_complete').text(''); 
+    $(this).hide(); 
+});
  
 
 picture.use([
