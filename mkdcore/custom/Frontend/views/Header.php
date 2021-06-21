@@ -160,15 +160,20 @@
                position: relative;
           }
           .parent-cat .child-cat{
+               padding: 5px 0 !important;
                position: absolute;
                right: -100px;
                background: #ffffff;
                width: 100px;
                top: 0;
+               display: none;
           }
           .parent-cat .child-cat a{
                width: 100%;
                padding: 5px !important;
+          }
+          .parent-cat:hover .child-cat{
+               display: flex;
           }
           .parent-cat .child-cat a:hover{
                background-color: #F6F6F6; 
