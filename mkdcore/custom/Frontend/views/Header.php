@@ -161,6 +161,10 @@
           }
           .parent-cat .child-cat{
                position: absolute;
+               right: -100px;
+               background: red;
+               width: 100px;
+               top: 0;
           }
 
           .logo-nav{
@@ -306,15 +310,15 @@ padding-right: 10px;
                                         </a> 
                                    </li>
                                    <?php  foreach ($all_categories as $key => $category): ?>
-                                             <li class="dropdown-submenu"> 
-                                             <a class="sub-item submenu-anchor-l2 parent-cat" href="<?php echo base_url(); ?>categories/?category=<?php echo $category->id; ?>">
-                                                  <?php echo $category->name; ?>
-                                                  <div class="child-cat">
+                                             <li class="dropdown-submenu parent-cat"> 
+                                                  <a class="sub-item submenu-anchor-l2" href="<?php echo base_url(); ?>categories/?category=<?php echo $category->id; ?>">
+                                                       <?php echo $category->name; ?>
+                                                  </a> 
+                                                  <div class="child-cat flex-top-column p-2">
                                                        <a href="#"> child1 </a>
                                                        <a href="#"> child2 </a>
                                                        <a href="#"> child3 </a>
                                                   </div>
-                                             </a> 
                                              </li> 
                                    <?php endforeach ?> 
                               </ul>
