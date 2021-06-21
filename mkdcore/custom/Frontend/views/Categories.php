@@ -99,7 +99,7 @@
 
 
                                              "><a href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>"><?php echo $value->name; ?></a>
-                                                  <div class="child-list-cat flex-top-column pl-5">
+                                                  <div class="child-list-cat flex-top-column pl-3">
                                                        <a href="#">Child1</a>
                                                        <a href="#">Child2</a>
                                                        <a href="#">Child3</a>
