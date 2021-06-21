@@ -160,13 +160,14 @@
                position: relative;
           }
           .parent-cat .child-cat{
-               padding: 5px 0 !important;
+               padding: 3px 0 !important;
                position: absolute;
-               right: -100px;
+               right: -101px;
                background: #ffffff;
                width: 100px;
                top: 0;
                display: none;
+               border-radius: 1px;
           }
           .parent-cat .child-cat a{
                width: 100%;

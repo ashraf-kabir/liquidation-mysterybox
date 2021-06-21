@@ -96,6 +96,11 @@
 
 
                                              "><a href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>"><?php echo $value->name; ?></a>
+                                                  <div class="child-list">
+                                                       <a href="#">Child1</a>
+                                                       <a href="#">Child2</a>
+                                                       <a href="#">Child3</a>
+                                                  </div>
                                              </li>
                                         <?php  } ?>
                                    <?php } ?>
