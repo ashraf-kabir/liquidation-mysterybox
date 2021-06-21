@@ -9,7 +9,10 @@ let this_image_object = "";
                     if( $(this).find('.validate_img_field').val() == "" )
                     {
                         e.preventDefault();
-                        alert('Please add thumbnail for '+ $(this).find('label').eq(0).text() );
+                        var error_msg  = $(this).find('label').eq(0).text(); 
+                        error_msg      = error_msg.trim();
+
+                        alert('Please add thumbnail for ' + error_msg );
                         return false;
                     } 
                 } 

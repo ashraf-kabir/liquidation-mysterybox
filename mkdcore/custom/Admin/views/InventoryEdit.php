@@ -159,25 +159,25 @@ if($this->session->userdata('role') == 1)
 
 
                 <div class="form-group col-md-5 col-sm-12">
-                    <label for="Weight">Weight </label>
+                    <label for="Weight">Weight <span class="text-danger">*</span></label>
                     <input type="text" class="form-control data-input" id="form_weight" name="weight" value="<?php echo set_value('weight', $this->_data['view_model']->get_weight());?>" onkeypress="return mkd_is_number(event,this)"/>
                 </div>
 
 
                 <div class="form-group col-md-5 col-sm-12">
-                    <label for="Length">Length </label>
+                    <label for="Length">Length <span class="text-danger">*</span></label>
                     <input type="text" class="form-control data-input" id="form_length" name="length" value="<?php echo set_value('length', $this->_data['view_model']->get_length());?>" onkeypress="return mkd_is_number(event,this)"/>
                 </div>
 
 
                 <div class="form-group col-md-5 col-sm-12">
-                    <label for="Height">Height </label>
+                    <label for="Height">Height <span class="text-danger">*</span></label>
                     <input type="text" class="form-control data-input" id="form_height" name="height" value="<?php echo set_value('height', $this->_data['view_model']->get_height());?>" onkeypress="return mkd_is_number(event,this)"/>
                 </div>
 
 
                 <div class="form-group col-md-5 col-sm-12">
-                    <label for="Width">Width </label>
+                    <label for="Width">Width <span class="text-danger">*</span></label>
                     <input type="text" class="form-control data-input" id="form_width" name="width" value="<?php echo set_value('width', $this->_data['view_model']->get_width());?>" onkeypress="return mkd_is_number(event,this)"/>
                 </div>
 

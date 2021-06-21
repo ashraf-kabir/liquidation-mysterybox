@@ -79,7 +79,7 @@ if ($layout_clean_mode) {
                 </h5>
                 <?= form_open() ?>
                 <div class="form-group col-md-5 col-sm-12 ">
-                    <label for="Product Name">Product Name </label>
+                    <label for="Product Name">Product Name <span class="text-danger">*</span></label>
                     <input type="text" class="form-control data-input" id="form_product_name" name="product_name" value="<?php echo set_value('product_name'); ?>"/>
                 </div>
 
@@ -147,24 +147,24 @@ if ($layout_clean_mode) {
                         }?>
                     </select>   
                 </div>
-                <div class="form-group col-md-12 col-sm-12 ">
+                <div class="form-group col-md-5 col-sm-12 ">
                     <label for="Inventory Location Description">Inventory Location Description </label>
                     <input type="text" class="form-control data-input" id="form_location_description" name="location_description" value="<?php echo set_value('location_description'); ?>"/>
                 </div>
                 <div class="form-group  col-md-5 col-sm-12">
-                    <label for="Weight">Weight </label>
+                    <label for="Weight">Weight <span class="text-danger">*</span></label>
                     <input type="text" class="form-control data-input" id="form_weight" name="weight" value="<?php echo set_value('weight'); ?>" onkeypress="return mkd_is_number(event,this)"/>
                 </div>
                 <div class="form-group  col-md-5 col-sm-12">
-                    <label for="Length">Length </label>
+                    <label for="Length">Length <span class="text-danger">*</span></label>
                     <input type="text" class="form-control data-input" id="form_length" name="length" value="<?php echo set_value('length'); ?>" onkeypress="return mkd_is_number(event,this)"/>
                 </div>
                 <div class="form-group  col-md-5 col-sm-12">
-                    <label for="Height">Height </label>
+                    <label for="Height">Height <span class="text-danger">*</span></label>
                     <input type="text" class="form-control data-input" id="form_height" name="height" value="<?php echo set_value('height'); ?>" onkeypress="return mkd_is_number(event,this)"/>
                 </div>
                 <div class="form-group  col-md-5 col-sm-12">
-                    <label for="Width">Width </label>
+                    <label for="Width">Width <span class="text-danger">*</span></label>
                     <input type="text" class="form-control data-input" id="form_width" name="width" value="<?php echo set_value('width'); ?>" onkeypress="return mkd_is_number(event,this)"/>
                 </div>
                 
