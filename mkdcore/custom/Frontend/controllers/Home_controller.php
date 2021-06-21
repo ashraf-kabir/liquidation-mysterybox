@@ -1115,6 +1115,8 @@ class Home_controller extends Manaknight_Controller
         $data['layout_clean_mode'] = FALSE; 
         $data['no_detail'] = TRUE; 
 
+        $this->load->model('terms_and_conditions_model');
+        $data['terms']     =  $this->terms_and_conditions_model->get(1); 
         $this->_render('Guest/AboutUs',$data);
     }
      

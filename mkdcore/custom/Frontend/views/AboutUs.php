@@ -1,29 +1,15 @@
+
 <section>
-     <div class="container  bg-dark mt-5 mb-5" id="about-us">
-          <div class="row justify-content-center px-2 px-md-4 py-4">
+     <div class="container  bg-white mt-5 mb-5" id="about-us">
+          <div class="row px-2 px-md-2 py-2">
                <div class="col-10">
-                    <h3 class="text-white">About Us</h3>
+                    <h3 class="text-black">About Us</h3>
                </div>
 
-               <div class="col-10 text-light about-details">
-                    <p>
-                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                         Explicabo, rerum? Corporis, accusamus suscipit dolores id,
-                         nesciunt quibusdam provident rem atque numquam qui vitae
-                         accusantium doloremque a harum cupiditate explicabo omnis!
-                    </p>
-                    <p>
-                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                         Explicabo, rerum? Corporis, accusamus suscipit dolores id,
-                         nesciunt quibusdam provident rem atque numquam qui vitae
-                         accusantium doloremque a harum cupiditate explicabo omnis!
-                    </p>
-                    <p>
-                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                         Explicabo, rerum? Corporis, accusamus suscipit dolores id,
-                         nesciunt quibusdam provident rem atque numquam qui vitae
-                         accusantium doloremque a harum cupiditate explicabo omnis!
-                    </p>
+               <div class="col-10 text-black about-details">
+                    <p  class="text-black">
+                         <?php echo $terms->about_us_page; ?>
+                    </p> 
                </div>
           </div>
      </div>

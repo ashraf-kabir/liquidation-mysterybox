@@ -999,7 +999,8 @@
 			"unique": [],
 			"field": [
 				["id", "integer", [], "ID", "", ""],
-				["terms_and_condition_text", "text", [], "Terms And Conditions", "required", "required"]
+				["terms_and_condition_text", "text", [], "Terms And Conditions", "required", ""],
+				["about_us_page", "text", [], "About", "", ""]
 			],
 			"join": [],
 			"method": "",
@@ -1009,7 +1010,7 @@
 			"count": "",
 			"override": "",
 			"seed": [
-				{"terms_and_condition_text" : "Test"}
+				{"terms_and_condition_text" : "Test", "about_us_page" : "Test"}
 			]
 		},
 		{
@@ -1125,7 +1126,8 @@
 					"Home Page Setting": "/home_page_setting",
 					"Carousel Slider": "/carousel_slider/0?order_by=id&direction=DESC",
 					"Product Terms": "/product_terms_and_condition/0?order_by=id&direction=DESC", 
-					"Terms And Conditions": "/terms_and_conditions/edit"
+					"Terms And Conditions": "/terms_and_conditions/edit",
+					"About Us": "/about_us/edit"
 				},
 
 
@@ -2877,6 +2879,71 @@
 			"load_libraries": []
 		},
 		{
+			"route": "/about_us",
+			"name": "AboutUs",
+			"page_name": "About Us",
+			"model": "terms_and_conditions",
+			"controller": "Admin_about_us_controller.php",
+			"api_controller": "Admin_about_us_api_controller.php",
+			"activity_log": false,
+			"override": "",
+			"override_add": "",
+			"override_edit": "",
+			"override_view": "",
+			"override_list": "",
+			"override_add_view_model": "",
+			"override_edit_view_model": "",
+			"override_view_view_model": "",
+			"override_list_view_model": "",
+			"api": false,
+			"frontend": false,
+			"paginate": false,
+			"paginate_join": "",
+			"portal": "admin",
+			"is_crud": true,
+			"method_edit_pre": "",
+			"is_add": false,
+			"is_edit": true,
+			"is_delete": false,
+			"is_real_delete": false,
+			"is_list": false,
+			"is_view": false,
+			"import": false,
+			"export": false,
+			"is_filter": false,
+			"all_records": true,
+			"active_only": false,
+			"middleware": [],
+			"method": "",
+			"method_add": "",
+			"method_edit": "",
+			"method_list": "",
+			"method_view": "",
+			"method_add_success": "",
+			"method_edit_success": "",
+			"method_list_success": "",
+			"method_view_success": "",
+			"method_delete_success": "",
+			"custom_view_add": "",
+			"custom_view_edit": "",
+			"custom_view_list": "",
+			"custom_view_view": "",
+			"listing_fields_api": ["id", "about_us_page"],
+			"listing_headers": ["xyzID"],
+			"listing_rows": ["id|integer"],
+			"listing_actions": [],
+			"filter_fields": [],
+			"add_fields": [],
+			"edit_fields": ["about_us_page"],
+			"view_fields": [ ],
+			"autocomplete": "",
+			"dynamic_mapping_add": {},
+			"dynamic_mapping_edit": {},
+			"dynamic_mapping_view": {},
+			"dynamic_mapping": {},
+			"load_libraries": []
+		},
+		{
 			"route": "/carousel_slider",
 			"name": "CarosalSlider",
 			"page_name": "Carousel Slider",
@@ -3442,6 +3509,7 @@
 		"../mkdcore/custom/Admin/controllers/Admin_traffic_referrer_controller.php" : "../release/application/controllers/Admin/Admin_traffic_referrer_controller.php",
 		"../mkdcore/custom/Admin/controllers/Admin_person_sale_report_controller.php" : "../release/application/controllers/Admin/Admin_person_sale_report_controller.php",
 		"../mkdcore/custom/Admin/controllers/Admin_terms_and_conditions_controller.php" : "../release/application/controllers/Admin/Admin_terms_and_conditions_controller.php",
+		"../mkdcore/custom/Admin/controllers/Admin_about_us_controller.php" : "../release/application/controllers/Admin/Admin_about_us_controller.php",
 		"../mkdcore/custom/Admin/controllers/Admin_carousel_slider_controller.php" : "../release/application/controllers/Admin/Admin_carousel_slider_controller.php",
 
 		"../mkdcore/custom/Admin/views/HomePageSettingEdit.php" : "../release/application/views/Admin/HomePageSettingEdit.php",
@@ -3554,6 +3622,7 @@
 
 		"admin/scan/scan_product_view": "Admin/Admin_inventory_controller/scan_product_view",
 		"admin/terms_and_conditions/edit": "Admin/Admin_terms_and_conditions_controller/edit/$1",
+		"admin/about_us/edit": "Admin/Admin_about_us_controller/edit/$1",
 		"admin/top_bar_setting": "Admin/Admin_carousel_slider_controller/top_bar_setting/$1",
 		"admin/home_page_setting": "Admin/Admin_carousel_slider_controller/home_page_setting",
 
