@@ -162,9 +162,16 @@
           .parent-cat .child-cat{
                position: absolute;
                right: -100px;
-               background: red;
+               background: #ffffff;
                width: 100px;
                top: 0;
+          }
+          .parent-cat .child-cat a{
+               width: 100%;
+               padding: 5px !important;
+          }
+          .parent-cat .child-cat a:hover{
+               background-color: #F6F6F6; 
           }
 
           .logo-nav{
@@ -314,7 +321,7 @@ padding-right: 10px;
                                                   <a class="sub-item submenu-anchor-l2" href="<?php echo base_url(); ?>categories/?category=<?php echo $category->id; ?>">
                                                        <?php echo $category->name; ?>
                                                   </a> 
-                                                  <div class="child-cat flex-top-column p-2">
+                                                  <div class="child-cat flex-top-column">
                                                        <a href="#"> child1 </a>
                                                        <a href="#"> child2 </a>
                                                        <a href="#"> child3 </a>
