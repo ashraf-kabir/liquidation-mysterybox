@@ -43,7 +43,6 @@
           .swiper-button-prev:hover{
                background-color:  #94959957;
                    color: black;
-                       padding: 44px 21px;
           }
           .badge {
                padding-left: 9px;
@@ -156,6 +155,12 @@
           }
           .search-wrapper.hidden{
                display: none;
+          }
+          .parent-cat{
+               position: relative;
+          }
+          .parent-cat .child-cat{
+               position: absolute;
           }
 
           .logo-nav{
@@ -302,8 +307,13 @@ padding-right: 10px;
                                    </li>
                                    <?php  foreach ($all_categories as $key => $category): ?>
                                              <li class="dropdown-submenu"> 
-                                             <a class="sub-item submenu-anchor-l2" href="<?php echo base_url(); ?>categories/?category=<?php echo $category->id; ?>">
+                                             <a class="sub-item submenu-anchor-l2 parent-cat" href="<?php echo base_url(); ?>categories/?category=<?php echo $category->id; ?>">
                                                   <?php echo $category->name; ?>
+                                                  <div class="child-cat">
+                                                       <a href="#"> child1 </a>
+                                                       <a href="#"> child2 </a>
+                                                       <a href="#"> child3 </a>
+                                                  </div>
                                              </a> 
                                              </li> 
                                    <?php endforeach ?> 

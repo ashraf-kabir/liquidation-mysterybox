@@ -71,14 +71,7 @@
         top: 44%;
     }
 
-    .list-swiper-button-next:hover {
-    padding: 35px 19px;
-    transform: scale(0.8);
-}
-.list-swiper-button-prev:hover {
-    padding: 35px 19px;
-    transform: scale(0.8);
-}
+
 
 
     @media (max-width: 991px){
