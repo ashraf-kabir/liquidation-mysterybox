@@ -43,6 +43,9 @@
           max-height: 200px;
           object-fit: contain;
      }
+     .child-list-cat a{
+          font-size: 12px;
+     }
 
      @media only screen and (max-width: 767px) {
 
@@ -96,7 +99,7 @@
 
 
                                              "><a href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>"><?php echo $value->name; ?></a>
-                                                  <div class="child-list">
+                                                  <div class="child-list-cat flex-top-column pl-5">
                                                        <a href="#">Child1</a>
                                                        <a href="#">Child2</a>
                                                        <a href="#">Child3</a>
