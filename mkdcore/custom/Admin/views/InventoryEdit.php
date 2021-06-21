@@ -88,7 +88,7 @@ if($this->session->userdata('role') == 1)
                 </h5>
                 <?= form_open() ?>
                 <div class="form-group col-md-5 col-sm-12">
-                    <label for="Product Name">Product Name </label>
+                    <label for="Product Name">Product Name <span class="text-danger">*</span></label>
                     <input type="text" class="form-control data-input" id="form_product_name" name="product_name" value="<?php echo set_value('product_name', $this->_data['view_model']->get_product_name());?>"/>
                 </div>
 
@@ -117,7 +117,7 @@ if($this->session->userdata('role') == 1)
 
 
                 <div class="form-group col-md-5 col-sm-12 ">
-                    <label for="sale_person_id"> Sale Person </label> 
+                    <label for="sale_person_id"> Sale Person <span class="text-danger">*</span></label> 
                     <select  class="form-control data-input" id="sale_person_id" name="sale_person_id">
                         <option value="" >Select</option>
                         <?php foreach ($sale_persons as $key => $value) {
@@ -126,7 +126,7 @@ if($this->session->userdata('role') == 1)
                     </select> 
                 </div>
                 <div class="form-group col-md-5 col-sm-12">
-                    <label for="Store Location">Store </label>
+                    <label for="Store Location">Store <span class="text-danger">*</span></label>
                     <select   class="form-control data-input" id="form_store_location_id" name="store_location_id">
                         <option value="" >Select</option>
                         <?php foreach ($stores as $key => $value) {
@@ -152,7 +152,7 @@ if($this->session->userdata('role') == 1)
                     </select>   
                 </div>
 
-                <div class="form-group col-md-5 col-sm-12">
+                <div class="form-group col-md-12 col-sm-12">
                     <label for="Inventory Location Description">Inventory Location Description </label>
                     <input type="text" class="form-control data-input" id="form_location_description" name="location_description" value="<?php echo set_value('location_description', $this->_data['view_model']->get_location_description());?>"/>
                 </div>
@@ -316,11 +316,11 @@ if($this->session->userdata('role') == 1)
 
                                     <div class="form-group col-md-12 col-sm-12"> 
                                         <label >Choose Thumbnail <?php echo $index_i; ?></label>
-                                        <img id="output_youtube_thumbnail_1" class="output_youtube_thumbnail_1  pb-2" style="max-height:100px" src="<?php echo $images_data[$key] ?>" onerror=\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\"/>
+                                        <img id="output_youtube_thumbnail_1" class="output_youtube_thumbnail_1  pb-2" style="max-height:100px" src="<?php echo $images_data[$key] ?>"  />
                                         <div style="margin: 0px;" class="btn btn-primary btn-sm mkd-choose-image-thumbnail" data-image-url="youtube_thumbnail_1" data-image-id="youtube_thumbnail_1_id" data-image-preview="output_youtube_thumbnail_1" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Browse</div>
 
 
-                                        <input type="hidden" class="youtube_thumbnail_1" id="youtube_thumbnail_1" name="youtube_thumbnail_1[]" class="validate_img_field" value="<?php echo $images_data[$key] ?>"/>
+                                        <input type="hidden" class="youtube_thumbnail_1 validate_img_field" id="youtube_thumbnail_1" name="youtube_thumbnail_1[]"  value="<?php echo $images_data[$key] ?>"/>
 
                                         <input type="hidden" class="youtube_thumbnail_1_id" id="youtube_thumbnail_1_id" name="youtube_thumbnail_1_id[]" value=""/> 
 
@@ -347,11 +347,11 @@ if($this->session->userdata('role') == 1)
 
                                     <div class="form-group col-md-12 col-sm-12"> 
                                         <label >Choose Thumbnail 1</label>
-                                        <img id="output_youtube_thumbnail_1" class="output_youtube_thumbnail_1  pb-2" style="max-height:100px"  onerror=\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\"/>
+                                        <img id="output_youtube_thumbnail_1" class="output_youtube_thumbnail_1  pb-2" style="max-height:100px"   />
                                         <div style="margin: 0px;" class="btn btn-primary btn-sm mkd-choose-image-thumbnail" data-image-url="youtube_thumbnail_1" data-image-id="youtube_thumbnail_1_id" data-image-preview="output_youtube_thumbnail_1" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Browse</div>
 
 
-                                        <input type="hidden" class="youtube_thumbnail_1" id="youtube_thumbnail_1" name="youtube_thumbnail_1[]" class="validate_img_field" value=""/>
+                                        <input type="hidden" class="youtube_thumbnail_1 validate_img_field" id="youtube_thumbnail_1" name="youtube_thumbnail_1[]"  value=""/>
 
                                         <input type="hidden" class="youtube_thumbnail_1_id" id="youtube_thumbnail_1_id" name="youtube_thumbnail_1_id[]" value=""/> 
 
@@ -389,7 +389,7 @@ if($this->session->userdata('role') == 1)
                 </div>
                  
                 <div class="form-group col-md-5 col-sm-12">
-                    <input type="submit" class="btn btn-primary ext-white mr-4 my-4" value="Submit">
+                    <input type="submit" class="btn btn-primary ext-white mr-4 my-4 validate-videos" value="Submit">
                 </div>
                 </form>
             </div>

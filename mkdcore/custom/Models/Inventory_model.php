@@ -47,7 +47,7 @@ class Inventory_model extends Manaknight_Model
 		'available_in_shelf', 
     ];
 	protected $_label_fields = [
-    'ID','Product Name','SKU','Category','Manifest','Store Location','Inventory Location','Inventory Location Description','Weight','Length','Height','Width','Image','Selling Price','Quantity','Description','Barcode Image','Cost Price','Admin Inventory Note','Can Ship','Pin Item','Product Type','Status',
+    'ID','Product Name','SKU','Category','Manifest','Store','Inventory Location','Inventory Location Description','Weight','Length','Height','Width','Image','Selling Price','Quantity','Description','Barcode Image','Cost Price','Admin Inventory Note','Can Ship','Pin Item','Product Type','Status',
     ];
 	protected $_use_timestamps = TRUE;
 	protected $_created_field = 'created_at';
@@ -60,7 +60,7 @@ class Inventory_model extends Manaknight_Model
 		['sku', 'SKU', ''],
 		['category_id', 'Category', ''],
 		['manifest_id', 'Manifest', ''],
-		['store_location_id', 'Store Location', 'required'],
+		['store_location_id', 'Store', 'required'],
 		['physical_location', 'Inventory Location', ''],
 		['location_description', 'Inventory Location Description', ''],
 		['weight', 'Weight', ''],
@@ -94,7 +94,7 @@ class Inventory_model extends Manaknight_Model
 		['sku', 'SKU', ''],
 		['category_id', 'Category', ''],
 		['manifest_id', 'Manifest', ''],
-		['store_location_id', 'Store Location', 'required'],
+		['store_location_id', 'Store', 'required'],
 		['physical_location', 'Inventory Location', ''],
 		['location_description', 'Inventory Location Description', ''],
 		['weight', 'Weight', ''],

@@ -233,10 +233,6 @@ $gallery_image_count = count($gallery_lists) + 1;
                             <?php endforeach ?> 
                         <?php endif ?> 
                         
-                        <a class="prev" onclick="plusSlides(-1)">❮</a>
-                        <a class="next" onclick="plusSlides(1)">❯</a>
-                    
-                         
                     </div>
                 </div>
             </div>

@@ -171,17 +171,13 @@
     <div class="swiper-container swiper-container-mysterybox mySwiper mySwiper-mysterybox"  style="min-height: 200px;max-height: 300px">
         <div class="swiper-wrapper">
             <?php foreach ($all_categories as $key => $value): ?>
+                <?php if (!empty($value->feature_image)): ?>
                 <div class="swiper-slide swiper-slide-mysterybox slide-list-box"> 
                     <a href="<?php echo base_url() ?>categories/?category=<?php echo $value->id; ?>">
-                    <?php if (empty($value->feature_image)): ?>
-                        <img class="img-thumbnail" src="./uploads/placeholder.jpg">
-                    <?php else: ?>
                         <img class="img-thumbnail"  src="<?php echo $value->feature_image; ?>">
-                    <?php endif ?> 
                     </a>
-
-                    <!-- <h2 class="top_div_categories"><?php echo $value->name ?></h2> -->
                 </div>
+                <?php endif ?> 
             <?php endforeach ?> 
         </div>
        

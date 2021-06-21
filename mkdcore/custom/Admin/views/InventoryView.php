@@ -254,21 +254,28 @@ if ($layout_clean_mode) {
 
 
 				<div class='row mb-4'> 
-					<div class='col-lg-12'>
-						Videos
-					</div>
+					
 					<?php 
+					$check_heading  = false;
 	            	$video_url = json_decode($this->_data['view_model']->get_video_url()); 
 	            	$image_url = json_decode($this->_data['view_model']->get_youtube_thumbnail_1()); 
 			 		foreach ($video_url as $key => $video): 
+			 			if (!empty($video)) 
+			 			{ 
 				 	?>  
+				 		<?php if (!$check_heading): $check_heading = true; ?>
+				 			<div class='col-lg-12'>
+								Videos
+							</div>
+				 		<?php endif ?>
+					 	
 						<div class=" col-lg-3 col-md-4 col-sm-12">
 							<a href="<?php echo $video ?>" target='_blank'>
 								<img class="img-thumbnail" src="<?php echo $image_url[$key] ?>">
 							</a>
 						</div> 
 					
-					<?php  endforeach; ?>
+					<?php } endforeach; ?>
 				</div>
 				
 

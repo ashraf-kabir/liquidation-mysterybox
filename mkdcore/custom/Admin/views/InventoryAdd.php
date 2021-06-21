@@ -108,7 +108,7 @@ if ($layout_clean_mode) {
 
 
                 <div class="form-group col-md-5 col-sm-12 ">
-                    <label for="sale_person_id"> Sale Person </label> 
+                    <label for="sale_person_id"> Sale Person <span class="text-danger">*</span></label> 
                     <select  class="form-control data-input" id="sale_person_id" name="sale_person_id">
                         <option value="" >Select</option>
                         <?php foreach ($sale_persons as $key => $value) {
@@ -125,7 +125,7 @@ if ($layout_clean_mode) {
  
 
                 <div class="form-group col-md-5 col-sm-12 ">
-                    <label for="Store Location">Store </label>
+                    <label for="Store Location">Store <span class="text-danger">*</span></label>
                     <select   class="form-control data-input" id="form_store_location_id" name="store_location_id">
                         <option value="" >Select</option>
                         <?php foreach ($stores as $key => $value) {
@@ -147,7 +147,7 @@ if ($layout_clean_mode) {
                         }?>
                     </select>   
                 </div>
-                <div class="form-group col-md-5 col-sm-12 ">
+                <div class="form-group col-md-12 col-sm-12 ">
                     <label for="Inventory Location Description">Inventory Location Description </label>
                     <input type="text" class="form-control data-input" id="form_location_description" name="location_description" value="<?php echo set_value('location_description'); ?>"/>
                 </div>
