@@ -79,9 +79,7 @@
     padding: 35px 19px;
     transform: scale(0.8);
 }
-.swiper-button-next:hover{
-    padding: 0 !important;
-}
+
 
     @media (max-width: 991px){
         .main-swiper-button-next{

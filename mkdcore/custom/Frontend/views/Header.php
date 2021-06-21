@@ -39,7 +39,6 @@
            .swiper-button-next:hover{
                background-color:  #94959957;
                    color: black;
-                       padding: 44px 21px;
           }
           .swiper-button-prev:hover{
                background-color:  #94959957;
