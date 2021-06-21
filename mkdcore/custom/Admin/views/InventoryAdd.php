@@ -276,13 +276,13 @@ if ($layout_clean_mode) {
                                     <label for="Youtube Thumbnail 1">Choose Thumbnail 1</label>
  
 
-                                    <img id="output_youtube_thumbnail_1 edit-preview-image " class="output_youtube_thumbnail_1  pb-2" style="max-height:100px" onerror=\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\"/>
+                                    <img id="output_youtube_thumbnail_1 edit-preview-image " class="output_youtube_thumbnail_1  pb-2" style="max-height:100px"  />
 
 
                                     <div style="margin: 0px;" class="btn btn-primary btn-sm mkd-choose-image-thumbnail" data-image-url="youtube_thumbnail_1" data-image-id="youtube_thumbnail_1_id" data-image-preview="output_youtube_thumbnail_1" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Browse</div>
 
 
-                                    <input type="hidden" class="youtube_thumbnail_1" id="youtube_thumbnail_1" name="youtube_thumbnail_1[]" class="validate_img_field" value=""/>
+                                    <input type="hidden" class="youtube_thumbnail_1 validate_img_field" id="youtube_thumbnail_1" name="youtube_thumbnail_1[]" value=""/>
 
                                     <input type="hidden" class="youtube_thumbnail_1_id" id="youtube_thumbnail_1_id" name="youtube_thumbnail_1_id[]" value=""/> 
 
@@ -298,7 +298,7 @@ if ($layout_clean_mode) {
                  
 
  
-                <div class="form-group col-md-5 col-sm-12">
+                <div class="form-group col-md-12 col-sm-12">
                     <label for="Inventory Note">Description </label>
                     <textarea id='subeditor_inventory_note' name='inventory_note' class='form-control subeditor_inventory_note data-input' rows='5'><?php echo set_value('inventory_note'); ?></textarea>
                 </div>
@@ -319,7 +319,7 @@ if ($layout_clean_mode) {
                  
                     
                 <div class="form-group  col-md-5 col-sm-12">
-                    <input type="submit" class="btn btn-primary text-white mr-4 my-4" value="Submit">
+                    <input type="submit" class="btn btn-primary text-white mr-4 my-4 validate-videos" value="Submit">
                 </div>
                 </form>
             </div>
