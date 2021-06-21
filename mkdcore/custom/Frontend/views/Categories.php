@@ -45,6 +45,7 @@
      }
      .child-list-cat a{
           font-size: 12px;
+          display: none;
      }
 
      @media only screen and (max-width: 767px) {
