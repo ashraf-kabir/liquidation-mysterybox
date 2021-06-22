@@ -43,6 +43,10 @@
         padding: 0 !important;
     }
 
+    .list-swiper-button-next, .list-swiper-button-prev{
+        padding: 35px 19px !important;
+    }
+
 
     
     @media only screen and (min-width:2144px) {

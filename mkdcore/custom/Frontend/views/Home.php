@@ -62,11 +62,11 @@
     }
 
     .swiper-button-next-mysterybox-card{
-        right: 16px;
+        right: 16px !important;
     }
 
     .swiper-button-prev-mysterybox-card{
-        left: 25px;
+        left: 25px !important;
     }
 
     .top_div_categories{
