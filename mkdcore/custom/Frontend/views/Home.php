@@ -61,6 +61,14 @@
         color: white !important;
     }
 
+    .swiper-button-next-mysterybox-card{
+        right: 16px;
+    }
+
+    .swiper-button-prev-mysterybox-card{
+        right: 25px;
+    }
+
     .top_div_categories{
         position: absolute;
         background: white;
