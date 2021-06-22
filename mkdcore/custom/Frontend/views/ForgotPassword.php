@@ -24,7 +24,7 @@
                 </div>
 
 
-                <div class="col-xl-5 col-lg-6 col-md-7 col-11 my-3"> 
+                <div class="col-xl-5 col-lg-6 col-md-7 col-sm-10 col-12 my-3"> 
                     <div class="bg-white w-100 p-2 p-md-4">
                         <h5>Forgot Password</h5>
                         <hr /> 
