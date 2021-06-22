@@ -24,16 +24,16 @@
                 </div>
 
 
-                <div class="col-xl-5 col-lg-5 col-md-5 col-5 my-3"> 
+                <div class="col-xl-5 col-lg-6 col-md-7 col-11 my-3"> 
                     <div class="bg-white w-100 p-2 p-md-4">
                         <h5>Forgot Password</h5>
                         <hr /> 
                         <div class="form-row justify-content-between">
-                            <div class="col-xl-12 col-lg-12 col-md-5 col-12 ">
+                            <div class="col-12 ">
                                 <label for="name">Email</label> 
                             </div> 
 
-                            <div class="col-xl-12 col-lg-12 col-md-5 col-12">
+                            <div class="col-12">
                                 <input
                                     type="email"
                                     name="email"
@@ -44,7 +44,7 @@
                                     />
                             </div> 
  
-                            <div class="col-xl-12 col-lg-12 col-md-5 col-12 mt-3 " style="text-align: center;">
+                            <div class="col-12 mt-3 " style="text-align: center;">
                                 <button type="submit" class="btn btn-secondary w-100" style="width: 50% !important;">Reset my password</button>
                             </div> 
                         </div> 
