@@ -30,6 +30,9 @@ if($this->session->userdata('role') == 1)
     {
         float: right;
     }
+    .sun-editor{
+        width: 100%;
+    }
 </style>
 <div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
