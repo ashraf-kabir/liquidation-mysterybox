@@ -107,6 +107,13 @@
         }  
     } */
 
+    @media (min-width: 991px){
+        .product-description{
+            max-height: 250px;
+            overflow-y: auto; 
+        }
+    }
+
     @media only screen and (max-width:991px) {
            
         .play_icon{
@@ -287,7 +294,7 @@ $gallery_image_count = count($gallery_lists) + 1;
                 <?php if (!empty($product->inventory_note)): ?>
                 <div class="row mt-4">
                     <div class="col-12  ">
-                        <div class="col-12 p-2 p-md-4 bg-white">
+                        <div class="col-12 p-2 p-md-4 bg-white product-description">
                             <h4  style="width: 100%;text-align: left;">DESCRIPTION</h4>
                             <p class="my-3"><?php echo $product->inventory_note; ?></p> 
                              
