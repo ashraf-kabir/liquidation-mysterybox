@@ -270,7 +270,7 @@ if ($layout_clean_mode) {
 				 		<?php endif ?>
 					 	
 						<div class=" col-lg-3 col-md-4 col-sm-12" style="position: relative;">
-							<div class="video-container-wrapper flex-css" style="position: absolute; height: 100%; width: 100%; top: 0; left: 0; z-index: 1; background-color: rgba(0, 0, 0, 0.5)">
+							<div class="video-container-wrapper" style="position: absolute; height: 100%; width: 100%; top: 0; left: 0; z-index: 1; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center;">
 								<img src="https://devmysterybox.vegasliquidationstore.com/assets/image/play_circle.png" alt="play" style="height: 30px;" />
 							</div>
 							<a href="<?php echo $video ?>" target='_blank'>
