@@ -1,6 +1,6 @@
 <?php echo form_open(''); ?>
     <section>
-        <div class="container-fluid px-5 py-5">
+        <div class="container-fluid py-5 px-xl-5 px-lg-5 px-md-4 px-3">
             <div class="row justify-content-center align-items-center">
 
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -44,8 +44,8 @@
                                     />
                             </div> 
  
-                            <div class="col-12 mt-3 " style="text-align: center;">
-                                <button type="submit" class="btn btn-secondary w-100" style="width: 50% !important;">Reset my password</button>
+                            <div class="col-12 mt-4 " style="text-align: center;">
+                                <button type="submit" class="btn btn-secondary reset-btn w-100" style="width: 68% !important;">Reset my password</button>
                             </div> 
                         </div> 
                     </div> 
