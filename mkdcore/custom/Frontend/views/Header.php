@@ -156,6 +156,9 @@
           .search-wrapper.hidden{
                display: none;
           }
+          .shop-dropdown a{
+               font-size: 13px !important;
+          }
           .parent-cat{
                position: relative;
           }
@@ -317,7 +320,7 @@ padding-right: 10px;
                          <li class="dropdown-submenu nav-item ">
                               <a  class="dropdown-item  nav-link" tabindex="-1"  >Shop Mysterybox<b class="caret"></b></a>
                               <ul class="dropdown-menu make-dropdown-menu-full">   
-                                   <li class="dropdown-submenu"> 
+                                   <li class="dropdown-submenu shop-dropdown"> 
                                         <a class="sub-item submenu-anchor-l2" href="<?php echo base_url(); ?>categories">
                                              All
                                         </a> 
