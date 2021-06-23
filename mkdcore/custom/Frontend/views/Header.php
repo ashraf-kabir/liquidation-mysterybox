@@ -233,9 +233,12 @@
 
           @media screen and (max-width: 1033px)
           {
-               .navbar .nav-item .nav-link
-               { 
-                    padding: 52px  7px;
+               .logo-nav{
+                    left: calc(50% - 17px)
+               }
+
+               .logo-nav img{
+                    width: 125px;
                }
           }
 

@@ -196,7 +196,7 @@ $gallery_image_count = count($gallery_lists) + 1;
     </main>
     <div class="container-fluid">
         <div class="row " style="margin: 15px 0px;">
-            <div class="col-lg-9 bg-white p-2 p-md-4 mt-4 add_margin_mobile "  style="padding-top: 0.5rem !important;">
+            <div class="col-lg-9 bg-white p-2 p-md-4 mt-4 add_margin_mobile flex-css">
                 
 
                 <div class="row ">
