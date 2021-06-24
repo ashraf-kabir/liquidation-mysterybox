@@ -247,9 +247,9 @@ if (!empty($product->feature_image))
 
                     <div class="col-12 col-sm-12 padding-left-0-custom" style="max-height: 350px; padding: 0px; overflow: auto;">
                         <div class="row " style="margin: 0px;"> 
-                        <div class="product-image-list-box flex-css-row-start">
+                        <div class="product-image-list-box flex-css-row-start pt-3">
                             <!-- <div class="col-12 col-sm-2">  -->
-                                <div class="product-image-list-container pt-2 pb-2">
+                                <div class="product-image-list-container">
                                     <img style="border: none;" class="demo cursor gallery-thumbnail img-thumbnail" src="<?php echo $feature_image; ?>"   onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>">
                                 </div> 
                             <!-- </div> -->
