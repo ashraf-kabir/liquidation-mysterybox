@@ -54,7 +54,7 @@
 
     /* width */
     .product-image-list-box::-webkit-scrollbar {
-  width: 5px;
+  height: 5px;
 }
 
 /* Track */
@@ -74,7 +74,7 @@
 
     /* width */
     ::-webkit-scrollbar {
-  width: 5px;
+  height: 5px;
 }
 
 /* Track */
