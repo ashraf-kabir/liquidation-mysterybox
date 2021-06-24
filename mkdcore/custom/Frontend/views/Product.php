@@ -53,6 +53,26 @@
         overflow-x: auto;
     }
 
+    /* width */
+    .product-image-list-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.product-image-list-container::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.product-image-list-container::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.product-image-list-container::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
 
     
     @media only screen and (min-width:2144px) {
