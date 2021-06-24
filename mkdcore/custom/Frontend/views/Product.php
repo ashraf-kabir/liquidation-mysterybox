@@ -174,10 +174,24 @@
     {
         display: none;
     }
+
+    .gallery-thumbnail{
+        max-height: 65px !important;
+        min-height: 65px !important;
+        width: 100% !important;
+    }
 </style>
 <?php 
  
 $gallery_image_count = count($gallery_lists) + 1;
+
+
+$feature_image = "/assets/frontend_images/noun_pallet_box_1675914.png";
+
+if (!empty($product->feature_image)) 
+{
+    $feature_image = $product->feature_image;
+}
  ?>
     <main class="container-fluid">
         <div class="row ">
@@ -196,34 +210,11 @@ $gallery_image_count = count($gallery_lists) + 1;
     </main>
     <div class="container-fluid">
         <div class="row " style="margin: 15px 0px;">
-            <div class="col-lg-9 bg-white p-2 p-md-4 mt-4 add_margin_mobile flex-css">
+            <div class="col-lg-7 bg-white p-2 p-md-4 mt-4 add_margin_mobile flex-css">
                 
 
-                <div class="row ">
-                    <div class="col-2 col-sm-1 padding-left-0-custom" style="max-height: 350px; padding: 0px; overflow: auto;">
-
-                        <?php if(!empty($product->feature_image)){   ?>
-                            <div class="column  pt-2 pb-2  w-100">
-                                <img style="border: none;" class="demo cursor img-thumbnail" src="<?php echo $product->feature_image; ?>" style="width:100%" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>">
-                            </div> 
-                        <?php }else{ ?>
-                            <div class="column  pt-2 pb-2  w-100">
-                                <img  style="border: none;" class="demo cursor  img-thumbnail" src="/assets/frontend_images/noun_pallet_box_1675914.png" style="width:100%" onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>">
-                            </div>  
-                        <?php } ?> 
-
-                        <?php if (!empty($gallery_lists)): $k= 2; ?> 
-                            <?php foreach ($gallery_lists as $key => $value): ?>
-
-                                <div class="column  pt-2 pb-2  w-100">
-                                    <img  style="border: none;" class="demo cursor img-thumbnail" src="<?php echo $value->image_name; ?>" style="width:100%" onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
-                                </div>
-                                 
-                            <?php endforeach ?> 
-                        <?php endif ?>  
-                       
-                    </div>
-                    <div class="col-10 col-sm-11">
+                <div class="row "> 
+                    <div class="col-12 col-sm-12">
                         <?php if(!empty($product->feature_image)){   ?>
                             <div class="mySlides">
                                 <div class="numbertext">1 / <?php echo $gallery_image_count ?></div>
@@ -245,9 +236,30 @@ $gallery_image_count = count($gallery_lists) + 1;
                         <?php endif ?> 
                         
                     </div>
+
+                    <div class="col-12 col-sm-12 padding-left-0-custom" style="max-height: 350px; padding: 0px; overflow: auto;">
+                        <div class="row " style="margin: 0px;"> 
+                            <div class="col-12 col-sm-2"> 
+                                <div class="column  pt-2 pb-2  w-100">
+                                    <img style="border: none;" class="demo cursor gallery-thumbnail img-thumbnail" src="<?php echo $feature_image; ?>"   onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>">
+                                </div> 
+                            </div>
+                         
+
+                            <?php if (!empty($gallery_lists)): $k= 2; ?> 
+                                <?php foreach ($gallery_lists as $key => $value): ?>
+                                <div class="col-12 col-sm-2"> 
+                                    <div class="column  pt-2 pb-2  w-100">
+                                        <img  style="border: none;" class="demo gallery-thumbnail cursor img-thumbnail" src="<?php echo $value->image_name; ?>"   onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
+                                    </div>
+                                </div>
+                                <?php endforeach ?> 
+                            <?php endif ?>  
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-991-p-0 mt-4 pr-md-0">
+            <div class="col-lg-5 col-991-p-0 mt-4 pr-md-0">
                 <div class="bg-white w-100 p-2 px-md-4 "  style="padding-top: 0.5rem !important;    padding-bottom: 1px !important;"> 
                     <ul class="list-unstyled" style="margin: 0px;">
 
