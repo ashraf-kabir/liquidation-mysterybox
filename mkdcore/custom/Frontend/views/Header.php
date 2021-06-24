@@ -238,7 +238,7 @@
           @media screen and (max-width: 1100px)
           {
                .logo-nav{
-                    left: calc(50% - 75px)
+                    left: calc(50% - 32px)
                }
 
                .logo-img{
