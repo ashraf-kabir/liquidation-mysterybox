@@ -54,22 +54,22 @@
     }
 
     /* width */
-    .product-image-list-container::-webkit-scrollbar {
+    .product-image-list-box::-webkit-scrollbar {
   width: 10px;
 }
 
 /* Track */
-.product-image-list-container::-webkit-scrollbar-track {
+.product-image-list-box::-webkit-scrollbar-track {
   background: #f1f1f1; 
 }
  
 /* Handle */
-.product-image-list-container::-webkit-scrollbar-thumb {
+.product-image-list-box::-webkit-scrollbar-thumb {
   background: #888; 
 }
 
 /* Handle on hover */
-.product-image-list-container::-webkit-scrollbar-thumb:hover {
+.product-image-list-box::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
 
