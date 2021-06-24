@@ -131,13 +131,14 @@ if ($layout_clean_mode) {
 					</div>
 				</div>
 
+				<?php if (!empty($view_model->get_feature_image())): ?>
 				<div class='row mb-4'>
 					<div class='col'>
-						<span class='d-block'>Image</span>
-						<img class="img-fluid d-block mb-3 mt-3 view-image" style='height: 120px; width: 300px; object-fit: cover;' src="<?php echo $view_model->get_feature_image();?>" onerror=\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\"/>
+						<span class='d-block'>Feature Image</span> 
+						<img class="img-fluid d-block mb-3 mt-3 view-image" style='height: 120px; width: 300px; object-fit: cover;' src="<?php echo $view_model->get_feature_image();?>" />
 					</div>
 				</div>
-
+				<?php endif ?>
 				
  
 
@@ -270,10 +271,11 @@ if ($layout_clean_mode) {
 				 		<?php endif ?>
 					 	
 						<div class=" col-lg-3 col-md-4 col-sm-12" style="position: relative;">
-							<div class="video-container-wrapper" style="position: absolute; height: 100%; width: 100%; top: 0; left: 0; z-index: 1; display: flex; justify-content: center; align-items: center;">
-								<img src="https://devmysterybox.vegasliquidationstore.com/assets/image/play_circle.png" alt="play" style="height: 30px;" />
-							</div>
 							<a href="<?php echo $video ?>" target='_blank'>
+								<div class="video-container-wrapper" style="position: absolute; height: 100%; width: 100%; top: 0; left: 0; z-index: 1; display: flex; justify-content: center; align-items: center;">
+									<img src="<?php echo base_url() ?>assets/image/play_circle.png" alt="play" style="height: 30px;" />
+								</div>
+							
 								<img class="img-thumbnail inventory-view-videos" style="height: 120px; width: 300px; object-fit: cover;" src="<?php echo $image_url[$key] ?>">
 							</a>
 						</div> 

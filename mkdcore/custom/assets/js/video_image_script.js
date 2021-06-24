@@ -76,9 +76,11 @@ let this_image_object = "";
                     $("#mkd-media-gallery-wrapper").append(
                     '<div class="col-md-2 mb-2"><img data-id="' +
                     element.id +
-                    '"src="' +
+                    '" data-video="' +
+                    element.video +
+                    '" src="' +
                     element.url +
-                    '" alt="" onerror="if (this.src != \'/uploads/placeholder.jpg\') this.src = \'/uploads/placeholder.jpg\';" class="img-fluid mkd-gallery-image-image img-size-preset"></div>'
+                    '" alt=""  class="img-fluid mkd-gallery-image-image mkd-gallery-image-image-2 img-size-preset"></div>'
                     );
                 }
 
@@ -88,16 +90,23 @@ let this_image_object = "";
 
                 window.asset_page = window.asset_page + window.asset_per_page;
 
-                $(".mkd-gallery-image-image").click(function() {
-                    var id = Number($(this).attr("data-id"));
-                    $(this).addClass("active");
-                    window.asset_selected_id = id;
-                    window.asset_selected_img = $(this).attr("src");
-                });
+                
             });
         });
 
-
+ 
+        $(document).on('click','.mkd-gallery-image-image-2',function(){ 
+            var id = Number($(this).attr("data-id"));
+            var img_src_id = $(this).attr("src");
+            var vid_src_id = $(this).attr("data-video");
+            
+            $("#mkd-media-image-thumbnail").modal("hide");
+            this_image_object.parent().parent().find('label').eq(1).after('<span class="youtube-image-delete-close"><i class="fa fa-trash img-wrapper-delete-close"></i></span>');
+            this_image_object.parent().find('.output_youtube_thumbnail_1').attr('src',img_src_id);
+            this_image_object.parent().find('.youtube_thumbnail_1').val(img_src_id);
+            this_image_object.parent().find('.youtube_thumbnail_1_id').val(id); 
+            this_image_object.parent().parent().find('.validate_url_field').val(vid_src_id); 
+        });
 
 
         $(document).on('click','#mkd-thumbnail-upload',function(){ 
@@ -139,7 +148,10 @@ function manaknightThumbnailImage(event, imgid)
             async: false,
             success: function(data)
             {
+
+
                 $("#mkd-media-image-thumbnail").modal("hide");
+                this_image_object.parent().parent().find('label').eq(1).after('<span class="youtube-image-delete-close"><i class="fa fa-trash img-wrapper-delete-close"></i></span>');
                 this_image_object.parent().find('.output_youtube_thumbnail_1').attr('src',data.file);
                 this_image_object.parent().find('.youtube_thumbnail_1').val(data.file);
                 this_image_object.parent().find('.youtube_thumbnail_1_id').val(data.id); 

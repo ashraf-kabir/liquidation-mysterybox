@@ -21,6 +21,10 @@ if ($layout_clean_mode) {
     {
         float: right;
     }
+
+    .youtube-image-delete-close{
+        display: block;
+    }
 </style>
 <div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->

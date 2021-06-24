@@ -44,8 +44,7 @@
           object-fit: contain;
      }
      .child-list-cat a{
-          font-size: 12px;
-          display: none;
+          font-size: 12px; 
      }
 
      @media only screen and (max-width: 767px) {
@@ -66,6 +65,7 @@
      }
 
 </style>
+
      <div class="container-fluid  " style="min-height:650px">
           <div class="row">
                <div class="col-md-12 my-4 col-sm-12 product__pathLink">
@@ -92,19 +92,24 @@
                                    <li class="cat-item cat-item-116 <?php if (!isset($_GET['category'])): ?> active_category <?php endif; ?>  ">
                                         <a href="<?php echo base_url(); ?>categories">All</a>
                                    </li>
-                                   <?php if( !empty($all_categories) ){ ?>
-                                        <?php foreach($all_categories as $key => $value){ ?>
+                                   <?php if( !empty($header_categories) ){ ?>
+                                        <?php foreach($header_categories as $key => $value){ ?>
                                              <li class="cat-item cat-item-116
 
                                              <?php if (isset($_GET['category']) and $_GET['category'] == $value->id): ?> active_category <?php endif; ?>
 
 
                                              "><a href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>"><?php echo $value->name; ?></a>
+                                                  <?php if (!empty($value->childs_list)): ?> 
                                                   <div class="child-list-cat flex-top-column pl-3">
-                                                       <a href="#">Child1</a>
-                                                       <a href="#">Child2</a>
-                                                       <a href="#">Child3</a>
+                                                       <?php foreach ($value->childs_list as $childkey => $childvalue): ?>
+                                                            <a 
+                                                                 <?php if (isset($_GET['category']) and $_GET['category'] == $childvalue->id): ?> style="width:100%;" class="active_category" <?php endif; ?>
+
+                                                             href="<?php echo base_url(); ?>categories/?category=<?php echo $childvalue->id; ?>"><?php echo $childvalue->name; ?></a>
+                                                       <?php endforeach ?> 
                                                   </div>
+                                                  <?php endif ?>
                                              </li>
                                         <?php  } ?>
                                    <?php } ?>
