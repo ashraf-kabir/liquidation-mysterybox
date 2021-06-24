@@ -3514,6 +3514,8 @@
 		"../mkdcore/custom/Admin/controllers/Admin_about_us_controller.php" : "../release/application/controllers/Admin/Admin_about_us_controller.php",
 		"../mkdcore/custom/Admin/controllers/Admin_carousel_slider_controller.php" : "../release/application/controllers/Admin/Admin_carousel_slider_controller.php",
 
+		"../mkdcore/custom/Admin/views/AboutUsEdit.php" : "../release/application/views/Admin/AboutUsEdit.php",
+		"../mkdcore/custom/Admin/views/TermsAndConditionsEdit.php" : "../release/application/views/Admin/TermsAndConditionsEdit.php",
 		"../mkdcore/custom/Admin/views/HomePageSettingEdit.php" : "../release/application/views/Admin/HomePageSettingEdit.php",
 		"../mkdcore/custom/Admin/views/CarouselSliderAdd.php" : "../release/application/views/Admin/CarouselSliderAdd.php",
 		"../mkdcore/custom/Admin/views/CarouselSliderEdit.php" : "../release/application/views/Admin/CarouselSliderEdit.php",
