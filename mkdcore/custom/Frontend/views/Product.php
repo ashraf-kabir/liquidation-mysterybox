@@ -55,6 +55,7 @@
     /* width */
     .product-image-list-box::-webkit-scrollbar {
   height: 5px;
+  width: 7px;
 }
 
 /* Track */
@@ -64,17 +65,18 @@
  
 /* Handle */
 .product-image-list-box::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #999; 
 }
 
 /* Handle on hover */
 .product-image-list-box::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #777; 
 }
 
     /* width */
     ::-webkit-scrollbar {
   height: 5px;
+  width: 7px;
 }
 
 /* Track */
