@@ -341,7 +341,7 @@ if($this->session->userdata('role') == 1)
 
                              <?php endif ?>
 
-                            <?php if ($counter == 2): ?>
+                            <?php if ($counter == 2):  $counter++; ?>
                                 <div class="row thumbnail_video_row">
                                     <div class="form-group col-md-12 col-sm-12">
                                         <label  class="label-full"  > <span class="label-text-is">Video URL 1 </span>
