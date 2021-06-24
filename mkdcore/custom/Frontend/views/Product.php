@@ -47,6 +47,11 @@
         padding: 35px 19px !important;
     }
 
+    .product-image-list-container{
+        height: 70px;
+        width: 70px;
+    }
+
 
     
     @media only screen and (min-width:2144px) {
@@ -176,9 +181,12 @@
     }
 
     .gallery-thumbnail{
-        max-height: 65px !important;
-        min-height: 65px !important;
-        width: 100% !important;
+        /* max-height: 65px !important; */
+        /* min-height: 65px !important; */
+        /* width: 100% !important; */
+        height: 100%;
+       width: 100%;
+       object-fit: contain;
     }
 </style>
 <?php 
@@ -239,7 +247,7 @@ if (!empty($product->feature_image))
 
                     <div class="col-12 col-sm-12 padding-left-0-custom" style="max-height: 350px; padding: 0px; overflow: auto;">
                         <div class="row " style="margin: 0px;"> 
-                        <div class="product-image-list-box">
+                        <div class="product-image-list-box flex-css-row-start">
                             <div class="col-12 col-sm-2"> 
                                 <div class="column  pt-2 pb-2  w-100">
                                     <img style="border: none;" class="demo cursor gallery-thumbnail img-thumbnail" src="<?php echo $feature_image; ?>"   onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>">
@@ -249,11 +257,11 @@ if (!empty($product->feature_image))
 
                             <?php if (!empty($gallery_lists)): $k= 2; ?> 
                                 <?php foreach ($gallery_lists as $key => $value): ?>
-                                <div class="col-12 col-sm-2"> 
-                                    <div class="column  pt-2 pb-2  w-100">
+                                <!-- <div class="col-12 col-sm-2">  -->
+                                    <div class="product-image-list-container">
                                         <img  style="border: none;" class="demo gallery-thumbnail cursor img-thumbnail" src="<?php echo $value->image_name; ?>"   onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
                                     </div>
-                                </div>
+                                <!-- </div> -->
                                 <?php endforeach ?> 
                             <?php endif ?>  
                         </div>
