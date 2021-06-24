@@ -33,6 +33,9 @@ if($this->session->userdata('role') == 1)
     .sun-editor{
         width: 100%;
     }
+    .youtube-image-delete-close{
+        display: block;
+    }
 </style>
 <div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
@@ -155,7 +158,7 @@ if($this->session->userdata('role') == 1)
                     </select>   
                 </div>
 
-                <div class="form-group col-md-12 col-sm-12">
+                <div class="form-group col-md-5 col-sm-12">
                     <label for="Inventory Location Description">Inventory Location Description </label>
                     <input type="text" class="form-control data-input" id="form_location_description" name="location_description" value="<?php echo set_value('location_description', $this->_data['view_model']->get_location_description());?>"/>
                 </div>
@@ -319,6 +322,8 @@ if($this->session->userdata('role') == 1)
 
                                     <div class="form-group col-md-12 col-sm-12"> 
                                         <label >Choose Thumbnail <?php echo $index_i; ?></label>
+                                        <span class="youtube-image-delete-close"><i class="fa fa-trash img-wrapper-delete-close"></i></span>
+
                                         <img id="output_youtube_thumbnail_1" class="output_youtube_thumbnail_1  pb-2" style="max-height:100px" src="<?php echo $images_data[$key] ?>"  />
                                         <div style="margin: 0px;" class="btn btn-primary btn-sm mkd-choose-image-thumbnail" data-image-url="youtube_thumbnail_1" data-image-id="youtube_thumbnail_1_id" data-image-preview="output_youtube_thumbnail_1" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Browse</div>
 

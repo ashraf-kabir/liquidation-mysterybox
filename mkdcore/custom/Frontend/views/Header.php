@@ -332,16 +332,18 @@ padding-right: 10px;
                                              All
                                         </a> 
                                    </li>
-                                   <?php  foreach ($all_categories as $key => $category): ?>
+                                   <?php  foreach ($header_categories as $key => $category): ?>
                                              <li class="dropdown-submenu shop-dropdown parent-cat"> 
                                                   <a class="sub-item submenu-anchor-l2" href="<?php echo base_url(); ?>categories/?category=<?php echo $category->id; ?>">
                                                        <?php echo $category->name; ?>
                                                   </a> 
+                                                  <?php if (!empty($category->childs_list)): ?> 
                                                   <div class="child-cat flex-top-column">
-                                                       <a href="#"> child1 </a>
-                                                       <a href="#"> child2 </a>
-                                                       <a href="#"> child3 </a>
+                                                       <?php foreach ($category->childs_list as $key => $value): ?> 
+                                                       <a href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>"> <?php echo $value->name ?> </a> 
+                                                       <?php endforeach ?>
                                                   </div>
+                                                  <?php endif ?>
                                              </li> 
                                    <?php endforeach ?> 
                               </ul>

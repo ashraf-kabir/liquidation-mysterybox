@@ -480,7 +480,7 @@
 				}], "xyzImage", "", ""],
 				["name", "string", [{ "limit": 255 }], "xyzName", "required|max_length[255]", "required|max_length[255]"],
 				["sku_prefix", "string", [{ "limit": 255 }], "SKU Prefix", "max_length[255]", "max_length[255]"],
-				["parent_category_id", "integer", [], "xyzParent Category", "", ""],
+				["parent_category_id", "integer", [], "Sub Category", "", ""],
 				["status", "integer", [], "xyzStatus", "required|integer", "required|integer"]
 			],
 			"method": "",
@@ -1103,7 +1103,8 @@
 				"/assets/js/app.js",
 				"/assets/js/admin.js",
 				"/assets/js/mkd-image-uppload.js",
-				"/assets/js/mkd-image-gallery.js"
+				"/assets/js/mkd-image-gallery.js",
+				"/assets/js/admin-actions.js"
 			],
 			"css": [
 				"/assets/css/styles.css",
@@ -1923,9 +1924,9 @@
 			"listing_rows": ["id|integer", "name|string", "feature_image|image",  "sku_prefix|string", "status|integer"],
 			"listing_actions": [],
 			"filter_fields": ["name", "status"],
-			"add_fields": ["name", "feature_image", "sku_prefix", "status"],
-			"edit_fields": ["name", "feature_image", "sku_prefix", "status"],
-			"view_fields": ["id", "name", "feature_image", "sku_prefix", "status"],
+			"add_fields": ["name", "feature_image", "parent_category_id", "sku_prefix", "status"],
+			"edit_fields": ["name", "feature_image", "parent_category_id", "sku_prefix", "status"],
+			"view_fields": ["id", "name", "feature_image", "parent_category_id", "sku_prefix", "status"],
 			"autocomplete": "",
 			"dynamic_mapping_add": {},
 			"dynamic_mapping_edit": {},
@@ -3479,6 +3480,7 @@
 		"../mkdcore/custom/assets/images/vegas-liquidation.png" : "../release/uploads/vegas-liquidation.png",
 		"../mkdcore/custom/assets/images/play_circle.png": "../release/assets/image/play_circle.png",
 
+		"../mkdcore/custom/assets/js/admin-actions.js": "../release/assets/js/admin-actions.js",
 		"../mkdcore/custom/assets/js/address_form.js": "../release/assets/js/address_form.js",
 		"../mkdcore/custom/assets/js/swiper-bundle.min.js": "../release/assets/frontend_js/swiper-bundle.min.js",
 		"../mkdcore/custom/assets/js/video_image_script.js": "../release/assets/js/video_image_script.js",

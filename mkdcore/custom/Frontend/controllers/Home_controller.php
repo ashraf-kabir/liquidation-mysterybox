@@ -118,6 +118,8 @@ class Home_controller extends Manaknight_Controller
          
         $data['type']            = $this->_data['type'];  
         $data['category']        = $this->_data['category'];  
+
+
         $data['all_categories']  = $this->category_model->get_all(['status' => 1]); 
         $data['category']        = $this->category_model->get($this->_data['category']); 
         
@@ -1153,10 +1155,24 @@ class Home_controller extends Manaknight_Controller
     {
         $this->load->model('home_page_setting_model');
 
-        $all_categories  = $this->category_model->get_all_with_sort_by(['status' => 1],'name');
+        $header_categories  = $this->category_model->get_all_with_sort_by(['status' => 1],'name');
+        $all_categories     = $header_categories;
+
+        foreach ($header_categories as $key => &$value) 
+        {
+            if (!empty($value->parent_category_id) ) 
+            {
+                unset($header_categories[$key]);
+            }else{
+                $value->childs_list = $this->category_model->get_all_with_sort_by(['parent_category_id' => $value->id],'name');
+            }
+        }
+
+        
         
        
-        $data['all_categories']   = $all_categories;
+        $data['all_categories']    = $all_categories;
+        $data['header_categories'] = $header_categories;
         // $data['liquidation_lot']  = $this->get_liquidation_lots();
         // $data['liquidation_pal']  = $this->get_liquidation_pallets();
         // $data['liquidation_trk']  = $this->get_liquidation_truckloads();

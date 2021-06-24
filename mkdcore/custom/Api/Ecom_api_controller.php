@@ -491,20 +491,33 @@ class Ecom_api_controller extends Manaknight_Controller
 
 
         $array_with_images = array();
-        foreach($list_of_data as $value)
-        {
-            $images_list = json_decode($value->youtube_thumbnail_1);
-            foreach($images_list as $img)
+        if (!empty($list_of_data)) 
+        { 
+            foreach($list_of_data as $value)
             {
-                $ilist['url'] = $img;
-                $ilist['id']  = 0;
-                array_push($array_with_images, $ilist);
-            }
-        }  
+               
+                $images_list = json_decode($value->youtube_thumbnail_1);
+                $videos_list = json_decode($value->video_url);
+                if (!empty($images_list)) 
+                {
+                    foreach($images_list as $k => $img)
+                    {
+                        if (!empty($img)) 
+                        { 
+                            $ilist['url'] = $img;
+                            $ilist['video'] = $videos_list[$k];
+                            $ilist['id']  = 0;
+                            array_push($array_with_images, $ilist);
+                        }
+                    }
+                }
+            } 
+        } 
 
         $output['item'] = $array_with_images;
         echo json_encode($output); 
         exit();
     }
+
 
 }

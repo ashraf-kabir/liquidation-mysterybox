@@ -63,6 +63,17 @@ if ($layout_clean_mode) {
                     </div>
 
 
+                    <div class="form-group col-md-5 col-sm-12">
+                        <label for="Parent Category Id">Sub Category</label>
+                        <select class="form-control data-input" id="form_parent_category_id"   name="parent_category_id" >
+                            <option value="">Select</option>
+                            <?php foreach ($parent_categories as $category_parent_list_key => $category_parent_list_value): ?>
+                                <option <?php if ($this->_data['view_model']->get_parent_category_id() == $category_parent_list_value->id): echo "selected"; endif ?> value="<?php echo $category_parent_list_value->id ?>" ><?php echo $category_parent_list_value->name ?></option>
+                            <?php endforeach ?>
+                        </select>   
+                    </div>
+
+
                     <div class="form-group col-md-5 col-sm-12 mb-4">
                         <label for="Image" style="display:block;">Feature Image </label>
 

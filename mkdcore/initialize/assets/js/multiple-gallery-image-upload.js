@@ -28,7 +28,9 @@ function manaknightMultipleImageUploader(event, imgid)
                 $('#manaknight_multiple_image_id_' + manaknight_multiple_image_id_to_add).val(data.id);
                 $('#barcode_image_id_' + manaknight_multiple_image_id_to_add).val(data.id);
 
-                var data_md4 = '<div class="col-md-3 form-group"><img style="height: 150px;width: 70%;" src="'+ data.file +'" /></div>';
+
+
+                var data_md4 = '<div class="col-md-3 form-group"><span data-id="' + manaknight_multiple_image_id_to_add + '" class="gallery-img-delete-close"><i class="fa fa-trash img-wrapper-delete-close"></i></span><img style="height: 150px;width: 70%;" src="'+ data.file +'" /></div>';
 
                 $('.add_images_gallery').append(data_md4);
 
