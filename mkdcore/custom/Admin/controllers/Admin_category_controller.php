@@ -127,7 +127,7 @@ class Admin_category_controller extends Admin_controller
         { 
             $this->success('Category has been added successfully');
             
-            return $this->redirect('/admin/category/0', 'refresh');
+            return $this->redirect('/admin/category/0?order_by=name&direction=ASC', 'refresh');
         }
 
         $this->_data['error'] = 'Error';
@@ -142,7 +142,7 @@ class Admin_category_controller extends Admin_controller
 		if (!$model)
 		{
 			$this->error('Error');
-			return redirect('/admin/category/0');
+			return redirect('/admin/category/0?order_by=name&direction=ASC');
         }
 
         include_once __DIR__ . '/../../view_models/Category_admin_edit_view_model.php';
@@ -177,7 +177,7 @@ class Admin_category_controller extends Admin_controller
         {
             $this->success('Category has been updated successfully');
             
-            return $this->redirect('/admin/category/0', 'refresh');
+            return $this->redirect('/admin/category/0?order_by=name&direction=ASC', 'refresh');
         }
 
         $this->_data['error'] = 'Error';
@@ -191,7 +191,7 @@ class Admin_category_controller extends Admin_controller
 		if (!$model)
 		{
 			$this->error('Error');
-			return redirect('/admin/category/0');
+			return redirect('/admin/category/0?order_by=name&direction=ASC');
 		}
 
 
@@ -221,7 +221,7 @@ class Admin_category_controller extends Admin_controller
         if (!$model)
         {
             $this->error('Error');
-            return redirect('/admin/category/0');
+            return redirect('/admin/category/0?order_by=name&direction=ASC');
         }
 
         $result = $this->category_model->real_delete($id);
@@ -233,7 +233,7 @@ class Admin_category_controller extends Admin_controller
         }
 
         $this->error('Error');
-        return redirect('/admin/category/0');
+        return redirect('/admin/category/0?order_by=name&direction=ASC');
     }
     
     
