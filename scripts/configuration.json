@@ -480,7 +480,7 @@
 				}], "xyzImage", "", ""],
 				["name", "string", [{ "limit": 255 }], "xyzName", "required|max_length[255]", "required|max_length[255]"],
 				["sku_prefix", "string", [{ "limit": 255 }], "SKU Prefix", "max_length[255]", "max_length[255]"],
-				["parent_category_id", "integer", [], "Sub Category", "", ""],
+				["parent_category_id", "integer", [], "Parent Category", "", ""],
 				["status", "integer", [], "xyzStatus", "required|integer", "required|integer"]
 			],
 			"method": "",
@@ -1920,8 +1920,8 @@
 			"custom_view_list": "",
 			"custom_view_view": "",
 			"listing_fields_api": ["id", "feature_image", "name", "parent_category_id", "status"],
-			"listing_headers": ["xyzID", "xyzName", "Image", "SKU Prefix", "xyzStatus"],
-			"listing_rows": ["id|integer", "name|string", "feature_image|image",  "sku_prefix|string", "status|integer"],
+			"listing_headers": ["xyzID", "xyzName", "Parent Category", "Image", "SKU Prefix", "xyzStatus"],
+			"listing_rows": ["id|integer", "name|string", "parent_category_id|integer", "feature_image|image",  "sku_prefix|string", "status|integer"],
 			"listing_actions": [],
 			"filter_fields": ["name", "status"],
 			"add_fields": ["name", "feature_image", "parent_category_id", "sku_prefix", "status"],
@@ -3541,6 +3541,8 @@
 		"../mkdcore/custom/Admin/views/PersonSaleReport.php" : "../release/application/views/Admin/PersonSaleReport.php",
 		"../mkdcore/custom/Admin/views/TopBarSettingEdit.php" : "../release/application/views/Admin/TopBarSettingEdit.php",
 		"../mkdcore/custom/Admin/views/Email.php" : "../release/application/views/Admin/Email.php",
+		"../mkdcore/custom/Admin/views/Category.php" : "../release/application/views/Admin/Category.php",
+		"../mkdcore/custom/Admin/views/CategoryEditParent.php" : "../release/application/views/Admin/CategoryEditParent.php",
 
 		"../mkdcore/custom/Admin/views/Customer.php" : "../release/application/views/Admin/Customer.php",
 		"../mkdcore/custom/Admin/views/CustomerAdd.php" : "../release/application/views/Admin/CustomerAdd.php",
@@ -3623,6 +3625,7 @@
 		"admin/transactions/to_csv": "Admin/Admin_transactions_controller/to_csv",
 		"admin/traffic_link_report/to_csv": "Admin/Admin_traffic_link_report_controller/to_csv",
 		"admin/sale_person_report/to_csv": "Admin/Admin_person_sale_report_controller/to_csv",
+		"admin/category/set_category/(:num)": "Admin/Admin_category_controller/set_category/$1",
 
 		"admin/scan/scan_product_view": "Admin/Admin_inventory_controller/scan_product_view",
 		"admin/terms_and_conditions/edit": "Admin/Admin_terms_and_conditions_controller/edit/$1",

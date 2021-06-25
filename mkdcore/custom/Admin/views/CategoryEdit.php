@@ -64,7 +64,7 @@ if ($layout_clean_mode) {
 
 
                     <div class="form-group col-md-5 col-sm-12">
-                        <label for="Parent Category Id">Sub Category</label>
+                        <label for="Parent Category Id">Parent Category</label>
                         <select class="form-control data-input" id="form_parent_category_id"   name="parent_category_id" >
                             <option value="">Select</option>
                             <?php foreach ($parent_categories as $category_parent_list_key => $category_parent_list_value): ?>

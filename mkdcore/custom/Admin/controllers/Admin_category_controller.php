@@ -238,6 +238,45 @@ class Admin_category_controller extends Admin_controller
     
     
     
-    
+    public function set_category($id)
+    {
+        $model = $this->category_model->get($id);
+        $session = $this->get_session();
+        if (!$model)
+        {
+            $this->error('Error');
+            return redirect('/admin/category/0?order_by=name&direction=ASC');
+        }
+
+        include_once __DIR__ . '/../../view_models/Category_admin_edit_view_model.php';
+        
+        $this->_data['view_model'] = new Category_admin_edit_view_model($this->category_model);
+        $this->_data['view_model']->set_model($model);
+        $this->_data['view_model']->set_heading('Parent Category');
+        
+        $this->_data['parent_categories'] = $this->category_model->get_all(['status' => 1]);
+
+        $this->form_validation->set_rules('parent_category_id','Parent Category', 'required');
+        if ($this->form_validation->run() === FALSE)
+        {
+            return $this->render('Admin/CategoryEditParent', $this->_data);
+        }
+ 
+        $parent_category_id = $this->input->post('parent_category_id', TRUE); 
+        
+        $result = $this->category_model->edit([ 
+            'parent_category_id' => $parent_category_id,  
+        ], $id);
+
+        if ($result)
+        {
+            $this->success('Category has been updated successfully');
+            
+            return $this->redirect('/admin/category/0?order_by=name&direction=ASC', 'refresh');
+        }
+
+        $this->_data['error'] = 'Error';
+        return $this->render('Admin/CategoryEditParent', $this->_data);
+    }
     
 }
