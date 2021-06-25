@@ -612,7 +612,7 @@ crossorigin="anonymous"></script>
     })
 
 
-  $(".child-cat").on("hover", function(e){
+  $(".child-cat").on("mouseover", function(e){
       console.log(e);
       console.log($($(this).parent()).children()[0]);
       $($($(this).parent()).children()[0]).css("background-color", "red");
