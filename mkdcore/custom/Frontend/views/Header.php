@@ -223,6 +223,7 @@
                }
                .parent-cat .child-cat{
                     position: relative;
+                    display: flex;
                     width: 100%;
                     left: 0;
                     padding: 3px 0 3px 20px !important
