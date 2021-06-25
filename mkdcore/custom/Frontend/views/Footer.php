@@ -612,7 +612,7 @@ crossorigin="anonymous"></script>
     })
 
 
-    document.querySelectorAll(".child-cat a").forEach(a = > {
+    document.querySelectorAll(".child-cat a").forEach(a => {
         console.log(a);
     })
 
