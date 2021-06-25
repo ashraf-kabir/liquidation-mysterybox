@@ -182,8 +182,8 @@
           .parent-cat .child-cat a:hover{
                background-color: #F6F6F6; 
           }
-          .parent-cat .child-cat a:hover .parent-cat{
-               background-color: red;
+          .parent-cat .child-cat a:hover .parent-cat a{
+               background-color: red !important;
           }
 
           .logo-nav{
