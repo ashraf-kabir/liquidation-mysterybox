@@ -178,11 +178,14 @@
           }
           .parent-cat:hover .child-cat{
                display: flex;
+               background-color: red !important;
           }
           .parent-cat .child-cat a:hover{
                background-color: #F6F6F6; 
           }
-
+          .parent-cat .child-cat a:hover .parent-cat a{
+               background-color: red !important;
+          }
      
 
           .logo-nav{
