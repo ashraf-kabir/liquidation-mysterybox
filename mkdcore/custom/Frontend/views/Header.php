@@ -230,6 +230,10 @@
                { 
                     margin-top: 0px !important;
                }
+               .parent-cat .child-cat{
+                    position: relative;
+                    padding: 3px 0 3px 20px !important
+               }
                .footer_move{
                     padding-left: 0px !important;
                }
