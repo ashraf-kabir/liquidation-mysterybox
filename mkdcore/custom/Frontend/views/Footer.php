@@ -613,9 +613,13 @@ crossorigin="anonymous"></script>
 
 
   $(".child-cat").on("mouseover", function(e){
-      console.log(e);
       console.log($($(this).parent()).children()[0]);
       $($($(this).parent()).children()[0]).attr("style", "background-color: #E0E0E0 !important;");
+  })
+
+  $(".child-cat").on("mouseout", function(e){
+      console.log($($(this).parent()).children()[0]);
+      $($($(this).parent()).children()[0]).attr("style", "background-color: #ffffff !important;");
   })
 
 
