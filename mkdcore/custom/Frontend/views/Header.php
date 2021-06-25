@@ -176,11 +176,6 @@
                width: 100%;
                padding: 5px !important;
           }
-          .parent-cat:hover{
-               background-color: red !important;
-
-          }
-
           .parent-cat:hover .child-cat{
                display: flex;
           }
