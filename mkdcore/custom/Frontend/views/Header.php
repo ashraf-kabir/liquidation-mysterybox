@@ -343,7 +343,7 @@ padding-right: 10px;
                                    </li>
                                    <?php  foreach ($header_categories as $key => $category): ?>
                                              <li class="dropdown-submenu shop-dropdown parent-cat"> 
-                                                  <a class="sub-item submenu-anchor-l2" href="<?php echo base_url(); ?>categories/?category=<?php echo $category->id; ?>">
+                                                  <a class="sub-item submenu-anchor-l2" href="<?php echo base_url();?>categories/?category=<?php echo $category->id; ?>">
                                                        <?php echo $category->name; ?>
                                                   </a> 
                                                   <?php if (!empty($category->childs_list)): ?> 

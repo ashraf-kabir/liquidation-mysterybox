@@ -615,7 +615,7 @@ crossorigin="anonymous"></script>
   $(".child-cat").on("mouseover", function(e){
       console.log(e);
       console.log($($(this).parent()).children()[0]);
-      $($($(this).parent()).children()[0]).css("background-color", "#E0E0E0 !important");
+      $($($(this).parent()).children()[0]).attr("style", "background-color: #E0E0E0 !important;");
   })
 
 
