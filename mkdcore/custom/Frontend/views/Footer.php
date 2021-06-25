@@ -612,14 +612,11 @@ crossorigin="anonymous"></script>
     })
 
 
-    document.querySelectorAll(".child-cat a").forEach(a => {
-        console.log(a);
-
-        a.addEventListener("onmouseover", function(e){
-            e.target.parentElement.parentElement.children[0].style.backgroundColor = "red";
-        })
-
-    })
+  $(".child-cat").on("hover", function(e){
+      console.log(e);
+      console.log($($(this).parent()).children()[0]);
+      $($($(this).parent()).children()[0]).css("background-color", "red");
+  })
 
 
 </script>
