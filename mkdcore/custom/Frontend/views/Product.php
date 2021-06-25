@@ -156,7 +156,8 @@
 
     @media (min-width: 991px){
         .product-description{
-            max-height: 250px;
+            max-height: 321px;
+            min-height: 321px;
             overflow-y: auto; 
         }
     }

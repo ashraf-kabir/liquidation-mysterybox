@@ -182,6 +182,9 @@
           .parent-cat .child-cat a:hover{
                background-color: #F6F6F6; 
           }
+          .parent-cat .child-cat a:hover .parent-cat{
+               background-color: red;
+          }
 
           .logo-nav{
                position: absolute;
