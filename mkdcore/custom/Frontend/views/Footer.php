@@ -611,4 +611,10 @@ crossorigin="anonymous"></script>
         document.querySelector(".search-wrapper").classList.add("hidden");
     })
 
+
+    document.querySelectorAll(".child-cat a").forEach(a = > {
+        console.log(a);
+    })
+
+
 </script>
