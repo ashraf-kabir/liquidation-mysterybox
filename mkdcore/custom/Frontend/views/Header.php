@@ -176,9 +176,13 @@
                width: 100%;
                padding: 5px !important;
           }
+          .parent-cat:hover{
+               background-color: red !important;
+
+          }
+
           .parent-cat:hover .child-cat{
                display: flex;
-               background-color: red !important;
           }
           .parent-cat .child-cat a:hover{
                background-color: #F6F6F6; 
