@@ -187,11 +187,7 @@
           .parent-cat .child-cat a:hover{
                background-color: #F6F6F6; 
           }
-          .parent-cat .child-cat a:hover .parent-cat a{
-               background-color: red !important;
-          }
-     
-
+         
           .logo-nav{
                position: absolute;
                left: calc(50% - 99px);
@@ -232,6 +228,7 @@
                }
                .parent-cat .child-cat{
                     position: relative;
+                    left: 0;
                     padding: 3px 0 3px 20px !important
                }
                .footer_move{
