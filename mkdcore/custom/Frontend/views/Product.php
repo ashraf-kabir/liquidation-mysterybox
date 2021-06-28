@@ -48,8 +48,8 @@
     }
 
     .product-image-list-container{
-        height: 70px;
-        width: 70px;
+        /* height: 70px; */
+        /* width: 70px; */
     }
 
     /* width */
@@ -289,7 +289,7 @@ if (!empty($product->feature_image))
                         <div class="row " style="margin: 0px;"> 
                             <div class="product-image-list-box flex-css-row-start">
                                 <div class="col-12 col-sm-2 testing"> 
-                                    <div class="product-image-list-container">
+                                    <div class="product-image-list-container pt-2 pb-2">
                                         <img style="border: none;" class="demo cursor gallery-thumbnail img-thumbnail" src="<?php echo $feature_image; ?>"   onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>">
                                     </div> 
                                 </div>
@@ -298,7 +298,7 @@ if (!empty($product->feature_image))
                             <?php if (!empty($gallery_lists)): $k= 2; ?> 
                                 <?php foreach ($gallery_lists as $key => $value): ?>
                                 <div class="col-12 col-sm-2 testing"> 
-                                    <div class="product-image-list-container">
+                                    <div class="product-image-list-container pt-2 pb-2">
                                         <img  style="border: none;" class="demo gallery-thumbnail cursor img-thumbnail" src="<?php echo $value->image_name; ?>"   onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
                                     </div>
                                 </div>
