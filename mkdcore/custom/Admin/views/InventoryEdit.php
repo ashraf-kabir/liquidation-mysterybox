@@ -31,7 +31,7 @@ if($this->session->userdata('role') == 1)
         float: right;
     }
     .sun-editor{
-        width: 100%;
+        width: 100% !important;
     }
     .youtube-image-delete-close{
         display: block;
