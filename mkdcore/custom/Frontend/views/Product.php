@@ -297,7 +297,7 @@ if (!empty($product->feature_image))
 
                             <?php if (!empty($gallery_lists)): $k= 2; ?> 
                                 <?php foreach ($gallery_lists as $key => $value): ?>
-                                <div class="col-12 col-sm-2"> 
+                                <div class="col-12 col-sm-2 testing"> 
                                     <div class="column  pt-2 pb-2  w-100">
                                         <img  style="border: none;" class="demo gallery-thumbnail cursor img-thumbnail" src="<?php echo $value->image_name; ?>"   onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>" >
                                     </div>
