@@ -72,13 +72,26 @@ class Home_controller extends Manaknight_Controller
         
         $where = [ 
             'product_type'       => $this->_data['type'], 
-            'category_id'        => $this->_data['category'], 
             'product_name'       => $this->_data['search_query'],  
             'sku'                => $this->_data['search_query'], 
             'status'             => 1
         ];
+
+        $where2 = [];
+
+        $categories  = $this->category_model->get_all(['parent_category_id' => $this->_data['category']]);
+
+        foreach($categories as $value)
+        {
+            array_push($where2, ['category_id' => $value->id]);
+        }
+        if (!empty($this->_data['category'])) 
+        {
+            array_push($where2, ['category_id' => $this->_data['category']]);
+        }
+        
   
-        $rows_data = $this->inventory_model->get_custom_count($where);
+        $rows_data = $this->inventory_model->get_custom_count($where, $where2);
         
 
        
@@ -113,8 +126,9 @@ class Home_controller extends Manaknight_Controller
             'num_tag_close' => '</li>'
         ]);
 
-        $data['products_list']  = $this->inventory_model->get_custom_paginated($offset , $limit, $where );  
-         
+        $data['products_list']  = $this->inventory_model->get_custom_paginated($offset , $limit, $where, '', 'ASC', $where2 );  
+         // echo $this->db->last_query();
+         // die();
          
         $data['type']            = $this->_data['type'];  
         $data['category']        = $this->_data['category'];  

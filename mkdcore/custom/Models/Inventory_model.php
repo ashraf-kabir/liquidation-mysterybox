@@ -257,7 +257,7 @@ class Inventory_model extends Manaknight_Model
 	 * @return integer $result
 	 */
 
-	public function get_custom_count($parameters)
+	public function get_custom_count($parameters , $parameters2 = [])
 	{
         if (!empty($parameters))
         {
@@ -303,7 +303,17 @@ class Inventory_model extends Manaknight_Model
             	$this->db->or_like('product_name', $parameters['product_name'], 'both'); 
             	$this->db->or_like('sku', $parameters['sku'], 'both'); 
             	$this->db->group_end();
+            }   
+        }
+
+        if (isset($parameters2) and !empty($parameters2)) 
+        {
+        	$this->db->group_start();
+        	foreach ($parameters2 as $key => $value)
+        	{ 
+            	$this->db->or_where('category_id', $value['category_id']);   
             }
+            $this->db->group_end();
         }
 
         $this->_custom_counting_conditions($this->db);
@@ -323,7 +333,7 @@ class Inventory_model extends Manaknight_Model
 	 * @param integer $limit default 10
 	 * @return array
 	 */
-	public function get_custom_paginated($page = 0, $limit=10, $where=[], $order_by='', $direction='ASC')
+	public function get_custom_paginated($page = 0, $limit=10, $where=[], $order_by='', $direction='ASC', $parameters2 = [])
     {
         $this->db->limit($limit, $page);
 
@@ -382,6 +392,18 @@ class Inventory_model extends Manaknight_Model
 
              
         }
+
+
+        if (isset($parameters2) and !empty($parameters2)) 
+        {
+        	$this->db->group_start();
+        	foreach ($parameters2 as $key => $value)
+        	{ 
+            	$this->db->or_where('category_id', $value['category_id']);  
+            }
+            $this->db->group_end();
+        }
+
 
         $query = $this->db->get($this->_table);
 		$result = [];
