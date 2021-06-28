@@ -227,6 +227,7 @@
         max-height: 65px !important;
         min-height: 65px !important;
         width: 100% !important;
+        object-fit: cover;
     }
 </style>
 <?php 
