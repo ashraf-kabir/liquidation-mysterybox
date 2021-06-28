@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">
                 <div class="container-fluid" id="mkd-media-gallery-container" style="height: 500px;overflow-y: scroll;">
-                    <div class="row" id="mkd-media-gallery-wrapper"></div> 
+                    <div class="row h-100" id="mkd-media-gallery-wrapper" style="overflow-y: scroll;"></div> 
                 </div>
                 <div class="container-fluid" id="mkd-media-upload-container">
                     <div class="row" id="mkd-media-upload-wrapper">
