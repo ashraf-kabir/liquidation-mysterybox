@@ -172,3 +172,15 @@ product page
 breadcrumb Home -> Category -> product
 Qty and add to cart on same line. With dropdown
 Price larger font
+
+--------------------------------------------------------------
+
+
+priority:
+- create a new page called add subcategory where we add category and set parent category
+- change current category page to only add parent category
+- check with sanjaya issues left
+- you are going take over all auction changes from ashraf. Ashraf need to finish 3 projects asap
+
+ALTER TABLE `category` ADD `is_from_parent_page` INT NOT NULL AFTER `status`;
+ALTER TABLE `category` CHANGE `is_from_parent_page` `is_from_parent_page` INT(11) NOT NULL DEFAULT '2';

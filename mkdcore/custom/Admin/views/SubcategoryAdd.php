@@ -14,7 +14,7 @@ if ($layout_clean_mode) {
             <a href="/admin/dashboard" class="breadcrumb-link">Dashboard</a>
         </li> -->
         <li class="breadcrumb-item active" aria-current="page">
-            <a href="/admin/category/0" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>
+            <a href="/admin/subcategory/0" class="breadcrumb-link"><?php echo $view_model->get_heading();?></a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
             Add
@@ -59,13 +59,21 @@ if ($layout_clean_mode) {
                 </h5>
                 <?= form_open() ?>
                 <div class="form-group col-md-5 col-sm-12 ">
-					<label for="Name">Name<span class="text-danger">*</span></label>
-					<input type="text" class="form-control data-input" id="form_name" name="name" value="<?php echo set_value('name'); ?>"/>
-				</div>
+                    <label for="Name">Name<span class="text-danger">*</span> </label>
+                    <input type="text" class="form-control data-input" id="form_name" name="name" value="<?php echo set_value('name'); ?>"/>
+                </div>
 
 
                  
-                
+                <div class="form-group col-md-5 col-sm-12">
+                    <label for="Parent Category Id">Parent Category<span class="text-danger">*</span></label>
+                    <select class="form-control data-input" id="form_parent_category_id"   name="parent_category_id" >
+                        <option value="">Select</option>
+                        <?php foreach ($parent_categories as $category_parent_list_key => $category_parent_list_value): ?>
+                            <option  value="<?php echo $category_parent_list_value->id ?>" ><?php echo $category_parent_list_value->name ?></option>
+                        <?php endforeach ?>
+                    </select>   
+                </div>
 
 
 
@@ -82,7 +90,7 @@ if ($layout_clean_mode) {
  
                 </div>  
  
-				 
+                 
 
                 <div class="form-group col-md-5 col-sm-12 ">
                     <label for="Name">SKU Prefix </label>
@@ -90,14 +98,14 @@ if ($layout_clean_mode) {
                 </div>
 
 
-				<div class="form-group col-md-5 col-sm-12 ">
-					<label for="Status">Status<span class="text-danger">*</span></label>
-					<select id="form_status" name="status" class="form-control data-input">
-						<?php foreach ($view_model->status_mapping() as $key => $value) {
-							echo "<option value='{$key}'> {$value} </option>";
-						}?>
-					</select>
-				</div>
+                <div class="form-group col-md-5 col-sm-12 ">
+                    <label for="Status">Status<span class="text-danger">*</span> </label>
+                    <select id="form_status" name="status" class="form-control data-input">
+                        <?php foreach ($view_model->status_mapping() as $key => $value) {
+                            echo "<option value='{$key}'> {$value} </option>";
+                        }?>
+                    </select>
+                </div>
 
                     
                 <div class="form-group  col-md-5 col-sm-12">

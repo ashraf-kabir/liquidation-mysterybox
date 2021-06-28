@@ -1155,23 +1155,16 @@ class Home_controller extends Manaknight_Controller
     {
         $this->load->model('home_page_setting_model');
 
-        $header_categories  = $this->category_model->get_all_with_sort_by(['status' => 1],'name');
-        $all_categories     = $header_categories;
-
+        $header_categories  = $this->category_model->get_all_with_sort_by(['status' => 1 , 'is_from_parent_page' => 1],'name'); 
         foreach ($header_categories as $key => &$value) 
-        {
-            if (!empty($value->parent_category_id) ) 
-            {
-                unset($header_categories[$key]);
-            }else{
-                $value->childs_list = $this->category_model->get_all_with_sort_by(['parent_category_id' => $value->id],'name');
-            }
+        { 
+            $value->childs_list = $this->category_model->get_all_with_sort_by(['parent_category_id' => $value->id, 'is_from_parent_page' => 2],'name'); 
         }
 
         
         
        
-        $data['all_categories']    = $all_categories;
+        $data['all_categories']    = $this->category_model->get_all_with_sort_by(['status' => 1],'name');;
         $data['header_categories'] = $header_categories;
         // $data['liquidation_lot']  = $this->get_liquidation_lots();
         // $data['liquidation_pal']  = $this->get_liquidation_pallets();

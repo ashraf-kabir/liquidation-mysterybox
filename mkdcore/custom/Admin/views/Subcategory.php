@@ -33,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <h5 class="primaryHeading2 text-md-left">
                     <?php echo $view_model->get_heading();?> Search
               </h5>
-                <?= form_open('/admin/category/0', ['method' => 'get']) ?>
+                <?= form_open('/admin/subcategory/0', ['method' => 'get']) ?>
                     <div class="row">
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                             <div class="form-group">
@@ -68,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
   <?php echo $view_model->get_heading();?>  (<?php echo $view_model->get_total_rows();?> results found)
-  <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/admin/category/add"><i class="fas fa-plus-circle"></i></a></span>
+  <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/admin/subcategory/add"><i class="fas fa-plus-circle"></i></a></span>
 </h5>
 
   <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4 pt-4" style='height:auto;'>
@@ -122,15 +122,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <?php
                     echo '<tr>';
                             echo "<td>{$data->id}</td>";
-                            echo "<td>{$data->name}</td>"; 
+                            echo "<td>{$data->name}</td>";
+                            echo "<td>" . ucfirst($data->parent_category_id) ."</td>";
+                            
                             echo "<td><div class='mkd-image-container'><img class='img-fluid modal-image' src='$data->feature_image' onerror=\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\"/></div></td>";
                             echo "<td>{$data->sku_prefix}</td>";
                             echo "<td>" . ucfirst($view_model->status_mapping()[$data->status]) ."</td>";
                             
                             echo '<td>';
-                            echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/admin/category/edit/' . $data->id . '">Edit</a>';
-                            echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/category/view/' . $data->id . '">View</a>';
-                            echo ' <a class="btn btn-link  link-underline text-underline text-danger btn-sm" target="_blank" href="/admin/category/delete/' . $data->id . '">Remove</a>';
+                            echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/admin/subcategory/edit/' . $data->id . '">Edit</a>';
+                            echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/subcategory/view/' . $data->id . '">View</a>';
+                            echo ' <a class="btn btn-link  link-underline text-underline text-danger btn-sm" target="_blank" href="/admin/subcategory/delete/' . $data->id . '">Remove</a>';
  
                             echo '</td>';
                     echo '</tr>';
