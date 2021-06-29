@@ -250,8 +250,8 @@
             min-height: 75px !important;
         }   
         .product-description{
-            min-height: 400px;
-            max-height: 400px;
+            min-height: 331px;
+            max-height: 331px;
         }
     }
     @media (max-width: 1100px){
@@ -260,8 +260,8 @@
             min-height: 60px !important;
         }   
         .product-description{
-            min-height: 500px;
-            max-height: 500px;
+            min-height: 317px;
+            max-height: 317px;
         }
     }
 
@@ -270,6 +270,10 @@
             max-height: 75px !important;
             min-height: 75px !important;
         }   
+        .product-description{
+            min-height: auto;
+            max-height: auto;
+        }
     }
 
     @media (max-width: 768px){
