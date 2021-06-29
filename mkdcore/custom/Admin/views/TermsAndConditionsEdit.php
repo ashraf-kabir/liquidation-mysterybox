@@ -62,7 +62,7 @@ if ($layout_clean_mode) {
                     Edit <?php echo $view_model->get_heading();?>
                 </h5>
                 <?= form_open() ?>
-				<div class="form-group col-md-5 col-sm-12">
+				<div class="form-group col-md-12 col-sm-12">
 					<label for="Terms And Conditions">Terms And Conditions </label>
 					<textarea id='form_terms_and_condition_text' name='terms_and_condition_text' class='data-input form-control' rows='5'><?php echo set_value('terms_and_condition_text', $this->_data['view_model']->get_terms_and_condition_text());?></textarea>
 				</div>
