@@ -209,6 +209,10 @@
         .col-991-p-0{
             padding: 15px !important;
         }
+        .product-gallery-container{
+            margin-left: 15px !important;
+            max-width: 95%;
+        }
         
     } 
 
@@ -319,9 +323,9 @@ if (!empty($product->feature_image))
                         
                     </div>
 
-                    <div class="col-12 col-sm-12 padding-left-0-custom" style="max-height: 350px; padding: 0px; overflow: auto;">
+                    <div class="col-12 col-sm-12 product-gallery-container" style="max-height: 350px; padding: 0px; overflow: auto;">
                         <div class="row " style="margin: 0px;"> 
-                            <div class="product-image-list-box flex-css-row-start">
+                            <div class="product-image-list-box flex-css">
                                 <div class="col-6 col-sm-2 testing"> 
                                     <div class="product-image-list-container pt-2 pb-2">
                                         <img style="border: none;" class="demo cursor gallery-thumbnail img-thumbnail" src="<?php echo $feature_image; ?>"   onclick="currentSlide(1)" alt="<?php echo $product->product_name; ?>">
