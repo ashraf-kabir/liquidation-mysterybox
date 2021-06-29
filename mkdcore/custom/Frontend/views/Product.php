@@ -154,6 +154,14 @@
         }  
     } */
 
+    @media (min-width: 1300px){
+        .product-description{
+            max-height: 521px;
+            min-height: 521px;
+            overflow-y: auto; 
+        }
+    }
+
     @media (min-width: 991px){
         .product-description{
             max-height: 321px;
@@ -215,6 +223,20 @@
         }
         
     } 
+
+    @media (max-width:500px) {
+        .product-gallery-container{
+            margin-left: 15px !important;
+            max-width: 93%;
+        }
+    }
+
+    @media (max-width:400px) {
+        .product-gallery-container{
+            margin-left: 15px !important;
+            max-width: 92%;
+        }
+    }
 
 
     .img-thumbnail{
