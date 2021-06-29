@@ -52,6 +52,11 @@
         /* width: 70px; */
     }
 
+    .product-description{
+        min-height: 345px;
+        max-height: 345px;
+    }
+
     /* width */
     .product-image-list-box::-webkit-scrollbar {
   height: 5px;
@@ -154,22 +159,6 @@
         }  
     } */
 
-    @media (min-width: 1300px){
-        .product-description{
-            max-height: 521px;
-            min-height: 521px;
-            overflow-y: auto; 
-        }
-    }
-
-    @media (min-width: 991px){
-        .product-description{
-            max-height: 321px;
-            min-height: 321px;
-            overflow-y: auto; 
-        }
-    }
-
     @media only screen and (max-width:991px) {
            
         .play_icon{
@@ -260,12 +249,20 @@
             max-height: 75px !important;
             min-height: 75px !important;
         }   
+        .product-description{
+            min-height: 400px;
+            max-height: 400px;
+        }
     }
     @media (max-width: 1100px){
         .gallery-thumbnail{
             max-height: 60px !important;
             min-height: 60px !important;
         }   
+        .product-description{
+            min-height: 500px;
+            max-height: 500px;
+        }
     }
 
     @media (max-width: 991px){
