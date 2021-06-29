@@ -59,6 +59,7 @@
      .active_category{
         background: #F6F6F6 !important;
         padding: 7px 10px !important;
+        margin-left: -10px !important;
      }
 
      .widget.widget_tz_categories ul li{
