@@ -45,6 +45,7 @@
      }
      .child-list-cat a{
           font-size: 12px; 
+          padding: 3px 0;
      }
 
      @media only screen and (max-width: 767px) {
@@ -94,7 +95,7 @@
                                    </li>
                                    <?php if( !empty($header_categories) ){ ?>
                                         <?php foreach($header_categories as $key => $value){ ?>
-                                             <li class="cat-item cat-item-116 "><a href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>" style="width:100%;"  class="<?php if (isset($_GET['category']) and $_GET['category'] == $value->id): ?> active_category <?php endif; ?>"><?php echo $value->name; ?></a>
+                                             <li class="cat-item cat-item-116 "><a href="<?php echo base_url(); ?>categories/?category=<?php echo $value->id; ?>" style="width:100%; display: inline-block"  class="<?php if (isset($_GET['category']) and $_GET['category'] == $value->id): ?> active_category <?php endif; ?>"><?php echo $value->name; ?></a>
                                                   <?php if (!empty($value->childs_list)): ?> 
                                                   <div class="child-list-cat flex-top-column pl-3">
                                                        <?php foreach ($value->childs_list as $childkey => $childvalue): ?>
