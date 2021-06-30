@@ -55,49 +55,9 @@
     .product-description{
         min-height: 345px;
         max-height: 345px;
+        overflow-y: auto;
     }
 
-    /* width */
-    .product-image-list-box::-webkit-scrollbar {
-  height: 5px;
-  width: 7px;
-}
-
-/* Track */
-.product-image-list-box::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
- 
-/* Handle */
-.product-image-list-box::-webkit-scrollbar-thumb {
-  background: #999; 
-}
-
-/* Handle on hover */
-.product-image-list-box::-webkit-scrollbar-thumb:hover {
-  background: #777; 
-}
-
-    /* width */
-    ::-webkit-scrollbar {
-  height: 5px;
-  width: 7px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #999; 
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #777; 
-}
 
 
     
