@@ -483,7 +483,7 @@ if($this->session->userdata('role') == 1)
                 ['font', 'fontSize', 'formatBlock'],
                 ['paragraphStyle', 'blockquote'],
                 ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-                ['fontColor', 'hiliteColor', 'textStyle'],
+                ['textStyle'],
                 ['removeFormat'],
                 '/', // Line break
                 ['outdent', 'indent'],

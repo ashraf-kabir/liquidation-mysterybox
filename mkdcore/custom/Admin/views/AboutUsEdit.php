@@ -62,10 +62,10 @@ if ($layout_clean_mode) {
                     Edit <?php echo $view_model->get_heading();?>
                 </h5>
                 <?= form_open() ?>
-				<div class="form-group col-md-12 col-sm-12">
-					<label for="About">About </label>
-					<textarea id='form_about_us_page' name='about_us_page' class='data-input form-control' rows='5'><?php echo set_value('about_us_page', $this->_data['view_model']->get_about_us_page());?></textarea>
-				</div>
+                <div class="form-group col-md-12 col-sm-12">
+                    <label for="About">About </label>
+                    <textarea id='form_about_us_page' name='about_us_page' class='data-input form-control' rows='5'><?php echo set_value('about_us_page', $this->_data['view_model']->get_about_us_page());?></textarea>
+                </div>
 
                     
                 <div class="form-group col-md-12 col-sm-12">
@@ -96,7 +96,7 @@ if ($layout_clean_mode) {
                 ['font', 'fontSize', 'formatBlock'],
                 ['paragraphStyle', 'blockquote'],
                 ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-                ['fontColor', 'hiliteColor', 'textStyle'],
+                [ 'textStyle'],
                 ['removeFormat'],
                 '/', // Line break
                 ['outdent', 'indent'],

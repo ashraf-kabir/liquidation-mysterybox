@@ -392,7 +392,7 @@ if ($layout_clean_mode) {
                 ['font', 'fontSize', 'formatBlock'],
                 ['paragraphStyle', 'blockquote'],
                 ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-                ['fontColor', 'hiliteColor', 'textStyle'],
+                ['textStyle'],
                 ['removeFormat'],
                 '/', // Line break
                 ['outdent', 'indent'],
