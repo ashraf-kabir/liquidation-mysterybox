@@ -53,8 +53,8 @@
     }
 
     .product-description{
-        min-height: 345px;
-        max-height: 345px;
+        min-height: 358px;
+        max-height: 358px;
         overflow-y: auto;
     }
 
@@ -210,8 +210,8 @@
             min-height: 75px !important;
         }   
         .product-description{
-            min-height: 331px;
-            max-height: 331px;
+            min-height: 343px;
+            max-height: 343px;
         }
     }
     @media (max-width: 1100px){
@@ -220,8 +220,8 @@
             min-height: 60px !important;
         }   
         .product-description{
-            min-height: 317px;
-            max-height: 317px;
+            min-height: 328px;
+            max-height: 328px;
         }
     }
 
