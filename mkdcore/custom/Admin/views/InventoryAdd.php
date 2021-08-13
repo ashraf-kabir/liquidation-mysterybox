@@ -257,7 +257,7 @@ if ($layout_clean_mode) {
 
  
 
-                 <div class="form-group col-md-12 col-sm-12"> 
+                <div class="form-group col-md-12 col-sm-12"> 
                     <div class="card" style="background-color: #fff; background-clip: border-box; border: 1px solid rgba(0,0,0,.125) !important; border-radius: .25rem;">
                         <div class="card-header" style="text-align: end;"> <button class="btn btn-primary add_more_link" type="button">Add More</button> </div>
 

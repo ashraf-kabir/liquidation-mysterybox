@@ -354,12 +354,12 @@ class Ecom_api_controller extends Manaknight_Controller
 
 
                 $order_data      = $this->pos_order_model->get($sale_order_id);
-                $order_detail    = $this->pos_order_items_model->get_by_fields(['product_id' => $item_id, 'order_id' => $sale_order_id]);
+                // $order_detail    = $this->pos_order_items_model->get_by_fields(['product_id' => $item_id, 'order_id' => $sale_order_id]);
  
 
-                if ($order_detail) 
+                if ($order_data) 
                 {
-                    $order_update = $this->pos_order_items_model->edit( [  'ship_station_tracking_no' => $tracking_no ], $order_detail->id);
+                    $order_update = $this->pos_order_model->edit( [  'ship_station_tracking_no' => $tracking_no ], $sale_order_id);
 
                     if(!$order_update)
                     {
