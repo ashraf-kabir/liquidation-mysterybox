@@ -1982,6 +1982,7 @@ class Home_controller extends Manaknight_Controller
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 
         // $headers = array(
         // "Content-Type: application/json",
@@ -2003,8 +2004,8 @@ class Home_controller extends Manaknight_Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, $query);
 
         //for debug only!
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
         $resp = curl_exec($curl);
         curl_close($curl);
@@ -2019,7 +2020,7 @@ class Home_controller extends Manaknight_Controller
         if(isset($response['response']) && $response['response'] == $APPROVED){ 
             $response['success'] = true;
         }else{
-            $response['error_msg'] = 'Transaction Not Approved';
+            $response['error_msg'] = 'Transaction Not Approved'.$nmi_secret_key.$url;
         }
       
 
