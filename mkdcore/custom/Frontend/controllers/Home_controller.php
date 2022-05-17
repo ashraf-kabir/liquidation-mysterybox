@@ -513,10 +513,10 @@ class Home_controller extends Manaknight_Controller
             $this->form_validation->set_rules('billing_state', "Billing State", "max_length[255]"); 
             $this->form_validation->set_rules('billing_address', "Billing Address", "required|min_length[5]"); 
             $this->form_validation->set_rules('payment', "Payment Method", "integer");
-            // $this->form_validation->set_rules('number', "Account Number", "required|integer");
-            // $this->form_validation->set_rules('exp_month', "Expiry Month", "required");
-            // $this->form_validation->set_rules('exp_year', "Expiry Year", "required");
-            // $this->form_validation->set_rules('cvc', "CVC", "required");
+            $this->form_validation->set_rules('number', "Account Number", "required|integer");
+            $this->form_validation->set_rules('exp_month', "Expiry Month", "required");
+            $this->form_validation->set_rules('exp_year', "Expiry Year", "required");
+            $this->form_validation->set_rules('cvc', "CVC", "required");
 
             $this->form_validation->set_rules('shipping_zip', "Shipping Zip", "required|integer");
             $this->form_validation->set_rules('shipping_city', "Shipping City", "required|max_length[255]");
@@ -681,10 +681,11 @@ class Home_controller extends Manaknight_Controller
             //     $exp_year       =  $this->input->post('exp_year', TRUE);
             //     $cvc            =  $this->input->post('cvc', TRUE);
     
-            //     $this->load->library('stripe_helper_service');
+            //     // $this->load->library('stripe_helper_service');
     
-            //     $this->stripe_helper_service->set_config($this->config);
-            //     $response = $this->stripe_helper_service->create_stripe_token($acc_number, $exp_month, $exp_year, $cvc);
+            //     // $this->stripe_helper_service->set_config($this->config);
+            //     // $response = $this->stripe_helper_service->create_stripe_token($acc_number, $exp_month, $exp_year, $cvc);
+
     
                 
             //     if( isset($response['success']) )
@@ -699,7 +700,14 @@ class Home_controller extends Manaknight_Controller
             //         exit();  
             //     } 
             // }
- 
+
+            $acc_number     =  $this->input->post('number', TRUE);
+            $exp_month      =  $this->input->post('exp_month', TRUE);
+            $exp_year       =  $this->input->post('exp_year', TRUE);
+            $cvc            =  $this->input->post('cvc', TRUE);
+
+           
+
 
 
 
@@ -891,10 +899,12 @@ class Home_controller extends Manaknight_Controller
 
                     if($payment == 2)
                     { 
+                        $response = $this->_make_nmi_payment($grand_total, $acc_number, $exp_month, $exp_year, $cvc);
                         $grand_total = number_format($grand_total,2);
-                        $response = $this->stripe_helper_service->create_stripe_charge($user_id, $token_id, $grand_total, "Ecom Order");
+                        // $response = $this->stripe_helper_service->create_stripe_charge($user_id, $token_id, $grand_total, "Ecom Order");
+                        $response = $this->_make_nmi_payment($grand_total, $acc_number, $exp_month, $exp_year, $cvc);
              
-                        if( isset($response['success']) )
+                        if( isset($response['success']) && $response['success'] == true )
                         { 
                             $this->pos_order_model->edit(['intent_data' => json_encode($response['response']) ], $order_id);
                             $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]); 
@@ -904,6 +914,7 @@ class Home_controller extends Manaknight_Controller
                             $this->db->trans_rollback();
                             $output['status'] = 0;
                             $output['error']  = $response['error_msg'];
+                            $output['msg']  = $response;
                             echo json_encode($output);
                             exit(); 
                         }  
@@ -1956,6 +1967,64 @@ class Home_controller extends Manaknight_Controller
         $conn = new PDO("mysql:host=" . $host_cron . ";dbname=" . $dbname_cron , $username_cron, $password_cron);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $conn;
+    }
+
+    private function _make_nmi_payment($amount, $ccnumber, $exp_month, $exp_year, $cvv='')
+    {
+        $APPROVED = 1;
+        $url = $this->config->item('nmi_url');
+        $nmi_secret_key = $this->config->item('nmi_security_key');
+        $ccexp = $exp_month . date_format(date_create_from_format('Y', $exp_year), 'y');
+        $type = 'sale';
+        $test_mode = 'enabled';
+
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        // $headers = array(
+        // "Content-Type: application/json",
+        // );
+        // curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        $query  = "";
+        // Login Information
+        $query .= "security_key=" . urlencode($nmi_secret_key) . "&";
+        // Sales Information
+        $query .= "ccnumber=" . urlencode($ccnumber) . "&";
+        $query .= "ccexp=" . urlencode($ccexp) . "&";
+        $query .= "amount=" . urlencode(number_format($amount,2,".","")) . "&";
+        $query .= "cvv=" . urlencode($cvv) . "&";
+        $query .= "type=" . urlencode($type) . "&";
+        $query .= "test_mode=" . urlencode($test_mode) . "&";
+
+
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $query);
+
+        //for debug only!
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        $resp = curl_exec($curl);
+        curl_close($curl);
+        
+        $data = explode("&",$resp);
+
+        for($i=0;$i<count($data);$i++) {
+                $rdata = explode("=",$data[$i]);
+                $response[$rdata[0]] = isset($rdata[1]) ? $rdata[1] : 0;
+        }
+
+        if(isset($response['response']) && $response['response'] == $APPROVED){ 
+            $response['success'] = true;
+        }else{
+            $response['error_msg'] = 'Transaction Not Approved';
+        }
+      
+
+        return $response;
+
     }
 
 }

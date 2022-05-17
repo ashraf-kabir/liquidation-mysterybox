@@ -3465,7 +3465,7 @@
 		"subclass_prefix": "Manaknight_",
 		"migration_number": 9377770345344,
 		"language": "english",
-		"base_url": "https://codebuilder.manaknightdigital.com/",
+		"base_url": "http://localhost:9000",
 		"site_title": "Manaknight Saas",
 		"company": "Manaknight Inc.",
 		"image_upload": "s3",
@@ -3501,7 +3501,9 @@
             "accounting_site_url": "http://localhost:8000/",
             "image_site_url": "http://localhost:9000/",
             "admin_email": "zeeshan72awan@gmail.com",
-            "platform_id": 5
+            "platform_id": 5,
+			"nmi_security_key": "jN42r8KXDe2BFA38Ge5k9h7r5msdqv8H",
+			"nmi_url": "https://secure.nmi.com/api/transact.php"
 		}
 	},
 	"database": {
@@ -3511,7 +3513,7 @@
 		"hostname": "localhost",
 		"username": "root",
 		"password": "",
-		"database": "code_builder",
+		"database": "mystery",
 		"dbdriver": "mysqli",
 		"dbprefix": "",
 		"pconnect": false,
