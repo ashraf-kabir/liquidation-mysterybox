@@ -878,7 +878,7 @@
 			"method": "",
 			"join": [],
 			"mapping": {
-				"status": {"1": "Paid","2": "Pending"},
+				"status": {"0": "Failed","1": "Paid","2": "Pending"},
 				"payment_type": {"1": "Cash", "2" : "Card", "3" : "ACH", "4" : "Bank"}
 			},
 			"pre": "",
@@ -2233,7 +2233,7 @@
 			"filter_fields": ["transaction_date" ],
 			"add_fields": [],
 			"edit_fields": [],
-			"view_fields": ["id",   "transaction_date", "customer_id", "tax", "discount", "total"],
+			"view_fields": ["id",   "transaction_date", "customer_id", "tax", "discount", "total", "status"],
 			"autocomplete": "",
 			"dynamic_mapping_add": {},
 			"dynamic_mapping_edit": {},
@@ -3744,6 +3744,7 @@
 		"v1/api/profile" : "Guest/Home_controller/profile",
 		"v1/api/check_cart_total_items" : "Guest/Home_controller/check_cart_total_items",
 		"v1/api/add_new_card" : "Guest/Home_controller/add_new_card",
+		"v1/api/nmi/add_new_card" : "Guest/Home_controller/add_new_card_nmi",
 		"v1/api/load_customer_cards" : "Guest/Home_controller/load_customer_cards",
 
 

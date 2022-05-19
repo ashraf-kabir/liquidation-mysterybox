@@ -513,10 +513,10 @@ class Home_controller extends Manaknight_Controller
             $this->form_validation->set_rules('billing_state', "Billing State", "max_length[255]"); 
             $this->form_validation->set_rules('billing_address', "Billing Address", "required|min_length[5]"); 
             $this->form_validation->set_rules('payment', "Payment Method", "integer");
-            $this->form_validation->set_rules('number', "Account Number", "required|integer");
-            $this->form_validation->set_rules('exp_month', "Expiry Month", "required");
-            $this->form_validation->set_rules('exp_year', "Expiry Year", "required");
-            $this->form_validation->set_rules('cvc', "CVC", "required");
+            // $this->form_validation->set_rules('number', "Account Number", "required|integer");
+            // $this->form_validation->set_rules('exp_month', "Expiry Month", "required");
+            // $this->form_validation->set_rules('exp_year', "Expiry Year", "required");
+            // $this->form_validation->set_rules('cvc', "CVC", "required");
 
             $this->form_validation->set_rules('shipping_zip', "Shipping Zip", "required|integer");
             $this->form_validation->set_rules('shipping_city', "Shipping City", "required|max_length[255]");
@@ -593,7 +593,7 @@ class Home_controller extends Manaknight_Controller
                 }
             }
 
- 
+            $this->db->trans_begin();
 
 
             $data['cart_items']  = $cart_items;
@@ -640,7 +640,7 @@ class Home_controller extends Manaknight_Controller
             $this->pos_checkout_service->set_pos_order_model($this->pos_order_model);
             $this->pos_checkout_service->set_coupon_model($this->coupon_model);
 
-            $this->db->trans_begin();
+           
  
 
             /**
@@ -899,10 +899,12 @@ class Home_controller extends Manaknight_Controller
 
                     if($payment == 2)
                     { 
-                        $response = $this->_make_nmi_payment($grand_total, $acc_number, $exp_month, $exp_year, $cvc);
+                        $customer_card_id = $this->input->post('customer_card', TRUE);
+                        $card_data = $this->customer_cards_model->get_by_field('id', $customer_card_id);
+                        $response = $this->_make_nmi_payment($grand_total, $card_data->account_no, $card_data->month, $card_data->year, $card_data->cvc);
                         $grand_total = number_format($grand_total,2);
                         // $response = $this->stripe_helper_service->create_stripe_charge($user_id, $token_id, $grand_total, "Ecom Order");
-                        $response = $this->_make_nmi_payment($grand_total, $acc_number, $exp_month, $exp_year, $cvc);
+                        // $response = $this->_make_nmi_payment($grand_total, $acc_number, $exp_month, $exp_year, $cvc);
              
                         if( isset($response['success']) && $response['success'] == true )
                         { 
@@ -911,6 +913,8 @@ class Home_controller extends Manaknight_Controller
                         }
                         else
                         { 
+                            $this->pos_order_model->edit(['status' => 0 ], $order_id); //Status Cancelled
+                            $this->transactions_model->edit(['status' => 0 ], $transaction_id); //Status Failed
                             $this->db->trans_rollback();
                             $output['status'] = 0;
                             $output['error']  = $response['error_msg'];
@@ -1911,6 +1915,81 @@ class Home_controller extends Manaknight_Controller
         exit();
     }
 
+    public function add_new_card_nmi(){
+        $user_id = $this->session->userdata('user_id');
+
+        if (empty($user_id))
+        { 
+            $output['error'] = 'Error! Login to continue.'; 
+            echo json_encode($output);
+            exit();
+        }
+        
+        if (!$this->session->userdata('customer_login'))
+        { 
+            $output['error'] = 'Error! Login as customer to continue.'; 
+            echo json_encode($output);
+            exit();
+        }
+
+        $this->load->model('customer_model');
+        $this->load->model('customer_cards_model');
+        
+        $card_number  = $this->input->post('card_number', TRUE);
+        $exp_month    = $this->input->post('exp_month', TRUE);
+        $exp_year     = $this->input->post('exp_year', TRUE);
+        $cvc          = $this->input->post('cvc', TRUE); 
+        $card_default = $this->input->post('card_default', TRUE); 
+
+        $card_last4 = substr($card_number, 12);
+        if(empty($card_number) || empty($exp_month) || empty($exp_year) || empty($cvc)){
+
+            $output['error'] = "Error! Please Fill Required Fields."; 
+            echo json_encode($output);
+            exit(); 
+        }
+
+        // check card already added or not
+        $prev_card = $this->customer_cards_model->get_by_fields(['user_id' => $user_id, 'account_no' => $card_number, 'cvc' => $cvc]);
+        if(empty($prev_card)){
+            // add new entry
+            $check_new_card = $this->customer_cards_model->create([
+                'is_default'     => $card_default,
+                'account_no'     => $card_number,
+                'user_id'        => $user_id,
+                'card_token'     => '',
+                'brand'          => 'Card',
+                'month'          => $exp_month,
+                'year'           => $exp_year,
+                'last4'          => $card_last4,
+                'cvc'            => $cvc,
+                'status'         => 1,
+            ]);
+
+            // output and exit
+            $output['success'] = "Card Added Successfully."; 
+            echo json_encode($output);
+            exit();   
+        }
+
+        // update card entry
+        $payload = [
+            'is_default'     => $card_default,
+            'account_no'     => $card_number,
+            'month'          => $exp_month,
+            'year'           => $exp_year,
+            'last4'          => $card_last4,
+            'cvc'            => $cvc,
+        ];
+        $check_new_card = $this->customer_cards_model->edit($payload, $prev_card->id);
+
+        // output and exit
+        $output['success'] = "Card Updated Successfully."; 
+        echo json_encode($output);
+        exit(); 
+
+    }
+
 
     private function get_liquidation_pallets()
     {
@@ -2020,7 +2099,7 @@ class Home_controller extends Manaknight_Controller
         if(isset($response['response']) && $response['response'] == $APPROVED){ 
             $response['success'] = true;
         }else{
-            $response['error_msg'] = 'Transaction Not Approved'.$nmi_secret_key.$url;
+            $response['error_msg'] = 'Payment Not Approved';
         }
       
 

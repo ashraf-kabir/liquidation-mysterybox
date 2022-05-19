@@ -882,7 +882,7 @@ $(document).on('click','.add_new_card',function(e){
   var card_default = $('#card_default').val(); 
 
   $.ajax({
-    url: '../v1/api/add_new_card',
+    url: '../v1/api/nmi/add_new_card',
     timeout: 30000,
     method: 'POST',
     dataType: 'JSON',  
@@ -904,10 +904,48 @@ $(document).on('click','.add_new_card',function(e){
     },
     error: function()
     { 
-      toastr.error('Error! Connection timeout.'); 
+      toastr.error('Error! Something went wrong.'); 
     } 
   });
 });
+
+
+// $(document).on('click','.add_new_card',function(e){
+//   e.preventDefault();
+
+//   var exp_month    = $('#exp_month').val();
+//   var card_number  = $('#account_no').val();
+//   var exp_year     = $('#exp_year').val();
+//   var cvc          = $('#cvc_numb').val(); 
+//   var card_default = $('#card_default').val(); 
+
+//   $.ajax({
+//     url: '../v1/api/add_new_card',
+//     timeout: 30000,
+//     method: 'POST',
+//     dataType: 'JSON',  
+//     data : {exp_month, card_number, exp_year, cvc, card_default },
+//     success: function (response)  
+//     {     
+//       if(response.success)
+//       {
+//         toastr.success(response.success); 
+//         load_customer_cards();
+//         $('.close-btn').trigger('click');
+//       } 
+
+
+//       if(response.error)
+//       { 
+//         toastr.error(response.error); 
+//       } 
+//     },
+//     error: function()
+//     { 
+//       toastr.error('Error! Connection timeout.'); 
+//     } 
+//   });
+// });
 
 
 
