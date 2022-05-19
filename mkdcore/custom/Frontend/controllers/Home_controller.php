@@ -2099,7 +2099,7 @@ class Home_controller extends Manaknight_Controller
         if(isset($response['response']) && $response['response'] == $APPROVED){ 
             $response['success'] = true;
         }else{
-            $response['error_msg'] = $resp.'Payment Not Approved'.$amount.$ccnumber.$exp_month.$exp_year.$cvv;
+            $response['error_msg'] = $resp.'Payment Not Approved'.$amount.$ccnumber.$ccexp.$cvv;
         }
       
 
