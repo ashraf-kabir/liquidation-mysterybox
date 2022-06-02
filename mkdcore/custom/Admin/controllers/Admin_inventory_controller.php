@@ -167,7 +167,8 @@ class Admin_inventory_controller extends Admin_controller
         $status = $this->input->post('status', TRUE);
         $store_location_id = $this->input->post('store_location_id', TRUE);
 
-        $can_ship = $this->input->post('can_ship', TRUE);
+        $can_ship = $this->input->post('can_ship', TRUE) ?? 2;
+        $can_ship_approval = $this->input->post('can_ship_approval', TRUE) ?? 2;
         $free_ship = $this->input->post('free_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
         $pin_item_top = $this->input->post('pin_item_top', TRUE);
@@ -222,6 +223,7 @@ class Admin_inventory_controller extends Admin_controller
             'status' => $status,
             'store_location_id' => $store_location_id, 
             'can_ship' => $can_ship,
+            'can_ship' => $can_ship_approval,
             'free_ship' => $free_ship,
             'product_type' => $product_type,
             'pin_item_top' => $pin_item_top,
@@ -324,7 +326,8 @@ class Admin_inventory_controller extends Admin_controller
         $store_location_id = $this->input->post('store_location_id', TRUE);
          
         $sale_person_id = $this->input->post('sale_person_id', TRUE);
-        $can_ship = $this->input->post('can_ship', TRUE);
+        $can_ship = $this->input->post('can_ship', TRUE) ?? 2;
+        $can_ship_approval = $this->input->post('can_ship_approval', TRUE) ?? 2;
         $free_ship = $this->input->post('free_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
         $pin_item_top = $this->input->post('pin_item_top', TRUE);
@@ -362,6 +365,7 @@ class Admin_inventory_controller extends Admin_controller
             'status' => $status,
             'store_location_id' => $store_location_id, 
             'can_ship' => $can_ship,
+            'can_ship' => $can_ship_approval,
             'free_ship' => $free_ship,
             'product_type' => $product_type,
             'pin_item_top' => $pin_item_top,

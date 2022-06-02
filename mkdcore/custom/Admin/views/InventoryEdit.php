@@ -166,7 +166,7 @@ if($this->session->userdata('role') == 1)
 
                 <div class="form-group col-md-5 col-sm-12">
                     <label for="Weight">Weight <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control data-input" id="form_weight" name="weight" value="<?php echo set_value('weight', $this->_data['view_model']->get_weight());?>" onkeypress="return mkd_is_number(event,this)"/>
+                    <input type="text" class="form-control data-input" id="form_weight" name="weight" value="<?php echo set_value('weight', $this->_data['view_model']->get_weight());?>" onkeypressing="return mkd_is_number(event,this)"/>
                 </div>
 
 
@@ -220,6 +220,15 @@ if($this->session->userdata('role') == 1)
                     <select id="form_can_ship" name="can_ship" class="form-control data-input">
                         <?php foreach ($view_model->can_ship_mapping() as $key => $value) {
                             echo "<option value='{$key}' " . (($view_model->get_can_ship() == $key && $view_model->get_can_ship() != '') ? 'selected' : '') . "> {$value} </option>";
+                        }?>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-5 col-sm-12">
+                    <label for="Can Ship Approval">Can Ship Approval </label>
+                    <select id="form_can_ship_approval" name="can_ship_approval" class="form-control data-input">
+                        <?php foreach ($view_model->can_ship_approval_mapping() as $key => $value) {
+                            echo "<option value='{$key}' " . (($view_model->get_can_ship_approval() == $key && $view_model->get_can_ship_approval() != '') ? 'selected' : '') . "> {$value} </option>";
                         }?>
                     </select>
                 </div>
@@ -503,7 +512,32 @@ if($this->session->userdata('role') == 1)
         editor.onChange = (contents, core) => {
             $('._se_command_save').trigger('click')
         }
+
+        // Shipping Status /////////////////////////////////////////////////////////////////////
+        // can_ship_mapping => 1 : Delivery or pickup, 2: pickup only
+        // can_ship_approval_mapping => 1 : Yes, 2: No
+            updateCanShip();
+            let weight_input = document.querySelector("#form_weight");
+            weight_input.addEventListener('input', updateCanShip);
+
+        // ///////////////////////////////////////////////////////////////////////////////////
     }, false)
+
+    function updateCanShip(){
+        let weight              = document.querySelector("#form_weight").value;
+        let can_ship            = document.querySelector("#form_can_ship");
+        let can_ship_approval   = document.querySelector("#form_can_ship_approval");
+
+        if(weight > 75){
+            can_ship.value = 2; 
+            can_ship.disabled = true;
+            can_ship_approval.disabled = false
+        }else{
+            can_ship_approval.value = 2
+            can_ship_approval.disabled = true
+            can_ship.disabled = false;
+        }
+    }
 
 
 </script>

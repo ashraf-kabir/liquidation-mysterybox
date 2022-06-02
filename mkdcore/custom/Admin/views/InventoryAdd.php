@@ -412,6 +412,15 @@ if ($layout_clean_mode) {
         editor.onChange = (contents, core) => {
             $('._se_command_save').trigger('click')
         }
+
+         // Shipping Status /////////////////////////////////////////////////////////////////////
+        // can_ship_mapping => 1 : Delivery or pickup, 2: pickup only
+        // can_ship_approval_mapping => 1 : Yes, 2: No
+        updateCanShip();
+        let weight_input = document.querySelector("#form_weight");
+        weight_input.addEventListener('input', updateCanShip);
+
+        // ///////////////////////////////////////////////////////////////////////////////////
   
     }, false)
  
@@ -426,5 +435,19 @@ if ($layout_clean_mode) {
         });
     }, false)
 
+    function updateCanShip(){
+        let weight              = document.querySelector("#form_weight").value;
+        let can_ship            = document.querySelector("#form_can_ship");
+        let can_ship_approval   = document.querySelector("#form_can_ship_approval");
 
+        if(weight > 75){
+            can_ship.value = 2; 
+            can_ship.disabled = true;
+            can_ship_approval.disabled = false
+        }else{
+            can_ship_approval.value = 2
+            can_ship_approval.disabled = true
+            can_ship.disabled = false;
+        }
+    }
 </script>

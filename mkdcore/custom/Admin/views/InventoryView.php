@@ -221,10 +221,19 @@ if ($layout_clean_mode) {
 					<div class='col'>
 						Can Ship
 					</div>
-				<div class='col'>
+					<div class='col'>
 						<?php echo $view_model->can_ship_mapping()[$view_model->get_can_ship()];?>
 					</div>
+				</div>
+
+				<div class='row mb-4'>
+					<div class='col'>
+						Can Ship Approval
 					</div>
+					<div class='col'>
+						<?php echo $view_model->can_ship_approval_mapping()[$view_model->get_can_ship_approval()];?>
+					</div>
+				</div>
 				
 				<div class='row mb-4'>
 					<div class='col'>

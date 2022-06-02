@@ -35,6 +35,7 @@ class Inventory_model extends Manaknight_Model
 		'cost_price',
 		'admin_inventory_note', 
 		'can_ship', 
+		'can_ship_approval', 
 		'pin_item_top',
 		'product_type',
 		'free_ship',
@@ -75,6 +76,7 @@ class Inventory_model extends Manaknight_Model
 		['cost_price', 'Cost Price', ''],
 		['admin_inventory_note', 'Admin Inventory Note', ''], 
 		['can_ship', 'Can Ship', ''], 
+		['can_ship_approval', 'Can Ship Approval', ''], 
 		['pin_item_top', 'Pin Item', ''],
 		['product_type', 'Product Type', ''],
 		['status', 'Status', ''],
@@ -109,6 +111,7 @@ class Inventory_model extends Manaknight_Model
 		['cost_price', 'Cost Price', ''],
 		['admin_inventory_note', 'Admin Inventory Note', ''],
 		['can_ship', 'Can Ship', ''], 
+		['can_ship_approval', 'Can Ship Approval', ''], 
 		['pin_item_top', 'Pin Item', ''],
 		['product_type', 'Product Type', ''],
 		['video_url', 'Video URL', ''],
@@ -177,6 +180,14 @@ class Inventory_model extends Manaknight_Model
 	 
 
 	public function can_ship_mapping ()
+	{
+		return [
+			1 => 'Delivery Or Pickup',
+			2 => 'Pickup only',
+		];
+	}
+
+	public function can_ship_approval_mapping ()
 	{
 		return [
 			1 => 'Yes',

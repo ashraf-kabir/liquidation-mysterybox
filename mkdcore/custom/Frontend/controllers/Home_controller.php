@@ -2048,6 +2048,93 @@ class Home_controller extends Manaknight_Controller
         return $conn;
     }
 
+    public function checkout_step_1(){
+
+        if( $this->session->userdata('customer_login') && $this->session->userdata('user_id') )
+        {
+            $user_id = $this->session->userdata('user_id');
+            $this->load->model('customer_model');
+
+            $customer     =  $this->customer_model->get($user_id);
+
+            if ( empty($customer->shipping_address) || empty($customer->shipping_state)  || empty($customer->shipping_zip)  || empty($customer->shipping_city)  || empty($customer->shipping_country)  || empty($customer->billing_address)  || empty($customer->billing_zip) )
+            {
+                redirect('/address_details');
+            }
+
+            $data['active'] = 'checkout';
+            $data['layout_clean_mode'] = FALSE;
+            $data['no_detail'] = TRUE;
+    
+
+             
+            
+            $this->load->model('pos_cart_model');
+            
+            $this->load->model('tax_model');
+
+
+
+        
+
+            $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+            $box_groups = [];
+
+            if (!empty($cart_items)) 
+            {                     
+                foreach ($cart_items as $key => &$value)
+                {
+                    $item_data = $this->inventory_model->get($value->product_id);
+
+                    $value->free_ship     = $item_data->free_ship;
+                    $value->can_ship      = $item_data->can_ship;
+                    $value->feature_image = $item_data->feature_image;
+                    $value->description   = $item_data->inventory_note; 
+                    $value->item_data     = $item_data; 
+                    
+                    $cart_item_quantity = $value->product_qty;
+                    if($item_data->weight > 150){
+                        for($i = 0; $i < $cart_item_quantity; $i++){
+                            $value->product_quantity = 1;
+                            array_push($box_groups, $value);
+                        }
+                    }else if($item_data->weight < 150){
+                        $total_box_weight = 0;
+                        $quantity_in_box = 1;
+                        for($i = 1; $i <= $cart_item_quantity; $i++){
+                            $total_box_weight += $item_data->weight;
+                            if($total_box_weight >= 150 || $i >= $cart_item_quantity ){
+                                $value->product_quantity = $quantity_in_box;
+                                array_push($box_groups, $value);
+                                // reset
+                                $total_box_weight = 0;
+                                $quantity_in_box = 1;
+                                continue;
+                            }else {
+                                $quantity_in_box++;
+                            }
+
+
+                        }
+                    }
+
+
+                }
+            }
+
+            
+            $data['cart_items']   =  $box_groups; 
+            // $data['cart_items']   =  $cart_items; 
+            $data['customer']     =  $customer; 
+            $data['tax']          =  $this->tax_model->get(1); 
+
+            $this->_render('Guest/Checkout1',$data);
+        }
+        else{
+            redirect('');
+        }
+    }
+
     private function _make_nmi_payment($amount, $ccnumber, $exp_month, $exp_year, $cvv='')
     {
         $APPROVED = 1;

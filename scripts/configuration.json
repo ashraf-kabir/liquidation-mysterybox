@@ -394,6 +394,7 @@
 				["cost_price", "float", [], "xyzCost Price", "", ""],
 				["admin_inventory_note", "text", [], "xyzAdmin Inventory Note", "", ""],
 				["can_ship", "integer", [], "xyzCan Ship", "", ""],
+				["can_ship_approval", "integer", [], "Can Ship Approval", "", ""],
 				["free_ship", "integer", [], "xyzFree Shipping", "", ""],
 				["pin_item_top", "integer", [{"default" : 1}], "xyzPin Item", "", ""],
 				["available_in_shelf", "integer", [{"default" : 1}], "xyzAvailable In Shelf", "", ""],
@@ -423,6 +424,11 @@
 					"0": "Inactive"
 				},
 				"can_ship": {
+					"1": "Delivery or Pickup",
+					"2": "Pickup only"
+				},
+
+				"can_ship_approval": {
 					"1": "Yes",
 					"2": "No"
 				},
@@ -1688,9 +1694,9 @@
 			"listing_rows": ["id|integer", "product_name|string",   "sku|string", "category_id|integer", "store_location_id|integer", "physical_location|integer", "product_type|integer", "quantity|integer", "status|integer"],
 			"listing_actions": [],
 			"filter_fields": ["product_name", "sku", "category_id" ],
-			"add_fields": ["product_name", "video_url", "sale_person_id", "sku", "free_ship", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",  "status", "store_location_id", "can_ship", "product_type", "pin_item_top", "youtube_thumbnail_1", "youtube_thumbnail_2", "youtube_thumbnail_3", "youtube_thumbnail_4"],
-			"edit_fields": ["product_name", "video_url", "sale_person_id", "sku", "free_ship", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",   "status", "store_location_id",   "can_ship", "product_type", "pin_item_top", "youtube_thumbnail_1", "youtube_thumbnail_2", "youtube_thumbnail_3", "youtube_thumbnail_4"],
-			"view_fields": ["id", "product_name", "free_ship", "sale_person_id", "video_url", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "status", "store_location_id", "barcode_image",  "can_ship",  "product_type", "pin_item_top", "youtube_thumbnail_1", "youtube_thumbnail_2", "youtube_thumbnail_3", "youtube_thumbnail_4"],
+			"add_fields": ["product_name", "video_url", "sale_person_id", "sku", "free_ship", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",  "status", "store_location_id", "can_ship", "can_ship_approval", "product_type", "pin_item_top", "youtube_thumbnail_1", "youtube_thumbnail_2", "youtube_thumbnail_3", "youtube_thumbnail_4"],
+			"edit_fields": ["product_name", "video_url", "sale_person_id", "sku", "free_ship", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",   "status", "store_location_id",   "can_ship", "can_ship_approval", "product_type", "pin_item_top", "youtube_thumbnail_1", "youtube_thumbnail_2", "youtube_thumbnail_3", "youtube_thumbnail_4"],
+			"view_fields": ["id", "product_name", "free_ship", "sale_person_id", "video_url", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "status", "store_location_id", "barcode_image",  "can_ship", "can_ship_approval",  "product_type", "pin_item_top", "youtube_thumbnail_1", "youtube_thumbnail_2", "youtube_thumbnail_3", "youtube_thumbnail_4"],
 			"autocomplete": "",
 			"dynamic_mapping_add": {},
 			"dynamic_mapping_edit": {},
@@ -1753,9 +1759,9 @@
 			"listing_rows": ["id|integer", "product_name|string",   "sku|string", "category_id|integer", "store_location_id|integer", "physical_location|integer", "product_type|integer", "quantity|integer", "status|integer"],
 			"listing_actions": [],
 			"filter_fields": ["product_name", "sku", "category_id" ],
-			"add_fields": ["product_name", "sku", "video_url", "sale_person_id", "free_ship", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",  "status", "store_location_id", "can_ship", "product_type", "pin_item_top", "youtube_thumbnail_1", "youtube_thumbnail_2", "youtube_thumbnail_3", "youtube_thumbnail_4"],
-			"edit_fields": ["product_name", "sku", "video_url", "sale_person_id", "free_ship", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",   "status", "store_location_id",   "can_ship", "product_type", "pin_item_top", "youtube_thumbnail_1", "youtube_thumbnail_2", "youtube_thumbnail_3", "youtube_thumbnail_4"],
-			"view_fields": ["id", "product_name", "sku", "video_url", "sale_person_id", "free_ship", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "status", "store_location_id", "barcode_image",  "can_ship",  "product_type", "pin_item_top", "youtube_thumbnail_1", "youtube_thumbnail_2", "youtube_thumbnail_3", "youtube_thumbnail_4"],
+			"add_fields": ["product_name", "sku", "video_url", "sale_person_id", "free_ship", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",  "status", "store_location_id", "can_ship", "can_ship_approval", "product_type", "pin_item_top", "youtube_thumbnail_1", "youtube_thumbnail_2", "youtube_thumbnail_3", "youtube_thumbnail_4"],
+			"edit_fields": ["product_name", "sku", "video_url", "sale_person_id", "free_ship", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",   "status", "store_location_id",   "can_ship", "can_ship_approval", "product_type", "pin_item_top", "youtube_thumbnail_1", "youtube_thumbnail_2", "youtube_thumbnail_3", "youtube_thumbnail_4"],
+			"view_fields": ["id", "product_name", "sku", "video_url", "sale_person_id", "free_ship", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note", "status", "store_location_id", "barcode_image",  "can_ship", "can_ship_approval", "product_type", "pin_item_top", "youtube_thumbnail_1", "youtube_thumbnail_2", "youtube_thumbnail_3", "youtube_thumbnail_4"],
 			"autocomplete": "",
 			"dynamic_mapping_add": {},
 			"dynamic_mapping_edit": {},
@@ -3643,6 +3649,7 @@
 		"../mkdcore/custom/Frontend/views/Footer.php" : "../release/application/views/Guest/Footer.php",
 		"../mkdcore/custom/Frontend/views/Home.php" : "../release/application/views/Guest/Home.php",
 		"../mkdcore/custom/Frontend/views/Checkout.php" : "../release/application/views/Guest/Checkout.php",
+		"../mkdcore/custom/Frontend/views/Checkout1.php" : "../release/application/views/Guest/Checkout1.php",
 		"../mkdcore/custom/Frontend/views/ForgotPassword.php" : "../release/application/views/Guest/ForgotPassword.php",
 		"../mkdcore/custom/Frontend/views/Cart.php" : "../release/application/views/Guest/Cart.php",
 		"../mkdcore/custom/Frontend/views/Categories.php" : "../release/application/views/Guest/Categories.php",
@@ -3752,7 +3759,7 @@
 		"/": "Guest/Home_controller/categories/0",
 
 		"home": "Guest/Home_controller/home",
-		"checkout": "Guest/Home_controller/checkout",
+		"checkout": "Guest/Home_controller/checkout_step_1",
 		"cart": "Guest/Home_controller/cart",
 		"logout": "Guest/Home_controller/logout",
 		"categories/(:num)": "Guest/Home_controller/categories/$1",
