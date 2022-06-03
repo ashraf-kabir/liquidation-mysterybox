@@ -297,7 +297,7 @@
                               <div class="details ">
                                    <h4><?php echo $value->product_name; ?></h4>
                                    <p>Details: <?php echo $value->description; ?></p>
-                                   <p>Price: $<span class="current_item_total_price"><?php echo $value->total_price; ?></span></p>
+                                   <p>Price: $<span class="current_item_total_price"><?php echo $value->unit_price * $value->product_quantity; ?></span></p>
                                    <div class="product-quantity">
                                         <p>Quantity:</p>
                                         <!-- <button data-id="<?php echo $value->product_id; ?>"  data-product_qty="<?php echo $value->product_quantity; ?>"  type="button" class="btn btn-secondary add_to_cart_button_checkout">+</button> -->
@@ -305,10 +305,32 @@
                                         <!-- <button data-id="<?php echo $value->product_id; ?>" data-product_qty="<?php echo $value->product_quantity; ?>" type="button"  class="btn btn-secondary minus_to_cart_button">-</button> -->
                                    </div>
 
+                                   <div class="d-flex justify-content-between">
+                                        <div class="border p-2" onclick="toggleToPickUp('<?php echo $key ?>')">
+                                             <h6>PICKUP AT <span class="float-right" id="pickup_tick_<?php echo $key; ?>">&#10004;</span></h6>
+                                             <p><?php echo $store_data->address ?></p>
+                                             <p><?php echo $store_data->state." ".$store_data->zip. " ".$store_data->phone ?></p>
+                                        </div>
+                                        <div class="border p-2" onclick="toggleToShipTo('<?php echo $key ?>')">
+                                             <h6>SHIP TO <span class="float-right" id="ship_to_tick_<?php echo $key; ?>">&#10004;</span></h6>
+                                             <p id="msg_full_name"><?php echo $customer->name; ?></p>
+                                             <p class="show-text-only" id="msg_shipping_address"><?php echo $customer->shipping_address; ?></p>
+                                             <p class="show-text-only" > 
+                                                  <span id="msg_shipping_city"><?php echo $customer->shipping_city; ?></span>
+                                                  <span id="shipping_coma"  
+                                                       <?php if (empty($customer->shipping_state)): ?> 
+                                                            style="display: none;" 
+                                                       <?php endif ?> >,</span>   
+                                                  <span id="msg_shipping_state"><?php echo $customer->shipping_state; ?></span>
+                                             </p>
+                                             <p id="msg_shipping_zip"><?php echo $customer->shipping_zip; ?></p>
+                                        </div>
+                                   </div>
+
                                     
 
 
-                                   <div class="shipping-cost">
+                                   <div class="shipping-cost" data-shipping-box="<?php echo $key ?>">
                                         <?php if ($value->can_ship == 2): ?>
                                              <div class="shipping-cost-options custom-pricing-div" style="margin-right: 5px;">
 
@@ -457,6 +479,13 @@
                });
           });
      });
+
+     function toggleToPickUp(key){
+          
+     }
+     function toggleToShipTo(key){
+
+     }
 
 </script>
 

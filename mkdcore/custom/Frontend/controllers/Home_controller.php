@@ -2072,10 +2072,11 @@ class Home_controller extends Manaknight_Controller
             $this->load->model('pos_cart_model');
             
             $this->load->model('tax_model');
+            $this->load->model('store_model');
 
 
 
-        
+            
 
             $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
             $box_groups = [];
@@ -2110,11 +2111,9 @@ class Home_controller extends Manaknight_Controller
                                 $total_box_weight = 0;
                                 $quantity_in_box = 1;
                                 continue;
-                            }else {
-                                $quantity_in_box++;
                             }
-
-
+                                $quantity_in_box += 1;
+                            
                         }
                     }
 
@@ -2127,6 +2126,7 @@ class Home_controller extends Manaknight_Controller
             // $data['cart_items']   =  $cart_items; 
             $data['customer']     =  $customer; 
             $data['tax']          =  $this->tax_model->get(1); 
+            $data['store_data']   =  $this->store_model->get_all()[0];
 
             $this->_render('Guest/Checkout1',$data);
         }
