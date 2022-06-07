@@ -464,7 +464,7 @@
                          </div>
                          <div>
                               <p>tax:</p>
-                              <p >$<span class="cart-tax">0.00</span></p>
+                              <p >$<span class="cart-tax"><?php echo number_format($tax_amount,2); ?></span></p>
                          </div>
                          <div>
                               <p>order total:</p>
@@ -562,7 +562,20 @@
           // update flag
           pickup_flag.value = "false";
 
-          // Calculate shipping cost for this item and update sub-total 
+          // remove previously checked option
+          let shipping_options_radio = document.querySelectorAll(`[type="radio"][data-key="${key}"]`);
+          console.log(shipping_options_radio[0]);
+          for(let i = 0; i < shipping_options_radio.length; i++){
+               console.log(shipping_options_radio[i]);
+               if(shipping_options_radio[i].checked == true){
+                    shipping_options_radio[i].checked = false;
+               }
+          }
+          // remove shipping cost for this item so user can select their choice
+          let shipping_item_label = document.querySelector(`#shipping_cost_label_${key}`);
+          let shipping_item_input = document.querySelector(`#shipping_cost_${key}`);
+          shipping_item_label.innerHTML = ``;
+          shipping_item_input.value = ``;
           sumShipping();
      }
 
@@ -578,10 +591,10 @@
           let shipping_item_input = document.querySelector(`#shipping_cost_${key}`);
           let shipping_service_input = document.querySelector(`#shipping_service_${key}`);
           let shipping_service_name_input = document.querySelector(`#shipping_service_name_${key}`);
-          shipping_item_label.innerHTML = `<span>Item ${key+1} Shipping:</span> <span> $${total_cost} </span>`;
+          shipping_item_label.innerHTML = `<span>Item ${key+1} Shipping:</span> &nbsp; <span> $${total_cost} </span>`;
           shipping_item_input.value = total_cost;
           shipping_service_input.value = service;
-          shipping_service_input_name.value = service_name;
+          shipping_service_name_input.value = service_name;
 
           sumShipping();
           
@@ -594,6 +607,7 @@
 
           let sum = 0;
           for(let i = 0; i < shipping_costs.length; i++){
+               console.log('sum shipping method item shipping cost'+shipping_costs[i].value);
                if(shipping_costs[i].value == '' || isNaN(parseFloat(shipping_costs[i].value))) continue;
                sum =   sum +  parseFloat(shipping_costs[i].value);
           }
@@ -615,7 +629,7 @@
           let total_with_tax_value = isNaN(parseFloat(total_with_tax.value)) || total_with_tax.value == ''? 0 : parseFloat(total_with_tax.value)
           let sum = total_shipping + total_with_tax_value;
           grand_total.value = sum;
-          grand_total_text.innerHTML = sum;
+          grand_total_text.innerHTML = sum.toFixed(2);
 
      }
 

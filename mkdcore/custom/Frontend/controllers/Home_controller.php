@@ -1164,17 +1164,18 @@ class Home_controller extends Manaknight_Controller
                     $item_data = $this->inventory_model->get($value->product_id);
                     $total += $value->unit_price * $value->product_qty;
 
-                    $total_shipping = !empty($value->shipping_cost) ? $total_shipping + $value->shipping_cost : $total_shipping + 0;
+                    $total_shipping = !empty($value->shipping_cost) ? (float) $total_shipping + (float) $value->shipping_cost : $total_shipping + 0;
                 }
             }
 
-            
             // $data['cart_items']   =  $cart_items; 
             $data['total']  = $total;
             $data['total_shipping']  = $total_shipping;
             $data['checkout_data'] = $checkout_data;
             $data['customer']     =  $customer; 
             $data['tax']          =  $this->tax_model->get(1); 
+            // echo '<pre>'; print_r($data); die();
+
 
             $this->_render('Guest/CheckoutStep2',$data);
         }
@@ -2303,7 +2304,7 @@ class Home_controller extends Manaknight_Controller
         }else{
             $response['error_msg'] = 'Payment Not Approved';
         }
-      
+      $response['amount'] = $amount;
 
         return $response;
 

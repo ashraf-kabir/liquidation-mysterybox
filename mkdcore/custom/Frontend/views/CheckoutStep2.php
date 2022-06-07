@@ -426,7 +426,7 @@
                          </div>
                          <div>
                               <p>shipping & handling:</p>
-                              <p>$ <span class="shipping_total_cost"><?php echo $total_shipping ?> </span></p>
+                              <p>$ <span class="shiping_total_cost"><?php echo $total_shipping ?> </span></p>
                          </div>
                          <div>
                               <p>Total before tax:</p>
@@ -434,12 +434,14 @@
                          </div>
                          <div>
                               <p>tax:</p>
-                              <p >$<span class="cart-tax"><?php echo number_format($tax_amount,2); ?></span></p>
+                              <p >$<span class="cart-tx"><?php echo number_format($tax_amount,2); ?></span></p>
                          </div>
                          <div>
-                              <p>order total:</p>
-                              <p>$<span class="total_of_all_text"><?php echo number_format($total,2); ?></span></p>
+                              <p>Order total:</p>
+                              <p>$<span class="total_of_all_"><?php echo number_format($grand_total,2); ?></span></p>
                          </div>
+                         <a class="btn btn-secondary" href="/checkout" >Back to Shipping</a> 
+
                     </div>
                </div>
                <div class="header">
