@@ -687,6 +687,45 @@
 			"seed": []
 		},
 		{
+			"name": "checkout_data",
+			"timestamp": true,
+			"migration": true,
+			"field": [
+				["id", "integer", [], "ID", "", ""],
+				["product_id", "integer", [], "xyzProduct ID", "", ""],
+				["user_id", "integer", [], "xyzUser ID", "", ""],
+				["customer_id", "integer", [], "xyzCustomer ID", "", ""],
+				["pos_order_id", "integer", [], "xyzOrder ID", "", ""],
+				["product_qty", "integer", [], "xyzQuantity", "", ""],
+				["is_pickup", "integer", [], "is Pickup", "", ""],
+				["is_done", "integer", [], "is Done", "", ""],
+				["unit_price", "float", [], "xyzUnit Price", "", ""],
+				["total_price", "float", [], "xyzTotal Price", "", ""],
+				["shipping_cost", "float", [], "Shipping Cost", "", ""],
+				["product_name", "string", [{"limit": 255}], "xyzProduct Name", "", ""],
+				["shipping_service", "string", [{"limit": 255}], "Shipping Service", "", ""],
+				["shipping_name", "string", [{"limit": 255}], "Shipping Service Name", "", ""]
+			],
+			"method": [],
+			"join": [],
+			"mapping": {
+				"is_pickup" : {
+					"0" : "Shipping",
+					"1" : "Pickup"
+				},
+				"is_done" : {
+					"0" : "No",
+					"1" : "Yes"
+				}
+
+			},
+			"pre": "",
+			"post": "",
+			"count": "",
+			"unique": [],
+			"seed": []
+		},
+		{
 			"name": "pos_order",
 			"timestamp": true,
 			"migration": true,
@@ -3650,6 +3689,7 @@
 		"../mkdcore/custom/Frontend/views/Home.php" : "../release/application/views/Guest/Home.php",
 		"../mkdcore/custom/Frontend/views/Checkout.php" : "../release/application/views/Guest/Checkout.php",
 		"../mkdcore/custom/Frontend/views/Checkout1.php" : "../release/application/views/Guest/Checkout1.php",
+		"../mkdcore/custom/Frontend/views/CheckoutStep2.php" : "../release/application/views/Guest/CheckoutStep2.php",
 		"../mkdcore/custom/Frontend/views/ForgotPassword.php" : "../release/application/views/Guest/ForgotPassword.php",
 		"../mkdcore/custom/Frontend/views/Cart.php" : "../release/application/views/Guest/Cart.php",
 		"../mkdcore/custom/Frontend/views/Categories.php" : "../release/application/views/Guest/Categories.php",
@@ -3760,6 +3800,7 @@
 
 		"home": "Guest/Home_controller/home",
 		"checkout": "Guest/Home_controller/checkout_step_1",
+		"checkout/step_2": "Guest/Home_controller/checkout_step_2",
 		"cart": "Guest/Home_controller/cart",
 		"logout": "Guest/Home_controller/logout",
 		"categories/(:num)": "Guest/Home_controller/categories/$1",

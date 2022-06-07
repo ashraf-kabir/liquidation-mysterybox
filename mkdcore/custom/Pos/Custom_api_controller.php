@@ -1615,6 +1615,7 @@ class Custom_api_controller extends Manaknight_Controller
             $user_id     = $this->session->userdata('user_id');  
 
             $id =  $this->input->post('id', TRUE);
+            $quantity =  $this->input->post('quantity', TRUE);
 
             if($this->session->userdata('customer_login'))
             {
@@ -1646,7 +1647,7 @@ class Custom_api_controller extends Manaknight_Controller
             {
                 $product = $this->inventory_model->get($value->product_id);  
 
-                if($product->can_ship == 1)
+                if($product->can_ship == 1 || ($product->can_ship == 2 && $product->can_ship_approval == 1)  )
                 {
                     if($product->weight == 0  OR $product->weight == "")
                     {
@@ -1655,6 +1656,8 @@ class Custom_api_controller extends Manaknight_Controller
                         break;
                     } else {
                         $value->product_detail = $product;
+                        // Use provided box quantity instead of cart quantity
+                        $value->product_qty = $quantity;
                     }
                      
                 }else{

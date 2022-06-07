@@ -528,13 +528,15 @@ class Home_controller extends Manaknight_Controller
 
 
             $this->load->model('pos_cart_model');
+            $this->load->model('checkout_data_model');
             $this->load->model('inventory_model');
             $this->load->library('helpers_service');
             $this->helpers_service->set_inventory_model($this->inventory_model);
 
 
 
-            $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+            // $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+            $cart_items =  $this->checkout_data_model->get_all(['customer_id' => $user_id, 'is_done' => "0"]); 
             if( empty($cart_items) )
             {   
                 $output['status'] = 0;
@@ -567,7 +569,7 @@ class Home_controller extends Manaknight_Controller
             foreach ($cart_items as $key => $cart_item_value) 
             { 
 
-                $this->form_validation->set_rules('shipping_service_id_' . $cart_item_value->id, "", "required", array('required' => 'Shipping service must be selected for all items.')); 
+                // $this->form_validation->set_rules('shipping_service_id_' . $cart_item_value->id, "", "required", array('required' => 'Shipping service must be selected for all items.')); 
 
                 if ($this->form_validation->run() === FALSE)
                 {
@@ -718,7 +720,7 @@ class Home_controller extends Manaknight_Controller
             /**
             * Cart Items  
             */
-            $cart_items     =  $this->pos_cart_model->get_all(['customer_id' => $user_id ]); 
+            // $cart_items     =  $this->pos_cart_model->get_all(['customer_id' => $user_id ]); 
             $customer_data  =  $this->customer_model->get( $user_id ); 
             $shipping_cost  =  0;
             $discount       =  0;
@@ -774,6 +776,7 @@ class Home_controller extends Manaknight_Controller
              
             $result = $this->pos_checkout_service->customer_create_order($customer_data,$tax,$discount,$user_id,$shipping_cost, $checkout_type);
 
+            
 
             if ($result) 
             { 
@@ -796,9 +799,12 @@ class Home_controller extends Manaknight_Controller
 
 
 
-                    $shipping_cost_name         =  $this->input->post('shipping_cost_name_' . $cart_item_value->id, TRUE);
-                    $shipping_cost_value        =  $this->input->post('shipping_cost_value_' . $cart_item_value->id, TRUE);
-                    $shipping_service_id        =  $this->input->post('shipping_service_id_' . $cart_item_value->id, TRUE);
+                    // $shipping_cost_name         =  $this->input->post('shipping_cost_name_' . $cart_item_value->id, TRUE);
+                    $shipping_cost_name         =   $cart_item_value->shipping_service_name;
+                    $shipping_cost_value        =   $cart_item_value->shipping_cost;
+                    $shipping_service_id        =   $cart_item_value->shipping_service;
+                    // $shipping_cost_value        =  $this->input->post('shipping_cost_value_' . $cart_item_value->id, TRUE);
+                    // $shipping_service_id        =  $this->input->post('shipping_service_id_' . $cart_item_value->id, TRUE);
 
 
                     $shipping_service_code        =  $this->input->post('shipping_service_name_code_' . $cart_item_value->id, TRUE);
@@ -827,6 +833,14 @@ class Home_controller extends Manaknight_Controller
                     );
                     $sub_total += $total_amount;
                     $detail_id = $this->pos_order_items_model->create($data_order_detail); 
+
+                    // Set Checkout data Done 
+                    $update_checkout_data = [
+                        'is_done'   => true,
+                        'pos_order_id'  => $result
+                    ];
+
+                    $this->checkout_data_model->edit($update_checkout_data, $cart_item_value->id); //Cart_items is alias for checkout_data
 
                     /**
                      *
@@ -870,6 +884,7 @@ class Home_controller extends Manaknight_Controller
                 );
                 $result = $this->pos_order_model->edit($data_order_prices, $order_id);
 
+               
 
                 /**
                 * Add Transaction  
@@ -1063,6 +1078,105 @@ class Home_controller extends Manaknight_Controller
             $data['tax']          =  $this->tax_model->get(1); 
 
             $this->_render('Guest/Checkout',$data);
+        }
+        else{
+            redirect('');
+        }
+    }
+
+
+    public function checkout_step_2()
+    {   
+        if( $this->session->userdata('customer_login') && $this->session->userdata('user_id') )
+        {
+            $user_id = $this->session->userdata('user_id');
+            $this->load->model('customer_model');
+
+            $customer     =  $this->customer_model->get($user_id);
+
+            if ( empty($customer->shipping_address) || empty($customer->shipping_state)  || empty($customer->shipping_zip)  || empty($customer->shipping_city)  || empty($customer->shipping_country)  || empty($customer->billing_address)  || empty($customer->billing_zip) )
+            {
+                redirect('/address_details');
+            }
+
+            $data['active'] = 'checkout';
+            $data['layout_clean_mode'] = FALSE;
+            $data['no_detail'] = TRUE;
+    
+
+             
+            
+            $this->load->model('pos_cart_model');
+            
+            $this->load->model('tax_model');
+            $this->load->model('checkout_data_model');
+
+            // echo '<pre>'; print_r($_POST); die();
+
+            $product_id         =  $this->input->post('product_id', TRUE);
+            $product_name       =  $this->input->post('product_name', TRUE);
+            $product_quantity     =  $this->input->post('product_quantity', TRUE);
+            $unit_price         =  $this->input->post('unit_price', TRUE);
+            $shipping_costs         =  $this->input->post('shipping_costs', TRUE);
+            $shipping_service       =  $this->input->post('shipping_service', TRUE);
+            $shipping_service_name     =  $this->input->post('shipping_service_name', TRUE);
+            $is_pickup          =  $this->input->post('is_pickup', TRUE);
+
+            // echo '<pre>'; print_r($_POST); die();
+
+            if(count($product_id) < 1){
+                $this->redirect('/checkout');
+            }
+            $this->checkout_data_model->real_delete_by_fields(['customer_id' => $customer->id, 'is_done'=> 0]);
+            for($i = 0; $i < count($product_id); $i++){
+                $temp_data = [
+                    'product_id'            => $product_id[$i],
+                    'product_name'          => $product_name[$i],
+                    'product_qty'           => $product_quantity[$i],
+                    'unit_price'            => $unit_price[$i],
+                    'total_price'           => $unit_price[$i] * $product_quantity[$i],
+                    'shipping_cost'         => $shipping_costs[$i],
+                    'shipping_service'      => $shipping_service[$i],
+                    'shipping_service_name'  => $shipping_service_name[$i],
+                    'is_pickup'             => (bool)$is_pickup[$i],
+                    'is_done'               => 0,
+                    'customer_id'           => $customer->id,
+                    'user_id'               => $user_id,
+                ];
+                // $temp_data['shipping_service'] = $is_pickup[$i] == false? $shipping_service[$i] : '';
+                // echo '<pre>'; print_r($temp_data); die();
+                $result = $this->checkout_data_model->create($temp_data);
+                
+
+            } 
+
+        
+
+            // $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
+            $checkout_data = $this->checkout_data_model->get_all(['customer_id' => $customer->id, 'is_done'=> 0]);
+
+            $total = 0;
+            $total_shipping = 0;
+            if (!empty($checkout_data)) 
+            {                     
+                foreach ($checkout_data as $key => $value)
+                {
+                    $item_data = $this->inventory_model->get($value->product_id);
+                    $total += $value->unit_price * $value->product_qty;
+
+                    $total_shipping = !empty($value->shipping_cost) ? $total_shipping + $value->shipping_cost : $total_shipping + 0;
+                }
+            }
+
+            
+            // $data['cart_items']   =  $cart_items; 
+            $data['total']  = $total;
+            $data['total_shipping']  = $total_shipping;
+            $data['checkout_data'] = $checkout_data;
+            $data['customer']     =  $customer; 
+            $data['tax']          =  $this->tax_model->get(1); 
+
+            $this->_render('Guest/CheckoutStep2',$data);
         }
         else{
             redirect('');
@@ -2089,6 +2203,7 @@ class Home_controller extends Manaknight_Controller
 
                     $value->free_ship     = $item_data->free_ship;
                     $value->can_ship      = $item_data->can_ship;
+                    $value->can_ship_approval      = $item_data->can_ship_approval;
                     $value->feature_image = $item_data->feature_image;
                     $value->description   = $item_data->inventory_note; 
                     $value->item_data     = $item_data; 
