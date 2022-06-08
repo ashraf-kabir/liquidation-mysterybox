@@ -265,6 +265,21 @@
           <div class="checkout-row">
                <div class="first-box">
                     <span>2</span>
+                    <span>Pickup Address</span>
+               </div>
+               <div class="second-box">
+                    <p id="msg_full_name"><?php echo $store->name; ?></p>
+                    <p class="show-text-only" id="msg_shipping_address"><?php echo $store->address; ?></p>
+                   
+                    <p id="msg_shipping_zip"><?php echo $store->zip; ?></p>
+                    <p id="msg_shipping_zip"><?php echo $store->phone; ?></p>
+               </div>
+               <div class="third-box"></div>
+              
+          </div>
+          <div class="checkout-row">
+               <div class="first-box">
+                    <span>3</span>
                     <span>payment method</span>
                </div>
                <div class="second-box"> 

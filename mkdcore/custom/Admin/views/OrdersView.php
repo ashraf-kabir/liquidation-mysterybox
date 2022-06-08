@@ -185,11 +185,11 @@ if ($layout_clean_mode) {
 				
 				<div class='row mb-4'>
 					<div class='col'>
-						Delivery Type
+						<!-- Delivery Type -->
 					</div>
-					<div class='col'>
-						<?php echo $view_model->checkout_type_mapping()[$view_model->get_checkout_type()];?>
-					</div>
+					<!-- <div class='col'>
+						<?php //echo $view_model->checkout_type_mapping()[$view_model->get_checkout_type()];?>
+					</div> -->
 				</div>
 				
 			 
@@ -207,6 +207,8 @@ if ($layout_clean_mode) {
                                     <th style="width:10%">Quantity</th>
                                     <th style="width:10%">Rate</th> 
                                     <th style="width:10%">Amount</th>
+                                    <th style="width:10%">Delivery Type</th> 
+                                    <th style="width:10%">Shipping Service</th> 
                                 </tr> 
                             </thead>
                             <tbody>
@@ -216,6 +218,8 @@ if ($layout_clean_mode) {
                                     <td><?php echo  $detail->quantity; ?></td>
                                     <td>$<?php echo  number_format($detail->product_unit_price,2); ?></td> 
                                     <td>$<?php echo  number_format($detail->amount,2); ?></td>
+                                    <td><?php echo $detail->is_pickup == "0"? 'Delivery' : 'Pick up'; ?></td>
+                                    <td><?php echo $detail->shipping_cost_name ; ?></td>
                                 </tr>
                             <?php } ?>
                             </tbody>

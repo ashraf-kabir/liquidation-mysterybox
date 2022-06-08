@@ -826,7 +826,7 @@ class Home_controller extends Manaknight_Controller
                         'shipping_cost_name'  => $shipping_cost_name,
                         'shipping_cost_value' => $shipping_cost_value,
                         'shipping_service_id' => $shipping_service_id,
-                        
+                        'is_pickup'           => $cart_item_value->is_pickup,
                         'shipping_service_code' => $shipping_service_code,
                         'shipping_service_name' => $shipping_service_name,
                     );
@@ -899,6 +899,7 @@ class Home_controller extends Manaknight_Controller
                     'discount'          =>  $discount, 
                     'subtotal'          =>  $sub_total, 
                     'total'             =>  $grand_total, 
+                    'status'            =>  '2'
                 );
                 $transaction_id = $this->transactions_model->create($add_transaction);
                 
@@ -922,11 +923,13 @@ class Home_controller extends Manaknight_Controller
              
                         if( isset($response['success']) && $response['success'] == true )
                         { 
+                            $payment_recieved = TRUE;
                             $this->pos_order_model->edit(['intent_data' => json_encode($response['response']) ], $order_id);
+                            $this->transactions_model->edit(['status' => 1 ], $transaction_id); //Status Paid
                             $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]); 
                         }
                         else
-                        { 
+                        { //on payment failure
                             $this->pos_order_model->edit(['status' => 0 ], $order_id); //Status Cancelled
                             $this->transactions_model->edit(['status' => 0 ], $transaction_id); //Status Failed
                             $this->db->trans_rollback();
@@ -950,8 +953,9 @@ class Home_controller extends Manaknight_Controller
                     $accounting_response = $this->send_order_to_accounting( $order_id );
                     if( isset( $accounting_response->error_msg ) )
                     {
-                        $output['status'] = 0;
+                        $output['status'] = $payment_recieved == TRUE ? 1 : 0;
                         $output['error']  = $accounting_response->error_msg;
+                        $output['redirect_url']  = base_url() . 'order_confirmation';
                         echo json_encode($output);
                         exit();
                     }
@@ -964,8 +968,9 @@ class Home_controller extends Manaknight_Controller
                     $accounting_trans_response = $this->send_transaction_to_accounting( $transaction_id );
                     if( isset( $accounting_trans_response->error_msg ) )
                     {
-                        $output['status'] = 0;
+                        $output['status'] = $payment_recieved == TRUE ? 1 : 0;
                         $output['error']  = $accounting_trans_response->error_msg;
+                        $output['redirect_url']  = base_url() . 'order_confirmation';
                         echo json_encode($output);
                         exit();
                     }
@@ -980,8 +985,9 @@ class Home_controller extends Manaknight_Controller
 
                     if( isset( $order_data->error_msg ) )
                     {
-                        $output['status'] = 0;
+                        $output['status'] = $payment_recieved == TRUE ? 1 : 0;
                         $output['error']  = $order_data->error_msg;
+                        $output['redirect_url']  = base_url() . 'order_confirmation';
                         echo json_encode($output);
                         exit();
                     }
@@ -989,12 +995,21 @@ class Home_controller extends Manaknight_Controller
 
 
 
-                    $this->send_email_on_order($order_id);
-                    $this->send_email_new_order_to_admin($order_id);
+                    try{
+                        $this->send_email_on_order($order_id);
+                        $this->send_email_new_order_to_admin($order_id);
+                    } catch (\Throwable $th) {
+                        $output['status'] = $payment_recieved == TRUE ? 1 : 0;
+                        $output['error']  = 'Something went wrong.';
+                        $output['redirect_url']  = base_url() . 'order_confirmation';
+                        echo json_encode($output);
+                        exit();
+                    }
+                   
 
 
                     $this->db->trans_commit();
-                    $output['status'] = 0;
+                    $output['status'] = $payment_recieved == TRUE ? 1 : 0;
                     $output['success']  = 'Order has been created successfully.';
                     $output['redirect_url']  = base_url() . 'order_confirmation';
                     echo json_encode($output);
@@ -1108,9 +1123,9 @@ class Home_controller extends Manaknight_Controller
             $this->load->model('pos_cart_model');
             
             $this->load->model('tax_model');
+            $this->load->model('store_model');
             $this->load->model('checkout_data_model');
 
-            // echo '<pre>'; print_r($_POST); die();
 
             $product_id         =  $this->input->post('product_id', TRUE);
             $product_name       =  $this->input->post('product_name', TRUE);
@@ -1121,7 +1136,7 @@ class Home_controller extends Manaknight_Controller
             $shipping_service_name     =  $this->input->post('shipping_service_name', TRUE);
             $is_pickup          =  $this->input->post('is_pickup', TRUE);
 
-            // echo '<pre>'; print_r($_POST); die();
+            // echo '<pre>'; print_r($_POST); print_r($shipping_service_name); die();
 
             if(count($product_id) < 1){
                 $this->redirect('/checkout');
@@ -1137,13 +1152,12 @@ class Home_controller extends Manaknight_Controller
                     'shipping_cost'         => $shipping_costs[$i],
                     'shipping_service'      => $shipping_service[$i],
                     'shipping_service_name'  => $shipping_service_name[$i],
-                    'is_pickup'             => (bool)$is_pickup[$i],
+                    'is_pickup'             => $is_pickup[$i] == "false" ? FALSE : TRUE ,
                     'is_done'               => 0,
                     'customer_id'           => $customer->id,
                     'user_id'               => $user_id,
                 ];
-                // $temp_data['shipping_service'] = $is_pickup[$i] == false? $shipping_service[$i] : '';
-                // echo '<pre>'; print_r($temp_data); die();
+             
                 $result = $this->checkout_data_model->create($temp_data);
                 
 
@@ -1172,6 +1186,7 @@ class Home_controller extends Manaknight_Controller
             $data['total_shipping']  = $total_shipping;
             $data['checkout_data'] = $checkout_data;
             $data['customer']     =  $customer; 
+            $data['store']     =  $this->store_model->get_all()[0]; 
             $data['tax']          =  $this->tax_model->get(1); 
             // echo '<pre>'; print_r($data); die();
 

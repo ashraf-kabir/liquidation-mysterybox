@@ -704,7 +704,7 @@
 				["shipping_cost", "float", [], "Shipping Cost", "", ""],
 				["product_name", "string", [{"limit": 255}], "xyzProduct Name", "", ""],
 				["shipping_service", "string", [{"limit": 255}], "Shipping Service", "", ""],
-				["shipping_name", "string", [{"limit": 255}], "Shipping Service Name", "", ""]
+				["shipping_service_name", "string", [{ "limit": 255 }], "xyzShipping Service Name", "", ""]
 			],
 			"method": [],
 			"join": [],
@@ -840,12 +840,13 @@
 				["pos_user_id", "integer", [], "xyzPOS User", "required|integer", "required|integer"],
 				["store_id", "integer", [], "xyzStore", "required|integer", "required|integer"],
 				["sale_person_id", "integer", [], "xyzStore", "required|integer", "required|integer"],
-				["manifest_id", "integer", [], "xyzManifest", "required|integer", "required|integer"]
+				["manifest_id", "integer", [], "xyzManifest", "required|integer", "required|integer"],
+				["is_pickup", "integer", [], "Pick up", "required|integer", ""]
 			],
 			"method": "",
 			"join": [],
 			"mapping": {
-
+				"is_pickuo": {"0": "Delivery","1": "Pickup"}
 			},
 			"pre": "",
 			"post": "",
@@ -918,7 +919,7 @@
 				["discount", "float", [{"default" : 0}], "xyzDiscount", "", ""],
 				["subtotal", "float", [], "xyzSubtotal", "", ""],
 				["total", "float", [], "xyzTotal", "", ""],
-				["status", "integer", [], "xyzStatus", "", ""]
+				["status", "integer", [{"default" : 2}], "xyzStatus", "", ""]
 			],
 			"method": "",
 			"join": [],

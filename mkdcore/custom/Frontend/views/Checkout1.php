@@ -587,12 +587,11 @@
      }
 
      function updateShippingTotal(){
-          console.log('updating shipping');
           let selected_shipping = event.target;
           let key = parseInt(selected_shipping.getAttribute('data-key'));
           let total_cost = selected_shipping.getAttribute('data-total-cost');
           let service = selected_shipping.getAttribute('data-service-code');
-          let service_name = selected_shipping.getAttribute('data-service-name');
+          let service_name = selected_shipping.getAttribute('data-service');
 
           let shipping_item_label = document.querySelector(`#shipping_cost_label_${key}`);
           let shipping_item_input = document.querySelector(`#shipping_cost_${key}`);
