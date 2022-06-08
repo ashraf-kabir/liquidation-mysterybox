@@ -180,6 +180,7 @@
                         </div> 
 
 
+                        <?php if(count($cart_items) >  0) : ?>
                         <a  
 
                         <?php if ($this->session->userdata('customer_login')): ?>
@@ -189,6 +190,7 @@
                             <?php endif; ?> 
 
                             style="line-height:2;" class="btn btn-success w-100  mb-4" >Checkout</a >
+                            <?php endif ;?>
                         </div>
                     </div>
                     </div>

@@ -731,13 +731,12 @@ class Home_controller extends Manaknight_Controller
             $tax_amount  = 0;
             
 
-            if (strtolower($customer_data->billing_state) == 'nv' or strtolower($customer_data->billing_state) == 'nevada') 
-            {
+            // if (strtolower($customer_data->billing_state) == 'nv' or strtolower($customer_data->billing_state) == 'nevada') {
                 if(isset($tax_data->tax) )
                 {
                     $tax_amount = $tax_data->tax/100;
                 }  
-            }
+            // }
             
 
             $referrer = 1;
@@ -2198,7 +2197,7 @@ class Home_controller extends Manaknight_Controller
 
             if (!empty($cart_items)) 
             {                     
-                foreach ($cart_items as $key => &$value)
+                foreach ($cart_items as $key => $value)
                 {
                     $item_data = $this->inventory_model->get($value->product_id);
 
@@ -2213,22 +2212,23 @@ class Home_controller extends Manaknight_Controller
                     if($item_data->weight > 150){
                         for($i = 0; $i < $cart_item_quantity; $i++){
                             $value->product_quantity = 1;
-                            array_push($box_groups, $value);
+                            $box_groups[] = $value;
                         }
                     }else if($item_data->weight < 150){
                         $total_box_weight = 0;
                         $quantity_in_box = 1;
                         for($i = 1; $i <= $cart_item_quantity; $i++){
                             $total_box_weight += $item_data->weight;
-                            if($total_box_weight >= 150 || $i >= $cart_item_quantity ){
+                            if($total_box_weight >= 150 || $i == $cart_item_quantity ){
                                 $value->product_quantity = $quantity_in_box;
-                                array_push($box_groups, $value);
+                                $box_groups[] = clone $value;
                                 // reset
                                 $total_box_weight = 0;
                                 $quantity_in_box = 1;
                                 continue;
                             }
-                                $quantity_in_box += 1;
+                                
+                            ++$quantity_in_box;
                             
                         }
                     }
@@ -2237,7 +2237,6 @@ class Home_controller extends Manaknight_Controller
                 }
             }
 
-            
             $data['cart_items']   =  $box_groups; 
             // $data['cart_items']   =  $cart_items; 
             $data['customer']     =  $customer; 
@@ -2304,7 +2303,6 @@ class Home_controller extends Manaknight_Controller
         }else{
             $response['error_msg'] = 'Payment Not Approved';
         }
-      $response['amount'] = $amount;
 
         return $response;
 

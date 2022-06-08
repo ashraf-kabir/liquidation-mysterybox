@@ -290,7 +290,9 @@
 
                           <input type="hidden" name="is_pickup[]" id="pickup_<?php echo $key; ?>" value = "true">
                          <div class="product border shadow p-2">
+                              
                               <div class="image">
+                                   <p>Item: <?php echo $key+1; ?></p>
 
                                    <?php if(!empty($value->feature_image)){   ?>
 
@@ -312,8 +314,8 @@
                                         <!-- <button data-id="<?php echo $value->product_id; ?>" data-product_qty="<?php echo $value->product_quantity; ?>" type="button"  class="btn btn-secondary minus_to_cart_button">-</button> -->
                                    </div>
 
-                                   <div class="d-flex justify-content-between">
-                                        <div class=" p-2 pt-0 position-relative " role="button" style="border-style:solid; border-width:5px" onclick="toggleToPickUp('<?php echo $key ?>')">
+                                   <div class="d-flex ">
+                                        <div class=" mr-2 p-2 pt-0 position-relative " role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px" onclick="toggleToPickUp('<?php echo $key ?>')">
                                              <span style="border-style:solid; border-width:5px; position:absolute; top:0; right:0;" class=" p-0 m-0 text-white bg-dark border-dark" id="pickup_tick_<?php echo $key; ?>">&#10004;</span>
                                              <h6>PICKUP AT </h6>
                                              <p><?php echo $store_data->address ?></p>
@@ -321,7 +323,7 @@
                                         </div>
 
                                         <?php if ($value->can_ship == 1 || $value->can_ship_approval == 1): ?>
-                                        <div class="position-relative p-2" role="button" style="border-style:solid; border-width:5px " onclick="toggleToShipTo('<?php echo $key ?>')">
+                                        <div class="  position-relative p-2" role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px " onclick="toggleToShipTo('<?php echo $key ?>')">
                                         <span class="text-white bg-dark border-dark" style="display:none; border-style:solid; border-width:5px; position:absolute; top:0; right:0;" id="ship_to_tick_<?php echo $key; ?>">&#10004;</span>
                                              <h6>SHIP TO </h6>
                                              <p id="msg_full_name"><?php echo $customer->name; ?></p>
@@ -359,21 +361,21 @@
                                         <?php else: ?>  
 
                                              <?php if ($value->free_ship == 1): ?>
-                                                  <p>Free Shipping:</p>
+                                                  <p>Shipping:</p>
 
                                                   <p>$<span class="selected_item_shipping_cost">0.00</span></p>
 
                                                   
                                                   <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date">N/A</span></strong></p>
                                                    
-                                                  <button style="display: none;" type="button" data-key="<?php echo $key; ?>" data-quantity="<?php echo $value->product_quantity; ?>" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
+                                                  <button style="display: none;" type="button" data-key="<?php echo $key; ?>" data-quantity="<?php echo $value->product_quantity; ?>" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost-">calculate</button>
                                              <?php else: ?>
                                                   <p>Shipping Cost:</p> 
                                                   <p>$<span class="selected_item_shipping_cost">0.00</span></p>
 
                                                   <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date">N/A</span></strong></p>
 
-                                                  <button style="display: none;" type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
+                                                  <button style="display: none;" type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost-">calculate</button>
                                              <?php endif; ?> 
                                         <?php endif; ?> 
                                    </div>
@@ -444,7 +446,9 @@
                          
                          <?php foreach($cart_items as $key => $value) :?>    
                          <div class="" style="display:flex">
-                                   <label for="" class="d-flex justify-content-between" id = "shipping_cost_label_<?php echo $key; ?>"></label>
+                                   <label for="" class="d-flex justify-content-between">
+                                   Item <?php echo $key+1 ?> Shipping:  $<span  id = "shipping_cost_label_<?php echo $key; ?>">0.00</span>
+                                   </label>
                                    <input type="hidden"  class="shipping_cost_input" name="shipping_costs[]" id="shipping_cost_<?php echo $key; ?>">
                                    <input type="hidden"  class="shipping_service_input" name="shipping_service[]" id="shipping_service_<?php echo $key; ?>">
                                    <input type="hidden"  class="shipping_service_name_input" name="shipping_service_name[]" id="shipping_service_name_<?php echo $key; ?>">
@@ -455,7 +459,7 @@
                          
                          <div>
                               <p>Total shipping:</p>
-                              <p>$<span id="total_shipping"></span></p>
+                              <p>$<span id="total_shipping">0</span></p>
                               <input type="hidden" id="total_shipping_cost" name="total_shipping_cost">
                          </div>
                          <div>
@@ -542,7 +546,7 @@
           // remove shipping cost for this item
           let shipping_item_label = document.querySelector(`#shipping_cost_label_${key}`);
           let shipping_item_input = document.querySelector(`#shipping_cost_${key}`);
-          shipping_item_label.innerHTML = ``;
+          shipping_item_label.innerHTML = `0.00`;
           shipping_item_input.value = ``;
           sumShipping();
 
@@ -574,13 +578,13 @@
           // remove shipping cost for this item so user can select their choice
           let shipping_item_label = document.querySelector(`#shipping_cost_label_${key}`);
           let shipping_item_input = document.querySelector(`#shipping_cost_${key}`);
-          shipping_item_label.innerHTML = ``;
+          shipping_item_label.innerHTML = `0.00`;
           shipping_item_input.value = ``;
           sumShipping();
      }
 
      function updateShippingTotal(){
-          // console.log(event.target.data-key);
+          console.log('updating shipping');
           let selected_shipping = event.target;
           let key = parseInt(selected_shipping.getAttribute('data-key'));
           let total_cost = selected_shipping.getAttribute('data-total-cost');
@@ -591,7 +595,7 @@
           let shipping_item_input = document.querySelector(`#shipping_cost_${key}`);
           let shipping_service_input = document.querySelector(`#shipping_service_${key}`);
           let shipping_service_name_input = document.querySelector(`#shipping_service_name_${key}`);
-          shipping_item_label.innerHTML = `<span>Item ${key+1} Shipping:</span> &nbsp; <span> $${total_cost} </span>`;
+          shipping_item_label.innerHTML = `${total_cost}`;
           shipping_item_input.value = total_cost;
           shipping_service_input.value = service;
           shipping_service_name_input.value = service_name;
@@ -625,13 +629,17 @@
           let grand_total = document.querySelector('#grand_total');
           let grand_total_text = document.querySelector('#grand_total_text');
 
-          let total_shipping = isNaN(parseFloat(total_shipping_cost.value)) || total_shipping_cost.value == ''? 0 : parseFloat(total_shipping_cost.value)
-          let total_with_tax_value = isNaN(parseFloat(total_with_tax.value)) || total_with_tax.value == ''? 0 : parseFloat(total_with_tax.value)
+          console.log(total_shipping_cost.value);
+          console.log(total_with_tax.value);
+          let total_shipping = isNaN(parseFloat(total_shipping_cost.value)) || total_shipping_cost.value == ''? 0 : parseFloat(total_shipping_cost.value.replaceAll(',',''));
+          let total_with_tax_value = isNaN(parseFloat(total_with_tax.value)) || total_with_tax.value == ''? 0 : parseFloat(total_with_tax.value.replaceAll(',',''));
           let sum = total_shipping + total_with_tax_value;
           grand_total.value = sum;
           grand_total_text.innerHTML = sum.toFixed(2);
 
      }
+
+     
 
       // Add listener to shipping options
 
