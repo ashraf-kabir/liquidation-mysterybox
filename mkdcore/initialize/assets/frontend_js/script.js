@@ -1054,6 +1054,7 @@
     // $('.shipping-cost-name').val(shipping_service_name);   
     // $('.shipping-cost-price-value').val(total_shipping_price);   
   
+    // Nevada Tax calculation
   
     $('.shipping_total_cost').text(Number(total_shipping_price).toFixed(2));  
   

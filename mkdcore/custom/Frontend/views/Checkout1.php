@@ -368,14 +368,14 @@
                                                   
                                                   <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date">N/A</span></strong></p>
                                                    
-                                                  <button style="display: none;" type="button" data-key="<?php echo $key; ?>" data-quantity="<?php echo $value->product_quantity; ?>" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost-">calculate</button>
+                                                  <button style="display: none;" type="button" data-key="<?php echo $key; ?>" data-quantity="<?php echo $value->product_quantity; ?>" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
                                              <?php else: ?>
                                                   <p>Shipping Cost:</p> 
                                                   <p>$<span class="selected_item_shipping_cost">0.00</span></p>
 
                                                   <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date">N/A</span></strong></p>
 
-                                                  <button style="display: none;" type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost-">calculate</button>
+                                                  <button style="display: none;" type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
                                              <?php endif; ?> 
                                         <?php endif; ?> 
                                    </div>
