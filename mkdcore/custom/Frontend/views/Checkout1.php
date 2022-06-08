@@ -558,6 +558,9 @@
           let shipping_box = document.querySelector(`[data-shipping-box= "${key}"]`);                    
           let shipping_options = document.querySelector(`[data-shipping-options= "${key}"]`);   
           // Toggle UI   
+          if(shipping_options.style.display == "block"){
+               return;
+          }
           ship_to_tick.style.display = "inline";
           pickup_tick.style.display = "none";
           shipping_box.style.display = "block";
@@ -615,7 +618,7 @@
                if(shipping_costs[i].value == '' || isNaN(parseFloat(shipping_costs[i].value))) continue;
                sum =   sum +  parseFloat(shipping_costs[i].value);
           }
-          total_shipping_cost.innerHTML = sum;
+          total_shipping_cost.innerHTML = sum.toFixed(2);
           total_shipping_cost_input.value = sum;
 
           // Generate grand total
