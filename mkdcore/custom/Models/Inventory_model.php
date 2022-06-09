@@ -184,6 +184,7 @@ class Inventory_model extends Manaknight_Model
 		return [
 			1 => 'Delivery Or Pickup',
 			2 => 'Pickup only',
+			2 => 'Shipping only',
 		];
 	}
 
