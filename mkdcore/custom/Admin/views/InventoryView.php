@@ -231,7 +231,8 @@ if ($layout_clean_mode) {
 						Can Ship Approval
 					</div>
 					<div class='col'>
-						<?php echo $view_model->can_ship_approval_mapping()[$view_model->get_can_ship_approval()];?>
+						<?php echo !empty($view_model->can_ship_approval_mapping()[$view_model->get_can_ship_approval()]) ? 
+										  $view_model->can_ship_approval_mapping()[$view_model->get_can_ship_approval()] : '';?>
 					</div>
 				</div>
 				

@@ -425,7 +425,8 @@
 				},
 				"can_ship": {
 					"1": "Delivery or Pickup",
-					"2": "Pickup only"
+					"2": "Pickup only",
+					"3": "Shipping only"
 				},
 
 				"can_ship_approval": {

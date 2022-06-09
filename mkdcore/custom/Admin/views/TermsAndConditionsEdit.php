@@ -114,7 +114,8 @@ if ($layout_clean_mode) {
         });
 
         editor.onChange = (contents, core) => {
-            $('._se_command_save').trigger('click')
+            $('._se_command_save').trigger('click');
+            $('[data-command="save"]').trigger('click');
         }
     }, false)
 

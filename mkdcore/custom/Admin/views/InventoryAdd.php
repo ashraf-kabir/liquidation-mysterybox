@@ -93,6 +93,7 @@ if ($layout_clean_mode) {
                     <label for="Product Type">Product Type </label>
                     <select id="form_product_type" name="product_type" class="form-control data-input">
                         <?php foreach ($view_model->product_type_mapping() as $key => $value) {
+                            
                             echo "<option value='{$key}'> {$value} </option>";
                         }?>
                     </select>
@@ -105,7 +106,8 @@ if ($layout_clean_mode) {
                     <select  class="form-control data-input" id="form_category_id" name="category_id">
                         <option value="" >Select</option>
                         <?php foreach ($parent_categories as $key => $value) {
-                            echo "<option value='{$value->id}'> {$value->name} </option>";
+                            $child_category_tab = $value->parent_category_id == 0 || $value->parent_category_id == null ? '' : '&nbsp;&nbsp;&nbsp;&nbsp;';
+                            echo "<option value='{$value->id}'> {$child_category_tab} {$value->name} </option>";
                         }?>
                     </select> 
                 </div>
@@ -410,7 +412,8 @@ if ($layout_clean_mode) {
         });
 
         editor.onChange = (contents, core) => {
-            $('._se_command_save').trigger('click')
+            $('._se_command_save').trigger('click');
+            $('[data-command="save"]').trigger('click');
         }
 
          // Shipping Status /////////////////////////////////////////////////////////////////////

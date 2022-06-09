@@ -274,7 +274,7 @@
                     <p id="msg_shipping_zip"><?php echo $store->zip; ?></p>
                     <p id="msg_shipping_zip"><?php echo $store->phone; ?></p>
                </div>
-               <div class="third-box"></div>
+               <div class="third-box">&nbsp;</div>
               
           </div>
           <div class="checkout-row">

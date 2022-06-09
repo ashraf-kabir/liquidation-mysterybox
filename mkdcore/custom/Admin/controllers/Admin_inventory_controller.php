@@ -123,7 +123,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
         $this->_data['sale_persons']        =   $this->user_model->get_all_users();
 
-
+        // echo '<pre>'; print_r($this->_data['parent_categories']); die();
         if ($this->input->post('can_ship') == 1) 
         {
             $this->form_validation->set_rules('weight', 'Weight', 'required|greater_than_equal_to[1]');
@@ -335,7 +335,6 @@ class Admin_inventory_controller extends Admin_controller
         
  
         $youtube_thumbnail_1 = json_encode($this->input->post('youtube_thumbnail_1', TRUE));
-        
 
         if($product_type == 2)
         {

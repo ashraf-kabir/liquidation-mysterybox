@@ -116,7 +116,8 @@ if($this->session->userdata('role') == 1)
                     <select  class="form-control data-input" id="form_category_id" name="category_id">
                         <option value="" >Select</option>
                         <?php foreach ($parent_categories as $key => $value) {
-                            echo "<option  " . (($view_model->get_category_id() == $value->id && $view_model->get_category_id() != '') ? 'selected' : '') . "   value='{$value->id}'> {$value->name} </option>";
+                            $child_category_tab = $value->parent_category_id == 0 || $value->parent_category_id == null ? '' : '&nbsp;&nbsp;&nbsp;&nbsp;';
+                            echo "<option  " . (($view_model->get_category_id() == $value->id && $view_model->get_category_id() != '') ? 'selected' : '') . "   value='{$value->id}'> {$child_category_tab} {$value->name} </option>";
                         }?>
                     </select>  
                 </div>
@@ -510,7 +511,8 @@ if($this->session->userdata('role') == 1)
         });
 
         editor.onChange = (contents, core) => {
-            $('._se_command_save').trigger('click')
+            $('._se_command_save').trigger('click');
+            $('[data-command="save"]').trigger('click');
         }
 
         // Shipping Status /////////////////////////////////////////////////////////////////////
