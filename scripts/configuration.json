@@ -1861,7 +1861,7 @@
 			"filter_fields": ["name", "email", "phone", "customer_since", "status"],
 			"add_fields": ["name", "email", "phone",  "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status", "password" ],
 			"edit_fields": ["name", "email", "phone", "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status"  ],
-			"view_fields": ["id", "name", "email", "phone", "company_name",   "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "last_order", "num_orders", "status"],
+			"view_fields": ["id", "name", "email", "phone", "company_name",   "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city",  "shipping_zip", "shipping_address", "shipping_country", "shipping_state", "shipping_city", "customer_since", "last_order", "num_orders", "status"],
 			"autocomplete": "",
 			"dynamic_mapping_add": {},
 			"dynamic_mapping_edit": {},

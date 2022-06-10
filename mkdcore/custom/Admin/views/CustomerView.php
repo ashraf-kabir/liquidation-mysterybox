@@ -119,6 +119,50 @@ if ($layout_clean_mode) {
 						<?php echo $view_model->get_billing_city();?>
 					</div>
 				</div>
+				<div class='row mb-4'>
+					<div class='col'>
+						Shipping Zip
+					</div>
+					<div class='col'>
+						<?php echo $view_model->get_shipping_zip();?>
+					</div>
+				</div>
+
+				<div class='row mb-4'>
+					<div class='col'>
+						Shipping Address
+					</div>
+					<div class='col'>
+						<?php echo $view_model->get_shipping_address();?>
+					</div>
+				</div>
+
+				<div class='row mb-4'>
+					<div class='col'>
+						Shipping Country
+					</div>
+					<div class='col'>
+						<?php echo $view_model->get_shipping_country();?>
+					</div>
+				</div>
+
+				<div class='row mb-4'>
+					<div class='col'>
+						Shipping State
+					</div>
+					<div class='col'>
+						<?php echo $view_model->get_shipping_state();?>
+					</div>
+				</div>
+
+				<div class='row mb-4'>
+					<div class='col'>
+						Shipping City
+					</div>
+					<div class='col'>
+						<?php echo $view_model->get_shipping_city();?>
+					</div>
+				</div>
 
 				<div class='row mb-4'>
 					<div class='col'>

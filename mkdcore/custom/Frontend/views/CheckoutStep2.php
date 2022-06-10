@@ -249,10 +249,10 @@
                                              <div class="custom-shipping-div">
                                                   <label for="city">City <span class="required-must">*</span></label>
                                                   <input name="shipping_city" id="shipping_city" value="<?php echo set_value('city', $customer->shipping_city); ?>" type="text" placeholder="your city" />
-                                             </div class="custom-shipping-div">
+                                             </div>
 
 
-                                             <div>
+                                             <div  class="custom-shipping-div">
                                                   <label for="zip-code">Zip-Code <span class="required-must">*</span></label>
                                                   <input id="shipping_zip" name="shipping_zip" value="<?php echo set_value('postal_code', $customer->shipping_zip); ?>" type="text" placeholder="your zip-code" />
                                              </div>
@@ -261,6 +261,7 @@
                                    </div>
                               </div>
                               <div class="checkout-info-add-btn">
+                                   <input type="checkbox" id="same_as_shipping" name="same_as_shipping" disabled="false" > Billing (same as shipping)
                                    <button type="button"  class="close-btn btn btn-secondary on_click_shipping_modal">Close</button>
                                    <button type="button" class="btn btn-primary add-shipping-address">Save</button>
                               </div>
