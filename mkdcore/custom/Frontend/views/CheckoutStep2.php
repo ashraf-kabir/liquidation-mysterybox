@@ -123,6 +123,12 @@
           }
      } 
 
+     .checkout-section .checkout-left .checkout-row .first-box {
+          font-weight: bold;
+          margin-right: 40px;
+          min-width: 180px;
+     }
+
 
 
 
