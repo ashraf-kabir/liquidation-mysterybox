@@ -172,7 +172,7 @@
      }
      
 </style> 
-<?php echo form_open('/checkout/step_2',array('class' => 'send_checkout_1' )); ?>
+<?php echo form_open('/checkout/step_2',array('class' => 'send_checkout_1', 'onsubmit' => 'validateForm()', 'id' => 'checkout_form_1', 'data-items' => count($cart_items) )); ?>
 <section class="checkout-section" id="checkout-section">
      <div class="checkout-left child">
           <div class="checkout-row">
@@ -288,7 +288,7 @@
                          <input type="hidden" name="product_quantity[]" value ="<?php echo $value->product_quantity; ?>">
                          <input type="hidden" name="unit_price[]" value ="<?php echo $value->unit_price; ?>">
 
-                          <input type="hidden" name="is_pickup[]" id="pickup_<?php echo $key; ?>" value = "true">
+                          <input type="hidden" name="is_pickup[]" id="pickup_<?php echo $key; ?>" value = "<?php echo $value->can_ship == 3 ? 'false' : 'true'; ?>">
                          <div class="product border shadow p-2">
                               
                               <div class="image">
@@ -324,7 +324,7 @@
                                         </div>
                                         <?php endif ; ?>
 
-                                        <?php if ($value->can_ship == 1 || $value->can_ship_approval == 1): ?>
+                                        <?php if ($value->can_ship != 2 || $value->can_ship_approval == 1): ?>
                                         <div class="  position-relative p-2" role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px " onclick="toggleToShipTo('<?php echo $key ?>')">
                                         <span class="text-white bg-dark border-dark" style="display:none; border-style:solid; border-width:5px; position:absolute; top:0; right:0;" id="ship_to_tick_<?php echo $key; ?>">&#10004;</span>
                                              <h6>SHIP TO </h6>
@@ -448,9 +448,9 @@
                          
                          <?php foreach($cart_items as $key => $value) :?>    
                          <div class="" style="display:flex">
-                                   <label for="" class="d-flex justify-content-between" style="display:none" id="shipping_item_price_label_<?php echo $key; ?>">
+                                   <span class="" style="display:none" id="shipping_item_price_label_<?php echo $key; ?>">
                                    Item <?php echo $key+1 ?> Shipping:  $<span  id = "shipping_cost_label_<?php echo $key; ?>">0.00</span>
-                                   </label>
+                         </span>
                                    <input type="hidden"  class="shipping_cost_input" name="shipping_costs[]" id="shipping_cost_<?php echo $key; ?>">
                                    <input type="hidden"  class="shipping_service_input" name="shipping_service[]" id="shipping_service_<?php echo $key; ?>">
                                    <input type="hidden"  class="shipping_service_name_input" name="shipping_service_name[]" id="shipping_service_name_<?php echo $key; ?>">
@@ -553,7 +553,6 @@
           shipping_item_label.innerHTML = `0.00`;
           shipping_item_input.value = ``;
 
-          console.log(shipping_item_price_label.style.display);
 
           sumShipping();
 
@@ -569,7 +568,9 @@
                return;
           }
           ship_to_tick.style.display = "inline";
-          pickup_tick.style.display = "none";
+          if(pickup_tick){
+               pickup_tick.style.display = "none";
+          }
           shipping_box.style.display = "block";
           shipping_options.style.display = "block";
 
@@ -578,9 +579,7 @@
 
           // remove previously checked option
           let shipping_options_radio = document.querySelectorAll(`[type="radio"][data-key="${key}"]`);
-          console.log(shipping_options_radio[0]);
           for(let i = 0; i < shipping_options_radio.length; i++){
-               console.log(shipping_options_radio[i]);
                if(shipping_options_radio[i].checked == true){
                     shipping_options_radio[i].checked = false;
                }
@@ -590,14 +589,15 @@
           let shipping_item_input = document.querySelector(`#shipping_cost_${key}`);
           shipping_item_label.innerHTML = `0.00`;
           shipping_item_input.value = ``;
+          let shipping_item_price_label = document.querySelector(`#shipping_item_price_label_${key}`);
+          shipping_item_price_label.style.display = "inline";
 
-          console.log(shipping_item_price_label.style.display);
           sumShipping();
      }
 
-     function updateShippingTotal(){
-          let selected_shipping = event.target;
-          let key = parseInt(selected_shipping.getAttribute('data-key'));
+     function updateShippingTotal(key){
+          let selected_shipping = document.querySelector(`[type="radio"][data-key="${key}"]:checked`)
+          // let key = parseInt(selected_shipping.getAttribute('data-key'));
           let total_cost = selected_shipping.getAttribute('data-total-cost');
           let service = selected_shipping.getAttribute('data-service-code');
           let service_name = selected_shipping.getAttribute('data-service');
@@ -613,8 +613,7 @@
           shipping_service_name_input.value = service_name;
 
           let pickup_flag = document.querySelector(`#pickup_${key}`);
-          shipping_item_price_label.style.display = pickup_flag == "false" ? "none": "inline-block";
-          console.log(shipping_item_price_label.style.display);
+          shipping_item_price_label.style.display = pickup_flag.value == "false" ? "inline": "none";
 
 
           sumShipping();
@@ -628,7 +627,6 @@
 
           let sum = 0;
           for(let i = 0; i < shipping_costs.length; i++){
-               console.log('sum shipping method item shipping cost'+shipping_costs[i].value);
                if(shipping_costs[i].value == '' || isNaN(parseFloat(shipping_costs[i].value))) continue;
                sum =   sum +  parseFloat(shipping_costs[i].value);
           }
@@ -646,8 +644,6 @@
           let grand_total = document.querySelector('#grand_total');
           let grand_total_text = document.querySelector('#grand_total_text');
 
-          console.log(total_shipping_cost.value);
-          console.log(total_with_tax.value);
           let total_shipping = isNaN(parseFloat(total_shipping_cost.value)) || total_shipping_cost.value == ''? 0 : parseFloat(total_shipping_cost.value.replaceAll(',',''));
           let total_with_tax_value = isNaN(parseFloat(total_with_tax.value)) || total_with_tax.value == ''? 0 : parseFloat(total_with_tax.value.replaceAll(',',''));
           let sum = total_shipping + total_with_tax_value;
@@ -660,6 +656,26 @@
 
       // Add listener to shipping options
 
+      function validateForm(){
+          event.preventDefault(); 
+          let items = event.target.getAttribute('data-items');
+
+          let pickup_input = null;
+          let pickup_shipping = null;
+          for(let i = 0; i < items; i++){
+
+               pickup_input = document.querySelector(`#pickup_${i}`);
+               pickup_shipping = document.querySelectorAll(`[type="radio"][data-key="${i}"]:checked`);
+               
+               if(pickup_input.value == 'false' && pickup_shipping.length < 1){
+                    toastr.error('Please select a shipping option For all items to be shipped.');
+                    return;
+               }
+          }
+
+          event.target.submit();
+
+      }
      
 
 

@@ -1647,7 +1647,7 @@ class Custom_api_controller extends Manaknight_Controller
             {
                 $product = $this->inventory_model->get($value->product_id);  
 
-                if($product->can_ship == 1 || ($product->can_ship == 2 && $product->can_ship_approval == 1)  )
+                if($product->can_ship != 2 || ($product->can_ship == 2 && $product->can_ship_approval == 1)  )
                 {
                     if($product->weight == 0  OR $product->weight == "")
                     {

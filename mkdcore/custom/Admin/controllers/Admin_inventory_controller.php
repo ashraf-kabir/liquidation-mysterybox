@@ -26,6 +26,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->load->model('user_model'); 
         $this->load->library('names_helper_service');
         $this->load->library('barcode_service');
+        $this->load->database();
         
     }
 
@@ -118,7 +119,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['view_model']->set_heading('Inventory');
         
 
-        $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
+        $this->_data['parent_categories']   =   $this->_get_grouped_categories();
         $this->_data['stores']              =   $this->store_model->get_all();
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
         $this->_data['sale_persons']        =   $this->user_model->get_all_users();
@@ -223,7 +224,7 @@ class Admin_inventory_controller extends Admin_controller
             'status' => $status,
             'store_location_id' => $store_location_id, 
             'can_ship' => $can_ship,
-            'can_ship' => $can_ship_approval,
+            'can_ship_approval' => $can_ship_approval,
             'free_ship' => $free_ship,
             'product_type' => $product_type,
             'pin_item_top' => $pin_item_top,
@@ -283,10 +284,13 @@ class Admin_inventory_controller extends Admin_controller
         
 
         $this->_data['gallery_lists']       =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
-        $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
+        $this->_data['parent_categories']   =   $this->_get_grouped_categories();
+        // $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
         $this->_data['stores']              =   $this->store_model->get_all();
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
         $this->_data['sale_persons']        =   $this->user_model->get_all_users();
+
+        // $this->_data['parent_categories'] 
 
         if ($this->input->post('can_ship') == 1) 
         {
@@ -340,7 +344,6 @@ class Admin_inventory_controller extends Admin_controller
         {
             $sku = '';
         }
-
         
         $result = $this->inventory_model->edit([
             'sale_person_id' => $sale_person_id,
@@ -364,7 +367,7 @@ class Admin_inventory_controller extends Admin_controller
             'status' => $status,
             'store_location_id' => $store_location_id, 
             'can_ship' => $can_ship,
-            'can_ship' => $can_ship_approval,
+            'can_ship_approval' => $can_ship_approval,
             'free_ship' => $free_ship,
             'product_type' => $product_type,
             'pin_item_top' => $pin_item_top,
@@ -482,6 +485,37 @@ class Admin_inventory_controller extends Admin_controller
         
         return $this->render('Admin/Scan_Product_View', $this->_data);
     }
+
+
+    private function _get_grouped_categories(){
+        // get parent categoris
+        $table = 'category';
+        $parent_where = '(parent_category_id IS NULL OR parent_category_id = 0) AND status = 1';
+		$this->db->where($parent_where);
+        $parent_categories = $this->db->get($table)->result();
+
+        // Get child categories
+        $child_where = '(parent_category_id IS NOT NULL OR parent_category_id != 0) AND status = 1';
+		$this->db->where($child_where);
+        $child_categories = $this->db->get($table)->result();
+
+        $categories = [];
+
+        foreach ($parent_categories as $key => $parent_category) {
+            // Add parent
+            $categories[] = $parent_category;
+
+            // Loop through child categories and append if its the child
+            foreach ($child_categories as $key => $child_category) {
+                if($child_category->parent_category_id == $parent_category->id){
+                    $categories[] = $child_category;
+                }
+            }
+        }
+
+        return $categories;
+
+	}
 
 
 

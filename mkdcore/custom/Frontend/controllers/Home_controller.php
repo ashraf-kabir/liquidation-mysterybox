@@ -1143,6 +1143,11 @@ class Home_controller extends Manaknight_Controller
             }
             $this->checkout_data_model->real_delete_by_fields(['customer_id' => $customer->id, 'is_done'=> 0]);
             for($i = 0; $i < count($product_id); $i++){
+                // if not pickup it must have shipping service
+                if($is_pickup[$i] == "false" &&  empty($shipping_service[$i])){
+                    $this->error('Please select shipping options for items that require shipping.');
+                    $this->redirect('/checkout');
+                }
                 $temp_data = [
                     'product_id'            => $product_id[$i],
                     'product_name'          => $product_name[$i],
