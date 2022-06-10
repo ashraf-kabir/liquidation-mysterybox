@@ -261,7 +261,6 @@
                                    </div>
                               </div>
                               <div class="checkout-info-add-btn">
-                                   <input type="checkbox" id="same_as_shipping" name="same_as_shipping" disabled="false" > Billing (same as shipping)
                                    <button type="button"  class="close-btn btn btn-secondary on_click_shipping_modal">Close</button>
                                    <button type="button" class="btn btn-primary add-shipping-address">Save</button>
                               </div>
