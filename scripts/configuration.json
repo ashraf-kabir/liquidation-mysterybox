@@ -562,7 +562,7 @@
 				}], "Shipping State", "", ""],
 
 
-				["customer_since", "date", [], "xyzCustomer Since", "required", "required"],
+				["customer_since", "date", [], "xyzCustomer Since", "required", ""],
 				["last_order", "string", [{
 					"limit": 255
 				}], "xyzLast Order", "", ""],
@@ -1859,8 +1859,8 @@
 			"listing_rows": ["id|integer", "name|string", "email|string", "phone|string", "customer_since|date", "last_order|string", "num_orders|integer", "status|integer"],
 			"listing_actions": [],
 			"filter_fields": ["name", "email", "phone", "customer_since", "status"],
-			"add_fields": ["name", "email", "phone",  "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status", "password" ],
-			"edit_fields": ["name", "email", "phone", "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city", "customer_since", "status"  ],
+			"add_fields": ["name", "email", "phone",  "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city",  "shipping_zip", "shipping_address", "shipping_country", "shipping_state", "shipping_city", "customer_since", "status", "password" ],
+			"edit_fields": ["name", "email", "phone", "company_name",  "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city",  "shipping_zip", "shipping_address", "shipping_country", "shipping_state", "shipping_city", "customer_since", "status"  ],
 			"view_fields": ["id", "name", "email", "phone", "company_name",   "billing_zip", "billing_address", "billing_country", "billing_state", "billing_city",  "shipping_zip", "shipping_address", "shipping_country", "shipping_state", "shipping_city", "customer_since", "last_order", "num_orders", "status"],
 			"autocomplete": "",
 			"dynamic_mapping_add": {},
