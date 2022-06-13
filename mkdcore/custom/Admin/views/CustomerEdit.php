@@ -101,6 +101,26 @@ if ($layout_clean_mode) {
 					<input type="text" class="form-control data-input" id="form_billing_city" name="billing_city" value="<?php echo set_value('billing_city', $this->_data['view_model']->get_billing_city());?>"/>
 				</div>
 				<div class="form-group col-md-5 col-sm-12">
+					<label for=" Shipping Zip">Shipping Zip </label>
+					<input type="text" class="form-control data-input" id="form_shipping_zip" name="shipping_zip" value="<?php echo set_value('shipping_zip', $this->_data['view_model']->get_shipping_zip());?>"/>
+				</div>
+				<div class="form-group col-md-5 col-sm-12">
+					<label for="Shipping Address"> Shipping Address </label>
+					<textarea id='form_shipping_address' name='shipping_address' class='data-input form-control' rows='5'><?php echo set_value('shipping_address', $this->_data['view_model']->get_shipping_address());?></textarea>
+				</div>
+				<div class="form-group col-md-5 col-sm-12">
+					<label for=" Shipping Country"> Shipping Country </label>
+					<input type="text" class="form-control data-input" id="form_shipping_country" name="shipping_country" value="<?php echo set_value('shipping_country', $this->_data['view_model']->get_shipping_country());?>"/>
+				</div>
+				<div class="form-group col-md-5 col-sm-12">
+					<label for=" Billing State"> Shipping State </label>
+					<input type="text" class="form-control data-input" id="form_shipping_state" name="shipping_state" value="<?php echo set_value('shipping_state', $this->_data['view_model']->get_shipping_state());?>"/>
+				</div>
+				<div class="form-group col-md-5 col-sm-12">
+					<label for=" Billing City"> Shipping City </label>
+					<input type="text" class="form-control data-input" id="form_shipping_city" name="shipping_city" value="<?php echo set_value('shipping_city', $this->_data['view_model']->get_shipping_city());?>"/>
+				</div>
+				<div class="form-group col-md-5 col-sm-12">
 					<label for="Customer Since">Customer Since </label>
 					<input type="date" class="form-control data-input" id="form_customer_since" name="customer_since" value="<?php echo set_value('customer_since', $this->_data['view_model']->get_customer_since());?>"/>
 				</div>

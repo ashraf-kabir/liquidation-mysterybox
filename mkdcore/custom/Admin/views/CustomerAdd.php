@@ -104,6 +104,26 @@ if ($layout_clean_mode) {
 					<label for="Billing City">Billing City </label>
 					<input type="text" class="form-control data-input" id="form_billing_city" name="billing_city" value="<?php echo set_value('billing_city'); ?>"/>
 				</div>
+				<div class="form-group col-md-5 col-sm-12 ">
+					<label for="Shipping Zip">Shipping Zip </label>
+					<input type="text" class="form-control data-input" id="form_shipping_zip" name="shipping_zip" value="<?php echo set_value('shipping_zip'); ?>"/>
+				</div>
+				<div class="form-group col-md-5 col-sm-12">
+					<label for="Shipping Address">Shipping Address </label>
+					<textarea id='form_shipping_address' name='shipping_address' class='form-control data-input' rows='5'><?php echo set_value('shipping_address'); ?></textarea>
+				</div>
+				<div class="form-group col-md-5 col-sm-12 ">
+					<label for="Shipping Country">Shipping Country </label>
+					<input type="text" class="form-control data-input" id="form_shipping_country" name="shipping_country" value="<?php echo set_value('shipping_country'); ?>"/>
+				</div>
+				<div class="form-group col-md-5 col-sm-12 ">
+					<label for="Shipping State">Shipping State </label>
+					<input type="text" class="form-control data-input" id="form_shipping_state" name="shipping_state" value="<?php echo set_value('shipping_state'); ?>"/>
+				</div>
+				<div class="form-group col-md-5 col-sm-12 ">
+					<label for="Shipping City">Shipping City </label>
+					<input type="text" class="form-control data-input" id="form_shipping_city" name="shipping_city" value="<?php echo set_value('shipping_city'); ?>"/>
+				</div>
 				<div class="form-group col-md-5 col-sm-12">
 					<label for="Customer Since">Customer Since </label>
 					<input type="date" class="form-control data-input" id="form_customer_since" name="customer_since" value="<?php echo set_value('customer_since'); ?>"/>
