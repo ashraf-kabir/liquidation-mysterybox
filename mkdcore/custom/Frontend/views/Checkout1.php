@@ -177,8 +177,8 @@
      <div class="checkout-left child ">
          
          <?php
-         echo $error;
-//               print_r($cart_items);
+
+//print_r($cart_items);
           ?>
 
           <div class="checkout-row p-0" id="review-and-shipping">
