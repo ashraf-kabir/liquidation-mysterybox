@@ -228,7 +228,7 @@
                                         <!-- <button data-id="<?php echo $value->product_id; ?>" data-product_qty="<?php echo $value->product_quantity; ?>" type="button"  class="btn btn-secondary minus_to_cart_button">-</button> -->
                                    </div>
 
-                                   <div class="d-flex flex-column flex-lg-row  ">
+                                   <div class="d-flex flex-column flex-xl-row  ">
                                         <?php if ($value->can_ship != 3 /* Shippinging only */): ?>
                                         <div class=" mr-2 p-2 pt-0 position-relative mt-2 " role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px" onclick="toggleToPickUp('<?php echo $key ?>')">
                                              <span style="border-style:solid; border-width:5px; position:absolute; top:0; right:0;" class=" p-0 m-0 text-white bg-dark border-dark" id="pickup_tick_<?php echo $key; ?>">&#10004;</span>
