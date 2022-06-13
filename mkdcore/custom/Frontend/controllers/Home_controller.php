@@ -1187,6 +1187,8 @@ class Home_controller extends Manaknight_Controller
             }
 
             // $data['cart_items']   =  $cart_items; 
+            $data['has_pickup'] = in_array('true', $is_pickup);
+            $data['has_shipping'] = in_array('false', $is_pickup);
             $data['total']  = $total;
             $data['total_shipping']  = $total_shipping;
             $data['checkout_data'] = $checkout_data;

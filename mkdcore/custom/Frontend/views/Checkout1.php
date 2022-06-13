@@ -174,8 +174,137 @@
 </style> 
 <?php echo form_open('/checkout/step_2',array('class' => 'send_checkout_1', 'onsubmit' => 'validateForm()', 'id' => 'checkout_form_1', 'data-items' => count($cart_items) )); ?>
 <section class="checkout-section" id="checkout-section">
-     <div class="checkout-left child">
-          <div class="checkout-row">
+     <div class="checkout-left child ">
+         
+         <?php
+//               print_r($cart_items);
+          ?>
+
+          <div class="checkout-row p-0" id="review-and-shipping">
+               <div class="first-box justify-content-between">
+                    <p>Review items & shipping</p>
+                    <a class="btn btn-secondary right" href="/cart"> Back to Cart </a>
+               </div>
+               <div class="box">
+                    <div class="heading">
+                         
+                    </div>
+                    <?php 
+                    $total = 0;
+                    foreach($cart_items as $key => $value)  { 
+                         // print_r($value);
+                         // die;
+                         // $total = $total + $value->total_price ;   
+                         $total = $total + ($value->unit_price * $value->product_quantity) ;    ?>
+
+                         <input type="hidden" name="product_id[]" value ="<?php echo $value->product_id; ?>">
+                         <input type="hidden" name="product_name[]" value ="<?php echo $value->product_name; ?>">
+                         <input type="hidden" name="product_quantity[]" value ="<?php echo $value->product_quantity; ?>">
+                         <input type="hidden" name="unit_price[]" value ="<?php echo $value->unit_price; ?>">
+
+                          <input type="hidden" name="is_pickup[]" id="pickup_<?php echo $key; ?>" value = "<?php echo $value->can_ship == 3 ? 'false' : 'true'; ?>">
+                         <div class="product border shadow p-2">
+                              
+                              <div class="image">
+                                   <p>Item: <?php echo $key+1; ?></p>
+
+                                   <?php if(!empty($value->feature_image)){   ?>
+
+                                        <img src="<?php echo $value->feature_image; ?>" alt="" height="100" width="100" alt="<?php echo $value->product_name; ?>" />
+                                   <?php }else{ ?>
+                                        <img src="/assets/frontend_images/noun_pallet_box_1675914.png" alt="" height="100" width="100" alt="<?php echo $value->product_name; ?>" />
+
+                                   <?php } ?>
+
+                              </div>
+                              <div class="details ">
+                                   <h4><?php echo $value->product_name; ?></h4>
+                                   <p>Details: <?php echo $value->description; ?></p>
+                                   <p>Price: $<span class="current_item_total_price"><?php echo $value->unit_price * $value->product_quantity; ?></span></p>
+                                   <div class="product-quantity">
+                                        <p>Quantity:</p>
+                                        <!-- <button data-id="<?php echo $value->product_id; ?>"  data-product_qty="<?php echo $value->product_quantity; ?>"  type="button" class="btn btn-secondary add_to_cart_button_checkout">+</button> -->
+                                        <span class="quantity_for_item" style="margin-left: 11px;"><?php echo $value->product_quantity; ?></span>
+                                        <!-- <button data-id="<?php echo $value->product_id; ?>" data-product_qty="<?php echo $value->product_quantity; ?>" type="button"  class="btn btn-secondary minus_to_cart_button">-</button> -->
+                                   </div>
+
+                                   <div class="d-flex flex-column flex-lg-row  ">
+                                        <?php if ($value->can_ship != 3 /* Shippinging only */): ?>
+                                        <div class=" mr-2 p-2 pt-0 position-relative mt-2 " role="button" style="border-style:solid; border-width:5px; max-width:300px; min-height:150px" onclick="toggleToPickUp('<?php echo $key ?>')">
+                                             <span style="border-style:solid; border-width:5px; position:absolute; top:0; right:0;" class=" p-0 m-0 text-white bg-dark border-dark" id="pickup_tick_<?php echo $key; ?>">&#10004;</span>
+                                             <h6>PICKUP AT </h6>
+                                             <p><?php echo $store_data->address ?></p>
+                                             <p><?php echo $store_data->state." ".$store_data->zip. " ".$store_data->phone ?></p>
+                                        </div>
+                                        <?php endif ; ?>
+
+                                        <?php if ($value->can_ship != 2 || $value->can_ship_approval == 1): ?>
+                                        <div class="  position-relative p-2 mt-2" role="button" style="border-style:solid; border-width:5px; max-width:300px; min-height:150px " onclick="toggleToShipTo('<?php echo $key ?>')">
+                                        <span class="text-white bg-dark border-dark" style="display:none; border-style:solid; border-width:5px; position:absolute; top:0; right:0;" id="ship_to_tick_<?php echo $key; ?>">&#10004;</span>
+                                             <h6>SHIP TO </h6>
+                                             <p id="msg_full_name"><?php echo $customer->name; ?></p>
+                                             <p class="show-text-only" id="msg_shipping_address"><?php echo $customer->shipping_address; ?></p>
+                                             <p class="show-text-only" > 
+                                                  <span id="msg_shipping_city"><?php echo $customer->shipping_city; ?></span>
+                                                  <span id="shipping_coma"  
+                                                       <?php if (empty($customer->shipping_state)): ?> 
+                                                            style="display: none;" 
+                                                       <?php endif ?> >,</span>   
+                                                  <span id="msg_shipping_state"><?php echo $customer->shipping_state; ?></span>
+                                             </p>
+                                             <p id="msg_shipping_zip"><?php echo $customer->shipping_zip; ?></p>
+                                        </div>
+                                        <?php endif ; ?>
+                                   </div>
+
+                                  
+                                    
+
+                                   <div class="shipping-cost"  style="display:none" data-shipping-box="<?php echo $key ?>">
+                                        <?php if ($value->can_ship == 2 && $value->can_ship_approval == 2): ?>
+                                             <div class="shipping-cost-options custom-pricing-div" style="margin-right: 5px;">
+
+                                                  <input type="hidden" class="shipping-cost-name" name="shipping_cost_name_<?php echo $value->id; ?>" value="">
+
+                                                  <input type="hidden" class="shipping-cost-price-value" name="shipping_cost_value_<?php echo $value->id; ?>" value="0">
+
+                                                  <label><input name="shipping_service_id_<?php echo $value->id; ?>" class="mr-3 shipping-cost-change" type="radio" value="Local Pickup" data-other-cost="0" data-price="0" data-service-code="Local Pickup" data-service-name="Local Pickup">Local Pickup </label>
+
+                                                  <label><input name="shipping_service_id_<?php echo $value->id; ?>" class="mr-3 shipping-cost-change" type="radio" value="Local Pickup No Shipping" data-other-cost="0" data-price="0" data-service-code="Local Pickup No Shipping" data-service-name="Local Pickup No Shipping">Local Pickup No Shipping </label>
+
+                                                   
+                                             </div>
+                                        <?php else: ?>  
+
+                                             <?php if ($value->free_ship == 1): ?>
+                                                  <p>Shipping:</p>
+
+                                                  <p>$<span class="selected_item_shipping_cost">0.00</span></p>
+
+                                                  
+                                                  <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date">N/A</span></strong></p>
+                                                   
+                                                  <button style="display: none;" type="button" data-key="<?php echo $key; ?>" data-quantity="<?php echo $value->product_quantity; ?>" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
+                                             <?php else: ?>
+                                                  <p>Shipping Cost:</p> 
+                                                  <p>$<span class="selected_item_shipping_cost">0.00</span></p>
+
+                                                  <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date">N/A</span></strong></p>
+
+                                                  <button style="display: none;" type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
+                                             <?php endif; ?> 
+                                        <?php endif; ?> 
+                                   </div>
+
+
+                                   <div class="shipping-cost-options custom-pricing-div" style="display:none" data-shipping-options="<?php echo $key ?>" > </div>
+                              </div>
+                         </div>
+
+                    <?php  }  $sub_total = $total; ?> 
+               </div>
+          </div> 
+          <div class="checkout-row border-0" >
                <!-- <div class="first-box">
                     <span>1</span>
                     <span>Shipping Address</span>
@@ -262,134 +391,6 @@
                     </div>
                </div>
           </div>
-         <?php
-//               print_r($cart_items);
-          ?>
-
-          <div class="checkout-row" id="review-and-shipping">
-               <div class="first-box">
-                    <span></span>
-                    <p>Review items & shipping</p>
-               </div>
-               <div class="box">
-                    <div class="heading">
-                         
-                    </div>
-                    <?php 
-                    $total = 0;
-                    foreach($cart_items as $key => $value)  { 
-                         // print_r($value);
-                         // die;
-                         // $total = $total + $value->total_price ;   
-                         $total = $total + ($value->unit_price * $value->product_quantity) ;    ?>
-
-                         <input type="hidden" name="product_id[]" value ="<?php echo $value->product_id; ?>">
-                         <input type="hidden" name="product_name[]" value ="<?php echo $value->product_name; ?>">
-                         <input type="hidden" name="product_quantity[]" value ="<?php echo $value->product_quantity; ?>">
-                         <input type="hidden" name="unit_price[]" value ="<?php echo $value->unit_price; ?>">
-
-                          <input type="hidden" name="is_pickup[]" id="pickup_<?php echo $key; ?>" value = "<?php echo $value->can_ship == 3 ? 'false' : 'true'; ?>">
-                         <div class="product border shadow p-2">
-                              
-                              <div class="image">
-                                   <p>Item: <?php echo $key+1; ?></p>
-
-                                   <?php if(!empty($value->feature_image)){   ?>
-
-                                        <img src="<?php echo $value->feature_image; ?>" alt="" height="100" width="100" alt="<?php echo $value->product_name; ?>" />
-                                   <?php }else{ ?>
-                                        <img src="/assets/frontend_images/noun_pallet_box_1675914.png" alt="" height="100" width="100" alt="<?php echo $value->product_name; ?>" />
-
-                                   <?php } ?>
-
-                              </div>
-                              <div class="details ">
-                                   <h4><?php echo $value->product_name; ?></h4>
-                                   <p>Details: <?php echo $value->description; ?></p>
-                                   <p>Price: $<span class="current_item_total_price"><?php echo $value->unit_price * $value->product_quantity; ?></span></p>
-                                   <div class="product-quantity">
-                                        <p>Quantity:</p>
-                                        <!-- <button data-id="<?php echo $value->product_id; ?>"  data-product_qty="<?php echo $value->product_quantity; ?>"  type="button" class="btn btn-secondary add_to_cart_button_checkout">+</button> -->
-                                        <span class="quantity_for_item" style="margin-left: 11px;"><?php echo $value->product_quantity; ?></span>
-                                        <!-- <button data-id="<?php echo $value->product_id; ?>" data-product_qty="<?php echo $value->product_quantity; ?>" type="button"  class="btn btn-secondary minus_to_cart_button">-</button> -->
-                                   </div>
-
-                                   <div class="d-flex ">
-                                        <?php if ($value->can_ship != 3 /* Shippinging only */): ?>
-                                        <div class=" mr-2 p-2 pt-0 position-relative " role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px" onclick="toggleToPickUp('<?php echo $key ?>')">
-                                             <span style="border-style:solid; border-width:5px; position:absolute; top:0; right:0;" class=" p-0 m-0 text-white bg-dark border-dark" id="pickup_tick_<?php echo $key; ?>">&#10004;</span>
-                                             <h6>PICKUP AT </h6>
-                                             <p><?php echo $store_data->address ?></p>
-                                             <p><?php echo $store_data->state." ".$store_data->zip. " ".$store_data->phone ?></p>
-                                        </div>
-                                        <?php endif ; ?>
-
-                                        <?php if ($value->can_ship != 2 || $value->can_ship_approval == 1): ?>
-                                        <div class="  position-relative p-2" role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px " onclick="toggleToShipTo('<?php echo $key ?>')">
-                                        <span class="text-white bg-dark border-dark" style="display:none; border-style:solid; border-width:5px; position:absolute; top:0; right:0;" id="ship_to_tick_<?php echo $key; ?>">&#10004;</span>
-                                             <h6>SHIP TO </h6>
-                                             <p id="msg_full_name"><?php echo $customer->name; ?></p>
-                                             <p class="show-text-only" id="msg_shipping_address"><?php echo $customer->shipping_address; ?></p>
-                                             <p class="show-text-only" > 
-                                                  <span id="msg_shipping_city"><?php echo $customer->shipping_city; ?></span>
-                                                  <span id="shipping_coma"  
-                                                       <?php if (empty($customer->shipping_state)): ?> 
-                                                            style="display: none;" 
-                                                       <?php endif ?> >,</span>   
-                                                  <span id="msg_shipping_state"><?php echo $customer->shipping_state; ?></span>
-                                             </p>
-                                             <p id="msg_shipping_zip"><?php echo $customer->shipping_zip; ?></p>
-                                        </div>
-                                        <?php endif ; ?>
-                                   </div>
-
-                                  
-                                    
-
-                                   <div class="shipping-cost"  style="display:none" data-shipping-box="<?php echo $key ?>">
-                                        <?php if ($value->can_ship == 2 && $value->can_ship_approval == 2): ?>
-                                             <div class="shipping-cost-options custom-pricing-div" style="margin-right: 5px;">
-
-                                                  <input type="hidden" class="shipping-cost-name" name="shipping_cost_name_<?php echo $value->id; ?>" value="">
-
-                                                  <input type="hidden" class="shipping-cost-price-value" name="shipping_cost_value_<?php echo $value->id; ?>" value="0">
-
-                                                  <label><input name="shipping_service_id_<?php echo $value->id; ?>" class="mr-3 shipping-cost-change" type="radio" value="Local Pickup" data-other-cost="0" data-price="0" data-service-code="Local Pickup" data-service-name="Local Pickup">Local Pickup </label>
-
-                                                  <label><input name="shipping_service_id_<?php echo $value->id; ?>" class="mr-3 shipping-cost-change" type="radio" value="Local Pickup No Shipping" data-other-cost="0" data-price="0" data-service-code="Local Pickup No Shipping" data-service-name="Local Pickup No Shipping">Local Pickup No Shipping </label>
-
-                                                   
-                                             </div>
-                                        <?php else: ?>  
-
-                                             <?php if ($value->free_ship == 1): ?>
-                                                  <p>Shipping:</p>
-
-                                                  <p>$<span class="selected_item_shipping_cost">0.00</span></p>
-
-                                                  
-                                                  <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date">N/A</span></strong></p>
-                                                   
-                                                  <button style="display: none;" type="button" data-key="<?php echo $key; ?>" data-quantity="<?php echo $value->product_quantity; ?>" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
-                                             <?php else: ?>
-                                                  <p>Shipping Cost:</p> 
-                                                  <p>$<span class="selected_item_shipping_cost">0.00</span></p>
-
-                                                  <p><strong>Expected Delivery Date : <span class="selected_item_expected_shipping_date">N/A</span></strong></p>
-
-                                                  <button style="display: none;" type="button" data-id="<?php echo $value->id; ?>" class="btn btn-secondary calculate-shipping-cost">calculate</button>
-                                             <?php endif; ?> 
-                                        <?php endif; ?> 
-                                   </div>
-
-
-                                   <div class="shipping-cost-options custom-pricing-div" style="display:none" data-shipping-options="<?php echo $key ?>" > </div>
-                              </div>
-                         </div>
-
-                    <?php  }  $sub_total = $total; ?> 
-               </div>
-          </div>
      </div>
 
      <!-- ORDER SURMARY -->
@@ -412,8 +413,9 @@
                     <button style="    margin-top: 0px;" class="btn btn-warning place-order-btn btn2-place_order" type="button">Place your Order</button> 
                </div>
 
-               <div class="">
-                    <p class="font-weight-bold">Shipping Details <button type="button" class="dropdown-btn btn btn-secondary shipping-btn btn-secondary  right ">Update</button></p>
+               <div class=" d-flex justify-content-between">
+                    <p class="font-weight-bold">Shipping Details </p>
+                    <button type="button" class="dropdown-btn btn btn-secondary shipping-btn btn-secondary ">Update</button>
                </div>
                <div class="">
                     <p id="msg_full_name"><?php echo $customer->name; ?></p>
@@ -429,15 +431,15 @@
                     <p id="msg_shipping_zip"><?php echo $customer->shipping_zip; ?></p>
                </div>
 
-               <div class="summary">
-                    <p>Order summary</p>
+               <div class="summary pt-2">
+                    <p>Order Summary</p>
                     <div class="order-details">
                          <div>
                               <p>Items(<?php echo count($cart_items) ?>):</p>
                               <p>$<span class="sub_total_value"><?php echo number_format($sub_total,2); ?></span></p>
                          </div>
-                         <div>
-                              <p>Shipping & Handling:</p>
+                         <div class="mt-1">
+                              <!-- <p>Shipping & Handling:</p> -->
                               <p>&nbsp;</p>
                               <!-- <p>$ <span class="shipping_total_cost">0.00</span></p> -->
 
@@ -447,10 +449,10 @@
                          </div>
                          
                          <?php foreach($cart_items as $key => $value) :?>    
-                         <div class="" style="display:flex">
-                                   <span class="" style="display:none" id="shipping_item_price_label_<?php echo $key; ?>">
-                                   Item <?php echo $key+1 ?> Shipping:  $<span  id = "shipping_cost_label_<?php echo $key; ?>">0.00</span>
-                         </span>
+                         <div class="justify-content-between" style="display:none" id="shipping_item_price_label_<?php echo $key; ?>">
+                                   <span> Item <?php echo $key+1 ?> Shipping:</span>
+                                   <span>$<span  id = "shipping_cost_label_<?php echo $key; ?>">0.00</span></span>
+
                                    <input type="hidden"  class="shipping_cost_input" name="shipping_costs[]" id="shipping_cost_<?php echo $key; ?>">
                                    <input type="hidden"  class="shipping_service_input" name="shipping_service[]" id="shipping_service_<?php echo $key; ?>">
                                    <input type="hidden"  class="shipping_service_name_input" name="shipping_service_name[]" id="shipping_service_name_<?php echo $key; ?>">
@@ -459,21 +461,21 @@
                          <?php endforeach ; ?>
 
                          
-                         <div>
-                              <p>Total shipping:</p>
+                         <div class="d-flex justify-content-between mt-1">
+                              <p>Total Shipping:</p>
                               <p>$<span id="total_shipping">0</span></p>
                               <input type="hidden" id="total_shipping_cost" name="total_shipping_cost">
                          </div>
-                         <div>
-                              <p>Total before tax:</p>
+                         <div class="d-flex justify-content-between">
+                              <p>Total Before Tax:</p>
                               <p>$<span class="total_without_tax_value"><?php echo number_format($sub_total,2); ?></span></p>
                          </div>
-                         <div>
-                              <p>tax:</p>
+                         <div class="d-flex justify-content-between">
+                              <p>Tax:</p>
                               <p >$<span class="cart-tax"><?php echo number_format($tax_amount,2); ?></span></p>
                          </div>
-                         <div>
-                              <p>order total:</p>
+                         <div class="d-flex justify-content-between">
+                              <p>Order Total:</p>
                               <p>$<span class="total_of_all_text" id="grand_total_text"><?php echo number_format($total,2); ?></span></p>
                               <input type="hidden" id="grand_total" name="grand_total" value="<?php echo number_format($total,2); ?>" >
                          </div>
@@ -590,7 +592,7 @@
           shipping_item_label.innerHTML = `0.00`;
           shipping_item_input.value = ``;
           let shipping_item_price_label = document.querySelector(`#shipping_item_price_label_${key}`);
-          shipping_item_price_label.style.display = "inline";
+          shipping_item_price_label.style.display = "flex";
 
           sumShipping();
      }
@@ -613,7 +615,7 @@
           shipping_service_name_input.value = service_name;
 
           let pickup_flag = document.querySelector(`#pickup_${key}`);
-          shipping_item_price_label.style.display = pickup_flag.value == "false" ? "inline": "none";
+          shipping_item_price_label.style.display = pickup_flag.value == "false" ? "flex": "none";
 
 
           sumShipping();

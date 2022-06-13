@@ -181,9 +181,10 @@
 <?php echo form_open('',array('class' => 'send_checkout' )); ?>
 <section class="checkout-section" id="checkout-section">
      <div class="checkout-left child">
+     <?php if($has_shipping == true): ?>
           <div class="checkout-row">
                <div class="first-box">
-                    <span>1</span>
+                    <!-- <span>1</span> -->
                     <span>Shipping Address</span>
                </div>
                <div class="second-box">
@@ -202,7 +203,7 @@
               
 
                <div class="third-box">
-                    <button type="button" class="dropdown-btn btn btn-secondary shipping-btn ">change/add</button>
+                    <!-- <button type="button" class="dropdown-btn btn btn-secondary shipping-btn ">change/add</button> -->
                     <div class="dropdown-box if_click_check" style="overflow-y: auto;">
                          <div class="modal-container">
                               <div class="payments-details">
@@ -268,9 +269,12 @@
                     </div>
                </div>
           </div>
+          <?php endif ; ?>
+
+          <?php if($has_pickup == true): ?>
           <div class="checkout-row">
                <div class="first-box">
-                    <span>2</span>
+                    <!-- <span>2</span> -->
                     <span>Pickup Address</span>
                </div>
                <div class="second-box">
@@ -283,9 +287,10 @@
                <div class="third-box">&nbsp;</div>
               
           </div>
+          <?php endif ; ?>
           <div class="checkout-row">
                <div class="first-box">
-                    <span>3</span>
+                    <!-- <span>3</span> -->
                     <span>payment method</span>
                </div>
                <div class="second-box"> 
