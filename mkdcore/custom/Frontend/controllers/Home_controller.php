@@ -2258,7 +2258,7 @@ class Home_controller extends Manaknight_Controller
 
                 }
             }
-
+            
             $data['cart_items']   =  $box_groups; 
             // $data['cart_items']   =  $cart_items; 
             $data['customer']     =  $customer; 

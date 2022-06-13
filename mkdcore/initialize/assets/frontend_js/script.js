@@ -459,7 +459,7 @@
               $(response.list_all).each(function(index,object){  
                 var shipping_cost_total = object.shipmentCost + object.otherCost;
                 shipping_cost_total = parseFloat(shipping_cost_total).toFixed(2);
-                shipping_options += '<label><input onclick="updateShippingTotal('+key+')" name="shipping_options_'+key+'" data-shipping-options="true" data-key="' + key + '"  data-service-name="shipping_service_id_' + id + '" class="mr-2 shipping-cost-change" type="radio" ' + object.selected + ' value="' + object.serviceCode + '" data-expected-date="' + object.expected_date_only + '"  data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '"  data-total-cost="' + shipping_cost_total + '" data-service-code="' + object.serviceCode + '" data-service="' + object.serviceName + '"  />' + object.serviceName + '  ( $' + shipping_cost_total + ' ) ' + object.expected_date + ' </label> </br>';
+                shipping_options += '<label><input onclick="updateShippingTotal('+key+')" name="shipping_options_'+key+'" data-shipping-options="true" data-key="' + key + '"  data-service-name="shipping_service_id_' + id + '" class="mr-2 shipping-cost-change" type="radio"   value="' + object.serviceCode + '" data-expected-date="' + object.expected_date_only + '"  data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '"  data-total-cost="' + shipping_cost_total + '" data-service-code="' + object.serviceCode + '" data-service="' + object.serviceName + '"  />' + object.serviceName + '  ( $' + shipping_cost_total + ' ) ' + object.expected_date + ' </label> </br>';
               }) 
               // shipping_options += '</select>';
   

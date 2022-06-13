@@ -177,6 +177,7 @@
      <div class="checkout-left child ">
          
          <?php
+         echo $error;
 //               print_r($cart_items);
           ?>
 
@@ -229,7 +230,7 @@
                                    </div>
 
                                    <div class="d-flex flex-column flex-xl-row  ">
-                                        <?php if ($value->can_ship != 3 /* Shippinging only */): ?>
+                                        <?php if ($value->can_ship != 3 /* Shipping only */): ?>
                                         <div class=" mr-2 p-2 pt-0 position-relative mt-2 " role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px" onclick="toggleToPickUp('<?php echo $key ?>')">
                                              <span style="border-style:solid; border-width:5px; position:absolute; top:0; right:0;" class=" p-0 m-0 text-white bg-dark border-dark" id="pickup_tick_<?php echo $key; ?>">&#10004;</span>
                                              <h6>PICKUP AT </h6>
@@ -394,8 +395,8 @@
      </div>
 
      <!-- ORDER SURMARY -->
-     <div class="checkout-right child topper">
-          <div class="box">
+     <div class="checkout-right child topper mt-2">
+          <div class="box mt-5">
                <?php 
                $tax_amount  = 0;
                if(isset($tax->tax) and $total != 0)
@@ -668,7 +669,7 @@
 
                pickup_input = document.querySelector(`#pickup_${i}`);
                pickup_shipping = document.querySelectorAll(`[type="radio"][data-key="${i}"]:checked`);
-               
+
                if(pickup_input.value == 'false' && pickup_shipping.length < 1){
                     toastr.error('Please select a shipping option For all items to be shipped.');
                     return;

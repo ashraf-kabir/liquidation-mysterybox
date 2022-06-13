@@ -41,6 +41,11 @@
                                         <input type="text" id="billing_zip" name="billing_zip"  class="form-control"  value="<?php echo $customer->billing_zip ?>" >
                                    </div>
 
+                                   <div class="col-md-12 col-12 my-2">
+                                        <input type="checkbox" id="same_as_billing"  class=""  >
+                                        <label for="same_as_billing">Shipping (Same as billing) </label>
+                                   </div>
+
 
 
 
@@ -97,3 +102,20 @@
 
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/address_form.js"></script>
+
+<script>
+
+     let same_as_billing = document.querySelector('#same_as_billing');
+
+     same_as_billing.addEventListener('change', function (){
+          if(this.checked){
+
+           document.querySelector('#shipping_address').value = document.querySelector('#billing_address').value;
+           document.querySelector('#shipping_country').value = document.querySelector('#billing_country').value;
+           document.querySelector('#shipping_state').value = document.querySelector('#billing_state').value;
+           document.querySelector('#shipping_city').value = document.querySelector('#billing_city').value;
+           document.querySelector('#shipping_zip').value = document.querySelector('#billing_zip').value;
+               
+          }
+     });
+</script>
