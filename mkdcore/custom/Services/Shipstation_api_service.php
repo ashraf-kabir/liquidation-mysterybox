@@ -124,6 +124,22 @@ class Shipstation_api_service {
                     $value->expected_date = "";
                     $value->expected_date_only = "";
                     $value->selected = "";
+
+                    /*  Specification Requires Only three options 
+                        Fedex Priority Overnight
+                        Fedex 2Day
+                        FedEx Ground free shipping (For business)/ Home Delivery (For Residential)
+                    */
+
+                    if(isset($value->serviceCode) && ($value->serviceCode != 'fedex_priority_overnight' &&
+                                                      $value->serviceCode != 'fedex_2day' &&
+                                                      $value->serviceCode != 'fedex_home_delivery' &&
+                                                      $value->serviceCode != 'fedex_ground'))
+                    {
+
+                        unset($response[$key]);
+
+                    }
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_express_saver') 
                     {
                         $expected_date_only = date('F d, Y', strtotime($myDate . ' +3 Weekday'));
