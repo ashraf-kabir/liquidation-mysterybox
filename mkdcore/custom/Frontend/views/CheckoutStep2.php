@@ -179,8 +179,13 @@
      
 </style> 
 <?php echo form_open('',array('class' => 'send_checkout' )); ?>
+
 <section class="checkout-section" id="checkout-section">
-     <div class="checkout-left child">
+
+     <div class="checkout-left child p-0">
+     <div class=" first-box d-flex flex-row-reverse justify-content-between">
+          <a class="btn btn-secondary" href="/checkout" >Back to Shipping</a> 
+     </div>
      <?php if($has_shipping == true): ?>
           <div class="checkout-row">
                <div class="first-box">
@@ -423,8 +428,8 @@
           </div>
           
      </div>
-     <div class="checkout-right child topper">
-          <div class="box">
+     <div class="checkout-right child topper mt-2">
+          <div class="box mt-5">
                <?php 
                $tax_amount  = 0;
                if(isset($tax->tax) and $total != 0)
@@ -466,7 +471,6 @@
                               <p>Order total:</p>
                               <p>$<span class="total_of_all_"><?php echo number_format($grand_total,2); ?></span></p>
                          </div>
-                         <a class="btn btn-secondary" href="/checkout" >Back to Shipping</a> 
 
                     </div>
                </div>
