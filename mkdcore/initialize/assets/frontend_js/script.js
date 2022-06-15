@@ -764,6 +764,7 @@
           {
             $('.on_click_shipping_modal').trigger('click');
             toastr.success(response.success); 
+            
   
             $('#msg_full_name').text($('#full_name').val());
             $('#msg_shipping_address').text(shipping_address);
@@ -789,7 +790,7 @@
              
             calculate_cost();
   
-  
+            window.location.reload();
             $('.calculate-shipping-cost').trigger('click');
   
           } 

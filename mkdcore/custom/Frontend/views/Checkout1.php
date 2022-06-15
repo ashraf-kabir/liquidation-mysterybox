@@ -222,6 +222,7 @@
                                    <h4><?php echo $value->product_name; ?></h4>
                                    <p>Details: <?php echo $value->description; ?></p>
                                    <p>Price: $<span class="current_item_total_price"><?php echo $value->unit_price * $value->product_quantity; ?></span></p>
+                                   <p>Weight: <span class=""><?php echo $value->weight * $value->product_quantity; ?></span> lbs</p>
                                    <div class="product-quantity">
                                         <p>Quantity:</p>
                                         <!-- <button data-id="<?php echo $value->product_id; ?>"  data-product_qty="<?php echo $value->product_quantity; ?>"  type="button" class="btn btn-secondary add_to_cart_button_checkout">+</button> -->
@@ -410,7 +411,7 @@
                <input type="hidden" value="<?php echo number_format($tax_amount,2); ?>" class="tax_amount_val" id="tax_amount_val" />
                <input type="hidden" value="<?php echo number_format($total-$tax_amount,2); ?>" class="total_without_tax" id= "total_without_tax" />
 
-               <div class="header btn2-place_order  mb-3"> 
+               <div class="header btn2-place_order  mb-3 d-none"> 
                     <button style="    margin-top: 0px;" class="btn btn-warning place-order-btn btn2-place_order" type="button">Place your Order</button> 
                </div>
 
