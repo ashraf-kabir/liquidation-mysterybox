@@ -2231,7 +2231,7 @@ class Home_controller extends Manaknight_Controller
                     $value->item_data     = $item_data; 
                     
                     $cart_item_quantity = $value->product_qty;
-                    if($item_data->weight > 150){
+                    if($item_data->weight >= 150){
                         for($i = 0; $i < $cart_item_quantity; $i++){
                             $value->product_quantity = 1;
                             $box_groups[] = $value;
@@ -2241,7 +2241,7 @@ class Home_controller extends Manaknight_Controller
                         $quantity_in_box = 1;
                         for($i = 1; $i <= $cart_item_quantity; $i++){
                             $total_box_weight += $item_data->weight;
-                            if($total_box_weight >= 150 || $i == $cart_item_quantity ){
+                            if($total_box_weight >= 150 || $i == $cart_item_quantity || $total_box_weight + $item_data->weight >= 150){
                                 $value->product_quantity = $quantity_in_box;
                                 $box_groups[] = clone $value;
                                 // reset
