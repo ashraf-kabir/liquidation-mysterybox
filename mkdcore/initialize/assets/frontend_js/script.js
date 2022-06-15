@@ -453,10 +453,18 @@
           {  
             if(response.list_all)
             { 
+              if(Array.isArray(response.list_all) &&  response.list_all.length == 0){
+                p_object.find('.shipping-cost-options').html('<p>No Available Shipping Option for this Item.</p>');
+                return;
+              }
+
               let shipping_options = '<input type="hidden" class="shipping-cost-name" name="shipping_cost_name_' + id + '" value=""  /><input type="hidden" class="shipping-cost-price-value" name="shipping_cost_value_' + id + '" value="0"  />';
              
               response.list_all.sort(function(a, b){
                 if((a.serviceCode == 'fedex_ground' || a.serviceCode == 'fedex_home_delivery') && b.serviceCode == 'fedex_priority_overnight' ){
+                  return -1;
+                }
+                if((a.serviceCode == 'fedex_ground' || a.serviceCode == 'fedex_home_delivery') && b.serviceCode == 'fedex_2day' ){
                   return -1;
                 }
                 if(a.serviceCode == 'fedex_2day'){

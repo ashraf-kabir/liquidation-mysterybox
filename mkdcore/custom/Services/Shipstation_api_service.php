@@ -215,7 +215,7 @@ class Shipstation_api_service {
                         $value->expected_date_only =  $expected_date_only;
                     }
 
-                    // 2 for business and 1 for home
+                    // 2 for business and 1 for home and 3 for others
                     //If business address remove home delivery and make ground shipping $0 free delivery
                     if (isset($value->serviceCode) && $value->serviceCode == 'fedex_home_delivery'  && $address_type == 2 ) 
                     {
