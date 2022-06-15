@@ -244,17 +244,17 @@
                                         <div class="  position-relative p-2 mt-2" role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px " onclick="toggleToShipTo('<?php echo $key ?>')">
                                         <span class="text-white bg-dark border-dark" style="display:none; border-style:solid; border-width:5px; position:absolute; top:0; right:0;" id="ship_to_tick_<?php echo $key; ?>">&#10004;</span>
                                              <h6>SHIP TO </h6>
-                                             <p id="msg_full_name"><?php echo $customer->name; ?></p>
-                                             <p class="show-text-only" id="msg_shipping_address"><?php echo $customer->shipping_address; ?></p>
+                                             <p id="msg_full_name" class="msg-full-name"><?php echo $customer->name; ?></p>
+                                             <p class="show-text-only" id="msg_shipping_address" class="msg-shipping-address"><?php echo $customer->shipping_address; ?></p>
                                              <p class="show-text-only" > 
-                                                  <span id="msg_shipping_city"><?php echo $customer->shipping_city; ?></span>
+                                                  <span id="msg_shipping_city" class="msg-shipping-city"><?php echo $customer->shipping_city; ?></span>
                                                   <span id="shipping_coma"  
                                                        <?php if (empty($customer->shipping_state)): ?> 
                                                             style="display: none;" 
                                                        <?php endif ?> >,</span>   
-                                                  <span id="msg_shipping_state"><?php echo $customer->shipping_state; ?></span>
+                                                  <span id="msg_shipping_state" class="msg-shipping-state"><?php echo $customer->shipping_state; ?></span>
                                              </p>
-                                             <p id="msg_shipping_zip"><?php echo $customer->shipping_zip; ?></p>
+                                             <p id="msg_shipping_zip" class="msg-shipping-zip"><?php echo $customer->shipping_zip; ?></p>
                                         </div>
                                         <?php endif ; ?>
                                    </div>

@@ -771,6 +771,12 @@
             $('#msg_shipping_zip').text(shipping_zip);
             $('#msg_shipping_state').text(shipping_state);
             $('#msg_shipping_city').text(shipping_city);
+
+            $('.msg-full-name').text($('#full_name').val());
+            $('.msg-shipping-address').text(shipping_address);
+            $('.msg-shipping-zip').text(shipping_zip);
+            $('.msg-shipping-state').text(shipping_state);
+            $('.msg-shipping-city').text(shipping_city);
   
             if (shipping_state != "" ) 
             {
@@ -791,6 +797,7 @@
             calculate_cost();
   
             window.location.reload();
+
             $('.calculate-shipping-cost').trigger('click');
   
           } 
