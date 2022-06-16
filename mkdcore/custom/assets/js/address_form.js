@@ -227,7 +227,7 @@ function initialize() {
                }
  
 
-               if (list_types.includes(address_type)) 
+               if (business_types.includes(address_type)) 
                {
                     isResidental = 2;
                }
