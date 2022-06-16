@@ -9,11 +9,20 @@
           country: 'short_name',
           postal_code: 'short_name'
      };
+
+     var residence = [
+          "premise", 
+          "subpremise", 
+          "street_address",
+          "street_number",
+          "neighborhood",
+          "room"
+
+     ];
  
 
-     var list_types = 
+     var business_types = 
      [
-          "premise", 
           "restaurant", 
           "food", 
           "shopping_mall", 
@@ -212,7 +221,7 @@ function initialize() {
                var address_type = place.types[i]; 
                console.log(address_type)
                 
-               if (address_type == 'street_address' ) 
+               if (residence.includes(address_type) ) 
                {
                     isResidental = 1;
                }

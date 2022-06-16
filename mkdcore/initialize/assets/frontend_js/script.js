@@ -796,7 +796,6 @@
              
             calculate_cost();
   
-            window.location.reload();
 
             $('.calculate-shipping-cost').trigger('click');
   
