@@ -563,6 +563,48 @@ class Shipstation_api_service {
         return json_decode($response);
     }
 
+
+    /* Validate Address using Smarty Us Address Api 
+        RDI response type: Residential, Commercial or [blank] (and empty response for address that couldn't be validated)
+    */
+    public function validate_address($street = "", $city = "", $state = "", $zip = "", $country = "US"){
+        $smarty_street_api_base_url = $this->_config->item("smarty_street_url");
+        $url = $smarty_street_api_base_url . "?";
+
+        $smarty_auth_id = $this->_config->item("smarty_auth_id");
+        $smarty_auth_token = $this->_config->item("smarty_auth_token") ;
+
+        $url .= "auth-id=$smarty_auth_id";
+        $url .= "&auth-token=$smarty_auth_token";
+        $url .= "&street=".urlencode($street);
+        $url .= "&city=".urlencode($city);
+        $url .= "&state=".urlencode($state);
+        $url .= "&zip=".urlencode($zip);
+
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        //for debug only!
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+        $resp = curl_exec($curl);
+        curl_close($curl);
+
+        $resp = json_decode($resp);
+        $output = false;
+
+        if(empty($resp)){
+            $output = false;
+        }else {
+            $output = isset($resp[0]->metadata->rdi) ?  $resp[0]->metadata->rdi : false;
+        }
+
+        return $output;
+
+    }
+
     
 }
 

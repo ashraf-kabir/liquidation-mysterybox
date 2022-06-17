@@ -373,7 +373,24 @@ class Home_controller extends Manaknight_Controller
                 $shipping_address       =  $this->input->post('shipping_address', TRUE);
                 $address_type           =  $this->input->post('address_type', TRUE);
 
+              
 
+                $validation_response = $this->_validate_address($shipping_address, $shipping_city, $shipping_state, $shipping_zip, $shipping_country );
+
+                if($validation_response == false){
+                    $output['status'] = 0;
+                    $output['error']  = "Error! Ensure shipping address is valid.";
+                    echo json_encode($output);
+                    exit();
+                }
+                
+                if($validation_response == 'Commercial'){
+                    $address_type = 2;
+                }else if ($validation_response == 'Residential') {
+                    $address_type = 1;
+                }else{
+                    $address_type = 0;
+                }
                 $payload = [ 
                     'billing_zip' => $billing_zip,
                     'billing_address' => $billing_address,
@@ -401,6 +418,8 @@ class Home_controller extends Manaknight_Controller
                 {
                     $output['status'] = 0;
                     $output['success']  = 'Profile has been updated successfully.'; 
+                    $output['validation']  = $validation_response;  
+
                     if ($this->input->post('address_fill_form', TRUE) ) 
                     {
                         $output['success']       = 'Data has been updated successfully.';  
@@ -1654,6 +1673,23 @@ class Home_controller extends Manaknight_Controller
                 $address_type        =   $this->input->post('address_type', TRUE);
                 $full_name           =   $this->input->post('full_name', TRUE);
                 $phone_number        =   $this->input->post('phone_number', TRUE);
+
+                $validation_response = $this->_validate_address($shipping_address, $shipping_city, $shipping_state, $shipping_zip, $shipping_country );
+
+                if($validation_response == false){
+                    $output['status'] = 0;
+                    $output['error']  = "Error! Ensure shipping address is valid.";
+                    echo json_encode($output);
+                    exit();
+                }
+                
+                if($validation_response == 'Commercial'){
+                    $address_type = 2;
+                }else if ($validation_response == 'Residential') {
+                    $address_type = 1;
+                }else{
+                    $address_type = 0;
+                }
                 
 
                 $response = $this->customer_model->edit([
@@ -2329,6 +2365,17 @@ class Home_controller extends Manaknight_Controller
 
         return $response;
 
+    }
+
+    private function _validate_address($shipping_address = "", $city = "", $state = "", $zip = "", $country = "US"){
+        // Validate address
+        $this->load->library('shipstation_api_service');
+        $this->shipstation_api_service->set_config($this->config);
+
+        $response = $this->shipstation_api_service
+                                ->validate_address($shipping_address, $city, $state, $zip, $country);
+
+        return $response;
     }
 
 }

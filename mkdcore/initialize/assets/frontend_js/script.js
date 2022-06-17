@@ -812,7 +812,7 @@
         },
         error: function()
         { 
-          toastr.error('Error! Connection timeout.'); 
+          toastr.error('Error! Something went wrong.'); 
         } 
       });
     }
