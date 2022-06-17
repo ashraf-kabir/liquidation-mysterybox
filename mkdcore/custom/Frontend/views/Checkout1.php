@@ -359,27 +359,27 @@
                                         <div class="inputs-container">
                                              <div class="custom-shipping-div">
                                                   <label for="address">Address <span class="required-must">*</span></label>
-                                                  <input name="shipping_address" id="shipping_address"  value="<?php echo set_value('address_1', $customer->shipping_address); ?>" type="search" placeholder="your address" />
+                                                  <input name="shipping_address" id="shipping_address"  value="<?php echo set_value('address_1', $customer->shipping_address); ?>" type="text" placeholder="your address" autocomplete="off" />
                                              </div>
                                              <div class="custom-shipping-div">
                                                   <label for="country">Country <span class="required-must">*</span></label>
-                                                  <input readonly=""  style="background: #e9ecef" name="shipping_country" id="shipping_country"  value="<?php echo set_value('country', $customer->shipping_country); ?>" type="text" placeholder="your country" />
+                                                  <input readonly=""  style="background: #e9ecef" name="shipping_country" id="shipping_country"  value="<?php echo set_value('country', $customer->shipping_country); ?>" type="text" placeholder="your country" autocomplete="off" />
                                              </div>
                                              
                                              <div class="custom-shipping-div">
                                                   <label for="state">State <span class="required-must">*</span></label>
-                                                  <input name="shipping_state" id="shipping_state"  value="<?php echo set_value('state', $customer->shipping_state); ?>" type="text" placeholder="your state" />
+                                                  <input name="shipping_state" id="shipping_state"  value="<?php echo set_value('state', $customer->shipping_state); ?>" type="text" placeholder="your state" autocomplete="off" />
                                              </div>
 
                                              <div class="custom-shipping-div">
                                                   <label for="city">City <span class="required-must">*</span></label>
-                                                  <input name="shipping_city" id="shipping_city" value="<?php echo set_value('city', $customer->shipping_city); ?>" type="text" placeholder="your city" />
+                                                  <input name="shipping_city" id="shipping_city" value="<?php echo set_value('city', $customer->shipping_city); ?>" type="text" placeholder="your city" autocomplete="off" />
                                              </div class="custom-shipping-div">
 
 
                                              <div>
                                                   <label for="zip-code">Zip-Code <span class="required-must">*</span></label>
-                                                  <input id="shipping_zip" name="shipping_zip" value="<?php echo set_value('postal_code', $customer->shipping_zip); ?>" type="text" placeholder="your zip-code" />
+                                                  <input id="shipping_zip" name="shipping_zip" value="<?php echo set_value('postal_code', $customer->shipping_zip); ?>" type="text" placeholder="your zip-code" autocomplete="off" />
                                              </div>
                                              <input type="hidden" id="address_type" name="address_type" value="<?php echo set_value('address_type', $customer->address_type); ?>">
                                         </div>

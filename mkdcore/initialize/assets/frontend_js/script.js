@@ -762,9 +762,8 @@
         {     
           if(response.success)
           {
-            setTimeout(() => {
               window.location.reload();
-            }, 1500);
+              return;
             $('.on_click_shipping_modal').trigger('click');
             toastr.success(response.success); 
             
