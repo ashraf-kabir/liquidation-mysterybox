@@ -170,6 +170,10 @@
      .second-box{
           width: 26%;
      }
+
+     input[type=search]::-webkit-search-cancel-button {
+          -webkit-appearance: searchfield-cancel-button;
+     }
      
 </style> 
 <?php echo form_open('/checkout/step_2',array('class' => 'send_checkout_1', 'onsubmit' => 'validateForm()', 'id' => 'checkout_form_1', 'data-items' => count($cart_items) )); ?>
@@ -359,7 +363,7 @@
                                         <div class="inputs-container">
                                              <div class="custom-shipping-div">
                                                   <label for="address">Address <span class="required-must">*</span></label>
-                                                  <input name="shipping_address" id="shipping_address"  value="<?php echo set_value('address_1', $customer->shipping_address); ?>" type="text" placeholder="your address" autocomplete="off" />
+                                                  <input name="shipping_address" id="shipping_address"  value="<?php echo set_value('address_1', $customer->shipping_address); ?>" type="search" placeholder="your address" autocomplete="off" />
                                              </div>
                                              <div class="custom-shipping-div">
                                                   <label for="country">Country <span class="required-must">*</span></label>
