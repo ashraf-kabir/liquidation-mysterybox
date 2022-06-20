@@ -174,6 +174,10 @@
      input[type=search]::-webkit-search-cancel-button {
           -webkit-appearance: searchfield-cancel-button;
      }
+
+     .address-modal-input{
+          width:350px;
+     }
      
 </style> 
 <?php echo form_open('/checkout/step_2',array('class' => 'send_checkout_1', 'onsubmit' => 'validateForm()', 'id' => 'checkout_form_1', 'data-items' => count($cart_items) )); ?>
@@ -363,11 +367,14 @@
                                         <div class="inputs-container">
                                              <div class="custom-shipping-div">
                                                   <label for="address">Address <span class="required-must">*</span></label>
-                                                  <input name="shipping_address" id="shipping_address"  value="<?php echo set_value('address_1', $customer->shipping_address); ?>" type="search" placeholder="your address" autocomplete="off" />
+                                                  <div class="border address-modal-input d-flex flex-row" style="">
+                                                       <input style="" name="shipping_address" class="border-0" id="shipping_address"  value="<?php echo set_value('address_1', $customer->shipping_address); ?>" type="text" placeholder="your address" autocomplete="off" />
+                                                       <span id="clear_shipping_address" role="button" class="font-weight-bold px-2 py-3 align-items-center">&times;</span>
+                                                  </div>
                                              </div>
                                              <div class="custom-shipping-div">
                                                   <label for="country">Country <span class="required-must">*</span></label>
-                                                  <input readonly=""  style="background: #e9ecef" name="shipping_country" id="shipping_country"  value="<?php echo set_value('country', $customer->shipping_country); ?>" type="text" placeholder="your country" autocomplete="off" />
+                                                  <input readonly="" class="address-modal-input" style="background: #e9ecef" name="shipping_country" id="shipping_country"  value="<?php echo set_value('country', $customer->shipping_country); ?>" type="text" placeholder="your country" autocomplete="off" />
                                              </div>
                                              
                                              <div class="custom-shipping-div">
@@ -530,10 +537,30 @@
           });
      });
 
-    
+
+    let clearShippingAddressBtn = document.querySelector("#clear_shipping_address");
+    let shippingAddressInput = document.querySelector("#shipping_address");
+
+    shippingAddressInput.addEventListener('change', handleShippingInputChange );
+    shippingAddressInput.addEventListener('focus', handleShippingInputChange );
+    shippingAddressInput.addEventListener('input', handleShippingInputChange );
+    shippingAddressInput.addEventListener('blur', handleShippingInputChange );
+    clearShippingAddressBtn.addEventListener('click', function(){
+          shippingAddressInput.value = "";
+    });
+
 
      // HIDE SHIPPING OPTIONS
      // document.querySelectorAll('shipping-cost')
+
+     function handleShippingInputChange(){
+          if(event.target.value == ''){
+               clearShippingAddressBtn.style.visibility = "hidden";
+          }else{
+               clearShippingAddressBtn.style.visibility = "visible";
+          }
+
+    }
 
      function toggleToPickUp(key){
           let pickup_flag = document.querySelector(`#pickup_${key}`);
@@ -682,6 +709,10 @@
           event.target.submit();
 
       }
+
+     //  document.getElementById('shipping_address').removeEventListener('click', function(e) { 
+     //      console.log('clicked search');
+     // })
      
 
 
