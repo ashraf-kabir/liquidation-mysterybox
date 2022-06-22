@@ -479,7 +479,7 @@ class Admin_inventory_controller extends Admin_controller
         $model->physical_location = $this->names_helper_service->get_physical_location_real_name( $model->physical_location ); 
         $model->store_location_id = $this->names_helper_service->get_store_name( $model->store_location_id ); 
         $this->_data['view_model']->set_model($model);
-        $store_inventory = json_decode($model->store_inventory);
+        $store_inventory = !empty($model->store_inventory) ? json_decode($model->store_inventory) : [];
         
         foreach ($store_inventory as $key => &$value) {
             $store_inventory[$key]->store_name = $this->names_helper_service->get_store_name( $value->store_id ); 
