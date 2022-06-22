@@ -196,13 +196,28 @@ if ($layout_clean_mode) {
 					</div>
 					</div>
 				
-				<div class='row mb-4'>
+				<!-- <div class='row mb-4'>
 					<div class='col'>
 						Store Location
 					</div>
 					<div class='col'>
 						<?php echo $view_model->get_store_location_id();?>
 					</div>
+				</div> -->
+				<div class='row mb-4'>
+					<div class='col'>
+						Store Data
+					</div>
+					<div class='col'>
+					<?php foreach($store_inventory as $key => $store_data) : ?>
+
+						<?php echo $key+1;?>. </br>
+						<?php echo "Store: {$store_data->store_name}";?> </br>
+						<?php echo "Physical Location: {$store_data->physical_location_name}";?> </br>
+						<?php echo "Quantity: {$store_data->quantity}";?> </br> </br>
+
+					<?php endforeach ; ?>
+					</div> 
 				</div>
 
 				<div class='row mb-4'>

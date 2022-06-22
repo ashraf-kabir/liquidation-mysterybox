@@ -132,7 +132,7 @@ if($this->session->userdata('role') == 1)
                         }?>
                     </select> 
                 </div>
-                <div class="form-group col-md-5 col-sm-12">
+                <!-- <div class="form-group col-md-5 col-sm-12">
                     <label for="Store Location">Store <span class="text-danger">*</span></label>
                     <select   class="form-control data-input" id="form_store_location_id" name="store_location_id">
                         <option value="" >Select</option>
@@ -142,13 +142,11 @@ if($this->session->userdata('role') == 1)
                     </select>   
                 </div>
 
- 
-
                 <div class="form-group col-md-5 col-sm-12">
-                    <label for="Manifest">Manifest </label>
-                    <input type="text" class="form-control data-input" id="form_manifest_id" name="manifest_id" value="<?php echo set_value('manifest_id', $this->_data['view_model']->get_manifest_id());?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
+                    <label for="Quantity">Quantity </label>
+                    <input type="text" class="form-control data-input" id="form_quantity" name="quantity" value="<?php echo set_value('quantity', $this->_data['view_model']->get_quantity());?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
                 </div>
-                
+
                 <div class="form-group col-md-5 col-sm-12">
                     <label for="Inventory Location">Inventory Location </label>
                     <select class="form-control data-input" id="form_physical_location" name="physical_location">
@@ -162,11 +160,98 @@ if($this->session->userdata('role') == 1)
                 <div class="form-group col-md-5 col-sm-12">
                     <label for="Inventory Location Description">Inventory Location Description </label>
                     <input type="text" class="form-control data-input" id="form_location_description" name="location_description" value="<?php echo set_value('location_description', $this->_data['view_model']->get_location_description());?>"/>
+                </div> -->
+
+                <div id="store-inventories">
+                    <?php if(!empty($store_inventory) && count($store_inventory) > 0): ?>
+                    <?php foreach($store_inventory as $key => $store_data) : ?>
+                    <?php $count = $key+1 ?>
+                    <div class="store-inventory">
+                        <div class="form-group col-md-5 col-sm-12 ">
+                            <label for="Store Location">Store <?php echo $count > 1 ? " - $count" : ""; ?> <span class="text-danger">*</span></label>
+                            <select required   class="form-control data-input" id="form_store_location_id" name="store_location_id[]" >
+                                <option value="" >Select</option>
+                                <?php foreach ($stores as $key => $value) {
+                                    $selected = $value->id == $store_data->store_id ? 'selected' : '';
+                                    echo "<option {$selected} value='{$value->id}'> {$value->name} </option>";
+                                }?>
+                            </select>  
+                        </div>
+
+                        <div class="form-group col-md-5 col-sm-12 ">
+                            <label for="Quantity">Quantity <?php echo $count > 1 ? " - $count" : ""; ?> <span class="text-danger">*</span> </label>
+                            <input type="text" required class="form-control data-input" id="form_quantity" name="quantity[]" value="<?php echo !empty($store_data->quantity) ? $store_data->quantity : ''; ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
+                        </div>
+
+                        <div class="form-group col-md-5 col-sm-12 ">
+                            <label for="Inventory Location">Inventory Location <?php echo $count > 1 ? " - $count" : ""; ?> </label>
+                            <select class="form-control data-input" id="form_physical_location" name="physical_location[]"  >
+                                <option value="" >Select</option>
+                                <?php foreach ($physical_locations as $key => $value) {
+                                    $selected = $value->id == $store_data->physical_location ? 'selected' : '';
+                                    echo "<option {$selected} value='{$value->id}'> {$value->name} </option>";
+                                }?>
+                            </select>   
+                        </div>
+
+                        <div class="form-group col-md-5 col-sm-12 ">
+                            <label for="Inventory Location Description">Inventory Location Description <?php echo $count > 1 ? " - $count" : ""; ?> </label>
+                            <input type="text" class="form-control data-input" id="form_location_description" name="location_description[]" value="<?php echo !empty($store_data->location_description) ? $store_data->location_description : ''; ?>"/>
+                        </div>
+                    </div>
+                    <?php endforeach ; ?>
+                    
+                    <?php else : ?>
+                        <div class="store-inventory">
+                        <div class="form-group col-md-5 col-sm-12 ">
+                            <label for="Store Location">Store <span class="text-danger">*</span></label>
+                            <select required   class="form-control data-input" id="form_store_location_id" name="store_location_id[]" >
+                                <option value="" >Select</option>
+                                <?php foreach ($stores as $key => $value) {
+                                    echo "<option value='{$value->id}'> {$value->name} </option>";
+                                }?>
+                            </select>  
+                        </div>
+
+                        <div class="form-group col-md-5 col-sm-12 ">
+                            <label for="Quantity">Quantity  <span class="text-danger">*</span> </label>
+                            <input type="text" required class="form-control data-input" id="form_quantity" name="quantity[]"  onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
+                        </div>
+
+                        <div class="form-group col-md-5 col-sm-12 ">
+                            <label for="Inventory Location">Inventory Location </label>
+                            <select class="form-control data-input" id="form_physical_location" name="physical_location[]"  >
+                                <option value="" >Select</option>
+                                <?php foreach ($physical_locations as $key => $value) {
+                                    echo "<option value='{$value->id}'> {$value->name} </option>";
+                                }?>
+                            </select>   
+                        </div>
+
+                        <div class="form-group col-md-5 col-sm-12 ">
+                            <label for="Inventory Location Description">Inventory Location Description </label>
+                            <input type="text" class="form-control data-input" id="form_location_description" name="location_description[]" />
+                        </div>
+                    </div>
+                    <?php endif ?>
                 </div>
+                <div class="d-inline-flex flex-row-reverse  col-md-5 col-sm-12 mb-3 ">
+                    <span role="button" class="rounded-sm btn btn-primary  shadow p-1" title="Add inventory to other stores" onclick="addStoreLocation()"><i class="fas fa-plus-circle"></i> Add Store Location</span>
+                    <span role="button" class="rounded-sm btn btn-danger mx-1  shadow p-1" id="remove-store-btn" style="display:none"  onclick="removeLastStoreLocation()"><i class="fas fa-times-circle"></i> Remove Store Location</span>
+                </div>
+
+ 
+
+                <div class="form-group col-md-5 col-sm-12">
+                    <label for="Manifest">Manifest </label>
+                    <input type="text" class="form-control data-input" id="form_manifest_id" name="manifest_id" value="<?php echo set_value('manifest_id', $this->_data['view_model']->get_manifest_id());?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
+                </div>
+                
+                
 
 
                 <div class="form-group col-md-5 col-sm-12">
-                    <label for="Weight">Weight <span class="text-danger">*</span></label>
+                    <label for="Weight">Weight (lbs) <span class="text-danger">*</span></label>
                     <input type="text" class="form-control data-input" id="form_weight" name="weight" value="<?php echo set_value('weight', $this->_data['view_model']->get_weight());?>" onkeypressing="return mkd_is_number(event,this)"/>
                 </div>
 
@@ -188,10 +273,7 @@ if($this->session->userdata('role') == 1)
                     <input type="text" class="form-control data-input" id="form_width" name="width" value="<?php echo set_value('width', $this->_data['view_model']->get_width());?>" onkeypress="return mkd_is_number(event,this)"/>
                 </div>
 
-                <div class="form-group col-md-5 col-sm-12">
-                    <label for="Quantity">Quantity </label>
-                    <input type="text" class="form-control data-input" id="form_quantity" name="quantity" value="<?php echo set_value('quantity', $this->_data['view_model']->get_quantity());?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
-                </div>
+               
 
                 <div class="form-group col-md-5 col-sm-12">
                     <label for="Cost Price">Cost Price </label>
@@ -464,6 +546,67 @@ if($this->session->userdata('role') == 1)
         
   
     }, false)
+
+    
+    function addStoreLocation(){
+        let store_inventory_template = `    
+        <div class="store-inventory ">
+            <div class="form-group col-md-5 col-sm-12 ">
+                <label for="Store Location">Store - {{{count}}} <span class="text-danger">*</span></label> 
+                <select required   class="form-control data-input" id="form_store_location_id" name="store_location_id[]">
+                    <option value="" >Select</option>
+                    <?php foreach ($stores as $key => $value) {
+                        echo "<option value='{$value->id}'> {$value->name} </option>";
+                    }?>
+                </select>  
+            </div>
+
+            <div class="form-group col-md-5 col-sm-12 ">
+                <label for="Quantity">Quantity - {{{count}}} <span class="text-danger">*</span> </label>
+                <input type="text" required class="form-control data-input" id="form_quantity" name="quantity[]" value="<?php echo set_value('quantity'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
+            </div>
+
+            <div class="form-group col-md-5 col-sm-12 ">
+                <label for="Inventory Location">Inventory Location - {{{count}}} </label>
+                <select class="form-control data-input" id="form_physical_location" name="physical_location[]">
+                    <option value="" >Select</option>
+                    <?php foreach ($physical_locations as $key => $value) {
+                        echo "<option value='{$value->id}'> {$value->name} </option>";
+                    }?>
+                </select>   
+            </div>
+
+            <div class="form-group col-md-5 col-sm-12 ">
+                <label for="Inventory Location Description">Inventory Location Description - {{{count}}} </label>
+                <input type="text" class="form-control data-input" id="form_location_description" name="location_description[]" value="<?php echo set_value('location_description'); ?>"/>
+            </div>
+
+            <div class="form-group col-md-5 col-sm-12 border-bottom "></div>
+        
+        </div>`;
+
+        let store_inventory_count = document.querySelectorAll(".store-inventory").length;
+        store_inventory_template = store_inventory_template.replaceAll('{{{count}}}', store_inventory_count+1);
+        let store_inventories = document.querySelector('#store-inventories');
+        // store_inventories.insertAdjacentHTML('afterend', store_inventory_template) ;
+        $('#store-inventories').append(store_inventory_template);
+        toggleRemoveBtn();
+
+    }
+
+    function removeLastStoreLocation(){
+        let store_inventories = document.querySelector('#store-inventories');
+        let all_store_inventory = document.querySelectorAll(".store-inventory")
+        all_store_inventory[all_store_inventory.length - 1].remove();
+        toggleRemoveBtn();
+    }
+
+    function toggleRemoveBtn(){
+        let store_inventory_count = document.querySelectorAll(".store-inventory").length;
+        document.querySelector('#remove-store-btn').style.display = store_inventory_count > 1 ? 'inline' : 'none';
+    }
+    toggleRemoveBtn();
+
 </script>
 
 

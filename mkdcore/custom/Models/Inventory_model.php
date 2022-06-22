@@ -46,6 +46,7 @@ class Inventory_model extends Manaknight_Model
 		'youtube_thumbnail_3',
 		'youtube_thumbnail_4',
 		'available_in_shelf', 
+		'store_inventory',
     ];
 	protected $_label_fields = [
     'ID','Product Name','SKU','Category','Manifest','Store','Inventory Location','Inventory Location Description','Weight','Length','Height','Width','Image','Selling Price','Quantity','Description','Barcode Image','Cost Price','Admin Inventory Note','Can Ship','Pin Item','Product Type','Status',
@@ -61,7 +62,7 @@ class Inventory_model extends Manaknight_Model
 		['sku', 'SKU', ''],
 		['category_id', 'Category', ''],
 		['manifest_id', 'Manifest', ''],
-		['store_location_id', 'Store', 'required'],
+		['store_location_id[]', 'Store', 'required'],
 		['physical_location', 'Inventory Location', ''],
 		['location_description', 'Inventory Location Description', ''],
 		['weight', 'Weight', ''],
@@ -96,7 +97,7 @@ class Inventory_model extends Manaknight_Model
 		['sku', 'SKU', ''],
 		['category_id', 'Category', ''],
 		['manifest_id', 'Manifest', ''],
-		['store_location_id', 'Store', 'required'],
+		['store_location_id', 'Store', ''],
 		['physical_location', 'Inventory Location', ''],
 		['location_description', 'Inventory Location Description', ''],
 		['weight', 'Weight', ''],

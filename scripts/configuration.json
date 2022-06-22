@@ -413,6 +413,7 @@
 				["youtube_thumbnail_4", "image|250|250|500|500", [{
 					"limit": 255
 				}], "Youtube Thumbnail 4", "", ""],
+				["store_inventory", "text", [], "Store Inventory", "", ""],
 
 				["status", "integer", [], "xyzStatus", "", ""]
 			],
@@ -1731,8 +1732,8 @@
 			"custom_view_list": "",
 			"custom_view_view": "",
 			"listing_fields_api": ["id", "product_name", "sku", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",  "store_location_id", "barcode_image"],
-			"listing_headers": ["xyzID", "xyzProduct Name", "xyzSKU", "xyzCategory", "xyzStore", "xyzInventory Location", "xyzType", "xyzQuantity",  "xyzStatus"],
-			"listing_rows": ["id|integer", "product_name|string",   "sku|string", "category_id|integer", "store_location_id|integer", "physical_location|integer", "product_type|integer", "quantity|integer", "status|integer"],
+			"listing_headers": ["xyzID", "xyzProduct Name", "xyzSKU", "xyzCategory", "xyzInventory Location", "xyzType", "xyzQuantity",  "xyzStatus"],
+			"listing_rows": ["id|integer", "product_name|string",   "sku|string", "category_id|integer", "physical_location|integer", "product_type|integer", "quantity|integer", "status|integer"],
 			"listing_actions": [],
 			"filter_fields": ["product_name", "sku", "category_id" ],
 			"add_fields": ["product_name", "video_url", "sale_person_id", "sku", "free_ship", "category_id", "manifest_id", "physical_location", "location_description", "weight", "length", "height", "width", "feature_image", "selling_price", "quantity", "inventory_note", "cost_price", "admin_inventory_note",  "status", "store_location_id", "can_ship", "can_ship_approval", "product_type", "pin_item_top", "youtube_thumbnail_1", "youtube_thumbnail_2", "youtube_thumbnail_3", "youtube_thumbnail_4"],

@@ -133,6 +133,8 @@ class Admin_inventory_controller extends Admin_controller
             $this->form_validation->set_rules('width', 'Width', 'required|greater_than_equal_to[1]');
         }
 
+        $this->form_validation->set_rules('store_location_id[]', 'Store', 'callback_validate_store_inventory');
+
 
          
 
@@ -200,6 +202,19 @@ class Admin_inventory_controller extends Admin_controller
             $sku = '';
         }
 
+        $store_inventory = [];
+        $total_quantity = 0;
+        foreach ($store_location_id as $key => $store) {
+            //TODO skip duplicates or return validation error (loop through store id and thro validation error if duplicate entry found)
+            $store_inventory_item['store_id'] = $store_location_id[$key];
+            $store_inventory_item['quantity'] = isset($quantity[$key]) ? $quantity[$key] : '';
+            $store_inventory_item['physical_location'] = isset($physical_location[$key]) ? $physical_location[$key] : '';
+            $store_inventory_item['location_description'] = isset($location_description[$key]) ? $location_description[$key] : '';
+            array_push($store_inventory, $store_inventory_item);
+            $total_quantity += !empty($quantity[$key]) ? $quantity[$key] : 0;
+        }
+
+        $store_inventory = json_encode($store_inventory);
         
         $result = $this->inventory_model->create([
             'sale_person_id' => $sale_person_id,
@@ -208,8 +223,8 @@ class Admin_inventory_controller extends Admin_controller
             'barcode_image' => $barcode_image,
             'category_id' => $category_id,
             'manifest_id' => $manifest_id,
-            'physical_location' => $physical_location,
-            'location_description' => $location_description,
+            'physical_location' => '',
+            'location_description' => '',
             'weight' => $weight,
             'length' => $length,
             'height' => $height,
@@ -217,12 +232,12 @@ class Admin_inventory_controller extends Admin_controller
             'feature_image' => $feature_image,
             'feature_image_id' => $feature_image_id,
             'selling_price' => $selling_price,
-            'quantity' => $quantity,
+            'quantity' => $total_quantity,
             'inventory_note' => $inventory_note,
             'cost_price' => $cost_price,
             'admin_inventory_note' => $admin_inventory_note, 
             'status' => $status,
-            'store_location_id' => $store_location_id, 
+            'store_location_id' => '', 
             'can_ship' => $can_ship,
             'can_ship_approval' => $can_ship_approval,
             'free_ship' => $free_ship,
@@ -230,6 +245,7 @@ class Admin_inventory_controller extends Admin_controller
             'pin_item_top' => $pin_item_top,
             'video_url' => $video_url, 
             'youtube_thumbnail_1' => $youtube_thumbnail_1, 
+            'store_inventory' => $store_inventory
         ]);
  
         if ($result)
@@ -289,6 +305,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['stores']              =   $this->store_model->get_all();
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
         $this->_data['sale_persons']        =   $this->user_model->get_all_users();
+        $this->_data['store_inventory']     =   json_decode($model->store_inventory);
 
         // $this->_data['parent_categories'] 
 
@@ -299,6 +316,7 @@ class Admin_inventory_controller extends Admin_controller
             $this->form_validation->set_rules('height', 'Height', 'required|greater_than_equal_to[1]');
             $this->form_validation->set_rules('width', 'Width', 'required|greater_than_equal_to[1]');
         }
+        $this->form_validation->set_rules('store_location_id[]', 'Store', 'callback_validate_store_inventory');
 
 
      
@@ -345,14 +363,28 @@ class Admin_inventory_controller extends Admin_controller
             $sku = '';
         }
         
+        $store_inventory = [];
+        $total_quantity = 0;
+        foreach ($store_location_id as $key => $store) {
+            //TODO skip duplicates or return validation error (loop through store id and thro validation error if duplicate entry found)
+            $store_inventory_item['store_id'] = $store_location_id[$key];
+            $store_inventory_item['quantity'] = isset($quantity[$key]) ? $quantity[$key] : '';
+            $store_inventory_item['physical_location'] = isset($physical_location[$key]) ? $physical_location[$key] : '';
+            $store_inventory_item['location_description'] = isset($location_description[$key]) ? $location_description[$key] : '';
+            array_push($store_inventory, $store_inventory_item);
+            $total_quantity += !empty($quantity[$key]) ? $quantity[$key] : 0;
+        }
+
+        $store_inventory = json_encode($store_inventory);
+        
         $result = $this->inventory_model->edit([
             'sale_person_id' => $sale_person_id,
             'product_name' => $product_name,
             'sku' => $sku,
             'category_id' => $category_id,
             'manifest_id' => $manifest_id,
-            'physical_location' => $physical_location,
-            'location_description' => $location_description,
+            'physical_location' => '',
+            'location_description' => '',
             'weight' => $weight,
             'length' => $length,
             'height' => $height,
@@ -360,12 +392,12 @@ class Admin_inventory_controller extends Admin_controller
             'feature_image' => $feature_image,
             'feature_image_id' => $feature_image_id,
             'selling_price' => $selling_price,
-            'quantity' => $quantity,
+            'quantity' => $total_quantity,
             'inventory_note' => $inventory_note,
             'cost_price' => $cost_price,
             'admin_inventory_note' => $admin_inventory_note, 
             'status' => $status,
-            'store_location_id' => $store_location_id, 
+            'store_location_id' => '', 
             'can_ship' => $can_ship,
             'can_ship_approval' => $can_ship_approval,
             'free_ship' => $free_ship,
@@ -373,6 +405,7 @@ class Admin_inventory_controller extends Admin_controller
             'pin_item_top' => $pin_item_top,
             'video_url' => $video_url,
             'youtube_thumbnail_1' => $youtube_thumbnail_1,  
+            'store_inventory' => $store_inventory
             
         ], $id);
        
@@ -446,6 +479,13 @@ class Admin_inventory_controller extends Admin_controller
         $model->physical_location = $this->names_helper_service->get_physical_location_real_name( $model->physical_location ); 
         $model->store_location_id = $this->names_helper_service->get_store_name( $model->store_location_id ); 
         $this->_data['view_model']->set_model($model);
+        $store_inventory = json_decode($model->store_inventory);
+        
+        foreach ($store_inventory as $key => &$value) {
+            $store_inventory[$key]->store_name = $this->names_helper_service->get_store_name( $value->store_id ); 
+            $store_inventory[$key]->physical_location_name = $this->names_helper_service->get_physical_location_real_name( $value->physical_location );
+        }
+        $this->_data['store_inventory'] = $store_inventory;
  
         return $this->render('Admin/InventoryView', $this->_data);
     }
@@ -516,6 +556,24 @@ class Admin_inventory_controller extends Admin_controller
         return $categories;
 
 	}
+
+    public function validate_store_inventory(){
+        // ensure the same store is not selected more than once.
+        $stores = $this->input->post('store_location_id');
+        $quantity = $this->input->post('quantity');
+
+        if(count($stores) < 1 || count($quantity) < 1){
+            $this->form_validation->set_message('validate_store_inventory', 'The Store and Quantity field is required.');
+            return FALSE;
+        }
+
+        if(count(array_unique($stores)) < count($stores)){
+            $this->form_validation->set_message('validate_store_inventory', 'The {field} fields contain duplicates.');
+            return FALSE;
+        }
+
+        return TRUE;
+    }
 
 
 
