@@ -188,6 +188,8 @@
   
       let quantity   = $('.product_quantity').val();
       let id         = $('.product_id').val(); 
+      // let pickup_only        = $('#store-component').attr('pickup-only') == 'true' ? true : false ; 
+      let store         = $('[type="radio"][input-name="store"]:checked').val(); 
   
       if (quantity > 0) 
       {
@@ -195,6 +197,8 @@
         var serialized_data = [];  
         serialized_data.push({ name: 'quantity', value :  quantity });
         serialized_data.push({ name: 'id', value :  id }); 
+        serialized_data.push({ name: 'store', value :  store }); 
+        // serialized_data.push({ name: 'pickup_only', value :  pickup_only }); 
   
         hide_qty_btns();
   

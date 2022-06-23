@@ -132,7 +132,9 @@
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-12 my-3 d-flex align-content-between flex-wrap">
                                     <h4 class="w-100 "><?= $value->product_name; ?></h4>
-
+                                    <?php if (!empty($value->store_id)) : ?>
+                                    <h4 class="w-100 "><i class="fa fa-store fa-2x"></i></h4>
+                                    <?php endif ; ?>
                                     <h4 class="text-danger my-3">
                                         <span>Price: </span>$<?= number_format($value->unit_price,2); ?> 
                                     </h4> 

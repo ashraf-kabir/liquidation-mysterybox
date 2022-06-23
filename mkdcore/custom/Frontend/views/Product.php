@@ -342,7 +342,48 @@ if (!empty($product->feature_image))
                     </ul> 
                 </div>
 
+                
+                
+
                 <?php  if ($product->quantity > 0)  { ?>
+                    <?php if ($product->can_ship != 3) /* 3 - shipping only */ : ?>
+                    <div class="bg-white w-100 p-2 px-md-4 d-flex my-3">
+                        <?php if ($product->can_ship != 2)  /* can_ship 2 - pickup only, can_ship_approval 2 - No */ : ?>
+                        <div button-type="delivery" role="button" class="mr-2 btn btn-primary" total-quantity='<?php echo $product->quantity ?>' 
+                            onclick="deliverySelected()">
+                        <span> Delivery </span>
+                        </div>
+                        <?php endif; ?>
+                        <div button-type="pickup" role="button" class=" btn" onclick="pickupSelected()">
+                        <span> Pick Up </span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white w-100 p-2 px-md-4 " style="display:none" id="store-component" 
+                            pickup = "<?php echo  ($product->can_ship == 2 && $product->can_ship_approval != 1) ? 'true' : '' ; ?>">
+                    <p>Select Store</p>
+                        <div class="d-flex">
+                            <?php foreach($store_inventory as $key => $store_data){
+                                $checked = '';
+                                $stock_info = $store_data->quantity > 0 ? "{$store_data->quantity} in stock" : "Out of stock";
+                                echo "<div class='border w-50 mx-2 p-2 shadow' role='button'>
+                                        <input name='store' type='radio' onchange='updateQuantity({$store_data->quantity})' input-name='store' 
+                                            store-quantity='{$store_data->quantity}'id='store_{$key}' value='{$store_data->store_id}' class='right' {$checked} /> </br>
+
+                                        <label for='store_{$key}' role='button'>
+                                        {$store_data->store->address} </br>
+                                        {$store_data->store->state}, {$store_data->store->zip} </br>
+                                        {$store_data->store->phone} </br>
+                                        <span class='font-italic text-muted'>({$stock_info})</span?
+                                        </label>
+
+                                    </div> ";
+
+                            } ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
                     <div class="col-12 quantity-to-cart bg-white w-100 p-2 p-md-4 " style="padding-top: 0px !important;">
                         <label for="quantity"  style="margin-bottom:0px">Qty </label>
                              
@@ -362,7 +403,7 @@ if (!empty($product->feature_image))
                             </select> 
 
                         <input type="hidden" class="product_id" name="product_id" value="<?= $product->id; ?>" />
-                        <a href="#" class="btn add_to_cart_button btn-success addToCartBtn" style="width: 100px;">
+                        <a href="#" class="btn add_to_cart_button btn-success addToCartBtn"  style="width: 100px;">
                         <i class="fas fa-shopping-cart cart-icon"></i>
                         </a>
                     </div>
@@ -373,6 +414,8 @@ if (!empty($product->feature_image))
                         </label>  
                     </div>
                 <?php } ?> 
+
+               
 
                 <?php if (!empty($product->inventory_note)): ?>
                 <div class="row mt-4">
@@ -498,6 +541,16 @@ if (!empty($product->feature_image))
     
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" defer></script>
 <script>
+// Init store component
+    document.addEventListener('DOMContentLoaded', function (){
+        let storeComponent = document.querySelector('#store-component');
+        console.log(storeComponent.getAttribute('pickup'));
+        if(storeComponent.getAttribute('pickup') == 'true'){
+            // trigger pickup selection
+            pickupSelected();
+        }
+    })
+
     var slideIndex = 1;
     showSlides(slideIndex);
 
@@ -526,6 +579,105 @@ if (!empty($product->feature_image))
     dots[slideIndex-1].className += " active";
     captionText.innerHTML = dots[slideIndex-1].alt;
     }
+
+    document.addEventListener('DOMContentLoaded', function (){
+
+        document.querySelector('[button-type="pickup"]').addEventListener('click', function() {
+            event.target.classlist.toggle('btn-primary');
+        })
+        
+        document.querySelector('[button-type="delivery"]').addEventListener('click', function() {
+            event.target.classlist.toggle('btn-primary');
+        })
+    })
+    
+    function pickupSelected(){
+        let pickupBtn = document.querySelector('[button-type="pickup"]')
+        let deliveryBtn = document.querySelector('[button-type="delivery"]')
+
+        // Update btn UI
+        console.log('pickup clicked');
+        pickupBtn.classList.add('btn-primary');
+        if(deliveryBtn){ deliveryBtn.classList.remove('btn-primary');}
+
+        // Disable Add to cart Btn
+        disableCartButtonState(true);
+
+        //show stores dropdown
+        setStoreComponentVisibility(true);
+
+        // update quantity dropdown
+        let maxQuantity = 0;
+        updateQuantity(maxQuantity);
+
+    }
+    
+    function deliverySelected(){
+        let pickupBtn = document.querySelector('[button-type="pickup"]')
+        let deliveryBtn = document.querySelector('[button-type="delivery"]')
+
+        // Update btn UI
+        if(pickupBtn){ pickupBtn.classList.remove('btn-primary');}
+        deliveryBtn.classList.add('btn-primary');
+
+        // Enable cart button
+        disableCartButtonState(false);
+
+        // Hide Store component
+        setStoreComponentVisibility(false);
+
+        
+
+
+        // update quantity dropdown
+        let maxQuantity = deliveryBtn.getAttribute('total-quantity');
+        updateQuantity(maxQuantity);
+
+    }
+
+    function disableCartButtonState(disable = true){
+        let cartBtn = document.querySelector('.add_to_cart_button');
+        if(disable){
+            cartBtn.disabled = true;
+            cartBtn.classList.remove('btn-success');
+            cartBtn.classList.add('btn-secondary');
+            return;
+        }
+        cartBtn.disabled = false;
+        cartBtn.classList.remove('btn-secondary');
+        cartBtn.classList.add('btn-success');
+
+    }
+
+    function setStoreComponentVisibility(visible = true){
+        let storeComponent = document.querySelector('#store-component');
+        // uncheck selected store
+        let storeInputs = document.querySelectorAll('[type=radio][input-name=store]');
+        for (let storeInput of storeInputs) {
+            storeInput.checked = false;
+        }
+        if(visible){
+            storeComponent.style.display = 'block';
+            return;
+        }
+        storeComponent.style.display = 'none';
+    }
+
+    function updateQuantity(maxQuantity = 0){
+        let quantityDropdown = document.querySelector('#quantity');
+        let optionsTemplate = '<option value="">Select</option>';
+
+        for(let i = 1; i <= maxQuantity; i++){
+            if(i > 10) break;
+            optionsTemplate += `<option value='${i}'>${i}</options>`
+        }
+        quantityDropdown.innerHTML = optionsTemplate;
+
+        if(maxQuantity > 0){
+            disableCartButtonState(false);
+        }
+    }
+
 </script>
 
  

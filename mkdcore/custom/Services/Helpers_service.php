@@ -143,6 +143,72 @@ class Helpers_service {
         
         
     }
+    /**
+     *  Check item in inventory 
+     *  Check Quantity
+     *  Post error if quantity is less
+     * 
+    */
+    public function check_item_in_store_inventory($product_id, $product_qty, $product_name, $checkout_type = false,$checkout_page = false, $store_id = null)
+    {
+        if($store_id == null){
+            return $this->check_item_in_inventory($product_id, $product_qty, $product_name, $checkout_type = false,$checkout_page = false);
+        }
+
+        $inventory_data =  $this->_inventory_model->get_by_fields(['id' => $product_id]);
+
+        $store_data = $this->_inventory_model->get_store_inventory_data(json_decode($inventory_data->store_inventory), $store_id);
+        // echo $store_data; exit(); die();
+        $quantity = empty($store_data) ? $inventory_data->quantity : $store_data->quantity;
+
+
+        
+        /**
+         *
+         * Product Type 2 = Generic 
+         * If 2 then don't check quantity 
+         * 
+        */
+
+        
+        // if($inventory_data->product_type != 2)
+        // { 
+            if( $product_qty > $quantity )
+            { 
+                if($quantity == 0)
+                {
+                    $output['error']  = $product_name . " is out of stock.";
+                }
+                else
+                {
+                    if (!$checkout_page) 
+                    {
+                        $output['error']  = $product_name . " quantity can't be greater than be available quantity."; 
+                    }else{
+                        $output['error2']  = true;
+                    }
+                    
+                } 
+                return  (object)$output;
+            }
+        // }
+        /**
+         * checkout type 2 =  Delivery
+         * 
+         * if we can't delivery show error
+         *  
+        */
+        // if($checkout_type == 2)
+        // {
+        //     // if($inventory_data->can_ship == 2)
+        //     // {
+        //     //     $output['error']  = "Error! " . $product_name . " can't be shipped."; 
+        //     //     return  (object)$output; 
+        //     // }
+        // }
+        
+        
+    }
      
 
     public function pos_logged_in($pos_id)

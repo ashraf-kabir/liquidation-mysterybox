@@ -432,4 +432,15 @@ class Inventory_model extends Manaknight_Model
         return $result;
     }
 
+	public function get_store_inventory_data($store_inventory = [], $store_id = null){
+
+		foreach ($store_inventory as $key => $store_data) {
+			if($store_id == $store_data->store_id){
+				return $store_data;
+			}
+		}
+
+		return null;
+	}
+
 }

@@ -488,6 +488,10 @@ class Home_controller extends Manaknight_Controller
                     $data_i = $this->inventory_model->get($cart->product_id);
                     
                     $cart->feature_image = $data_i->feature_image;
+                    // if(!empty($cart->store_id)){
+                    //     $cart->pickup_store = $this->inventory_model
+                    //                                 ->get_store_inventory_data(json_decode($data_i->store_inventory), $cart->store_id);
+                    // }
                 }
             }
 
@@ -848,6 +852,7 @@ class Home_controller extends Manaknight_Controller
                         'is_pickup'           => $cart_item_value->is_pickup,
                         'shipping_service_code' => $shipping_service_code,
                         'shipping_service_name' => $shipping_service_name,
+                        'store_id'              => $cart_item_value->store_id
                     );
                     $sub_total += $total_amount;
                     $detail_id = $this->pos_order_items_model->create($data_order_detail); 
@@ -868,9 +873,18 @@ class Home_controller extends Manaknight_Controller
                     */
                     if($detail_id and $inventory_data->product_type != 2 )
                     {
+                        $store_data = json_decode($this->inventory_model->get($inventory_data->id)->store_inventory);
+                        $total_quantity = 0;
+                        foreach ($store_data as $key => $value) {
+                            if($value->store_id == $cart_item_value->store_id){
+                                $value->quantity = $value->quantity - $cart_item_value->product_qty;
+                                $total_quantity += $value->quantity;
+                            }
+                        }
                         $quantity_left = $inventory_data->quantity - $cart_item_value->product_qty;
                         $this->inventory_model->edit([
-                            'quantity' => $quantity_left
+                            'quantity' => $total_quantity,
+                            'store_inventory' => json_encode($store_data)
                         ], $inventory_data->id ); 
                     }
                 }
@@ -1154,8 +1168,8 @@ class Home_controller extends Manaknight_Controller
             $shipping_service       =  $this->input->post('shipping_service', TRUE);
             $shipping_service_name     =  $this->input->post('shipping_service_name', TRUE);
             $is_pickup          =  $this->input->post('is_pickup', TRUE);
+            $store_id          =  $this->input->post('store_id', TRUE);
 
-            // echo '<pre>'; print_r($_POST); print_r($shipping_service_name); die();
 
             if(count($product_id) < 1){
                 $this->redirect('/checkout');
@@ -1181,6 +1195,9 @@ class Home_controller extends Manaknight_Controller
                     'customer_id'           => $customer->id,
                     'user_id'               => $user_id,
                 ];
+                $temp_data['store_id'] = $is_pickup[$i] == "true" && !empty($store_id[$i]) ? $store_id[$i] : '';
+            // echo '<pre>'; print_r($_POST); print_r($shipping_service_name); die();
+
              
                 $result = $this->checkout_data_model->create($temp_data);
                 
@@ -1205,9 +1222,17 @@ class Home_controller extends Manaknight_Controller
                 }
             }
 
+            // Get Store address
+            $stores = [];
+            foreach ($store_id as $key => $value) {
+                if(empty($store_id[$key])){ continue ;}
+                $stores[] = $this->store_model->get($value);
+            }
+
             // $data['cart_items']   =  $cart_items; 
             $data['has_pickup'] = in_array('true', $is_pickup);
             $data['has_shipping'] = in_array('false', $is_pickup);
+            $data['stores']  = $stores;
             $data['total']  = $total;
             $data['total_shipping']  = $total_shipping;
             $data['checkout_data'] = $checkout_data;
@@ -1275,6 +1300,7 @@ class Home_controller extends Manaknight_Controller
 
         $this->load->library('names_helper_service');
         $this->load->model('category_model');
+        $this->load->model('store_model');
         $this->load->model('physical_location_model'); 
         $this->load->model('product_terms_and_condition_model'); 
 
@@ -1286,9 +1312,19 @@ class Home_controller extends Manaknight_Controller
         $model->category_real_name = $this->names_helper_service->get_category_real_name( $model->category_id );
         $model->location_real_name = $this->names_helper_service->get_physical_location_real_name( $model->physical_location );
 
-        $data['product']        =   $model;
-        $data['gallery_lists']  =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
-        $data['terms_and_con']  =   $this->product_terms_and_condition_model->get_all(['status' => 1]);
+        $store_inventory = !empty($model->store_inventory) ? json_decode($model->store_inventory) : [];
+
+        foreach ($store_inventory as $key => &$value) {
+            $store_inventory[$key]->store = $this->store_model->get($value->store_id); 
+        }
+        // echo '<pre>';
+        // print_r($store_inventory); die();
+
+        $data['stores']             =   $this->store_model->get_all();
+        $data['product']            =   $model;
+        $data['store_inventory']    =   $store_inventory;
+        $data['gallery_lists']      =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
+        $data['terms_and_con']      =   $this->product_terms_and_condition_model->get_all(['status' => 1]);
  
         $data['no_detail'] = TRUE; 
 
@@ -2265,6 +2301,15 @@ class Home_controller extends Manaknight_Controller
                     $value->feature_image = $item_data->feature_image;
                     $value->description   = $item_data->inventory_note; 
                     $value->item_data     = $item_data; 
+                    if(!empty($value->store_id)){ //if user selected store when adding to cart
+
+                        $value->pickup_store = $this->store_model->get($value->store_id);
+                        // Disable shipping
+                        $value->can_ship = 2;
+                        $value->can_ship_approval = 2;
+                    }else{ //shipping only
+                        $value->can_ship = 3;
+                    }
                     
                     $cart_item_quantity = $value->product_qty;
                     if($item_data->weight >= 150){

@@ -212,6 +212,8 @@
                          <input type="hidden" name="unit_price[]" value ="<?php echo $value->unit_price; ?>">
 
                           <input type="hidden" name="is_pickup[]" id="pickup_<?php echo $key; ?>" value = "<?php echo $value->can_ship == 3 ? 'false' : 'true'; ?>">
+                          <input type="hidden" name="store_id[]" value ="<?php echo !empty($value->pickup_store->id) ?  $value->pickup_store->id : '' ?>">
+
                          <div class="product border shadow p-2">
                               
                               <div class="image">
@@ -243,8 +245,8 @@
                                         <div class=" mr-2 p-2 pt-0 position-relative mt-2 " role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px" onclick="toggleToPickUp('<?php echo $key ?>')">
                                              <span style="border-style:solid; border-width:5px; position:absolute; top:0; right:0;" class=" p-0 m-0 text-white bg-dark border-dark" id="pickup_tick_<?php echo $key; ?>">&#10004;</span>
                                              <h6>PICKUP AT </h6>
-                                             <p><?php echo $store_data->address ?></p>
-                                             <p><?php echo $store_data->state." ".$store_data->zip. " ".$store_data->phone ?></p>
+                                             <p><?php echo $value->pickup_store->address ?></p>
+                                             <p><?php echo $value->pickup_store->state." ".$value->pickup_store->zip. " ".$value->pickup_store->phone ?></p>
                                         </div>
                                         <?php endif ; ?>
 

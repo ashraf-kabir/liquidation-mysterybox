@@ -186,8 +186,7 @@
      <div class=" first-box d-flex flex-row-reverse justify-content-between">
           <a class="btn btn-secondary" href="/checkout" >Back to Shipping</a> 
      </div>
-     <?php if($has_shipping == true): ?>
-          <div class="checkout-row">
+          <div class="checkout-row" <?php echo ($has_shipping == true) ? '' : 'style="display:none"' ?>>
                <div class="first-box">
                     <!-- <span>1</span> -->
                     <span>Shipping Address</span>
@@ -274,24 +273,25 @@
                     </div>
                </div>
           </div>
-          <?php endif ; ?>
 
           <?php if($has_pickup == true): ?>
+          <?php foreach($stores as $key => $store_data) : ?>
           <div class="checkout-row">
                <div class="first-box">
                     <!-- <span>2</span> -->
-                    <span>Pickup Address</span>
+                    <span>Pickup Address <?php echo $key > 0 ? $key+1 : ''?></span>
                </div>
                <div class="second-box">
-                    <p id="msg_full_name"><?php echo $store->name; ?></p>
-                    <p class="show-text-only" id="msg_shipping_address"><?php echo $store->address; ?></p>
+                    <p id="msg_full_name"><?php echo $store_data->name; ?></p>
+                    <p class="show-text-only" id="msg_shipping_address"><?php echo $store_data->address; ?></p>
                    
-                    <p id="msg_shipping_zip"><?php echo $store->zip; ?></p>
-                    <p id="msg_shipping_zip"><?php echo $store->phone; ?></p>
+                    <p id="msg_shipping_zip"><?php echo $store_data->zip; ?></p>
+                    <p id="msg_shipping_zip"><?php echo $store_data->phone; ?></p>
                </div>
                <div class="third-box">&nbsp;</div>
               
           </div>
+          <?php endforeach ; ?>
           <?php endif ; ?>
           <div class="checkout-row">
                <div class="first-box">

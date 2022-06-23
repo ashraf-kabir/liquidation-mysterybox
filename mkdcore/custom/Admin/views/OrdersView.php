@@ -208,7 +208,7 @@ if ($layout_clean_mode) {
                                     <th style="width:10%">Rate</th> 
                                     <th style="width:10%">Amount</th>
                                     <th style="width:10%">Delivery Type</th> 
-                                    <th style="width:10%">Shipping Service</th> 
+                                    <th style="width:10%">Shipping Service/Store</th> 
                                 </tr> 
                             </thead>
                             <tbody>
@@ -219,7 +219,16 @@ if ($layout_clean_mode) {
                                     <td>$<?php echo  number_format($detail->product_unit_price,2); ?></td> 
                                     <td>$<?php echo  number_format($detail->amount,2); ?></td>
                                     <td><?php echo $detail->is_pickup == "0"? 'Delivery' : 'Pick up'; ?></td>
+									<?php if (empty($detail->store_id)) : ?>
                                     <td><?php echo $detail->shipping_cost_name ; ?></td>
+									<?php else : ?>
+									<?php foreach($stores as $key => $store){
+										if($store->id == $detail->store_id){
+											echo "<td> {$store->name} </td>";
+										}
+									} ?>
+
+									<?php endif ; ?>
                                 </tr>
                             <?php } ?>
                             </tbody>

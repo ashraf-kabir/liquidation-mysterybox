@@ -241,6 +241,7 @@ class Custom_api_controller extends Manaknight_Controller
         // { 
             $product_id      =  $this->input->post('id', TRUE);
             $product_qty     =  $this->input->post('quantity', TRUE);
+            $store           =  $this->input->post('store', TRUE) ;
             $force_update    =  $this->input->post('force_update', TRUE);
             $user_id         =  $this->session->userdata('user_id'); 
             
@@ -256,12 +257,14 @@ class Custom_api_controller extends Manaknight_Controller
 
             $product_data = $this->inventory_model->get($product_id);
 
+
             if( isset($product_data->product_name) )
             {
                 $product_name =  $product_data->product_name;
                 $unit_price   =  $product_data->selling_price; 
                 $total_price  =  $product_qty * $unit_price;
                 $qty_in_inven =  $product_data->quantity;
+
 
                 if ($product_qty > $qty_in_inven  && $this->input->post('is_add',true) )  
                 {
@@ -280,9 +283,9 @@ class Custom_api_controller extends Manaknight_Controller
                 */
                 if ($this->session->userdata('user_id')) 
                 {
-                    $check_chart_if_product =  $this->pos_cart_model->get_by_fields(['product_id' => $product_id, 'customer_id' => $user_id]);  
+                    $check_chart_if_product =  $this->pos_cart_model->get_by_fields(['product_id' => $product_id, 'customer_id' => $user_id, 'store_id' => $store]);  
                 }else{
-                    $check_chart_if_product =  $this->pos_cart_model->get_by_fields(['product_id' => $product_id, 'secret_key' => $ip_address_user]);  
+                    $check_chart_if_product =  $this->pos_cart_model->get_by_fields(['product_id' => $product_id, 'secret_key' => $ip_address_user, 'store_id' => $store]);  
                 }
 
                 
@@ -300,7 +303,7 @@ class Custom_api_controller extends Manaknight_Controller
                     }
 
 
-                    $check_quantity = $this->helpers_service->check_item_in_inventory($product_id, $product_qty_now, $product_name, false, $this->input->post('checkout_page', TRUE));
+                    $check_quantity = $this->helpers_service->check_item_in_store_inventory($product_id, $product_qty_now, $product_name, false, $this->input->post('checkout_page', ), $store);
 
                     if( isset($check_quantity->error)  )
                     {
@@ -321,6 +324,7 @@ class Custom_api_controller extends Manaknight_Controller
                         'product_name'  => $product_name,
                         'customer_id'   => $user_id,
                         'secret_key'    => $ip_address_user,
+                        'store_id'      -> $store
                     ); 
 
                     if ($this->input->post('checkout_page', TRUE)  &&  isset($check_quantity->error2) ) 
@@ -335,7 +339,7 @@ class Custom_api_controller extends Manaknight_Controller
                 else
                 { 
 
-                    $check_quantity = $this->helpers_service->check_item_in_inventory($product_id, $product_qty, $product_name,false, $this->input->post('checkout_page', TRUE));
+                    $check_quantity = $this->helpers_service->check_item_in_store_inventory($product_id, $product_qty, $product_name,false, $this->input->post('checkout_page', TRUE), $store);
 
                     if( isset($check_quantity->error)  )
                     {
@@ -353,6 +357,7 @@ class Custom_api_controller extends Manaknight_Controller
                         'product_name'  => $product_name,
                         'customer_id'   => $user_id,
                         'secret_key'    => $ip_address_user,
+                        'store_id'      => $store
                     );
 
                     if ($this->input->post('checkout_page', TRUE) &&  isset($check_quantity->error2) ) 
