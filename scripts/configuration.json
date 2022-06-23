@@ -677,7 +677,8 @@
 				["total_price", "float", [], "xyzTotal Price", "", ""],
 				["product_name", "string", [{"limit": 255}], "xyzProduct Name", "", ""],
 				["secret_key", "string", [{"limit": 255}], "xyzKey", "", ""],
-				["expiry", "integer", [], "xyzExpiry", "", ""]
+				["expiry", "integer", [], "xyzExpiry", "", ""],
+				["store_id", "integer", [{"default": null}], "Store ID", "", ""]
 			],
 			"method": [],
 			"join": [],
@@ -706,7 +707,8 @@
 				["shipping_cost", "float", [], "Shipping Cost", "", ""],
 				["product_name", "string", [{"limit": 255}], "xyzProduct Name", "", ""],
 				["shipping_service", "string", [{"limit": 255}], "Shipping Service", "", ""],
-				["shipping_service_name", "string", [{ "limit": 255 }], "xyzShipping Service Name", "", ""]
+				["shipping_service_name", "string", [{ "limit": 255 }], "xyzShipping Service Name", "", ""],
+				["store_id", "integer", [], "Store ID", "", ""]
 			],
 			"method": [],
 			"join": [],
@@ -2512,7 +2514,7 @@
 			"method_add": "",
 			"method_edit": "",
 			"method_list": "",
-			"method_view": "\n\t\t$this->load->model('pos_order_items_model'); \n\t\t $this->_data['orders_details'] = $this->pos_order_items_model->get_all(['order_id' => $id]); \n\t\t",
+			"method_view": "\n\t\t$this->load->model('pos_order_items_model'); \n\t\t $this->_data['orders_details'] = $this->pos_order_items_model->get_all(['order_id' => $id]); \n\t\t \n\t\t$this->load->model('store_model'); \n\t\t $this->_data['stores'] = $this->store_model->get_all(); \n\t\t",
 			"method_add_success": "",
 			"method_edit_success": "",
 			"method_list_success": "",
