@@ -875,12 +875,36 @@ class Home_controller extends Manaknight_Controller
                     {
                         $store_data = json_decode($this->inventory_model->get($inventory_data->id)->store_inventory);
                         $total_quantity = 0;
+                        $is_pickup = false;
                         foreach ($store_data as $key => $value) {
-                            if($value->store_id == $cart_item_value->store_id){
-                                $value->quantity = $value->quantity - $cart_item_value->product_qty;
-                                $total_quantity += $value->quantity;
+                            if($value->store_id == $cart_item_value->store_id ){
+                                $store_quantity_left = (int)$value->quantity - (int)$cart_item_value->product_qty;
+                                $value->quantity = (int)$store_quantity_left;
+                                $total_quantity = $total_quantity + $store_quantity_left;
+                                $is_pickup = TRUE;
                             }
                         }
+                        if(!$is_pickup){
+                            $total_quantity = 0;
+                            $qty = $cart_item_value->product_qty;
+                            foreach ($store_data as $key => $value) {
+                                if($value->quantity >= $qty ){
+                                    $store_quantity_left = (int)$value->quantity - (int)$qty;
+                                    $value->quantity = (int)$store_quantity_left;
+                                    $total_quantity = $total_quantity + $store_quantity_left;
+                                    break;
+                                }
+                                $qty_avail = (int)$value->quantity ;
+                                $qty -= $qty_avail;
+                                $store_quantity_left = (int)$value->quantity - (int)$qty_avail;
+                                    $value->quantity = (int)$store_quantity_left;
+                                    $total_quantity = $total_quantity + $store_quantity_left;
+
+
+                            }
+                        }
+
+
                         $quantity_left = $inventory_data->quantity - $cart_item_value->product_qty;
                         $this->inventory_model->edit([
                             'quantity' => $total_quantity,
