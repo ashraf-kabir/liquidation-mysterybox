@@ -348,7 +348,7 @@ if (!empty($product->feature_image))
                 <?php  if ($product->quantity > 0)  { ?>
                     <?php if ($product->can_ship != 3) /* 3 - shipping only */ : ?>
                     <div class="bg-white w-100 p-2 px-md-4 d-flex my-3">
-                        <?php if ($product->can_ship != 2)  /* can_ship 2 - pickup only, can_ship_approval 2 - No */ : ?>
+                        <?php if ($product->can_ship != 2 || ($product->can_ship == 2 && $product->can_ship_approval == 1) )  /* can_ship 2 - pickup only, can_ship_approval 1 - Yes */ : ?>
                         <div button-type="delivery" role="button" class="mr-2 btn btn-primary" total-quantity='<?php echo $product->quantity ?>' 
                             onclick="deliverySelected()">
                         <span> Delivery </span>
