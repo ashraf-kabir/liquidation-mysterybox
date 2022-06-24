@@ -1251,7 +1251,7 @@ class Home_controller extends Manaknight_Controller
 
             // Get Store address
             $stores = [];
-            foreach ($store_id as $key => $value) {
+            foreach (array_unique($store_id) as $key => $value) {
                 if(empty($store_id[$key])){ continue ;}
                 $stores[] = $this->store_model->get($value);
             }
