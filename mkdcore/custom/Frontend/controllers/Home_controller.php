@@ -1013,7 +1013,7 @@ class Home_controller extends Manaknight_Controller
                     $accounting_response = $this->send_order_to_accounting( $order_id );
                     if( isset( $accounting_response->error_msg ) )
                     {
-                        $output['status'] = $payment_recieved == TRUE ? 1 : 0;
+                        $output['status'] = 0;
                         $output['error']  = $accounting_response->error_msg;
                         $output['redirect_url']  = base_url() . 'order_confirmation';
                         echo json_encode($output);
@@ -1028,7 +1028,7 @@ class Home_controller extends Manaknight_Controller
                     $accounting_trans_response = $this->send_transaction_to_accounting( $transaction_id );
                     if( isset( $accounting_trans_response->error_msg ) )
                     {
-                        $output['status'] = $payment_recieved == TRUE ? 1 : 0;
+                        $output['status'] = 0;
                         $output['error']  = $accounting_trans_response->error_msg;
                         $output['redirect_url']  = base_url() . 'order_confirmation';
                         echo json_encode($output);
@@ -1045,7 +1045,7 @@ class Home_controller extends Manaknight_Controller
 
                     if( isset( $order_data->error_msg ) )
                     {
-                        $output['status'] = $payment_recieved == TRUE ? 1 : 0;
+                        $output['status'] = 0;
                         $output['error']  = $order_data->error_msg;
                         $output['redirect_url']  = base_url() . 'order_confirmation';
                         echo json_encode($output);
@@ -1069,7 +1069,7 @@ class Home_controller extends Manaknight_Controller
 
 
                     $this->db->trans_commit();
-                    $output['status'] = $payment_recieved == TRUE ? 1 : 0;
+                    $output['status'] = 0;
                     $output['success']  = 'Order has been created successfully.';
                     $output['redirect_url']  = base_url() . 'order_confirmation';
                     echo json_encode($output);
