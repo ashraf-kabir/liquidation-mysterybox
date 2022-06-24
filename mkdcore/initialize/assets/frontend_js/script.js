@@ -273,7 +273,7 @@
       $('.remove_able_loader_gif').remove();
     }
   
-    function update_create_cart(quantity, id, redirect_after = false, checkout_this_object = null, is_add = false)
+    function update_create_cart(quantity, id, redirect_after = false, checkout_this_object = null, is_add = false, store = null)
     {
   
       if (quantity > 0) 
@@ -283,6 +283,10 @@
         serialized_data.push({ name: 'quantity', value :  quantity });
         serialized_data.push({ name: 'id', value :  id }); 
         serialized_data.push({ name: 'force_update', value :  true }); 
+        if(store != null){
+          serialized_data.push({ name: 'store', value :  store }); 
+        }
+
         if (redirect_after) 
         {
           serialized_data.push({ name: 'checkout_page', value :  true });
@@ -365,10 +369,12 @@
       e.preventDefault(); 
       let quantity   = $(this).parent().parent().find('.quantity_value').val();
       let id         = $(this).attr('data-id'); 
-  
+      let cartId         = $(this).attr('data-cart-id'); 
+      let store   = $(`${cartId}-store-input`).val();
+      store = store.trim();
   
       var this_object_now = $(this); 
-      update_create_cart(quantity, id , false, $(this))
+      update_create_cart(quantity, id , false, $(this), false, store);
     });
   
   

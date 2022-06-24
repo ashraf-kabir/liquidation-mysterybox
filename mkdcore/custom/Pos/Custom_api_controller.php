@@ -324,7 +324,7 @@ class Custom_api_controller extends Manaknight_Controller
                         'product_name'  => $product_name,
                         'customer_id'   => $user_id,
                         'secret_key'    => $ip_address_user,
-                        'store_id'      -> $store
+                        'store_id'      => $store
                     ); 
 
                     if ($this->input->post('checkout_page', TRUE)  &&  isset($check_quantity->error2) ) 
