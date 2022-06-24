@@ -647,7 +647,7 @@
 				}], "xyzState", "required|max_length[255]", "required|max_length[255]"],
 				["zip", "string", [{
 					"limit": 255
-				}], "xyzZip", "required|numeric", "required|numeric"],
+				}], "xyzZip", "required|max_length[20]", "required|max_length[20]"],
 				["phone", "string", [{
 					"limit": 255
 				}], "xyzPhone", "required|numeric", "required|numeric"]
@@ -2076,7 +2076,7 @@
 			"is_add": true,
 			"is_edit": true,
 			"is_delete": false,
-			"is_real_delete": false,
+			"is_real_delete": true,
 			"is_list": true,
 			"is_view": true,
 			"import": false,
@@ -2136,7 +2136,7 @@
 			"is_add": true,
 			"is_edit": true,
 			"is_delete": false,
-			"is_real_delete": false,
+			"is_real_delete": true,
 			"is_list": true,
 			"is_view": true,
 			"import": false,
