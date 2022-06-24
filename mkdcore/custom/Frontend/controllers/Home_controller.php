@@ -1072,6 +1072,7 @@ class Home_controller extends Manaknight_Controller
                     $output['status'] = 0;
                     $output['success']  = 'Order has been created successfully.';
                     $output['redirect_url']  = base_url() . 'order_confirmation';
+                    $output['data']  = $order_data;
                     echo json_encode($output);
                     exit(); 
                 }
