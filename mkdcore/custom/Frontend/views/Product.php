@@ -332,9 +332,9 @@ if (!empty($product->feature_image))
             </div>
             <div class="col-lg-5 col-991-p-0 mt-4 pr-md-0">
                 <div class="bg-white w-100 p-2 px-md-4 d-flex justify-content-center "  style="padding-top: 0.5rem !important;    padding-bottom: 1px !important;"> 
-                    <ul class="list-unstyled" style="margin: 0px;">
+                    <ul class="list-unstyled text-center" style="margin: 0px;">
 
-                        <li class="my-1"><h4  style="width: 100%;text-align: left;"><?php echo $product->product_name; ?></h4> </li>
+                        <li class="my-1 "><h4  style="width: 100%;"><?php echo $product->product_name; ?></h4> </li>
 
                         <li class="my-1">Price: <span class="product__price">$<?php echo number_format($product->selling_price,2); ?></span></li>
  
@@ -362,7 +362,7 @@ if (!empty($product->feature_image))
                     <div class="bg-white w-100 p-2 px-md-4 " style="display:none" id="store-component" 
                             pickup = "<?php echo  ($product->can_ship == 2 && $product->can_ship_approval != 1) ? 'true' : '' ; ?>">
                     <p class="text-center">Select Store</p>
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center" >
                             <?php foreach($store_inventory as $key => $store_data){
                                 $checked = '';
                                 $stock_info = $store_data->quantity > 0 ? "{$store_data->quantity} in stock" : "Out of stock";
@@ -384,7 +384,7 @@ if (!empty($product->feature_image))
                     </div>
                     <?php endif; ?>
 
-                    <div class="col-12 quantity-to-cart bg-white w-100 p-2 p-md-4 d-flex justify-content-center" style="padding-top: 0px !important;">
+                    <div class="col-12 quantity-to-cart bg-white w-100 p-2 p-md-4 d-flex justify-content-center align-items-center" style="">
                         <label for="quantity"  style="margin-bottom:0px">Qty </label>
                              
                             <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity mx-3"  style="font-size: 13px; padding: 0px; width: 75px; height: 38px;"> 
