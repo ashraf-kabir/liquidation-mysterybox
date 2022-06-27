@@ -133,8 +133,20 @@
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-12 my-3 d-flex align-content-between flex-wrap">
                                     <h4 class="w-100 "><?= $value->product_name; ?></h4>
                                     <?php if (!empty($value->store_id)) : ?>
-                                    <h4 class="w-100 "><i class="fa fa-store fa-2x"></i></h4>
-                                    <input type="hidden" name="store_id" id="<?php echo $value->id ?>-store-input" value="<?php echo $value->store_id ?>">
+                                        <h6 class="w-100 "> 
+                                            Store Pickup
+                                            <p class="mt-1 font-weight-light">
+                                                <?php echo $value->pickup_store->name ?> </br>
+                                                <?php echo $value->pickup_store->address ?>,
+                                                <?php echo $value->pickup_store->state ?>. </br>
+                                                <?php echo $value->pickup_store->zip ?>, 
+                                                <?php echo $value->pickup_store->phone ?>.
+                                        
+                                            </p>
+                                        </h6>
+                                        <input type="hidden" name="store_id" id="<?php echo $value->id ?>-store-input" value="<?php echo $value->store_id ?>">
+                                    <?php else : ?>
+                                        <h6 class="w-100 ">Delivery</h6>
                                     <?php endif ; ?>
                                     <h4 class="text-danger my-3">
                                         <span>Price: </span>$<?= number_format($value->unit_price,2); ?> 

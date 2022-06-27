@@ -276,7 +276,7 @@
     function update_create_cart(quantity, id, redirect_after = false, checkout_this_object = null, is_add = false, store = null)
     {
   
-      if (quantity > 0) 
+      if (quantity > 0)
       { 
         // get data and post to server
         var serialized_data = [];  
@@ -485,7 +485,8 @@
               $(response.list_all).each(function(index,object){  
                 var shipping_cost_total = object.shipmentCost + object.otherCost;
                 shipping_cost_total = parseFloat(shipping_cost_total).toFixed(2);
-                shipping_options += '<label><input onclick="updateShippingTotal('+key+')" name="shipping_options_'+key+'" data-shipping-options="true" data-key="' + key + '"  data-service-name="shipping_service_id_' + id + '" class="mr-2 shipping-cost-change" type="radio"   value="' + object.serviceCode + '" data-expected-date="' + object.expected_date_only + '"  data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '"  data-total-cost="' + shipping_cost_total + '" data-service-code="' + object.serviceCode + '" data-service="' + object.serviceName + '"  />' + object.serviceName + '  ( $' + shipping_cost_total + ' ) ' + object.expected_date + ' </label> </br>';
+                let checked = object.serviceCode == 'fedex_home_delivery' || object.serviceCode == 'fedex_ground'  ? 'checked=true' : '';
+                shipping_options += '<label><input onclick="updateShippingTotal('+key+')" '+checked+' name="shipping_options_'+key+'" data-shipping-options="true" data-key="' + key + '"  data-service-name="shipping_service_id_' + id + '" class="mr-2 shipping-cost-change" type="radio"   value="' + object.serviceCode + '" data-expected-date="' + object.expected_date_only + '"  data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '"  data-total-cost="' + shipping_cost_total + '" data-service-code="' + object.serviceCode + '" data-service="' + object.serviceName + '"  />' + object.serviceName + '  ( $' + shipping_cost_total + ' ) ' + object.expected_date + ' </label> </br>';
               }) 
               // shipping_options += '</select>';
   
@@ -1262,4 +1263,12 @@
       $('.shipping-btn').trigger('click');
       toastr.error('Shipping details are required to continue.');
     }
+  })
+
+  // Auto click ship to using attribute selector
+  $(document).ready(function(){
+    setTimeout(() => {
+      $('[item-ship-to=true]').click();
+
+    }, 1000);
   })

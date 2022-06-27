@@ -468,6 +468,7 @@ class Home_controller extends Manaknight_Controller
             $this->load->model('customer_model');
             $this->load->model('inventory_model');
             $this->load->model('tax_model');
+            $this->load->model('store_model');
 
             
 
@@ -488,10 +489,9 @@ class Home_controller extends Manaknight_Controller
                     $data_i = $this->inventory_model->get($cart->product_id);
                     
                     $cart->feature_image = $data_i->feature_image;
-                    // if(!empty($cart->store_id)){
-                    //     $cart->pickup_store = $this->inventory_model
-                    //                                 ->get_store_inventory_data(json_decode($data_i->store_inventory), $cart->store_id);
-                    // }
+                    if(!empty($cart->store_id)){
+                        $cart->pickup_store = $this->store_model->get($cart->store_id);
+                    }
                 }
             }
 
