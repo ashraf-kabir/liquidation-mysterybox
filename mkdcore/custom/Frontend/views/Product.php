@@ -1,4 +1,9 @@
 <style type="text/css">
+    select {
+        text-align: center;
+        text-align-last: center;
+        -moz-text-align-last: center;
+    }
     .mySlides img {
         max-height: 350px !important;
         object-fit: contain;
