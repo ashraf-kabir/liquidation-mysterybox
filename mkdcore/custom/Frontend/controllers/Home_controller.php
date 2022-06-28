@@ -1198,6 +1198,7 @@ class Home_controller extends Manaknight_Controller
             $is_pickup          =  $this->input->post('is_pickup', TRUE);
             $store_id          =  $this->input->post('store_id', TRUE);
 
+            // echo '<pre>'; print_r($_POST); die();
 
             if(count($product_id) < 1){
                 $this->redirect('/checkout');
@@ -1224,11 +1225,8 @@ class Home_controller extends Manaknight_Controller
                     'user_id'               => $user_id,
                 ];
                 $temp_data['store_id'] = $is_pickup[$i] == "true" && !empty($store_id[$i]) ? $store_id[$i] : '';
-            // echo '<pre>'; print_r($_POST); print_r($shipping_service_name); die();
 
-             
                 $result = $this->checkout_data_model->create($temp_data);
-                
 
             } 
 
@@ -2329,12 +2327,19 @@ class Home_controller extends Manaknight_Controller
                     $value->feature_image = $item_data->feature_image;
                     $value->description   = $item_data->inventory_note; 
                     $value->item_data     = $item_data; 
-                    if(!empty($value->store_id)){ //if user selected store when adding to cart
 
+                    $item_stores = json_decode($item_data->store_inventory, TRUE);
+                    $item_stores = array_map(function ($item_store_inventory){
+                        $item_store_inventory['store'] = $this->store_model->get($item_store_inventory['store_id']);
+                        return (Object) $item_store_inventory;
+                    }, $item_stores);
+                    $value->stores = $item_stores;
+
+                    if(!empty($value->store_id)){ //if user selected store when adding to cart
                         $value->pickup_store = $this->store_model->get($value->store_id);
                         // Disable shipping
-                        $value->can_ship = 2;
-                        $value->can_ship_approval = 2;
+                        // $value->can_ship = 2;
+                        // $value->can_ship_approval = 2;
                     }else{ //shipping only
                         $value->can_ship = 3;
                     }
@@ -2368,7 +2373,7 @@ class Home_controller extends Manaknight_Controller
 
                 }
             }
-            
+            // echo '<pre>'; print_r($box_groups); die();
             $data['cart_items']   =  $box_groups; 
             // $data['cart_items']   =  $cart_items; 
             $data['customer']     =  $customer; 

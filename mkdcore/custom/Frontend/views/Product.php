@@ -374,7 +374,7 @@ if (!empty($product->feature_image))
                                         {$store_data->store->address} </br>
                                         {$store_data->store->state}, {$store_data->store->zip} </br>
                                         {$store_data->store->phone} </br>
-                                        <span class='font-italic text-muted'>({$stock_info})</span?
+                                        <span class='font-italic text-muted'>({$stock_info})</span>
                                         </label>
 
                                     </div> ";

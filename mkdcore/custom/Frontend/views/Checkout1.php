@@ -212,7 +212,7 @@
                          <input type="hidden" name="unit_price[]" value ="<?php echo $value->unit_price; ?>">
 
                           <input type="hidden" name="is_pickup[]" id="pickup_<?php echo $key; ?>" value = "<?php echo $value->can_ship == 3 ? 'false' : 'true'; ?>">
-                          <input type="hidden" name="store_id[]" value ="<?php echo !empty($value->pickup_store->id) ?  $value->pickup_store->id : '' ?>">
+                          <input type="hidden" name="store_id[]" id="store_<?php echo $key; ?>" value ="<?php echo !empty($value->pickup_store->id) ?  $value->pickup_store->id : '' ?>">
 
                          <div class="product border shadow p-2">
                               
@@ -245,8 +245,8 @@
                                         <div class=" mr-2 p-2 pt-0 position-relative mt-2 " role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px" onclick="toggleToPickUp('<?php echo $key ?>')">
                                              <span style="border-style:solid; border-width:5px; position:absolute; top:0; right:0;" class=" p-0 m-0 text-white bg-dark border-dark" id="pickup_tick_<?php echo $key; ?>">&#10004;</span>
                                              <h6>PICKUP AT </h6>
-                                             <p><?php echo $value->pickup_store->address ?></p>
-                                             <p><?php echo $value->pickup_store->state." ".$value->pickup_store->zip. " ".$value->pickup_store->phone ?></p>
+                                             <p id="pickup-address-<?php echo $key ?>"><?php echo $value->pickup_store->address ?></p>
+                                             <p id="pickup-state-<?php echo $key ?>"><?php echo $value->pickup_store->state." ".$value->pickup_store->zip. " ".$value->pickup_store->phone ?></p>
                                         </div>
                                         <?php endif ; ?>
 
@@ -270,8 +270,32 @@
                                         <?php endif ; ?>
                                    </div>
 
-                                  
-                                    
+                                   <!-- Store options -->
+                                   <div id="store-options-<?php echo $key ?>">
+                                        <?php 
+                                             foreach ($value->stores as $store_key => $store_data) {
+                                                  $checked = !empty($value->store_id) && ($value->store_id == $store_data->store_id) ?  'checked' : '';
+                                                  $stock_info = $store_data->quantity > 0 ? "{$store_data->quantity} in stock" : "Out of stock";
+                                                  if($store_data->quantity < 1) { continue; }
+                                                  echo "<div class=' mx-2 p-2' role='button'>
+                                                            <input name='store_{$key}'  type='radio'   
+                                                                   onchange='setItemPickupStore($key, {$store_data->store_id})'
+                                                                   store-quantity='{$store_data->quantity}'id='store_{$key}_{$store_key}' value='{$store_data->store_id}' 
+                                                                   class='right' {$checked}
+                                                                   store-address='{$store_data->store->address}' 
+                                                                   store-state='{$store_data->store->state}, {$store_data->store->zip} {$store_data->store->phone}' /> 
+
+                                                            <label for='store_{$key}_{$store_key}' class='text-center' role='button'>
+                                                            {$store_data->store->address} 
+                                                            {$store_data->store->state}, {$store_data->store->zip} 
+                                                            {$store_data->store->phone} 
+                                                            <span class='font-italic text-muted'>({$stock_info})</span>
+                                                            </label>
+
+                                                       </div> ";
+                                             }
+                                        ?>
+                                   </div>
 
                                    <div class="shipping-cost"  style="display:none" data-shipping-box="<?php echo $key ?>">
                                         <?php if ($value->can_ship == 2 && $value->can_ship_approval == 2): ?>
@@ -571,11 +595,14 @@
           let ship_to_tick = document.querySelector(`#ship_to_tick_${key}`);
           let shipping_box = document.querySelector(`[data-shipping-box= "${key}"]`);
           let shipping_options = document.querySelector(`[data-shipping-options= "${key}"]`);
+          let store_options = document.querySelector(`#store-options-${key}`);   
           // Toggle UI
           ship_to_tick.style.display = "none";
           pickup_tick.style.display = "inline";
           shipping_box.style.display = "none";
           shipping_options.style.display = "none";
+          
+          store_options.style.display = "block";
 
 
           // update flag
@@ -599,6 +626,7 @@
           let ship_to_tick = document.querySelector(`#ship_to_tick_${key}`);
           let shipping_box = document.querySelector(`[data-shipping-box= "${key}"]`);                    
           let shipping_options = document.querySelector(`[data-shipping-options= "${key}"]`);   
+          let store_options = document.querySelector(`#store-options-${key}`);   
           // Toggle UI   
           if(shipping_options.style.display == "block"){
                return;
@@ -609,6 +637,8 @@
           }
           shipping_box.style.display = "block";
           shipping_options.style.display = "block";
+          // Hide stores 
+          store_options.style.display = "none";
 
           // update flag
           pickup_flag.value = "false";
@@ -710,6 +740,17 @@
           }
 
           event.target.submit();
+
+      }
+
+      function setItemPickupStore(key, store_id){
+          document.querySelector(`#store_${key}`).value = store_id ;
+          let selectedInput = event.target;
+          let address = selectedInput.getAttribute('store-address');
+          let state = selectedInput.getAttribute('store-state');
+
+          document.querySelector(`#pickup-address-${key}`).innerText = address;
+          document.querySelector(`#pickup-state-${key}`).innerText = state;
 
       }
 
