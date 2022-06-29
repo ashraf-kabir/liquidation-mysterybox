@@ -371,11 +371,13 @@ if (!empty($product->feature_image))
                             <?php foreach($store_inventory as $key => $store_data){
                                 $checked = '';
                                 $stock_info = $store_data->quantity > 0 ? "{$store_data->quantity} in stock" : "Out of stock";
-                                echo "<div class='border w-50 mx-2 p-2 shadow d-flex' role='button'>
+                                echo "<div class='border w-50 mx-2 p-2 shadow d-flex flex-row' role='button'>
+                                        <span>
                                         <input name='store'  type='radio' onchange='updateQuantity({$store_data->quantity})' input-name='store' 
-                                            store-quantity='{$store_data->quantity}'id='store_{$key}' value='{$store_data->store_id}' class='right' {$checked} /> </br>
+                                            store-quantity='{$store_data->quantity}'id='store_{$key}' value='{$store_data->store_id}' class='right ' {$checked} />
+                                        </span>
 
-                                        <label for='store_{$key}' class='text-center' role='button'>
+                                        <label for='store_{$key}' class='text-center ml-1' role='button'>
                                         {$store_data->store->address} </br>
                                         {$store_data->store->state}, {$store_data->store->zip} </br>
                                         {$store_data->store->phone} </br>

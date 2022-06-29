@@ -617,8 +617,8 @@
           shipping_item_label.innerHTML = `0.00`;
           shipping_item_input.value = ``;
 
-
-          sumShipping();
+          updateShippingTotal(key);
+          // sumShipping();
 
      }
      function toggleToShipTo(key){
@@ -659,10 +659,12 @@
           let shipping_item_price_label = document.querySelector(`#shipping_item_price_label_${key}`);
           shipping_item_price_label.style.display = "flex";
 
-          sumShipping();
+          updateShippingTotal(key)
+          // sumShipping();
      }
 
      function updateShippingTotal(key){
+          //update shipping total and hidden form fields in order summary
           let selected_shipping = document.querySelector(`[type="radio"][data-key="${key}"]:checked`)
           // let key = parseInt(selected_shipping.getAttribute('data-key'));
           let total_cost = selected_shipping.getAttribute('data-total-cost');

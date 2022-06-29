@@ -494,6 +494,13 @@ class Home_controller extends Manaknight_Controller
                     }
                 }
             }
+            // Sort according to quantity
+            usort($cart_items, function ($x, $y) {
+                if ($x->product_qty === $y->product_qty) {
+                    return 0;
+                }
+                return $x->product_qty > $y->product_qty ? -1 : 1;
+            });
 
             $data['cart_items'] = $cart_items;
             $data['customer']   =  $this->customer_model->get($user_id);  
@@ -1217,8 +1224,8 @@ class Home_controller extends Manaknight_Controller
                     'unit_price'            => $unit_price[$i],
                     'total_price'           => $unit_price[$i] * $product_quantity[$i],
                     'shipping_cost'         => $shipping_costs[$i],
-                    'shipping_service'      => $shipping_service[$i],
-                    'shipping_service_name'  => $shipping_service_name[$i],
+                    'shipping_service'      => $is_pickup[$i] == "false" ? $shipping_service[$i] : '',
+                    'shipping_service_name'  => $is_pickup[$i] == "false" ? $shipping_service_name[$i] : '',
                     'is_pickup'             => $is_pickup[$i] == "false" ? FALSE : TRUE ,
                     'is_done'               => 0,
                     'customer_id'           => $customer->id,

@@ -490,9 +490,13 @@
                 shipping_options += '<label><input onclick="updateShippingTotal('+key+')" '+checked+' name="shipping_options_'+key+'" data-shipping-options="true" data-key="' + key + '"  data-service-name="shipping_service_id_' + id + '" class="mr-2 shipping-cost-change" type="radio"   value="' + object.serviceCode + '" data-expected-date="' + object.expected_date_only + '"  data-other-cost="' + object.otherCost + '"   data-price="' + object.shipmentCost + '"  data-total-cost="' + shipping_cost_total + '" data-service-code="' + object.serviceCode + '" data-service="' + object.serviceName + '"  />' + object.serviceName + '  ( $' + shipping_cost_total + ' ) ' + object.expected_date + ' </label> </br>';
               }) 
               // shipping_options += '</select>';
-  
+              
+              
               p_object.find('.shipping-cost-options').html(shipping_options);
-  
+              
+              //  updateshipping total for all to validate autoselected shipping service
+              updateShippingTotal(key);
+              
               select_expected_date();
             }
   
