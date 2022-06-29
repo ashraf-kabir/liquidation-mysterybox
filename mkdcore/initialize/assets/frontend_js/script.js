@@ -371,10 +371,9 @@
       let quantity   = $(this).parent().parent().find('.quantity_value').val();
       let id         = $(this).attr('data-id'); 
       let cartId         = $(this).attr('data-cart-id'); 
-      if($(`#${cartId}-store-input`)){
-        store   = $(`#${cartId}-store-input`).val();
+      store   = $(`#${cartId}-store-input`).val();
+      if(store){
         store = store.trim();
-
       }
   
       var this_object_now = $(this); 
