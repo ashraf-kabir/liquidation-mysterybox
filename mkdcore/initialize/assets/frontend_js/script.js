@@ -496,7 +496,12 @@
               
               //  updateshipping total for all to validate autoselected shipping service
               updateShippingTotal(key);
-              
+              // Click delivery items after getting shipping cost
+              $(document).ready(function(){
+                setTimeout(() => {
+                  $('[item-ship-to=true]').click();
+                }, 1000);
+              })
               select_expected_date();
             }
   
