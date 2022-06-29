@@ -245,8 +245,9 @@
                                         <div class=" mr-2 p-2 pt-0 position-relative mt-2 " role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px" onclick="toggleToPickUp('<?php echo $key ?>')">
                                              <span style="border-style:solid; border-width:5px; position:absolute; top:0; right:0;" class=" p-0 m-0 text-white bg-dark border-dark" id="pickup_tick_<?php echo $key; ?>">&#10004;</span>
                                              <h6>PICKUP AT </h6>
-                                             <p id="pickup-address-<?php echo $key ?>"><?php echo $value->pickup_store->address ?></p>
-                                             <p id="pickup-state-<?php echo $key ?>"><?php echo $value->pickup_store->state." ".$value->pickup_store->zip. " ".$value->pickup_store->phone ?></p>
+                                             <p id="pickup-address-<?php echo $key ?>"><?php echo !empty($value->pickup_store->address) ? $value->pickup_store->address : ''  ?></p>
+                                             <p id="pickup-state-<?php echo $key ?>">
+                                                  <?php echo !empty($value->pickup_store->address) ? $value->pickup_store->state." ".$value->pickup_store->zip. " ".$value->pickup_store->phone  : '' ?></p>
                                         </div>
                                         <?php endif ; ?>
 
