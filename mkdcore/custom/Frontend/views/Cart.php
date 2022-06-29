@@ -121,7 +121,7 @@
                     $total      = 0;
                     $sub_total  = 0;
                     foreach($cart_items as $key => $value) {  $total = $total + $value->total_price;  ?> 
-                        <div class="row cart__addedItem justify-content-between mb-4"  style="background-color: white;">
+                        <div class="row cart__addedItem justify-content-between mb-4 p-2"  style="background-color: white;">
                             <div class="col-xl-3 col-lg-4 col-md-4 col-12 my-3">
                                 <?php if( empty($value->feature_image) ) :  ?>
                                     <img  class="image-fit-in-div img-thumbnail " src="<?php echo base_url(); ?>/assets/frontend_images/noun_pallet_box_1675914.png" alt="<?= $value->product_name; ?>"  />
@@ -147,6 +147,7 @@
                                         <input type="hidden" name="store_id" id="<?php echo $value->id ?>-store-input" value="<?php echo $value->store_id ?>">
                                     <?php else : ?>
                                         <h6 class="w-100 ">Delivery</h6>
+                                        <input type="hidden" name="store_id" id="<?php echo $value->id ?>-store-input" value="<?php echo $value->store_id ?>">
                                     <?php endif ; ?>
                                     <h4 class="text-danger my-3">
                                         <span>Price: </span>$<?= number_format($value->unit_price,2); ?> 
@@ -156,7 +157,7 @@
                                     <a href="<?php echo base_url(); ?>cart_remove/<?= $value->id; ?>" style="line-height: 2;" class=" delete_btn_c  remove-btn"><strong>X</strong></a>
                                     <label for="quantity">
                                         Qty:
-                                        <input type="text"  name="quantity" class="quantity_value form-control w-75" value="<?= $value->product_qty; ?>"  />
+                                        <input type="text"  name="quantity" class="quantity_value form-control w-50 text-center" value="<?= $value->product_qty; ?>"  />
                                     </label>
                                     <h5>
                                         Total: <span>$<?= number_format($value->total_price,2); ?> </span>

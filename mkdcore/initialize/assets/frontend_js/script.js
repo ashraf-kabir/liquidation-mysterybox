@@ -372,9 +372,7 @@
       let id         = $(this).attr('data-id'); 
       let cartId         = $(this).attr('data-cart-id'); 
       store   = $(`#${cartId}-store-input`).val();
-      if(store){
-        store = store.trim();
-      }
+      store = store.trim();
   
       var this_object_now = $(this); 
       update_create_cart(quantity, id , false, $(this), false, store);
