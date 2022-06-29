@@ -42,7 +42,7 @@
 
         .delete_btn_c { 
             right: 0px;
-            top: -381px;
+            top: -481px;
         }
         .margin-left-0{
             padding: 0px !important;
