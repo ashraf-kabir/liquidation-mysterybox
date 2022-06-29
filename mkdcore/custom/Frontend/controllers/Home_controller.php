@@ -2341,7 +2341,7 @@ class Home_controller extends Manaknight_Controller
                         // $value->can_ship = 2;
                         // $value->can_ship_approval = 2;
                     }else{ //shipping only
-                        $value->can_ship = 3;
+                        // $value->can_ship = 3;
                     }
                     
                     $cart_item_quantity = $value->product_qty;
