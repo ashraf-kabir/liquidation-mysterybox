@@ -732,12 +732,21 @@
           for(let i = 0; i < items; i++){
 
                pickup_input = document.querySelector(`#pickup_${i}`);
+               store_input = document.querySelector(`#store_${i}`);
                pickup_shipping = document.querySelectorAll(`[type="radio"][data-key="${i}"]:checked`);
 
+               // Validate shipping is selected
                if(pickup_input.value == 'false' && pickup_shipping.length < 1){
                     toastr.error('Please select a shipping option For all items to be shipped.');
                     return;
                }
+               // validate that a pickup location is selected 
+               if(pickup_input.value == 'true' && store_input.value === ''){
+                    toastr.error('Please select a pickup location For all items to be picked up.');
+                    return;
+               }
+
+               
           }
 
           event.target.submit();
