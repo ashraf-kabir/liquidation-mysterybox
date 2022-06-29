@@ -253,7 +253,7 @@
 
                                         <?php if ($value->can_ship != 2 || $value->can_ship_approval == 1): ?>
                                         <div class="  position-relative p-2 mt-2" role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px"
-                                              onclick="toggleToShipTo('<?php echo $key ?>')"  item-ship-to='true'>
+                                              onclick="toggleToShipTo('<?php echo $key ?>')"  item-ship-to='<?php echo !empty($value->pickup_store->id) ? true : "" ?>'>
                                         <span class="text-white bg-dark border-dark" style="display:none; border-style:solid; border-width:5px; position:absolute; top:0; right:0;" id="ship_to_tick_<?php echo $key; ?>">&#10004;</span>
                                              <h6>SHIP TO </h6>
                                              <p id="msg_full_name" class="msg-full-name"><?php echo $customer->name; ?></p>
@@ -721,7 +721,7 @@
 
      
 
-      // Add listener to shipping options
+      // Add listener to shipping options and pick up
 
       function validateForm(){
           event.preventDefault(); 
