@@ -367,11 +367,15 @@
   
     $(document).on('click','.edit_to_cart_button',function(e){
       e.preventDefault(); 
+      let store = null;
       let quantity   = $(this).parent().parent().find('.quantity_value').val();
       let id         = $(this).attr('data-id'); 
       let cartId         = $(this).attr('data-cart-id'); 
-      let store   = $(`#${cartId}-store-input`).val();
-      store = store.trim();
+      if($(`#${cartId}-store-input`)){
+        store   = $(`#${cartId}-store-input`).val();
+        store = store.trim();
+
+      }
   
       var this_object_now = $(this); 
       update_create_cart(quantity, id , false, $(this), false, store);
