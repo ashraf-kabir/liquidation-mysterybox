@@ -366,7 +366,6 @@ class Admin_inventory_controller extends Admin_controller
         $store_inventory = [];
         $total_quantity = 0;
         foreach ($store_location_id as $key => $store) {
-            //TODO skip duplicates or return validation error (loop through store id and thro validation error if duplicate entry found)
             $store_inventory_item['store_id'] = $store_location_id[$key];
             $store_inventory_item['quantity'] = isset($quantity[$key]) ? $quantity[$key] : '';
             $store_inventory_item['physical_location'] = isset($physical_location[$key]) ? $physical_location[$key] : '';
@@ -563,7 +562,7 @@ class Admin_inventory_controller extends Admin_controller
         $quantity = $this->input->post('quantity');
 
         if(count($stores) < 1 || count($quantity) < 1){
-            $this->form_validation->set_message('validate_store_inventory', 'The Store and Quantity field is required.');
+            $this->form_validation->set_message('validate_store_inventory', 'The Store and Quantity fields are required.');
             return FALSE;
         }
 
