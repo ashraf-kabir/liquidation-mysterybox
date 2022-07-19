@@ -230,7 +230,7 @@
                               </div>
                               <div class="details ">
                                    <h4><?php echo $value->product_name; ?></h4>
-                                   <p>Details: <?php echo $value->description; ?></p>
+                                   <!-- <p>Details: <?php echo $value->description; ?></p> -->
                                    <p>Price: $<span class="current_item_total_price"><?php echo $value->unit_price * $value->product_quantity; ?></span></p>
                                    <p>Weight: <span class=""><?php echo $value->item_data->weight * $value->product_quantity; ?></span> lbs</p>
                                    <div class="product-quantity">
@@ -242,17 +242,19 @@
 
                                    <div class="d-flex flex-column flex-xl-row  ">
                                         <?php if ($value->can_ship != 3 /* Shipping only */): ?>
-                                        <div class=" mr-2 p-2 pt-0 position-relative mt-2 " role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px" onclick="toggleToPickUp('<?php echo $key ?>')">
+                                        <div class=" mr-2 p-2 pt-0 position-relative mt-2 " role="button" style="border-style:solid; border-width:1px; width:300px; min-height:150px" onclick="toggleToPickUp('<?php echo $key ?>')">
                                              <span style="border-style:solid; border-width:5px; position:absolute; top:0; right:0;" class=" p-0 m-0 text-white bg-dark border-dark" id="pickup_tick_<?php echo $key; ?>">&#10004;</span>
                                              <h6>PICKUP AT </h6>
-                                             <p id="pickup-address-<?php echo $key ?>"><?php echo !empty($value->pickup_store->address) ? $value->pickup_store->address : ''  ?></p>
+                                             <p id="pickup-address-<?php echo $key ?>">
+                                                  <?php echo !empty($value->pickup_store->address) ? $value->pickup_store->name." ".$value->pickup_store->address : ''  ?>
+                                             </p>
                                              <p id="pickup-state-<?php echo $key ?>">
                                                   <?php echo !empty($value->pickup_store->address) ? $value->pickup_store->state." ".$value->pickup_store->zip. " ".$value->pickup_store->phone  : '' ?></p>
                                         </div>
                                         <?php endif ; ?>
 
                                         <?php if ($value->can_ship != 2 || $value->can_ship_approval == 1): ?>
-                                        <div class="  position-relative p-2 mt-2" role="button" style="border-style:solid; border-width:5px; width:300px; min-height:150px"
+                                        <div class="  position-relative p-2 mt-2" role="button" style="border-style:solid; border-width:1px; width:300px; min-height:150px"
                                               onclick="toggleToShipTo('<?php echo $key ?>')"  item-ship-to='<?php echo !empty($value->pickup_store->id) ? "" : "true" ?>'>
                                         <span class="text-white bg-dark border-dark" style="display:none; border-style:solid; border-width:5px; position:absolute; top:0; right:0;" id="ship_to_tick_<?php echo $key; ?>">&#10004;</span>
                                              <h6>SHIP TO </h6>
@@ -283,10 +285,12 @@
                                                                    onchange='setItemPickupStore($key, {$store_data->store_id})'
                                                                    store-quantity='{$store_data->quantity}'id='store_{$key}_{$store_key}' value='{$store_data->store_id}' 
                                                                    class='right' {$checked}
+                                                                   store-name='{$store_data->store->name}' 
                                                                    store-address='{$store_data->store->address}' 
                                                                    store-state='{$store_data->store->state}, {$store_data->store->zip} {$store_data->store->phone}' /> 
 
                                                             <label for='store_{$key}_{$store_key}' class='text-center' role='button'>
+                                                            {$store_data->store->name}, 
                                                             {$store_data->store->address} 
                                                             {$store_data->store->state}, {$store_data->store->zip} 
                                                             {$store_data->store->phone} 
@@ -599,7 +603,9 @@
           let store_options = document.querySelector(`#store-options-${key}`);   
           // Toggle UI
           ship_to_tick.style.display = "none";
+          ship_to_tick.parentElement.style.borderWidth = "1px";
           pickup_tick.style.display = "inline";
+          pickup_tick.parentElement.style.borderWidth = "5px";
           shipping_box.style.display = "none";
           shipping_options.style.display = "none";
           
@@ -633,8 +639,10 @@
                return;
           }
           ship_to_tick.style.display = "inline";
+          ship_to_tick.parentElement.style.borderWidth = "5px";
           if(pickup_tick){
                pickup_tick.style.display = "none";
+               pickup_tick.parentElement.style.borderWidth = "1px";
           }
           shipping_box.style.display = "block";
           shipping_options.style.display = "block";
@@ -758,10 +766,11 @@
       function setItemPickupStore(key, store_id){
           document.querySelector(`#store_${key}`).value = store_id ;
           let selectedInput = event.target;
+          let name = selectedInput.getAttribute('store-name');
           let address = selectedInput.getAttribute('store-address');
           let state = selectedInput.getAttribute('store-state');
 
-          document.querySelector(`#pickup-address-${key}`).innerText = address;
+          document.querySelector(`#pickup-address-${key}`).innerHTML = name + '<br>' + address;
           document.querySelector(`#pickup-state-${key}`).innerText = state;
 
       }

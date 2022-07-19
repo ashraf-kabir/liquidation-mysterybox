@@ -140,7 +140,7 @@
                                                 <?php echo $value->pickup_store->address ?>,
                                                 <?php echo $value->pickup_store->state ?>. </br>
                                                 <?php echo $value->pickup_store->zip ?>, 
-                                                <?php echo $value->pickup_store->phone ?>.
+                                                <a href="tel:<?php echo $value->pickup_store->phone ?>"><?php echo $value->pickup_store->phone ?>.</a>
                                         
                                             </p>
                                         </h6>
