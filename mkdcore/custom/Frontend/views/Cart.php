@@ -137,9 +137,9 @@
                                             Store Pickup
                                             <p class="mt-1 font-weight-light">
                                                 <?php echo $value->pickup_store->name ?> </br>
-                                                <?php echo $value->pickup_store->address ?>,
-                                                <?php echo $value->pickup_store->state ?>. </br>
-                                                <?php echo $value->pickup_store->zip ?>, 
+                                                <?php echo $value->pickup_store->address ?>,<br>
+                                                <?php echo $value->pickup_store->state ?>
+                                                <?php echo $value->pickup_store->zip ?><br>
                                                 <a href="tel:<?php echo $value->pickup_store->phone ?>"><?php echo $value->pickup_store->phone ?>.</a>
                                         
                                             </p>
