@@ -232,7 +232,7 @@
                                    <h4><?php echo $value->product_name; ?></h4>
                                    <!-- <p>Details: <?php echo $value->description; ?></p> -->
                                    <p>Price: $<span class="current_item_total_price"><?php echo $value->unit_price * $value->product_quantity; ?></span></p>
-                                   <p>Weight: <span class=""><?php echo $value->item_data->weight * $value->product_quantity; ?></span> lbs</p>
+                                   <!-- <p>Weight: <span class=""><?php echo $value->item_data->weight * $value->product_quantity; ?></span> lbs</p> -->
                                    <div class="product-quantity">
                                         <p>Quantity:</p>
                                         <!-- <button data-id="<?php echo $value->product_id; ?>"  data-product_qty="<?php echo $value->product_quantity; ?>"  type="button" class="btn btn-secondary add_to_cart_button_checkout">+</button> -->
@@ -249,11 +249,11 @@
                                                   <?php echo !empty($value->pickup_store->address) ? $value->pickup_store->name." ".$value->pickup_store->address : ''  ?>
                                              </p>
                                              <p id="pickup-state-<?php echo $key ?>">
-                                                  <?php echo !empty($value->pickup_store->address) ? $value->pickup_store->state." ".$value->pickup_store->zip. " ".$value->pickup_store->phone  : '' ?></p>
+                                                  <?php echo !empty($value->pickup_store->address) ? $value->pickup_store->state." ".$value->pickup_store->zip. "<br>".$value->pickup_store->phone  : '' ?></p>
                                         </div>
                                         <?php endif ; ?>
                                         <?php if ($value->can_ship != 2 || $value->can_ship_approval == 1 && $value->can_ship != 3): ?>
-                                             <div class="align-items-center d-flex justify-content-center mx-2" style="min-height:150px">OR</div>
+                                             <div class="align-items-center d-flex justify-content-center mx-2 pr-2" style="min-height:150px">OR</div>
                                         <?php endif; ?>
 
                                         <?php if ($value->can_ship != 2 || $value->can_ship_approval == 1): ?>
@@ -290,7 +290,7 @@
                                                                    class='right' {$checked}
                                                                    store-name='{$store_data->store->name}' 
                                                                    store-address='{$store_data->store->address}' 
-                                                                   store-state='{$store_data->store->state}, {$store_data->store->zip} {$store_data->store->phone}' /> 
+                                                                   store-state='{$store_data->store->state} {$store_data->store->zip} <br>{$store_data->store->phone}' /> 
 
                                                             <label for='store_{$key}_{$store_key}' class='text-center' role='button'>
                                                             {$store_data->store->name}, 
@@ -774,7 +774,7 @@
           let state = selectedInput.getAttribute('store-state');
 
           document.querySelector(`#pickup-address-${key}`).innerHTML = name + '<br>' + address;
-          document.querySelector(`#pickup-state-${key}`).innerText = state;
+          document.querySelector(`#pickup-state-${key}`).innerHTML = state;
 
       }
 

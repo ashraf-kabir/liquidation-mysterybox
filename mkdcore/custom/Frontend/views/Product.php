@@ -380,7 +380,8 @@ if (!empty($product->feature_image))
                                         <label for='store_{$key}' class='text-center ml-1' role='button'>
                                         {$store_data->store->name} </br>
                                         {$store_data->store->address} </br>
-                                        {$store_data->store->state}, {$store_data->store->zip} </br>
+                                        {$store_data->store->state}</br>
+                                         {$store_data->store->zip} </br>
                                         {$store_data->store->phone} </br>
                                         <span class='font-italic text-muted'>({$stock_info})</span>
                                         </label>
