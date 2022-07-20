@@ -231,7 +231,7 @@
                               <div class="details ">
                                    <h4><?php echo $value->product_name; ?></h4>
                                    <!-- <p>Details: <?php echo $value->description; ?></p> -->
-                                   <p>Price: $<span class="current_item_total_price"><?php echo $value->unit_price * $value->product_quantity; ?></span></p>
+                                   <p class="pt-1">Price: $<span class="current_item_total_price"><?php echo $value->unit_price * $value->product_quantity; ?></span></p>
                                    <!-- <p>Weight: <span class=""><?php echo $value->item_data->weight * $value->product_quantity; ?></span> lbs</p> -->
                                    <div class="product-quantity">
                                         <p>Quantity:</p>
