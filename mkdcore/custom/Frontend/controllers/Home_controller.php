@@ -1250,7 +1250,8 @@ class Home_controller extends Manaknight_Controller
                 {
                     $item_data = $this->inventory_model->get($value->product_id);
                     $total += $value->unit_price * $value->product_qty;
-
+                    $value->product = $item_data;
+                    $value->store = !empty($value->store_id) ? $this->store_model->get($value->store_id) : null;
                     $total_shipping = !empty($value->shipping_cost) ? (float) $total_shipping + (float) $value->shipping_cost : $total_shipping + 0;
                 }
             }
@@ -1270,9 +1271,9 @@ class Home_controller extends Manaknight_Controller
             $data['total_shipping']  = $total_shipping;
             $data['checkout_data'] = $checkout_data;
             $data['customer']     =  $customer; 
-            $data['store']     =  $this->store_model->get_all()[0]; 
+            // $data['store']     =  $this->store_model->get_all()[0]; 
             $data['tax']          =  $this->tax_model->get(1); 
-            // echo '<pre>'; print_r($data); die();
+            // echo '<pre>'; print_r($checkout_data); die();
 
 
             $this->_render('Guest/CheckoutStep2',$data);

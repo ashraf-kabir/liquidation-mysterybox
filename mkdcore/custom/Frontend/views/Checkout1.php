@@ -249,7 +249,13 @@
                                                   <?php echo !empty($value->pickup_store->address) ? $value->pickup_store->name." ".$value->pickup_store->address : ''  ?>
                                              </p>
                                              <p id="pickup-state-<?php echo $key ?>">
-                                                  <?php echo !empty($value->pickup_store->address) ? $value->pickup_store->state." ".$value->pickup_store->zip. "<br>".$value->pickup_store->phone  : '' ?></p>
+                                                  <?php echo !empty($value->pickup_store->address) ? $value->pickup_store->city." "
+                                                                                                    .$value->pickup_store->state." "
+                                                                                                    .$value->pickup_store->zip. "<br>"
+                                                                                                    ."<a href='tel:{$value->pickup_store->phone}'>"
+                                                                                                    .$value->pickup_store->phone."</a>"
+                                                                                                   : '' ?>
+                                             </p>
                                         </div>
                                         <?php endif ; ?>
                                         <?php if ($value->can_ship != 2 || $value->can_ship_approval == 1 && $value->can_ship != 3): ?>
@@ -290,13 +296,15 @@
                                                                    class='right' {$checked}
                                                                    store-name='{$store_data->store->name}' 
                                                                    store-address='{$store_data->store->address}' 
-                                                                   store-state='{$store_data->store->state} {$store_data->store->zip} <br>{$store_data->store->phone}' /> 
+                                                                   store-city='{$store_data->store->city}' 
+                                                                   store-phone='{$store_data->store->phone}' 
+                                                                   store-state='{$store_data->store->state} {$store_data->store->zip}' 
+                                                                   /> 
 
                                                             <label for='store_{$key}_{$store_key}' class='text-center' role='button'>
                                                             {$store_data->store->name}, 
                                                             {$store_data->store->address} 
-                                                            {$store_data->store->state}, {$store_data->store->zip} 
-                                                            {$store_data->store->phone} 
+                                                            {$store_data->store->city} {$store_data->store->state} {$store_data->store->zip} 
                                                             <span class='font-italic text-muted'>({$stock_info})</span>
                                                             </label>
 
@@ -771,10 +779,12 @@
           let selectedInput = event.target;
           let name = selectedInput.getAttribute('store-name');
           let address = selectedInput.getAttribute('store-address');
+          let city = selectedInput.getAttribute('store-city');
+          let phone = selectedInput.getAttribute('store-phone');
           let state = selectedInput.getAttribute('store-state');
 
           document.querySelector(`#pickup-address-${key}`).innerHTML = name + '<br>' + address;
-          document.querySelector(`#pickup-state-${key}`).innerHTML = state;
+          document.querySelector(`#pickup-state-${key}`).innerHTML = `${city} ${state} <br> <a href="tel:${phone}">${phone}</a>`;
 
       }
 

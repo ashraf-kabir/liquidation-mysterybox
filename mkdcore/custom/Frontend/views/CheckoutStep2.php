@@ -183,9 +183,47 @@
 <section class="checkout-section" id="checkout-section">
 
      <div class="checkout-left child p-0">
+
      <div class=" first-box d-flex flex-row-reverse justify-content-between">
           <a class="btn btn-secondary" href="/checkout" >Back to Shipping</a> 
      </div>
+
+     <?php foreach($checkout_data as $key => $item) : ?>
+          <div class="checkout-row">
+               <div class="first-box">
+                    <?php if (!empty($item->product->feature_image)): ?>
+                   <img src="<?php echo $item->product->feature_image ?>" alt="<?php echo $item->product_name?>"  height="100" width="100">
+                   <?php else: ?>
+                    <img  src="/assets/frontend_images/noun_pallet_box_1675914.png" alt="<?php echo $item->product_name?>" height="100" width="100">
+                   <?php endif; ?>
+               </div>
+               <div class="second-box" >
+                    <p><?php echo $item->product_name ?></p>
+                    <p>Qty: <?php echo $item->product_qty ?></p>
+                    <p>Price: <?php echo $item->unit_price ?></p>
+               </div>
+               <div class="third-box" style="width:250px">
+                    <?php if (!empty($item->store)): ?>
+                    <p id="msg_full_name">Store Pickup</p>
+                    <p id="msg_full_name"><?php echo $item->store->name; ?></p>
+                    <p class="show-text-only" id="msg_shipping_address"><?php echo $item->store->address; ?></p>
+                   
+                    <p id="msg_shipping_zip"><?php echo $item->store->city. " ".$item->store->state." ".$item->store->zip; ?></p>
+                    <a href="tel:<?php echo $item->store->phone; ?>"><p id="msg_shipping_zip"><?php echo $item->store->phone; ?></p></a>
+                    <?php else: ?>
+                    <p id="msg_full_name">Delivery</p>
+                    <p id="msg_full_name"><?php echo $customer->name; ?></p>
+                    <p class="show-text-only" id="msg_shipping_address"><?php echo $customer->shipping_address; ?></p>
+                   
+                    <p id="msg_shipping_zip"><?php echo $customer->shipping_city. " " .$customer->shipping_state." ".$customer->shipping_zip; ?></p>
+                    <?php endif; ?>
+               </div>
+              
+          </div>
+          <?php endforeach ; ?>
+
+
+     
           <div class="checkout-row" <?php echo ($has_shipping == true) ? '' : 'style="display:none"' ?>>
                <div class="first-box">
                     <!-- <span>1</span> -->
@@ -276,9 +314,8 @@
 
           <?php if($has_pickup == true): ?>
           <?php foreach($stores as $key => $store_data) : ?>
-          <div class="checkout-row">
+          <!-- <div class="checkout-row">
                <div class="first-box">
-                    <!-- <span>2</span> -->
                     <span>Pickup Address <?php echo $key > 0 ? $key+1 : ''?></span>
                </div>
                <div class="second-box">
@@ -290,7 +327,7 @@
                </div>
                <div class="third-box">&nbsp;</div>
               
-          </div>
+          </div> -->
           <?php endforeach ; ?>
           <?php endif ; ?>
           <div class="checkout-row">
