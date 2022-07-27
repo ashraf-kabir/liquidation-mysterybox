@@ -200,15 +200,14 @@
 	                                    <td style="border: 1px solid #dee2e6;"><?php echo  $detail->quantity; ?></td>
 	                                    <td style="border: 1px solid #dee2e6;"><?php echo  $detail->is_pickup == 1 ? 'Store Pickup' : 'Delivery'; ?></td>
 	                                    <td style="border: 1px solid #dee2e6;">
-											<?php if (!empty($detail->store))
-											{
-												echo "{$detail->store->name} </br>";
-												echo "{$detail->store->address} </br>";
-												echo "{$detail->store->city} {$detail->store->state}";
-												echo "{$detail->store->zip}";
-												echo "<a href='tel:{$detail->store->phone}'>{$detail->store->phone}</a>";
-											}
-											?>
+											<?php if (!empty($detail->store)) : ?>
+											
+												<p><?php echo $detail->store->name ?> </p>
+												<p><?php echo $detail->store->address ?> </p>
+												<p><?php echo $detail->store->city." ". $detail->store->state. " ".$detail->store->zip." " ?> </p>
+												<p><a href='tel:<?php echo $detail->store->phone?>'> <?php echo $detail->store->phone?>  </a></p>
+											
+											<?php endif; ?>
 										</td>
 	                                    <td style="border: 1px solid #dee2e6;"><?php echo  number_format($detail->product_unit_price,2); ?></td> 
 	                                    <td style="border: 1px solid #dee2e6;"><?php echo  number_format($detail->amount,2); ?></td>
