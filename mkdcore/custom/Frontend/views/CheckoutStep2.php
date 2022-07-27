@@ -204,14 +204,14 @@
                </div>
                <div class="third-box" style="width:250px">
                     <?php if (!empty($item->store)): ?>
-                    <p id="msg_full_name">Store Pickup</p>
+                    <p id="msg_full_name" class="font-weight-bold">Store Pickup</p>
                     <p id="msg_full_name"><?php echo $item->store->name; ?></p>
                     <p class="show-text-only" id="msg_shipping_address"><?php echo $item->store->address; ?></p>
                    
                     <p id="msg_shipping_zip"><?php echo $item->store->city. " ".$item->store->state." ".$item->store->zip; ?></p>
                     <a href="tel:<?php echo $item->store->phone; ?>"><p id="msg_shipping_zip"><?php echo $item->store->phone; ?></p></a>
                     <?php else: ?>
-                    <p id="msg_full_name">Delivery</p>
+                    <p id="msg_full_name" class="font-weight-bold">Delivery</p>
                     <p id="msg_full_name"><?php echo $customer->name; ?></p>
                     <p class="show-text-only" id="msg_shipping_address"><?php echo $customer->shipping_address; ?></p>
                    

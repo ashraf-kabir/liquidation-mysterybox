@@ -202,10 +202,10 @@
 	                                    <td style="border: 1px solid #dee2e6;">
 											<?php if (!empty($detail->store)) : ?>
 											
-												<p style="margin-top:0.5px; padding-top:0.5px"><?php echo $detail->store->name ?> </p>
-												<p style="margin-top:0.5px; padding-top:0.5px"><?php echo $detail->store->address ?> </p>
-												<p style="margin-top:0.5px; padding-top:0.5px"><?php echo $detail->store->city." ". $detail->store->state. " ".$detail->store->zip." " ?> </p>
-												<p style="margin-top:0.5px; padding-top:0.5px"><a href='tel:<?php echo $detail->store->phone?>'> <?php echo $detail->store->phone?>  </a></p>
+												<p style="margin-top:0; padding-top:0"><?php echo $detail->store->name ?> </p>
+												<p style="margin-top:0; padding-top:0"><?php echo $detail->store->address ?> </p>
+												<p style="margin-top:0; padding-top:0"><?php echo $detail->store->city." ". $detail->store->state. " ".$detail->store->zip." " ?> </p>
+												<p style="margin-top:0; padding-top:0"><a href='tel:<?php echo $detail->store->phone?>'> <?php echo $detail->store->phone?>  </a></p>
 											
 											<?php endif; ?>
 										</td>
