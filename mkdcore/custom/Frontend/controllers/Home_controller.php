@@ -1349,7 +1349,12 @@ class Home_controller extends Manaknight_Controller
         $store_inventory = !empty($model->store_inventory) ? json_decode($model->store_inventory) : [];
 
         foreach ($store_inventory as $key => &$value) {
-            $store_inventory[$key]->store = $this->store_model->get($value->store_id); 
+            $store_data = $this->store_model->get($value->store_id);
+            if($store_data->can_ship == 3 /* Shipping only */) {
+                unset($store_inventory[$key]);
+            }
+            $store_inventory[$key]->store = $store_data; 
+            // remove warehouse store (can_ship - shipping only --> 3)
         }
         // echo '<pre>';
         // print_r($store_inventory); die();

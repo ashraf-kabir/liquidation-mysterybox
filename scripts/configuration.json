@@ -650,13 +650,18 @@
 				}], "xyzZip", "required|max_length[20]", "required|max_length[20]"],
 				["phone", "string", [{
 					"limit": 255
-				}], "xyzPhone", "required|numeric", "required|numeric"],
-				["city", "string", [], "xyzCity", "", ""]
+				}], "xyzPhone", "required|string", "required|string"],
+				["city", "string", [], "xyzCity", "", ""],
+				["can_ship", "integer", [], "xyzCan Ship", "", ""]
 			],
 			"method": "",
 			"join": [],
 			"mapping": {
-
+				"can_ship": {
+					"1": "Delivery or Pickup",
+					"2": "Pickup only",
+					"3": "Shipping only"
+				}
 			},
 			"pre": "",
 			"post": "",
@@ -2164,9 +2169,9 @@
 			"listing_rows": ["id|integer", "name|string", "address|text", "state|string", "zip|string", "phone|string", "city|string"],
 			"listing_actions": [],
 			"filter_fields": ["name", "state", "zip", "phone", "city"],
-			"add_fields": ["name", "address", "state", "zip", "phone", "city"],
-			"edit_fields": ["name", "address", "state", "zip", "phone", "city"],
-			"view_fields": ["id", "name", "address", "state", "zip", "phone", "city"],
+			"add_fields": ["name", "address", "state", "zip", "phone", "city", "can_ship"],
+			"edit_fields": ["name", "address", "state", "zip", "phone", "city", "can_ship"],
+			"view_fields": ["id", "name", "address", "state", "zip", "phone", "city", "can_ship"], 
 			"autocomplete": "",
 			"dynamic_mapping_add": {},
 			"dynamic_mapping_edit": {},
