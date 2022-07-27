@@ -650,7 +650,7 @@
 				}], "xyzZip", "required|max_length[20]", "required|max_length[20]"],
 				["phone", "string", [{
 					"limit": 255
-				}], "xyzPhone", "required|string", "required|string"],
+				}], "xyzPhone", "required|max_length[25]", "required|max_length[25]"],
 				["city", "string", [], "xyzCity", "", ""],
 				["can_ship", "integer", [], "xyzCan Ship", "", ""]
 			],
