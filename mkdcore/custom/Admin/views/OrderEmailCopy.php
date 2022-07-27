@@ -202,10 +202,10 @@
 	                                    <td style="border: 1px solid #dee2e6;">
 											<?php if (!empty($detail->store)) : ?>
 											
-												<p><?php echo $detail->store->name ?> </p>
-												<p><?php echo $detail->store->address ?> </p>
-												<p><?php echo $detail->store->city." ". $detail->store->state. " ".$detail->store->zip." " ?> </p>
-												<p><a href='tel:<?php echo $detail->store->phone?>'> <?php echo $detail->store->phone?>  </a></p>
+												<p style="margin-top:1px; padding-top:1.5px"><?php echo $detail->store->name ?> </p>
+												<p style="margin-top:1px; padding-top:1.5px"><?php echo $detail->store->address ?> </p>
+												<p style="margin-top:1px; padding-top:1.5px"><?php echo $detail->store->city." ". $detail->store->state. " ".$detail->store->zip." " ?> </p>
+												<p style="margin-top:1px; padding-top:1.5px"><a href='tel:<?php echo $detail->store->phone?>'> <?php echo $detail->store->phone?>  </a></p>
 											
 											<?php endif; ?>
 										</td>
@@ -216,12 +216,12 @@
 	                            </tbody>
 	                            <tfoot>
 								<tr>
-									<td colspan="2"></td> 
+									<td colspan="4"></td> 
 									<td>Subtotal</td>
 									<td><?php echo number_format($view_model->get_subtotal(),2);?></td>
 								</tr> 
 								<tr>
-									<td colspan="2"></td> 
+									<td colspan="4"></td> 
 									<td>Shipping Cost</td>
 									<td><?php echo number_format($view_model->get_shipping_cost(),2);?>
 										<span><?php echo $view_model->get_shipping_cost_service_name() ; ?></span>
