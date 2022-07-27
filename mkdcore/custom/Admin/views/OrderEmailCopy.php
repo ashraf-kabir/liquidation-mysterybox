@@ -166,14 +166,14 @@
 						</div>
 					</div>
 					
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
+					<!-- <div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
 						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
 							Delivery Type
 						</div>
 						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
 							<?php echo $view_model->checkout_type_mapping()[$view_model->get_checkout_type()];?>
 						</div>
-					</div>
+					</div> -->
 					
 				 
 					 
@@ -187,6 +187,8 @@
 	                                <tr>
 	                                    <th style="width:20%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;" >Item Name</th> 
 	                                    <th style="width:10%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;" >Quantity</th>
+	                                    <th style="width:10%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;" >Delivery Type</th>
+	                                    <th style="width:10%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;" ></th>
 	                                    <th style="width:10%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;" >Rate</th> 
 	                                    <th style="width:10%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;" >Amount</th>
 	                                </tr> 
@@ -196,6 +198,18 @@
 	                                <tr>
 	                                    <td style="border: 1px solid #dee2e6;"><?php echo  $detail->product_name; ?>  </td> 
 	                                    <td style="border: 1px solid #dee2e6;"><?php echo  $detail->quantity; ?></td>
+	                                    <td style="border: 1px solid #dee2e6;"><?php echo  $detail->is_pickup == 1 ? 'Store Pickup' : 'Delivery'; ?></td>
+	                                    <td style="border: 1px solid #dee2e6;">
+											<?php if (!empty($detail->store))
+											{
+												echo "{$detail->store->name} </br>";
+												echo "{$detail->store->address} </br>";
+												echo "{$detail->store->city} {$detail->store->state}";
+												echo "{$detail->store->zip}";
+												echo "<a href='tel:{$detail->store->phone}'>{$detail->store->phone}</a>";
+											}
+											?>
+										</td>
 	                                    <td style="border: 1px solid #dee2e6;"><?php echo  number_format($detail->product_unit_price,2); ?></td> 
 	                                    <td style="border: 1px solid #dee2e6;"><?php echo  number_format($detail->amount,2); ?></td>
 	                                </tr>

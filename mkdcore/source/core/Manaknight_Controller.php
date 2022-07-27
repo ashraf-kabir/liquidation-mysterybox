@@ -528,6 +528,7 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
         $this->load->model('pos_order_model'); 
         $this->load->model('pos_order_items_model'); 
         $this->load->model('email_model');
+        $this->load->model('store_model');
 
 
         $this->load->library('mail_service');
@@ -544,7 +545,15 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
             $this->_data['view_model']->set_heading('Orders');
             $this->_data['view_model']->set_model($model);
             $this->load->model('pos_order_items_model'); 
-            $this->_data['orders_details'] = $this->pos_order_items_model->get_all(['order_id' => $id]); 
+
+            $order_details = $this->pos_order_items_model->get_all(['order_id' => $id]);
+            foreach ($order_details as $order_detail)
+            {
+                if($order_detail->store_id == 0 /* if no store, hence its pickup */) {continue;}
+
+                $order_detail->store = $this->store_model->get($order_detail->store_id);
+            }
+            $this->_data['orders_details'] = $order_details;
              
 
             ob_start();  
