@@ -258,6 +258,7 @@
                                                                                                    : '' ?>
                                              </p>
                                              <?php else : ?>
+                                                  <span style="border-style:solid; border-width:5px; position:absolute; top:0; right:0;" class=" p-0 m-0 text-white  border-dark" id="pickup_tick_<?php echo $key; ?>"></span>
                                                   <h6> NO PICKUP STORE AVAILABLE</h6>
                                              <?php endif; ?>
                                         </div>
