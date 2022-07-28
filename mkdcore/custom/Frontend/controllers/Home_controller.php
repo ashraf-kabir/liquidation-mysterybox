@@ -1352,6 +1352,7 @@ class Home_controller extends Manaknight_Controller
             $store_data = $this->store_model->get($value->store_id);
             if($store_data->can_ship == 3 /* Shipping only */) {
                 unset($store_inventory[$key]);
+                continue;
             }
             $store_inventory[$key]->store = $store_data; 
             // remove warehouse store (can_ship - shipping only --> 3)
@@ -2346,6 +2347,13 @@ class Home_controller extends Manaknight_Controller
                         $item_store_inventory['store'] = $this->store_model->get($item_store_inventory['store_id']);
                         return (Object) $item_store_inventory;
                     }, $item_stores);
+                    $item_stores = array_filter($item_stores, function ($item_store){
+                        // remove stores that can't pick up because they are warehouses
+                        if($item_store->store->can_ship == 3 /* Shipping only */){
+                            return false;
+                        }
+                        return true;
+                    });
                     $value->stores = $item_stores;
 
                     if(!empty($value->store_id)){ //if user selected store when adding to cart

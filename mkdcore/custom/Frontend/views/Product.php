@@ -359,14 +359,18 @@ if (!empty($product->feature_image))
                         <span> Delivery </span>
                         </div>
                         <?php endif; ?>
+                        <?php if (count($store_inventory) > 0) : ?>
                         <div button-type="pickup" role="button" class=" btn" onclick="pickupSelected()">
                         <span> Pick Up </span>
                         </div>
+                        <?php endif; ?>
                     </div>
 
                     <div class="bg-white w-100 p-2 px-md-4 " style="display:none" id="store-component" 
                             pickup = "<?php echo  ($product->can_ship == 2 && $product->can_ship_approval != 1) ? 'true' : '' ; ?>">
+                    <?php if (count($store_inventory) > 0) : ?>
                     <p class="text-center">Select Store</p>
+                    <?php endif; ?>
                         <div class="d-flex justify-content-center" >
                             <?php foreach($store_inventory as $key => $store_data){
                                 $checked = '';
@@ -382,7 +386,7 @@ if (!empty($product->feature_image))
                                         {$store_data->store->address} </br>
                                         {$store_data->store->city}
                                         {$store_data->store->state}
-                                         {$store_data->store->zip} </br>
+                                        {$store_data->store->zip} </br>
                                         <a href='tel:{$store_data->store->phone}'>{$store_data->store->phone}</a> </br>
                                         <span class='font-italic text-muted'>({$stock_info})</span>
                                         </label>
@@ -395,8 +399,17 @@ if (!empty($product->feature_image))
                     <?php endif; ?>
 
                     <div class="col-12 quantity-to-cart bg-white w-100 p-2 p-md-4 d-flex justify-content-center align-items-center" style="">
-                        <label for="quantity"  style="margin-bottom:0px">Qty </label>
-                             
+                        
+                                    <!-- (Pickup only && can ship - no  && no store) -->
+                            <?php if (($product->can_ship == 2 && $product->can_ship_approval != 1) && count($store_inventory) < 1) : ?>
+                                <!-- Out of stock -->
+                            <div class="col-12 bg-white w-100 p-2 p-md-4 "  style="padding-top: 0px !important;">
+                                <label style="color: red;" for="quantity" ><strong>Out of stock</strong> 
+                                    <a href="" class="on_click_notification btn btn-primary" data-product-title="<?php echo $product->product_name; ?>"> Notify me when available</a>
+                                </label>  
+                            </div>
+                            <?php else : ?>
+                            <label for="quantity"  style="margin-bottom:0px">Qty </label>
                             <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity mx-3"  style="font-size: 13px; padding: 0px; width: 75px; height: 38px;"> 
                                 <option value="">Select</option>
                                 <?php  
@@ -406,7 +419,6 @@ if (!empty($product->feature_image))
                                     {
                                         echo '<option value="' . $i . '" >' . $i .'</option>';
                                     }
-                                    
                                 }
                                 ?>
                                 
@@ -416,6 +428,7 @@ if (!empty($product->feature_image))
                         <a href="#" class="btn add_to_cart_button btn-success addToCartBtn"  style="width: 100px;">
                         <i class="fas fa-shopping-cart cart-icon"></i>
                         </a>
+                        <?php endif; ?>
                     </div>
                 <?php }else{ ?>
                     <div class="col-12 bg-white w-100 p-2 p-md-4 "  style="padding-top: 0px !important;">
