@@ -163,6 +163,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							    echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/manager/inventory/view/' . $data->id . '">View</a>';
                                  
                             }  
+                            echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/transfer/' . $data->id . '">Transfer</a>';
 							echo '</td>';
                     echo '</tr>';
                 ?>

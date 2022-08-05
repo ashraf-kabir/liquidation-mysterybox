@@ -5,7 +5,24 @@ if ($layout_clean_mode) {
 	echo '<style>#content{padding:0px !important;}</style>';
 }
 ?>
-
+<?php if (strlen($error) > 0) : ?>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger" role="alert">
+                <?php echo $error; ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<?php if (strlen($success) > 0) : ?>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success" role="success">
+                <?php echo $success; ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
 
 <div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->

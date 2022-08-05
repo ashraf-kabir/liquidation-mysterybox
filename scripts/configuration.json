@@ -659,7 +659,7 @@
 			"mapping": {
 				"can_ship": {
 					"1": "Delivery or Pickup",
-					
+					"2":"Pickup only",
 					"3": "Shipping only"
 				}
 			},
@@ -3661,6 +3661,7 @@
 		"../mkdcore/custom/Admin/views/InventoryAdd.php" : "../release/application/views/Admin/InventoryAdd.php",
 		"../mkdcore/custom/Admin/views/InventoryEdit.php" : "../release/application/views/Admin/InventoryEdit.php",
 		"../mkdcore/custom/Admin/views/InventoryView.php" : "../release/application/views/Admin/InventoryView.php",
+		"../mkdcore/custom/Admin/views/InventoryTransfer.php" : "../release/application/views/Admin/InventoryTransfer.php",
 		"../mkdcore/custom/Admin/views/Scan_Product_View.php" : "../release/application/views/Admin/Scan_Product_View.php",
 		"../mkdcore/custom/Admin/views/OrdersView.php" : "../release/application/views/Admin/OrdersView.php",
 		"../mkdcore/custom/Admin/views/Orders.php" : "../release/application/views/Admin/Orders.php",
@@ -3754,6 +3755,7 @@
 
 		"admin/sales_report/to_csv": "Admin/Admin_category_wise_controller/to_csv",
 		"admin/inventory_report/to_csv": "Admin/Admin_inventory_report_controller/to_csv",
+		"admin/inventory/transfer/(:num)": "Admin/Admin_inventory_controller/transfer/$1",
 		"admin/customer_report/to_csv": "Admin/Admin_customer_report_controller/to_csv",
 		"admin/shipping_cost_report/to_csv": "Admin/Admin_shipping_cost_report_controller/to_csv",
 		"admin/transactions/to_csv": "Admin/Admin_transactions_controller/to_csv",

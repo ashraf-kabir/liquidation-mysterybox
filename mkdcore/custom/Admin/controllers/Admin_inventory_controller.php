@@ -556,7 +556,8 @@ class Admin_inventory_controller extends Admin_controller
 
 	}
 
-    public function validate_store_inventory(){
+    public function validate_store_inventory ()
+    {
         // ensure the same store is not selected more than once.
         $stores = $this->input->post('store_location_id');
         $quantity = $this->input->post('quantity');
@@ -572,6 +573,64 @@ class Admin_inventory_controller extends Admin_controller
         }
 
         return TRUE;
+    }
+
+    public function transfer ($id)
+    {
+        $model = $this->inventory_model->get($id);
+        $session = $this->get_session();
+        if (!$model)
+        {
+            $this->error('Error');
+            return redirect('/admin/inventory/0');
+        }
+
+        if(isset($_POST['submit_inventory_transfer']))
+        {
+            // Start Inventory transfer
+            $from_store = $this->input->post('from_store');
+            $from_quantity = $this->input->post('from_quantity');
+            $to_store = $this->input->post('to_store');
+            if($from_store == $to_store){
+                // error cant transfer to the same store
+                $this->error('Error, Cannot transfer to the same store.');
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+            $store_inventory = json_decode($model->store_inventory);
+            foreach ($store_inventory as $key => &$value) 
+            { 
+                 if($value->store_id == $from_store ) 
+                 { // remove quantity from store
+                    $value->quantity = $value->quantity - $from_quantity;
+                    continue;
+                 }
+                 if($value->store_id == $to_store ) 
+                 { // add quantity to store
+                    $value->quantity += $from_quantity;
+                 }
+            }
+            $this->inventory_model->edit([
+                'store_inventory' => json_encode($store_inventory)
+            ], $model->id);
+
+            $this->success('Inventory Transferred Successfully');
+            return redirect('/admin/inventory/view/'.$id);
+        }
+
+
+        $this->_data['heading'] = 'Inventory';
+        $this->_data['inventory_item'] = $model;
+        $this->_data['store_data'] = base64_encode($model->store_inventory);
+        $store_inventory = json_decode($model->store_inventory);
+        $this->names_helper_service->set_store_model($this->store_model); 
+        foreach ($store_inventory as $key => $value) 
+        { 
+            $value->store = $this->names_helper_service->get_store_name( $value->store_id ); 
+             
+        }
+        $this->_data['store_inventory'] = $store_inventory;
+
+        return $this->render('Admin/InventoryTransfer', $this->_data);
     }
 
 
