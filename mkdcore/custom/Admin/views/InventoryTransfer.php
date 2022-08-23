@@ -57,11 +57,11 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                 </div>
 
                 <div class="" id="transfer-section">
-                    <div class='row mb-4 ' id="product-info" style="display:none">
+                    <!-- <div class='row mb-1 ' id="product-info" style="visibility:hidden">
                         <div class='display-5 p-3'>
                             Product Name: <span product-info="name"> </span>
                         </div>
-                    </div>
+                    </div> -->
                     <div class='row mb-1 ' id="product-not-found" style="">
                         <div class='display-5 p-3'>
                             <span id="message"> </span>
@@ -138,13 +138,11 @@ if ($layout_clean_mode) {
             }
         });
         let options_template = '';
-        console.log(store);
         for(let i = 1; i <= store.quantity; i++ ){
             options_template += `<option value="${i}"> ${i} </option>`;
         }
         document.querySelector("#from_quantity").innerHTML = options_template;
 
-        console.log(options_template);
     });
 
 
@@ -158,8 +156,9 @@ if ($layout_clean_mode) {
                 setMessage(''); //clear message
                 setProductForTransfer(data.product);
             }else{
-                setMessage('Item Not Found.')
-                setProductInfo('');
+                setMessage('Item Not Found.');
+                clearStoreInfo();
+                
             }
         })
         .catch((err) => {
@@ -177,14 +176,20 @@ if ($layout_clean_mode) {
 
     function setProductInfo(name = ''){
         document.querySelector('[product-info=name]').innerHTML = name;
-        document.querySelector('#product-info').style.display = name === '' ? 'none' : 'block';
+        document.querySelector('#product-info').style.visibility = name === '' ? 'hidden' : 'visible';
     }
 
+    function clearStoreInfo(){
+        // setProductInfo('');
+        document.querySelector('#to_store').innerHTML = "";
+        document.querySelector('#from_store').innerHTML = "";
+
+    }
     function setProductForTransfer(product) {
         console.log(product);
         //Set product name
-        setProductInfo(product.product_name);
-        
+        // setProductInfo(product.product_name);
+        setMessage(`Product Name: ${product.product_name}`);
         // set From Store
         let store_data = JSON.parse(product.store_inventory) ?? [];
         let from_store_options = '<option value="">--Select Store--</option>';
