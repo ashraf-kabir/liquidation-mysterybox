@@ -28,25 +28,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <section>
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-        <div class="card" id="inventory_filter_listing">
+        <div class="card" id="inventory_transfer_filter_listing">
             <div class="card-body">
               <h5 class="primaryHeading2 text-md-left">
                     <?php echo $view_model->get_heading();?> Search
               </h5>
-                <?php if($this->session->userdata('role') == 2) { ?>
-                    <?= form_open('/admin/inventory/0', ['method' => 'get']) ?>
-                <?php }elseif($this->session->userdata('role') == 4) { ?>
-                    <?= form_open('/manager/inventory/0', ['method' => 'get']) ?>
-                <?php } ?>
-                
+                <?= form_open('/admin/inventory_transfer/0', ['method' => 'get']) ?>
                     <div class="row">
-                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-							<div class="form-group">
-								<label for="Product Name">Product Name </label>
-								<input type="text" class="form-control" id="product_name" name="product_name" value="<?php echo $this->_data['view_model']->get_product_name();?>"/>
-							</div>
-						</div>
-						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                    						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
 							<div class="form-group">
 								<label for="SKU">SKU </label>
 								<input type="text" class="form-control" id="sku" name="sku" value="<?php echo $this->_data['view_model']->get_sku();?>"/>
@@ -54,14 +43,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
 							<div class="form-group">
-								<label for="Category">Category </label>
-                                <select class="form-control" id="category_id" name="category_id" >
-                                    <option value="" >All</option>
-                                    <?php foreach ($categories as $key => $value) {
-                                        echo "<option  " . ( ($this->_data['view_model']->get_category_id() == $value->id) ? 'selected' : '' ) . "   value='{$value->id}'> {$value->name} </option>";
-                                    } ?>
-                                </select>
-								 
+								<label for="Status">Status </label>
+								<select name="status" class="form-control">
+									<option value="">All</option>
+									<?php foreach ($view_model->status_mapping() as $key => $value) {
+										echo "<option value='{$key}' " . (($view_model->get_status() == $key && $view_model->get_status() != '') ? 'selected' : '') . "> {$value} </option>";
+									}?>
+								</select>
 							</div>
 						</div>
 
@@ -79,14 +67,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </section>
 
 <h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
-  <?php echo $view_model->get_heading();?>   (<?php echo $view_model->get_total_rows();?> results found)
-
-    <?php if($this->session->userdata('role') == 2) { ?>
-        <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/admin/inventory/add"><i class="fas fa-plus-circle"></i></a></span>
-    <?php }elseif($this->session->userdata('role') == 4) { ?>
-        <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/manager/inventory/add"><i class="fas fa-plus-circle"></i></a></span>
-    <?php } ?>
-  
+  <?php echo $view_model->get_heading();?>  (<?php echo $view_model->get_total_rows();?> results found)
+  <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/admin/transfer/transfer_inventory"><i class="fas fa-plus-circle"></i></a></span>
 </h5>
 
   <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4 pt-4" style='height:auto;'>
@@ -109,7 +91,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         if ($clean_mode) {
             $format_mode = '&layout_clean_mode=1';
         }
-        
         foreach ($view_model->get_column() as $key => $data) {
             $data_field = $field_column[$key];
             if (strlen($order_by) < 1 || $data_field == '')
@@ -140,30 +121,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php foreach ($view_model->get_list() as $data) { ?>
                 <?php
                     echo '<tr>';
-                            echo "<td>{$data->id}</td>";
+                        							echo "<td>{$data->id}</td>";
 							echo "<td>{$data->product_name}</td>";
 							echo "<td>{$data->sku}</td>";
-							echo "<td>{$data->category_id}</td>";
-							// echo "<td>{$data->store_location_id}</td>";
-							echo "<td>{$data->physical_location}</td>";
-							echo "<td>" . ucfirst($view_model->product_type_mapping()[$data->product_type]) ."</td>";
+							echo "<td>{$store_map[$data->from_store]}</td>";
 							echo "<td>{$data->quantity}</td>";
+							echo "<td>{$store_map[$data->to_store]}</td>";
 							echo "<td>" . ucfirst($view_model->status_mapping()[$data->status]) ."</td>";
-                            echo '<td>';
-                            
-                            if($this->session->userdata('role') == 2) 
-                            { 
-                                echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/admin/inventory/edit/' . $data->id . '">Edit</a>';
-							    echo '<a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/view/' . $data->id . '">View</a>';
+							echo '<td>';
+                            if( $data->status != 2  /* Completed */) { //Show when status is not completed
+                                echo ' <a class="btn btn-link  link-underline text-underline btn-sm text-success" target="_blank" href="/admin/inventory_transfer/accept/' . $data->id . '">Accept Request</a>';
                             }
-                            elseif($this->session->userdata('role') == 4) 
-                            { 
-                                 
-                                echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/manager/inventory/edit/' . $data->id . '">Edit</a>';
-							    echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/manager/inventory/view/' . $data->id . '">View</a>';
-                                 
-                            }  
-                            // echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/transfer/' . $data->id . '">Transfer</a>';
+							echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory_transfer/view/' . $data->id . '">View</a>';
+							echo ' <a class="btn btn-link  link-underline text-underline text-danger btn-sm" target="_blank" href="/admin/inventory_transfer/delete/' . $data->id . '">Remove</a>';
 							echo '</td>';
                     echo '</tr>';
                 ?>

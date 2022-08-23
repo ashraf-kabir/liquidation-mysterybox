@@ -44,36 +44,31 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="card" id="">
             <div class="card-body">
-            ``  <div class='row mb-4'>
-					<div class='col-2'>
-						Product Name:
-					</div>
-					<div class='col'>
-						<?php echo $inventory_item->product_name;?>
-					</div>
-				</div>
+            <?= form_open() ?>
+            <input type="hidden" id="encoded-stores" value="<?php echo $encoded_stores ?>">
+                <div class="my-2" >
+                    <div class="form-group col-md-5 p-0 d-inline-block">
+                        <label for="">Scan Item</label>
+                        <input type="text" name="sku" id="sku" class="form-control" focus="true">
+                    </div>
+                    <div class="form-group col-md-4 p-0 d-inline-block">
+                        <span type="button" class="btn btn-primary" onclick="getProduct()">Get Product</span>
+                    </div>
+                </div>
 
-				<div class='row mb-4'>
-					<div class='col-2'>
-						SKU:
-					</div>
-					<div class='col'>
-						<?php echo $inventory_item->sku;?>
-					</div>
-				</div>
-
-                <?= form_open() ?>
-
+                <div class="" id="transfer-section">
+                    <div class='row mb-4 ' id="product-info" style="display:none">
+                        <div class='display-5 p-3'>
+                            Product Name: <span product-info="name"> </span>
+                        </div>
+                    </div>
+    
+    
                     <div class="form-group">
                         <label for="">Transfer From</label>
-                        <select required name="from_store" id="from_store" class="form-control" store-data="<?php echo  $store_data ?>">
+                        <select required name="from_store" id="from_store" class="form-control"  store-data="">
                         <option value="">--Select Store--</option>
-                        <?php foreach ($store_inventory as $key => $value): ?>
-                            <option value="<?php echo $value->store_id ?>">
-                            <?php echo $value->store ?>
-                            </option>
-
-                        <?php endforeach; ?>
+                        
                         
                         </select>
                     </div>
@@ -88,18 +83,14 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                     <div class="form-group">
                         <label for="">To</label>
                         <select required name="to_store" id="to_store" class="form-control">
-                        <?php foreach ($store_inventory as $key => $value): ?>
-                            <option value="<?php echo $value->store_id ?>">
-                            <?php echo $value->store ?>
-                            </option>
-
-                        <?php endforeach; ?>
+                        
                         
                         </select>
                     </div>
 
                     <button type="submit" class="btn btn-primary" name="submit_inventory_transfer"> Submit</button>
-                </form>
+                </div>
+            </form>
                 
 
                 
@@ -119,6 +110,15 @@ if ($layout_clean_mode) {
 
 
 <script>
+
+    document.querySelector('#sku').addEventListener('DOMContentLoaded', function (event){
+        event.target.focus();
+    });
+    document.querySelector('#sku').addEventListener('change', function (event){
+        getProductBySKU(event.target.value);
+    });
+
+
     document.querySelector('#from_store').addEventListener('change', function (event){
         if(event.target == ''){
             return;
@@ -140,13 +140,60 @@ if ($layout_clean_mode) {
         document.querySelector("#from_quantity").innerHTML = options_template;
 
         console.log(options_template);
-        // console.log(store);
-
-        // console.log(store_data);
-        // console.log(store_id);
     });
 
-    function validateInventoryTransferForm(){
+
+    function getProductBySKU(sku) {
+        console.log('fetching product');
+        fetch(`/v1/api/product/sku/${sku}`)
+        .then((response) => response.json())
+        .then((data) => {
+            // console.log(data)
+            if(data.success){
+                setProductForTransfer(data.product);
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    }
+
+    function getProduct() {
+        getProductBySKU(document.querySelector('#sku').value);
+    }
+
+    function setProductForTransfer(product) {
+        console.log(product);
+        //Set product name
+        document.querySelector('[product-info=name]').innerHTML = product.product_name;
+        document.querySelector('#product-info').style.display = 'block';
+        // set From Store
+        let store_data = JSON.parse(product.store_inventory) ?? [];
+        let from_store_options = '<option value="">--Select Store--</option>';
+        
+        store_data.forEach(element => {
+            from_store_options += `<option value="${element.store_id}">${getStoreName(element.store_id)}</option>`;
+        });
+        document.querySelector('#from_store').setAttribute('store-data', btoa(product.store_inventory));
+        document.querySelector('#from_store').innerHTML = from_store_options; console.log(from_store_options)
+        // Handle from store quantity
+        // Set to store
+        let to_store_options = '';
+        store_data.forEach(element => {
+            to_store_options += `<option value="${element.store_id}">${getStoreName(element.store_id)}</option>`;
+        });
+        document.querySelector('#to_store').innerHTML = to_store_options;
+        // show product section
 
     }
+
+    function getStoreName(store_id){
+        let stores = JSON.parse( `${atob(document.querySelector('#encoded-stores').value) }`);
+        let store = stores.filter(store => {
+            return store.id === store_id;
+        });
+
+        return store[0].name;
+    }
+
 </script>

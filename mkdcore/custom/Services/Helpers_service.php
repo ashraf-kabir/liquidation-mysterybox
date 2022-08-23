@@ -4,6 +4,9 @@ class Helpers_service {
     private $_pos_user_model;
     private $_customer_model;
     private $_inventory_model;
+    private $_store_model;
+    private $_inventory_transfer_log_model;
+    private $_inventory_transfer_model;
     private $_notification_system_model;
     private $_mail_service;
     private $_config;
@@ -47,6 +50,21 @@ class Helpers_service {
     public function set_inventory_model($inventory_model)
     {
         $this->_inventory_model = $inventory_model;
+    }
+
+    public function set_store_model($store_model)
+    {
+        $this->_store_model = $store_model;
+    }
+
+    public function set_inventory_transfer_log_model($inventory_transfer_log_model)
+    {
+        $this->_inventory_transfer_log_model = $inventory_transfer_log_model;
+    }
+
+    public function set_inventory_transfer_model($inventory_transfer_model)
+    {
+        $this->_inventory_transfer_model = $inventory_transfer_model;
     }
 
 
@@ -250,6 +268,31 @@ class Helpers_service {
                 $this->_notification_system_model->edit( ['is_notified' => 1 ], $value->id);
             }
         }   
+    }
+
+    public function log_inventory_transfer ($inventory_transfer_id, $action = '')
+    {
+        if(empty($inventory_transfer_id)) {
+            return;
+        }
+
+        $inventory_transfer_request = $this->_inventory_transfer_model->get($inventory_transfer_id);
+
+        if(!empty($inventory_transfer_request)){
+            $from_store = $this->_store_model->get($inventory_transfer_request->from_store);
+            $to_store = $this->_store_model->get($inventory_transfer_request->to_store);
+            $detail = "{$inventory_transfer_request->quantity} unit(s) of {$inventory_transfer_request->product_name} 
+                        with sku {$inventory_transfer_request->sku},
+                        from {$from_store->name} to {$to_store->name}.";
+            $this->_inventory_transfer_log_model->create([
+                'user_id'   => $_SESSION['user_id'],
+                'action'    => $action,
+                'last_ip'   => $this->_inventory_transfer_log_model->get_ip(),
+                'user_agent'   => $this->_inventory_transfer_log_model->get_user_agent(),
+                'detail'    => $detail
+            ]);
+        }
+
     }
 
 }

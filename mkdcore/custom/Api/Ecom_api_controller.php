@@ -326,6 +326,32 @@ class Ecom_api_controller extends Manaknight_Controller
 
 
 
+    public function get_product_by_sku ($sku)
+    {
+        // $params = json_decode(file_get_contents('php://input'), TRUE);   
+        // file_put_contents('file.txt', print_r($params, true));
+        if(!empty($sku))
+        {
+            $this->load->model('inventory_model'); 
+
+            $product = $this->inventory_model->get_by_fields( [ 'sku' => $sku] );
+            
+            if( !empty($product) )
+            {
+                $output['success'] = true; 
+                $output['product'] = $product; 
+                echo json_encode($output);
+                exit();
+            }else{
+                $output['error'] = true;
+                $output['msg']   = "No such barcode found.";
+                echo json_encode($output);
+                exit();
+            }
+        }
+    }
+
+
 
     public function update_order_status()
     {

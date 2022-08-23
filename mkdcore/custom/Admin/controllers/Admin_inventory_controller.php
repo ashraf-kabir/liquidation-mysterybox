@@ -24,6 +24,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->load->model('physical_location_model');
         $this->load->model('customer_model'); 
         $this->load->model('user_model'); 
+        $this->load->model('inventory_transfer_model'); 
         $this->load->library('names_helper_service');
         $this->load->library('barcode_service');
         $this->load->database();
@@ -629,6 +630,57 @@ class Admin_inventory_controller extends Admin_controller
              
         }
         $this->_data['store_inventory'] = $store_inventory;
+
+        return $this->render('Admin/InventoryTransfer', $this->_data);
+    }
+
+    public function transfer_inventory()
+    {
+        $this->load->library('helpers_service');
+        $this->load->model('inventory_transfer_log_model');
+        $this->_data['heading'] = 'Inventory Transfer';
+        $this->_data['page_name'] = 'Inventory Transfer';
+
+        $this->_data['encoded_stores'] = base64_encode(json_encode($this->store_model->get_all()));
+
+        if(isset($_POST['submit_inventory_transfer']))
+        {
+            // Start Inventory transfer
+            $sku = $this->input->post('sku');
+            $from_store = $this->input->post('from_store');
+            $from_quantity = $this->input->post('from_quantity');
+            $to_store = $this->input->post('to_store');
+            $product = $this->inventory_model->get_by_field('sku', $sku);
+            if(empty($product)){
+                // error cant transfer to the same store
+                $this->error('Error, Product not found.');
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+            if($from_store == $to_store){
+                // error cant transfer to the same store
+                $this->error('Error, Cannot transfer to the same store.');
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+
+            $result = $this->inventory_transfer_model->create([
+                'product_name' => $product->product_name,
+                'sku' => $sku,
+                'from_store' => $from_store,
+                'to_store' => $to_store,
+                'quantity' => $from_quantity,
+                'status' => '1' //pending
+            ]);
+
+            $this->helpers_service->set_inventory_transfer_log_model($this->inventory_transfer_log_model);
+            $this->helpers_service->set_inventory_transfer_model($this->inventory_transfer_model);
+            $this->helpers_service->set_store_model($this->store_model);
+            $this->helpers_service->log_inventory_transfer($result, 'Initiate transfer');
+
+            $this->success('Inventory Transfer Request Pending');
+            return redirect('/admin/transfer/transfer_inventory/');
+        }
+
+        
 
         return $this->render('Admin/InventoryTransfer', $this->_data);
     }
