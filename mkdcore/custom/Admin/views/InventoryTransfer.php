@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2020*/
 $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
 ?>
+
 <div class="tab-content mx-4" id="nav-tabContent">
 <br>
 <div class="clear"></div>
@@ -70,6 +71,11 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
     
     
                     <div class="form-group">
+                        <label for="">Product</label>
+                        <input class="form-control" type="text" name="" id="product_name" value="" disabled>
+                    </div>
+
+                    <div class="form-group">
                         <label for="">Transfer From</label>
                         <select required name="from_store" id="from_store" class="form-control"  store-data="">
                         <option value="">--Select Store--</option>
@@ -119,7 +125,7 @@ if ($layout_clean_mode) {
     document.querySelector('#sku').addEventListener('DOMContentLoaded', function (event){
         event.target.focus();
     });
-    document.querySelector('#sku').addEventListener('change', function (event){
+    document.querySelector('#sku').addEventListener('input', function (event){
         getProductBySKU(event.target.value);
     });
 
@@ -175,21 +181,21 @@ if ($layout_clean_mode) {
     }
 
     function setProductInfo(name = ''){
-        document.querySelector('[product-info=name]').innerHTML = name;
-        document.querySelector('#product-info').style.visibility = name === '' ? 'hidden' : 'visible';
+
+        document.querySelector('#product_name').value = name;
+        // document.querySelector('#product-info').style.visibility = name === '' ? 'hidden' : 'visible';
     }
 
     function clearStoreInfo(){
-        // setProductInfo('');
+        setProductInfo('');
         document.querySelector('#to_store').innerHTML = "";
         document.querySelector('#from_store').innerHTML = "";
 
     }
     function setProductForTransfer(product) {
-        console.log(product);
         //Set product name
-        // setProductInfo(product.product_name);
-        setMessage(`Product Name: ${product.product_name}`);
+        setProductInfo(product.product_name);
+        // setMessage(`Product Name: ${product.product_name}`);
         // set From Store
         let store_data = JSON.parse(product.store_inventory) ?? [];
         let from_store_options = '<option value="">--Select Store--</option>';
@@ -218,5 +224,4 @@ if ($layout_clean_mode) {
 
         return store[0].name;
     }
-
 </script>
