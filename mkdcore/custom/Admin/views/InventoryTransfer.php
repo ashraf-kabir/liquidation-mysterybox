@@ -147,8 +147,9 @@ if ($layout_clean_mode) {
 
 
     function getProductBySKU(sku) {
-        let url = `/v1/api/product/sku/${sku}`;
-        fetch(encodeURI(url))
+        let url = `/v1/api/product/sku/${encodeURIComponent(sku)}`;
+        console.log(url);
+        fetch(url)
         .then((response) => response.json())
         .then((data) => {
             // console.log(data)
@@ -158,7 +159,6 @@ if ($layout_clean_mode) {
             }else{
                 setMessage('Item Not Found.');
                 clearStoreInfo();
-                
             }
         })
         .catch((err) => {
