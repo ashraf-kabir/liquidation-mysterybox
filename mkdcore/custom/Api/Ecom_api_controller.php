@@ -333,7 +333,7 @@ class Ecom_api_controller extends Manaknight_Controller
         if(!empty($sku))
         {
             $this->load->model('inventory_model'); 
-
+            $sku = urldecode($sku);
             $product = $this->inventory_model->get_by_fields( [ 'sku' => $sku] );
             
             if( !empty($product) )

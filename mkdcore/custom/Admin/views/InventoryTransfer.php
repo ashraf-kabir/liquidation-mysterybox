@@ -149,8 +149,8 @@ if ($layout_clean_mode) {
 
 
     function getProductBySKU(sku) {
-        
-        fetch(`/v1/api/product/sku/${encodeURIComponent(sku)}`)
+        let url = `/v1/api/product/sku/${sku}`;
+        fetch(encodeURI(url))
         .then((response) => response.json())
         .then((data) => {
             // console.log(data)
