@@ -62,6 +62,11 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                             Product Name: <span product-info="name"> </span>
                         </div>
                     </div>
+                    <div class='row mb-1 ' id="product-not-found" style="">
+                        <div class='display-5 p-3'>
+                            <span id="message"> </span>
+                        </div>
+                    </div>
     
     
                     <div class="form-group">
@@ -144,13 +149,17 @@ if ($layout_clean_mode) {
 
 
     function getProductBySKU(sku) {
-        console.log('fetching product');
-        fetch(`/v1/api/product/sku/${sku}`)
+        
+        fetch(`/v1/api/product/sku/${encodeURIComponent(sku)}`)
         .then((response) => response.json())
         .then((data) => {
             // console.log(data)
             if(data.success){
+                setMessage(''); //clear message
                 setProductForTransfer(data.product);
+            }else{
+                setMessage('Item Not Found.')
+                setProductInfo('');
             }
         })
         .catch((err) => {
@@ -162,11 +171,20 @@ if ($layout_clean_mode) {
         getProductBySKU(document.querySelector('#sku').value);
     }
 
+    function setMessage(msg= ''){
+        document.querySelector('#message').innerText = msg;
+    }
+
+    function setProductInfo(name = ''){
+        document.querySelector('[product-info=name]').innerHTML = name;
+        document.querySelector('#product-info').style.display = name === '' ? 'none' : 'block';
+    }
+
     function setProductForTransfer(product) {
         console.log(product);
         //Set product name
-        document.querySelector('[product-info=name]').innerHTML = product.product_name;
-        document.querySelector('#product-info').style.display = 'block';
+        setProductInfo(product.product_name);
+        
         // set From Store
         let store_data = JSON.parse(product.store_inventory) ?? [];
         let from_store_options = '<option value="">--Select Store--</option>';
