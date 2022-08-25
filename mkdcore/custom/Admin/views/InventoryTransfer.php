@@ -52,8 +52,19 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                         <label for="">Scan Item</label>
                         <input type="text" name="sku" id="sku" class="form-control" focus="true">
                     </div>
-                    <div class="form-group col-md-4 p-0 d-inline-block">
+                    <!-- <div class="form-group col-md-4 p-0 d-inline-block">
                         <span type="button" class="btn btn-primary" onclick="getProduct()">Get Product</span>
+                    </div> -->
+                </div>
+                <div class="my-2" >
+                    <div class="form-group col-md-5 p-0 d-inline-block">
+                        <label for=""> Items</label>
+                        <select name="" id="items" class="form-control">
+                            <option value=""></option>
+                        <?php foreach ($inventory_items as $item): ?>
+                            <option value="<?php echo $item->sku ?>"> <?php echo $item->sku." - ". $item->product_name?></option>
+                        <?php endforeach; ?>
+                        </select>
                     </div>
                 </div>
 
@@ -127,6 +138,13 @@ if ($layout_clean_mode) {
     });
     document.querySelector('#sku').addEventListener('input', function (event){
         getProductBySKU(event.target.value);
+    });
+
+    document.querySelector('#items').addEventListener('change', function (event){
+        let sku = event.target.value;
+        if(sku === '') { return; }
+        document.querySelector('#sku').value = sku;
+        getProductBySKU(sku);
     });
 
 

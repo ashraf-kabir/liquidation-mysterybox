@@ -642,7 +642,8 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['page_name'] = 'Inventory Transfer';
 
         $this->_data['encoded_stores'] = base64_encode(json_encode($this->store_model->get_all()));
-
+        $this->_data['inventory_items'] = $this->inventory_model->get_all(['quantity > 0']);
+        // print_r( $this->_data['inventory_items']);
         if(isset($_POST['submit_inventory_transfer']))
         {
             // Start Inventory transfer
@@ -671,6 +672,7 @@ class Admin_inventory_controller extends Admin_controller
                 'status' => '1' //pending
             ]);
 
+            // Log
             $this->helpers_service->set_inventory_transfer_log_model($this->inventory_transfer_log_model);
             $this->helpers_service->set_inventory_transfer_model($this->inventory_transfer_model);
             $this->helpers_service->set_store_model($this->store_model);
