@@ -142,7 +142,9 @@ if ($layout_clean_mode) {
 
     document.querySelector('#items').addEventListener('change', function (event){
         let sku = event.target.value;
-        if(sku === '') { return; }
+        if(sku === '') { 
+            clearStoreInfo();
+         }
         document.querySelector('#sku').value = sku;
         getProductBySKU(sku);
     });
