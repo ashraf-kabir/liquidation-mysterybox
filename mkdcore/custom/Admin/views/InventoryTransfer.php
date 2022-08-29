@@ -139,6 +139,15 @@ if ($layout_clean_mode) {
     document.querySelector('#sku').addEventListener('input', function (event){
         getProductBySKU(event.target.value);
     });
+    document.querySelector('#from_store').addEventListener('change', function (event){
+        let selected_value = event.target.value;
+        let to_options = document.querySelectorAll('#to_store option');
+        for (const element of to_options) {
+            element.style.display = 'block';
+        }
+        document.querySelector(`#to_store > option[value="${selected_value}"]`).style.display = 'none';
+        document.querySelector('#to_store').value = "";
+    });
 
     document.querySelector('#items').addEventListener('change', function (event){
         let sku = event.target.value;
@@ -227,7 +236,7 @@ if ($layout_clean_mode) {
         document.querySelector('#from_store').innerHTML = from_store_options; console.log(from_store_options)
         // Handle from store quantity
         // Set to store
-        let to_store_options = '';
+        let to_store_options = '<option value=""></option>';
         store_data.forEach(element => {
             to_store_options += `<option value="${element.store_id}">${getStoreName(element.store_id)}</option>`;
         });
@@ -244,4 +253,6 @@ if ($layout_clean_mode) {
 
         return store[0].name;
     }
+
+
 </script>

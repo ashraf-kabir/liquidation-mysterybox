@@ -282,7 +282,7 @@ class Helpers_service {
             $from_store = $this->_store_model->get($inventory_transfer_request->from_store);
             $to_store = $this->_store_model->get($inventory_transfer_request->to_store);
             $detail = "{$inventory_transfer_request->quantity} unit(s) of {$inventory_transfer_request->product_name} 
-                        with sku {$inventory_transfer_request->sku},
+                        with SKU {$inventory_transfer_request->sku},
                         from {$from_store->name} to {$to_store->name}.";
             $this->_inventory_transfer_log_model->create([
                 'user_id'   => $_SESSION['user_id'],
