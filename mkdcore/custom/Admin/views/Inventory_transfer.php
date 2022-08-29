@@ -130,7 +130,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							echo "<td>" . ucfirst($view_model->status_mapping()[$data->status]) ."</td>";
 							echo '<td>';
                             if( $data->status != 2  /* Completed */) { //Show when status is not completed
-                                echo ' <a class="btn btn-link  link-underline text-underline btn-sm text-success" target="_blank" href="/admin/inventory_transfer/accept/' . $data->id . '">Accept Request</a>';
+                                echo ' <button class="btn btn-link  link-underline text-underline btn-sm text-success" onclick="confirmAndAccept()" target="" href="/admin/inventory_transfer/accept/' . $data->id . '">Accept Request</button>';
                             }
 							echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory_transfer/view/' . $data->id . '">View</a>';
 							echo ' <a class="btn btn-link  link-underline text-underline text-danger btn-sm" target="_blank" href="/admin/inventory_transfer/delete/' . $data->id . '">Remove</a>';
@@ -144,9 +144,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
    </section>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="acceptTransferModal" tabindex="-1" role="dialog" aria-labelledby="acceptTransferModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="acceptTransferModalLabel"> Scan Item for confirmation </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="acceptTransferModalForm" action="" method="get">
+      <div class="modal-body">
+            <div class="form-group">
+                <label for=""> Scan Item</label>
+                <input type="text" name="sku_c" id="sku_c" class="form-control">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Proceed</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
 <?php
 if ($layout_clean_mode) {
     echo '<style>#content{padding:0px !important;}</style>';
     echo '<style>#tab-content{padding:0px !important; margin:0px !important;}</style>';
 }
 ?>
+
+
+<script>
+    function confirmAndAccept() {
+        let target = event.target.getAttribute('href');
+        console.log(target);
+        let form = document.querySelector('#acceptTransferModalForm');
+        form.setAttribute('action', target);
+        $('#acceptTransferModal').modal('show')
+    }
+</script>

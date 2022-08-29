@@ -98,13 +98,13 @@ if ($layout_clean_mode) {
 					</div>
 				</div>
 				<?php if ( $view_model->get_status() != 2 /* 2 - Completed---> only show button when status is not completed */ ): ?>
-				<div class='row mb-4'>
+				<!-- <div class='row mb-4'>
 					<div class='col'>
 						<a href="<?php echo '/admin/inventory_transfer/accept/'.$view_model->get_id() ?>" class="btn btn-primary">Accept Request</a>
 					</div>
 					<div class='col'>
 					</div>
-				</div>
+				</div> -->
 				<?php endif ; ?>
             </div>
         </div>

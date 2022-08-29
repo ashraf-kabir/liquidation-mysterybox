@@ -174,6 +174,7 @@ class Admin_inventory_transfer_controller extends Admin_controller
     public function accept($id)
 	{
         $model = $this->inventory_transfer_model->get($id);
+        $sku_confirmation = $this->input->get('sku_c');
 
 		if (!$model)
 		{
@@ -181,6 +182,11 @@ class Admin_inventory_transfer_controller extends Admin_controller
 			return redirect('/admin/inventory_transfer/0');
         }
 
+        if ($model->sku != $sku_confirmation)
+        {
+            $this->error('Error! Inventory Transfer Confirmation Failed.');
+			return redirect('/admin/inventory_transfer/0');
+        }
         // Handle transfer here
 
         $from_store = $model->from_store;
