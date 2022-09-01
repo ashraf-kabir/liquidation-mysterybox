@@ -87,7 +87,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                     </div>
 
                     <div class="form-group">
-                        <label for="">Transfer From</label>
+                        <label for="">Transfer From <span class="text-danger">*</span></label>
                         <select name="from_store" id="from_store" class="form-control"  store-data="">
                         <option value="">--Select Store--</option>
                         
@@ -96,14 +96,14 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                     </div>
 
                     <div class="form-group">
-                        <label for="">Quantity</label>
+                        <label for="">Quantity <span class="text-danger">*</span></label>
                         <select  name="from_quantity" id="from_quantity" class="form-control">
                             
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="">To</label>
+                        <label for="">To <span class="text-danger">*</span></label>
                         <select  name="to_store" id="to_store" class="form-control">
                         
                         
