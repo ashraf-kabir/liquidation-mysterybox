@@ -650,6 +650,11 @@ class Admin_inventory_controller extends Admin_controller
             $_from_quantity = $this->input->post('_quantity[]');
             $_to_store = $this->input->post('_to[]');
             $items_count = 0;
+
+            if (count($_sku) < 1) {
+                $this->error('Atleast one request must be added to list');
+                return redirect('/admin/transfer/transfer_inventory/');
+            }
             for ($i = 0; $i < count($_sku); $i++) {
                 // Start Inventory transfer
                 $sku = $_sku[$i];
