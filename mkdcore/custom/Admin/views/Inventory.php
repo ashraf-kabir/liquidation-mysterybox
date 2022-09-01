@@ -145,7 +145,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							echo "<td>{$data->sku}</td>";
 							echo "<td>{$data->category_id}</td>";
 							// echo "<td>{$data->store_location_id}</td>";
-							echo "<td>{$data->physical_location}</td>";
+							// echo "<td>{$data->physical_location}</td>";
 							echo "<td>" . ucfirst($view_model->product_type_mapping()[$data->product_type]) ."</td>";
 							echo "<td>{$data->quantity}</td>";
 							echo "<td>" . ucfirst($view_model->status_mapping()[$data->status]) ."</td>";

@@ -183,21 +183,6 @@ if($this->session->userdata('role') == 1)
                             <input type="text" required class="form-control data-input" id="form_quantity" name="quantity[]" value="<?php echo !empty($store_data->quantity) ? $store_data->quantity : ''; ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
                         </div>
 
-                        <div class="form-group col-md-5 col-sm-12 ">
-                            <label for="Inventory Location">Inventory Location <?php echo $count > 1 ? " - $count" : ""; ?> </label>
-                            <select class="form-control data-input" id="form_physical_location" name="physical_location[]"  >
-                                <option value="" >Select</option>
-                                <?php foreach ($physical_locations as $key => $value) {
-                                    $selected = $value->id == $store_data->physical_location ? 'selected' : '';
-                                    echo "<option {$selected} value='{$value->id}'> {$value->name} </option>";
-                                }?>
-                            </select>   
-                        </div>
-
-                        <div class="form-group col-md-5 col-sm-12 ">
-                            <label for="Inventory Location Description">Inventory Location Description <?php echo $count > 1 ? " - $count" : ""; ?> </label>
-                            <input type="text" class="form-control data-input" id="form_location_description" name="location_description[]" value="<?php echo !empty($store_data->location_description) ? $store_data->location_description : ''; ?>"/>
-                        </div>
                     </div>
                     <?php endforeach ; ?>
                     
@@ -218,20 +203,6 @@ if($this->session->userdata('role') == 1)
                             <input type="text" required class="form-control data-input" id="form_quantity" name="quantity[]"  onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
                         </div>
 
-                        <div class="form-group col-md-5 col-sm-12 ">
-                            <label for="Inventory Location">Inventory Location </label>
-                            <select class="form-control data-input" id="form_physical_location" name="physical_location[]"  >
-                                <option value="" >Select</option>
-                                <?php foreach ($physical_locations as $key => $value) {
-                                    echo "<option value='{$value->id}'> {$value->name} </option>";
-                                }?>
-                            </select>   
-                        </div>
-
-                        <div class="form-group col-md-5 col-sm-12 ">
-                            <label for="Inventory Location Description">Inventory Location Description </label>
-                            <input type="text" class="form-control data-input" id="form_location_description" name="location_description[]" />
-                        </div>
                     </div>
                     <?php endif ?>
                 </div>
@@ -566,21 +537,6 @@ if($this->session->userdata('role') == 1)
                 <input type="text" required class="form-control data-input" id="form_quantity" name="quantity[]" value="" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
             </div>
 
-            <div class="form-group col-md-5 col-sm-12 ">
-                <label for="Inventory Location">Inventory Location - {{{count}}} </label>
-                <select class="form-control data-input" id="form_physical_location" name="physical_location[]">
-                    <option value="" >Select</option>
-                    <?php foreach ($physical_locations as $key => $value) {
-                        echo "<option value='{$value->id}'> {$value->name} </option>";
-                    }?>
-                </select>   
-            </div>
-
-            <div class="form-group col-md-5 col-sm-12 ">
-                <label for="Inventory Location Description">Inventory Location Description - {{{count}}} </label>
-                <input type="text" class="form-control data-input" id="form_location_description" name="location_description[]" value=""/>
-            </div>
-
             <div class="form-group col-md-5 col-sm-12 border-bottom "></div>
         
         </div>`;
@@ -686,3 +642,18 @@ if($this->session->userdata('role') == 1)
 
 
 </script>
+
+<!-- <div class="form-group col-md-5 col-sm-12 ">
+                <label for="Inventory Location">Inventory Location - {{{count}}} </label>
+                <select class="form-control data-input" id="form_physical_location" name="physical_location[]">
+                    <option value="" >Select</option>
+                    <?php foreach ($physical_locations as $key => $value) {
+                        echo "<option value='{$value->id}'> {$value->name} </option>";
+                    }?>
+                </select>   
+            </div>
+
+            <div class="form-group col-md-5 col-sm-12 ">
+                <label for="Inventory Location Description">Inventory Location Description - {{{count}}} </label>
+                <input type="text" class="form-control data-input" id="form_location_description" name="location_description[]" value=""/>
+            </div> -->

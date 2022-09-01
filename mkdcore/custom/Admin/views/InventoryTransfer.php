@@ -109,9 +109,26 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                         
                         </select>
                     </div>
-
-                    <button type="submit" class="btn btn-primary" name="submit_inventory_transfer"> Submit</button>
+                    
+                    <button type="button" class="btn btn-primary" onclick="addToTransferList()"> Add</button>
                 </div>
+                
+                <div class="mt-2">
+                    <table class="table">
+                        <tr>
+                            <th>SKU</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                        <tbody id="transfer-list-table-body">
+                        
+                        </tbody>
+                    </table>
+                </div>
+                
+                <button type="submit" class="btn btn-success" name="submit_inventory_transfer"> Submit</button>
             </form>
                 
 
@@ -253,6 +270,36 @@ if ($layout_clean_mode) {
 
         return store[0].name;
     }
+
+    function addToTransferList(){
+        let sku = document.querySelector('#sku').value.trim();
+        let from = document.querySelector('#from_store').value.trim();
+        let to = document.querySelector('#to_store').value.trim();
+        let quantity = document.querySelector('#from_quantity').value;
+        if(sku === '' || from === '' || to === '' || quantity < 1 ) {
+            alert('Select all required fields.');
+            return;
+        }
+        document.querySelector('#transfer-list-table-body')
+            .innerHTML += TransferItemsRow({sku, from, to, quantity}); 
+    }
+
+    function TransferItemsRow(data){
+        return `
+            <tr>
+                <td><input type="hidden" name="_sku[]" id="" value="${data.sku}" > ${data.sku} </td>
+                <td><input type="hidden" name="_from[]" id="" value="${data.from}" > ${getStoreName(data.from)}</td>
+                <td><input type="hidden" name="_to[]" id="" value="${data.to}" > ${getStoreName(data.to)}</td>
+                <td><input type="hidden" name="_quantity[]" id="" value="${data.quantity}" >  ${data.quantity}</td>
+                <td>
+                    <button class="btn btn-danger" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    }
+
 
 
 </script>

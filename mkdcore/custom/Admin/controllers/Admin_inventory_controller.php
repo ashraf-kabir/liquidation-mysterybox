@@ -125,7 +125,6 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
         $this->_data['sale_persons']        =   $this->user_model->get_all_users();
 
-        // echo '<pre>'; print_r($this->_data['parent_categories']); die();
         if ($this->input->post('can_ship') == 1) 
         {
             $this->form_validation->set_rules('weight', 'Weight', 'required|greater_than_equal_to[1]');
@@ -154,7 +153,7 @@ class Admin_inventory_controller extends Admin_controller
         $product_name = $this->input->post('product_name', TRUE); 
         $category_id = $this->input->post('category_id', TRUE);
         $manifest_id = $this->input->post('manifest_id', TRUE);
-        $physical_location = $this->input->post('physical_location', TRUE);
+        $physical_location = $this->input->post('physical_location', TRUE) ?? NULL;
         $location_description = $this->input->post('location_description', TRUE);
         $weight = $this->input->post('weight', TRUE);
         $length = $this->input->post('length', TRUE);
@@ -209,8 +208,8 @@ class Admin_inventory_controller extends Admin_controller
             //TODO skip duplicates or return validation error (loop through store id and thro validation error if duplicate entry found)
             $store_inventory_item['store_id'] = $store_location_id[$key];
             $store_inventory_item['quantity'] = isset($quantity[$key]) ? $quantity[$key] : '';
-            $store_inventory_item['physical_location'] = isset($physical_location[$key]) ? $physical_location[$key] : '';
-            $store_inventory_item['location_description'] = isset($location_description[$key]) ? $location_description[$key] : '';
+            // $store_inventory_item['physical_location'] = isset($physical_location[$key]) ? $physical_location[$key] : '';
+            // $store_inventory_item['location_description'] = isset($location_description[$key]) ? $location_description[$key] : '';
             array_push($store_inventory, $store_inventory_item);
             $total_quantity += !empty($quantity[$key]) ? $quantity[$key] : 0;
         }
@@ -369,8 +368,8 @@ class Admin_inventory_controller extends Admin_controller
         foreach ($store_location_id as $key => $store) {
             $store_inventory_item['store_id'] = $store_location_id[$key];
             $store_inventory_item['quantity'] = isset($quantity[$key]) ? $quantity[$key] : '';
-            $store_inventory_item['physical_location'] = isset($physical_location[$key]) ? $physical_location[$key] : '';
-            $store_inventory_item['location_description'] = isset($location_description[$key]) ? $location_description[$key] : '';
+            // $store_inventory_item['physical_location'] = isset($physical_location[$key]) ? $physical_location[$key] : '';
+            // $store_inventory_item['location_description'] = isset($location_description[$key]) ? $location_description[$key] : '';
             array_push($store_inventory, $store_inventory_item);
             $total_quantity += !empty($quantity[$key]) ? $quantity[$key] : 0;
         }
@@ -483,7 +482,7 @@ class Admin_inventory_controller extends Admin_controller
         
         foreach ($store_inventory as $key => &$value) {
             $store_inventory[$key]->store_name = $this->names_helper_service->get_store_name( $value->store_id ); 
-            $store_inventory[$key]->physical_location_name = $this->names_helper_service->get_physical_location_real_name( $value->physical_location );
+            // $store_inventory[$key]->physical_location_name = $this->names_helper_service->get_physical_location_real_name( $value->physical_location );
         }
         $this->_data['store_inventory'] = $store_inventory;
  
@@ -646,37 +645,45 @@ class Admin_inventory_controller extends Admin_controller
         
         if(isset($_POST['submit_inventory_transfer']))
         {
-            // Start Inventory transfer
-            $sku = $this->input->post('sku');
-            $from_store = $this->input->post('from_store');
-            $from_quantity = $this->input->post('from_quantity');
-            $to_store = $this->input->post('to_store');
-            $product = $this->inventory_model->get_by_field('sku', $sku);
-            if(empty($product)){
-                // error cant transfer to the same store
-                $this->error('Error, Product not found.');
-                return redirect($_SERVER['HTTP_REFERER']);
-            }
-            if($from_store == $to_store){
-                // error cant transfer to the same store
-                $this->error('Error, Cannot transfer to the same store.');
-                return redirect($_SERVER['HTTP_REFERER']);
-            }
+            $_sku = $this->input->post('_sku[]');
+            $_from_store = $this->input->post('_from[]');
+            $_from_quantity = $this->input->post('_quantity[]');
+            $_to_store = $this->input->post('_to[]');
+            $items_count = 0;
+            for ($i = 0; $i < count($_sku); $i++) {
+                // Start Inventory transfer
+                $sku = $_sku[$i];
+                $from_store = $_from_store[$i];
+                $from_quantity = $_from_quantity[$i];
+                $to_store = $_to_store[$i];
+                $product = $this->inventory_model->get_by_field('sku', $sku);
+                if(empty($product)){
+                    continue;
+                }
+                if($from_store == $to_store){
+                    continue;
+                }
 
-            $result = $this->inventory_transfer_model->create([
-                'product_name' => $product->product_name,
-                'sku' => $sku,
-                'from_store' => $from_store,
-                'to_store' => $to_store,
-                'quantity' => $from_quantity,
-                'status' => '1' //pending
-            ]);
+                $result = $this->inventory_transfer_model->create([
+                    'product_name' => $product->product_name,
+                    'sku' => $sku,
+                    'from_store' => $from_store,
+                    'to_store' => $to_store,
+                    'quantity' => $from_quantity,
+                    'status' => '1' //pending
+                ]);
 
-            // Log
-            $this->helpers_service->set_inventory_transfer_log_model($this->inventory_transfer_log_model);
-            $this->helpers_service->set_inventory_transfer_model($this->inventory_transfer_model);
-            $this->helpers_service->set_store_model($this->store_model);
-            $this->helpers_service->log_inventory_transfer($result, 'Initiate transfer');
+                if($result) {
+                    $items_count++;
+                }
+
+                // Log
+                $this->helpers_service->set_inventory_transfer_log_model($this->inventory_transfer_log_model);
+                $this->helpers_service->set_inventory_transfer_model($this->inventory_transfer_model);
+                $this->helpers_service->set_store_model($this->store_model);
+                $this->helpers_service->log_inventory_transfer($result, 'Initiate transfer');
+            }
+            
 
             $this->success('Inventory Transfer Request Pending');
             return redirect('/admin/transfer/transfer_inventory/');

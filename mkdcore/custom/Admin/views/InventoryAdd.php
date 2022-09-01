@@ -146,7 +146,7 @@ if ($layout_clean_mode) {
                             <input type="text" required class="form-control data-input" id="form_quantity" name="quantity[]" value="" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
                         </div>
 
-                        <div class="form-group col-md-5 col-sm-12 ">
+                        <!-- <div class="form-group col-md-5 col-sm-12 ">
                             <label for="Inventory Location">Inventory Location </label>
                             <select class="form-control data-input" id="form_physical_location" name="physical_location[]">
                                 <option value="" >Select</option>
@@ -159,7 +159,7 @@ if ($layout_clean_mode) {
                         <div class="form-group col-md-5 col-sm-12 ">
                             <label for="Inventory Location Description">Inventory Location Description </label>
                             <input type="text" class="form-control data-input" id="form_location_description" name="location_description[]" value=""/>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="d-inline-flex flex-row-reverse  col-md-5 col-sm-12 mb-3 ">
@@ -487,21 +487,6 @@ if ($layout_clean_mode) {
             <input type="text" required class="form-control data-input" id="form_quantity" name="quantity[]" value="<?php echo set_value('quantity'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
         </div>
 
-        <div class="form-group col-md-5 col-sm-12 ">
-            <label for="Inventory Location">Inventory Location - {{{count}}} </label>
-            <select class="form-control data-input" id="form_physical_location" name="physical_location[]">
-                <option value="" >Select</option>
-                <?php foreach ($physical_locations as $key => $value) {
-                    echo "<option value='{$value->id}'> {$value->name} </option>";
-                }?>
-            </select>   
-        </div>
-
-        <div class="form-group col-md-5 col-sm-12 ">
-            <label for="Inventory Location Description">Inventory Location Description - {{{count}}} </label>
-            <input type="text" class="form-control data-input" id="form_location_description" name="location_description[]" value="<?php echo set_value('location_description'); ?>"/>
-        </div>
-
         <div class="form-group col-md-5 col-sm-12 border-bottom "></div>
     
     </div>`;
@@ -528,3 +513,19 @@ if ($layout_clean_mode) {
     }
 
 </script>
+
+
+<!--   <div class="form-group col-md-5 col-sm-12 ">
+            <label for="Inventory Location">Inventory Location - {{{count}}} </label>
+            <select class="form-control data-input" id="form_physical_location" name="physical_location[]">
+                <option value="" >Select</option>
+                <?php foreach ($physical_locations as $key => $value) {
+                    echo "<option value='{$value->id}'> {$value->name} </option>";
+                }?>
+            </select>   
+        </div>
+
+        <div class="form-group col-md-5 col-sm-12 ">
+            <label for="Inventory Location Description">Inventory Location Description - {{{count}}} </label>
+            <input type="text" class="form-control data-input" id="form_location_description" name="location_description[]" value="<?php echo set_value('location_description'); ?>"/>
+        </div> -->

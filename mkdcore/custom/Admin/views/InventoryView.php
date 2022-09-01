@@ -94,7 +94,7 @@ if ($layout_clean_mode) {
 					</div>
 				</div>
 
-				<div class='row mb-4'>
+				<!-- <div class='row mb-4'>
 					<div class='col'>
 						Inventory Location
 					</div>
@@ -110,7 +110,7 @@ if ($layout_clean_mode) {
 					<div class='col'>
 						<?php echo $view_model->get_location_description();?>
 					</div>
-				</div>
+				</div> -->
 
 				<div class='row mb-4'>
 					<div class='col'>
@@ -230,8 +230,8 @@ if ($layout_clean_mode) {
 
 						<?php echo $key+1;?>. </br>
 						<?php echo "Store: {$store_data->store_name}";?> </br>
-						<?php echo "Physical Location: {$store_data->physical_location_name}";?> </br>
 						<?php echo "Quantity: {$store_data->quantity}";?> </br> </br>
+						<?php //echo "Physical Location: {$store_data->physical_location_name}";?> </br>
 
 					<?php endforeach ; ?>
 					</div> 

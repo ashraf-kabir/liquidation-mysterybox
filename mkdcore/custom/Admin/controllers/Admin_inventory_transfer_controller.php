@@ -229,7 +229,7 @@ class Admin_inventory_transfer_controller extends Admin_controller
 
         if ($result)
         {
-            $this->success('Inventory Tranfer Request Accepted.');
+            $this->success('Inventory Transfer Request Accepted.');
             return $this->redirect('/admin/inventory_transfer/0', 'refresh');
         }
 
