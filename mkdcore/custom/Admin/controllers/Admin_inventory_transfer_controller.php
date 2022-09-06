@@ -63,6 +63,8 @@ class Admin_inventory_transfer_controller extends Admin_controller
             $where,
             $order_by,
             $direction));
+            
+        $this->_data['inventory_items_list']  = $this->inventory_model->get_all(['status' => 1]);
 
         if ($format == 'csv')
         {
@@ -179,13 +181,13 @@ class Admin_inventory_transfer_controller extends Admin_controller
 		if (!$model)
 		{
 			$this->error('Error');
-			return redirect('/admin/inventory_transfer/0');
+			return redirect('/admin/inventory_transfer/0?order_by=id&direction=DESC');
         }
 
         if ($model->sku != $sku_confirmation)
         {
             $this->error('Error! Inventory Transfer Confirmation Failed.');
-			return redirect('/admin/inventory_transfer/0');
+			return redirect('/admin/inventory_transfer/0?order_by=id&direction=DESC');
         }
         // Handle transfer here
 

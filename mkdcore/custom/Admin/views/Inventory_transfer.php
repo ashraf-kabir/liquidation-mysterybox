@@ -151,7 +151,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="acceptTransferModalLabel"> Scan Item for confirmation </h5>
+        <h5 class="modal-title" id="acceptTransferModalLabel"> Scan or select item for confirmation </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -159,8 +159,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <form id="acceptTransferModalForm" action="" method="get">
       <div class="modal-body">
             <div class="form-group">
-                <label for=""> Scan Item</label>
-                <input type="text" name="sku_c" id="sku_c" class="form-control">
+                <label for=""> Scan or select item</label>
+                <input required type="text" name="sku_c" id="sku_c" class="form-control">
+                <label for=""> Select Items</label>
+                <select name="" id="select-items" class="form-control" onchange="populateSku()">
+                    <option value=""></option>
+                <?php foreach ($inventory_items_list as $item): ?>
+                    <option value="<?php echo $item->sku ?>"> <?php echo $item->sku." - ". $item->product_name?></option>
+                <?php endforeach; ?>
+                </select>
             </div>
         </div>
         <div class="modal-footer">
@@ -182,9 +189,15 @@ if ($layout_clean_mode) {
 <script>
     function confirmAndAccept() {
         let target = event.target.getAttribute('href');
-        console.log(target);
+        // console.log(target);
         let form = document.querySelector('#acceptTransferModalForm');
         form.setAttribute('action', target);
         $('#acceptTransferModal').modal('show')
+    }
+
+    function populateSku() {
+       let itemSku = document.querySelector('#select-items').value;
+       document.querySelector('#sku_c').value = itemSku;
+
     }
 </script>
