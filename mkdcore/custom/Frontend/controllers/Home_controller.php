@@ -2439,7 +2439,7 @@ class Home_controller extends Manaknight_Controller
         $query .= "amount=" . urlencode(number_format($amount,2,".","")) . "&";
         $query .= "cvv=" . urlencode($cvv) . "&";
         $query .= "type=" . urlencode($type) . "&";
-        $query .= "test_mode=" . urlencode($test_mode) . "&";
+        // $query .= "test_mode=" . urlencode($test_mode) . "&";
 
 
         curl_setopt($curl, CURLOPT_POSTFIELDS, $query);
@@ -2461,7 +2461,7 @@ class Home_controller extends Manaknight_Controller
         if(isset($response['response']) && $response['response'] == $APPROVED){ 
             $response['success'] = true;
         }else{
-            $response['error_msg'] = 'Payment Not Approved'.$ccexp;
+            $response['error_msg'] = 'Payment Not Approved';
         }
 
         return $response;
