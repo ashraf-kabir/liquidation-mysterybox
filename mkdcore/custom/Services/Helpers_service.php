@@ -177,7 +177,7 @@ class Helpers_service {
 
         $store_data = $this->_inventory_model->get_store_inventory_data(json_decode($inventory_data->store_inventory), $store_id);
         // echo $store_data; exit(); die();
-        $quantity = empty($store_data) ? $inventory_data->quantity : $store_data->quantity;
+        $quantity = empty($store_data) || is_null($store_data) ? $inventory_data->quantity : $store_data->quantity;
 
 
         
