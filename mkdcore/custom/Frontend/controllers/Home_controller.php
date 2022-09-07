@@ -623,7 +623,7 @@ class Home_controller extends Manaknight_Controller
                     $output['error']  = $check_quantity->error;
                     echo json_encode($output);
                     exit(); 
-                }exit();
+                }
             }
 
             $this->db->trans_begin();
