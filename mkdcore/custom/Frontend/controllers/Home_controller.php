@@ -617,14 +617,13 @@ class Home_controller extends Manaknight_Controller
                 $check_quantity = $cart_item_value->is_pickup == 1 ? $this->helpers_service->check_item_in_store_inventory($cart_item_value->product_id, $cart_item_value->product_qty, $cart_item_value->product_name, $checkout_type, false, $cart_item_value->store_id)
                                                                      : $this->helpers_service->check_item_in_inventory($cart_item_value->product_id, $cart_item_value->product_qty, $cart_item_value->product_name, $checkout_type);
 
-                // if( isset($check_quantity->error) )
-                if( true)
+                if( isset($check_quantity->error) )
                 {  
                     $output['status'] = 0;
-                    $output['error']  = json_encode($check_quantity);
+                    $output['error']  = $check_quantity->error;
                     echo json_encode($output);
                     exit(); 
-                }
+                }exit();
             }
 
             $this->db->trans_begin();
