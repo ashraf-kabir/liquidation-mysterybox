@@ -111,7 +111,7 @@ class Helpers_service {
      * 
     */
     public function check_item_in_inventory($product_id, $product_qty, $product_name, $checkout_type = false,$checkout_page = false)
-    {return $product_name;
+    {
         $inventory_data =  $this->_inventory_model->get_by_fields(['id' => $product_id]);
 
 
@@ -126,7 +126,7 @@ class Helpers_service {
         // if($inventory_data->product_type != 2)
         // { 
             if( $product_qty > $inventory_data->quantity )
-            { 
+            { return 'greater';
                 if($inventory_data->quantity == 0)
                 {
                     $output['error']  = $product_name . " is out of stock.";
