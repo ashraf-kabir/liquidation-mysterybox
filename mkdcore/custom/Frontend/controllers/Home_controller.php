@@ -614,14 +614,14 @@ class Home_controller extends Manaknight_Controller
 
                 $cart_item_value = (object) $cart_item_value;
                                     // if item is pick up check store inventory else check all inventory
-                $check_quantity = ($cart_item_value->is_pickup == 1) ? $this->helpers_service->check_item_in_store_inventory($cart_item_value->product_id, $cart_item_value->product_qty, $cart_item_value->product_name, $checkout_type, true, $cart_item_value->store_id)
+                $check_quantity = $cart_item_value->is_pickup == 1 ? $this->helpers_service->check_item_in_store_inventory($cart_item_value->product_id, $cart_item_value->product_qty, $cart_item_value->product_name, $checkout_type, false, $cart_item_value->store_id)
                                                                      : $this->helpers_service->check_item_in_inventory($cart_item_value->product_id, $cart_item_value->product_qty, $cart_item_value->product_name, $checkout_type);
 
                 // if( isset($check_quantity->error) )
                 if( true)
                 {  
                     $output['status'] = 0;
-                    $output['error']  = json_encode($cart_item_value);
+                    $output['error']  = json_encode($check_quantity);
                     echo json_encode($output);
                     exit(); 
                 }

@@ -193,7 +193,7 @@ class Helpers_service {
         // { 
             if( $product_qty > $quantity )
             { 
-                if($quantity == 0)
+                if($quantity < 1)
                 {
                     $output['error']  = $product_name . " is out of stock.";
                 }
