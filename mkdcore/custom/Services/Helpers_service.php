@@ -126,7 +126,7 @@ class Helpers_service {
         // if($inventory_data->product_type != 2)
         // { 
             if( $product_qty > $inventory_data->quantity )
-            { return 'greater';
+            {
                 if($inventory_data->quantity == 0)
                 {
                     $output['error']  = $product_name . " is out of stock.";
