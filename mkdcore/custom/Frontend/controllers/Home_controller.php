@@ -2417,7 +2417,7 @@ class Home_controller extends Manaknight_Controller
         $exp_month = $exp_month < 10 ? "0{$exp_month}" : $exp_month;
         $ccexp = $exp_month . date_format(date_create_from_format('Y', $exp_year), 'y');
         $type = 'sale';
-        $test_mode = 'enabled';
+        // $test_mode = 'enabled';
 
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_URL, $url);
