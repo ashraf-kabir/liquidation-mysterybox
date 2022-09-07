@@ -2413,6 +2413,7 @@ class Home_controller extends Manaknight_Controller
         $APPROVED = 1;
         $url = $this->config->item('nmi_url');
         $nmi_secret_key = $this->config->item('nmi_security_key');
+        $exp_month = $exp_month < 10 ? "0{$exp_month}" : $exp_month;
         $ccexp = $exp_month . date_format(date_create_from_format('Y', $exp_year), 'y');
         $type = 'sale';
         $test_mode = 'enabled';
