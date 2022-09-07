@@ -621,7 +621,7 @@ class Home_controller extends Manaknight_Controller
                 if( true)
                 {  
                     $output['status'] = 0;
-                    $output['error']  = json_encode($check_quantity);
+                    $output['error']  = json_encode($cart_item_value);
                     echo json_encode($output);
                     exit(); 
                 }
