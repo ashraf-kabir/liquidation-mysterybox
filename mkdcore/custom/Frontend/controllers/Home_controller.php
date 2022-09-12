@@ -318,6 +318,37 @@ class Home_controller extends Manaknight_Controller
     }
 
 
+    public function customer_orders()
+    {
+        if(!$this->session->userdata('customer_login') && !$this->session->userdata('user_id'))
+        {
+            redirect('');
+        }
+
+        $this->load->model('customer_model');
+        $this->load->model('store_model');
+        $this->load->model('pos_order_model');
+        $this->load->model('pos_order_items_model');
+
+        $customer_id = $this->session->userdata('user_id');
+        // $customer = $this->customer_model->get($customer_id);
+
+        $orders = $this->pos_order_model->get_all(['customer_id' => $customer_id]);
+        foreach ($orders as $key => &$order) {
+            $order->details = $this->pos_order_items_model->get_all([
+                'order_id' => $order->id
+            ]);
+        }
+
+        $data['orders'] = $orders;
+        $data['stores'] = $this->store_model->get_all();
+        $data['order_model'] = $this->pos_order_model;
+
+
+        $data['active'] = 'customer_orders';
+        $data['layout_clean_mode'] = FALSE;
+        $this->_render('Guest/CustomerOrders',$data);
+    }
 
     public function profile()
     {    

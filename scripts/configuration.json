@@ -3914,6 +3914,7 @@
 		"../mkdcore/custom/Frontend/views/AddressDetails.php" : "../release/application/views/Guest/AddressDetails.php",
 		"../mkdcore/custom/Frontend/views/TermsAndConditions.php" : "../release/application/views/Guest/TermsAndConditions.php",
 		"../mkdcore/custom/Frontend/views/ImageThumbnailModel.php" : "../release/application/views/Guest/ImageThumbnailModel.php",
+		"../mkdcore/custom/Frontend/views/CustomerOrders.php" : "../release/application/views/Guest/CustomerOrders.php",
 
 		"../mkdcore/custom/Services/Stripe_terminal_service.php" : "../release/application/libraries/Stripe_terminal_service.php",
 
@@ -4032,7 +4033,8 @@
 		"order_confirmation": "Guest/Home_controller/order_confirmation",
 		"address_details": "Guest/Home_controller/address_details",
 		"terms_and_conditions": "Guest/Home_controller/terms_and_conditions",
-		"profile": "Guest/Home_controller/profile"
+		"profile": "Guest/Home_controller/profile",
+		"customer/orders": "Guest/Home_controller/customer_orders"
 	},
 	"reverse_copy": {
 	},

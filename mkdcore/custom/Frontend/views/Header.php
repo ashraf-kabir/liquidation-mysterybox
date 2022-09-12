@@ -407,9 +407,13 @@ padding-right: 10px;
                               <ul class="dropdown-menu make-dropdown-menu-full"> 
                                    <?php if($this->session->userdata('customer_login') && $this->session->userdata('user_id') ){ ?>  
                                         <li class="dropdown-submenu" style="padding-top: 5px;padding-bottom: 5px;">  
-                                             <a style="font-size: 16px;cursor: pointer;"    href="<?php echo base_url(); ?>profile" class="sub-item  <?php if( isset($active)  and $active == 'profile'  ){ echo 'active'; } ?>" >Profile</a> |  
-                                             <a style="font-size: 16px;cursor: pointer;"   
-                                             class=" sub-item <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>"  href="<?php echo base_url(); ?>logout" 
+                                             <a style="font-size: 16px;cursor: pointer;"    href="<?php echo base_url(); ?>profile" class="sub-item submenu-anchor-l2  <?php if( isset($active)  and $active == 'profile'  ){ echo 'active'; } ?>" >Profile</a> 
+                                        </li> 
+                                        <li class="dropdown-submenu" style="padding-top: 5px;padding-bottom: 5px;">  
+                                             <a style="font-size: 16px;cursor: pointer;"    href="<?php echo base_url(); ?>customer/orders" class="sub-item submenu-anchor-l2  <?php if( isset($active)  and $active == 'customer_orders'  ){ echo 'active'; } ?>" >My Orders</a> 
+                                        </li> 
+                                        <li class="dropdown-submenu" style="padding-top: 5px;padding-bottom: 5px;">     <a style="font-size: 16px;cursor: pointer;"   
+                                             class=" sub-item submenu-anchor-l2 <?php if( isset($active)  and $active == 'contact'  ){ echo 'active'; } ?>"  href="<?php echo base_url(); ?>logout" 
                                              >Logout</a> 
                                         </li> 
                                    <?php }else { ?>  
