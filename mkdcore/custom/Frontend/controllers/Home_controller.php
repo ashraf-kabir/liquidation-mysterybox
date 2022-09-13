@@ -328,7 +328,7 @@ class Home_controller extends Manaknight_Controller
         // $order_iid = $this->input->get('order_iid');
         // if(isset($order_iid))
         // {
-        //    echo $this->send_email_new_order_to_admin($order_iid);
+        //    echo $this->send_email_on_order($order_iid);
         //    return;
         // }
 

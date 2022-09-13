@@ -45,7 +45,7 @@
                                              <div class='row'>
                                              <div class="col-md-12">
                                              <div class="table-responsive " >
-                                                  <table class="table table-borderless table-sm">
+                                                  <table class="table table-borderless table-sm" style="font-size:small">
                                                        <thead class="thead-dark">
                                                             <tr>
                                                                  <th style="width:10%">&nbsp;</th>
