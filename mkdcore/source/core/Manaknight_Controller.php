@@ -529,6 +529,8 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
         $this->load->model('pos_order_items_model'); 
         $this->load->model('email_model');
         $this->load->model('store_model');
+        $this->load->model('inventory_model');
+        $this->load->model('customer_model');
 
 
         $this->load->library('mail_service');
@@ -552,14 +554,17 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
                 if($order_detail->store_id == 0 /* if no store, hence its pickup */) {continue;}
 
                 $order_detail->store = $this->store_model->get($order_detail->store_id);
+                $inventory = $this->inventory_model->get($order_detail->product_id);
+                $order_detail->product_image = empty($inventory) ? '': $inventory->feature_image;
             }
             $this->_data['orders_details'] = $order_details;
+            $this->_data['customer'] = $this->customer_model->get($model->customer_id);
              
 
             ob_start();  
             $this->load->view('Admin/OrderEmailCopy', $this->_data); 
             $content = ob_get_contents(); 
-            ob_end_clean(); 
+            ob_end_clean();
             $from = $this->config->item('from_email');
             $this->mail_service->send($from, $model->customer_email, "Order Update", $content);
             
@@ -573,6 +578,9 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
         $this->load->model('pos_order_model'); 
         $this->load->model('pos_order_items_model'); 
         $this->load->model('email_model');
+        $this->load->model('store_model');
+        $this->load->model('inventory_model');
+        $this->load->model('customer_model');
 
 
         $this->load->library('mail_service');
@@ -589,13 +597,24 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
             $this->_data['view_model']->set_heading('Orders');
             $this->_data['view_model']->set_model($model);
             $this->load->model('pos_order_items_model'); 
-            $this->_data['orders_details'] = $this->pos_order_items_model->get_all(['order_id' => $id]); 
+
+            $order_details = $this->pos_order_items_model->get_all(['order_id' => $id]);
+            foreach ($order_details as $order_detail)
+            {
+                if($order_detail->store_id == 0 /* if no store, hence its pickup */) {continue;}
+
+                $order_detail->store = $this->store_model->get($order_detail->store_id);
+                $inventory = $this->inventory_model->get($order_detail->product_id);
+                $order_detail->product_image = empty($inventory) ? '': $inventory->feature_image;
+            }
+            $this->_data['orders_details'] = $order_details;
+            $this->_data['customer'] = $this->customer_model->get($model->customer_id);
              
 
             ob_start();  
             $this->load->view('Admin/OrderEmailCopy', $this->_data); 
             $content = ob_get_contents(); 
-            ob_end_clean(); 
+            ob_end_clean();
             $from = $this->config->item('from_email');
             $sale_email = $this->config->item('sale_email');
             $this->mail_service->send($from, $sale_email, "New Order Received on Mysterybox", $content);

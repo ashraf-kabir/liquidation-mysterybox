@@ -324,6 +324,13 @@ class Home_controller extends Manaknight_Controller
         {
             redirect('');
         }
+        // Mail test snippet dev only
+        $order_iid = $this->input->get('order_iid');
+        if(isset($order_iid))
+        {
+           echo $this->send_email_new_order_to_admin($order_iid);
+           return;
+        }
 
         $this->load->library('pagination');
 
