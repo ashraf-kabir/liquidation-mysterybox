@@ -318,29 +318,71 @@ class Home_controller extends Manaknight_Controller
     }
 
 
-    public function customer_orders()
+    public function customer_orders($offset = 0)
     {
         if(!$this->session->userdata('customer_login') && !$this->session->userdata('user_id'))
         {
             redirect('');
         }
 
+        $this->load->library('pagination');
+
         $this->load->model('customer_model');
         $this->load->model('store_model');
+        $this->load->model('inventory_model');
         $this->load->model('pos_order_model');
         $this->load->model('pos_order_items_model');
 
+        $limit = 6;
+        $direction = 'DESC';
         $customer_id = $this->session->userdata('user_id');
         // $customer = $this->customer_model->get($customer_id);
 
+        $this->db->limit($limit, $offset);
+        $this->db->order_by('id', $direction); 
         $orders = $this->pos_order_model->get_all(['customer_id' => $customer_id]);
+        $orders_count = $this->pos_order_model->count(['customer_id' => $customer_id]);
         foreach ($orders as $key => &$order) {
             $order->details = $this->pos_order_items_model->get_all([
                 'order_id' => $order->id
             ]);
+
+            foreach ($order->details as $detail_key => &$detail) {
+                $inventory = $this->inventory_model->get($detail->product_id);
+                $detail->product_image = empty($inventory) ? '': $inventory->feature_image;
+            }
         }
 
+        $this->pagination->initialize([
+            'reuse_query_string' => TRUE,
+            'base_url'      => base_url() . "customer/orders",
+            'total_rows'    => $orders_count,
+            'per_page'      => $limit,
+            'num_links'     => 4,
+            'full_tag_open' => '<ul class="pagination justify-content-end">',
+            'full_tag_close' => '</ul>',
+            'attributes' => ['class' => 'page-link'],
+            'first_link' => FALSE,
+            'last_link' => FALSE,
+            'first_tag_open' => '<li class="page-item">',
+            'first_tag_close' => '</li>',
+            'prev_link' => '&laquo',
+            'prev_tag_open' => '<li class="page-item">',
+            'prev_tag_close' => '</li>',
+            'next_link' => '&raquo',
+            'next_tag_open' => '<li class="page-item">',
+            'next_tag_close' => '</li>',
+            'last_tag_open' => '<li class="page-item">',
+            'last_tag_close' => '</li>',
+            'cur_tag_open' => '<li class="page-item active"><a href="#" class="page-link">',
+            'cur_tag_close' => '<span class="sr-only">(current)</span></a></li>',
+            'num_tag_open' => '<li class="page-item">',
+            'num_tag_close' => '</li>'
+        ]);
+
+
         $data['orders'] = $orders;
+        $data['pagination_links'] = $this->pagination->create_links();;
         $data['stores'] = $this->store_model->get_all();
         $data['order_model'] = $this->pos_order_model;
 

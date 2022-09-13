@@ -842,6 +842,7 @@
 			"join": [],
 			"mapping": {
 				"status": {"0": "Canceled","1": "Purchased", "2" : "Refunded"},
+				"status_color": {"0": "danger","1": "success", "2" : "warning"},
 				"order_type": {"1": "Online", "2" : "POS"},
 				"pos_pickup_status": {"1": "Pending", "2" : "Picked"},
 				"checkout_type": {"1": "Pickup", "2" : "Delivery"},
@@ -4034,7 +4035,8 @@
 		"address_details": "Guest/Home_controller/address_details",
 		"terms_and_conditions": "Guest/Home_controller/terms_and_conditions",
 		"profile": "Guest/Home_controller/profile",
-		"customer/orders": "Guest/Home_controller/customer_orders"
+		"customer/orders": "Guest/Home_controller/customer_orders/0",
+		"customer/orders/(:num)": "Guest/Home_controller/customer_orders/$1"
 	},
 	"reverse_copy": {
 	},
