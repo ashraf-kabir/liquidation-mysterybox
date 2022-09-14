@@ -135,7 +135,7 @@
 							<div style="background-color:#ddd;color:#444;padding:1.5rem;margin-top:1.5rem; margin-bottom:1.5rem; ">
 								<div><?php echo $view_model->get_billing_name();?> </div>
 								<div><?php echo $view_model->get_shipping_address();?> </div>
-								<div><?php echo $view_model->get_shipping_city() == '' ? '': $view_model->get_billing_city().',' ;?><?php echo $view_model->get_shipping_zip();?>  </div>
+								<div><?php echo $view_model->get_shipping_city() == '' ? '': $view_model->get_shipping_city().',' ;?><?php echo $view_model->get_shipping_zip();?>  </div>
 								<div><a href='tel:<?php echo $customer->phone?>'> <?php echo $customer->phone?>  </a>  </div>
 							</div>
 						</div>
