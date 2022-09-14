@@ -89,8 +89,8 @@ if ($layout_clean_mode) {
 					<textarea id='form_billing_address' name='billing_address' class='data-input form-control' rows='5'><?php echo set_value('billing_address', $this->_data['view_model']->get_billing_address());?></textarea>
 				</div>
 				<div class="form-group col-md-5 col-sm-12">
-					<label for=" Billing Country"> Billing Country </label>
-					<input type="text" class="form-control data-input" id="form_billing_country" name="billing_country" value="<?php echo set_value('billing_country', $this->_data['view_model']->get_billing_country());?>"/>
+					<label for=" Billing Country"> Billing Country (ISO two-letter country code) </label>
+					<input type="text" class="form-control data-input" maxlength="2" id="form_billing_country" name="billing_country" value="<?php echo set_value('billing_country', $this->_data['view_model']->get_billing_country());?>"/>
 				</div>
 				<div class="form-group col-md-5 col-sm-12">
 					<label for=" Billing State"> Billing State </label>
@@ -109,8 +109,8 @@ if ($layout_clean_mode) {
 					<textarea id='form_shipping_address' name='shipping_address' class='data-input form-control' rows='5'><?php echo set_value('shipping_address', $this->_data['view_model']->get_shipping_address());?></textarea>
 				</div>
 				<div class="form-group col-md-5 col-sm-12">
-					<label for=" Shipping Country"> Shipping Country </label>
-					<input type="text" class="form-control data-input" id="form_shipping_country" name="shipping_country" value="<?php echo set_value('shipping_country', $this->_data['view_model']->get_shipping_country());?>"/>
+					<label for=" Shipping Country"> Shipping Country (ISO two-letter country code)  </label>
+					<input type="text" class="form-control data-input" maxlength="2" id="form_shipping_country" name="shipping_country" value="<?php echo set_value('shipping_country', $this->_data['view_model']->get_shipping_country());?>"/>
 				</div>
 				<div class="form-group col-md-5 col-sm-12">
 					<label for=" Billing State"> Shipping State </label>
