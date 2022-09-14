@@ -551,12 +551,12 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
             $order_details = $this->pos_order_items_model->get_all(['order_id' => $id]);
             foreach ($order_details as $order_detail)
             {
+                $inventory = $this->inventory_model->get($order_detail->product_id);
                 $order_detail->product_image = empty($inventory) ? '': $inventory->feature_image;
-                
+
                 if($order_detail->store_id == 0 /* if no store, hence its pickup */) {continue;}
 
                 $order_detail->store = $this->store_model->get($order_detail->store_id);
-                $inventory = $this->inventory_model->get($order_detail->product_id);
             }
             $this->_data['orders_details'] = $order_details;
             $this->_data['customer'] = $this->customer_model->get($model->customer_id);
