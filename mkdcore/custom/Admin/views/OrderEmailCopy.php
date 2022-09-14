@@ -23,14 +23,14 @@
 
 	        <div class="card pb-5" style="border-bottom:1px solid #ccc;position: relative;display: -ms-flexbox;display: flex;-ms-flex-direction: column;flex-direction: column;min-width: 0;word-wrap: break-word;background-color: #fff;background-clip: border-box;border: 1px solid rgba(0,0,0,.125);border-radius: .25rem;padding-bottom: 3rem!important;width: 100% !important;">
 	            <div class="card-body" style="flex: 1 1 auto;padding: 1.25rem;width: 100% !important;">
-	                <div class="text-center" style="text-align-center">
+	                <div class="text-center" style="text-align:center">
 						<img class="logo-img mx-auto" style="padding-bottom: 9px;height:100px" src="<?php echo base_url() ?>uploads/vegas-liquidation.png"></a> 
 					</div> 
 					<h2 class="" style="margin-top:1.5rem; margin-bottom:1.5rem; padding:1.5rem;text-align:center; background-color:#333;color:#eee">
 						 Thank you for your order!
 					</h2>
 
-					<div class=" " style="margin-top:1.5rem; margin-bottom:1.5rem; padding:1.5rem;display:flex;justify-content:space-between;background-color:#ddd;color:#444;">
+					<div class=" " style="margin-top:1.5rem; margin-bottom:1.5rem; padding:1.5rem;background-color:#ddd;color:#444;">
 						<div>
 							<div style="margin-top:1rem;"><span style="font-weight:bold">Order Number: </span> <?php echo $view_model->get_id();?> </div>
 							<div style="margin-top:1rem;"><span style="font-weight:bold">Billing Name: </span> <?php echo $view_model->get_billing_name();?> </div>
@@ -49,11 +49,11 @@
 	                            <thead class="" style="padding-top:1rem; padding-bottom:1rem; height:50px">
 	                                <tr>
 	                                    <th style="width:10%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;" ></th> 
-	                                    <th style="width:15%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;" >Item Name</th> 
-	                                    <th style="width:10%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;" >Delivery Type</th>
-	                                    <th style="width:15%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;" >Shipping Service/Store</th>
-	                                    <th style="width:10%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;" >Rate</th> 
-	                                    <th style="width:10%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;" >Amount</th>
+	                                    <th style="width:15%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;text-align:left;" >Item Name</th> 
+	                                    <th style="width:10%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;text-align:left;" >Delivery Type</th>
+	                                    <th style="width:15%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;text-align:left;" >Shipping Service/Store</th>
+	                                    <th style="width:10%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;text-align:left;" >Rate</th> 
+	                                    <th style="width:10%;color: #495057; background-color: #e9ecef; border-color: #dee2e6;text-align:left;" >Amount</th>
 	                                </tr> 
 	                            </thead>
 	                            <tbody style="border-bottom: 1px solid #444">
@@ -120,7 +120,7 @@
 						</div>
 					</div>
 
-					<div class=" " style="margin-top:1.5rem; margin-bottom:1.5rem; padding:1.5rem;display:flex;justify-content:space-between;">
+					<div class=" " style="margin-top:1.5rem; margin-bottom:1.5rem; padding:1.5rem;">
 						<div style="">
 							<div style="font-weight:bold">Billing Details</div>
 							<div style="background-color:#ddd;color:#444;padding:1.5rem;margin-top:1.5rem; margin-bottom:1.5rem; ">
