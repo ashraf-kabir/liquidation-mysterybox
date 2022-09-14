@@ -7,7 +7,7 @@
 
                     <span class="font-weight-bold d-block mt-4"> </span> 
 
-                    <span>Thanking you for your order. You know you will recieve an email with order confirmation along with tracking number once order is shipped.</span>
+                    <span>Thank you for your order. You will recieve an email with order confirmation along with tracking number once order is shipped.</span>
                      
                     <p class="font-weight-bold mb-0">Thanks for shopping with us!</p>  
                 </div>
