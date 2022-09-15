@@ -136,6 +136,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							echo "<td>{$data->billing_name}</td>";
 							echo "<td>" . ucfirst($view_model->order_type_mapping()[$data->order_type]) ."</td>";
 							echo "<td>" . ucfirst($view_model->payment_method_mapping()[$data->payment_method]) ."</td>";
+							echo "<td><a target='_blank' href='https://www.google.com/search?q={$data->ship_station_tracking_no}'>{$data->ship_station_tracking_no}</a></td>";
 							echo "<td>" . ucfirst($view_model->is_picked_mapping()[$data->is_picked]) ."</td>";
 							echo "<td>" . ucfirst($view_model->is_shipped_mapping()[$data->is_shipped]) ."</td>";
 							echo "<td>$" . number_format($data->subtotal, 2) . "</td>";

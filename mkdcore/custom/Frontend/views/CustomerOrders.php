@@ -18,7 +18,7 @@
                                                  <div class="text-muted">Order  #<?php echo $order->id ?> </div> 
                                                  <div class="text-<?php echo $order_model->status_color_mapping()[$order->status] ?>">  <?php echo $order_model->status_mapping()[$order->status] ?> </div>
                                                  <?php if (!empty($order->ship_station_tracking_no)) : ?>
-                                                 <div class="text-muted">Tracking #<a href="https://www.google.com/search?q=<?php echo $order->ship_station_tracking_no ?>">
+                                                 <div class="text-muted">Tracking #<a target="_blank" href="https://www.google.com/search?q=<?php echo $order->ship_station_tracking_no ?>">
                                                        <?php echo $order->ship_station_tracking_no ?> </a> 
                                                   </div>
                                                   <?php endif ?>

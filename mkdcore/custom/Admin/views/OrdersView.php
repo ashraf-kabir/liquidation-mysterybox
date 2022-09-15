@@ -167,6 +167,15 @@ if ($layout_clean_mode) {
 				
 				<div class='row mb-4'>
 					<div class='col'>
+						 Tracking #
+					</div>
+				<div class='col'>
+				<a target='_blank' href='https://www.google.com/search?q=<?php echo $data->ship_station_tracking_no?>'><?php echo $data->ship_station_tracking_no?></a>
+					</div>
+					</div>
+				
+				<div class='row mb-4'>
+					<div class='col'>
 						Order Type
 					</div>
 					<div class='col'>
