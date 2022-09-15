@@ -357,9 +357,9 @@ class Ecom_api_controller extends Manaknight_Controller
     {
 
         $params = json_decode(file_get_contents('php://input'), TRUE);   
-        $params['sale_order_id'] = $this->input->post('sale_order_id');
-        $params['tracking_no'] = $this->input->post('tracking_no');
-        $params['item_id'] = $this->input->post('item_id');
+        // $params['sale_order_id'] = $this->input->post('sale_order_id');
+        // $params['tracking_no'] = $this->input->post('tracking_no');
+        // $params['item_id'] = $this->input->post('item_id');
 
 
         if(isset($params) and !empty($params))
