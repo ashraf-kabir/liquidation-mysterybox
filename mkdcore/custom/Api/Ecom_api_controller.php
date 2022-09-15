@@ -391,7 +391,7 @@ class Ecom_api_controller extends Manaknight_Controller
 
                 if ($order_data) 
                 {
-                    $order_update = $this->pos_order_model->edit( [  'ship_station_tracking_no' => $tracking_no ], $sale_order_id);
+                    $order_update = $this->pos_order_model->edit( [  'ship_station_tracking_no' => $tracking_no, 'is_shipped' => 1 ], $sale_order_id);
 
                     if(!$order_update)
                     {
@@ -400,6 +400,11 @@ class Ecom_api_controller extends Manaknight_Controller
                         echo json_encode($output);
                         exit(); 
                     } 
+                    $this->load->library('mail_service');
+                    $this->mail_service->set_adapter('smtp');
+                    $from = $this->config->item('from_email');  
+                    $text_msg = "Your order has been shipped and your tracking number is " . $tracking_number . ".<br> You can track order <a href='https://www.google.com/search?q=" . $tracking_number . "' target='_blank' style='color;#1A73E8 !important;' >here</a>"; 
+                    $this->mail_service->send($from, $order_data->customer_email, "Order Shipped", $text_msg);
                     exit(); 
                 }
 
