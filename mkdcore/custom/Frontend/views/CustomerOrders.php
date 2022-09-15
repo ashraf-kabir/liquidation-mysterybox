@@ -23,11 +23,11 @@
 
                                                  <div class="action flex-fill">
                                                   <?php if ($order->is_picked == 1): ?>
-                                                       <div class="text-info "> Order Picked </div>
+                                                       <div class="text-info "> Order Processed </div>
                                                   <?php elseif ($order->is_shipped == 1): ?>
                                                        <div class="text-success">Order Shipped </div>
                                                        <?php else: ?>
-                                                            <span class="text-primary">Order Processing </span>
+                                                            <span class="text-primary">Order Pending </span>
                                                        <?php endif; ?>
                                                   </div>
                                              </div>

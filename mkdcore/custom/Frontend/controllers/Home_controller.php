@@ -991,7 +991,7 @@ class Home_controller extends Manaknight_Controller
 
                             }
                         }
-
+                        
                         foreach ($store_data as $key => $value) {
                            $total_quantity = $total_quantity + $value->quantity;
                         }
