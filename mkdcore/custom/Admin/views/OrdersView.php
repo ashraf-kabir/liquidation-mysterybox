@@ -170,7 +170,7 @@ if ($layout_clean_mode) {
 						 Tracking #
 					</div>
 				<div class='col'>
-				<a target='_blank' href='https://www.google.com/search?q=<?php echo $data->ship_station_tracking_no?>'><?php echo $data->ship_station_tracking_no?></a>
+				<a target='_blank' href='https://www.google.com/search?q=<?php echo $view_model->get_ship_station_tracking_no()?>'><?php echo $view_model->get_ship_station_tracking_no() ?></a>
 					</div>
 					</div>
 				
