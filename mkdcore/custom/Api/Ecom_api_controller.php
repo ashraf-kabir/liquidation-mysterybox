@@ -397,7 +397,7 @@ class Ecom_api_controller extends Manaknight_Controller
                         echo json_encode($output);
                         exit(); 
                     } 
-                    echo "mystery{$tracking_no}";
+                    echo "mystery{$tracking_no} {$sale_order_id}";
                     exit(); 
                 }
 
