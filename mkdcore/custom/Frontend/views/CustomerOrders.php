@@ -15,9 +15,13 @@
                                     <?php foreach ($orders as $key => $order) : ?>
                                         <div class="d-flex justify-content-between mb-5 mt-1 border-bottom shadow-sm p-2">
                                              <div class=" flex-fill d-flex flex-column ">
-                                                 <div class="text-muted">Order  #<?php echo $order->id ?> </div>
+                                                 <div class="text-muted">Order  #<?php echo $order->id ?> </div> 
                                                  <div class="text-<?php echo $order_model->status_color_mapping()[$order->status] ?>">  <?php echo $order_model->status_mapping()[$order->status] ?> </div>
-                                                
+                                                 <?php if (!empty($order->ship_station_tracking_no)) : ?>
+                                                 <div class="text-muted">Tracking #<a href="https://www.google.com/search?q=<?php echo $order->ship_station_tracking_no ?>">
+                                                       <?php echo $order->ship_station_tracking_no ?> </a> 
+                                                  </div>
+                                                  <?php endif ?>
                                                  <div>Total $<?php echo number_format($order->total, 2) ?></div>
                                                  <div>Date <?php echo date('F d, Y H:i', strtotime( $order->order_date_time)) ?></div>
 
