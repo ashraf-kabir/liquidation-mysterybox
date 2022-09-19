@@ -986,7 +986,7 @@ class Home_controller extends Manaknight_Controller
                                             'quantity' => $quantity_to_pull
                                         ];
                                         break;
-                                    } else {
+                                    } else {print_r($value); die();
                                         $quantity_to_pull -= $location_quantity;
                                         $value->locations[$location_id] -= $location_quantity;
                                         $location_inventory_details[] = [
