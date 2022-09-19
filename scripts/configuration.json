@@ -910,7 +910,8 @@
 				["store_id", "integer", [], "xyzStore", "required|integer", "required|integer"],
 				["sale_person_id", "integer", [], "xyzStore", "required|integer", "required|integer"],
 				["manifest_id", "integer", [], "xyzManifest", "required|integer", "required|integer"],
-				["is_pickup", "integer", [], "Pick up", "required|integer", ""]
+				["is_pickup", "integer", [], "Pick up", "required|integer", ""],
+				["inventory_details", "text", [], "Inventory Details", "", ""]
 			],
 			"method": "",
 			"join": [],
