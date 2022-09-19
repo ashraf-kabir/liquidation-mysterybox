@@ -640,9 +640,13 @@ class Home_controller extends Manaknight_Controller
             $this->load->model('pos_cart_model');
             $this->load->model('checkout_data_model');
             $this->load->model('inventory_model');
+            $this->load->model('store_model');
+            $this->load->model('physical_location_model');
             $this->load->library('helpers_service');
+            $this->load->library('names_helper_service');
             $this->helpers_service->set_inventory_model($this->inventory_model);
-
+            $this->names_helper_service->set_store_model($this->store_model); 
+            $this->names_helper_service->set_physical_location_model($this->physical_location_model);
 
 
             // $cart_items =  $this->pos_cart_model->get_all(['customer_id' => $user_id]); 
@@ -964,10 +968,35 @@ class Home_controller extends Manaknight_Controller
                         $store_data = json_decode($this->inventory_model->get($inventory_data->id)->store_inventory);
                         $total_quantity = 0;
                         $is_pickup = false;
+                        $location_inventory_details = [];
                         foreach ($store_data as $key => $value) {
                             if($value->store_id == $cart_item_value->store_id ){
                                 $store_quantity_left = (int)$value->quantity - (int)$cart_item_value->product_qty;
                                 $value->quantity = (int)$store_quantity_left;
+                                // pull quantity from store locations
+                                $store_locations = isset($value->locations) ? $value->locations : [];
+                                $quantity_to_pull = (int)$cart_item_value->product_qty;
+                                foreach ($store_locations as $location_id => $location_quantity) {
+                                    if ($quantity_to_pull < 1 ) { break;} //completed
+                                    if ($location_quantity >= $quantity_to_pull) { //When we 
+                                        $value->locations[$location_id] -= $quantity_to_pull;
+                                        $location_inventory_details[] = [
+                                            'store' => $this->names_helper_service->get_store_name( $value->store_id ), 
+                                            'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
+                                            'quantity' => $quantity_to_pull
+                                        ];
+                                        break;
+                                    } else {
+                                        $quantity_to_pull -= $location_quantity;
+                                        $value->locations[$location_id] -= $location_quantity;
+                                        $location_inventory_details[] = [
+                                            'store' => $this->names_helper_service->get_store_name( $value->store_id ), 
+                                            'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
+                                            'quantity' => $location_quantity
+                                        ];
+                                    }
+
+                                }
                                 // $total_quantity = $total_quantity + $store_quantity_left;
                                 $is_pickup = TRUE;
                             }
@@ -975,21 +1004,54 @@ class Home_controller extends Manaknight_Controller
                         if(!$is_pickup){
                             // $total_quantity = 0;
                             $qty = $cart_item_value->product_qty;
+                            $quantity_to_pull = (int)$cart_item_value->product_qty;
                             foreach ($store_data as $key => $value) {
-                                if($value->quantity >= $qty ){
-                                    $store_quantity_left = (int)$value->quantity - (int)$qty;
-                                    $value->quantity = (int)$store_quantity_left;
-                                    // $total_quantity = $total_quantity + $store_quantity_left;
-                                    break;
-                                }
-                                $qty_avail = (int)$value->quantity ;
-                                $qty -= $qty_avail;
-                                $store_quantity_left = (int)$value->quantity - (int)$qty_avail;
-                                    $value->quantity = (int)$store_quantity_left;
-                                    // $total_quantity = $total_quantity + $store_quantity_left;
+                                // ensure store is not pickup only
+                                $store_info = $this->store_model->get($value->store_id);
+                                if($store_info->can_ship == 2 /*pickup only */) { continue;}
 
+                                // pull quantity from store locations
+                                $store_locations = isset($value->locations) ? $value->locations : [];
+                                foreach ($store_locations as $location_id => $location_quantity) {
+                                    if ($quantity_to_pull < 1 ) { break;} //completed
+                                    if ($location_quantity >= $quantity_to_pull) { //When we 
+                                        $value->locations[$location_id] -= $quantity_to_pull;
+                                        $location_inventory_details[] = [
+                                            'store' => $this->names_helper_service->get_store_name( $value->store_id ), 
+                                            'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
+                                            'quantity' => $quantity_to_pull
+                                        ];
+                                        break;
+                                    } else {
+                                        $quantity_to_pull -= $location_quantity;
+                                        $value->locations[$location_id] -= $location_quantity;
+                                        $location_inventory_details[] = [
+                                            'store' => $this->names_helper_service->get_store_name( $value->store_id ), 
+                                            'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
+                                            'quantity' => $location_quantity
+                                        ];
+                                    }
+
+                                // if($value->quantity >= $qty ){
+                                //     $store_quantity_left = (int)$value->quantity - (int)$qty;
+                                //     $value->quantity = (int)$store_quantity_left;
+                                //     // $total_quantity = $total_quantity + $store_quantity_left;
+                                //     break;
+                                // }
+                                // $qty_avail = (int)$value->quantity ;
+                                // $qty -= $qty_avail;
+                                // $store_quantity_left = (int)$value->quantity - (int)$qty_avail;
+                                //     $value->quantity = (int)$store_quantity_left;
+                                //     // $total_quantity = $total_quantity + $store_quantity_left;
+                                }
 
                             }
+                            $store_quantity = 0;
+                            foreach ($store_locations as $location_id => $location_quantity) {
+                                $store_quantity += $location_quantity; 
+                            }
+                            $value->quantity = $store_quantity;
+                            
                         }
                         
                         foreach ($store_data as $key => $value) {
@@ -1001,6 +1063,10 @@ class Home_controller extends Manaknight_Controller
                             'quantity' => $total_quantity,
                             'store_inventory' => json_encode($store_data)
                         ], $inventory_data->id ); 
+
+                        $this->pos_order_items_model->edit([
+                            'inventory_details' => json_encode($location_inventory_details)
+                        ], $detail_id); 
                     }
                 }
                 
@@ -1044,7 +1110,7 @@ class Home_controller extends Manaknight_Controller
                     'transaction_time'  =>  Date('g:i:s A'), 
                     'pos_order_id'      =>  $order_id, 
                     'tax'               =>  $tax,  
-                    'discount'          =>  $discount, 
+                    'discount'          =>  $discount,
                     'subtotal'          =>  $sub_total, 
                     'total'             =>  $grand_total, 
                     'status'            =>  '2'
@@ -1072,7 +1138,7 @@ class Home_controller extends Manaknight_Controller
                         if( isset($response['success']) && $response['success'] == true )
                         { 
                             $payment_recieved = TRUE;
-                            $this->pos_order_model->edit(['intent_data' => json_encode($response['response']) ], $order_id);
+                            $this->pos_order_model->edit(['intent_data' => json_encode($response) ], $order_id);
                             $this->transactions_model->edit(['status' => 1 ], $transaction_id); //Status Paid
                             $this->pos_cart_model->real_delete_by_fields(['customer_id' => $user_id]); 
                         }

@@ -132,6 +132,32 @@ if($this->session->userdata('role') == 1)
                         }?>
                     </select> 
                 </div>
+
+                <fieldset class="col-md-5 ml-3 form-group border" >
+                    <legend>Item Store Management</legend>
+                    <div id = "stores">
+                    <?php foreach ($stores as $key => $store): ?>
+                        <?php $in_inventory = in_array($store->id, $item_inventory_stores) ? TRUE : FALSE; ?>
+                        <div>
+                            <input class="" type="checkbox" name="stores_inventory[]" value="<?php echo $store->id; ?>"  <?php echo $in_inventory ? 'checked' : ''; ?>
+                                id="store_<?php echo $store->id; ?>" onchange="toggleStoreLocationsVisibility(this, <?php echo $store->id;?>)">
+
+                            <label id="store_<?php echo $store->id; ?>"><?php echo $store->name; ?></label>
+                            <div id='<?php echo "store_{$store->id}_locations";?>' style="display: <?php echo $in_inventory ? 'block' : 'none'; ?>">
+                                <?php foreach ($store->locations as $location): ?>
+                                    <div class="form-group"  >
+                                        <label id="location_<?php echo $location->id; ?>"><?php echo $location->name; ?></label>
+                                        <input class="form-control" type="number" placeholder="Quantity" 
+                                            name='<?php echo "store_{$store->id}_location[$location->id]";?>' 
+                                            value="<?php echo isset($item_inventory_locations[$location->id]) ? $item_inventory_locations[$location->id] : 0  ?>"  id="">
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                    </div>
+                </fieldset>
+
                 <!-- <div class="form-group col-md-5 col-sm-12">
                     <label for="Store Location">Store <span class="text-danger">*</span></label>
                     <select   class="form-control data-input" id="form_store_location_id" name="store_location_id">
@@ -162,7 +188,7 @@ if($this->session->userdata('role') == 1)
                     <input type="text" class="form-control data-input" id="form_location_description" name="location_description" value="<?php echo set_value('location_description', $this->_data['view_model']->get_location_description());?>"/>
                 </div> -->
 
-                <div id="store-inventories">
+                <!-- <div id="store-inventories">
                     <?php if(!empty($store_inventory) && count($store_inventory) > 0): ?>
                     <?php foreach($store_inventory as $key => $store_data) : ?>
                     <?php $count = $key+1 ?>
@@ -209,7 +235,7 @@ if($this->session->userdata('role') == 1)
                 <div class="d-inline-flex flex-row-reverse  col-md-5 col-sm-12 mb-3 ">
                     <span role="button" class="rounded-sm btn btn-primary  shadow p-1" title="Add inventory to other stores" onclick="addStoreLocation()"><i class="fas fa-plus-circle"></i> Add Store Location</span>
                     <span role="button" class="rounded-sm btn btn-danger mx-1  shadow p-1" id="remove-store-btn" style="display:none"  onclick="removeLastStoreLocation()"><i class="fas fa-times-circle"></i> Remove Store Location</span>
-                </div>
+                </div> -->
 
  
 
@@ -563,6 +589,14 @@ if($this->session->userdata('role') == 1)
     }
     toggleRemoveBtn();
 
+    function toggleStoreLocationsVisibility(el, store_id) {
+        if (el.checked) {
+           return document.querySelector(`#store_${store_id}_locations`).style.display = 'block';
+        }
+        document.querySelector(`#store_${store_id}_locations`).style.display = 'none';
+    }
+
+
 </script>
 
 
@@ -622,6 +656,7 @@ if($this->session->userdata('role') == 1)
             weight_input.addEventListener('input', updateCanShip);
 
         // ///////////////////////////////////////////////////////////////////////////////////
+
     }, false)
 
     function updateCanShip(){
@@ -640,6 +675,7 @@ if($this->session->userdata('role') == 1)
         }
     }
 
+   
 
 </script>
 

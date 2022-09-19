@@ -108,6 +108,10 @@ class Api_service{
                         'shipping_cost_name'  =>  $value->shipping_cost_name,
                         'shipping_cost_value' =>  $value->shipping_cost_value,
                         'shipping_service_id' =>  $value->shipping_service_id,
+
+                        'is_pickup'           =>  $value->is_pickup,
+                        'store'               =>  $store_location,
+                        'inventory_details'   =>  $value->inventory_details,
                 
                     ) );
             }

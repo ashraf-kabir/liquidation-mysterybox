@@ -230,7 +230,13 @@ if ($layout_clean_mode) {
 
 						<?php echo $key+1;?>. </br>
 						<?php echo "Store: {$store_data->store_name}";?> </br>
-						<?php echo "Quantity: {$store_data->quantity}";?> </br> </br>
+						<?php echo "Store Quantity: {$store_data->quantity}";?> </br> </br>
+						<?php if (isset($store_data->location_data)) : ?>
+							<?php foreach($store_data->location_data as $key2 => $location) : ?>
+								<?php echo "Physical Location: ".$location['name'] ?> <br>
+								<?php echo "Quantity: ".$location['quantity'] ?> <br><br>
+							<?php endforeach ; ?>
+						<?php endif; ?>
 						<?php //echo "Physical Location: {$store_data->physical_location_name}";?> </br>
 
 					<?php endforeach ; ?>
