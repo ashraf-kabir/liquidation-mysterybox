@@ -979,16 +979,16 @@ class Home_controller extends Manaknight_Controller
                                 foreach ($store_locations as $location_id => $location_quantity) {
                                     if ($quantity_to_pull < 1 ) { break;} //completed
                                     if ($location_quantity >= $quantity_to_pull) { //When we 
-                                        $value->locations[$location_id] -= $quantity_to_pull;
+                                        $value->locations->{$location_id} -= $quantity_to_pull;
                                         $location_inventory_details[] = [
                                             'store' => $this->names_helper_service->get_store_name( $value->store_id ), 
                                             'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
                                             'quantity' => $quantity_to_pull
                                         ];
                                         break;
-                                    } else {print_r($value); die();
+                                    } else {
                                         $quantity_to_pull -= $location_quantity;
-                                        $value->locations[$location_id] -= $location_quantity;
+                                        $value->locations->{$location_id} -= $location_quantity;
                                         $location_inventory_details[] = [
                                             'store' => $this->names_helper_service->get_store_name( $value->store_id ), 
                                             'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
@@ -1015,7 +1015,7 @@ class Home_controller extends Manaknight_Controller
                                 foreach ($store_locations as $location_id => $location_quantity) {
                                     if ($quantity_to_pull < 1 ) { break;} //completed
                                     if ($location_quantity >= $quantity_to_pull) { //When we 
-                                        $value->locations[$location_id] -= $quantity_to_pull;
+                                        $value->locations->{$location_id} -= $quantity_to_pull;
                                         $location_inventory_details[] = [
                                             'store' => $this->names_helper_service->get_store_name( $value->store_id ), 
                                             'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
@@ -1024,7 +1024,7 @@ class Home_controller extends Manaknight_Controller
                                         break;
                                     } else {
                                         $quantity_to_pull -= $location_quantity;
-                                        $value->locations[$location_id] -= $location_quantity;
+                                        $value->locations->{$location_id} -= $location_quantity;
                                         $location_inventory_details[] = [
                                             'store' => $this->names_helper_service->get_store_name( $value->store_id ), 
                                             'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
