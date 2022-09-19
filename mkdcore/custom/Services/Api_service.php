@@ -75,7 +75,7 @@ class Api_service{
                 } 
 
 
-                $physical_location_name = $store_location;
+                $physical_location_name = "N/A";
                 if(isset($physical_location->name))
                 {
                     $physical_location_name    = $physical_location->name;

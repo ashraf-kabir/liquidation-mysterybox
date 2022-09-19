@@ -3886,8 +3886,15 @@
 		"../mkdcore/custom/Admin/views/Inventory_transfer.php" : "../release/application/views/Admin/Inventory_transfer.php",
 		"../mkdcore/custom/Admin/views/Inventory_transferAdd.php" : "../release/application/views/Admin/Inventory_transferAdd.php",
 		"../mkdcore/custom/Admin/views/Inventory_transferView.php" : "../release/application/views/Admin/Inventory_transferView.php",
-
+		
 		"../mkdcore/custom/Admin/controllers/Admin_inventory_transfer_controller.php" : "../release/application/controllers/Admin/Admin_inventory_transfer_controller.php",
+
+		"../mkdcore/custom/Admin/views/Inventory_Location.php" : "../release/application/views/Admin/Inventory_Location.php",
+		"../mkdcore/custom/Admin/views/Inventory_LocationAdd.php" : "../release/application/views/Admin/Inventory_LocationAdd.php",
+		"../mkdcore/custom/Admin/views/Inventory_LocationEdit.php" : "../release/application/views/Admin/Inventory_LocationEdit.php",
+		"../mkdcore/custom/Admin/views/Inventory_LocationView.php" : "../release/application/views/Admin/Inventory_LocationView.php",
+
+		"../mkdcore/custom/Admin/controllers/Admin_inventory_location_controller.php" : "../release/application/controllers/Admin/Admin_inventory_location_controller.php",
 
 		"../mkdcore/custom/Admin/controllers/Admin_transactions_controller.php" : "../release/application/controllers/Admin/Admin_transactions_controller.php",
 		"../mkdcore/custom/Admin/controllers/Admin_category_wise_controller.php" : "../release/application/controllers/Admin/Admin_category_wise_controller.php",
