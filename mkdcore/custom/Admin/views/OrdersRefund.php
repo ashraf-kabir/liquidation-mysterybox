@@ -77,8 +77,8 @@ if ($layout_clean_mode) {
                     </div>
                     <div class="form-group col-md-6 mx-1">
                         <label for="">Amount ($)</label>
-                        <input class="form-control" required type="number" name="amount" id="amount" step="0.01" max="<?php echo number_format($order->total, 2) ?>" 
-                            value="<?php echo $order->total  ?>" oninput="handleAmountChange(this)"/>
+                        <input class="form-control" required type="number" name="amount" id="amount" step="0.01" value="<?php echo number_format($order->total, 2) ?>" 
+                            max="<?php echo number_format($order->total, 2) ?>" oninput="handleAmountChange(this)"/>
                     </div>
 
                     <div class="form-group col-md-6 mx-1">

@@ -42,6 +42,7 @@ class Pos_checkout_service {
         $payment             =  $customer_data['payment'];
         $customer_id         =  $customer_data['customer_id'];
         $checkout_type       =  $customer_data['checkout_type'];
+        $tax = number_format($tax, 2);
 
          
         $shipping_cost_service_name = "";
@@ -142,6 +143,7 @@ class Pos_checkout_service {
         $payment_method      =  $customer_data->payment;
         $customer_id         =  $customer_data->id;
         $referrer            =  $customer_data->referrer;
+        $tax = number_format($tax, 2);
 
         
 
