@@ -135,7 +135,7 @@ class Helpers_service {
                 {
                     if (!$checkout_page) 
                     {
-                        $output['error']  = $product_name . " quantity can't be greater than be available quantity."; 
+                        $output['error']  = $product_name . " quantity exceeds available quantity."; 
                     }else{
                         $output['error2']  = true;
                     }
@@ -201,7 +201,7 @@ class Helpers_service {
                 {
                     if (!$checkout_page) 
                     {
-                        $output['error']  = $product_name . " quantity can't be greater than be available quantity."; 
+                        $output['error']  = $product_name . " quantity exceeds available store quantity."; 
                     }else{
                         $output['error2']  = true;
                     }
