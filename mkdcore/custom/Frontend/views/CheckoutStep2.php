@@ -200,7 +200,7 @@
                <div class="second-box" >
                     <p><?php echo $item->product_name ?></p>
                     <p>Qty: <?php echo $item->product_qty ?></p>
-                    <p>Price: <?php echo $item->unit_price ?></p>
+                    <p>Price: $<?php echo $item->unit_price ?></p>
                </div>
                <div class="third-box" style="width:250px">
                     <?php if (!empty($item->store)): ?>
