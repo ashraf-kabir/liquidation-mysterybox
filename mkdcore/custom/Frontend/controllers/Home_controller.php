@@ -985,6 +985,7 @@ class Home_controller extends Manaknight_Controller
                                             'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
                                             'quantity' => $quantity_to_pull
                                         ];
+                                        $quantity_to_pull = 0;
                                         break;
                                     } else {
                                         $quantity_to_pull -= $location_quantity;
@@ -1021,6 +1022,7 @@ class Home_controller extends Manaknight_Controller
                                             'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
                                             'quantity' => $quantity_to_pull
                                         ];
+                                        $quantity_to_pull = 0;
                                         break;
                                     } else {
                                         $quantity_to_pull -= $location_quantity;
