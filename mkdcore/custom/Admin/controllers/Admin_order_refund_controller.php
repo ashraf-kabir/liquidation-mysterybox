@@ -33,6 +33,7 @@ class Admin_order_refund_controller extends Admin_controller
         }
 
         $this->_data['heading'] = "Order";
+        $this->_data['page_name'] = "Orders";
         $this->_data['order'] = $order_model;
 
         if(isset($_POST['refund-btn']))
