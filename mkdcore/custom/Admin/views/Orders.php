@@ -144,6 +144,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							echo "<td>$" . number_format($data->total, 2) . "</td>";
 							echo '<td>';
 							echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/orders/view/' . $data->id . '">View</a>';
+                            $response = json_decode($data->intent_data);
+	                        if(isset($response->transactionid) && $response->success == 1 && $data->status == 1 /*Purchased */ && $data->payment_method == 2 /* Card*/ ) {
+                                echo ' <a class="btn btn-link text-danger  link-underline text-underline btn-sm" target="_blank" href="/admin/orders/refund/' . $data->id . '">Refund</a>';
+                            }
 							echo '</td>';
                     echo '</tr>';
                 ?>

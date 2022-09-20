@@ -176,6 +176,19 @@ if ($layout_clean_mode) {
 				
 				<div class='row mb-4'>
 					<div class='col'>
+						Payment Transaction ID 
+					</div>
+					<div class='col'>
+						<?php 
+						$response = json_decode($view_model->get_intent_data());
+						echo isset($response->transactionid) ? $response->transactionid: '';
+						
+						
+						?>
+					</div>
+				</div>
+				<div class='row mb-4'>
+					<div class='col'>
 						Order Type
 					</div>
 					<div class='col'>
