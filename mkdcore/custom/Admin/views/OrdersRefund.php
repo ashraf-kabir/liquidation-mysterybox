@@ -65,19 +65,19 @@ if ($layout_clean_mode) {
                     </div>
                     <div class="form-group col-md-6 mx-1">
                         <label for="">Total Order Amount ($)</label>
-                        <input class="form-control" required readonly type="number" name="total-amount" id="total-amount"  value="<?php echo $order->total ?>" />
+                        <input class="form-control" required readonly type="number" name="total-amount" id="total-amount"  value="<?php echo number_format($order->total, 2) ?>" />
                     </div>
                     <div class="form-group col-md-6 mx-1">
                         <label for="">Subtotal ($)</label>
-                        <input class="form-control"  readonly type="number"  value="<?php echo $order->subtotal ?>" />
+                        <input class="form-control"  readonly type="number"  value="<?php echo number_format($order->subtotal, 2) ?>" />
                     </div>
                     <div class="form-group col-md-6 mx-1">
                         <label for="">Tax ($)</label>
-                        <input class="form-control"  readonly type="number"   value="<?php echo $order->tax,2 ?>" />
+                        <input class="form-control"  readonly type="number"   value="<?php echo number_format($order->tax, 2) ?>" />
                     </div>
                     <div class="form-group col-md-6 mx-1">
                         <label for="">Amount ($)</label>
-                        <input class="form-control" required type="number" name="amount" id="amount" step="0.01" max="<?php echo number_format($order->total,2) ?>" 
+                        <input class="form-control" required type="number" name="amount" id="amount" step="0.01" max="<?php echo number_format($order->total, 2) ?>" 
                             value="<?php echo $order->total  ?>" oninput="handleAmountChange(this)"/>
                     </div>
 
