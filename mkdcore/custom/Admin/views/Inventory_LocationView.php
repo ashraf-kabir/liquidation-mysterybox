@@ -42,6 +42,16 @@ if ($layout_clean_mode) {
 						<?php echo $view_model->get_name();?>
 					</div>
 				</div>
+				
+				<div class='row mb-4'>
+					<div class='col'>
+						Barcode Image
+					</div>
+					<div class='col'>
+					<img class="img-fluid d-block mb-3 mt-3 view-image" style='max-height: 100px;' src="<?php echo $view_model->get_barcode_image();?>" onerror= \"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\" />
+					</div>
+				</div>
+
 
 				<div class='row mb-4'>
 					<div class='col'>
@@ -56,3 +66,73 @@ if ($layout_clean_mode) {
         </div>
     </div>
 </div>
+
+
+<?php if ($this->input->get('print') == 1): ?>
+	<div class="modal print-modal" tabindex="-1" role="dialog">
+	  	<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      	<div class="modal-header">
+			        <h5 class="modal-title">Please print the Inventory Location Code below</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          	<span aria-hidden="true">&times;</span>
+			        </button>
+		      	</div>
+		      	<div class="modal-body  page_full_width  record_break_per printable" id="print-me-2">
+
+		      		 
+		      		<div class='row '  >
+						<div class="col-sm-12" >
+							<h1  style="text-overflow: hidden;" class="make_font_big" > <?php echo $view_model->get_name();?></h1> 
+						</div> 
+					</div>
+
+
+
+					<div class='row ' >
+						<div class="col-sm-12" >
+							<h1  class="make_font_big"  ><?php echo $store->name;?></h1> 
+						</div> 
+					</div>
+
+					<div class='row' style="text-align: center;">
+						<div class="col-sm-12" >
+							<img style="width: 100%;height: 150px"   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
+						</div> 
+					</div>  
+			         
+		      	</div>
+		      	<div class="modal-footer">
+		        	<button type="button" class="btn btn-primary"  onClick="printdiv('print-me-2')" >Print</button>
+		        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		      	</div>
+		    </div>
+	  	</div>
+	</div>
+<?php endif ?>
+
+
+<script>
+	function printdiv(printpage) 
+    {
+
+    	$('.print-modal').modal('hide');
+    	
+        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">  body  { margin: 0px !important;  } @media print {  .make_font_big{font-size: 7rem !important;padding:0px !important; word-spacing: 50px !important; width : 100% !important;transform:translateY(-20px); } .col-sm-12{ text-align: justify !important;text-justify: inter-word !important;} @page{ width:256px !important; height: 170px !important; margin: 0px !important; padding: 0px !important; }   .printable{padding:0px!important;margin:0px!important;} .printable{width:100%!important;float:left!important;} .printable{padding:0px!important;margin:0px!important;}  } </style><body>';
+       
+        var footstr = "</body>";
+        var newstr = document.all.item(printpage).innerHTML;
+        var oldstr = document.body.innerHTML;
+        document.body.innerHTML = headstr + newstr + footstr;
+        window.print();
+        document.body.innerHTML = oldstr;
+        return false;
+    }   
+
+
+    <?php if ($this->input->get('print') == 1): ?>
+    document.addEventListener('DOMContentLoaded', function(){
+    	$('.print-modal').modal('toggle')
+    }, false);
+    <?php endif ?>
+</script>

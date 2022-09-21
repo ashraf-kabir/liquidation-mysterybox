@@ -18,7 +18,7 @@ class Admin_inventory_location_controller extends Admin_controller
     {
         parent::__construct();
         
-        
+        $this->load->library('barcode_service');
         
     }
 
@@ -109,18 +109,31 @@ class Admin_inventory_location_controller extends Admin_controller
 
         $name = $this->input->post('name', TRUE);
 		$store_id = $this->input->post('store_id', TRUE);
+
+        $increment_id  =  $this->physical_location_model->get_auto_increment_id();
+        $code           =  sprintf("%05d", $increment_id); 
+        $code           = $store_id."-".$code; 
+
+        $barcode_image_name = $this->barcode_service->generate_png_barcode($code, "location"); 
+        /**
+         *  Upload Image to S3
+         * 
+        */ 
+        $barcode_image  = $this->upload_image_with_s3($barcode_image_name);
 		
         $result = $this->physical_location_model->create([
             'name' => $name,
 			'store_id' => $store_id,
+			'barcode_image' => $barcode_image,
 			
         ]);
 
         if ($result)
         {
+            $physical_location_id = $result;
             $this->success('Inventory Location has been added successfully.');
             
-            return $this->redirect('/admin/inventory_location/0', 'refresh');
+            return $this->redirect('/admin/inventory_location/view/'.$physical_location_id.'?print=1', 'refresh');
         }
 
         $this->_data['error'] = 'Error';
