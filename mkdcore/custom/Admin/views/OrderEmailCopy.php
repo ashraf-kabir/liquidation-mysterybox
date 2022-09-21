@@ -49,7 +49,7 @@
 									<!-- Billing -->
 									<div>
 										<div style="font-weight:bold">Billing Details</div>
-										<div style="margin-top:1.5rem; margin-bottom:1.5rem; ">
+										<div style="margin-top:1.5rem; margin-bottom:1.3rem; ">
 											<div><?php echo $view_model->get_billing_name();?> </div>
 											<div><?php echo $view_model->get_billing_address();?> </div>
 											<div><?php echo $view_model->get_billing_city() == '' ? '': $view_model->get_billing_city().',' ;?> <?php echo $view_model->get_billing_zip();?>  </div>
@@ -61,7 +61,7 @@
 									<!-- Shipping -->
 									<div>
 										<div style="font-weight:bold">Shipping Details</div>
-										<div style="margin-top:1.5rem; margin-bottom:1.5rem; ">
+										<div style="margin-top:1.5rem; margin-bottom:1.3rem; ">
 											<div><?php echo $view_model->get_billing_name();?> </div>
 											<div><?php echo $view_model->get_shipping_address();?> </div>
 											<div><?php echo $view_model->get_shipping_city() == '' ? '': $view_model->get_shipping_city().',' ;?><?php echo $view_model->get_shipping_zip();?>  </div>
@@ -72,12 +72,6 @@
 							</tr>
 						</tbody>
 					</table>
-
-					<div style="display: -ms-flexbox;display:flex; justify-content:space-between; align-items:baseline; padding:1rem;background-color:#ddd;color:#444;height:180px">
-						
-						
-						
-					</diV>
 					
 
 					<div>
