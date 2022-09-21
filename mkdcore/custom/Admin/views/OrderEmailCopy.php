@@ -30,7 +30,7 @@
 						 Thank you for your order!
 					</h2>
 
-					<table style="width: 100%;max-width: 100%;margin-bottom: 1rem;background-color: transparent; border-collapse: collapse; border: none; ">
+					<table style="width: 100%;max-width: 100%;margin-bottom: 1rem;background-color: transparent; border-collapse: collapse; border: none; padding:1rem">
 						<tbody>
 							<tr style="padding:1rem;background-color:#ddd;color:#444;height:180px">
 								<td style="width:33%">
