@@ -30,37 +30,53 @@
 						 Thank you for your order!
 					</h2>
 
+					<table style="width: 100%;max-width: 100%;margin-bottom: 1rem;background-color: transparent; border-collapse: collapse; border: none; ">
+						<tbody>
+							<tr style="padding:1rem;background-color:#ddd;color:#444;height:180px">
+								<td style="width:33%">
+									<div>
+										<div>
+											<div style="margin-top:1rem;"><span style="font-weight:bold">Order Number: </span> <?php echo $view_model->get_id();?> </div>
+											<div style="margin-top:1rem;"><span style="font-weight:bold">Billing Name: </span> <?php echo $view_model->get_billing_name();?> </div>
+										</div>
+										<div>
+											<div style="margin-top:1rem;"><span style="font-weight:bold">Order Date: </span><?php echo date('m-d-Y', strtotime( $view_model->get_order_date_time() ));?></div>
+											<div style="margin-top:1rem;"><span style="font-weight:bold">Email: </span> <?php echo $view_model->get_customer_email();?> </div>
+										</div>
+									</div>
+								</td>
+								<td style="width:33%">
+									<!-- Billing -->
+									<div>
+										<div style="font-weight:bold">Billing Details</div>
+										<div style="margin-top:1.5rem; margin-bottom:1.5rem; ">
+											<div><?php echo $view_model->get_billing_name();?> </div>
+											<div><?php echo $view_model->get_billing_address();?> </div>
+											<div><?php echo $view_model->get_billing_city() == '' ? '': $view_model->get_billing_city().',' ;?> <?php echo $view_model->get_billing_zip();?>  </div>
+											<div><a href='tel:<?php echo $customer->phone?>'> <?php echo $customer->phone?>  </a>  </div>
+										</div>
+									</div>
+								</td>
+								<td style="width:33%">
+									<!-- Shipping -->
+									<div>
+										<div style="font-weight:bold">Shipping Details</div>
+										<div style="margin-top:1.5rem; margin-bottom:1.5rem; ">
+											<div><?php echo $view_model->get_billing_name();?> </div>
+											<div><?php echo $view_model->get_shipping_address();?> </div>
+											<div><?php echo $view_model->get_shipping_city() == '' ? '': $view_model->get_shipping_city().',' ;?><?php echo $view_model->get_shipping_zip();?>  </div>
+											<div><a href='tel:<?php echo $customer->phone?>'> <?php echo $customer->phone?>  </a>  </div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
 					<div style="display: -ms-flexbox;display:flex; justify-content:space-between; align-items:baseline; padding:1rem;background-color:#ddd;color:#444;height:180px">
-						<div>
-							<div>
-								<div style="margin-top:1rem;"><span style="font-weight:bold">Order Number: </span> <?php echo $view_model->get_id();?> </div>
-								<div style="margin-top:1rem;"><span style="font-weight:bold">Billing Name: </span> <?php echo $view_model->get_billing_name();?> </div>
-							</div>
-							<div>
-								<div style="margin-top:1rem;"><span style="font-weight:bold">Order Date: </span><?php echo date('m-d-Y', strtotime( $view_model->get_order_date_time() ));?></div>
-								<div style="margin-top:1rem;"><span style="font-weight:bold">Email: </span> <?php echo $view_model->get_customer_email();?> </div>
-							</div>
-						</div>
-						<!-- Billing -->
-						<div>
-							<div style="font-weight:bold">Billing Details</div>
-							<div style="margin-top:1.5rem; margin-bottom:1.5rem; ">
-								<div><?php echo $view_model->get_billing_name();?> </div>
-								<div><?php echo $view_model->get_billing_address();?> </div>
-								<div><?php echo $view_model->get_billing_city() == '' ? '': $view_model->get_billing_city().',' ;?> <?php echo $view_model->get_billing_zip();?>  </div>
-								<div><a href='tel:<?php echo $customer->phone?>'> <?php echo $customer->phone?>  </a>  </div>
-							</div>
-						</div>
-						<!-- Shipping -->
-						<div>
-							<div style="font-weight:bold">Shipping Details</div>
-							<div style="margin-top:1.5rem; margin-bottom:1.5rem; ">
-								<div><?php echo $view_model->get_billing_name();?> </div>
-								<div><?php echo $view_model->get_shipping_address();?> </div>
-								<div><?php echo $view_model->get_shipping_city() == '' ? '': $view_model->get_shipping_city().',' ;?><?php echo $view_model->get_shipping_zip();?>  </div>
-								<div><a href='tel:<?php echo $customer->phone?>'> <?php echo $customer->phone?>  </a>  </div>
-							</div>
-						</div>
+						
+						
+						
 					</diV>
 					
 
@@ -143,28 +159,6 @@
 						</div>
 					</div>
 
-					<div class=" " style="margin-top:1.5rem; margin-bottom:1.5rem; padding:1.5rem;">
-						<div style="">
-							<div style="font-weight:bold">Billing Details</div>
-							<div style="background-color:#ddd;color:#444;padding:1.5rem;margin-top:1.5rem; margin-bottom:1.5rem; ">
-								<div><?php echo $view_model->get_billing_name();?> </div>
-								<div><?php echo $view_model->get_billing_address();?> </div>
-								<div><?php echo $view_model->get_billing_city() == '' ? '': $view_model->get_billing_city().',' ;?> <?php echo $view_model->get_billing_zip();?>  </div>
-								<div><a href='tel:<?php echo $customer->phone?>'> <?php echo $customer->phone?>  </a>  </div>
-							</div>
-						</div>
-						<div>
-						<div style="font-weight:bold">Shipping Details</div>
-							<div style="background-color:#ddd;color:#444;padding:1.5rem;margin-top:1.5rem; margin-bottom:1.5rem; ">
-								<div><?php echo $view_model->get_billing_name();?> </div>
-								<div><?php echo $view_model->get_shipping_address();?> </div>
-								<div><?php echo $view_model->get_shipping_city() == '' ? '': $view_model->get_shipping_city().',' ;?><?php echo $view_model->get_shipping_zip();?>  </div>
-								<div><a href='tel:<?php echo $customer->phone?>'> <?php echo $customer->phone?>  </a>  </div>
-							</div>
-						</div>
-					</div>
-	                
-					
 					
 				 
 					 
