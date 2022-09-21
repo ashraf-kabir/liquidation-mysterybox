@@ -91,13 +91,13 @@ if ($layout_clean_mode) {
 
 					<div class='row ' >
 						<div class="col-sm-12" >
-							<h1  class="make_font_big"  ><?php echo $store->name;?></h1> 
+							<h1  class="make_font_big" >Store: <?php echo $store->name;?></h1> 
 						</div> 
 					</div>
 
 					<div class='row' style="text-align: center;">
 						<div class="col-sm-12" >
-							<img style="width: 100%;height: 150px"   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
+							<img style="width: 100%;height: 150px;padding:3px;"   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
 						</div> 
 					</div>  
 			         
