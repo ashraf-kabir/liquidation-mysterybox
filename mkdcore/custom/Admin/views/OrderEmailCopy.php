@@ -30,16 +30,39 @@
 						 Thank you for your order!
 					</h2>
 
-					<div class=" " style="margin-top:1.5rem; margin-bottom:1.5rem; padding:1.5rem;background-color:#ddd;color:#444;">
+					<div style="display: -ms-flexbox;display:flex; justify-content:space-between; align-items:baseline; padding:1rem;background-color:#ddd;color:#444;height:180px">
 						<div>
-							<div style="margin-top:1rem;"><span style="font-weight:bold">Order Number: </span> <?php echo $view_model->get_id();?> </div>
-							<div style="margin-top:1rem;"><span style="font-weight:bold">Billing Name: </span> <?php echo $view_model->get_billing_name();?> </div>
+							<div>
+								<div style="margin-top:1rem;"><span style="font-weight:bold">Order Number: </span> <?php echo $view_model->get_id();?> </div>
+								<div style="margin-top:1rem;"><span style="font-weight:bold">Billing Name: </span> <?php echo $view_model->get_billing_name();?> </div>
+							</div>
+							<div>
+								<div style="margin-top:1rem;"><span style="font-weight:bold">Order Date: </span><?php echo date('m-d-Y', strtotime( $view_model->get_order_date_time() ));?></div>
+								<div style="margin-top:1rem;"><span style="font-weight:bold">Email: </span> <?php echo $view_model->get_customer_email();?> </div>
+							</div>
 						</div>
+						<!-- Billing -->
 						<div>
-							<div style="margin-top:1rem;"><span style="font-weight:bold">Order Date: </span><?php echo date('m-d-Y', strtotime( $view_model->get_order_date_time() ));?></div>
-							<div style="margin-top:1rem;"><span style="font-weight:bold">Email: </span> <?php echo $view_model->get_customer_email();?> </div>
+							<div style="font-weight:bold">Billing Details</div>
+							<div style="margin-top:1.5rem; margin-bottom:1.5rem; ">
+								<div><?php echo $view_model->get_billing_name();?> </div>
+								<div><?php echo $view_model->get_billing_address();?> </div>
+								<div><?php echo $view_model->get_billing_city() == '' ? '': $view_model->get_billing_city().',' ;?> <?php echo $view_model->get_billing_zip();?>  </div>
+								<div><a href='tel:<?php echo $customer->phone?>'> <?php echo $customer->phone?>  </a>  </div>
+							</div>
 						</div>
-					</div>
+						<!-- Shipping -->
+						<div>
+							<div style="font-weight:bold">Shipping Details</div>
+							<div style="margin-top:1.5rem; margin-bottom:1.5rem; ">
+								<div><?php echo $view_model->get_billing_name();?> </div>
+								<div><?php echo $view_model->get_shipping_address();?> </div>
+								<div><?php echo $view_model->get_shipping_city() == '' ? '': $view_model->get_shipping_city().',' ;?><?php echo $view_model->get_shipping_zip();?>  </div>
+								<div><a href='tel:<?php echo $customer->phone?>'> <?php echo $customer->phone?>  </a>  </div>
+							</div>
+						</div>
+					</diV>
+					
 
 					<div>
 						<h5 style="margin-top:1.5rem; margin-bottom:1.25rem;">Order Details</h5>
@@ -141,155 +164,7 @@
 						</div>
 					</div>
 	                
-					<!-- <div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							ID
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->get_id();?>
-						</div>
-					</div>
-
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Billing Name
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->get_billing_name();?>
-						</div>
-					</div>
-
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Billing Country
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->get_billing_country();?>
-						</div>
-					</div>
-
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Billing City
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->get_billing_city();?>
-						</div>
-					</div>
-
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Billing Zip
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->get_billing_zip();?>
-						</div>
-					</div>
-
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Billing Address
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->get_billing_address();?>
-						</div>
-					</div>
-
-
-
-					 
-
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Shipping Country
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->get_shipping_country();?>
-						</div>
-					</div>
-
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Shipping City
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->get_shipping_city();?>
-						</div>
-					</div>
-
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Shipping Zip
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->get_shipping_zip();?>
-						</div>
-					</div>
-
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Shipping Address
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->get_shipping_address();?>
-						</div>
-					</div>
-
-
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Order Date
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo date('m-d-Y', strtotime( $view_model->get_order_date_time() ));?>
-						</div>
-					</div>
-
-
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Order Time
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo date('H:i:s A', strtotime( $view_model->get_order_date_time() ));?>
-						</div>
-					</div>
-
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Payment Method
-						</div>
-					<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->payment_method_mapping()[$view_model->get_payment_method()];?>
-						</div>
-						</div>
 					
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Order Type
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->order_type_mapping()[$view_model->get_order_type()];?>
-						</div>
-					</div>
-					
-					<div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Status
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->status_mapping()[$view_model->get_status()];?>
-						</div>
-					</div>
-					 -->
-					<!-- <div class='row mb-4'  style="margin-bottom: 1.5rem!important;display: flex;-ms-flex-wrap: wrap; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;"  >
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							Delivery Type
-						</div>
-						<div class='col'  style="flex-basis: 0; -ms-flex-positive: 1; flex-grow: 1; max-width: 100%;position: relative; width: 100%; min-height: 1px;padding-right: 15px; padding-left: 15px;">
-							<?php echo $view_model->checkout_type_mapping()[$view_model->get_checkout_type()];?>
-						</div>
-					</div> -->
 					
 				 
 					 

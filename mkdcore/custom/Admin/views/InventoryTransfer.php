@@ -47,6 +47,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
             <div class="card-body">
             <?= form_open() ?>
             <input type="hidden" id="encoded-stores" value="<?php echo $encoded_stores ?>">
+            <input type="hidden" id="encoded-locations" value="<?php echo $encoded_locations ?>">
                 <div class="my-2" >
                     <div class="form-group col-md-5 p-0 d-inline-block">
                         <label for="">Scan Item</label>
@@ -87,9 +88,18 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                     </div>
 
                     <div class="form-group">
-                        <label for="">Transfer From <span class="text-danger">*</span></label>
+                        <label for="">Transfer From Store <span class="text-danger">*</span></label>
                         <select name="from_store" id="from_store" class="form-control"  store-data="">
                         <option value="">--Select Store--</option>
+                        
+                        
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Transfer From Location <span class="text-danger">*</span></label>
+                        <select name="from_location" id="from_location" class="form-control"  location-data="">
+                        <option value="">--Select Location--</option>
                         
                         
                         </select>
@@ -103,7 +113,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                     </div>
                     
                     <div class="form-group">
-                        <label for="">To <span class="text-danger">*</span></label>
+                        <label for="">To Store<span class="text-danger">*</span></label>
                         <select  name="to_store" id="to_store" class="form-control">
                         
                         
@@ -118,6 +128,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                         <tr>
                             <th>SKU</th>
                             <th>From</th>
+                            <th>From Location</th>
                             <th>To</th>
                             <th>Quantity</th>
                             <th>Action</th>
@@ -156,6 +167,7 @@ if ($layout_clean_mode) {
     document.querySelector('#sku').addEventListener('input', function (event){
         getProductBySKU(event.target.value);
     });
+    // Hide TO STORE if it is selected in FROM STORE //////////
     document.querySelector('#from_store').addEventListener('change', function (event){
         let selected_value = event.target.value;
         let to_options = document.querySelectorAll('#to_store option');
@@ -165,6 +177,7 @@ if ($layout_clean_mode) {
         document.querySelector(`#to_store > option[value="${selected_value}"]`).style.display = 'none';
         document.querySelector('#to_store').value = "";
     });
+    // /////////////////////////////////////   //////// //////
 
     document.querySelector('#items').addEventListener('change', function (event){
         let sku = event.target.value;
@@ -189,8 +202,40 @@ if ($layout_clean_mode) {
                 store = element;
             }
         });
+        let locations = store.locations;
+        document.querySelector("#from_location").setAttribute('location-data', locations);
+
+        let location_options_template = '<option value=""> </option>';
+        Object.entries(locations).forEach((location)=> {
+            location_options_template += `<option value="${location[0]}">${getLocationName(location[0])}</option>`;
+        });
+       
+        document.querySelector("#from_location").innerHTML = location_options_template;
+        document.querySelector("#from_location").setAttribute('location-data', JSON.stringify(locations));
+
+    });
+
+    document.querySelector('#from_location').addEventListener('change', function (event){
+        if(event.target == ''){
+            return;
+        }
+        let location_id = event.target.value;
+        let location_data = JSON.parse(event.target.getAttribute('location-data'));
+        let location_quantity = 0;
+        Object.entries(location_data).forEach((location)=> {
+            if(location[0] === location_id){
+                location_quantity = location[1];
+            }
+        });
+
+        // let store = null;
+        // store_data.forEach((element)=>{
+        //     if(element.store_id === store_id){
+        //         store = element;
+        //     }
+        // });
         let options_template = '';
-        for(let i = 1; i <= store.quantity; i++ ){
+        for(let i = 1; i <= location_quantity; i++ ){
             options_template += `<option value="${i}"> ${i} </option>`;
         }
         document.querySelector("#from_quantity").innerHTML = options_template;
@@ -271,17 +316,27 @@ if ($layout_clean_mode) {
         return store[0].name;
     }
 
+    function getLocationName(location_id){
+        let locations = JSON.parse( `${atob(document.querySelector('#encoded-locations').value) }`);
+        let location = locations.filter(location => {
+            return location.id === location_id;
+        });
+
+        return location[0].name;
+    }
+
     function addToTransferList(){
         let sku = document.querySelector('#sku').value.trim();
         let from = document.querySelector('#from_store').value.trim();
+        let from_location = document.querySelector('#from_location').value.trim();
         let to = document.querySelector('#to_store').value.trim();
         let quantity = document.querySelector('#from_quantity').value;
-        if(sku === '' || from === '' || to === '' || quantity < 1 ) {
+        if(sku === '' || from === '' || to === '' || quantity < 1 || from_location === '') {
             alert('Select all required fields.');
             return;
         }
         document.querySelector('#transfer-list-table-body')
-            .innerHTML += TransferItemsRow({sku, from, to, quantity}); 
+            .innerHTML += TransferItemsRow({sku, from, to, quantity, from_location}); 
     }
 
     function TransferItemsRow(data){
@@ -289,6 +344,7 @@ if ($layout_clean_mode) {
             <tr>
                 <td><input type="hidden" name="_sku[]" id="" value="${data.sku}" > ${data.sku} </td>
                 <td><input type="hidden" name="_from[]" id="" value="${data.from}" > ${getStoreName(data.from)}</td>
+                <td><input type="hidden" name="_from_location[]" id="" value="${data.from_location}" > ${getLocationName(data.from_location)}</td>
                 <td><input type="hidden" name="_to[]" id="" value="${data.to}" > ${getStoreName(data.to)}</td>
                 <td><input type="hidden" name="_quantity[]" id="" value="${data.quantity}" >  ${data.quantity}</td>
                 <td>

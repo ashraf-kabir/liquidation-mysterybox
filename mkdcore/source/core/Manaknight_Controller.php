@@ -567,7 +567,7 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
             $content = ob_get_contents(); 
             ob_end_clean();
             $from = $this->config->item('from_email');
-            $this->mail_service->send($from, $model->customer_email, "Order Update", $content);
+            $this->mail_service->send($from, $model->customer_email, "Mystery Box Order Update", $content);
             
         }  
     }

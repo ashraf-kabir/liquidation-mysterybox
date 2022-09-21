@@ -686,16 +686,19 @@ class Admin_inventory_controller extends Admin_controller
     {
         $this->load->library('helpers_service');
         $this->load->model('inventory_transfer_log_model');
+        $this->load->model('physical_location_model');
         $this->_data['heading'] = 'Inventory Transfer';
         $this->_data['page_name'] = 'Inventory Transfer';
 
         $this->_data['encoded_stores'] = base64_encode(json_encode($this->store_model->get_all()));
+        $this->_data['encoded_locations'] = base64_encode(json_encode($this->physical_location_model->get_all()));
         $this->_data['inventory_items'] = $this->inventory_model->get_all(['quantity > 0']);
         
         if(isset($_POST['submit_inventory_transfer']))
         {
             $_sku = $this->input->post('_sku[]');
             $_from_store = $this->input->post('_from[]');
+            $_from_location = $this->input->post('_from_location[]');
             $_from_quantity = $this->input->post('_quantity[]');
             $_to_store = $this->input->post('_to[]');
             $items_count = 0;
@@ -708,6 +711,7 @@ class Admin_inventory_controller extends Admin_controller
                 // Start Inventory transfer
                 $sku = $_sku[$i];
                 $from_store = $_from_store[$i];
+                $from_location = $_from_location[$i];
                 $from_quantity = $_from_quantity[$i];
                 $to_store = $_to_store[$i];
                 $product = $this->inventory_model->get_by_field('sku', $sku);
@@ -722,6 +726,7 @@ class Admin_inventory_controller extends Admin_controller
                     'product_name' => $product->product_name,
                     'sku' => $sku,
                     'from_store' => $from_store,
+                    'from_location' => $from_location,
                     'to_store' => $to_store,
                     'quantity' => $from_quantity,
                     'status' => '1' //pending

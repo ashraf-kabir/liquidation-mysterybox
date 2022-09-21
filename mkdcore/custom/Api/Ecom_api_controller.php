@@ -404,7 +404,7 @@ class Ecom_api_controller extends Manaknight_Controller
                     $this->mail_service->set_adapter('smtp');
                     $from = $this->config->item('from_email');  
                     $text_msg = "Your order has been shipped and your tracking number is <a target='_blank' href='https://www.google.com/search?q={$tracking_no}'>" . $tracking_no . "</a>.<br> You can track order <a href='https://www.google.com/search?q=" . $tracking_no . "' target='_blank' style='color;#1A73E8 !important;' >here</a>"; 
-                    $this->mail_service->send($from, $order_data->customer_email, "Order Shipped", $text_msg);
+                    $this->mail_service->send($from, $order_data->customer_email, "Mystery Box Order Update", $text_msg);
                     exit(); 
                 }
 
