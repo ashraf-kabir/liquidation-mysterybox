@@ -23,6 +23,7 @@ if ($layout_clean_mode) {
             <div class="card-body">
                 <h5 class="primaryHeading2 text-md-left">
                     <?php echo $view_model->get_heading();?> Details
+					<span class="btn btn-primary float-right" onclick="togglePrintModal()">Print Barcode</span>
                 </h5>
                 
 				<div class='row mb-4'>
@@ -68,7 +69,7 @@ if ($layout_clean_mode) {
 </div>
 
 
-<?php if ($this->input->get('print') == 1): ?>
+<?php if ($this->input->get('print') == 1 || true): ?>
 	<div class="modal print-modal" tabindex="-1" role="dialog">
 	  	<div class="modal-dialog" role="document">
 		    <div class="modal-content">
@@ -91,7 +92,7 @@ if ($layout_clean_mode) {
 
 					<div class='row ' >
 						<div class="col-sm-12" >
-							<h1  class="make_font_big" >Store: <?php echo $store->name;?></h1> 
+							<h1  class="font-x-large" >Store: <?php echo $store->name;?></h1> 
 						</div> 
 					</div>
 
@@ -113,12 +114,11 @@ if ($layout_clean_mode) {
 
 
 <script>
-	function printdiv(printpage) 
-    {
+	function printdiv(printpage) {
 
     	$('.print-modal').modal('hide');
     	
-        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">  body  { margin: 0px !important;  } @media print {  .make_font_big{font-size: 7rem !important;padding:0px !important; word-spacing: 50px !important; width : 100% !important;transform:translateY(-20px); } .col-sm-12{ text-align: justify !important;text-justify: inter-word !important;} @page{ width:256px !important; height: 170px !important; margin: 0px !important; padding: 0px !important; }   .printable{padding:0px!important;margin:0px!important;} .printable{width:100%!important;float:left!important;} .printable{padding:0px!important;margin:0px!important;}  } </style><body>';
+        var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">  body  { margin: 0px !important;  } @media print {  .make_font_big{font-size: 5rem !important;padding:0px !important; word-spacing: 30px !important; width : 100% !important;transform:translateY(-20px); } .col-sm-12{ text-align: justify !important;text-justify: inter-word !important;} @page{ width:256px !important; height: 170px !important; margin: 0px !important; padding: 0px !important; }   .printable{padding:0px!important;margin:0px!important;} .printable{width:100%!important;float:left!important;} .printable{padding:0px!important;margin:0px!important;}  } </style><body>';
        
         var footstr = "</body>";
         var newstr = document.all.item(printpage).innerHTML;
@@ -129,10 +129,14 @@ if ($layout_clean_mode) {
         return false;
     }   
 
+	function togglePrintModal() {
+		$('.print-modal').modal('toggle')
+	}
+
 
     <?php if ($this->input->get('print') == 1): ?>
     document.addEventListener('DOMContentLoaded', function(){
-    	$('.print-modal').modal('toggle')
+    	togglePrintModal()
     }, false);
     <?php endif ?>
 </script>
