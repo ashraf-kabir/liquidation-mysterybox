@@ -36,7 +36,7 @@
 								<td style="width:33%;padding:5px">
 									<div>
 										<div>
-											<div style="margin-top:1rem;"><span style="font-weight:bold">Order Number: </span> <?php echo $view_model->get_id();?> </div>
+											<div style="margin-top:1rem;"><span style="font-weight:bold">Order Number: </span> #<?php echo $view_model->get_id();?> </div>
 											<div style="margin-top:1rem;"><span style="font-weight:bold">Billing Name: </span> <?php echo $view_model->get_billing_name();?> </div>
 										</div>
 										<div>

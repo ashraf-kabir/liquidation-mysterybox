@@ -109,12 +109,20 @@
                                                                       <td>$<?php echo number_format($order->discount, 2);?></td>
                                                                  </tr>
 
+                                                                 <?php if ($order->status == 2 /* Refunded */): ?>
+                                                                 <tr>
+                                                                      <td colspan="2"></td> 
+                                                                      <td>Refunded Amount</td>
+                                                                      <td style="font-weight:bold;color:#FF5733">$-<?php echo number_format($order->refunded_amount(), 2);?></td>
+                                                                 </tr>
+                                                                 <?php endif; ?>
+
                                                                  <tr>
                                                                       <td colspan="2"></td> 
                                                                       <td>Total</td>
                                                                       <td>
                                                                  $<?php  
-                                                                      echo number_format($order->total, 2);
+                                                                      echo number_format($order->total - $order->refunded_amount, 2);
                                                                  ?>
                                                                  
                                                             </td>

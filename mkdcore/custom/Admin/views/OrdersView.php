@@ -306,13 +306,20 @@ if ($layout_clean_mode) {
 								<td>Discount</td>
 								<td>$<?php echo number_format($view_model->get_discount(), 2);?></td>
 							</tr>
+							<?php if ($view_model->get_status() == 2 /* Refunded */): ?>
+							<tr>
+								<td colspan="2"></td> 
+								<td>Refunded Amount</td>
+								<td style="font-weight:bold;color:#FF5733">$-<?php echo number_format($view_model->get_refunded_amount(), 2);?></td>
+							</tr>
+							<?php endif; ?>
 
 							<tr>
 								<td colspan="2"></td> 
 								<td>Total</td>
 								<td>
                                     $<?php  
-                                        echo number_format($view_model->get_total(), 2);
+                                        echo number_format($view_model->get_total() - $view_model->get_refunded_amount() , 2);
                                     ?>
                                     
                                 </td>
