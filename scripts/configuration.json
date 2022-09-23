@@ -3864,6 +3864,7 @@
 		"../mkdcore/custom/Admin/views/OrdersView.php" : "../release/application/views/Admin/OrdersView.php",
 		"../mkdcore/custom/Admin/views/Orders.php" : "../release/application/views/Admin/Orders.php",
 		"../mkdcore/custom/Admin/views/OrderEmailCopy.php" : "../release/application/views/Admin/OrderEmailCopy.php",
+		"../mkdcore/custom/Admin/views/OrderRefundEmailCopy.php" : "../release/application/views/Admin/OrderRefundEmailCopy.php",
 		"../mkdcore/custom/Admin/views/InventoryReport.php" : "../release/application/views/Admin/InventoryReport.php",
 		"../mkdcore/custom/Admin/views/CustomerReport.php" : "../release/application/views/Admin/CustomerReport.php",
 		"../mkdcore/custom/Admin/views/ShippingCostReport.php" : "../release/application/views/Admin/ShippingCostReport.php",
