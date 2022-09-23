@@ -141,7 +141,7 @@
 								<tr>
 									<td colspan="4"></td> 
 									<td>Refunded Amount</td>
-									<td style="font-weight:bold;color:#FF5733">$<?php echo number_format($view_model->get_refunded_amount(), 2);?></td>
+									<td style="font-weight:bold;color:#FF5733">$-<?php echo number_format($view_model->get_refunded_amount(), 2);?></td>
 								</tr>
 
 								<tr style="font-weight:bold; border-top:1px solid #444;">
