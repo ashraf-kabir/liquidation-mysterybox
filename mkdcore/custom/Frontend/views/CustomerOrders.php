@@ -113,7 +113,7 @@
                                                                  <tr>
                                                                       <td colspan="2"></td> 
                                                                       <td>Refunded Amount</td>
-                                                                      <td style="font-weight:bold;color:#FF5733">$-<?php echo number_format($order->refunded_amount(), 2);?></td>
+                                                                      <td style="font-weight:bold;color:#FF5733">$-<?php echo number_format($order->refunded_amount, 2);?></td>
                                                                  </tr>
                                                                  <?php endif; ?>
 
