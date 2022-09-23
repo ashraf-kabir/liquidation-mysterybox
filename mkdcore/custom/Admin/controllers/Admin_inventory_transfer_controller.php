@@ -19,6 +19,7 @@ class Admin_inventory_transfer_controller extends Admin_controller
         parent::__construct();
 
         $this->load->model('store_model');
+        $this->load->model('physical_location_model');
         $this->load->model('inventory_model');
         
     }
@@ -65,6 +66,7 @@ class Admin_inventory_transfer_controller extends Admin_controller
             $direction));
             
         $this->_data['inventory_items_list']  = $this->inventory_model->get_all(['status' => 1]);
+        $this->_data['encoded_physical_locations']  =   base64_encode(json_encode($this->physical_location_model->get_all()));
 
         if ($format == 'csv')
         {
@@ -87,7 +89,15 @@ class Admin_inventory_transfer_controller extends Admin_controller
         foreach ($stores as $store) {
             $store_map[$store->id] = $store->name;
         }
+
+        $locations = $this->physical_location_model->get_all();
+        $location_map = [];
+        foreach ($locations as $location) {
+            $location_map[$location->id] = $location->name;
+        }
         $this->_data['store_map'] = $store_map;
+        $this->_data['location_map'] = $location_map;
+
 
         return $this->render('Admin/Inventory_transfer', $this->_data);
 	}
@@ -146,7 +156,14 @@ class Admin_inventory_transfer_controller extends Admin_controller
         foreach ($stores as $store) {
             $store_map[$store->id] = $store->name;
         }
+
+        $locations = $this->physical_location_model->get_all();
+        $location_map = [];
+        foreach ($locations as $location) {
+            $location_map[$location->id] = $location->name;
+        }
         $this->_data['store_map'] = $store_map;
+        $this->_data['location_map'] = $location_map;
         
 		return $this->render('Admin/Inventory_transferView', $this->_data);
 	}
@@ -177,6 +194,7 @@ class Admin_inventory_transfer_controller extends Admin_controller
 	{
         $model = $this->inventory_transfer_model->get($id);
         $sku_confirmation = $this->input->get('sku_c');
+        $to_location = $this->input->get('physical_location');
 
 		if (!$model)
 		{
@@ -192,6 +210,7 @@ class Admin_inventory_transfer_controller extends Admin_controller
         // Handle transfer here
 
         $from_store = $model->from_store;
+        $from_location = $model->from_location;
         $from_quantity = $model->quantity;
         $to_store = $model->to_store;
         if($from_store == $to_store){
@@ -201,22 +220,31 @@ class Admin_inventory_transfer_controller extends Admin_controller
         }
         $inventory = $this->inventory_model->get_by_field('sku', $model->sku);
         $store_inventory = json_decode($inventory->store_inventory);
+
+        // remove items;
         foreach ($store_inventory as $key => &$value) 
         { 
-            if($value->store_id == $from_store ) 
-            { 
-                if($from_quantity > $value->quantity) {
-                    $this->error('Error, Cannot transfer due to insufficient quantity.');
-                    return redirect($_SERVER['HTTP_REFERER']);
-                }
-                // remove quantity from store
-                $value->quantity = $value->quantity - $from_quantity;
-                continue;
+            if($value->store_id != $from_store ) { continue;}
+
+            if($from_quantity > $value->locations->{$from_location}) {
+                $this->error('Error, Cannot transfer due to insufficient quantity.');
+                return redirect($_SERVER['HTTP_REFERER']);
             }
-            if($value->store_id == $to_store ) 
-            { // add quantity to store
-                $value->quantity += $from_quantity;
-            }
+
+            $value->locations->{$from_location} -=  $from_quantity;
+            // subtract from store quantity
+            $value->quantity -= $from_quantity;
+
+        }
+
+        // add items;
+        foreach ($store_inventory as $key => &$value) 
+        { 
+            if($value->store_id != $to_store ) { continue;}
+            
+            $value->locations->{$to_location} = empty($value->locations->{$to_location}) ? $from_quantity : $value->locations->{$to_location} + $from_quantity;
+            // increase store quantity
+            $value->quantity += $from_quantity;
         }
 
         $this->inventory_model->edit([

@@ -97,9 +97,9 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                     </div>
 
                     <div class="form-group">
-                        <label for="">Transfer From Location <span class="text-danger">*</span></label>
+                        <label for="">Store Physical Location <span class="text-danger">*</span></label>
                         <select name="from_location" id="from_location" class="form-control"  location-data="">
-                        <option value="">--Select Location--</option>
+                        <option value="">--Select Store Physical Location--</option>
                         
                         
                         </select>
@@ -190,6 +190,7 @@ if ($layout_clean_mode) {
 
 
     document.querySelector('#from_store').addEventListener('change', function (event){
+        initFromLocationHandler();
         if(event.target == ''){
             return;
         }
@@ -217,6 +218,7 @@ if ($layout_clean_mode) {
 
     document.querySelector('#from_location').addEventListener('change', function (event){
         if(event.target == ''){
+            console.log('nothing selected');
             return;
         }
         let location_id = event.target.value;
@@ -227,13 +229,7 @@ if ($layout_clean_mode) {
                 location_quantity = location[1];
             }
         });
-
-        // let store = null;
-        // store_data.forEach((element)=>{
-        //     if(element.store_id === store_id){
-        //         store = element;
-        //     }
-        // });
+        console.log('something');
         let options_template = '';
         for(let i = 1; i <= location_quantity; i++ ){
             options_template += `<option value="${i}"> ${i} </option>`;
@@ -241,11 +237,32 @@ if ($layout_clean_mode) {
         document.querySelector("#from_quantity").innerHTML = options_template;
 
     });
+    // Select2 Handler for #from_location 
+    function initFromLocationHandler() {
+        $('#from_location').on('select2:select', function(event){
+            if(event.target == ''){
+                return;
+            }
+            let location_id = event.target.value;
+            let location_data = JSON.parse(event.target.getAttribute('location-data'));
+            let location_quantity = 0;
+            Object.entries(location_data).forEach((location)=> {
+                if(location[0] === location_id){
+                    location_quantity = location[1];
+                }
+            });
+            let options_template = '';
+            for(let i = 1; i <= location_quantity; i++ ){
+                options_template += `<option value="${i}"> ${i} </option>`;
+            }
+            document.querySelector("#from_quantity").innerHTML = options_template;
+        });
+
+    }
 
 
     function getProductBySKU(sku) {
         let url = `/v1/api/product/sku/${encodeURIComponent(sku)}`;
-        console.log(url);
         fetch(url)
         .then((response) => response.json())
         .then((data) => {

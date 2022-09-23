@@ -49,7 +49,7 @@ if ($layout_clean_mode) {
 						Barcode Image
 					</div>
 					<div class='col'>
-					<img class="img-fluid d-block mb-3 mt-3 view-image" style='max-height: 100px;' src="<?php echo $view_model->get_barcode_image();?>" onerror= \"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\" />
+					<img class="img-fluid d-block mb-3 mt-3 view-image" style='max-height: 100px;' src='<?php echo $view_model->get_barcode_image();?>' onerror= \"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\" />
 					</div>
 				</div>
 
@@ -98,7 +98,7 @@ if ($layout_clean_mode) {
 
 					<div class='row' style="text-align: center;">
 						<div class="col-sm-12" >
-							<img style="width: 100%;height: 150px;padding:3px;"   src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode"  >
+							<img style="width: 100%;height: 150px;padding:3px;"   src='<?php echo $view_model->get_barcode_image(); ?>' alt="Barcode"  >
 						</div> 
 					</div>  
 			         
@@ -140,3 +140,4 @@ if ($layout_clean_mode) {
     }, false);
     <?php endif ?>
 </script>
+

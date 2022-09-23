@@ -128,9 +128,40 @@ if ($layout_clean_mode) {
                         }?>
                     </select> 
                 </div>
-                <fieldset class="col-md-5 ml-3 form-group border">
+                <fieldset class="col-md-5 ml-3 form-group border-bottom">
+                    <hr>
                     <legend>Item Store Management</legend>
-                    <div id = "stores">
+                    <div id="store-inventories" encoded-locations="<?php echo $encoded_physical_locations; ?> ">
+                        <div class="store shadow-sm my-2 p-2">
+                            <div class="form-group">
+                                <label for="">Store <span class="text-danger">*</span></label>
+                                <select required name="stores[]" id="" class="form-control" onchange="listStoreLocations(this)">
+                                <option value=""></option>
+                                    <?php foreach ($stores as $store): ?>
+                                    <option value="<?php echo $store->id?>"> <?php echo $store->name; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            
+                            </div>
+                            <div class="form-group">
+                                <label for="">Physical Location <span class="text-danger">*</span></label>
+                                <select required name="locations[]" class="form-control location-dropdown" role="physical-location" onchange="updateLocationState(this)">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Quantity <span class="text-danger">*</span></label>
+                                <input required class="form-control" type="number" name="quantity[]" id="">
+                            </div>
+                        </div>
+                       
+                        
+                    </div>
+                    <div class="d-inline-flex flex-row-reverse mb-3 ">
+                        <span role="button" class="rounded-sm btn btn-primary  shadow p-1 text-sm" title="Add new location" onclick="addStoreLocation()"><i class="fas fa-plus-circle"></i> Add Inventory Location</span>
+                        <span role="button" class="rounded-sm btn btn-danger mx-1  shadow p-1 text-sm" id="remove-store-btn" style="display:none"  onclick="removeLastStoreLocation()"><i class="fas fa-times-circle"></i> Remove Inventory Location</span>
+                    </div> 
+                    <!-- <div id = "stores">
                     <?php foreach ($stores as $key => $store): ?>
                         <div>
                             <input class="" type="checkbox" name="stores_inventory[]" value="<?php echo $store->id; ?>" 
@@ -146,44 +177,11 @@ if ($layout_clean_mode) {
                             </div>
                         </div>
                     <?php endforeach; ?>
-                    </div>
+                    </div> -->
                 </fieldset>
                 
 
-                <!-- <div id="store-inventories" encoded-locations="<?php echo $encoded_physical_locations; ?> ">
-                    <div class="store-inventory">
-                        <div class="form-group col-md-5 col-sm-12 ">
-                            <label for="Store Location">Store <span class="text-danger">*</span></label>
-                            <select required   class="form-control data-input" id="form_store_location_id" name="store_location_id[]" onchange="showLocations()">
-                                <option value="" >Select</option>
-                                <?php foreach ($stores as $key => $value) {
-                                    echo "<option value='{$value->id}'> {$value->name} </option>";
-                                }?>
-                            </select>  
-                        </div>
-                        <div class="d-inline-flex flex-row-reverse  col-md-5 col-sm-12 mb-3 ">
-                            <span role="button" class="rounded-sm btn btn-primary  shadow p-1" title="Add physical location " onclick="addPhysicalLocation()"><i class="fas fa-plus-circle"></i> Add Physical Location</span>
-                            <span role="button" class="rounded-sm btn btn-danger mx-1  shadow p-1" id="remove-store-btn" style="display:none"  onclick="removeLastPhysicalLocation()"><i class="fas fa-times-circle"></i> Remove Physical Location</span>
-                        </div>
-                        <div class="locations">
-                            
-                            
-                        </div>
-                        
-
-                        
-                        
-                        <div class="form-group col-md-5 col-sm-12 ">
-                            <label for="Inventory Location Description">Inventory Location Description </label>
-                            <input type="text" class="form-control data-input" id="form_location_description" name="location_description[]" value=""/>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-inline-flex flex-row-reverse  col-md-5 col-sm-12 mb-3 ">
-                    <span role="button" class="rounded-sm btn btn-primary  shadow p-1" title="Add inventory to other stores" onclick="addStoreLocation()"><i class="fas fa-plus-circle"></i> Add Store Location</span>
-                    <span role="button" class="rounded-sm btn btn-danger mx-1  shadow p-1" id="remove-store-btn" style="display:none"  onclick="removeLastStoreLocation()"><i class="fas fa-times-circle"></i> Remove Store Location</span>
-                </div> -->
-                
+               
  
                 <div class="form-group col-md-5 col-sm-12 ">
                     <label for="Manifest">Manifest </label>
@@ -389,6 +387,7 @@ if ($layout_clean_mode) {
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/video_image_script.js"></script>
 <script type="text/javascript">
+    
     document.addEventListener('DOMContentLoaded',function(){
         number_counter = 2;
         $(document).on('click','.add_more_link',function(){
@@ -485,105 +484,106 @@ if ($layout_clean_mode) {
         }
     }
 
+    let storeState = {
+        locations: []
+    };
 
-    function addStoreLocation(){
-        let store_inventory_template = `    
-        <div class="store-inventory ">
-        <div class="form-group col-md-5 col-sm-12 ">
-            <label for="Store Location">Store - {{{count}}} <span class="text-danger">*</span></label> 
-            <select required   class="form-control data-input" id="form_store_location_id" name="store_location_id[]">
-                <option value="" >Select</option>
-                <?php foreach ($stores as $key => $value) {
-                    echo "<option value='{$value->id}'> {$value->name} </option>";
-                }?>
-            </select>  
-        </div>
+    function listStoreLocations(el) {
+        const locations = getStoreLocations(el.value);
+        let options_template = '';
+        locations.forEach(location => options_template += `<option value="${location.id}">${location.name}</option>`)
+        let locationElement = el.parentElement.parentElement.querySelector("select[role='physical-location']");
+        locationElement.innerHTML = options_template;
+    }
 
-        <div class="form-group col-md-5 col-sm-12 ">
-            <label for="Quantity">Quantity - {{{count}}} <span class="text-danger">*</span> </label>
-            <input type="text" required class="form-control data-input" id="form_quantity" name="quantity[]" value="<?php echo set_value('quantity'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
-        </div>
+    function getStoreLocations(store_id) {console.log(storeState.locations);
+        let physicalLocations = JSON.parse(atob(document.querySelector('#store-inventories').getAttribute('encoded-locations')));
+        return physicalLocations = physicalLocations.filter(location => location.store_id === store_id && storeState.locations.indexOf(location.id) === -1 );
+    }
 
-        <div class="form-group col-md-5 col-sm-12 border-bottom "></div>
+    function updateLocationState(el) {
+        // console.log(el);
+    }
     
-    </div>`;
+    function addStoreLocation() {
+        updateLocations();
+       
+        $(`#store-inventories`).append(`
+        <div class="store shadow-sm my-2 p-2" style="">
+        ${Store()}
+        ${PhysicalLocation()}
+        ${Quantity()}
+        </div>
+        `);
 
-        let store_inventory_count = document.querySelectorAll(".store-inventory").length;
-        store_inventory_template = store_inventory_template.replaceAll('{{{count}}}', store_inventory_count+1);
-        let store_inventories = document.querySelector('#store-inventories');
-        // store_inventories.insertAdjacentHTML('afterend', store_inventory_template) ;
-        $('#store-inventories').append(store_inventory_template);
-        toggleRemoveBtn();
-
+        $(".location-dropdown").select2();
+        updateRemoveStoreBtn();
     }
 
-    function removeLastStoreLocation(){
-        let store_inventories = document.querySelector('#store-inventories');
-        let all_store_inventory = document.querySelectorAll(".store-inventory")
-        all_store_inventory[all_store_inventory.length - 1].remove();
-        toggleRemoveBtn();
+    function removeLastStoreLocation() {
+        document.querySelectorAll('.store')[document.querySelectorAll('.store').length - 1].remove();
+        updateRemoveStoreBtn();
+        updateLocations();
     }
 
-    function toggleRemoveBtn(){
-        let store_inventory_count = document.querySelectorAll(".store-inventory").length;
-        document.querySelector('#remove-store-btn').style.display = store_inventory_count > 1 ? 'inline' : 'none';
-    }
-
-    function showLocations() {
-        let physicalLocations = JSON.parse(document.querySelector('#store-inventories').getAttribute('encoded-locations'));
-
-    }
-
-    function PhysicalLocation(data = {}) {
-        return `
-            <div>
-                <label>${data.name}</label>
-                <input type="number" name="" />
-            </div>
-        `;
-    }
-
-
-    function PhysicalLocationTemplate() {
-        return `
-            <div class="form-group col-md-5 col-sm-12 physical-location">
-                <label for="Inventory Location">Inventory Location </label>
-                <select class="form-control data-input" id="form_physical_location" name="${data.store_id}_physical_location[]">
-                    <option value="" >Select</option>
-                    <?php foreach ($physical_locations as $key => $value) {
-                        echo "<option value='{$value->id}'> {$value->name} </option>";
-                    }?>
-                </select>   
-            </div>
-            <div class="form-group col-md-5 col-sm-12 ">
-                <label for="Quantity">Quantity <span class="text-danger">*</span> </label>
-                <input type="number" required class="form-control data-input" id="form_quantity" name="quantity[]" value="" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)"/>
-            </div>
-
-        `;
-    }
-
-    function toggleStoreLocationsVisibility(el, store_id) {
-        if (el.checked) {
-           return document.querySelector(`#store_${store_id}_locations`).style.display = 'block';
+    function updateLocations(){
+        let locations = document.querySelectorAll("[name='locations[]']");
+        storeState.locations = [];
+        for(let i = 0; i < locations.length; i++) {
+            storeState.locations.push(locations[i].value);
         }
-        document.querySelector(`#store_${store_id}_locations`).style.display = 'none';
     }
+
+    function updateRemoveStoreBtn() {
+        if(document.querySelectorAll('.store').length > 1) { 
+           return showRemoveStore();
+        }
+        hideRemoveStore();
+    }
+
+    function showRemoveStore() {
+        document.querySelector('#remove-store-btn').style.display = 'inline';
+    }
+
+    function hideRemoveStore() {
+        document.querySelector('#remove-store-btn').style.display = 'none';
+    }
+
+
+    function Store() {
+        return `
+            <div class="form-group">
+                <label for="">Store</label>
+                <select name="stores[]" id="" class="form-control" onchange="listStoreLocations(this)">
+                <option value=""></option>
+                    <?php foreach ($stores as $store): ?>
+                    <option value="<?php echo $store->id?>"> <?php echo $store->name; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            
+            </div>
+        `;
+    }
+
+    function PhysicalLocation() {
+        return `
+            <div class="form-group">
+                <label for="">Physical Location</label>
+                <select name="locations[]" class="form-control location-dropdown" role="physical-location">
+                    <option value=""></option>
+                </select>
+            </div>
+        `;
+    }
+
+    function Quantity() {
+        return `<div class="form-group">
+                    <label for="">Quantity</label>
+                    <input class="form-control" type="number" name="quantity[]" id="">
+                </div>`;
+    }
+
+
+   
 
 </script>
-
-
-<!--   <div class="form-group col-md-5 col-sm-12 ">
-            <label for="Inventory Location">Inventory Location - {{{count}}} </label>
-            <select class="form-control data-input" id="form_physical_location" name="physical_location[]">
-                <option value="" >Select</option>
-                <?php foreach ($physical_locations as $key => $value) {
-                    echo "<option value='{$value->id}'> {$value->name} </option>";
-                }?>
-            </select>   
-        </div>
-
-        <div class="form-group col-md-5 col-sm-12 ">
-            <label for="Inventory Location Description">Inventory Location Description - {{{count}}} </label>
-            <input type="text" class="form-control data-input" id="form_location_description" name="location_description[]" value="<?php echo set_value('location_description'); ?>"/>
-        </div> -->

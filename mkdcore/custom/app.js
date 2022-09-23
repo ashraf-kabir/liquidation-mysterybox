@@ -315,3 +315,19 @@ try {
     })
   })
 } catch {}
+
+
+if(document.querySelector('.location-dropdown'))
+{
+  $(".location-dropdown").select2();
+}
+// Inventory Transfer 
+if(document.querySelector('#from_location'))
+{
+  $("#from_location").select2();
+}
+//Inventory Transfer Accept
+if(document.querySelector('#to_location'))
+{
+  $("#to_location").select2();
+}

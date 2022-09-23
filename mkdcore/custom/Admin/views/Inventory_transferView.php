@@ -82,6 +82,15 @@ if ($layout_clean_mode) {
 
 				<div class='row mb-4'>
 					<div class='col'>
+						To Location
+					</div>
+					<div class='col'>
+						<?php echo isset($location_map[$view_model->get_to_location()]) ? $location_map[$view_model->get_to_location()] : '';?>
+					</div>
+				</div>
+
+				<div class='row mb-4'>
+					<div class='col'>
 						Quantity
 					</div>
 					<div class='col'>

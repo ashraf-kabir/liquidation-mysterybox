@@ -78,7 +78,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <div class="clearfix"></div>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive" id="table-wrapper" encoded-locations= "<?php echo $encoded_physical_locations; ?>">
     <table class="table br w-100">
         <thead class='thead-light'>
         <?php
@@ -117,20 +117,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             }
         } ?>
         </thead>
-        <tbody class="tbody-light">
+        <tbody class="tbody-light" >
             <?php foreach ($view_model->get_list() as $data) { ?>
                 <?php
+                    $store = isset($store_map[$data->from_store]) ? $store_map[$data->from_store] : 'N/A' ;
+                    $location = isset($location_map[$data->from_location]) ? $location_map[$data->from_location] : 'N/A';
                     echo '<tr>';
                         							echo "<td>{$data->id}</td>";
 							echo "<td>{$data->product_name}</td>";
 							echo "<td>{$data->sku}</td>";
-							echo "<td>{$store_map[$data->from_store]}</td>";
+							echo "<td>{$store}</td>";
+							echo "<td>{$location}</td>";
 							echo "<td>{$data->quantity}</td>";
 							echo "<td>{$store_map[$data->to_store]}</td>";
 							echo "<td>" . ucfirst($view_model->status_mapping()[$data->status]) ."</td>";
 							echo '<td>';
                             if( $data->status != 2  /* Completed */) { //Show when status is not completed
-                                echo ' <button class="btn btn-link  link-underline text-underline btn-sm text-success" onclick="confirmAndAccept()" target="" href="/admin/inventory_transfer/accept/' . $data->id . '">Accept Request</button>';
+                                echo '<button class="btn btn-link  link-underline text-underline btn-sm text-success" onclick="confirmAndAccept('. $data->to_store .')" target="" href="/admin/inventory_transfer/accept/'.$data->id.'">Accept Request</button>';
                             }
 							echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory_transfer/view/' . $data->id . '">View</a>';
 							echo ' <a class="btn btn-link  link-underline text-underline text-danger btn-sm" target="_blank" href="/admin/inventory_transfer/delete/' . $data->id . '">Remove</a>';
@@ -168,6 +171,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <option value="<?php echo $item->sku ?>"> <?php echo $item->sku." - ". $item->product_name?></option>
                 <?php endforeach; ?>
                 </select>
+                <label for=""> Store Physical Location (Destination)</label>
+                <select name="physical_location" id="to_location" class="form-control" >
+                    <option value=""></option>
+               
+                </select>
             </div>
         </div>
         <div class="modal-footer">
@@ -187,11 +195,18 @@ if ($layout_clean_mode) {
 
 
 <script>
-    function confirmAndAccept() {
+    function confirmAndAccept(to_store_id) {
         let target = event.target.getAttribute('href');
         // console.log(target);
         let form = document.querySelector('#acceptTransferModalForm');
         form.setAttribute('action', target);
+
+        let locations = JSON.parse(atob(document.querySelector('#table-wrapper').getAttribute('encoded-locations')));
+        console.log(locations);console.log(to_store_id);
+        let options_template = locations.filter((location) => location.store_id == to_store_id )
+                                        .map((location) => { return `<option value="${location.id}"> ${location.name} </option>`});
+        console.log(options_template);
+        $('#to_location').html(options_template);
         $('#acceptTransferModal').modal('show')
     }
 

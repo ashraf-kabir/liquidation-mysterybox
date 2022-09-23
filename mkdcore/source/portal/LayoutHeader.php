@@ -13,8 +13,10 @@
     <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" crossorigin="anonymous"></script> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
     <!-- Our Vendor CSS -->
+    <link href="/assets/css/select2.css" rel="stylesheet" />
     <!-- Our Custom CSS -->
     {{{css}}}
+
 </head>
 
 <body>

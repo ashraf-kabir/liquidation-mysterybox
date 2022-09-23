@@ -122,10 +122,11 @@ class Admin_inventory_controller extends Admin_controller
 
         $this->_data['parent_categories']   =   $this->_get_grouped_categories();
         $stores             =   $this->store_model->get_all();
-        $stores = $this->append_locations_to_store($stores);
+        // $stores = $this->append_locations_to_store($stores);
         $this->_data['stores']              =   $stores;
-        $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
-        $this->_data['encoded_physical_locations']  =   json_encode($this->_data['physical_locations']);
+        $physical_locations  =   $this->physical_location_model->get_all();
+        $this->_data['physical_locations']  =   $physical_locations;
+        $this->_data['encoded_physical_locations']  =   base64_encode(json_encode($this->_data['physical_locations']));
         $this->_data['sale_persons']        =   $this->user_model->get_all_users();
 
         if ($this->input->post('can_ship') == 1) 
@@ -136,7 +137,7 @@ class Admin_inventory_controller extends Admin_controller
             $this->form_validation->set_rules('width', 'Width', 'required|greater_than_equal_to[1]');
         }
 
-        $this->form_validation->set_rules('stores_inventory[]', 'Store', 'callback_validate_store_inventory');
+        $this->form_validation->set_rules('locations[]', 'Store', 'callback_validate_store_inventory');
 
 
          
@@ -173,7 +174,9 @@ class Admin_inventory_controller extends Admin_controller
         
         $status = $this->input->post('status', TRUE);
         // $store_location_id = $this->input->post('store_location_id', TRUE);
-        $stores_inventory = $this->input->post('stores_inventory', TRUE);
+        $location_stores = $this->input->post('stores', TRUE);
+        $locations = $this->input->post('locations', TRUE);
+        $quantity = $this->input->post('quantity', TRUE);
 
         $can_ship = $this->input->post('can_ship', TRUE) ?? 2;
         $can_ship_approval = $this->input->post('can_ship_approval', TRUE) ?? 2;
@@ -207,30 +210,27 @@ class Admin_inventory_controller extends Admin_controller
             $sku = '';
         }
 
-        // $store_inventory = [];
-        // $total_quantity = 0;
-        // foreach ($store_location_id as $key => $store) {
-        //     //TODO skip duplicates or return validation error (loop through store id and thro validation error if duplicate entry found)
-        //     $store_inventory_item['store_id'] = $store_location_id[$key];
-        //     $store_inventory_item['quantity'] = isset($quantity[$key]) ? $quantity[$key] : '';
-        //     // $store_inventory_item['physical_location'] = isset($physical_location[$key]) ? $physical_location[$key] : '';
-        //     // $store_inventory_item['location_description'] = isset($location_description[$key]) ? $location_description[$key] : '';
-        //     array_push($store_inventory, $store_inventory_item);
-        //     $total_quantity += !empty($quantity[$key]) ? $quantity[$key] : 0;
-        // }
 
         $store_inventory = [];
         $total_quantity = 0;
-        foreach ($stores_inventory as $key => $store_id) {
+        $unique_stores = array_unique($location_stores);
+        foreach ($unique_stores as $key => $store_id) {
+            $store_location_data = [];
+            foreach ($locations as $key2 => $location_id) {
+                if ($store_id == $location_stores[$key2]) {
+                    $store_location_data[$location_id] = $quantity[$key2];
+                }
+            }
+
             $store_inventory_item['store_id'] = $store_id;
             $store_locations = $this->input->post("store_{$store_id}_location");
 
-            $store_quantity = array_reduce($store_locations, function ($sum, $location_quantity) {
+            $store_quantity = array_reduce($store_location_data, function ($sum, $location_quantity) {
                 return $sum + $location_quantity;
             }, 0);
 
             $store_inventory_item['quantity'] = $store_quantity;
-            $store_inventory_item['locations'] = $store_locations; //id as key
+            $store_inventory_item['locations'] = $store_location_data; //id as key
     
             array_push($store_inventory, $store_inventory_item);
             $total_quantity += $store_quantity;
@@ -332,6 +332,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['store_inventory']     =   json_decode($model->store_inventory);
         $this->_data['item_inventory_locations']     =   $this->extract_locations_from_store_inventory(json_decode($model->store_inventory));
         $this->_data['item_inventory_stores']     =   $this->extract_stores_from_store_inventory(json_decode($model->store_inventory));
+        $this->_data['encoded_physical_locations']  =   base64_encode(json_encode($this->_data['physical_locations']));
       
 
         // $this->_data['parent_categories'] 
@@ -343,7 +344,7 @@ class Admin_inventory_controller extends Admin_controller
             $this->form_validation->set_rules('height', 'Height', 'required|greater_than_equal_to[1]');
             $this->form_validation->set_rules('width', 'Width', 'required|greater_than_equal_to[1]');
         }
-        $this->form_validation->set_rules('stores_inventory[]', 'Store', 'callback_validate_store_inventory');
+        $this->form_validation->set_rules('locations[]', 'Store', 'callback_validate_store_inventory');
 
 
      
@@ -372,7 +373,10 @@ class Admin_inventory_controller extends Admin_controller
         $admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
          
         $status = $this->input->post('status', TRUE);
-        $stores_inventory = $this->input->post('stores_inventory', TRUE);
+        // $stores_inventory = $this->input->post('stores_inventory', TRUE);
+        $location_stores = $this->input->post('stores', TRUE);
+        $locations = $this->input->post('locations', TRUE);
+        $quantity = $this->input->post('quantity', TRUE);
          
         $sale_person_id = $this->input->post('sale_person_id', TRUE);
         $can_ship = $this->input->post('can_ship', TRUE) ?? 2;
@@ -389,37 +393,34 @@ class Admin_inventory_controller extends Admin_controller
         {
             $sku = '';
         }
-        
-        // $store_inventory = [];
-        // $total_quantity = 0;
-        // foreach ($store_location_id as $key => $store) {
-        //     $store_inventory_item['store_id'] = $store_location_id[$key];
-        //     $store_inventory_item['quantity'] = isset($quantity[$key]) ? $quantity[$key] : '';
-        //     // $store_inventory_item['physical_location'] = isset($physical_location[$key]) ? $physical_location[$key] : '';
-        //     // $store_inventory_item['location_description'] = isset($location_description[$key]) ? $location_description[$key] : '';
-        //     array_push($store_inventory, $store_inventory_item);
-        //     $total_quantity += !empty($quantity[$key]) ? $quantity[$key] : 0;
-        // }
-
+    
         $store_inventory = [];
         $total_quantity = 0;
-        foreach ($stores_inventory as $key => $store_id) {
+        $unique_stores = array_unique($location_stores);
+        foreach ($unique_stores as $key => $store_id) {
+            $store_location_data = [];
+            foreach ($locations as $key2 => $location_id) {
+                if ($store_id == $location_stores[$key2]) {
+                    $store_location_data[$location_id] = $quantity[$key2];
+                }
+            }
+
             $store_inventory_item['store_id'] = $store_id;
             $store_locations = $this->input->post("store_{$store_id}_location");
 
-            $store_quantity = array_reduce($store_locations, function ($sum, $location_quantity) {
-                $location_quantity = is_numeric($location_quantity) ? $location_quantity : 0;
+            $store_quantity = array_reduce($store_location_data, function ($sum, $location_quantity) {
                 return $sum + $location_quantity;
             }, 0);
 
             $store_inventory_item['quantity'] = $store_quantity;
-            $store_inventory_item['locations'] = $store_locations; //id as key
+            $store_inventory_item['locations'] = $store_location_data; //id as key
     
             array_push($store_inventory, $store_inventory_item);
             $total_quantity += $store_quantity;
         }
 
         $store_inventory = json_encode($store_inventory);
+        
         
         $result = $this->inventory_model->edit([
             'sale_person_id' => $sale_person_id,
@@ -608,20 +609,9 @@ class Admin_inventory_controller extends Admin_controller
     public function validate_store_inventory ()
     {
         // ensure the same store is not selected more than once.
-        $stores = $this->input->post('stores_inventory');
-        // $quantity = $this->input->post('quantity');
+        $locations = $this->input->post('locations');
 
-        // if(count($stores) < 1 || count($quantity) < 1){
-        //     $this->form_validation->set_message('validate_store_inventory', 'The Store and Quantity fields are required.');
-        //     return FALSE;
-        // }
-
-        // if(count(array_unique($stores)) < count($stores)){
-        //     $this->form_validation->set_message('validate_store_inventory', 'The {field} fields contain duplicates.');
-        //     return FALSE;
-        // }
-
-        return count($stores) < 1 ? FALSE : TRUE;
+        return count($locations) < 1 ? FALSE : TRUE;
     }
 
     public function transfer ($id)
@@ -772,7 +762,7 @@ class Admin_inventory_controller extends Admin_controller
         foreach ($store_inventory as $store_data) {
             if(empty($store_data->locations)) { continue;}
             foreach ($store_data->locations as $location_id => $location_quantity) {
-                $locations[$location_id] = $location_quantity;
+                $locations[] = ['store_id' => $store_data->store_id, 'location_id' => $location_id, 'quantity' => $location_quantity];
             }
         }
         return $locations;
