@@ -622,4 +622,54 @@ class {{{subclass_prefix}}}Controller extends CI_Controller
             
         }  
     }
+
+    public function send_email_on_refund($order_id)
+    {
+        $this->load->model('pos_order_model'); 
+        $this->load->model('pos_order_items_model'); 
+        $this->load->model('email_model');
+        $this->load->model('store_model');
+        $this->load->model('inventory_model');
+        $this->load->model('customer_model');
+
+
+        $this->load->library('mail_service');
+        $this->mail_service->set_adapter('smtp');
+
+
+        $id    = $order_id;  
+        $model = $this->pos_order_model->get($id);
+
+        if ($model and isset($model->customer_email) and filter_var($model->customer_email, FILTER_VALIDATE_EMAIL))
+        {   
+            include_once __DIR__ . '/../view_models/Orders_admin_view_view_model.php';
+            $this->_data['view_model'] = new Orders_admin_view_view_model($this->pos_order_model);
+            $this->_data['view_model']->set_heading('Orders');
+            $this->_data['view_model']->set_model($model);
+            $this->load->model('pos_order_items_model'); 
+
+            $order_details = $this->pos_order_items_model->get_all(['order_id' => $id]);
+            foreach ($order_details as $order_detail)
+            {
+                $inventory = $this->inventory_model->get($order_detail->product_id);
+                $order_detail->product_image = empty($inventory) ? '': $inventory->feature_image;
+
+                if($order_detail->store_id == 0 /* if no store, hence its pickup */) {continue;}
+
+                $order_detail->store = $this->store_model->get($order_detail->store_id);
+            }
+            $this->_data['orders_details'] = $order_details;
+            $this->_data['customer'] = $this->customer_model->get($model->customer_id);
+             
+
+            ob_start();  
+            $this->load->view('Admin/OrderRefundEmailCopy', $this->_data); 
+            $content = ob_get_contents(); 
+            ob_end_clean();
+            $from = $this->config->item('from_email');
+            $this->mail_service->send($from, $model->customer_email, "Mystery Box Order Refund", $content);
+            
+        }  
+    }
+
 }

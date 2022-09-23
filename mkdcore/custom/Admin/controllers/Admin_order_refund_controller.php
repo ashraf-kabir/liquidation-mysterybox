@@ -49,13 +49,18 @@ class Admin_order_refund_controller extends Admin_controller
             if(isset($response['success']) && $response['success']) {
                 // Update model refunded
                 $this->pos_order_model->edit([
-                    'intent_data' => json_encode($response),
+                    'refunded_amount' => number_format($amount, 2),
+                    'refund_response' => json_encode($response),
                     'status' => 2 /* Refunded */
                 ], $id);
+
+                // notify customer
+                $this->send_email_on_refund($order_model->id);
+
                 $this->success('Refunded Successfully');
                 return redirect('/admin/orders/0?order_by=id&direction=DESC');
             }
-            $this->error('Refunded failed, refund amount may not exceed transaction balance');
+            $this->error('Refund failed, refund amount may not exceed transaction balance');
             return $this->render('Admin/OrdersRefund', $this->_data);
         }
         
@@ -160,6 +165,16 @@ class Admin_order_refund_controller extends Admin_controller
 
         return $response;
 
+    }
+
+
+    private function notify_customer_about_refund($order_id) 
+    {
+                    $this->load->library('mail_service');
+                    $this->mail_service->set_adapter('smtp');
+                    $from = $this->config->item('from_email');  
+                    $text_msg = "Your order has been shipped and your tracking number is <a target='_blank' href='https://www.google.com/search?q={$tracking_no}'>" . $tracking_no . "</a>.<br> You can track order <a href='https://www.google.com/search?q=" . $tracking_no . "' target='_blank' style='color;#1A73E8 !important;' >here</a>"; 
+                    $this->mail_service->send($from, $order_data->customer_email, "Mystery Box Order Update", $text_msg);
     }
 
     

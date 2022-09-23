@@ -187,6 +187,31 @@ if ($layout_clean_mode) {
 						?>
 					</div>
 				</div>
+
+				<?php if ($view_model->get_status() == 2 /* Refunded */): ?>
+				<div class='row mb-4'>
+					<div class='col'>
+						Refund Transaction ID 
+					</div>
+					<div class='col'>
+						<?php 
+						$response = json_decode($view_model->get_refund_response());
+						echo isset($response->transactionid) ? $response->transactionid: '';
+						
+						
+						?>
+					</div>
+				</div>
+				<div class='row mb-4'>
+					<div class='col'>
+						Refunded Amount
+					</div>
+					<div class='col'>
+						<?php echo number_format($view_model->get_refunded_amount(), 2);?>
+					</div>
+				</div>
+				<?php endif; ?>
+
 				<div class='row mb-4'>
 					<div class='col'>
 						Order Type
