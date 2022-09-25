@@ -721,5 +721,39 @@ class Pos_order_items_report_model extends Manaknight_Model
         
     }
 
+    public function get_refunded_transactions_total ($from_date = '', $to_date = '')
+    {
+        $this->db->from('transactions'); 
+        $this->db->select_sum('total');
+
+        $this->db->where('transaction_type', 2);
+        if(!empty($from_date)) {
+            $this->db->where('created_at >= ', $from_date); 
+        }
+        if(!empty($to_date)) {
+            $this->db->where('created_at <= ', $to_date);
+        }
+
+        $total_data = $this->db->get()->row();
+        return $total_data->total;
+    }
+
+    public function get_refunded_transactions_tax ($from_date = '', $to_date = '')
+    {
+        $this->db->from('transactions'); 
+        $this->db->select_sum('tax');
+
+        $this->db->where('transaction_type', 2);
+        if(!empty($from_date)) {
+            $this->db->where('created_at >= ', $from_date); 
+        }
+        if(!empty($to_date)) {
+            $this->db->where('created_at <= ', $to_date);
+        }
+
+        $tax_data = $this->db->get()->row();
+        return $tax_data->tax;
+    }
+
 
 }

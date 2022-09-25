@@ -18,7 +18,7 @@ class Admin_order_refund_controller extends Admin_controller
     {
         parent::__construct();
         
-        
+        $this->load->model('transactions_model');
         
     }
 
@@ -43,16 +43,35 @@ class Admin_order_refund_controller extends Admin_controller
             $transaction_id = $payment_data->transactionid;
 
             $amount = $this->input->post('amount');
+            $tax_refunded = $this->input->post('tax_refunded');
 
-            $response = $this->_make_nmi_refund($amount, $transaction_id);
+            $total = $amount + $tax_refunded;
+
+            $response = $this->_make_nmi_refund($total, $transaction_id);
 
             if(isset($response['success']) && $response['success']) {
                 // Update model refunded
                 $this->pos_order_model->edit([
-                    'refunded_amount' => number_format($amount, 2),
+                    'refunded_amount' => number_format($total, 2),
                     'refund_response' => json_encode($response),
                     'status' => 2 /* Refunded */
                 ], $id);
+
+                // Add refund transaction 
+                $sale_transaction = $this->transactions_model->get_by_field('pos_order_id', $order_model->id);
+                $this->transaction_model->create([
+                    'payment_type'      =>  $sale_transaction->payment_type,
+                    'customer_id'       =>  $sale_transaction->customer_id, 
+                    'pos_user_id'       =>  0, 
+                    'transaction_date'  =>  Date('Y-m-d'), 
+                    'transaction_time'  =>  Date('g:i:s A'), 
+                    'pos_order_id'      =>  $order_model->id, 
+                    'tax'               =>  $tax_refunded,  
+                    'discount'          =>  $sale_transaction->discount,
+                    'subtotal'          =>  $amount, 
+                    'total'             =>  $total, //Tax is strictly for report so may not necessarily add up
+                    'status'            =>  '1'
+                ]);
 
                 // notify customer
                 $this->send_email_on_refund($order_model->id);

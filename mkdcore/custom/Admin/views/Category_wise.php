@@ -196,9 +196,23 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
             <tr> 
                 <th></th>
                 <th></th> 
-                <th>Total = $<?php echo number_format($total_wout_tax,2) ?></th>
-                <th>Tax = $<?php echo number_format($total_tax,2) ?></th>
-                <th>Grand Total = $<?php echo number_format($grand_total,2) ?></th>
+                <th>Sales SubTotal = $<?php echo number_format($total_wout_tax,2) ?></th>
+                <th>Sales Tax = $<?php echo number_format($total_tax,2) ?></th>
+                <th>Sales Total = $<?php echo number_format($sales_grand_total,2) ?></th>
+            </tr>
+            <tr> 
+                <th></th>
+                <th></th> 
+                <th>Refund SubTotal = $<?php echo number_format($total_refunded,2) ?></th>
+                <th>Refund Tax = $<?php echo number_format($total_refunded_tax,2) ?></th>
+                <th>Refund Total = $<?php echo number_format($total_refunded + $total_refunded_tax,2) ?></th>
+            </tr>
+            <tr> 
+                <th></th>
+                <th></th> 
+                <th> Total = $<?php echo number_format($total_wout_tax - $total_refunded,2) ?></th>
+                <th> Tax = $<?php echo number_format($total_tax - $total_refunded_tax,2) ?></th>
+                <th> Grand Total = $<?php echo number_format($sales_grand_total - ($total_refunded + $total_refunded_tax),2) ?></th>
             </tr>
         </tfoot>
     </table>

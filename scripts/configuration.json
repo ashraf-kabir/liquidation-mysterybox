@@ -994,13 +994,15 @@
 				["discount", "float", [{"default" : 0}], "xyzDiscount", "", ""],
 				["subtotal", "float", [], "xyzSubtotal", "", ""],
 				["total", "float", [], "xyzTotal", "", ""],
-				["status", "integer", [{"default" : 2}], "xyzStatus", "", ""]
+				["status", "integer", [{"default" : 2}], "xyzStatus", "", ""],
+				["transaction_type", "integer", [{"default" : 1}], "Transaction Type", "", ""]
 			],
 			"method": "",
 			"join": [],
 			"mapping": {
 				"status": {"0": "Failed","1": "Paid","2": "Pending"},
-				"payment_type": {"1": "Cash", "2" : "Card", "3" : "ACH", "4" : "Bank"}
+				"payment_type": {"1": "Cash", "2" : "Card", "3" : "ACH", "4" : "Bank"},
+				"transaction_type": {"1": "Sales", "2" : "Refund"}
 			},
 			"pre": "",
 			"post": "",

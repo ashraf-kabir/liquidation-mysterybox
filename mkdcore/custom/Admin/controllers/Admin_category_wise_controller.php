@@ -20,6 +20,8 @@ class Admin_category_wise_controller extends Admin_controller
         
         $this->load->model('inventory_model');    
         $this->load->model('category_model');    
+        $this->load->model('transactions_model');    
+        $this->load->model('pos_order_model');    
         $this->load->model('pos_order_items_model');    
         $this->load->model('pos_order_items_report_model');    
         
@@ -97,6 +99,8 @@ class Admin_category_wise_controller extends Admin_controller
                 ->set_output(json_encode($this->_data['view_model']->to_json()));
         }
 
+        $from_date = $this->_data['from_date'];
+        $to_date   = $this->_data['to_date'];
 
         if ( !empty( $this->_data['view_model']->get_list() ) ) 
         {
@@ -113,8 +117,7 @@ class Admin_category_wise_controller extends Admin_controller
                     'product_id' =>  $value->id
                 ];
 
-                $from_date = $this->_data['from_date'];
-                $to_date   = $this->_data['to_date'];
+                
 
                 $order_items = $this->pos_order_items_report_model->get_all_pos_order( $where_sale_order, null, $from_date , $to_date); 
 
@@ -180,11 +183,15 @@ class Admin_category_wise_controller extends Admin_controller
                 } 
             }
         } 
+
         
-
+        
         $grand_total = $total_wout_tax + $total_tax;
+        
+        $this->_data['total_refunded'] = $this->pos_order_items_report_model->get_refunded_transactions_total($from_date, $to_date) ?? 0;
+        $this->_data['total_refunded_tax'] = $this->pos_order_items_report_model->get_refunded_transactions_tax($from_date, $to_date) ?? 0;
 
-        $this->_data['grand_total']    = $grand_total;
+        $this->_data['sales_grand_total']    = $grand_total;
         $this->_data['total_wout_tax'] = $total_wout_tax;
         $this->_data['total_tax']      = $total_tax;
          

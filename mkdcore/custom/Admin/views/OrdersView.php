@@ -206,8 +206,8 @@ if ($layout_clean_mode) {
 					<div class='col'>
 						Refunded Amount
 					</div>
-					<div class='col'>
-						<?php echo number_format($view_model->get_refunded_amount(), 2);?>
+					<div class='col text-danger'>
+						$<?php echo number_format($view_model->get_refunded_amount(), 2);?>
 					</div>
 				</div>
 				<?php endif; ?>

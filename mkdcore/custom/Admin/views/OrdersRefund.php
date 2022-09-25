@@ -51,7 +51,7 @@ if ($layout_clean_mode) {
                 <h5 class="primaryHeading2 text-md-left">
                     <?php echo $heading;?> Refund
                 </h5>
-                <?= form_open() ?>
+                <?= form_open(['onsubmit' => 'return validateForm()']) ?>
 				<div class="row">
                     <input type="hidden" required name="order_id" id="order_id" value="<?php echo $order->id; ?>">
 
@@ -80,6 +80,11 @@ if ($layout_clean_mode) {
                         <input class="form-control" required type="number" name="amount" id="amount" step="0.01" value="<?php echo number_format($order->total, 2) ?>" 
                             max="<?php echo number_format($order->total, 2) ?>" oninput="handleAmountChange(this)"/>
                     </div>
+                    <div class="form-group col-md-6 mx-1">
+                        <label for="">Tax amount to be refunded (<em>For documentation purposes only.</em>) ($)</label>
+                        <input required class="form-control" required type="number" name="amount" id="amount" step="0.01" value="" 
+                            max="<?php echo number_format($order->total, 2) ?>"/>
+                    </div>
 
                     <div class="form-group col-md-6 mx-1">
                         <button type="submit" id="refund-btn" name="refund-btn" class="btn btn-primary">Refund</button>
@@ -94,6 +99,10 @@ if ($layout_clean_mode) {
 </div>
 
 <script>
+
+    function validateForm(){
+        return confirm("Are you sure you want to proceed? Refund cannot be reversed.");
+    }
 
     function makeRefund() {
         const amount = parseFloat(document.getElementById('amount').value);
