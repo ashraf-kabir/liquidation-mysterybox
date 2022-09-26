@@ -59,7 +59,7 @@ class Admin_order_refund_controller extends Admin_controller
 
                 // Add refund transaction 
                 $sale_transaction = $this->transactions_model->get_by_field('pos_order_id', $order_model->id);
-                $this->transaction_model->create([
+                $this->transactions_model->create([
                     'payment_type'      =>  $sale_transaction->payment_type,
                     'customer_id'       =>  $sale_transaction->customer_id, 
                     'pos_user_id'       =>  0, 
