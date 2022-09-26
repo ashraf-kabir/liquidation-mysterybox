@@ -81,8 +81,8 @@ if ($layout_clean_mode) {
                             max="<?php echo number_format($order->total, 2) ?>" oninput="handleAmountChange(this)"/>
                     </div>
                     <div class="form-group col-md-6 mx-1">
-                        <label for="">Tax amount to be refunded (<em>For documentation purposes only.</em>) ($)</label>
-                        <input required class="form-control" required type="number" name="amount" id="amount" step="0.01" value="" 
+                        <label for="">Tax amount to be refunded ($)</label>
+                        <input required class="form-control" required type="number" name="tax_refund" id="tax_refund" step="0.01" value="0" 
                             max="<?php echo number_format($order->total, 2) ?>"/>
                     </div>
 
@@ -101,29 +101,46 @@ if ($layout_clean_mode) {
 <script>
 
     function validateForm(){
-        return confirm("Are you sure you want to proceed? Refund cannot be reversed.");
+        if (!confirm("Are you sure you want to proceed? Refund cannot be reversed.")) { return false};
+
+        return validateAmount();
     }
 
     function makeRefund() {
-        const amount = parseFloat(document.getElementById('amount').value);
+        const tax_refund = parseFloat(document.getElementById('tax_refund').value);
+        const refund_amount = parseFloat(document.getElementById('amount').value);
         const total = parseFloat(document.getElementById('total-amount').value);
+        
+        const amount = refund_amount + tax_refund;
         if(amount < 0) {return alert('invalid amount');}
         if (amount > total ) {return  alert('invalid amount');}
-
-        const order_id = document.getElementById('order_id').value;
-        const url = "v1/api/nmi/refund";
-
-
     }
 
     function handleAmountChange(el) {
-        const amount = parseFloat(document.getElementById('amount').value);
+        const tax_refund = parseFloat(document.getElementById('tax_refund').value);
+        const refund_amount = parseFloat(document.getElementById('amount').value);
         const total = parseFloat(document.getElementById('total-amount').value);
+        
+        const amount = refund_amount + tax_refund;
         if(amount > 0 && amount <= total) {
             document.querySelector('#refund-btn').removeAttribute('disabled');
         }
         else {
             document.querySelector('#refund-btn').setAttribute('disabled', "true");
+        }
+    }
+
+    function validateAmount () {
+        const tax_refund = parseFloat(document.getElementById('tax_refund').value);
+        const refund_amount = parseFloat(document.getElementById('amount').value);
+        const total = parseFloat(document.getElementById('total-amount').value);
+        
+        const amount = refund_amount + tax_refund;
+        if(amount > 0 && amount <= total) {
+            return true;
+        }
+        else {
+           return false;
         }
     }
 
