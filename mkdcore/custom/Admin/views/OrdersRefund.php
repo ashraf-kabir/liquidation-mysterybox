@@ -51,7 +51,7 @@ if ($layout_clean_mode) {
                 <h5 class="primaryHeading2 text-md-left">
                     <?php echo $heading;?> Refund
                 </h5>
-                <?= form_open(['onsubmit' => 'return validateForm()']) ?>
+                <?= form_open('',['onsubmit' => 'return validateForm()']) ?>
 				<div class="row">
                     <input type="hidden" required name="order_id" id="order_id" value="<?php echo $order->id; ?>">
 
