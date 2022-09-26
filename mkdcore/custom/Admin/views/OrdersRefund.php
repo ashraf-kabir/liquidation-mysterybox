@@ -77,13 +77,13 @@ if ($layout_clean_mode) {
                     </div>
                     <div class="form-group col-md-6 mx-1">
                         <label for="">Amount ($)</label>
-                        <input class="form-control" required type="number" name="amount" id="amount" step="0.01" value="<?php echo number_format($order->total, 2) ?>" 
+                        <input class="form-control" required type="number" name="amount" id="amount" step="0.01" value="<?php echo number_format($order->subtotal, 2) ?>" 
                             max="<?php echo number_format($order->total, 2) ?>" oninput="handleAmountChange(this)"/>
                     </div>
                     <div class="form-group col-md-6 mx-1">
                         <label for="">Tax amount to be refunded ($)</label>
-                        <input required class="form-control" required type="number" name="tax_refund" id="tax_refund" step="0.01" value="0" 
-                            max="<?php echo number_format($order->total, 2) ?>"/>
+                        <input required class="form-control" required type="number" name="tax_refund" id="tax_refund" step="0.01" value="<?php echo number_format($order->tax, 2) ?>"" 
+                            max="<?php echo number_format($order->tax, 2) ?>"/>
                     </div>
 
                     <div class="form-group col-md-6 mx-1">
@@ -102,8 +102,12 @@ if ($layout_clean_mode) {
 
     function validateForm(){
         if (!confirm("Are you sure you want to proceed? Refund cannot be reversed.")) { return false};
+        if(!validateAmount()) {
+            alert('Total amount may not exceed sale amount.');
+            return false
 
-        return validateAmount();
+        }
+        return true;
     }
 
     function makeRefund() {
