@@ -29,8 +29,11 @@ class Admin_transactions_controller extends Admin_controller
         include_once __DIR__ . '/../../view_models/Transactions_admin_list_paginate_view_model.php';
         $session = $this->get_session();
         $format = $this->input->get('format', TRUE) ?? 'view';
-        $order_by = $this->input->get('order_by', TRUE) ?? '';
-        $direction = $this->input->get('direction', TRUE) ?? 'ASC';
+        $order_by = $this->input->get('order_by', TRUE) ?? 'id';
+        $direction = $this->input->get('direction', TRUE) ?? 'DESC';
+        $to_date = $this->input->get('to_date', TRUE) ?? '';
+        $from_date = $this->input->get('from_date', TRUE) ?? '';
+        $transaction_type = $this->input->get('transaction_type', TRUE) ?? '';
 
         $this->_data['view_model'] = new Transactions_admin_list_paginate_view_model(
             $this->transactions_model,
@@ -40,9 +43,17 @@ class Admin_transactions_controller extends Admin_controller
         $this->_data['view_model']->set_transaction_date(($this->input->get('transaction_date', TRUE) != NULL) ? $this->input->get('transaction_date', TRUE) : NULL);
 		  
 		
-        $where = [
-            'transaction_date'  => $this->_data['view_model']->get_transaction_date(),  
-        ];
+        $where = [];
+        if (!empty($transaction_type)) {
+            $where['transaction_type'] = $transaction_type;
+        }
+        if (!empty($from_date)) {
+            $where[] = "created_at >= '{$from_date}'";
+        }
+
+        if (!empty($to_date)) {
+            $where[] = "created_at <= '{$to_date}'";
+        }
 
         $this->_data['view_model']->set_total_rows($this->transactions_model->count($where));
 
@@ -58,6 +69,10 @@ class Admin_transactions_controller extends Admin_controller
             $where,
             $order_by,
             $direction));
+        
+        $this->_data['from_date'] = $from_date;            
+        $this->_data['to_date'] = $to_date;            
+        $this->_data['transaction_type'] = $transaction_type;            
 
         if ($format == 'csv')
         {

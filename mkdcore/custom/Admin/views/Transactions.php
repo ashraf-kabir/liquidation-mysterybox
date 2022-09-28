@@ -35,10 +35,28 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
               </h5>
                 <?= form_open('/admin/transactions/0', ['method' => 'get']) ?>
                     <div class="row">
-                    						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                    	<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
 							<div class="form-group">
-								<label for="Transaction Date">Transaction Date </label>
-								<input type="date" class="form-control" id="transaction_date" name="transaction_date" value="<?php echo $this->_data['view_model']->get_transaction_date();?>"/>
+								<label for="Transaction Type">Transaction Type </label>
+                                <select name="transaction_type" id="transaction_type" class="form-control">
+                                    <option value=""></option>
+                                    <?php foreach ($view_model->transaction_type_mapping() as $key => $value): ?>
+                                        <?php $selected = $transaction_type == $key ? 'selected' : '' ?>
+                                    <option <?php echo $selected; ?> value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+							</div>
+						</div>
+                    	<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+							<div class="form-group">
+								<label for="From Date">From </label>
+								<input type="date" class="form-control" id="from_date" name="from_date" value="<?php echo $from_date;?>"/>
+							</div>
+						</div>
+                    	<div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+							<div class="form-group">
+								<label for="To Date">To </label>
+								<input type="date" class="form-control" id="to_date" name="to_date" value="<?php echo $to_date;?>"/>
 							</div>
 						</div>
 
