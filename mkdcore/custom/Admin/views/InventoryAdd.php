@@ -102,8 +102,8 @@ if ($layout_clean_mode) {
                 
 
                 <div class="form-group col-md-5 col-sm-12 ">
-                    <label for="Parent Category"> Category </label> 
-                    <select  class="form-control data-input" id="form_category_id" name="category_id">
+                    <label for="Parent Category"> Category <span class="text-danger">*</span> </label> 
+                    <select required  class="form-control data-input" id="form_category_id" name="category_id">
                         <option value="" >Select</option>
                         <?php foreach ($parent_categories as $key => $value) {
                             $child_category_tab = $value->parent_category_id == 0 || $value->parent_category_id == null ? '' : '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -115,7 +115,7 @@ if ($layout_clean_mode) {
 
                 <div class="form-group col-md-5 col-sm-12 ">
                     <label for="sale_person_id"> Sale Person <span class="text-danger">*</span></label> 
-                    <select  class="form-control data-input" id="sale_person_id" name="sale_person_id">
+                    <select required class="form-control data-input" id="sale_person_id" name="sale_person_id">
                         <option value="" >Select</option>
                         <?php foreach ($sale_persons as $key => $value) {
 
@@ -553,8 +553,8 @@ if ($layout_clean_mode) {
     function Store() {
         return `
             <div class="form-group">
-                <label for="">Store</label>
-                <select name="stores[]" id="" class="form-control" onchange="listStoreLocations(this)">
+                <label for="">Store <span class="text-danger">*</span></label>
+                <select required name="stores[]" id="" class="form-control" onchange="listStoreLocations(this)">
                 <option value=""></option>
                     <?php foreach ($stores as $store): ?>
                     <option value="<?php echo $store->id?>"> <?php echo $store->name; ?></option>
@@ -568,8 +568,8 @@ if ($layout_clean_mode) {
     function PhysicalLocation() {
         return `
             <div class="form-group">
-                <label for="">Physical Location</label>
-                <select name="locations[]" class="form-control location-dropdown" role="physical-location">
+                <label for="">Physical Location <span class="text-danger">*</span></label>
+                <select required name="locations[]" class="form-control location-dropdown" role="physical-location">
                     <option value=""></option>
                 </select>
             </div>
@@ -578,8 +578,8 @@ if ($layout_clean_mode) {
 
     function Quantity() {
         return `<div class="form-group">
-                    <label for="">Quantity</label>
-                    <input class="form-control" type="number" name="quantity[]" id="">
+                    <label for="">Quantity <span class="text-danger">*</span></label>
+                    <input required class="form-control" type="number" name="quantity[]" id="">
                 </div>`;
     }
 
