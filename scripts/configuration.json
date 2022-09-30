@@ -4032,7 +4032,7 @@
 		"v1/api/add_new_card" : "Guest/Home_controller/add_new_card",
 		"v1/api/nmi/add_new_card" : "Guest/Home_controller/add_new_card_nmi",
 		"v1/api/load_customer_cards" : "Guest/Home_controller/load_customer_cards",
-		"v1/api/nmi/refund" : "Admin/Home_controller/Admin_order_refund_controller/do_refund",
+		"v1/api/physical_location/create" : "Admin/Admin_inventory_controller/create_physical_location",
 
 
 		"/(:num)": "Guest/Home_controller/categories/$1",

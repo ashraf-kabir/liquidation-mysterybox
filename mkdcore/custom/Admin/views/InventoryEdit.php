@@ -144,7 +144,7 @@ if($this->session->userdata('role') == 1)
                         <div class="store shadow-sm my-2 p-2">
                             <div class="form-group">
                                 <label for="">Store <span class="text-danger">*</span></label>
-                                <select required name="stores[]" id="" class="form-control" onchange="listStoreLocations(this)">
+                                <select required name="stores[]" id="" role='store' class="form-control" onchange="listStoreLocations(this)">
                                 <option value=""></option>
                                     <?php foreach ($stores as $store): ?>
                                     <option <?php echo $value['store_id'] == $store->id? 'selected' : '' ?> value="<?php echo $store->id?>"> <?php echo $store->name; ?></option>
@@ -154,15 +154,21 @@ if($this->session->userdata('role') == 1)
                             </div>
                             <div class="form-group">
                                 <label for="">Physical Location <span class="text-danger">*</span></label>
-                                <select required name="locations[]" class="form-control location-dropdown" role="physical-location" onchange="updateLocationState(this)">
-                                <?php foreach ($physical_locations as $key => $location) {
-                                    if($value['store_id'] == $location->store_id) {
-                                        $selected = $value['location_id'] == $location->id ? 'selected' : '';
-                                        echo "<option {$selected} value='{$location->id}'> {$location->name} </option>";
-                                    }
-                                }?>
-                                
-                                </select>
+                                <div class="d-flex">
+                                    <select required name="locations[]" class="form-control location-dropdown" role="physical-location" onchange="updateLocationState(this)">
+                                    <?php foreach ($physical_locations as $key => $location) {
+                                        if($value['store_id'] == $location->store_id) {
+                                            $selected = $value['location_id'] == $location->id ? 'selected' : '';
+                                            echo "<option {$selected} value='{$location->id}'> {$location->name} </option>";
+                                        }
+                                    }?>
+                                    
+                                    </select>
+                                    <button type="button" class="btn btn-primary"  onclick="newPhysicalLocationToggle(this)" >
+                                    <i class="fas fa-plus-circle"></i>
+                                    </button>
+
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="">Quantity <span class="text-danger">*</span></label>
@@ -439,6 +445,40 @@ if($this->session->userdata('role') == 1)
     </div>
 </div>
 
+<!-- New Physical location Modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="newPhysicalLocationModal" tabindex="-1" role="dialog" aria-labelledby="newPhysicalLocationLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newPhysicalLocationModalLabel"> Add new Physical Location</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="hidden" id="location_trigger" value="">
+                    <label for=""> Select Store</label>
+                    <select name="new_physical_location_store" id="new_physical_location_store" class="form-control" >
+                        <option value=""></option>
+                    <?php foreach ($stores as $store): ?>
+                        <option value="<?php echo $store->id ?>"><?php echo $store->name ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                    <label for=""> Store Inventory Location</label>
+                    <input type="text" name="new_physical_location" id="new_physical_location" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" onclick="createInventoryLocation(this)" class="btn btn-primary">Add</button>
+            </div>
+    </div>
+  </div>
+</div>
+
 <?php 
     $this->load->view('Guest/ImagePortalModal.php');
 ?>
@@ -501,6 +541,52 @@ if($this->session->userdata('role') == 1)
         
     // });
 
+    function newPhysicalLocationToggle(el) {
+        const id = makeid(8);
+        el.parentElement.parentElement.parentElement.querySelector("[role='store']").id = id;
+        document.querySelector('#location_trigger').value = id;
+        document.querySelector("#new_physical_location_store").value = '';
+        document.querySelector("#new_physical_location").value = '';
+        $('#newPhysicalLocationModal').modal('show');
+    }
+
+    function createInventoryLocation(el) {
+        const store = document.querySelector("#new_physical_location_store").value;
+        const physical_location = document.querySelector("#new_physical_location").value;
+        const new_physical_location_trigger = document.querySelector("#location_trigger").value;
+        el.innerHTML = "Adding Location...";
+        $.ajax({
+               type: "POST",
+               url: "/v1/api/physical_location/create",
+               timeout: 15000,
+               dataType: "JSON",
+               data: { store: store, physical_location: physical_location },
+               success: function (response) {
+                document.querySelector('#store-inventories').setAttribute('encoded-locations', response.responseJSON.encoded_locations);
+                   $(`#${new_physical_location_trigger}`).trigger('change');
+                   el.innerHTML = "Add";
+                   $('#newPhysicalLocationModal').modal('hide');
+               },
+               error: function (response) {
+                   document.querySelector('#store-inventories').setAttribute('encoded-locations', response.responseJSON.encoded_locations);
+                   $(`#${new_physical_location_trigger}`).trigger('change');
+                   el.innerHTML = "Add";
+                   $('#newPhysicalLocationModal').modal('hide');
+               }
+          });
+    }
+
+    function makeid(length) {
+        let result           = '';
+        let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let charactersLength = characters.length;
+        for ( let i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * 
+            charactersLength));
+        }
+        return result;
+    }
+
     function listStoreLocations(el) {
         const locations = getStoreLocations(el.value);
         let options_template = '';
@@ -513,6 +599,7 @@ if($this->session->userdata('role') == 1)
         let physicalLocations = JSON.parse(atob(document.querySelector('#store-inventories').getAttribute('encoded-locations')));
         return physicalLocations = physicalLocations.filter(location => location.store_id === store_id && storeState.locations.indexOf(location.id) === -1 );
     }
+
 
     function updateLocationState(el) {
         // console.log(el);
@@ -567,7 +654,7 @@ if($this->session->userdata('role') == 1)
         return `
             <div class="form-group">
                 <label for="">Store <span class="text-danger">*</span></label>
-                <select required name="stores[]" id="" class="form-control" onchange="listStoreLocations(this)">
+                <select required name="stores[]" id="" role='store' class="form-control" onchange="listStoreLocations(this)">
                 <option value=""></option>
                     <?php foreach ($stores as $store): ?>
                     <option value="<?php echo $store->id?>"> <?php echo $store->name; ?></option>
@@ -582,9 +669,14 @@ if($this->session->userdata('role') == 1)
         return `
             <div class="form-group">
                 <label for="">Physical Location <span class="text-danger">*</span></label>
-                <select required name="locations[]" class="form-control location-dropdown" role="physical-location">
-                    <option value=""></option>
-                </select>
+                <div class="d-flex">
+                    <select required name="locations[]" class="form-control location-dropdown" role="physical-location">
+                        <option value=""></option>
+                    </select>
+                    <button type="button" class="btn btn-primary"  onclick="newPhysicalLocationToggle(this)">
+                        <i class="fas fa-plus-circle"></i>
+                    </button>
+                </div>
             </div>
         `;
     }

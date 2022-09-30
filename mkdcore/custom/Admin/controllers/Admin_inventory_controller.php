@@ -744,6 +744,7 @@ class Admin_inventory_controller extends Admin_controller
     }
 
 
+
     private function append_locations_to_store($stores = [])
     {
         $this->load->model('physical_location_model');
@@ -776,6 +777,51 @@ class Admin_inventory_controller extends Admin_controller
         }
         return $stores;
     }
+
+    public function create_physical_location()
+    {
+
+        if ($this->session->userdata('user_id')) 
+        { 
+            $this->load->library('barcode_service');
+            $this->load->model('physical_location_model');
+            $store_id = $this->input->post('store');
+            $name = $this->input->post('physical_location');
+
+            $increment_id  =  $this->physical_location_model->get_auto_increment_id();
+            $code           =  sprintf("%05d", $increment_id); 
+            $code           = $store_id."-".$code; 
+
+            $barcode_image_name = $this->barcode_service->generate_png_barcode($code, "location"); 
+            /**
+             *  Upload Image to S3
+             * 
+            */ 
+            $barcode_image  = $this->upload_image_with_s3($barcode_image_name);
+            
+            $result = $this->physical_location_model->create([
+                'name' => $name,
+                'store_id' => $store_id,
+                'barcode_image' => $barcode_image,
+                
+            ]);
+
+            if ($result)
+            {
+                $output['status'] = 200;
+                $output['encoded_locations'] =  base64_encode(json_encode($this->physical_location_model->get_all()));
+                echo json_encode($output); 
+                exit();
+            }
+            echo json_encode([
+                'error' => 'Failed to create physical location',
+            ]); 
+            exit();
+        }
+        
+    }
+
+
 
 
 }
