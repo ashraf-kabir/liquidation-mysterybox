@@ -550,7 +550,7 @@ if ($layout_clean_mode) {
                dataType: "JSON",
                data: { store: store, physical_location: physical_location },
                success: function (response) {
-                document.querySelector('#store-inventories').setAttribute('encoded-locations', response.responseJSON.encoded_locations);
+                document.querySelector('#store-inventories').setAttribute('encoded-locations', response.encoded_locations);
                    $(`#${new_physical_location_trigger}`).trigger('change');
                    el.innerHTML = 'Add';
                    $('#newPhysicalLocationModal').modal('hide');
