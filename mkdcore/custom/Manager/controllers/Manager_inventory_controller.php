@@ -26,6 +26,9 @@ class Manager_inventory_controller extends Manager_controller
         
         $this->load->model('customer_model'); 
         $this->load->library('names_helper_service');
+
+        $this->load->library('barcode_service');
+        $this->load->database();
         
     }
 
@@ -116,9 +119,13 @@ class Manager_inventory_controller extends Manager_controller
         $this->_data['view_model']->set_heading('Inventory');
         
 
-        $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
-        $this->_data['stores']              =   $this->store_model->get_all();
-        $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
+        $this->_data['parent_categories']   =   $this->_get_grouped_categories();
+        $stores             =   $this->store_model->get_all();
+        // $stores = $this->append_locations_to_store($stores);
+        $this->_data['stores']              =   $stores;
+        $physical_locations  =   $this->physical_location_model->get_all();
+        $this->_data['physical_locations']  =   $physical_locations;
+        $this->_data['encoded_physical_locations']  =   base64_encode(json_encode($this->_data['physical_locations']));
         $this->_data['sale_persons']        =   $this->user_model->get_all_users();
 
         if ($this->input->post('can_ship') == 1) 
@@ -129,82 +136,139 @@ class Manager_inventory_controller extends Manager_controller
             $this->form_validation->set_rules('width', 'Width', 'required|greater_than_equal_to[1]');
         }
 
+        $this->form_validation->set_rules('locations[]', 'Store', 'callback_validate_store_inventory');
 
- 
+
          
 
-		if ($this->form_validation->run() === FALSE)
-		{ 
-			return $this->render('Admin/InventoryAdd', $this->_data);
+        if ($this->form_validation->run() === FALSE)
+        { 
+            return $this->render('Admin/InventoryAdd', $this->_data);
         }
+    
+        // echo '<pre>';
+        // print_r($_POST); die;
 
         $increment_id  =  $this->inventory_model->get_auto_increment_id();
         $sku           =  sprintf("%05d", $increment_id); 
+ 
 
         $sale_person_id = $this->input->post('sale_person_id', TRUE); 
         $product_name = $this->input->post('product_name', TRUE); 
-		$category_id = $this->input->post('category_id', TRUE);
-		$manifest_id = $this->input->post('manifest_id', TRUE);
-		$physical_location = $this->input->post('physical_location', TRUE);
-		$location_description = $this->input->post('location_description', TRUE);
-		$weight = $this->input->post('weight', TRUE);
-		$length = $this->input->post('length', TRUE);
-		$height = $this->input->post('height', TRUE);
-		$width = $this->input->post('width', TRUE);
-		$feature_image = $this->input->post('feature_image', TRUE);
-		$feature_image_id = $this->input->post('feature_image_id', TRUE);
-		$selling_price = $this->input->post('selling_price', TRUE);
-		$quantity = $this->input->post('quantity', TRUE);
-		$inventory_note = $this->input->post('inventory_note', TRUE);
-		$cost_price = $this->input->post('cost_price', TRUE);
+        $category_id = $this->input->post('category_id', TRUE);
+        $manifest_id = $this->input->post('manifest_id', TRUE);
+        // $physical_location = $this->input->post('physical_location', TRUE) ?? NULL;
+        // $location_description = $this->input->post('location_description', TRUE);
+        $weight = $this->input->post('weight', TRUE);
+        $length = $this->input->post('length', TRUE);
+        $height = $this->input->post('height', TRUE);
+        $width = $this->input->post('width', TRUE);
+        $feature_image = $this->input->post('feature_image', TRUE);
+        $feature_image_id = $this->input->post('feature_image_id', TRUE);
+        $selling_price = $this->input->post('selling_price', TRUE);
+        $quantity = $this->input->post('quantity', TRUE);
+        $inventory_note = $this->input->post('inventory_note', TRUE);
+        $cost_price = $this->input->post('cost_price', TRUE);
         $admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
         
-		$status = $this->input->post('status', TRUE);
-		$store_location_id = $this->input->post('store_location_id', TRUE);
-		 
-		$can_ship = $this->input->post('can_ship', TRUE);
+        $status = $this->input->post('status', TRUE);
+        // $store_location_id = $this->input->post('store_location_id', TRUE);
+        $location_stores = $this->input->post('stores', TRUE);
+        $locations = $this->input->post('locations', TRUE);
+        $quantity = $this->input->post('quantity', TRUE);
+
+        $can_ship = $this->input->post('can_ship', TRUE) ?? 2;
+        $can_ship_approval = $this->input->post('can_ship_approval', TRUE) ?? 2;
         $free_ship = $this->input->post('free_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
         $pin_item_top = $this->input->post('pin_item_top', TRUE);
         $video_url = json_encode($this->input->post('video_url', TRUE)); 
         $youtube_thumbnail_1 = json_encode($this->input->post('youtube_thumbnail_1', TRUE));
+         
+
+      
+        //SKU for category
+        $category_data = $this->category_model->get($category_id);
+
+        if (isset($category_data->sku_prefix) and !empty($category_data->sku_prefix))
+        {
+            $sku = $category_data->sku_prefix . "" . $sku;
+        }
+
+
         
+        $barcode_image_name = $this->barcode_service->generate_png_barcode($sku, "inventory"); 
+        /**
+         *  Upload Image to S3
+         * 
+        */ 
+        $barcode_image  = $this->upload_image_with_s3($barcode_image_name);
+
         if($product_type == 2)
         {
             $sku = '';
         }
- 
-		
+
+
+        $store_inventory = [];
+        $total_quantity = 0;
+        $unique_stores = array_unique($location_stores);
+        foreach ($unique_stores as $key => $store_id) {
+            $store_location_data = [];
+            foreach ($locations as $key2 => $location_id) {
+                if ($store_id == $location_stores[$key2]) {
+                    $store_location_data[$location_id] = $quantity[$key2];
+                }
+            }
+
+            $store_inventory_item['store_id'] = $store_id;
+            $store_locations = $this->input->post("store_{$store_id}_location");
+
+            $store_quantity = array_reduce($store_location_data, function ($sum, $location_quantity) {
+                return $sum + $location_quantity;
+            }, 0);
+
+            $store_inventory_item['quantity'] = $store_quantity;
+            $store_inventory_item['locations'] = $store_location_data; //id as key
+    
+            array_push($store_inventory, $store_inventory_item);
+            $total_quantity += $store_quantity;
+        }
+
+        $store_inventory = json_encode($store_inventory);
+        
         $result = $this->inventory_model->create([
             'sale_person_id' => $sale_person_id,
             'product_name' => $product_name,
-			'sku' => $sku,
-			'category_id' => $category_id,
-			'manifest_id' => $manifest_id,
-			'physical_location' => $physical_location,
-			'location_description' => $location_description,
-			'weight' => $weight,
-			'length' => $length,
-			'height' => $height,
-			'width' => $width,
-			'feature_image' => $feature_image,
-			'feature_image_id' => $feature_image_id,
-			'selling_price' => $selling_price,
-			'quantity' => $quantity,
-			'inventory_note' => $inventory_note,
-			'cost_price' => $cost_price,
-			'admin_inventory_note' => $admin_inventory_note, 
-			'status' => $status,
-			'store_location_id' => $store_location_id, 
+            'sku' => $sku,
+            'barcode_image' => $barcode_image,
+            'category_id' => $category_id,
+            'manifest_id' => $manifest_id,
+            'physical_location' => '',
+            'location_description' => '',
+            'weight' => $weight,
+            'length' => $length,
+            'height' => $height,
+            'width' => $width,
+            'feature_image' => $feature_image,
+            'feature_image_id' => $feature_image_id,
+            'selling_price' => $selling_price,
+            'quantity' => $total_quantity,
+            'inventory_note' => $inventory_note,
+            'cost_price' => $cost_price,
+            'admin_inventory_note' => $admin_inventory_note, 
+            'status' => $status,
+            'store_location_id' => '', 
             'can_ship' => $can_ship,
+            'can_ship_approval' => $can_ship_approval,
             'free_ship' => $free_ship,
             'product_type' => $product_type,
-			'pin_item_top' => $pin_item_top,
-            'video_url' => $video_url,
-            'youtube_thumbnail_1' => $youtube_thumbnail_1,  
-			
+            'pin_item_top' => $pin_item_top,
+            'video_url' => $video_url, 
+            'youtube_thumbnail_1' => $youtube_thumbnail_1, 
+            'store_inventory' => $store_inventory
         ]);
-
+ 
         if ($result)
         {
             $inventory_id = $result;
@@ -242,10 +306,10 @@ class Manager_inventory_controller extends Manager_controller
 	{
         $model = $this->inventory_model->get($id);
         $session = $this->get_session();
-		if (!$model)
-		{
-			$this->error('Error');
-			return redirect('/manager/inventory/0');
+        if (!$model)
+        {
+            $this->error('Error');
+            return redirect('/manager/inventory/0');
         }
 
         include_once __DIR__ . '/../../view_models/Inventory_admin_edit_view_model.php';
@@ -257,10 +321,20 @@ class Manager_inventory_controller extends Manager_controller
         
 
         $this->_data['gallery_lists']       =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
-        $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
-        $this->_data['stores']              =   $this->store_model->get_all();
+        $this->_data['parent_categories']   =   $this->_get_grouped_categories();
+        // $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
+        $stores             =   $this->store_model->get_all();
+        $stores = $this->append_locations_to_store($stores);
+        $this->_data['stores']              =   $stores;
         $this->_data['physical_locations']  =   $this->physical_location_model->get_all();
         $this->_data['sale_persons']        =   $this->user_model->get_all_users();
+        $this->_data['store_inventory']     =   json_decode($model->store_inventory);
+        $this->_data['item_inventory_locations']     =   $this->extract_locations_from_store_inventory(json_decode($model->store_inventory));
+        $this->_data['item_inventory_stores']     =   $this->extract_stores_from_store_inventory(json_decode($model->store_inventory));
+        $this->_data['encoded_physical_locations']  =   base64_encode(json_encode($this->_data['physical_locations']));
+      
+
+        // $this->_data['parent_categories'] 
 
         if ($this->input->post('can_ship') == 1) 
         {
@@ -269,79 +343,116 @@ class Manager_inventory_controller extends Manager_controller
             $this->form_validation->set_rules('height', 'Height', 'required|greater_than_equal_to[1]');
             $this->form_validation->set_rules('width', 'Width', 'required|greater_than_equal_to[1]');
         }
+        $this->form_validation->set_rules('locations[]', 'Store', 'callback_validate_store_inventory');
 
 
-        
-        
-		if ($this->form_validation->run() === FALSE)
-		{ 
-			return $this->render('Admin/InventoryEdit', $this->_data);
+     
+
+        if ($this->form_validation->run() === FALSE)
+        { 
+            return $this->render('Admin/InventoryEdit', $this->_data);
         }
 
-        $sale_person_id = $this->input->post('sale_person_id', TRUE);
         $product_name = $this->input->post('product_name', TRUE);
-		$sku = $this->input->post('sku', TRUE);
-		$category_id = $this->input->post('category_id', TRUE);
-		$manifest_id = $this->input->post('manifest_id', TRUE);
-		$physical_location = $this->input->post('physical_location', TRUE);
-		$location_description = $this->input->post('location_description', TRUE);
-		$weight = $this->input->post('weight', TRUE);
-		$length = $this->input->post('length', TRUE);
-		$height = $this->input->post('height', TRUE);
-		$width = $this->input->post('width', TRUE);
-		$feature_image = $this->input->post('feature_image', TRUE);
-		$feature_image_id = $this->input->post('feature_image_id', TRUE);
-		$selling_price = $this->input->post('selling_price', TRUE);
-		$quantity = $this->input->post('quantity', TRUE);
-		$inventory_note = $this->input->post('inventory_note', TRUE);
-		$cost_price = $this->input->post('cost_price', TRUE);
-		$admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
-		 
-		$status = $this->input->post('status', TRUE);
-		$store_location_id = $this->input->post('store_location_id', TRUE);
-		 
-		$can_ship = $this->input->post('can_ship', TRUE);
+        $sku = $this->input->post('sku', TRUE);
+        $category_id = $this->input->post('category_id', TRUE);
+        $manifest_id = $this->input->post('manifest_id', TRUE);
+        $physical_location = $this->input->post('physical_location', TRUE);
+        $location_description = $this->input->post('location_description', TRUE);
+        $weight = $this->input->post('weight', TRUE);
+        $length = $this->input->post('length', TRUE);
+        $height = $this->input->post('height', TRUE);
+        $width = $this->input->post('width', TRUE);
+        $feature_image = $this->input->post('feature_image', TRUE);
+        $feature_image_id = $this->input->post('feature_image_id', TRUE);
+        $selling_price = $this->input->post('selling_price', TRUE);
+        $quantity = $this->input->post('quantity', TRUE);
+        $inventory_note = $this->input->post('inventory_note', TRUE);
+        $cost_price = $this->input->post('cost_price', TRUE);
+        $admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
+         
+        $status = $this->input->post('status', TRUE);
+        // $stores_inventory = $this->input->post('stores_inventory', TRUE);
+        $location_stores = $this->input->post('stores', TRUE);
+        $locations = $this->input->post('locations', TRUE);
+        $quantity = $this->input->post('quantity', TRUE);
+         
+        $sale_person_id = $this->input->post('sale_person_id', TRUE);
+        $can_ship = $this->input->post('can_ship', TRUE) ?? 2;
+        $can_ship_approval = $this->input->post('can_ship_approval', TRUE) ?? 2;
         $free_ship = $this->input->post('free_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
-		$pin_item_top = $this->input->post('pin_item_top', TRUE);
-        $video_url = json_encode($this->input->post('video_url', TRUE)); 
-        $youtube_thumbnail_1 = json_encode($this->input->post('youtube_thumbnail_1', TRUE));
+        $pin_item_top = $this->input->post('pin_item_top', TRUE);
+        $video_url = json_encode($this->input->post('video_url', TRUE));
         
+ 
+        $youtube_thumbnail_1 = json_encode($this->input->post('youtube_thumbnail_1', TRUE));
+
         if($product_type == 2)
         {
             $sku = '';
-        } 
+        }
+    
+        $store_inventory = [];
+        $total_quantity = 0;
+        $unique_stores = array_unique($location_stores);
+        foreach ($unique_stores as $key => $store_id) {
+            $store_location_data = [];
+            foreach ($locations as $key2 => $location_id) {
+                if ($store_id == $location_stores[$key2]) {
+                    $store_location_data[$location_id] = $quantity[$key2];
+                }
+            }
+
+            $store_inventory_item['store_id'] = $store_id;
+            $store_locations = $this->input->post("store_{$store_id}_location");
+
+            $store_quantity = array_reduce($store_location_data, function ($sum, $location_quantity) {
+                return $sum + $location_quantity;
+            }, 0);
+
+            $store_inventory_item['quantity'] = $store_quantity;
+            $store_inventory_item['locations'] = $store_location_data; //id as key
+    
+            array_push($store_inventory, $store_inventory_item);
+            $total_quantity += $store_quantity;
+        }
+
+        $store_inventory = json_encode($store_inventory);
+        
         
         $result = $this->inventory_model->edit([
             'sale_person_id' => $sale_person_id,
             'product_name' => $product_name,
-			'sku' => $sku,
-			'category_id' => $category_id,
-			'manifest_id' => $manifest_id,
-			'physical_location' => $physical_location,
-			'location_description' => $location_description,
-			'weight' => $weight,
-			'length' => $length,
-			'height' => $height,
-			'width' => $width,
-			'feature_image' => $feature_image,
-			'feature_image_id' => $feature_image_id,
-			'selling_price' => $selling_price,
-			'quantity' => $quantity,
-			'inventory_note' => $inventory_note,
-			'cost_price' => $cost_price,
-			'admin_inventory_note' => $admin_inventory_note, 
-			'status' => $status,
-			'store_location_id' => $store_location_id, 
+            'sku' => $sku,
+            'category_id' => $category_id,
+            'manifest_id' => $manifest_id,
+            'physical_location' => '',
+            'location_description' => '',
+            'weight' => $weight,
+            'length' => $length,
+            'height' => $height,
+            'width' => $width,
+            'feature_image' => $feature_image,
+            'feature_image_id' => $feature_image_id,
+            'selling_price' => $selling_price,
+            'quantity' => $total_quantity,
+            'inventory_note' => $inventory_note,
+            'cost_price' => $cost_price,
+            'admin_inventory_note' => $admin_inventory_note, 
+            'status' => $status,
+            'store_location_id' => '', 
             'can_ship' => $can_ship,
+            'can_ship_approval' => $can_ship_approval,
             'free_ship' => $free_ship,
             'product_type' => $product_type,
-			'pin_item_top' => $pin_item_top,
+            'pin_item_top' => $pin_item_top,
             'video_url' => $video_url,
             'youtube_thumbnail_1' => $youtube_thumbnail_1,  
-			
+            'store_inventory' => $store_inventory
+            
         ], $id);
-
+       
         if ($result)
         {
             $inventory_id = $id;
@@ -358,8 +469,10 @@ class Manager_inventory_controller extends Manager_controller
                 $this->helpers_service->set_config($this->config);
                 $this->helpers_service->notify_item_has_been_added($inventory_id); 
             }
-
             
+
+
+
             /**
              * Get all images that are uploaded
              * save them one by one
@@ -392,12 +505,11 @@ class Manager_inventory_controller extends Manager_controller
 	{
         $model = $this->inventory_model->get($id);
 
-		if (!$model)
-		{
-			$this->error('Error');
-			return redirect('/manager/inventory/0');
-		}
-
+        if (!$model)
+        {
+            $this->error('Error');
+            return redirect('/manager/inventory/0');
+        }
 
         $this->names_helper_service->set_store_model($this->store_model); 
         $this->names_helper_service->set_physical_location_model($this->physical_location_model);
@@ -405,14 +517,24 @@ class Manager_inventory_controller extends Manager_controller
         $this->names_helper_service->set_category_model($this->category_model);  
 
         include_once __DIR__ . '/../../view_models/Inventory_admin_view_view_model.php';
-		$this->_data['view_model'] = new Inventory_admin_view_view_model($this->inventory_model);
-		$this->_data['view_model']->set_heading('Inventory');
+        $this->_data['view_model'] = new Inventory_admin_view_view_model($this->inventory_model);
+        $this->_data['view_model']->set_heading('Inventory');
         $model->category_id       = $this->names_helper_service->get_category_real_name( $model->category_id ); 
         $model->physical_location = $this->names_helper_service->get_physical_location_real_name( $model->physical_location ); 
         $model->store_location_id = $this->names_helper_service->get_store_name( $model->store_location_id ); 
         $this->_data['view_model']->set_model($model);
+        $store_inventory = !empty($model->store_inventory) ? json_decode($model->store_inventory) : [];
         
-		return $this->render('Admin/InventoryView', $this->_data);
+        foreach ($store_inventory as $key => &$store) {
+            $store_inventory[$key]->store_name = $this->names_helper_service->get_store_name( $store->store_id ); 
+            $store_locations = isset($store->locations) ? $store->locations : [];
+            foreach ($store_locations as $location_id => $location_quantity) {
+                $store_inventory[$key]->location_data[] = ['name' => $this->names_helper_service->get_physical_location_real_name($location_id), 'quantity' => $location_quantity];
+            }
+        }
+        $this->_data['store_inventory'] = $store_inventory;
+ 
+        return $this->render('Admin/InventoryView', $this->_data);
 	}
 
     
@@ -442,8 +564,77 @@ class Manager_inventory_controller extends Manager_controller
     }
     
     
+    private function _get_grouped_categories(){
+        // get parent categoris
+        $table = 'category';
+        $parent_where = '(parent_category_id IS NULL OR parent_category_id = 0) AND status = 1';
+		$this->db->where($parent_where);
+        $parent_categories = $this->db->get($table)->result();
+
+        // Get child categories
+        $child_where = '(parent_category_id IS NOT NULL OR parent_category_id != 0) AND status = 1';
+		$this->db->where($child_where);
+        $child_categories = $this->db->get($table)->result();
+
+        $categories = [];
+
+        foreach ($parent_categories as $key => $parent_category) {
+            // Add parent
+            $categories[] = $parent_category;
+
+            // Loop through child categories and append if its the child
+            foreach ($child_categories as $key => $child_category) {
+                if($child_category->parent_category_id == $parent_category->id){
+                    $categories[] = $child_category;
+                }
+            }
+        }
+
+        return $categories;
+
+	}
+
+    public function validate_store_inventory ()
+    {
+        // ensure the same store is not selected more than once.
+        $locations = $this->input->post('locations');
+
+        return count($locations) < 1 ? FALSE : TRUE;
+    }
+
     
-    
+    private function append_locations_to_store($stores = [])
+    {
+        $this->load->model('physical_location_model');
+
+        foreach ($stores as $key => &$store) {
+            $store->locations = $this->physical_location_model->get_all([
+                'store_id'  => $store->id 
+            ]);
+        }
+        return $stores;
+    }
+
+    private function extract_locations_from_store_inventory($store_inventory = []) 
+    {
+        $locations = [];
+        foreach ($store_inventory as $store_data) {
+            if(empty($store_data->locations)) { continue;}
+            foreach ($store_data->locations as $location_id => $location_quantity) {
+                $locations[] = ['store_id' => $store_data->store_id, 'location_id' => $location_id, 'quantity' => $location_quantity];
+            }
+        }
+        return $locations;
+    }
+
+    private function extract_stores_from_store_inventory($store_inventory = []) 
+    {
+        $stores = [];
+        foreach ($store_inventory as $store_data) {
+            $stores[] = $store_data->store_id;
+        }
+        return $stores;
+    }
     
     
     

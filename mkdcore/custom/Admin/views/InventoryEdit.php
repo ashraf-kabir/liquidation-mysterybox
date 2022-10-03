@@ -164,10 +164,11 @@ if($this->session->userdata('role') == 1)
                                     }?>
                                     
                                     </select>
-                                    <button type="button" class="btn btn-primary"  onclick="newPhysicalLocationToggle(this)" >
-                                    <i class="fas fa-plus-circle"></i>
-                                    </button>
-
+                                    <?php if($this->session->userdata('role') == 2): ?> 
+                                        <button type="button" class="btn btn-primary"  onclick="newPhysicalLocationToggle(this)" >
+                                        <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    <?php endif ?>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -673,9 +674,11 @@ if($this->session->userdata('role') == 1)
                     <select required name="locations[]" class="form-control location-dropdown" role="physical-location">
                         <option value=""></option>
                     </select>
-                    <button type="button" class="btn btn-primary"  onclick="newPhysicalLocationToggle(this)">
+                    <?php if($this->session->userdata('role') == 2): ?> 
+                        <button type="button" class="btn btn-primary"  onclick="newPhysicalLocationToggle(this)" >
                         <i class="fas fa-plus-circle"></i>
-                    </button>
+                        </button>
+                    <?php endif ?>
                 </div>
             </div>
         `;

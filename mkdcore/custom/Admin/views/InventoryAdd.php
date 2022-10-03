@@ -149,9 +149,13 @@ if ($layout_clean_mode) {
                                     <select required name="locations[]" class="form-control location-dropdown" role="physical-location" onchange="updateLocationState(this)">
                                         <option value=""></option>
                                     </select>
-                                    <button type="button" class="btn btn-primary"  onclick="newPhysicalLocationToggle(this)" >
-                                    <i class="fas fa-plus-circle"></i>
-                                    </button>
+                                        <!-- Only admin can add new location -->
+                                    <?php if($this->session->userdata('role') == 2): ?> 
+                                        <button type="button" class="btn btn-primary"  onclick="newPhysicalLocationToggle(this)" >
+                                        <i class="fas fa-plus-circle"></i>
+                                        </button>
+                                    <?php endif ?>
+
                                 </div>
                             </div>
                             <div class="form-group">
@@ -660,9 +664,12 @@ if ($layout_clean_mode) {
                     <select required name="locations[]" class="form-control location-dropdown" role="physical-location">
                         <option value=""></option>
                     </select>
-                    <button type="button" class="btn btn-primary"  onclick="newPhysicalLocationToggle(this)">
+
+                    <?php if($this->session->userdata('role') == 2): ?> 
+                        <button type="button" class="btn btn-primary"  onclick="newPhysicalLocationToggle(this)" >
                         <i class="fas fa-plus-circle"></i>
-                    </button>
+                        </button>
+                    <?php endif ?>
                 </div>
             </div>
         `;
