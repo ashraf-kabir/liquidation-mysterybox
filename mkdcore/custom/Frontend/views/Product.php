@@ -284,10 +284,10 @@ if (!empty($product->feature_image))
     </main>
     <div class="container-fluid">
         <div class="row " style="margin: 15px 0px;">
-            <div class="col-lg-7 bg-white p-2 p-md-4 mt-4 add_margin_mobile flex-css">
+            <div class="col-lg-7 bg-white p-2 p-md-4 mt-4 add_margin_mobile d-flex">
                 
 
-                <div class="row "> 
+                <div class="row col-md-12"> 
                     <div class="col-12 col-sm-12">
                         <?php if(!empty($product->feature_image)){   ?>
                             <div class="mySlides">
