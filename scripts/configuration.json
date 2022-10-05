@@ -1785,7 +1785,7 @@
 			"method_edit_pre": "",
 			"is_add": true,
 			"is_edit": true,
-			"is_delete": false,
+			"is_delete": true,
 			"is_real_delete": false,
 			"is_list": true,
 			"is_view": true,

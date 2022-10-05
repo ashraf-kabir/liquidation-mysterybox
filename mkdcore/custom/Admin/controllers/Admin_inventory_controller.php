@@ -539,6 +539,28 @@ class Admin_inventory_controller extends Admin_controller
         return $this->render('Admin/InventoryView', $this->_data);
     }
 
+    public function delete($id)
+	{
+        $model = $this->inventory_model->get($id);
+
+		if (!$model)
+		{
+			$this->error('Error');
+			return redirect('/admin/inventory/0');
+        }
+
+        $result = $this->inventory_model->delete($id);
+
+        if ($result)
+        {
+            $this->success('Action completed successfully.');
+            return $this->redirect('/admin/inventory/0', 'refresh');
+        }
+
+        $this->error('Error');
+        return redirect('/admin/inventory/0');
+	}
+
     
     
     

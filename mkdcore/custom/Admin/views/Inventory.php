@@ -155,6 +155,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             { 
                                 echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/admin/inventory/edit/' . $data->id . '">Edit</a>';
 							    echo '<a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/view/' . $data->id . '">View</a>';
+                                if ($data->status != 0 /* 0 = inactive  */) {
+                                    echo '<a class="btn btn-link text-danger link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/delete/' . $data->id . '">Set Inactive</a>';
+                                }
                             }
                             elseif($this->session->userdata('role') == 4) 
                             { 
