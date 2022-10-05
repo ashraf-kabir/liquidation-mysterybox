@@ -561,6 +561,28 @@ class Admin_inventory_controller extends Admin_controller
         return redirect('/admin/inventory/0');
 	}
 
+    public function set_active($id)
+	{
+        $model = $this->inventory_model->get($id);
+
+		if (!$model)
+		{
+			$this->error('Error');
+			return redirect('/admin/inventory/0');
+        }
+
+        $result = $this->inventory_model->edit(['status' => 1], $id);
+
+        if ($result)
+        {
+            $this->success('Action completed successfully.');
+            return $this->redirect('/admin/inventory/0', 'refresh');
+        }
+
+        $this->error('Error');
+        return redirect('/admin/inventory/0');
+	}
+
     
     
     
