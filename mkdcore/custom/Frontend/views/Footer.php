@@ -173,6 +173,7 @@
                 <li><a href="<?php echo base_url(); ?>about_us/">About&nbsp;Us</a></li>
                 <li><a href="<?php echo base_url(); ?>contact_us/">Contact&nbsp;Us</a></li>        
                 <li><a href="<?php echo base_url(); ?>privacy_policy/">Privacy&nbsp;Policy</a></li>        
+                <li><a href="<?php echo base_url(); ?>terms_and_conditions/">Terms&nbsp;And&nbsp;Conditions</a></li>        
             </ul>
         </div>
         </div>
