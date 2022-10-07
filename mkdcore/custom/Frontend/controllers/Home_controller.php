@@ -1530,6 +1530,16 @@ class Home_controller extends Manaknight_Controller
         $data['terms']     =  $this->terms_and_conditions_model->get(1); 
         $this->_render('Guest/AboutUs',$data);
     }
+
+    public function privacy_policy()
+    {
+        $data['layout_clean_mode'] = FALSE; 
+        $data['no_detail'] = TRUE; 
+
+        $this->load->model('terms_and_conditions_model');
+        $data['terms']     =  $this->terms_and_conditions_model->get(1); 
+        $this->_render('Guest/Privacy',$data);
+    }
      
     public function contact_us()
     {
