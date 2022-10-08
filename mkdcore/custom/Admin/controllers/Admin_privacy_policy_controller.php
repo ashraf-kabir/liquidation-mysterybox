@@ -45,6 +45,7 @@ class Admin_privacy_policy_controller extends Admin_controller
         $this->_data['view_model'] = new PrivacyPolicy_admin_edit_view_model($this->terms_and_conditions_model);
         $this->_data['view_model']->set_model($model);
         $this->_data['view_model']->set_heading('Privacy Policy');
+        $this->_data['page_name'] = 'Privacy Policy';
         
 
         $this->form_validation->set_rules('privacy_policy','Privacy Policy','required');
@@ -54,10 +55,10 @@ class Admin_privacy_policy_controller extends Admin_controller
 			return $this->render('Admin/PrivacyPolicyEdit', $this->_data);
         }
 
-        $about_us_page = $this->input->post('privacy_policy', TRUE);
+        $privacy_policy = $this->input->post('privacy_policy', TRUE);
 		
         $result = $this->terms_and_conditions_model->edit([
-            'about_us_page' => $about_us_page,
+            'privacy_policy' => $privacy_policy,
 			
         ], $id);
 

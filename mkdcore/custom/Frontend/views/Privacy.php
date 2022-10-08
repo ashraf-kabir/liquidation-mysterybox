@@ -8,7 +8,7 @@
 
                <div class="col-10 text-black about-details">
                     <p  class="text-black">
-                         <?php echo $terms->terms_and_condition_text; ?>
+                         <?php echo $terms->privacy_policy; ?>
                     </p> 
                </div>
           </div>
