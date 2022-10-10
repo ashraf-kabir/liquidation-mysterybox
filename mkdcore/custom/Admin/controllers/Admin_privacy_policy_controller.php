@@ -46,6 +46,7 @@ class Admin_privacy_policy_controller extends Admin_controller
         $this->_data['view_model']->set_model($model);
         $this->_data['view_model']->set_heading('Privacy Policy');
         $this->_data['page_name'] = 'Privacy Policy';
+        $this->_data['privacy_policy'] = $model->privacy_policy;
         
 
         $this->form_validation->set_rules('privacy_policy','Privacy Policy','required');
