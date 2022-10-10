@@ -6,6 +6,9 @@ if ($layout_clean_mode) {
 }
 ?>
 
+
+<div class="tab-content mx-4" id="nav-tabContent">
+
 <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
 <!-- <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/assets/css/suneditor.css" rel="stylesheet"> -->
 <!-- <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/assets/css/suneditor-contents.css" rel="stylesheet"> -->
@@ -22,7 +25,6 @@ if ($layout_clean_mode) {
         width: 100%;
     }
 </style>
-<div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
 <div aria-label="breadcrumb">
     <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
