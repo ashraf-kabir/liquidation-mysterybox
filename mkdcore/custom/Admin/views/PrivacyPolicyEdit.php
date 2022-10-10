@@ -10,6 +10,9 @@ if ($layout_clean_mode) {
      .sun-editor{
         width: 100%;
     }
+    textarea{
+        width: 100%;
+    }
 </style>
 <div class="tab-content mx-4" id="nav-tabContent">
               <!-- Bread Crumb -->
