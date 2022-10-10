@@ -77,7 +77,7 @@ if ($layout_clean_mode) {
                 <?= form_open() ?>
                 <div class="form-group col-md-12 col-sm-12">
                     <label for="Privacy">Privacy Policy </label>
-                    <textarea id='form_privacy_policy' name='privacy_policy' class='data-input form-control' rows='10'><?php echo set_value('privacy_policy', $this->privacy_policy);?></textarea>
+                    <textarea id='form_privacy_policy' name='privacy_policy' class='data-input form-control' rows='10'><?php echo set_value('privacy_policy', $this->_data['view_model']->get_privacy_policy());?></textarea>
                 </div>
 
                     
