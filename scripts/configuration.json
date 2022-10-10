@@ -3974,6 +3974,7 @@
 		"../mkdcore/custom/Admin/views/SubcategoryAdd.php" : "../release/application/views/Admin/SubcategoryAdd.php",
 		"../mkdcore/custom/Admin/views/SubcategoryEdit.php" : "../release/application/views/Admin/SubcategoryEdit.php",
 		"../mkdcore/custom/Admin/views/AboutUsEdit.php" : "../release/application/views/Admin/AboutUsEdit.php",
+		"../mkdcore/custom/Admin/views/PrivacyPolicyEdit.php" : "../release/application/views/Admin/PrivacyPolicyEdit.php",
 		"../mkdcore/custom/Admin/views/TermsAndConditionsEdit.php" : "../release/application/views/Admin/TermsAndConditionsEdit.php",
 		"../mkdcore/custom/Admin/views/HomePageSettingEdit.php" : "../release/application/views/Admin/HomePageSettingEdit.php",
 		"../mkdcore/custom/Admin/views/CarouselSliderAdd.php" : "../release/application/views/Admin/CarouselSliderAdd.php",
