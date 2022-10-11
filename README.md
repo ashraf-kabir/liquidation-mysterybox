@@ -1,6 +1,7 @@
 # Manaknight Code builder
 
 # New Project Setup
+
 1.git clone <repo>
 
 2.Install Docker [MAC Instructions](https://docs.docker.com/docker-for-mac/install/)
@@ -24,6 +25,7 @@
 10.To see member panel go to [http://localhost:9000/member/login](http://localhost:9000/member/login) . Login is member@manaknight.com/a123456
 
 # Mac Setup
+
 1.composer install
 
 2.cd scripts;
@@ -80,7 +82,9 @@ sudo ./copyToProd.sh
 ```
 
 # Configuration Sections
+
 Below I'll explain the meaning of each field
+
 ```
     "has_license_key": <boolean> - always true  (dont change)
     "license_key": <string> - generate one from random key on generator.php (change)
@@ -141,6 +145,7 @@ Below I'll explain the meaning of each field
 ```
 
 ## Roles
+
 These are the roles in the system. By the requirements, put roles given as instructions.
 
 ```
@@ -153,6 +158,7 @@ These are the roles in the system. By the requirements, put roles given as instr
 ```
 
 ## Models
+
 These are the models in codeigniter. If given model schema by manager, implement model schema.
 
 ```
@@ -179,7 +185,9 @@ These are the models in codeigniter. If given model schema by manager, implement
 ```
 
 ## Join
+
 When a join maybe needed, this array will make the function available to join
+
 ```
 [
   {
@@ -190,7 +198,9 @@ When a join maybe needed, this array will make the function available to join
 ```
 
 ## Field
+
 These are the fields of database table. Look at codeigniter validation rules
+
 ```
 ie. ["action", "string",[{"limit": 50}], "Action", "required|max[50]", "required|max[50]"]
 
@@ -215,7 +225,9 @@ codeigniter validation rules - same as regular codeigniter
 ```
 
 ## Portal
+
 Information needed to build portal.
+
 ```
 [
   {
@@ -250,8 +262,10 @@ Information needed to build portal.
 ```
 
 ## Controller
+
 Information needed to build a controller
-```
+
+````
 [
   {
     "route": <string> - base route of controller ie. /users always plural
@@ -343,9 +357,10 @@ Information needed to build a controller
     This value will be loaded in constructor. So in view, you can have dynamically loaded mapping
   }
 ]
-```
+````
 
 ## Marketing Page
+
 This is the place to move custom marketing pages from template/custom folder to the main project.
 
 ```
@@ -367,6 +382,7 @@ This is the place to move custom marketing pages from template/custom folder to 
 ```
 
 ## Reporting
+
 This is the place to make generic reporting pages.
 
 ```
@@ -411,19 +427,18 @@ This is the place to make generic reporting pages.
 
 ## add , edit , filter fields pipes
 
-You can use pipes to specify  how  data will be rendered or the type of input type you will get i.e form controls if you dont put a pipe the code builder will use datatype specified on the model
+You can use pipes to specify how data will be rendered or the type of input type you will get i.e form controls if you dont put a pipe the code builder will use datatype specified on the model
 
 1. Auto complete pipe
-can be used for add, edit and filter fields
-for example:
-"email|autocomplete:table_name:field_search:field_label_field:field_value_field"
+   can be used for add, edit and filter fields
+   for example:
+   "email|autocomplete:table_name:field_search:field_label_field:field_value_field"
 1. email the field
-2. autocomplete to generate autocomplete input
-3. table_name table you want to search
-4. field_search table -> field to search
-5. field_label_field ->field to show user
-6. field_value_field -> field to use as value example user_id
-
+1. autocomplete to generate autocomplete input
+1. table_name table you want to search
+1. field_search table -> field to search
+1. field_label_field ->field to show user
+1. field_value_field -> field to use as value example user_id
 
 ```
 [
@@ -432,6 +447,7 @@ for example:
   },
 ]
 ```
+
 ## Local Development
 
 You can maintain a local env.json in your project root. This allows you to maintain separate
@@ -525,11 +541,11 @@ production and local development configurations. You need to add env.json to .gi
 You can activate stripe module in pag
 
 ```
- {
-    
-       
-   
+
+{
+
 }
+
 ```
 
 ## Reverse Copy
@@ -556,27 +572,29 @@ This script does 2 things:
 
 3.It prints the lines you need to copy into copy object.
 ```
+
 I.E.
 "../mkdcore/custom/generated/release_application_controllers_Guest_Home_controller.php": "../release/application/controllers/Guest/Home_controller.php",
+
 ```
 
 
 
-## Stripe ACH 
+## Stripe ACH
 If you want to send ach invoice to customer and  attach webhook for it's response
- 
-You need to do following steps in order to get it correctly 
+
+You need to do following steps in order to get it correctly
 
 1) First add service in copy object Stripe_ach_invoice_service.
 2) Load Service where you want to you.
 3) Set config using $this->stripe_ach_invoice_service->set_config($this->config);
-4) Now you can send invoice using send_ach_invoice_sale_order function of above service if  
+4) Now you can send invoice using send_ach_invoice_sale_order function of above service if
     requires 4 Parameters  return Invoice ID as response
 
   1) Customer Name
-  2) Customer Email 
-  3) Customer Phone 
-  4) Total 
+  2) Customer Email
+  3) Customer Phone
+  4) Total
   5) Days until invoice due
 
 5) Don't forget to update your webhook response (mkdcore/source/payment/Stripe_webhooks_api_controller.php =>  function handle_invoice_paid_method )
@@ -584,8 +602,8 @@ You need to do following steps in order to get it correctly
 
 ## Generate Barcode
 If you want to generate barcode of any string or number use Barcode_service
- 
-You need to do following steps in order to get it correctly 
+
+You need to do following steps in order to get it correctly
 
 1) First add service in copy object Barcode_service in configuration.json.
 2) Load Service where you want to you.
@@ -593,36 +611,37 @@ You need to do following steps in order to get it correctly
 
     1) String or Number for barcode (required)
     2) Manually name the image (optional)
-4) use this function to upload this file to s3 $this->upload_image_with_s3($image_url) return 
-upload image url 
+4) use this function to upload this file to s3 $this->upload_image_with_s3($image_url) return
+upload image url
 
- 
 
-## Signature 
+
+## Signature
 
 1) first we need to place this signature html
 <div class="wrapper_signature_div">
     <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
 </div>
 <br>
-<button type="button" class="btn btn-success" id="save-png">Save Signature</button> 
+<button type="button" class="btn btn-success" id="save-png">Save Signature</button>
 <button type="button" class="btn btn-danger " id="clear">Clear</button>
 
 <!-- <div id="signature-div" ></div>  -->
-  
+
 <textarea id="signature64" name="signature_in_b64" style="display: none"></textarea>
 2) Load Signature Assests from js and css
-3) Generate Image and upload image to s3 like we did for barcode 
-$folderPath = "uploads/"; 
-$image_parts = explode(";base64,", $this->input->post('signature_in_b64', TRUE) ); 
-$image_type_aux = explode("image/", $image_parts[0]); 
-$image_type = $image_type_aux[1]; 
-$image_base64 = base64_decode($image_parts[1]); 
-$file = $folderPath . uniqid() . '.'.$image_type; 
+3) Generate Image and upload image to s3 like we did for barcode
+$folderPath = "uploads/";
+$image_parts = explode(";base64,", $this->input->post('signature_in_b64', TRUE) );
+$image_type_aux = explode("image/", $image_parts[0]);
+$image_type = $image_type_aux[1];
+$image_base64 = base64_decode($image_parts[1]);
+$file = $folderPath . uniqid() . '.'.$image_type;
 file_put_contents($file, $image_base64);
 
 /**
   *  Upload Image to S3
-  * 
-*/ 
+  *
+*/
 $signature_image  = $this->upload_image_with_s3($file);
+```
