@@ -573,13 +573,13 @@ class Shipstation_api_service
         $resp = curl_exec($curl);
         curl_close($curl);
 
-        echo '<pre>';
-        var_dump($resp);
-        echo '</pre>';
+
         $resp = json_decode($resp);
         $output = false;
 
-
+        echo '<pre>';
+        var_dump($resp);
+        echo '</pre>';
 
         if (empty($resp)) {
             $output = false;
