@@ -576,6 +576,9 @@ class Shipstation_api_service
         $resp = json_decode($resp);
         $output = false;
 
+        echo '<pre>';
+        var_dump($resp);
+        echo '</pre>';
 
         if (empty($resp)) {
             $output = false;
