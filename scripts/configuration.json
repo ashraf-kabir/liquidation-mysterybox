@@ -3016,7 +3016,7 @@
       "is_add": true,
       "is_edit": true,
       "is_delete": true,
-      "is_real_delete": false,
+      "is_real_delete": true,
       "is_list": true,
       "is_view": true,
       "import": false,
@@ -6173,6 +6173,7 @@
     "admin/orders/refund/(:num)": "Admin/Admin_order_refund_controller/refund/$1",
 
     "admin/inventory/set_active/(:num)": "Admin/Admin_inventory_controller/set_active/$1",
+    "admin/inventory/real_delete/(:num)": "Admin/Admin_inventory_controller/real_delete/$1",
     "admin/inventory/delete_gallery_image/(:num)": "Admin/Admin_inventory_controller/delete_gallery_image/$1",
     "manager/inventory/delete_gallery_image/(:num)": "Manager/Manager_inventory_controller/delete_gallery_image/$1",
 

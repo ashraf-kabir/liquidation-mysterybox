@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
 /**
  * Inventory_model Model
@@ -14,7 +14,7 @@ class Inventory_model extends Manaknight_Model
 	protected $_primary_key = 'id';
 	protected $_return_type = 'array';
 	protected $_allowed_fields = [
-    	'id',
+		'id',
 		'sale_person_id',
 		'product_name',
 		'sku',
@@ -33,9 +33,9 @@ class Inventory_model extends Manaknight_Model
 		'inventory_note',
 		'barcode_image',
 		'cost_price',
-		'admin_inventory_note', 
-		'can_ship', 
-		'can_ship_approval', 
+		'admin_inventory_note',
+		'can_ship',
+		'can_ship_approval',
 		'pin_item_top',
 		'product_type',
 		'free_ship',
@@ -45,17 +45,17 @@ class Inventory_model extends Manaknight_Model
 		'youtube_thumbnail_2',
 		'youtube_thumbnail_3',
 		'youtube_thumbnail_4',
-		'available_in_shelf', 
+		'available_in_shelf',
 		'store_inventory',
-    ];
+	];
 	protected $_label_fields = [
-    'ID','Product Name','SKU','Category','Manifest','Store','Inventory Location','Inventory Location Description','Weight','Length','Height','Width','Image','Selling Price','Quantity','Description','Barcode Image','Cost Price','Admin Inventory Note','Can Ship','Pin Item','Product Type','Status',
-    ];
+		'ID', 'Product Name', 'SKU', 'Category', 'Manifest', 'Store', 'Inventory Location', 'Inventory Location Description', 'Weight', 'Length', 'Height', 'Width', 'Image', 'Selling Price', 'Quantity', 'Description', 'Barcode Image', 'Cost Price', 'Admin Inventory Note', 'Can Ship', 'Pin Item', 'Product Type', 'Status',
+	];
 	protected $_use_timestamps = TRUE;
 	protected $_created_field = 'created_at';
 	protected $_updated_field = 'updated_at';
 	protected $_validation_rules = [
-    ['id', 'ID', ''],
+		['id', 'ID', ''],
 		['product_name', 'Product Name', 'required'],
 		['sale_person_id', 'Sale Person', 'required'],
 		['item_tax', 'Item Tax', ''],
@@ -76,22 +76,22 @@ class Inventory_model extends Manaknight_Model
 		['inventory_note', 'Description', ''],
 		['barcode_image', 'Barcode Image', ''],
 		['cost_price', 'Cost Price', ''],
-		['admin_inventory_note', 'Admin Inventory Note', ''], 
-		['can_ship', 'Can Ship', ''], 
-		['can_ship_approval', 'Can Ship Approval', ''], 
+		['admin_inventory_note', 'Admin Inventory Note', ''],
+		['can_ship', 'Can Ship', ''],
+		['can_ship_approval', 'Can Ship Approval', ''],
 		['pin_item_top', 'Pin Item', ''],
 		['product_type', 'Product Type', ''],
 		['status', 'Status', ''],
-		['video_url', 'Video URL', ''], 
+		['video_url', 'Video URL', ''],
 		['youtube_thumbnail_1', 'Youtube Thumbnail 1', ''],
 		['youtube_thumbnail_2', 'Youtube Thumbnail 2', ''],
 		['youtube_thumbnail_3', 'Youtube Thumbnail 3', ''],
 		['youtube_thumbnail_4', 'Youtube Thumbnail 4', ''],
 		['available_in_shelf', 'Available In Shelf', ''],
-		
-    ];
+
+	];
 	protected $_validation_edit_rules = [
-    	['id', 'ID', ''],
+		['id', 'ID', ''],
 		['product_name', 'Product Name', 'required'],
 		['sale_person_id', 'Sale Person', 'required'],
 		['item_tax', 'Item Tax', ''],
@@ -113,8 +113,8 @@ class Inventory_model extends Manaknight_Model
 		['barcode_image', 'Barcode Image', ''],
 		['cost_price', 'Cost Price', ''],
 		['admin_inventory_note', 'Admin Inventory Note', ''],
-		['can_ship', 'Can Ship', ''], 
-		['can_ship_approval', 'Can Ship Approval', ''], 
+		['can_ship', 'Can Ship', ''],
+		['can_ship_approval', 'Can Ship Approval', ''],
 		['pin_item_top', 'Pin Item', ''],
 		['product_type', 'Product Type', ''],
 		['video_url', 'Video URL', ''],
@@ -124,65 +124,63 @@ class Inventory_model extends Manaknight_Model
 		['youtube_thumbnail_2', 'Youtube Thumbnail 2', ''],
 		['youtube_thumbnail_3', 'Youtube Thumbnail 3', ''],
 		['youtube_thumbnail_4', 'Youtube Thumbnail 4', ''],
-		
-    ];
-	protected $_validation_messages = [
 
-    ];
+	];
+	protected $_validation_messages = [];
 
 	public function __construct()
 	{
 		parent::__construct();
 	}
 
-    /**
-     * If you need to modify payload before create, overload this function
-     *
-     * @param mixed $data
-     * @return mixed
-     */
-    protected function _pre_create_processing($data)
-    {
-        
-        return $data;
-    }
+	/**
+	 * If you need to modify payload before create, overload this function
+	 *
+	 * @param mixed $data
+	 * @return mixed
+	 */
+	protected function _pre_create_processing($data)
+	{
 
-    /**
-     * If you need to modify payload before edit, overload this function
-     *
-     * @param mixed $data
-     * @return mixed
-     */
-    protected function _post_edit_processing($data)
-    {
-        
-        return $data;
-    }
+		return $data;
+	}
 
-    /**
-     * Allow user to add extra counting condition so user don't have to change main function
-     *
-     * @param mixed $parameters
-     * @return $db
-     */
-    protected function _custom_counting_conditions(&$db)
-    {
-        
-        return $db;
-    }
+	/**
+	 * If you need to modify payload before edit, overload this function
+	 *
+	 * @param mixed $data
+	 * @return mixed
+	 */
+	protected function _post_edit_processing($data)
+	{
+
+		return $data;
+	}
+
+	/**
+	 * Allow user to add extra counting condition so user don't have to change main function
+	 *
+	 * @param mixed $parameters
+	 * @return $db
+	 */
+	protected function _custom_counting_conditions(&$db)
+	{
+
+		return $db;
+	}
 
 
-	public function status_mapping ()
+	public function status_mapping()
 	{
 		return [
 			1 => 'Active',
 			0 => 'Inactive',
 		];
 	}
- 
-	 
 
-	public function can_ship_mapping ()
+
+
+	public function can_ship_mapping()
 	{
 		return [
 			1 => 'Delivery Or Pickup',
@@ -191,24 +189,24 @@ class Inventory_model extends Manaknight_Model
 		];
 	}
 
-	public function can_ship_approval_mapping ()
+	public function can_ship_approval_mapping()
 	{
 		return [
 			1 => 'Yes',
 			2 => 'No',
 		];
 	}
-	 
 
-	public function free_ship_mapping ()
+
+	public function free_ship_mapping()
 	{
-		return [ 
+		return [
 			1 => 'Yes',
-			2 => 'No', 
+			2 => 'No',
 		];
 	}
 
-	public function product_type_mapping ()
+	public function product_type_mapping()
 	{
 		return [
 			1 => 'Inventory',
@@ -216,126 +214,112 @@ class Inventory_model extends Manaknight_Model
 		];
 	}
 
-	public function pin_item_top_mapping ()
+	public function pin_item_top_mapping()
 	{
 		return [
 			1 => 'No',
 			2 => 'Yes',
 		];
-    }
-    
+	}
 
 
-    /**
+
+	/**
 	 * Get all using or like Model
 	 *
 	 * @return array
 	 */
-	public function get_all_inventory_products($search_product_value = false, $where2 = array(), $page = 0, $limit=10)
-    {
-        $this->db->from($this->_table);
+	public function get_all_inventory_products($search_product_value = false, $where2 = array(), $page = 0, $limit = 10)
+	{
+		$this->db->from($this->_table);
 
 		$this->db->limit($limit, $page);
-		
-		if($search_product_value)
-		{ 
+
+		if ($search_product_value) {
 			$this->db->group_start();
-			 
+
 			$this->db->or_like($this->clean_alpha_field('product_name'), $search_product_value, 'both');
 			$this->db->or_like($this->clean_alpha_field('sku'), $search_product_value, 'both');
-			 
+
 			$this->db->group_end();
 		}
-		
- 
 
-		if(!empty($where2))
-		{ 
+
+
+		if (!empty($where2)) {
 			$this->db->group_start();
-			foreach($where2 as $field => $value)
-			{
+			foreach ($where2 as $field => $value) {
 				$this->db->where($field, $value);
-			}  
+			}
 			$this->db->group_end();
 		}
 
-        $this->db->order_by('pin_item_top','DESC');
-        return $this->db->get()->result();
-    }
+		$this->db->order_by('pin_item_top', 'DESC');
+		return $this->db->get()->result();
+	}
 
 
-	 /**
+	/**
 	 * Count number of model
 	 *
 	 * @access public
-     * @param mixed $parameters
+	 * @param mixed $parameters
 	 * @return integer $result
 	 */
 
-	public function get_custom_count($parameters , $parameters2 = [])
+	public function get_custom_count($parameters, $parameters2 = [])
 	{
-        if (!empty($parameters))
-        {
-            foreach ($parameters as $key => $value)
-            {
-            	if ($key == 'product_name' or $key == 'sku' ) 
-            	{
-            		continue;
-            	}
-            	
-                if (is_numeric($key) && strlen($value) > 0)
-                {
-                    $this->db->where($value);
-                    continue;
-                }
-
-                if ($key === NULL && $value === NULL)
-				{
+		if (!empty($parameters)) {
+			foreach ($parameters as $key => $value) {
+				if ($key == 'product_name' or $key == 'sku') {
 					continue;
-                }
+				}
 
-                if (!is_null($value))
-                {
-                    if(is_numeric($value))
-                    {
-                        $this->db->where($key, $value);
-                        continue;
-                    }
+				if (is_numeric($key) && strlen($value) > 0) {
+					$this->db->where($value);
+					continue;
+				}
 
-                    if(is_string($value))
-                    {
-                        $this->db->like($key, $value);
-                        continue;
-                    }
+				if ($key === NULL && $value === NULL) {
+					continue;
+				}
 
-                    $this->db->where($key, $value);
-                }
-            }
+				if (!is_null($value)) {
+					if (is_numeric($value)) {
+						$this->db->where($key, $value);
+						continue;
+					}
 
-            if (isset($parameters['product_name']) and !empty($parameters['product_name'])) 
-            {
-            	$this->db->group_start();
-            	$this->db->or_like('product_name', $parameters['product_name'], 'both'); 
-            	$this->db->or_like('sku', $parameters['sku'], 'both'); 
-            	$this->db->group_end();
-            }   
-        }
+					if (is_string($value)) {
+						$this->db->like($key, $value);
+						continue;
+					}
 
-        if (isset($parameters2) and !empty($parameters2)) 
-        {
-        	$this->db->group_start();
-        	foreach ($parameters2 as $key => $value)
-        	{ 
-            	$this->db->or_where('category_id', $value['category_id']);   
-            }
-            $this->db->group_end();
-        }
+					$this->db->where($key, $value);
+				}
+			}
 
-        $this->_custom_counting_conditions($this->db);
+			if (isset($parameters['product_name']) and !empty($parameters['product_name'])) {
+				$this->db->group_start();
+				$this->db->or_like('product_name', $parameters['product_name'], 'both');
+				$this->db->or_like('sku', $parameters['sku'], 'both');
+				$this->db->group_end();
+			}
+		}
+
+		if (isset($parameters2) and !empty($parameters2)) {
+			$this->db->group_start();
+			foreach ($parameters2 as $key => $value) {
+				$this->db->or_where('category_id', $value['category_id']);
+			}
+			$this->db->group_end();
+		}
+
+		$this->_custom_counting_conditions($this->db);
 		$this->db->from($this->_table);
 		return $this->db->count_all_results();
 	}
-	
+
 
 
 
@@ -348,101 +332,85 @@ class Inventory_model extends Manaknight_Model
 	 * @param integer $limit default 10
 	 * @return array
 	 */
-	public function get_custom_paginated($page = 0, $limit=10, $where=[], $order_by='', $direction='ASC', $parameters2 = [])
-    {
-        $this->db->limit($limit, $page);
+	public function get_custom_paginated($page = 0, $limit = 10, $where = [], $order_by = '', $direction = 'ASC', $parameters2 = [])
+	{
+		$this->db->limit($limit, $page);
 
-        if ($order_by === '')
-        {
-            $order_by = $this->_primary_key;
-        }
+		if ($order_by === '') {
+			$order_by = $this->_primary_key;
+		}
 
-        $this->db->order_by($this->clean_alpha_num_field($order_by), $this->clean_alpha_field($direction));
+		$this->db->order_by($this->clean_alpha_num_field($order_by), $this->clean_alpha_field($direction));
 
-        if (!empty($where))
-        {
-            foreach($where as $field => $value)
-            {
-            	if ($field == 'product_name' or $field == 'sku' ) 
-            	{
-            		continue;
-            	}
-                if (is_numeric($field) && strlen($value) > 0)
-                {
-                    $this->db->where($value);
-                    continue;
-                }
-
-                if ($field === NULL && $value === NULL)
-				{
+		if (!empty($where)) {
+			foreach ($where as $field => $value) {
+				if ($field == 'product_name' or $field == 'sku') {
+					continue;
+				}
+				if (is_numeric($field) && strlen($value) > 0) {
+					$this->db->where($value);
 					continue;
 				}
 
-                if ($value !== NULL)
-                {
-                    if(is_numeric($value))
-                    {
-                        $this->db->where($field, $value);
-                        continue;
-                    }
-
-                    if(is_string($value))
-                    {
-                        $this->db->like($field, $value);
-                        continue;
-                    }
-
-                    $this->db->where($field, $value);
+				if ($field === NULL && $value === NULL) {
+					continue;
 				}
-            }
+
+				if ($value !== NULL) {
+					if (is_numeric($value)) {
+						$this->db->where($field, $value);
+						continue;
+					}
+
+					if (is_string($value)) {
+						$this->db->like($field, $value);
+						continue;
+					}
+
+					$this->db->where($field, $value);
+				}
+			}
 
 
-            if (isset($where['product_name']) and !empty($where['product_name'])) 
-            {
-            	$this->db->group_start();
-            	$this->db->or_like('product_name', $where['product_name'], 'both'); 
-            	$this->db->or_like('sku', $where['sku'], 'both'); 
-            	$this->db->group_end();
-            }
-
-             
-        }
-
-
-        if (isset($parameters2) and !empty($parameters2)) 
-        {
-        	$this->db->group_start();
-        	foreach ($parameters2 as $key => $value)
-        	{ 
-            	$this->db->or_where('category_id', $value['category_id']);  
-            }
-            $this->db->group_end();
-        }
-
-
-        $query = $this->db->get($this->_table);
-		$result = [];
-
-        if ($query->num_rows() > 0)
-        {
-            foreach ($query->result() as $row)
-            {
-                $result[] = $row;
-            }
+			if (isset($where['product_name']) and !empty($where['product_name'])) {
+				$this->db->group_start();
+				$this->db->or_like('product_name', $where['product_name'], 'both');
+				$this->db->or_like('sku', $where['sku'], 'both');
+				$this->db->group_end();
+			}
 		}
 
-        return $result;
-    }
 
-	public function get_store_inventory_data($store_inventory = [], $store_id = null){
+		if (isset($parameters2) and !empty($parameters2)) {
+			$this->db->group_start();
+			foreach ($parameters2 as $key => $value) {
+				$this->db->or_where('category_id', $value['category_id']);
+			}
+			$this->db->group_end();
+		}
+
+
+		$query = $this->db->get($this->_table);
+		$result = [];
+
+		if ($query->num_rows() > 0) {
+			foreach ($query->result() as $row) {
+				$result[] = $row;
+			}
+		}
+
+		return $result;
+	}
+
+	public function get_store_inventory_data($store_inventory = [], $store_id = null)
+	{
 
 		foreach ($store_inventory as $key => $store_data) {
-			if($store_id == $store_data->store_id){
+			if ($store_id == $store_data->store_id) {
 				return $store_data;
 			}
 		}
 
 		return null;
 	}
-
 }
