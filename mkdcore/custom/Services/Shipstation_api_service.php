@@ -577,9 +577,9 @@ class Shipstation_api_service
         $resp = json_decode($resp);
         $output = false;
 
-        echo '<pre>';
-        var_dump($resp);
-        echo '</pre>';
+        // echo '<pre>';
+        // var_dump($resp);
+        // echo '</pre>';
 
         if (empty($resp)) {
             $output = false;
@@ -587,9 +587,9 @@ class Shipstation_api_service
             $output = isset($resp[0]->metadata->rdi) ?  $resp[0]->metadata->rdi : false;
         }
 
-        echo '<pre>';
-        var_dump($output);
-        echo '</pre>';
+        // echo '<pre>';
+        // var_dump($output);
+        // echo '</pre>';
         return $output;
     }
 
