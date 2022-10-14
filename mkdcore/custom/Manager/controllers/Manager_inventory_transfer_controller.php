@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
-include_once 'Admin_controller.php';
+include_once 'Manager_controller.php';
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
 /**
  * Inventory_transfer Controller
@@ -9,7 +9,7 @@ include_once 'Admin_controller.php';
  * @author Ryan Wong
  *
  */
-class Manager_inventory_transfer_controller extends Admin_controller
+class Manager_inventory_transfer_controller extends Manager_controller
 {
     protected $_model_file = 'inventory_transfer_model';
     public $_page_name = 'Inventory Transfer Requests';
@@ -28,16 +28,16 @@ class Manager_inventory_transfer_controller extends Admin_controller
     public function index($page)
     {
         $this->load->library('pagination');
-        include_once __DIR__ . '/../../view_models/Inventory_transfer_admin_list_paginate_view_model.php';
+        include_once __DIR__ . '/../../view_models/Inventory_transfer_manager_list_paginate_view_model.php';
         $session = $this->get_session();
         $format = $this->input->get('format', TRUE) ?? 'view';
         $order_by = $this->input->get('order_by', TRUE) ?? '';
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
 
-        $this->_data['view_model'] = new Inventory_transfer_admin_list_paginate_view_model(
+        $this->_data['view_model'] = new Inventory_transfer_manager_list_paginate_view_model(
             $this->inventory_transfer_model,
             $this->pagination,
-            '/manager/inventory_transfer/0'
+            '/admin/inventory_transfer/0'
         );
         $this->_data['view_model']->set_heading('Inventory Transfer Requests');
         $this->_data['view_model']->set_sku(($this->input->get('sku', TRUE) != NULL) ? $this->input->get('sku', TRUE) : NULL);
@@ -56,7 +56,7 @@ class Manager_inventory_transfer_controller extends Admin_controller
         $this->_data['view_model']->set_per_page(25);
         $this->_data['view_model']->set_order_by($order_by);
         $this->_data['view_model']->set_sort($direction);
-        $this->_data['view_model']->set_sort_base_url('/manager/inventory_transfer/0');
+        $this->_data['view_model']->set_sort_base_url('/admin/inventory_transfer/0');
         $this->_data['view_model']->set_page($page);
         $this->_data['view_model']->set_list($this->inventory_transfer_model->get_paginated(
             $this->_data['view_model']->get_page(),
@@ -103,13 +103,13 @@ class Manager_inventory_transfer_controller extends Admin_controller
 
     public function add()
     {
-        include_once __DIR__ . '/../../view_models/Inventory_transfer_admin_add_view_model.php';
+        include_once __DIR__ . '/../../view_models/Inventory_transfer_manager_add_view_model.php';
         $session = $this->get_session();
         $this->form_validation = $this->inventory_transfer_model->set_form_validation(
             $this->form_validation,
             $this->inventory_transfer_model->get_all_validation_rule()
         );
-        $this->_data['view_model'] = new Inventory_transfer_admin_add_view_model($this->inventory_transfer_model);
+        $this->_data['view_model'] = new Inventory_transfer_manager_add_view_model($this->inventory_transfer_model);
         $this->_data['view_model']->set_heading('Inventory Transfer Requests');
 
 
@@ -142,8 +142,8 @@ class Manager_inventory_transfer_controller extends Admin_controller
         }
 
 
-        include_once __DIR__ . '/../../view_models/Inventory_transfer_admin_view_view_model.php';
-        $this->_data['view_model'] = new Inventory_transfer_admin_view_view_model($this->inventory_transfer_model);
+        include_once __DIR__ . '/../../view_models/Inventory_transfer_manager_view_view_model.php';
+        $this->_data['view_model'] = new Inventory_transfer_manager_view_view_model($this->inventory_transfer_model);
         $this->_data['view_model']->set_heading('Inventory Transfer Requests');
         $this->_data['view_model']->set_model($model);
 

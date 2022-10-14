@@ -1,0 +1,591 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background: rgb(246, 246, 246);
+}
+.btn-secondary {
+  background-color: #1b1c1d !important;
+}
+
+.pb-4,
+.py-4 {
+  padding-bottom: 0px !important;
+}
+.bg-light {
+  background: #e1e1e1 !important;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-menu a {
+  color: #000 !important;
+  text-decoration: none;
+  padding: 0 5px;
+  font-size: 12px;
+}
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 0;
+  margin-top: 127px;
+  margin-left: -1px;
+  -webkit-border-radius: 0 6px 6px 6px;
+  -moz-border-radius: 0 6px 6px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu > .dropdown-menu.second {
+  top: -50px;
+  left: 100%;
+}
+.dropdown-submenu > .dropdown-menu.third {
+  top: -50px;
+  left: 100%;
+}
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+
+/*.dropdown-submenu > a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #ccc;
+  margin-top: 5px;
+  margin-right: -10px;
+  color: #000;
+}*/
+
+.dropdown-submenu:hover > a:after {
+  border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+  float: none;
+}
+
+.dropdown-submenu.pull-left > .dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  -webkit-border-radius: 6px 0 6px 6px;
+  -moz-border-radius: 6px 0 6px 6px;
+  border-radius: 6px 0 6px 6px;
+}
+.dropdown-menu .dropdown-submenu .main-item {
+  font-size: 14px !important;
+  font-weight: bold;
+  pointer-events: none;
+}
+.dropdown-menu .dropdown-submenu .sub-item {
+  padding-left: 10px !important;
+}
+header {
+  background: #fff;
+}
+header h1 {
+  font-weight: 900;
+  font-size: 40px;
+}
+header .btn,
+header input.form-control {
+  border-radius: 0 !important;
+  height: 40px;
+}
+header .btn-secondary {
+  background: #000;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 14px;
+  width: 100px;
+}
+header .btn-secondary:hover {
+  background: #000000cc;
+}
+header .fas.fa-phone-alt {
+  font-size: 30px;
+  padding: 0 10px;
+  opacity: 0.2;
+}
+.header__contact span {
+  font-size: 12px;
+  font-weight: 300;
+}
+.header__contact h5 {
+  font-size: 18px;
+  font-weight: 600;
+}
+.navbar {
+  background: #9a9a9a;
+  margin-top: 30px;
+  padding: 0;
+}
+.navbar .nav-item .nav-link {
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000 !important;
+  padding: 52px 24px;
+  transition: 0.2s;
+}
+.navbar .nav-item .nav-link.active {
+  background: #c5c5c5;
+}
+.navbar .nav-item .nav-link.active:hover {
+  background: #e0e0e0;
+  color: black !important;
+}
+.navbar .nav-item .nav-link:hover {
+  background: #e0e0e0;
+  color: black !important;
+}
+.navbar-toggler,
+.navbar-toggler-icon {
+  color: #000;
+}
+
+/* MAIN */
+.section__header {
+  font-size: 27px;
+  font-weight: 600;
+}
+.section__header span {
+  font-weight: 400;
+}
+.main__img {
+  object-fit: contain;
+}
+.main__imgLink {
+  border: 2px solid black;
+  padding: 0;
+  margin: 0 10px;
+}
+.offer__item {
+  background: #fff;
+  width: 100% !important;
+  padding: 20px 15px;
+  width: 290px;
+  margin-bottom: 20px;
+}
+.offer__item a {
+  color: #000;
+  text-decoration: none !important;
+}
+.offer__item a .text-gray {
+  color: #a9a9a9;
+  font-weight: 600;
+  font-size: 14px;
+}
+.offer__toggler {
+  color: #000;
+  font-weight: 500;
+  opacity: 0.6;
+  text-decoration: none;
+  transition: 0.1s;
+}
+.offer__toggler.active {
+  font-weight: 700;
+  opacity: 1;
+  background: none !important;
+  border-bottom: 3px solid black !important;
+}
+.offer__toggler:hover {
+  border-bottom: 3px solid black !important;
+  color: inherit;
+}
+
+/* Footer */
+footer {
+  background: #212121;
+  padding: 30px;
+}
+.footer__col {
+  color: #fff;
+}
+.footer__col .list-unstyled li {
+  font-size: 15px;
+  font-weight: 600;
+}
+.footer__col .list-unstyled li i {
+  color: rgb(154, 154, 154);
+  margin-right: 15px;
+}
+.footer__header {
+  font-weight: 600;
+  font-size: 18px;
+}
+.follow__buttons a {
+  color: #fff;
+  text-decoration: none;
+  transition: 0.3s;
+  width: 40px;
+  margin-right: 10px;
+}
+.follow__buttons a:hover i {
+  opacity: 0.8;
+  color: #fff;
+  background: #a9a9a9;
+}
+.follow__buttons i {
+  padding: 10px;
+  width: 40px;
+  margin: 8px;
+  text-align: center;
+  font-size: 23px;
+}
+.follow__buttons .fb-icon {
+  background-color: #3b5a9a;
+}
+.follow__buttons .tw-icon {
+  background-color: #28a9e2;
+}
+.follow__buttons .in-icon {
+  background-color: #567d9c;
+}
+.follow__buttons .pi-icon {
+  background-color: #e04a39;
+}
+.follow__buttons .gp-icon {
+  background-color: #e04a39;
+}
+.site__mapUl {
+  list-style-type: square;
+  list-style-position: inside;
+  color: #a9a9a9;
+}
+.site__mapUl li {
+  padding: 5px 0;
+  transition: 0.3s;
+}
+.site__mapUl li:hover {
+  color: #a9a9a9c5;
+}
+.site__mapUl li a {
+  text-decoration: none;
+  color: inherit;
+}
+.copyright__text {
+  color: #9a9a9a;
+  font-size: 12px;
+}
+.btn.translate-btn {
+  border-radius: 0;
+  position: fixed;
+  bottom: 0;
+  left: 20px;
+  background: #f89406;
+  color: #fff;
+  text-transform: capitalize;
+  font-size: 17px;
+  padding: 10px 18px;
+  font-weight: 600;
+}
+.slick-arrow {
+  display: none !important;
+}
+.slick__btnLeft,
+.slick__btnRight {
+  font-size: 19px;
+  font-weight: 300;
+  transition: 0.3s;
+  margin: 0 10px;
+  width: 40px;
+}
+.slick__btnLeft:hover {
+  padding-right: 20px;
+}
+.slick__btnRight:hover {
+  padding-left: 20px;
+}
+
+/* PRODUCT PAGE */
+.product__pathLink {
+  color: #626262;
+}
+.product__pathLink a {
+  color: #000;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.product__pathLink a:hover {
+  color: #626262;
+}
+.product__title {
+  font-weight: 600;
+  font-size: 40px;
+}
+.product__price {
+  font-weight: 700;
+}
+.product__deliveryDetails {
+  text-align: center;
+}
+.product__deliveryDetails i {
+  font-size: 30px;
+  margin: 15px 0;
+}
+.product__deliveryDetails h5 {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  vertical-align: middle;
+}
+
+/* ABOUT US */
+.about__row p {
+  font-size: 14px;
+  line-height: 1.818;
+  color: #707070;
+}
+.about__chartImg {
+  width: 80%;
+}
+.team__card {
+  margin: 20px auto;
+  width: 300px;
+  background: #fff;
+  padding: 20px;
+  height: 480px;
+}
+.img__wrapper {
+  height: 230px;
+}
+.team__card img {
+  width: 200px;
+  margin: 20px auto;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+.team__card img:hover {
+  transform: scale(0.86);
+}
+.team__name {
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.team__title {
+  color: #81858c;
+  font-size: 14px;
+}
+.team__text {
+  color: #707070;
+  font-weight: 400;
+}
+.team__socialLinks a {
+  font-size: 16px;
+  color: #81858c;
+  padding: 10px;
+  margin: 7px;
+}
+
+/* TESTIMONIAL */
+#testimonial {
+  background-image: url("http://chromium.themes.zone/local/wp-content/uploads/sites/4/revslider/chromium-slider-b/new_slide_2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 550px;
+  margin: 80px 0;
+}
+.testimonial__item img {
+  border-radius: 50%;
+  color: #fff !important;
+}
+.owl-nav {
+  margin: 20px auto !important;
+  text-align: center;
+}
+.owl-carousel .owl-nav button.owl-prev,
+.owl-carousel .owl-nav button.owl-next,
+.owl-carousel button.owl-dot {
+  padding: 0 25px !important;
+  font-size: 40px;
+  outline: none;
+  border: none;
+}
+.number__item {
+  padding: 10px;
+  background: #fff;
+  min-width: 300px;
+  justify-content: center;
+}
+.number__item i {
+  font-size: 35px;
+  margin-right: 10px;
+}
+.number__item h4 {
+  font-size: 22px;
+  font-weight: 600;
+}
+.number__item h4 span {
+  font-weight: 300;
+  font-size: 20px;
+}
+
+/* CONTACT */
+
+.contact-links a {
+  color: #fff;
+  text-decoration: none;
+}
+.contact-links a:hover i {
+  opacity: 0.8;
+  background: orange;
+}
+.contact-links i {
+  background: #a9a9a9;
+  padding: 10px 8px;
+  width: 40px;
+  margin: 8px;
+  text-align: center;
+  font-size: 23px;
+  transition: all 0.3s;
+}
+.contact__row .list-unstyled {
+  color: #626262;
+}
+#contact__form input[type="submit"] {
+  color: #000;
+}
+#contact__form input[type="submit"]:hover {
+  background: #000;
+  color: #fff;
+}
+/* Position the image container (needed to position the left and right arrows) */
+.container {
+  position: relative;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.image-container .img-controller i {
+  pointer-events: none;
+  line-height: 100%;
+}
+
+.image-container {
+  max-height: 500px;
+  min-height: 500px;
+  height: 100%;
+  position: relative;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.img-controller {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.09);
+  width: 10%;
+  font-size: 50px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.bordered {
+  border: 2px solid black;
+  margin: 5px; 
+  border-radius: 5px;
+}
+
+.img-controller.right {
+  top: 0;
+  right: 0;
+}
+
+.img-controller.left {
+  top: 0;
+  left: 0;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Container for image text */
+.caption-container {
+  text-align: center;
+  background-color: #222;
+  padding: 2px 16px;
+  color: white;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Six columns side by side */
+.column {
+  float: left;
+  width: 16.66%;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
