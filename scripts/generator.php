@@ -45,7 +45,7 @@ if ($action == 'preschema') {
 
 if ($action == 'random') {
     echo '<h1>Random Key</h1>';
-    echo '<p>' . sha1(uniqid() . time()). '</p>';
+    echo '<p>' . sha1(uniqid() . time()) . '</p>';
 }
 
 if ($action == 'rebuild') {

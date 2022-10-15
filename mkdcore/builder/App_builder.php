@@ -38,7 +38,7 @@ class App_builder extends Builder
     protected $_translations = [];
     protected $_modular_packages = [];
 
-    public function __construct($config, $locale=false)
+    public function __construct($config, $locale = false)
     {
         $this->_config = json_decode($config, TRUE);
         $this->_locale = $locale;
@@ -49,12 +49,11 @@ class App_builder extends Builder
      * function simply copies content of configuration.json in the package folder
      * we need to maintain a strong naming conversion is source directory must match name defined in configuration.json
      */
-   
+
     private function init_modular_packages()
     {
-        foreach($this->_modular_packages as $package)
-        {
-        
+        foreach ($this->_modular_packages as $package) {
+
             $package_config = json_decode(file_get_contents("../mkdcore/source/{$package['name']}/configuration.json"), TRUE);
 
             /*if(isset($package['settings']['dynamic_templates']) && $package['settings']['dynamic_templates'] == TRUE)
@@ -68,30 +67,25 @@ class App_builder extends Builder
 
                 $template = file_get_contents("../mkdcore/source/{$package['name']}/menu_item.php");
                 $template = $this->inject_substitute($template, 'portal', $package['settings']['user_portal'] );
-            }*/ 
+            }*/
 
             $config_items = array_keys($package_config);
 
-            for($i = 0; $i < count( $config_items); $i ++ )
-            {
-                if(isset( $this->_config[$config_items[$i]]))
-                {
+            for ($i = 0; $i < count($config_items); $i++) {
+                if (isset($this->_config[$config_items[$i]])) {
                     $this->_config[$config_items[$i]] = array_merge($package_config[$config_items[$i]], $this->_config[$config_items[$i]]);
                 }
             }
             //build the menus
-            for($i = 0; $i < count($this->_config['portals']); $i++)
-            {
-                if(isset($package_config['menus'][$this->_config['portals'][$i]['name']]))
-                {
+            for ($i = 0; $i < count($this->_config['portals']); $i++) {
+                if (isset($package_config['menus'][$this->_config['portals'][$i]['name']])) {
                     $menu_1 = array_slice($this->_config['portals'][$i]['menu'], 0, 1, true);
                     $menu_2 = array_slice($this->_config['portals'][$i]['menu'], 1, count($this->_config['portals'][$i]['menu']) - 1, true);
                     $this->_config['portals'][$i]['menu'] = array_merge($menu_1, $package_config['menus'][$this->_config['portals'][$i]['name']], $menu_2);
                 }
 
-                if(isset($package_config['js'][ $this->_config['portals'][$i]['name'] ]))
-                {
-                    $this->_config['portals'][$i]['js'] = array_merge($this->_config['portals'][$i]['js'], $package_config['js'][ $this->_config['portals'][$i]['name'] ]);
+                if (isset($package_config['js'][$this->_config['portals'][$i]['name']])) {
+                    $this->_config['portals'][$i]['js'] = array_merge($this->_config['portals'][$i]['js'], $package_config['js'][$this->_config['portals'][$i]['name']]);
                 }
             }
         }
@@ -108,10 +102,8 @@ class App_builder extends Builder
         //     $this->_render_list[] = $lang_builder;
         // }
 
-        foreach ($this->_config['packages'] as $package_type => $package)
-        {
-            if(!empty($package) && is_array($package) && $package['is_active'] == TRUE )
-            {
+        foreach ($this->_config['packages'] as $package_type => $package) {
+            if (!empty($package) && is_array($package) && $package['is_active'] == TRUE) {
                 $this->_modular_packages[] = [
                     'name' => $package_type,
                     'settings' =>  $package
@@ -119,14 +111,12 @@ class App_builder extends Builder
             }
         }
 
-        if(file_exists("translations.json"))
-        {
+        if (file_exists("translations.json")) {
             $local_config = json_decode(file_get_contents("translations.json"), TRUE);
             $this->_config['translations'] = $local_config['translations'];
         }
 
-        if(file_exists("env.json"))
-        {
+        if (file_exists("env.json")) {
             $local_config = json_decode(file_get_contents("env.json"), TRUE);
             $this->_config['config'] = $local_config['config'];
             $this->_config['database'] =  $local_config['database'];
@@ -140,8 +130,7 @@ class App_builder extends Builder
         sortKeysDesc($this->_translations);
         $config_builder = new Config_builder($this->_config['config'], $this->_config['locale']);
         $config_builder->set_translate_text($this->_translations);
-        if ($this->_config['locale'])
-        {
+        if ($this->_config['locale']) {
             $config_builder->set_language($this->_config['language']);
         }
         $this->_render_list[] = $config_builder;
@@ -273,19 +262,16 @@ class App_builder extends Builder
 
 function sortKeysDesc(&$arrNew)
 {
-    uksort($arrNew, function($a, $b)
-    {
-        $lenA = strlen($a); $lenB = strlen($b);
-        if($lenA == $lenB)
-        {
+    uksort($arrNew, function ($a, $b) {
+        $lenA = strlen($a);
+        $lenB = strlen($b);
+        if ($lenA == $lenB) {
             // If equal length, sort again by descending
             $arrOrig = array($a, $b);
             $arrSort = $arrOrig;
             rsort($arrSort);
-            if($arrOrig[0] !== $arrSort[0]) return 1;
-        }
-        else
-        {
+            if ($arrOrig[0] !== $arrSort[0]) return 1;
+        } else {
             // If not equal length, simple
             return $lenB - $lenA;
         }

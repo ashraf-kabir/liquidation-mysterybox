@@ -498,8 +498,8 @@ img {
 }
 
 .image-container {
-  max-height: 500px;
-  min-height: 500px;
+  max-height: 580px;
+  min-height: 580px;
   height: 100%;
   position: relative;
 }
