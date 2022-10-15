@@ -6,8 +6,9 @@
     }
 
     .mySlides img {
-        max-height: 350px !important;
+        /*max-height: 350px;*/
         object-fit: contain;
+        margin-left: 50px;
     }
 
 
@@ -255,17 +256,60 @@
         }
     }
 
-    @media (max-width: 768px) {
-        .gallery-thumbnail {
-            max-height: 60px !important;
-            min-height: 60px !important;
+    @media (max-width: 650px) {
+        .image-container {
+            max-height: 350px;
+            min-height: 350px;
+            height: 100%;
+            position: relative;
+        }
+
+        .mySlides img {
+            /*max-height: 350px;*/
+            object-fit: contain;
+            /* margin-right: 50px; */
+            /* margin-left: -3px; */
         }
     }
 
-    @media (max-width: 575px) {
-        .gallery-thumbnail {
-            max-height: 80px !important;
-            min-height: 80px !important;
+    @media (max-width: 600px) {
+
+        .image-container {
+            max-height: 250px;
+            min-height: 250px;
+            height: 100%;
+            position: relative;
+        }
+
+        .mySlides img {
+            /*max-height: 350px;*/
+            object-fit: contain;
+            margin-right: 50px;
+            /* margin-left: -3px; */
+        }
+    }
+
+    @media (max-width: 380px) {
+        .mySlides img {
+            /*max-height: 350px;*/
+            object-fit: contain;
+            margin-right: 20px;
+            margin-left: -1px;
+        }
+
+        .mySlides .main-img {
+            max-height: 350px;
+            object-fit: contain;
+            margin-right: 40px;
+            margin-left: 20px;
+        }
+
+        .numbertext {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 2px;
+            position: absolute;
+            top: 0;
         }
     }
 </style>
@@ -303,7 +347,7 @@ if (!empty($product->feature_image)) {
 
             <div class="row col-md-12">
                 <div class="row col-12 col-sm-12 image-container">
-                    <div class="img-controller left col-1">
+                    <div class="img-controller left col-1" id="left">
                         <i class="fas fa-chevron-left"></i>
                     </div>
                     <?php if (!empty($product->feature_image)) {   ?>
@@ -579,12 +623,6 @@ if (!empty($product->feature_image)) {
         }
     })
 
-    const left = document.querySelectorAll('.left');
-
-    left.addEventListener('click', function(e) {
-        alert("I am here");
-    });
-
     var slideIndex = 1;
     showSlides(slideIndex);
 
@@ -617,7 +655,7 @@ if (!empty($product->feature_image)) {
         slides[slideIndex - 1].style.display = "block";
         dots[slideIndex - 1].className += " active";
         dots[slideIndex - 1].closest('.testing').className += " bordered";
-        captionText.innerHTML = dots[slideIndex - 1].alt;
+        //captionText.innerHTML = dots[slideIndex - 1].alt;
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -739,11 +777,16 @@ if (!empty($product->feature_image)) {
      *
      */
     const img = document.querySelector('.main-img');
-    var dots = document.getElementsByClassName("testing");
+    var dots = document.querySelectorAll(".testing");
+    var slides = document.querySelectorAll(".mySlides");
+    console.log(dots.length, slides.length);
 
     function initThumbnail(e) {
         dots.forEach((dot) => {
             dot.classList.remove('bordered');
+        });
+        slides.forEach((slide) => {
+            slide.style.display = "none";
         });
         const element = e.target;
         if (element.classList.contains('right')) {
@@ -751,14 +794,13 @@ if (!empty($product->feature_image)) {
             thumbnail++;
             if (counter === dots.length) counter = 0;
             if (thumbnail === dots.length) thumbnail = 0;
-            img.src = dots[counter];
         } else if (element.classList.contains('left')) {
             counter = counter - 1;
             thumbnail = thumbnail - 1;
             if (counter === -1) counter = dots.length - 1;
             if (thumbnail === -1) thumbnail = dots.length - 1;
-            img.src = dots[counter];
         }
+        slides[thumbnail].style.display = "block";
         dots[thumbnail].classList.add('bordered');
     }
 </script>
