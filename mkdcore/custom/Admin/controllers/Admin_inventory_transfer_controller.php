@@ -9,7 +9,7 @@ include_once 'Admin_controller.php';
  * @author Ryan Wong
  *
  */
-class Manager_inventory_transfer_controller extends Admin_controller
+class Admin_inventory_transfer_controller extends Admin_controller
 {
     protected $_model_file = 'inventory_transfer_model';
     public $_page_name = 'Inventory Transfer Requests';

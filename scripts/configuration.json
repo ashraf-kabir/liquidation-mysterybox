@@ -6187,6 +6187,7 @@
     "../mkdcore/custom/Manager/views/Inventory_transferAdd.php": "../release/application/views/Manager/Inventory_transferAdd.php",
     "../mkdcore/custom/Manager/views/Inventory_transferView.php": "../release/application/views/Manager/Inventory_transferView.php",
     "../mkdcore/custom/Manager/views/InventoryAdd.php": "../release/application/views/Manager/InventoryAdd.php",
+    "../mkdcore/custom/Manager/views/InventoryTransfer.php": "../release/application/views/Manager/InventoryTransfer.php",
 
     "../mkdcore/custom/Admin/views/Inventory_Location.php": "../release/application/views/Admin/Inventory_Location.php",
     "../mkdcore/custom/Admin/views/Inventory_LocationAdd.php": "../release/application/views/Admin/Inventory_LocationAdd.php",
