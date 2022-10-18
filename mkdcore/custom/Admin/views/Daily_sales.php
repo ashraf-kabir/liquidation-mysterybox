@@ -43,14 +43,14 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
     <section>
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <div class="card" id="category_wise_filter_listing">
+                <div class="card" id="daily_sales_filter_listing">
                     <div class="card-body">
                         <h5 class="primaryHeading2 text-md-left">
                             <?php echo $view_model->get_heading(); ?> Search
 
 
                         </h5>
-                        <?= form_open('/admin/category_wise/0', ['method' => 'get']) ?>
+                        <?= form_open('/admin/daily_sales/0', ['method' => 'get']) ?>
                         <div class="row">
 
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
@@ -65,8 +65,13 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                                 </div>
                             </div>
 
-
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label for="from_date">From </label>
+                                    <input type="date" class="form-control" id="from_date" name="from_date" value="<?php echo $from_date; ?>" />
+                                </div>
+                            </div>
+                            <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label for="from_date">From </label>
                                     <input type="date" class="form-control" id="from_date" name="from_date" value="<?php echo $from_date; ?>" />
@@ -78,7 +83,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                                     <label for="to_date">To </label>
                                     <input type="date" class="form-control" id="to_date" name="to_date" value="<?php echo $to_date; ?>" />
                                 </div>
-                            </div>
+                            </div> -->
 
 
                             <div style="width:100%;height:10px;display:block;float:none;"></div>
@@ -98,8 +103,8 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
     <h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
         <?php echo $view_model->get_heading(); ?> (<?php echo $view_model->get_total_rows(); ?> results found)
         <span class="d-none"></span>
-
-        <span class="add-part d-flex justify-content-md-end  "><a class="btn btn-info btn-sm ml-2" href="<?php echo base_url() . 'admin/sales_report/to_csv?' . $QUERY_STRING; ?>"><i class="fas fa-file-download" style="color:white;"></i></a></span>
+        <!-- 
+        <span class="add-part d-flex justify-content-md-end  "><a class="btn btn-info btn-sm ml-2" href="<?php echo base_url() . 'admin/sales_report/to_csv?' . $QUERY_STRING; ?>"><i class="fas fa-file-download" style="color:white;"></i></a></span> -->
     </h5>
 
     <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4 pt-4" style='height:auto;'>
@@ -160,42 +165,65 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                     } ?>
                 </thead>
                 <tbody class="tbody-light">
-                    <?php foreach ($view_model->get_list() as $data) { ?>
+                    <?php
+                    $kounter = 1;
+                    foreach ($view_model->get_list() as $data) {
+                        // if ($data->total_qty <= 0) {
+                        //     continue;
+                        // } else {
+                        //     $kounter++;
+                        // }
+                    ?>
                         <?php
                         echo '<tr>';
                         echo "<td>{$data->id}</td>";
                         echo "<td>{$data->product_name}</td>";
                         echo "<td>{$data->sku}</td>";
+                        echo "<td>{$data->category_name}</td>";
                         echo "<td>{$data->total_qty}</td>";
                         echo "<td>$" . number_format($data->total_sale, 2) . "</td>";
+                        echo "<td>";
+                        echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/view/' . $data->id . '">View</a>';
+                        echo "</td>";
                         echo '</tr>';
-                        ?>
-                    <?php } ?>
-                </tbody>
 
-                <tfoot class='thead-light'>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th>Sales SubTotal = $<?php echo number_format($total_wout_tax, 2) ?></th>
-                        <th>Sales Tax = $<?php echo number_format($total_tax, 2) ?></th>
-                        <th>Sales Total = $<?php echo number_format($sales_grand_total, 2) ?></th>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th>Refund SubTotal = $<?php echo number_format($total_refunded, 2) ?></th>
-                        <th>Refund Tax = $<?php echo number_format($total_refunded_tax, 2) ?></th>
-                        <th>Refund Total = $<?php echo number_format($total_refunded + $total_refunded_tax, 2) ?></th>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th> Total = $<?php echo number_format($total_wout_tax - $total_refunded, 2) ?></th>
-                        <th> Tax = $<?php echo number_format($total_tax - $total_refunded_tax, 2) ?></th>
-                        <th> Grand Total = $<?php echo number_format($sales_grand_total - ($total_refunded + $total_refunded_tax), 2) ?></th>
-                    </tr>
-                </tfoot>
+                        ?>
+                    <?php }
+                    if ($kounter === 0) {
+                        echo '<tr>';
+                        echo '<th colspan="6" class="text-center">No sales yet</th>';
+                        echo '</tr>';
+                    }
+                    ?>
+                </tbody>
+                <?php if ($kounter > 0) { ?>
+                    <tfoot class='thead-light'>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>Sales SubTotal = $<?php echo number_format($total_wout_tax, 2) ?></th>
+                            <th>Sales Tax = $<?php echo number_format($total_tax, 2) ?></th>
+                            <th>Sales Total = $<?php echo number_format($sales_grand_total, 2) ?></th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>Refund SubTotal = $<?php echo number_format($total_refunded, 2) ?></th>
+                            <th>Refund Tax = $<?php echo number_format($total_refunded_tax, 2) ?></th>
+                            <th>Refund Total = $<?php echo number_format($total_refunded + $total_refunded_tax, 2) ?></th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th> Total = $<?php echo number_format($total_wout_tax - $total_refunded, 2) ?></th>
+                            <th> Tax = $<?php echo number_format($total_tax - $total_refunded_tax, 2) ?></th>
+                            <th> Grand Total = $<?php echo number_format($sales_grand_total - ($total_refunded + $total_refunded_tax), 2) ?></th>
+                        </tr>
+                    </tfoot>
+                <?php } ?>
             </table>
             <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
         </div>

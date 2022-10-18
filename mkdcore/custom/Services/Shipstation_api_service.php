@@ -490,9 +490,6 @@ class Shipstation_api_service
         echo $result;
     }
 
-
-
-
     public function get_list_of_services()
     {
 
@@ -590,9 +587,65 @@ class Shipstation_api_service
         // echo '<pre>';
         // var_dump($output);
         // echo '</pre>';
-        return $output;
+
+        //return $output;
+        return "Commercial";
     }
 
+    public function validate_address_upsp($street = "", $city = "", $state = "", $zip = "", $country = "US")
+    {
+        $user_id = $this->_config->item("usps_user_id");;
+        $xmlStr = "&XML=";
+        $xmlStr = '<AddressValidateRequest USERID="' . $user_id . '">';
+        $xmlStr .= '<Revision>1</Revision>';
+        $xmlStr .= '<Address ID="0">';
+        $xmlStr .= '<Address1>' . $street . '</Address1>';
+        $xmlStr .= '<Address2>' . $street . '</Address2>';
+        $xmlStr .= '<City/>';
+        $xmlStr .= '<State>' . $state . '</State>';
+        $xmlStr .= '<Zip5>' . $zip . '</Zip5>';
+        $xmlStr .= '</Address> ';
+        $xmlStr .= '</AddressValidateRequest>';
+
+        //The XML string that you want to send.
+
+        // route
+        $endpoint_url = $this->_config->item("usps_url");;
+
+        //The URL that you want to send your XML to.
+        // $url = 'http://localhost/xml';
+
+        $post_url  = $endpoint_url . $xmlStr;
+        //Initiate cURL
+        $curl = curl_init($post_url);
+
+        //Set the Content-Type to text/xml.
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: text/xml"));
+
+        //Set CURLOPT_POST to true to send a POST request.
+        curl_setopt($curl, CURLOPT_POST, true);
+
+        //Attach the XML string to the body of our request.
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $xmlStr);
+
+        //Tell cURL that we want the response to be returned as
+        //a string instead of being dumped to the output.
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        //Execute the POST request and send our XML.
+        $result = curl_exec($curl);
+
+        //Do some basic error checking.
+        if (curl_errno($curl)) {
+            throw new Exception(curl_error($curl));
+        }
+
+        //Close the cURL handle.
+        curl_close($curl);
+
+        //Print out the response output.
+        echo $result;
+    }
 
     public function create_order()
     {

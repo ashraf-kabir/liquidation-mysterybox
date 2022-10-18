@@ -36,7 +36,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <?php if ($this->session->userdata('role') == 2) { ?>
                             <?= form_open('/admin/inventory/0', ['method' => 'get']) ?>
                         <?php } elseif ($this->session->userdata('role') == 4) { ?>
-                            <?= form_open('/manager/inventory/0', ['method' => 'get']) ?>
+                            <?= form_open('/admin/inventory/0', ['method' => 'get']) ?>
                         <?php } ?>
 
                         <div class="row">
@@ -84,7 +84,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <?php if ($this->session->userdata('role') == 2) { ?>
             <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/admin/inventory/add"><i class="fas fa-plus-circle"></i></a></span>
         <?php } elseif ($this->session->userdata('role') == 4) { ?>
-            <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/manager/inventory/add"><i class="fas fa-plus-circle"></i></a></span>
+            <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/admin/inventory/add"><i class="fas fa-plus-circle"></i></a></span>
         <?php } ?>
 
     </h5>
@@ -154,8 +154,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             echo '<a class="btn btn-link text-danger link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/real_delete/' . $data->id . '">Delete</a>';
                         } elseif ($this->session->userdata('role') == 4) {
 
-                            echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/manager/inventory/edit/' . $data->id . '">Edit</a>';
-                            echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/manager/inventory/view/' . $data->id . '">View</a>';
+                            echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/admin/inventory/edit/' . $data->id . '">Edit</a>';
+                            echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/view/' . $data->id . '">View</a>';
                         }
                         // echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/transfer/' . $data->id . '">Transfer</a>';
                         echo '</td>';

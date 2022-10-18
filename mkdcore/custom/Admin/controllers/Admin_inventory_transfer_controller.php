@@ -98,7 +98,7 @@ class Admin_inventory_transfer_controller extends Admin_controller
         $this->_data['location_map'] = $location_map;
 
 
-        return $this->render('Manager/Inventory_transfer', $this->_data);
+        return $this->render('Admin/Inventory_transfer', $this->_data);
     }
 
     public function add()
@@ -127,7 +127,7 @@ class Admin_inventory_transfer_controller extends Admin_controller
         }
 
         $this->_data['error'] = 'Error';
-        return $this->render('Manager/Inventory_transferAdd', $this->_data);
+        return $this->render('Admin/Inventory_transferAdd', $this->_data);
     }
 
 
@@ -138,7 +138,7 @@ class Admin_inventory_transfer_controller extends Admin_controller
 
         if (!$model) {
             $this->error('Error');
-            return redirect('/manager/inventory_transfer/0');
+            return redirect('/admin/inventory_transfer/0');
         }
 
 
@@ -161,7 +161,7 @@ class Admin_inventory_transfer_controller extends Admin_controller
         $this->_data['store_map'] = $store_map;
         $this->_data['location_map'] = $location_map;
 
-        return $this->render('Manager/Inventory_transferView', $this->_data);
+        return $this->render('Admin/Inventory_transferView', $this->_data);
     }
 
     public function delete($id)
@@ -170,18 +170,18 @@ class Admin_inventory_transfer_controller extends Admin_controller
 
         if (!$model) {
             $this->error('Error');
-            return redirect('/manager/inventory_transfer/0');
+            return redirect('/admin/inventory_transfer/0');
         }
 
         $result = $this->inventory_transfer_model->real_delete($id);
 
         if ($result) {
             $this->success('Inventory has been deleted successfully.');
-            return $this->redirect('/manager/inventory_transfer/0', 'refresh');
+            return $this->redirect('/admin/inventory_transfer/0', 'refresh');
         }
 
         $this->error('Error');
-        return redirect('/manager/inventory_transfer/0');
+        return redirect('/admin/inventory_transfer/0');
     }
 
     public function accept($id)
@@ -192,12 +192,12 @@ class Admin_inventory_transfer_controller extends Admin_controller
 
         if (!$model) {
             $this->error('Error');
-            return redirect('/manager/inventory_transfer/0?order_by=id&direction=DESC');
+            return redirect('/admin/inventory_transfer/0?order_by=id&direction=DESC');
         }
 
         if ($model->sku != $sku_confirmation) {
             $this->error('Error! Inventory Transfer Confirmation Failed.');
-            return redirect('/manager/inventory_transfer/0?order_by=id&direction=DESC');
+            return redirect('/admin/inventory_transfer/0?order_by=id&direction=DESC');
         }
         // Handle transfer here
 
@@ -256,7 +256,7 @@ class Admin_inventory_transfer_controller extends Admin_controller
         }
 
         $this->error('Error');
-        return redirect('/manager/inventory_transfer/0');
+        return redirect('/admin/inventory_transfer/0');
     }
 
 
