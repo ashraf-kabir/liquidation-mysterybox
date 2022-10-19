@@ -17,6 +17,7 @@ class Admin_daily_sales_controller extends Admin_controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('store_model');
         $this->load->model('inventory_model');
         $this->load->model('category_model');
         $this->load->model('transactions_model');
@@ -90,8 +91,8 @@ class Admin_daily_sales_controller extends Admin_controller
                 ->set_output(json_encode($this->_data['view_model']->to_json()));
         }
 
-        $from_date = date('Y-m-d');
-        $to_date   = date('Y-m-d');
+        // $from_date = date('Y-m-d');
+        // $to_date   = date('Y-m-d');
         $this->names_helper_service->set_category_model($this->category_model);
 
         if (!empty($this->_data['view_model']->get_list())) {
@@ -183,39 +184,36 @@ class Admin_daily_sales_controller extends Admin_controller
     }
 
 
+
     public function view($id)
     {
-        $model = $this->inventory_model->get($id);
+        $model = $this->pos_order_model->get($id);
 
         if (!$model) {
             $this->error('Error');
-            return redirect('/admin/inventory/0');
+            return redirect('/admin/orders/0');
         }
 
-        $this->names_helper_service->set_store_model($this->store_model);
-        $this->names_helper_service->set_physical_location_model($this->physical_location_model);
-        $this->names_helper_service->set_customer_model($this->customer_model);
-        $this->names_helper_service->set_category_model($this->category_model);
-
-        include_once __DIR__ . '/../../view_models/Inventory_admin_view_view_model.php';
-        $this->_data['view_model'] = new Inventory_admin_view_view_model($this->inventory_model);
+        include_once __DIR__ . '/../../view_models/Daily_sales_admin_view_view_model.php';
+        $this->_data['view_model'] = new Daily_sales_admin_view_view_model($this->pos_order_model);
         $this->_data['view_model']->set_heading('Inventory');
-        $model->category_id       = $this->names_helper_service->get_category_real_name($model->category_id);
-        $model->physical_location = $this->names_helper_service->get_physical_location_real_name($model->physical_location);
-        $model->store_location_id = $this->names_helper_service->get_store_name($model->store_location_id);
         $this->_data['view_model']->set_model($model);
-        $store_inventory = !empty($model->store_inventory) ? json_decode($model->store_inventory) : [];
+        $this->load->model('pos_order_items_model');
+        $from_date = date('Y-m-d');
+        $to_date   = date('Y-m-d');
+        $where = [
+            "product_id" => $id,
+            "a.created_at" => $from_date,
+        ];
+        $this->_data['orders_details'] = $this->pos_order_items_model->_join("pos_order", "order_id", $where, ['created_at', 'updated_at']);
 
-        foreach ($store_inventory as $key => &$store) {
-            $store_inventory[$key]->store_name = $this->names_helper_service->get_store_name($store->store_id);
-            $store_locations = isset($store->locations) ? $store->locations : [];
-            foreach ($store_locations as $location_id => $location_quantity) {
-                $store_inventory[$key]->location_data[] = ['name' => $this->names_helper_service->get_physical_location_real_name($location_id), 'quantity' => $location_quantity];
-            }
-            // $store_inventory[$key]->physical_location_name = $this->names_helper_service->get_physical_location_real_name( $value->physical_location );
-        }
-        $this->_data['store_inventory'] = $store_inventory;
+        $this->load->model('store_model');
+        $this->_data['inventory_details'] = $this->inventory_model->get($id);
+        $this->_data['status_mapping'] = $this->inventory_model->status_mapping();
+        $this->_data['stores'] = $this->store_model->get_all();
 
-        return $this->render('Admin/InventoryView', $this->_data);
+
+
+        return $this->render('Admin/Daily_salesView', $this->_data);
     }
 }

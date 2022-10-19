@@ -183,7 +183,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                         echo "<td>{$data->total_qty}</td>";
                         echo "<td>$" . number_format($data->total_sale, 2) . "</td>";
                         echo "<td>";
-                        echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/view/' . $data->id . '">View</a>';
+                        echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/daily_sales/view/' . $data->id . '">View</a>';
                         echo "</td>";
                         echo '</tr>';
 
