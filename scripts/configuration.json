@@ -6245,6 +6245,7 @@
     "../mkdcore/custom/Admin/views/CategoryEditParent.php": "../release/application/views/Admin/CategoryEditParent.php",
     "../mkdcore/custom/Admin/views/Daily_sales.php": "../release/application/views/Admin/Daily_sales.php",
     "../mkdcore/custom/Admin/views/Daily_salesView.php": "../release/application/views/Admin/Daily_salesView.php",
+    "../mkdcore/custom/Admin/view_models/Daily_sales_admin_view_view_model.php": "../release/application/view_models/Daily_sales_admin_view_view_model.php",
 
     "../mkdcore/custom/Admin/views/Customer.php": "../release/application/views/Admin/Customer.php",
     "../mkdcore/custom/Admin/views/CustomerAdd.php": "../release/application/views/Admin/CustomerAdd.php",
