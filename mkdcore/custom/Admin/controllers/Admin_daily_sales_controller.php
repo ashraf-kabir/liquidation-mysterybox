@@ -207,7 +207,7 @@ class Admin_daily_sales_controller extends Admin_controller
         }
 
         include_once __DIR__ . '/../../view_models/Daily_sales_admin_view_view_model.php';
-        $this->_data['view_model'] = new Daily_sales_admin_view_view_model($this->pos_order_model);
+        $this->_data['view_model'] = new Daily_sales_admin_view_view_model($this->inventory_model);
         $this->_data['view_model']->set_heading('Inventory');
         $this->_data['view_model']->set_model($model);
         $this->load->model('pos_order_items_model');
