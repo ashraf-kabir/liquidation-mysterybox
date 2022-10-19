@@ -166,7 +166,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                 </thead>
                 <tbody class="tbody-light">
                     <?php
-                    $kounter = 1;
+                    $kounter = 0;
                     foreach ($view_model->get_list() as $data) {
                         if ($data->total_qty <= 0) {
                             continue;
@@ -183,7 +183,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                         echo "<td>{$data->total_qty}</td>";
                         echo "<td>$" . number_format($data->total_sale, 2) . "</td>";
                         echo "<td>";
-                        echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/daily_sales/view/' . $data->id . '">View</a>';
+                        echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/daily_sales/view/' . $data->order_id . '">View</a>';
                         echo "</td>";
                         echo '</tr>';
 

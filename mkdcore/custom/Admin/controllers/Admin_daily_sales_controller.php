@@ -203,7 +203,7 @@ class Admin_daily_sales_controller extends Admin_controller
 
         if (!$model) {
             $this->error('Error');
-            return redirect('/admin/orders/0');
+            return redirect('/admin/daily_sales/0');
         }
 
         include_once __DIR__ . '/../../view_models/Daily_sales_admin_view_view_model.php';
