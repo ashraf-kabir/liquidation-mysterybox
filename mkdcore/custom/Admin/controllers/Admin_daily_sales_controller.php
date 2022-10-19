@@ -199,7 +199,7 @@ class Admin_daily_sales_controller extends Admin_controller
 
     public function view($id)
     {
-        $model = $this->pos_order_model->get($id);
+        $model = $this->inventory_model->get($id);
 
         if (!$model) {
             $this->error('Error');
