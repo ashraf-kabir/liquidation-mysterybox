@@ -168,11 +168,11 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                     <?php
                     $kounter = 1;
                     foreach ($view_model->get_list() as $data) {
-                        // if ($data->total_qty <= 0) {
-                        //     continue;
-                        // } else {
-                        //     $kounter++;
-                        // }
+                        if ($data->total_qty <= 0) {
+                            continue;
+                        } else {
+                            $kounter++;
+                        }
                     ?>
                         <?php
                         echo '<tr>';

@@ -91,8 +91,8 @@ class Admin_daily_sales_controller extends Admin_controller
                 ->set_output(json_encode($this->_data['view_model']->to_json()));
         }
 
-        // $from_date = date('Y-m-d');
-        // $to_date   = date('Y-m-d');
+        $from_date = date('Y-m-d');
+        $to_date   = date('Y-m-d');
         $this->names_helper_service->set_category_model($this->category_model);
 
         if (!empty($this->_data['view_model']->get_list())) {
