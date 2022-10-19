@@ -36,13 +36,13 @@ class Manager_inventory_controller extends Manager_controller
     public function index($page)
     {
         $this->load->library('pagination');
-        include_once __DIR__ . '/../../view_models/Inventory_admin_list_paginate_view_model.php';
+        include_once __DIR__ . '/../../view_models/Inventory_manager_list_paginate_view_model.php';
         $session = $this->get_session();
         $format = $this->input->get('format', TRUE) ?? 'view';
         $order_by = $this->input->get('order_by', TRUE) ?? '';
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
 
-        $this->_data['view_model'] = new Inventory_admin_list_paginate_view_model(
+        $this->_data['view_model'] = new Inventory_manager_list_paginate_view_model(
             $this->inventory_model,
             $this->pagination,
             '/manager/inventory/0'
@@ -103,18 +103,18 @@ class Manager_inventory_controller extends Manager_controller
             }
         }
 
-        return $this->render('Admin/Inventory', $this->_data);
+        return $this->render('Manager/Inventory', $this->_data);
     }
 
     public function add()
     {
-        include_once __DIR__ . '/../../view_models/Inventory_admin_add_view_model.php';
+        include_once __DIR__ . '/../../view_models/Inventory_manager_add_view_model.php';
         $session = $this->get_session();
         $this->form_validation = $this->inventory_model->set_form_validation(
             $this->form_validation,
             $this->inventory_model->get_all_validation_rule()
         );
-        $this->_data['view_model'] = new Inventory_admin_add_view_model($this->inventory_model);
+        $this->_data['view_model'] = new Inventory_manager_add_view_model($this->inventory_model);
         $this->_data['view_model']->set_heading('Inventory');
 
 
@@ -303,12 +303,12 @@ class Manager_inventory_controller extends Manager_controller
             return redirect('/manager/inventory/0');
         }
 
-        include_once __DIR__ . '/../../view_models/Inventory_admin_edit_view_model.php';
+        include_once __DIR__ . '/../../view_models/Inventory_manager_edit_view_model.php';
         $this->form_validation = $this->inventory_model->set_form_validation(
             $this->form_validation,
             $this->inventory_model->get_all_edit_validation_rule()
         );
-        $this->_data['view_model'] = new Inventory_admin_edit_view_model($this->inventory_model);
+        $this->_data['view_model'] = new Inventory_manager_edit_view_model($this->inventory_model);
         $this->_data['view_model']->set_model($model);
         $this->_data['view_model']->set_heading('Inventory');
 
@@ -341,7 +341,7 @@ class Manager_inventory_controller extends Manager_controller
 
 
         if ($this->form_validation->run() === FALSE) {
-            return $this->render('Admin/InventoryEdit', $this->_data);
+            return $this->render('Manager/InventoryEdit', $this->_data);
         }
 
         $product_name = $this->input->post('product_name', TRUE);
@@ -484,7 +484,7 @@ class Manager_inventory_controller extends Manager_controller
         }
 
         $this->_data['error'] = 'Error';
-        return $this->render('Admin/InventoryEdit', $this->_data);
+        return $this->render('Manager/InventoryEdit', $this->_data);
     }
 
     public function view($id)
@@ -501,8 +501,8 @@ class Manager_inventory_controller extends Manager_controller
         $this->names_helper_service->set_customer_model($this->customer_model);
         $this->names_helper_service->set_category_model($this->category_model);
 
-        include_once __DIR__ . '/../../view_models/Inventory_admin_view_view_model.php';
-        $this->_data['view_model'] = new Inventory_admin_view_view_model($this->inventory_model);
+        include_once __DIR__ . '/../../view_models/Inventory_manager_view_view_model.php';
+        $this->_data['view_model'] = new Inventory_manager_view_view_model($this->inventory_model);
         $this->_data['view_model']->set_heading('Inventory');
         $model->category_id       = $this->names_helper_service->get_category_real_name($model->category_id);
         $model->physical_location = $this->names_helper_service->get_physical_location_real_name($model->physical_location);
@@ -519,7 +519,7 @@ class Manager_inventory_controller extends Manager_controller
         }
         $this->_data['store_inventory'] = $store_inventory;
 
-        return $this->render('Admin/InventoryView', $this->_data);
+        return $this->render('Manager/InventoryView', $this->_data);
     }
 
 

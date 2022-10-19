@@ -348,7 +348,7 @@ if (!empty($product->feature_image)) {
             <div class="row col-md-12">
                 <div class="row col-12 col-sm-12 image-container">
                     <div class="img-controller left col-1" id="left">
-                        <i class="fas fa-chevron-left"></i>
+                        <i class="fas fa-chevron-left" style="color: black;"></i>
                     </div>
                     <?php if (!empty($product->feature_image)) {   ?>
                         <div class="mySlides img col-10">
@@ -370,7 +370,7 @@ if (!empty($product->feature_image)) {
                         <?php endforeach ?>
                     <?php endif ?>
                     <div class="img-controller right col-1">
-                        <i class="fas fa-chevron-right"></i>
+                        <i class="fas fa-chevron-right" style="color: black;"></i>
                     </div>
                 </div>
 

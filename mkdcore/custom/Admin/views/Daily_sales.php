@@ -67,8 +67,8 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
 
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                                 <div class="form-group">
-                                    <label for="from_date">From </label>
-                                    <input type="date" class="form-control" id="from_date" name="from_date" value="<?php echo $from_date; ?>" />
+                                    <label for="SKU">SKU </label>
+                                    <input type="text" class="form-control" id="sku" name="sku" value="<?php echo $sku; ?>" />
                                 </div>
                             </div>
                             <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
@@ -191,7 +191,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                     <?php }
                     if ($kounter === 0) {
                         echo '<tr>';
-                        echo '<th colspan="6" class="text-center">No sales yet</th>';
+                        echo '<th colspan="6" class="text-center">No sales today yet</th>';
                         echo '</tr>';
                     }
                     ?>

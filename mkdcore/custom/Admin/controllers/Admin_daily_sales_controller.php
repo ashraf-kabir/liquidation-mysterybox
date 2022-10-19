@@ -37,6 +37,7 @@ class Admin_daily_sales_controller extends Admin_controller
         $format = $this->input->get('format', TRUE) ?? 'view';
         $order_by = $this->input->get('order_by', TRUE) ?? 'id';
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
+        $sku = $this->input->get('sku', TRUE) ?? '';
 
         if ($order_by == 'name') {
             $order_by = 'product_name';
@@ -53,13 +54,17 @@ class Admin_daily_sales_controller extends Admin_controller
         $this->_data['category_id']    =     $this->input->get('category_id', TRUE) != NULL  ? $this->input->get('category_id', TRUE) : NULL;
         $this->_data['from_date']      =     $this->input->get('from_date', TRUE) != NULL  ? $this->input->get('from_date', TRUE) : NULL;
         $this->_data['to_date']        =     $this->input->get('to_date', TRUE) != NULL  ? $this->input->get('to_date', TRUE) : NULL;
+        $this->_data['sku']        =     $this->input->get('sku', TRUE) != NULL  ? $this->input->get('sku', TRUE) : NULL;
 
         $from_date = $this->_data['from_date'];
         $to_date   = $this->_data['to_date'];
+        $sku   = $this->_data['sku'];
+
 
         $where = [
             'category_id' => $this->_data['category_id'],
         ];
+
 
         $this->_data['view_model']->set_total_rows($this->inventory_model->count($where));
 
@@ -145,6 +150,13 @@ class Admin_daily_sales_controller extends Admin_controller
         $where = [
             'category_id' => $this->_data['category_id'],
         ];
+        if (!empty($sku)) {
+            $where = [
+                'category_id' => $this->_data['category_id'],
+                'sku' => $sku,
+            ];
+        }
+
         $products_list = $this->inventory_model->get_all($where);
 
 

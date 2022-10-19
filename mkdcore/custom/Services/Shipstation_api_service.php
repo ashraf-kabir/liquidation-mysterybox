@@ -588,8 +588,8 @@ class Shipstation_api_service
         // var_dump($output);
         // echo '</pre>';
 
-        //return $output;
-        return "Commercial";
+        return $output;
+        //return "Commercial";
     }
 
     public function validate_address_upsp($street = "", $city = "", $state = "", $zip = "", $country = "US")
