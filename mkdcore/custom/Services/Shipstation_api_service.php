@@ -633,10 +633,14 @@ class Shipstation_api_service
         //Execute the POST request and send our XML.
         $result = curl_exec($curl);
 
+        echo '<pre>';
+        var_dump($result);
+        echo '</pre>';
+
         //Do some basic error checking.
-        // if (curl_errno($curl)) {
-        //     throw new Exception(curl_error($curl));
-        // }
+        if (curl_errno($curl)) {
+            throw new Exception(curl_error($curl));
+        }
 
         //Close the cURL handle.
         curl_close($curl);
@@ -644,9 +648,7 @@ class Shipstation_api_service
         //Convert XML to array
         $result = simplexml_load_string($result);
 
-        // echo '<pre>';
-        // var_dump($result);
-        // echo '</pre>';
+
 
         $output = false;
 
