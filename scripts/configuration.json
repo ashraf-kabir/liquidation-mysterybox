@@ -6125,7 +6125,7 @@
       "smarty_street_url": "https://us-street.api.smartystreets.com/street-address",
       "smarty_auth_id": "46662156-e1b0-b5fb-4072-b0be85c4e8eb",
       "smarty_auth_token": "s79UFAQrwip8OvJsbVK3",
-      "usps_url": "https:/secure.shippingapis.com/ShippingAPI.dll?API=Verify&XML=",
+      "usps_url": "https://secure.shippingapis.com/ShippingAPI.dll?API=Verify&XML=",
       "usps_user_id": "595BERIK3153"
     }
   },
