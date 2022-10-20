@@ -1805,6 +1805,8 @@ class Home_controller extends Manaknight_Controller
 
                 $validation_response = $this->_validate_address($shipping_address, $shipping_city, $shipping_state, $shipping_zip, $shipping_country);
 
+                echo $validation_response;
+
                 if ($validation_response == false) {
                     $output['status'] = 0;
                     $output['error']  = "Error! Ensure shipping address is valid.";
@@ -2471,7 +2473,7 @@ class Home_controller extends Manaknight_Controller
         $this->shipstation_api_service->set_config($this->config);
 
         $response = $this->shipstation_api_service
-            ->validate_address($shipping_address, $city, $state, $zip, $country);
+            ->validate_address_upsp($shipping_address, $city, $state, $zip, $country);
 
         return $response;
     }

@@ -167,15 +167,15 @@ if ($layout_clean_mode) {
         getProductBySKU(event.target.value);
     });
     // Hide TO STORE if it is selected in FROM STORE //////////
-    document.querySelector('#from_store').addEventListener('change', function(event) {
-        let selected_value = event.target.value;
-        let to_options = document.querySelectorAll('#to_store option');
-        for (const element of to_options) {
-            element.style.display = 'block';
-        }
-        document.querySelector(`#to_store > option[value="${selected_value}"]`).style.display = 'none';
-        document.querySelector('#to_store').value = "";
-    });
+    // document.querySelector('#from_store').addEventListener('change', function(event) {
+    //     let selected_value = event.target.value;
+    //     let to_options = document.querySelectorAll('#to_store option');
+    //     for (const element of to_options) {
+    //         element.style.display = 'block';
+    //     }
+    //     document.querySelector(`#to_store > option[value="${selected_value}"]`).style.display = 'none';
+    //     document.querySelector('#to_store').value = "";
+    // });
     // /////////////////////////////////////   //////// //////
 
     document.querySelector('#items').addEventListener('change', function(event) {
