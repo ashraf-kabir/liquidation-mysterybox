@@ -625,7 +625,7 @@ class Shipstation_api_service
         //Set CURLOPT_POST to true to send a GET request.
         curl_setopt($curl, CURLOPT_HTTPGET, true);
 
-        curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+        //curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         //Tell cURL that we want the response to be returned as
         //a string instead of being dumped to the output.
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -633,9 +633,9 @@ class Shipstation_api_service
         //Execute the POST request and send our XML.
         $result = curl_exec($curl);
 
-        echo '<pre>';
-        var_dump($result);
-        echo '</pre>';
+        // echo '<pre>';
+        // var_dump($result);
+        // echo '</pre>';
 
         //Do some basic error checking.
         if (curl_errno($curl)) {
