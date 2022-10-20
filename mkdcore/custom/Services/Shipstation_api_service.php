@@ -634,9 +634,9 @@ class Shipstation_api_service
         $result = curl_exec($curl);
 
         //Do some basic error checking.
-        if (curl_errno($curl)) {
-            throw new Exception(curl_error($curl));
-        }
+        // if (curl_errno($curl)) {
+        //     throw new Exception(curl_error($curl));
+        // }
 
         //Close the cURL handle.
         curl_close($curl);
