@@ -614,7 +614,7 @@ class Shipstation_api_service
         // route
         $endpoint_url = $this->_config->item("usps_url");
         echo $endpoint_url;
-
+        exit();
         //The URL that you want to send your XML to.
         // $url = 'http://localhost/xml';
 
