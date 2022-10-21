@@ -84,6 +84,7 @@ class Image_controller extends CI_Controller
         $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data_uri));
         $filename = md5(uniqid() . time()) . '.png';
         file_put_contents($image_path . $filename, $data);
+        $compressedImage = compressImage($image_path . $filename, $image_path . $filename, 70);
         list($width, $height) = getimagesize( $image_path . $filename );
         $session = $this->get_session();
         $user_id = isset($session['user_id']) ? $session['user_id'] : 0;
@@ -167,7 +168,15 @@ class Image_controller extends CI_Controller
         $user_id = isset($session['user_id']) ? $session['user_id'] : 0;
         $image_path = __DIR__ . '/../../../uploads/';
 
-        if (!move_uploaded_file($path, $image_path . $filename))
+        // if (!move_uploaded_file($path, $image_path . $filename))
+        // {
+        //     return $this->output->set_content_type('application/json')
+        //     ->set_status_header(403)
+        //     ->set_output(json_encode([
+        //         'message' => 'xyzUpload file failed'
+        //     ]));
+        // }
+        if (!compressImage($path, $image_path . $filename, 70))
         {
             return $this->output->set_content_type('application/json')
             ->set_status_header(403)
@@ -405,6 +414,31 @@ class Image_controller extends CI_Controller
 
 
     }
+
+    function compressImage($source, $destination, $quality = 70) { 
+        $imgInfo = getimagesize($source); 
+        $mime = $imgInfo['mime']; 
+         
+        switch($mime){ 
+            case 'image/jpeg': 
+                $image = imagecreatefromjpeg($source); 
+               imagejpeg($image, $destination, $quality);
+                break; 
+            case 'image/png': 
+                $image = imagecreatefrompng($source); 
+                imagepng($image, $destination, $quality);
+                break; 
+            case 'image/gif': 
+                $image = imagecreatefromgif($source); 
+                imagegif($image, $destination, $quality);
+                break; 
+            default: 
+                $image = imagecreatefromjpeg($source); 
+               imagejpeg($image, $destination, $quality);
+        } 
+         
+        return $destination; 
+    } 
 
     /**
      * Debug Controller to error_log and turn off in production
