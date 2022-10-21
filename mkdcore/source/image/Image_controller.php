@@ -252,8 +252,8 @@ class Image_controller extends CI_Controller
         // echo $image_path;die;
         try {
             $compressedImage = compressImage($path, $image_path . $filename, 70);
-        } catch (\Throwable $th) {
-            echo json_encode($th); exit;
+        } catch (Exception $th) {
+            echo json_encode($th->getMessage()); exit;
         }
 
         try
