@@ -595,6 +595,7 @@ class Shipstation_api_service
     {
         $user_id = $this->_config->item("usps_user_id");;
         //$xmlStr = "&XML=";
+        echo $user_id;
         $xmlStr = '<AddressValidateRequest USERID="' . $user_id . '">';
         $xmlStr .= '<Revision>1</Revision>';
         $xmlStr .= '<Address ID="0">';
@@ -625,7 +626,7 @@ class Shipstation_api_service
         //Set CURLOPT_POST to true to send a GET request.
         curl_setopt($curl, CURLOPT_HTTPGET, true);
 
-        //curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+        curl_setopt($curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
         //Tell cURL that we want the response to be returned as
         //a string instead of being dumped to the output.
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -648,8 +649,6 @@ class Shipstation_api_service
         //Convert XML to array
         $result = simplexml_load_string($result);
 
-
-
         $output = false;
 
         if ($result->Address->Business == 'Y') {
@@ -661,7 +660,6 @@ class Shipstation_api_service
         } else {
             $output = false;
         }
-
 
         return $output;
     }
