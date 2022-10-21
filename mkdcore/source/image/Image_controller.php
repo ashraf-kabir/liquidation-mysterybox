@@ -249,7 +249,8 @@ class Image_controller extends CI_Controller
         $user_id = isset($session['user_id']) ? $session['user_id'] : 0;
         $image_path = __DIR__ . '/../../../uploads/';
         echo $path;
-        // echo $image_path;die;
+        echo $image_path;
+        echo $filename;die;
         try {
             $compressedImage = compressImage($path, $image_path . $filename, 70);
         } catch (Exception $th) {
