@@ -107,7 +107,7 @@ class Admin_inventory_controller extends Admin_controller
     }
 
     public function add()
-    {phpinfo(); die;
+    {
         include_once __DIR__ . '/../../view_models/Inventory_admin_add_view_model.php';
         $session = $this->get_session();
         $this->form_validation = $this->inventory_model->set_form_validation(
