@@ -596,6 +596,7 @@ class Shipstation_api_service
         $user_id = $this->_config->item("usps_user_id");;
         //$xmlStr = "&XML=";
         echo $user_id;
+
         $xmlStr = '<AddressValidateRequest USERID="' . $user_id . '">';
         $xmlStr .= '<Revision>1</Revision>';
         $xmlStr .= '<Address ID="0">';
@@ -611,7 +612,8 @@ class Shipstation_api_service
         //The XML string that you want to send.
 
         // route
-        $endpoint_url = $this->_config->item("usps_url");;
+        $endpoint_url = $this->_config->item("usps_url");
+        echo $endpoint_url;
 
         //The URL that you want to send your XML to.
         // $url = 'http://localhost/xml';
@@ -632,36 +634,36 @@ class Shipstation_api_service
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
         //Execute the POST request and send our XML.
-        $result = curl_exec($curl);
+        // $result = curl_exec($curl);
 
-        // echo '<pre>';
-        // var_dump($result);
-        // echo '</pre>';
+        // // echo '<pre>';
+        // // var_dump($result);
+        // // echo '</pre>';
 
-        //Do some basic error checking.
-        if (curl_errno($curl)) {
-            throw new Exception(curl_error($curl));
-        }
+        // //Do some basic error checking.
+        // if (curl_errno($curl)) {
+        //     throw new Exception(curl_error($curl));
+        // }
 
-        //Close the cURL handle.
-        curl_close($curl);
+        // //Close the cURL handle.
+        // curl_close($curl);
 
-        //Convert XML to array
-        $result = simplexml_load_string($result);
+        // //Convert XML to array
+        // $result = simplexml_load_string($result);
 
-        $output = false;
+        // $output = false;
 
-        if ($result->Address->Business == 'Y') {
+        // if ($result->Address->Business == 'Y') {
 
-            $output = "Commercial";
-        } else if ($result->Address->Business == 'N') {
+        //     $output = "Commercial";
+        // } else if ($result->Address->Business == 'N') {
 
-            $output = "Residential";
-        } else {
-            $output = false;
-        }
+        //     $output = "Residential";
+        // } else {
+        //     $output = false;
+        // }
 
-        return $output;
+        // return $output;
     }
 
     public function create_order()
