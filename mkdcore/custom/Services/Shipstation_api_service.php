@@ -595,7 +595,6 @@ class Shipstation_api_service
     {
         $user_id = $this->_config->item("usps_user_id");;
         //$xmlStr = "&XML=";
-        echo $user_id;
         $xmlStr = '<AddressValidateRequest USERID="' . $user_id . '">';
         $xmlStr .= '<Revision>1</Revision>';
         $xmlStr .= '<Address ID="0">';

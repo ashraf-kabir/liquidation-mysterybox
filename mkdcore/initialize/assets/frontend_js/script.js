@@ -38,6 +38,7 @@ $(document).on('click', '.update__form_submit', function (e) {
     dataType: 'JSON',
     data: dataForm,
     success: function (response) {
+      console.log(response);
       if (response.success) {
         toastr.success(response.success);
         if (response.redirect_url) {
@@ -52,8 +53,6 @@ $(document).on('click', '.update__form_submit', function (e) {
       }
     },
     error: function (response) {
-      console.error(response);
-      console.error("I am here");
       toastr.error('Error! Try again later.');
     }
   })
