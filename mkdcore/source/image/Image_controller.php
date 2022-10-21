@@ -84,7 +84,7 @@ class Image_controller extends CI_Controller
         $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data_uri));
         $filename = md5(uniqid() . time()) . '.png';
         file_put_contents($image_path . $filename, $data);
-        $compressedImage = compressImage($image_path . $filename, $image_path . $filename, 70);
+        
         list($width, $height) = getimagesize( $image_path . $filename );
         $session = $this->get_session();
         $user_id = isset($session['user_id']) ? $session['user_id'] : 0;
@@ -247,13 +247,15 @@ class Image_controller extends CI_Controller
         $height = 0;
         $session = $this->get_session();
         $user_id = isset($session['user_id']) ? $session['user_id'] : 0;
+        $image_path = __DIR__ . '/../../../uploads/';
+        $compressedImage = compressImage($path, $image_path . $filename, 70);
 
         try
         {
             $result = $s3->putObject([
                 'Bucket' => $this->config->item('aws_bucket'),
                 'Key'    => $filename,
-                'Body'   => fopen($path, 'r'),
+                'Body'   => fopen($$image_path . $filename, 'r'),
                 'ACL'    => 'public-read',
             ]);
 
