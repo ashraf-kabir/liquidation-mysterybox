@@ -137,7 +137,7 @@ class Image_controller extends CI_Controller
         // var_dump($_FILES['file']);
         // echo '</pre>';
         // echo count($_FILES);
-        // exit();
+
         if (!(isset($_FILES) && count($_FILES) > 0 && isset($_FILES['file']))) {
             return $this->output->set_content_type('application/json')
                 ->set_status_header(403)
@@ -174,7 +174,6 @@ class Image_controller extends CI_Controller
                     'message' => 'xyzUpload file failed'
                 ]));
         }
-
         // if (!$this->compressImage($path, $image_path . $filename, 70)) {
         //     return $this->output->set_content_type('application/json')
         //         ->set_status_header(403)
@@ -245,18 +244,18 @@ class Image_controller extends CI_Controller
         $user_id = isset($session['user_id']) ? $session['user_id'] : 0;
         $image_path = __DIR__ . '/../../../uploads/';
 
-        try {
-            $compressedImage = $this->compressImage($path, $image_path . $filename, 70);
-        } catch (Exception $th) {
-            echo json_encode($th->getMessage());
-            exit;
-        }
+        // try {
+        //     $compressedImage = $this->compressImage($path, $image_path . $filename, 70);
+        // } catch (Exception $th) {
+        //     echo json_encode($th->getMessage());
+        //     exit;
+        // }
 
         try {
             $result = $s3->putObject([
                 'Bucket' => $this->config->item('aws_bucket'),
                 'Key'    => $filename,
-                'Body'   => fopen($image_path . $filename, 'r'),
+                'Body'   => fopen($path, 'r'),
                 'ACL'    => 'public-read',
             ]);
 

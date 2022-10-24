@@ -16,7 +16,6 @@ var picture = new window.uppload_Uppload({
       $("#" + image_url_uppload_library + "_id").val(json.id);
       $("#" + image_url_uppload_library + "_text").html(json.file);
       $("#" + image_url_uppload_library + "_complete").text("Upload Complete");
-      alert("I was successful");
     }
   })
 });
