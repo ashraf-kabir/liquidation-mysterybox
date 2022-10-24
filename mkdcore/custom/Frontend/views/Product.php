@@ -9,6 +9,7 @@
         /*max-height: 350px;*/
         object-fit: contain;
         margin-left: 50px;
+        overflow: hidden;
     }
 
 
@@ -270,6 +271,12 @@
             /* margin-right: 50px; */
             /* margin-left: -3px; */
         }
+
+        .gallery-thumbnail {
+            max-height: 75px !important;
+            min-height: 75px !important;
+            width: 80% !important;
+        }
     }
 
     @media (max-width: 600px) {
@@ -286,6 +293,12 @@
             object-fit: contain;
             margin-right: 50px;
             /* margin-left: -3px; */
+        }
+
+        .gallery-thumbnail {
+            max-height: 75px !important;
+            min-height: 75px !important;
+            width: 100% !important;
         }
     }
 
@@ -310,6 +323,12 @@
             padding: 8px 2px;
             position: absolute;
             top: 0;
+        }
+
+        .gallery-thumbnail {
+            max-height: 70px !important;
+            min-height: 70px !important;
+            width: 100% !important;
         }
     }
 </style>
@@ -388,7 +407,7 @@ if (!empty($product->feature_image)) {
                                 <?php foreach ($gallery_lists as $key => $value) : ?>
                                     <div class="col-6 col-sm-2 testing">
                                         <div class="product-image-list-container pt-2 pb-2">
-                                            <img style="border: none;" class="demo gallery-thumbnail cursor img-thumbnail" src="<?php echo $value->image_name; ?>" onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>">
+                                            <img style="border: none; width: 80%" class="demo gallery-thumbnail cursor img-thumbnail" src="<?php echo $value->image_name; ?>" onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>">
                                         </div>
                                     </div>
                                 <?php endforeach ?>
