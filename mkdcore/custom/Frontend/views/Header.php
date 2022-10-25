@@ -298,6 +298,38 @@
           .swiper-button-disabled {
                display: none !important;
           }
+
+          .goog-logo-link {
+               display: none !important;
+          }
+
+          .goog-te-gadget {
+               color: transparent !important;
+          }
+
+          select.goog-te-combo {
+               padding: 7px 0px !important;
+               margin: 0px 0 !important;
+               width: 130px !important;
+               background: #fff;
+               border: 2px solid black;
+               font-weight: 400;
+          }
+
+          .language-button {
+               margin: 0px !important;
+               border: 0px !important;
+               background: none !important;
+               box-shadow: none !important;
+          }
+
+          div.goog-te-gadget {
+               padding-top: 16px !important;
+          }
+
+          .goog-te-banner-frame {
+               display: none !important;
+          }
      </style>
 </head>
 
@@ -463,3 +495,7 @@
                </div>
           </nav>
      </header>
+
+     <div class="row" style=" width: 100%;height: 49px; margin-bottom: 18px; margin-left: 15px !important;">
+          <div id="google_translate_element" style="padding-right: 0px; padding-left: 10px"></div>
+     </div>

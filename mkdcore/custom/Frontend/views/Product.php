@@ -49,6 +49,7 @@
 
     .img-thumbnail {
         padding: 0 !important;
+        max-width: 100% !important;
     }
 
     .list-swiper-button-next,
@@ -217,7 +218,7 @@
     .gallery-thumbnail {
         max-height: 90px !important;
         min-height: 90px !important;
-        width: 100% !important;
+        width: 90% !important;
         object-fit: cover;
     }
 
@@ -407,7 +408,7 @@ if (!empty($product->feature_image)) {
                                 <?php foreach ($gallery_lists as $key => $value) : ?>
                                     <div class="col-6 col-sm-2 testing">
                                         <div class="product-image-list-container pt-2 pb-2">
-                                            <img style="border: none; width: 80%" class="demo gallery-thumbnail cursor img-thumbnail" src="<?php echo $value->image_name; ?>" onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>">
+                                            <img style="border: none;" class="demo gallery-thumbnail cursor img-thumbnail" src="<?php echo $value->image_name; ?>" onclick="currentSlide(<?php echo $k++; ?>)" alt="<?php echo $product->product_name; ?>">
                                         </div>
                                     </div>
                                 <?php endforeach ?>
@@ -798,7 +799,10 @@ if (!empty($product->feature_image)) {
     const img = document.querySelector('.main-img');
     var dots = document.querySelectorAll(".testing");
     var slides = document.querySelectorAll(".mySlides");
+    var scroll_div = document.querySelector('.product-image-list-box');
+    var scroll_div_two = document.querySelector('.product-gallery-container');
     console.log(dots.length, slides.length);
+    //alert(scroll_div.innerHTML);
 
     function initThumbnail(e) {
         dots.forEach((dot) => {
@@ -813,13 +817,18 @@ if (!empty($product->feature_image)) {
             thumbnail++;
             if (counter === dots.length) counter = 0;
             if (thumbnail === dots.length) thumbnail = 0;
+            var distance = 200;
         } else if (element.classList.contains('left')) {
             counter = counter - 1;
             thumbnail = thumbnail - 1;
             if (counter === -1) counter = dots.length - 1;
             if (thumbnail === -1) thumbnail = dots.length - 1;
+            var distance = -200;
         }
         slides[thumbnail].style.display = "block";
         dots[thumbnail].classList.add('bordered');
+        scroll_div.scroll(distance, 0);
+        //scroll_div_two.scroll(distance, 0);
+        //dots[thumbnail].scroll(distance, 0);
     }
 </script>
