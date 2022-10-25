@@ -218,7 +218,7 @@
     .gallery-thumbnail {
         max-height: 90px !important;
         min-height: 90px !important;
-        width: 90% !important;
+        width: 100% !important;
         object-fit: cover;
     }
 

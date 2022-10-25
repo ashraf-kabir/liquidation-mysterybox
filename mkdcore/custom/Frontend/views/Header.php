@@ -330,6 +330,10 @@
           .goog-te-banner-frame {
                display: none !important;
           }
+
+          body {
+               top: 0px !important;
+          }
      </style>
 </head>
 
