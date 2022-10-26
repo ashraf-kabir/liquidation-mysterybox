@@ -801,7 +801,7 @@ if (!empty($product->feature_image)) {
     var dots = document.querySelectorAll(".testing");
     var slides = document.querySelectorAll(".mySlides");
     var scroll_div = document.querySelector('.product-gallery-container');
-    var scroll_div_width = scroll_div.offsetWidth;
+    var scroll_div_width = scroll_div.scrollWidth;
     var scroll_bar_step = scroll_div_width / dots.length;
 
     console.log("scroll_div_offset_width: " + scroll_div.offsetWidth);
