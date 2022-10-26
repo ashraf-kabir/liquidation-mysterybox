@@ -820,7 +820,7 @@ if (!empty($product->feature_image)) {
             slide.style.display = "none";
         });
         const element = e.target;
-        console.log(img_width)
+
         if (element.classList.contains('right')) {
             counter++;
             thumbnail++;
@@ -836,8 +836,10 @@ if (!empty($product->feature_image)) {
                 scroll_counter += scroll_bar_step;
             }
 
-            console.log(counter);
-            console.log(scroll_counter);
+            console.log("scroll_div and img width: " + scroll_div_width + img_width);
+            console.log("image width: " + img_width)
+            console.log("counter: " + counter);
+            console.log("scroll_counter: " + scroll_counter);
 
 
         } else if (element.classList.contains('left')) {
@@ -847,18 +849,24 @@ if (!empty($product->feature_image)) {
             if (thumbnail === -1) thumbnail = dots.length - 1;
 
             if (counter === 0) {
+
                 scroll_div.scrollLeft -= (scroll_counter + img_width)
                 scroll_counter = 0;
             } else if (counter === dots.length - 1) {
-                scroll_div.scrollLeft += (scroll_div_width + img_width)
+                var half_width = img_width / 2;
+                var quarter_width = img_width / 4;
+                scroll_div.scrollLeft += (scroll_div_width + parseInt(img_width) + parseInt(half_width) + parseInt(quarter_width))
                 scroll_counter = scroll_div_width;
             } else {
                 scroll_div.scrollLeft -= scroll_bar_step;
                 scroll_counter -= scroll_bar_step;
             }
 
-            console.log(counter);
-            console.log(scroll_counter);
+            console.log("scroll_div and img width: " + (scroll_div_width + img_width));
+            console.log("scroll_div and img width and half img width and quarter_width: " + (scroll_div_width + img_width + half_width + quarter_width));
+            console.log("image width: " + img_width)
+            console.log("counter: " + counter);
+            console.log("scroll_counter: " + scroll_counter);
 
         }
         slides[thumbnail].style.display = "block";
