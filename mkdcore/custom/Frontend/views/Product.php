@@ -327,9 +327,9 @@
         }
 
         .gallery-thumbnail {
-            max-height: 70px !important;
+            /* max-height: 70px !important; */
             min-height: 70px !important;
-            width: 100% !important;
+            max-width: 90% !important;
         }
     }
 </style>

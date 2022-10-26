@@ -341,7 +341,6 @@
 
 
 
-
      <?php if (!empty($home_page_setting->home_page_top_text)) : ?>
           <header class="container-fluid top_header_css">
                <?php echo $home_page_setting->home_page_top_text; ?>

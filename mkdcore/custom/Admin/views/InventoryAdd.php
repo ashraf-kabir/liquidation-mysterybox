@@ -267,11 +267,16 @@ if ($layout_clean_mode) {
 
                         <span class="img-delete-close " style="display:none"><i class="fa fa-trash img-wrapper-delete-close"></i></span>
                         <img class="edit-preview-image" id="output_feature_image" style="max-height:100px" />
-                        <div class="btn uppload-button image_id_uppload_library btn-primary btn-sm  " data-image-url="feature_image" data-image-id="feature_image_id" data-image-preview="output_feature_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
-                        <input type="hidden" id="feature_image" data-srcid="output_feature_image" class="check_change_event" name="feature_image" value="" />
-                        <input type="hidden" id="feature_image_id" name="feature_image_id" value="" />
 
-                        <button type="button" data-preview="output_feature_image" data-url="feature_image" data-id="feature_image_id" class="btn btn-primary btn-sm add-image-form-portal create-image-portal-modal">+</button>
+                        <div class="mkd-upload-form-btn-wrapper gallery_image_add_inputs">
+                            <button class="mkd-upload-btn btn btn-primary d-block">Choose Image</button>
+                            <input type="file" name="feature_image_upload" id="" class="" onchange="uploadFeatureImage(this)" accept=".jpg,.jpeg,.png">
+
+                            <!-- <div class="btn uppload-button image_id_uppload_library btn-primary btn-sm  " data-image-url="feature_image" data-image-id="feature_image_id" data-image-preview="output_feature_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div> -->
+                            <input type="hidden" id="feature_image" data-srcid="output_feature_image" class="check_change_event" name="feature_image" value="" />
+                            <input type="hidden" id="feature_image_id" name="feature_image_id" value="" />
+                        </div>
+                        <button type="button" data-preview="output_feature_image" data-url="feature_image" data-id="feature_image_id" class="btn btn-primary btn-sm add-image-form-portal create-image-portal-modal pt5" style="margin-bottom: 20px;">+</button>
                         <span id="feature_image_complete" style="display: block;"></span>
 
                     </div>
@@ -682,5 +687,34 @@ $this->load->view('Guest/ImagePortalModal');
                     <label for="">Quantity <span class="text-danger">*</span></label>
                     <input required class="form-control" type="number" name="quantity[]" id="">
                 </div>`;
+    }
+
+    function uploadFeatureImage(e) {
+
+        console.log(e.files[0]);
+        var file = e.files[0];
+
+        var formData = new FormData();
+        formData.append('file', file);
+
+        $.ajax({
+            type: "POST",
+            url: "/v1/api/file/upload",
+            enctype: 'multipart/form-data',
+            timeout: 15000,
+            processData: false,
+            contentType: false,
+            cache: false,
+            data: formData,
+            success: function(response) {
+                console.log(response);
+                document.getElementById("output_feature_image").setAttribute("src", response.file);
+                document.getElementById("feature_image").value = response.file;
+                document.getElementById("feature_image_id").value = response.id;
+            },
+            error: function(response) {
+                console.log(response);
+            }
+        });
     }
 </script>
