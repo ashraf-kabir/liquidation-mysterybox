@@ -804,10 +804,10 @@ if (!empty($product->feature_image)) {
     var scroll_div_width = scroll_div.offsetWidth;
     var scroll_bar_step = scroll_div_width / dots.length;
 
-    // console.log("scroll_div_offset_width: " + scroll_div.offsetWidth);
-    // console.log("scroll_div_scroll_width: " + scroll_div.scrollWidth);
-    // console.log("scroll_div_client_width: " + scroll_div.clientWidth)
-    // console.log("scroll_bar_step: " + scroll_bar_step);
+    console.log("scroll_div_offset_width: " + scroll_div.offsetWidth);
+    console.log("scroll_div_scroll_width: " + scroll_div.scrollWidth);
+    console.log("scroll_div_client_width: " + scroll_div.clientWidth)
+    console.log("scroll_bar_step: " + scroll_bar_step);
 
     function initThumbnail(e) {
 
@@ -829,8 +829,8 @@ if (!empty($product->feature_image)) {
             }
             if (thumbnail === dots.length) thumbnail = 0;
 
-            // console.log(counter);
-            // console.log(scroll_counter);
+            console.log(counter);
+            console.log(scroll_counter);
             scroll_div.scrollLeft += scroll_bar_step;
             scroll_counter += scroll_bar_step;
 
@@ -849,8 +849,8 @@ if (!empty($product->feature_image)) {
                 scroll_div.scrollLeft += scroll_div_width
                 scroll_counter = scroll_div_width;
             }
-            // console.log(counter);
-            // console.log(scroll_counter);
+            console.log(counter);
+            console.log(scroll_counter);
 
             scroll_div.scrollLeft -= scroll_bar_step;
             scroll_counter -= scroll_bar_step;
