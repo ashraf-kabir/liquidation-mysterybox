@@ -785,6 +785,7 @@ if (!empty($product->feature_image)) {
 
     let counter = 0;
     let thumbnail = 0;
+    let scroll_counter = 0;
 
     btns.forEach((btn) => {
         btn.addEventListener('click', function(e) {
@@ -799,12 +800,17 @@ if (!empty($product->feature_image)) {
     const img = document.querySelector('.main-img');
     var dots = document.querySelectorAll(".testing");
     var slides = document.querySelectorAll(".mySlides");
-    var scroll_div = document.querySelector('.product-image-list-box');
-    var scroll_div_two = document.querySelector('.product-gallery-container');
-    console.log(dots.length, slides.length);
-    //alert(scroll_div.innerHTML);
+    var scroll_div = document.querySelector('.product-gallery-container');
+    var scroll_div_width = scroll_div.offsetWidth;
+    var scroll_bar_step = scroll_div_width / dots.length;
+
+    // console.log("scroll_div_offset_width: " + scroll_div.offsetWidth);
+    // console.log("scroll_div_scroll_width: " + scroll_div.scrollWidth);
+    // console.log("scroll_div_client_width: " + scroll_div.clientWidth)
+    // console.log("scroll_bar_step: " + scroll_bar_step);
 
     function initThumbnail(e) {
+
         dots.forEach((dot) => {
             dot.classList.remove('bordered');
         });
@@ -815,20 +821,42 @@ if (!empty($product->feature_image)) {
         if (element.classList.contains('right')) {
             counter++;
             thumbnail++;
-            if (counter === dots.length) counter = 0;
+
+            if (counter === dots.length) {
+                counter = 0;
+                scroll_div.scrollLeft -= scroll_counter;
+                scroll_counter = 0;
+            }
             if (thumbnail === dots.length) thumbnail = 0;
-            var distance = 200;
+
+            // console.log(counter);
+            // console.log(scroll_counter);
+            scroll_div.scrollLeft += scroll_bar_step;
+            scroll_counter += scroll_bar_step;
+
         } else if (element.classList.contains('left')) {
             counter = counter - 1;
             thumbnail = thumbnail - 1;
             if (counter === -1) counter = dots.length - 1;
             if (thumbnail === -1) thumbnail = dots.length - 1;
-            var distance = -200;
+
+            if (counter === 0) {
+                scroll_div.scrollLeft -= scroll_counter
+                scroll_counter = 0;
+            }
+
+            if (counter === dots.length - 1) {
+                scroll_div.scrollLeft += scroll_div_width
+                scroll_counter = scroll_div_width;
+            }
+            // console.log(counter);
+            // console.log(scroll_counter);
+
+            scroll_div.scrollLeft -= scroll_bar_step;
+            scroll_counter -= scroll_bar_step;
         }
         slides[thumbnail].style.display = "block";
         dots[thumbnail].classList.add('bordered');
-        scroll_div.scroll(distance, 0);
-        //scroll_div_two.scroll(distance, 0);
-        //dots[thumbnail].scroll(distance, 0);
+
     }
 </script>
