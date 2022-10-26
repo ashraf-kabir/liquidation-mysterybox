@@ -805,10 +805,10 @@ if (!empty($product->feature_image)) {
     var scroll_bar_step = scroll_div_width / dots.length;
     var img_width = 0;
 
-    console.log("scroll_div_offset_width: " + scroll_div.offsetWidth);
-    console.log("scroll_div_scroll_width: " + scroll_div.scrollWidth);
-    console.log("scroll_div_client_width: " + scroll_div.clientWidth)
-    console.log("scroll_bar_step: " + scroll_bar_step);
+    // console.log("scroll_div_offset_width: " + scroll_div.offsetWidth);
+    // console.log("scroll_div_scroll_width: " + scroll_div.scrollWidth);
+    // console.log("scroll_div_client_width: " + scroll_div.clientWidth)
+    // console.log("scroll_bar_step: " + scroll_bar_step);
 
     function initThumbnail(e) {
 
@@ -836,10 +836,10 @@ if (!empty($product->feature_image)) {
                 scroll_counter += scroll_bar_step;
             }
 
-            console.log("scroll_div and img width: " + scroll_div_width + img_width);
-            console.log("image width: " + img_width)
-            console.log("counter: " + counter);
-            console.log("scroll_counter: " + scroll_counter);
+            // console.log("scroll_div and img width: " + scroll_div_width + img_width);
+            // console.log("image width: " + img_width)
+            // console.log("counter: " + counter);
+            // console.log("scroll_counter: " + scroll_counter);
 
 
         } else if (element.classList.contains('left')) {
@@ -862,11 +862,11 @@ if (!empty($product->feature_image)) {
                 scroll_counter -= scroll_bar_step;
             }
 
-            console.log("scroll_div and img width: " + (scroll_div_width + img_width));
-            console.log("scroll_div and img width and half img width and quarter_width: " + (scroll_div_width + img_width + half_width + quarter_width));
-            console.log("image width: " + img_width)
-            console.log("counter: " + counter);
-            console.log("scroll_counter: " + scroll_counter);
+            // console.log("scroll_div and img width: " + (scroll_div_width + img_width));
+            // console.log("scroll_div and img width and half img width and quarter_width: " + (scroll_div_width + img_width + half_width + quarter_width));
+            // console.log("image width: " + img_width)
+            // console.log("counter: " + counter);
+            // console.log("scroll_counter: " + scroll_counter);
 
         }
         slides[thumbnail].style.display = "block";
