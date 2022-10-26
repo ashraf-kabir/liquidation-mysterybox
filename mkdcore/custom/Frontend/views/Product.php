@@ -803,6 +803,7 @@ if (!empty($product->feature_image)) {
     var scroll_div = document.querySelector('.product-gallery-container');
     var scroll_div_width = scroll_div.scrollWidth;
     var scroll_bar_step = scroll_div_width / dots.length;
+    var img_width = 0;
 
     console.log("scroll_div_offset_width: " + scroll_div.offsetWidth);
     console.log("scroll_div_scroll_width: " + scroll_div.scrollWidth);
@@ -813,26 +814,31 @@ if (!empty($product->feature_image)) {
 
         dots.forEach((dot) => {
             dot.classList.remove('bordered');
+            img_width = dot.offsetWidth;
         });
         slides.forEach((slide) => {
             slide.style.display = "none";
         });
         const element = e.target;
+        console.log(img_width)
         if (element.classList.contains('right')) {
             counter++;
             thumbnail++;
 
+            if (thumbnail === dots.length) thumbnail = 0;
             if (counter === dots.length) {
                 counter = 0;
-                scroll_div.scrollLeft -= scroll_counter;
+                console.log(scroll_counter + img_width);
+                scroll_div.scrollLeft -= (scroll_counter + img_width);
                 scroll_counter = 0;
+            } else {
+                scroll_div.scrollLeft += scroll_bar_step;
+                scroll_counter += scroll_bar_step;
             }
-            if (thumbnail === dots.length) thumbnail = 0;
 
             console.log(counter);
             console.log(scroll_counter);
-            scroll_div.scrollLeft += scroll_bar_step;
-            scroll_counter += scroll_bar_step;
+
 
         } else if (element.classList.contains('left')) {
             counter = counter - 1;
@@ -841,19 +847,19 @@ if (!empty($product->feature_image)) {
             if (thumbnail === -1) thumbnail = dots.length - 1;
 
             if (counter === 0) {
-                scroll_div.scrollLeft -= scroll_counter
+                scroll_div.scrollLeft -= (scroll_counter + img_width)
                 scroll_counter = 0;
+            } else if (counter === dots.length - 1) {
+                scroll_div.scrollLeft += (scroll_div_width + img_width)
+                scroll_counter = scroll_div_width;
+            } else {
+                scroll_div.scrollLeft -= scroll_bar_step;
+                scroll_counter -= scroll_bar_step;
             }
 
-            if (counter === dots.length - 1) {
-                scroll_div.scrollLeft += scroll_div_width
-                scroll_counter = scroll_div_width;
-            }
             console.log(counter);
             console.log(scroll_counter);
 
-            scroll_div.scrollLeft -= scroll_bar_step;
-            scroll_counter -= scroll_bar_step;
         }
         slides[thumbnail].style.display = "block";
         dots[thumbnail].classList.add('bordered');
