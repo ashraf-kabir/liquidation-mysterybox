@@ -57,7 +57,7 @@ if ($layout_clean_mode) {
 							Category
 						</div>
 						<div class='col'>
-							<?php echo $view_model->get_category_id(); ?>
+							<?php echo $helper_service->get_category_real_name($view_model->get_category_id()); ?>
 						</div>
 					</div>
 

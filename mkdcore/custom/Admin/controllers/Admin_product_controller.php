@@ -88,6 +88,12 @@ class Admin_product_controller extends Admin_controller
                 ->set_output(json_encode($this->_data['view_model']->to_json()));
         }
 
+        if (!empty($this->_data['view_model']->get_list())) {
+            $this->names_helper_service->set_category_model($this->category_model);
+            foreach ($this->_data['view_model']->get_list() as $key => &$value) {
+                $value->category_id  = $this->names_helper_service->get_category_real_name($value->category_id);
+            }
+        }
 
         return $this->render('Admin/Product', $this->_data);
     }
@@ -258,6 +264,8 @@ class Admin_product_controller extends Admin_controller
         $this->_data['view_model'] = new Product_admin_view_view_model($this->inventory_model);
         $this->_data['view_model']->set_heading('Products');
         $this->_data['view_model']->set_model($model);
+        $this->names_helper_service->set_category_model($this->category_model);
+        $this->_data['helper_service'] = $this->names_helper_service;
 
         return $this->render('Admin/ProductView', $this->_data);
     }
