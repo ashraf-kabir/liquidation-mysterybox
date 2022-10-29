@@ -84,14 +84,14 @@ if ($layout_clean_mode) {
                     </h5>
                     <?= form_open() ?>
                     <div class="form-group col-md-5 col-sm-12 ">
-                        <label for="Product Name">Product Name <span class="text-danger">*</span></label>
+                        <label for="Product Name">Inventory Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control data-input" id="form_product_name" name="product_name" value="<?php echo set_value('product_name'); ?>" />
                     </div>
 
 
 
                     <div class="form-group col-md-5 col-sm-12 ">
-                        <label for="Product Type">Product Type </label>
+                        <label for="Product Type">Inventory Type </label>
                         <select id="form_product_type" name="product_type" class="form-control data-input">
                             <?php foreach ($view_model->product_type_mapping() as $key => $value) {
 
@@ -100,21 +100,41 @@ if ($layout_clean_mode) {
                         </select>
                     </div>
 
+                    <div class="form-group col-md-5 col-sm-12 ">
+                        <label for="Product Type">Product Type </label>
+                        <select id="form_parent_inventory" name="parent_inventory_id" class="form-control data-input" onchange="updateSKU(this)">
+                            <option value="">Select</option>
+                            <?php if (isset($products)) {
+                                foreach ($products as $key => $value) {
 
+                                    echo "<option value='{$value->id}' data-category='{$value->category_id}'> {$value->product_name} </option>";
+                                }
+                            } ?>
+                        </select>
+                    </div>
 
+                    <?php
+                    // echo '<pre>';
+                    // var_dump($products);
+                    // echo '</pre>';
+                    ?>
                     <div class="form-group col-md-5 col-sm-12 ">
                         <label for="Parent Category"> Category <span class="text-danger">*</span> </label>
-                        <select required class="form-control data-input" id="form_category_id" name="category_id">
+                        <input type="text" name="" id="form_display_category_id" class="form-control data-input" required readonly>
+                        <input type="hidden" name="category_id" id="form_category_id" class="form-control data-input" required>
+                        <!-- <select required class="form-control data-input" id="form_category_id" name="category_id" readonly>
                             <option value="">Select</option>
                             <?php foreach ($parent_categories as $key => $value) {
                                 $child_category_tab = $value->parent_category_id == 0 || $value->parent_category_id == null ? '' : '&nbsp;&nbsp;&nbsp;&nbsp;';
                                 echo "<option value='{$value->id}'> {$child_category_tab} {$value->name} </option>";
                             } ?>
-                        </select>
+                        </select> -->
+                        <input type="hidden" name="sale_person_id" value="<?= $this->session->userdata('user_id') ?>">
+                        <input type="hidden" id="encoded_parent_categories" value="<?= $encoded_parent_categories ?>">
                     </div>
 
 
-                    <div class="form-group col-md-5 col-sm-12 ">
+                    <!-- <div class="form-group col-md-5 col-sm-12 ">
                         <label for="sale_person_id"> Sale Person <span class="text-danger">*</span></label>
                         <select required class="form-control data-input" id="sale_person_id" name="sale_person_id">
                             <option value="">Select</option>
@@ -127,7 +147,8 @@ if ($layout_clean_mode) {
                                 echo "<option  " . $selected . " value='{$value->id}'> {$value->first_name}  {$value->last_name} </option>";
                             } ?>
                         </select>
-                    </div>
+                    </div> -->
+
                     <fieldset class="col-md-5 ml-3 form-group border-bottom">
                         <hr>
                         <legend>Item Store Management</legend>
@@ -436,7 +457,25 @@ $this->load->view('Guest/ImagePortalModal');
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/video_image_script.js"></script>
 <script type="text/javascript">
+    function updateSKU(event) {
+        const categories = getCategories();
+        let category_value = event.options[event.selectedIndex].dataset.category
+        //console.log(category_value);
+        let sku_value = categories.filter(category => category.id === category_value)
+        let skuElement = document.querySelector("#form_category_id");
+        let skuDisplayElement = document.querySelector("#form_display_category_id");
+        //console.log(sku_value);
+        skuElement.value = sku_value[0].id;
+        skuDisplayElement.value = sku_value[0].name;
+    }
+
+    function getCategories() {
+        let categories = JSON.parse(atob(document.querySelector('#encoded_parent_categories').value));
+        return categories;
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
+
         number_counter = 2;
         $(document).on('click', '.add_more_link', function() {
             var row_th = $('.thumbnail_video_row').eq(0).clone();

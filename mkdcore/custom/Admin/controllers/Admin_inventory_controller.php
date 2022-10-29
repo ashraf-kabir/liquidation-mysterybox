@@ -56,6 +56,7 @@ class Admin_inventory_controller extends Admin_controller
             'product_name' => $this->_data['view_model']->get_product_name(),
             'sku' => $this->_data['view_model']->get_sku(),
             'category_id' => $this->_data['view_model']->get_category_id(),
+            'is_product' => 0,
         ];
 
         $this->_data['view_model']->set_total_rows($this->inventory_model->count($where));
@@ -102,6 +103,7 @@ class Admin_inventory_controller extends Admin_controller
         }
 
         $this->_data['categories'] = $this->category_model->get_all();
+        $this->_data['products'] = $this->inventory_model->get_by_fields(['is_product' => 1]);
 
         return $this->render('Admin/Inventory', $this->_data);
     }
@@ -119,6 +121,7 @@ class Admin_inventory_controller extends Admin_controller
 
 
         $this->_data['parent_categories']   =   $this->_get_grouped_categories();
+        $this->_data['encoded_parent_categories']   =  base64_encode(json_encode($this->_get_grouped_categories()));
         $stores             =   $this->store_model->get_all();
         // $stores = $this->append_locations_to_store($stores);
         $this->_data['stores']              =   $stores;
@@ -126,6 +129,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['physical_locations']  =   $physical_locations;
         $this->_data['encoded_physical_locations']  =   base64_encode(json_encode($this->_data['physical_locations']));
         $this->_data['sale_persons']        =   $this->user_model->get_all_users();
+        $this->_data['products'] = $this->inventory_model->get_all(['is_product = 1']);
 
         if ($this->input->post('can_ship') == 1) {
             $this->form_validation->set_rules('weight', 'Weight', 'required|greater_than_equal_to[1]');
@@ -154,6 +158,7 @@ class Admin_inventory_controller extends Admin_controller
         $product_name = $this->input->post('product_name', TRUE);
         $category_id = $this->input->post('category_id', TRUE);
         $manifest_id = $this->input->post('manifest_id', TRUE);
+        $parent_inventory_id = $this->input->post('parent_inventory_id', TRUE);
         // $physical_location = $this->input->post('physical_location', TRUE) ?? NULL;
         // $location_description = $this->input->post('location_description', TRUE);
         $weight = $this->input->post('weight', TRUE);
@@ -237,6 +242,7 @@ class Admin_inventory_controller extends Admin_controller
             'product_name' => $product_name,
             'sku' => $sku,
             'barcode_image' => $barcode_image,
+            'parent_inventory_id' => $parent_inventory_id,
             'category_id' => $category_id,
             'manifest_id' => $manifest_id,
             'physical_location' => '',
@@ -315,6 +321,7 @@ class Admin_inventory_controller extends Admin_controller
 
         $this->_data['gallery_lists']       =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
         $this->_data['parent_categories']   =   $this->_get_grouped_categories();
+        $this->_data['encoded_parent_categories']   =  base64_encode(json_encode($this->_get_grouped_categories()));
         // $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
         $stores             =   $this->store_model->get_all();
         $stores = $this->append_locations_to_store($stores);
@@ -325,6 +332,13 @@ class Admin_inventory_controller extends Admin_controller
         $this->_data['item_inventory_locations']     =   $this->extract_locations_from_store_inventory(json_decode($model->store_inventory));
         $this->_data['item_inventory_stores']     =   $this->extract_stores_from_store_inventory(json_decode($model->store_inventory));
         $this->_data['encoded_physical_locations']  =   base64_encode(json_encode($this->_data['physical_locations']));
+        $this->_data['products'] = $this->inventory_model->get_all(['is_product = 1']);
+        $this->_data['parent_inventory'] = $this->inventory_model->get_by_fields(["is_product" => 0, "id" => $id]);
+
+        // echo '<pre>';
+        // var_dump($this->_data['parent_inventory']);
+        // echo '</pre>';
+        // exit;
 
 
         // $this->_data['parent_categories'] 
@@ -356,6 +370,7 @@ class Admin_inventory_controller extends Admin_controller
         $width = $this->input->post('width', TRUE);
         $feature_image = $this->input->post('feature_image', TRUE);
         $feature_image_id = $this->input->post('feature_image_id', TRUE);
+        $parent_inventory_id = $this->input->post('parent_inventory_id', TRUE);
         $selling_price = $this->input->post('selling_price', TRUE);
         $quantity = $this->input->post('quantity', TRUE);
         $inventory_note = $this->input->post('inventory_note', TRUE);
@@ -428,6 +443,7 @@ class Admin_inventory_controller extends Admin_controller
             'selling_price' => $selling_price,
             'quantity' => $total_quantity,
             'inventory_note' => $inventory_note,
+            'parent_inventory_id' => $parent_inventory_id,
             'cost_price' => $cost_price,
             'admin_inventory_note' => $admin_inventory_note,
             'status' => $status,
@@ -479,6 +495,7 @@ class Admin_inventory_controller extends Admin_controller
                 }
             }
 
+            $this->_data['products'] = $this->inventory_model->get_by_fields(['is_product' => 1]);
             $this->success('Inventory has been updated successfully.');
             return $this->redirect('/admin/inventory/0', 'refresh');
         }
