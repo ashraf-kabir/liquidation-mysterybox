@@ -1,14 +1,6 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
-
-
-$QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
-
-
-/*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2020*/
-
-?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div class="tab-content mx-4" id="nav-tabContent">
+    <h2>Dashboard</h2>
     <br>
     <div class="clear"></div>
     <?php if (strlen($error) > 0) : ?>
@@ -30,15 +22,6 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
         </div>
     <?php endif; ?>
 
-    <?php if ($this->session->flashdata('error2')) : ?>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="alert alert-danger" role="alert">
-                    <?php echo $this->session->flashdata('error2'); ?>
-                </div>
-            </div>
-        </div>
-    <?php endif ?>
 
     <section>
         <div class="row">
@@ -47,10 +30,8 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                     <div class="card-body">
                         <h5 class="primaryHeading2 text-md-left">
                             <?php echo $view_model->get_heading(); ?> Search
-
-
                         </h5>
-                        <?= form_open('/admin/daily_sales/0', ['method' => 'get']) ?>
+                        <?= form_open('/employee/dashboard/0', ['method' => 'get']) ?>
                         <div class="row">
 
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
@@ -71,20 +52,6 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                                     <input type="text" class="form-control" id="sku" name="sku" value="<?php echo $sku; ?>" />
                                 </div>
                             </div>
-                            <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label for="from_date">From </label>
-                                    <input type="date" class="form-control" id="from_date" name="from_date" value="<?php echo $from_date; ?>" />
-                                </div>
-                            </div>
-
-                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
-                                <div class="form-group">
-                                    <label for="to_date">To </label>
-                                    <input type="date" class="form-control" id="to_date" name="to_date" value="<?php echo $to_date; ?>" />
-                                </div>
-                            </div> -->
-
 
                             <div style="width:100%;height:10px;display:block;float:none;"></div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
@@ -104,9 +71,8 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
         <?php echo $view_model->get_heading(); ?>
         <!-- (<?php echo $view_model->get_total_rows(); ?> results found) -->
         <span class="d-none"></span>
-        <!-- 
-        <span class="add-part d-flex justify-content-md-end  "><a class="btn btn-info btn-sm ml-2" href="<?php echo base_url() . 'admin/sales_report/to_csv?' . $QUERY_STRING; ?>"><i class="fas fa-file-download" style="color:white;"></i></a></span> -->
     </h5>
+
 
     <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4 pt-4" style='height:auto;'>
         <div class="row">
@@ -184,7 +150,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                         echo "<td>{$data->total_qty}</td>";
                         echo "<td>$" . number_format($data->total_sale, 2) . "</td>";
                         echo "<td>";
-                        echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/daily_sales/view/' . $data->id . '">View</a>';
+                        echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/employee/daily_sales/view/' . $data->id . '">View</a>';
                         echo "</td>";
                         echo '</tr>';
 
@@ -198,7 +164,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                     ?>
                 </tbody>
                 <?php if ($kounter > 0) { ?>
-                    <tfoot class='thead-light'>
+                    <!-- <tfoot class='thead-light'>
                         <tr>
                             <th></th>
                             <th></th>
@@ -223,16 +189,10 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                             <th> Tax = $<?php echo number_format($total_tax - $total_refunded_tax, 2) ?></th>
                             <th> Grand Total = $<?php echo number_format($sales_grand_total - ($total_refunded + $total_refunded_tax), 2) ?></th>
                         </tr>
-                    </tfoot>
+                    </tfoot> -->
                 <?php } ?>
             </table>
             <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
         </div>
     </section>
 </div>
-<?php
-if ($layout_clean_mode) {
-    echo '<style>#content{padding:0px !important;}</style>';
-    echo '<style>#tab-content{padding:0px !important; margin:0px !important;}</style>';
-}
-?>

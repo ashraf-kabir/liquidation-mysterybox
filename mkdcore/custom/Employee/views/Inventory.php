@@ -28,13 +28,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <section>
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <div class="card" id="inventory_transfer_filter_listing">
+                <div class="card" id="inventory_filter_listing">
                     <div class="card-body">
                         <h5 class="primaryHeading2 text-md-left">
                             <?php echo $view_model->get_heading(); ?> Search
                         </h5>
-                        <?= form_open('/admin/inventory_transfer/0', ['method' => 'get']) ?>
+                        <?php if ($this->session->userdata('role') == 2) { ?>
+                            <?= form_open('/admin/inventory/0', ['method' => 'get']) ?>
+                        <?php } elseif ($this->session->userdata('role') == 4) { ?>
+                            <?= form_open('/admin/inventory/0', ['method' => 'get']) ?>
+                        <?php } ?>
+
                         <div class="row">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label for="Product Name">Inventory Name </label>
+                                    <input type="text" class="form-control" id="product_name" name="product_name" value="<?php echo $this->_data['view_model']->get_product_name(); ?>" />
+                                </div>
+                            </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                                 <div class="form-group">
                                     <label for="SKU">SKU </label>
@@ -43,13 +54,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                                 <div class="form-group">
-                                    <label for="Status">Status </label>
-                                    <select name="status" class="form-control">
+                                    <label for="Category">Category </label>
+                                    <select class="form-control" id="category_id" name="category_id">
                                         <option value="">All</option>
-                                        <?php foreach ($view_model->status_mapping() as $key => $value) {
-                                            echo "<option value='{$key}' " . (($view_model->get_status() == $key && $view_model->get_status() != '') ? 'selected' : '') . "> {$value} </option>";
+                                        <?php foreach ($categories as $key => $value) {
+                                            echo "<option  " . (($this->_data['view_model']->get_category_id() == $value->id) ? 'selected' : '') . "   value='{$value->id}'> {$value->name} </option>";
                                         } ?>
                                     </select>
+
                                 </div>
                             </div>
 
@@ -68,7 +80,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <h5 class="primaryHeading2 d-flex justify-content-between mt-2 my-4">
         <?php echo $view_model->get_heading(); ?> (<?php echo $view_model->get_total_rows(); ?> results found)
-        <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/employee/transfer/transfer_inventory"><i class="fas fa-plus-circle"></i></a></span>
+
+        <?php if ($this->session->userdata('role') == 2) { ?>
+            <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/admin/inventory/add"><i class="fas fa-plus-circle"></i></a></span>
+        <?php } elseif ($this->session->userdata('role') == 4) { ?>
+            <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/admin/inventory/add"><i class="fas fa-plus-circle"></i></a></span>
+        <?php } ?>
+
     </h5>
 
     <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4 pt-4" style='height:auto;'>
@@ -78,7 +96,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
             <div class="clearfix"></div>
         </div>
-        <div class="table-responsive" id="table-wrapper" encoded-locations="<?php echo $encoded_physical_locations; ?>">
+        <div class="table-responsive">
             <table class="table br w-100">
                 <thead class='thead-light'>
                     <?php
@@ -91,6 +109,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     if ($clean_mode) {
                         $format_mode = '&layout_clean_mode=1';
                     }
+
                     foreach ($view_model->get_column() as $key => $data) {
                         $data_field = $field_column[$key];
                         if (strlen($order_by) < 1 || $data_field == '') {
@@ -111,23 +130,36 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <tbody class="tbody-light">
                     <?php foreach ($view_model->get_list() as $data) { ?>
                         <?php
-                        $store = isset($store_map[$data->from_store]) ? $store_map[$data->from_store] : 'N/A';
-                        $location = isset($location_map[$data->from_location]) ? $location_map[$data->from_location] : 'N/A';
                         echo '<tr>';
                         echo "<td>{$data->id}</td>";
                         echo "<td>{$data->product_name}</td>";
                         echo "<td>{$data->sku}</td>";
-                        echo "<td>{$store}</td>";
-                        echo "<td>{$location}</td>";
+                        echo "<td>{$data->category_id}</td>";
+                        // echo "<td>{$data->store_location_id}</td>";
+                        // echo "<td>{$data->physical_location}</td>";
+                        echo "<td>" . ucfirst($view_model->product_type_mapping()[$data->product_type]) . "</td>";
                         echo "<td>{$data->quantity}</td>";
-                        echo "<td>{$store_map[$data->to_store]}</td>";
                         echo "<td>" . ucfirst($view_model->status_mapping()[$data->status]) . "</td>";
                         echo '<td>';
-                        if ($data->status != 2  /* Completed */) { //Show when status is not completed
-                            // echo '<button class="btn btn-link  link-underline text-underline btn-sm text-success" onclick="confirmAndAccept(' . $data->to_store . ')" target="" href="/admin/inventory_transfer/accept/' . $data->id . '">Accept Request</button>';
+
+                        if ($this->session->userdata('role') == 2) {
+                            echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/admin/inventory/edit/' . $data->id . '">Edit</a>';
+                            echo '<a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/view/' . $data->id . '">View</a>';
+                            if ($data->status != 0 /* 0 = inactive  */) {
+                                echo '<a class="btn btn-link text-danger link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/delete/' . $data->id . '">Set Inactive</a>';
+                            }
+                            if ($data->status == 0 /* 0 = inactive  */) {
+                                echo '<a class="btn btn-link text-success link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/set_active/' . $data->id . '">Set Active</a>';
+                            }
+                            echo '<a class="btn btn-link text-danger link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/real_delete/' . $data->id . '">Delete</a>';
+                        } elseif ($this->session->userdata('role') == 4) {
+
+                            echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/admin/inventory/edit/' . $data->id . '">Edit</a>';
+                            echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/view/' . $data->id . '">View</a>';
+                        } elseif ($this->session->userdata('role') == 5) {
+                            echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/employee/inventory/view/' . $data->id . '">View</a>';
                         }
-                        echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/employee/inventory_transfer/view/' . $data->id . '">View</a>';
-                        // echo ' <a class="btn btn-link  link-underline text-underline text-danger btn-sm" target="_blank" href="/admin/inventory_transfer/delete/' . $data->id . '">Remove</a>';
+                        // echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/transfer/' . $data->id . '">Transfer</a>';
                         echo '</td>';
                         echo '</tr>';
                         ?>
@@ -138,75 +170,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div>
     </section>
 </div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="acceptTransferModal" tabindex="-1" role="dialog" aria-labelledby="acceptTransferModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="acceptTransferModalLabel"> Scan or select item for confirmation </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="acceptTransferModalForm" action="" method="get">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for=""> Scan or select item</label>
-                        <input required type="text" name="sku_c" id="sku_c" class="form-control">
-                        <label for=""> Select Items</label>
-                        <select name="" id="select-items" class="form-control" onchange="populateSku()">
-                            <option value=""></option>
-                            <?php foreach ($inventory_items_list as $item) : ?>
-                                <option value="<?php echo $item->sku ?>"> <?php echo $item->sku . " - " . $item->product_name ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <label for=""> Store Physical Location (Destination)</label>
-                        <select name="physical_location" id="to_location" class="form-control">
-                            <option value=""></option>
-
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Proceed</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 <?php
 if ($layout_clean_mode) {
     echo '<style>#content{padding:0px !important;}</style>';
     echo '<style>#tab-content{padding:0px !important; margin:0px !important;}</style>';
 }
 ?>
-
-
-<script>
-    function confirmAndAccept(to_store_id) {
-        let target = event.target.getAttribute('href');
-        // console.log(target);
-        let form = document.querySelector('#acceptTransferModalForm');
-        form.setAttribute('action', target);
-
-        let locations = JSON.parse(atob(document.querySelector('#table-wrapper').getAttribute('encoded-locations')));
-        console.log(locations);
-        console.log(to_store_id);
-        let options_template = locations.filter((location) => location.store_id == to_store_id)
-            .map((location) => {
-                return `<option value="${location.id}"> ${location.name} </option>`
-            });
-        console.log(options_template);
-        $('#to_location').html(options_template);
-        $('#acceptTransferModal').modal('show')
-    }
-
-    function populateSku() {
-        let itemSku = document.querySelector('#select-items').value;
-        document.querySelector('#sku_c').value = itemSku;
-
-    }
-</script>

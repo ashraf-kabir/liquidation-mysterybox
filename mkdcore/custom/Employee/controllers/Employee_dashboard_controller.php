@@ -1,18 +1,18 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
-include_once 'Admin_controller.php';
-/*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
+include_once 'Employee_controller.php';
+
 /**
- * Daily_sales Controller
+ * Employee Dashboard Controller
  * @copyright 2019 Manaknightdigital Inc.
  * @link https://manaknightdigital.com
  * @license Proprietary Software licensing
  * @author Ryan Wong
  *
  */
-class Admin_daily_sales_controller extends Admin_controller
+class Employee_dashboard_controller extends Employee_controller
 {
+    public $_page_name = 'Dashboard';
     protected $_model_file = 'category_model';
-    public $_page_name = 'Daily Sales';
 
     public function __construct()
     {
@@ -27,12 +27,9 @@ class Admin_daily_sales_controller extends Admin_controller
         $this->load->library('names_helper_service');
     }
 
-
-
-    public function index($page)
+    public function index($page = 0)
     {
-        $this->load->library('pagination');
-        include_once __DIR__ . '/../../view_models/Daily_sales_admin_list_paginate_view_model.php';
+        include_once __DIR__ . '/../../view_models/Daily_sales_employee_list_paginate_view_model.php';
         $session = $this->get_session();
         $format = $this->input->get('format', TRUE) ?? 'view';
         $order_by = $this->input->get('order_by', TRUE) ?? 'id';
@@ -43,12 +40,13 @@ class Admin_daily_sales_controller extends Admin_controller
             $order_by = 'product_name';
         }
 
-        $this->_data['view_model'] = new Daily_sales_admin_list_paginate_view_model(
+        $this->_data['view_model'] = new Daily_sales_employee_list_paginate_view_model(
             $this->inventory_model,
             $this->pagination,
-            '/admin/daily_sales/0'
+            '/employee/dashboard/0'
         );
-        $this->_data['view_model']->set_heading('Daily Sales');
+
+        $this->_data['view_model']->set_heading('Dashboard');
         $this->_data['view_model']->set_name(($this->input->get('name', TRUE) != NULL) ? $this->input->get('name', TRUE) : NULL);
 
         $this->_data['category_id']    =     $this->input->get('category_id', TRUE) != NULL  ? $this->input->get('category_id', TRUE) : NULL;
@@ -72,7 +70,7 @@ class Admin_daily_sales_controller extends Admin_controller
         $this->_data['view_model']->set_per_page(25);
         $this->_data['view_model']->set_order_by($order_by);
         $this->_data['view_model']->set_sort($direction);
-        $this->_data['view_model']->set_sort_base_url('/admin/daily_sales/0');
+        $this->_data['view_model']->set_sort_base_url('/employee/dashboard/0');
         $this->_data['view_model']->set_page($page);
         $this->_data['view_model']->set_list($this->inventory_model->get_paginated(
             $this->_data['view_model']->get_page(),
@@ -196,9 +194,8 @@ class Admin_daily_sales_controller extends Admin_controller
         // var_dump($this->_data);
         // echo '</pre>';
         // exit;
-        return $this->render('Admin/Daily_sales', $this->_data);
+        return $this->render('Employee/Dashboard', $this->_data);
     }
-
 
 
     public function view($id)
@@ -207,11 +204,11 @@ class Admin_daily_sales_controller extends Admin_controller
 
         if (!$model) {
             $this->error('Error');
-            return redirect('/admin/daily_sales/0');
+            return redirect('/employee/dashboard/0');
         }
 
-        include_once __DIR__ . '/../../view_models/Daily_sales_admin_view_view_model.php';
-        $this->_data['view_model'] = new Daily_sales_admin_view_view_model($this->inventory_model);
+        include_once __DIR__ . '/../../view_models/Daily_sales_employee_view_view_model.php';
+        $this->_data['view_model'] = new Daily_sales_employee_view_view_model($this->inventory_model);
         $this->_data['view_model']->set_heading('Inventory');
         $this->_data['view_model']->set_model($model);
         $this->load->model('pos_order_items_model');
@@ -228,8 +225,6 @@ class Admin_daily_sales_controller extends Admin_controller
         $this->_data['status_mapping'] = $this->inventory_model->status_mapping();
         $this->_data['stores'] = $this->store_model->get_all();
 
-
-
-        return $this->render('Admin/Daily_salesView', $this->_data);
+        return $this->render('Employee/Daily_salesView', $this->_data);
     }
 }

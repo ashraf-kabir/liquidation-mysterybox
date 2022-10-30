@@ -96,7 +96,7 @@ class Inventory_model extends Manaknight_Model
 	];
 	protected $_validation_edit_rules = [
 		['id', 'ID', ''],
-		['product_name', 'Product Name', 'required'],
+		['product_name', 'Inventory Name', 'required'],
 		['sale_person_id', 'Sale Person', 'required'],
 		['item_tax', 'Item Tax', ''],
 		['sku', 'SKU', ''],

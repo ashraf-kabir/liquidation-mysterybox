@@ -57,6 +57,7 @@ class Employee_inventory_controller extends Employee_controller
             'product_name' => $this->_data['view_model']->get_product_name(),
             'sku' => $this->_data['view_model']->get_sku(),
             'category_id' => $this->_data['view_model']->get_category_id(),
+            'is_product' => 0,
         ];
 
         $this->_data['view_model']->set_total_rows($this->inventory_model->count($where));
@@ -126,6 +127,9 @@ class Employee_inventory_controller extends Employee_controller
         $this->_data['physical_locations']  =   $physical_locations;
         $this->_data['encoded_physical_locations']  =   base64_encode(json_encode($this->_data['physical_locations']));
         $this->_data['sale_persons']        =   $this->user_model->get_all_users();
+        $this->_data['products'] = $this->inventory_model->get_all(['is_product = 1']);
+        $this->_data['parent_categories']   =   $this->_get_grouped_categories();
+        $this->_data['encoded_parent_categories']   =  base64_encode(json_encode($this->_get_grouped_categories()));
 
         if ($this->input->post('can_ship') == 1) {
             $this->form_validation->set_rules('weight', 'Weight', 'required|greater_than_equal_to[1]');
@@ -154,6 +158,7 @@ class Employee_inventory_controller extends Employee_controller
         $product_name = $this->input->post('product_name', TRUE);
         $category_id = $this->input->post('category_id', TRUE);
         $manifest_id = $this->input->post('manifest_id', TRUE);
+        $parent_inventory_id = $this->input->post('parent_inventory_id', TRUE);
         // $physical_location = $this->input->post('physical_location', TRUE) ?? NULL;
         // $location_description = $this->input->post('location_description', TRUE);
         $weight = $this->input->post('weight', TRUE);
@@ -239,6 +244,7 @@ class Employee_inventory_controller extends Employee_controller
             'barcode_image' => $barcode_image,
             'category_id' => $category_id,
             'manifest_id' => $manifest_id,
+            'parent_inventory_id' => $parent_inventory_id,
             'physical_location' => '',
             'location_description' => '',
             'weight' => $weight,
@@ -622,6 +628,7 @@ class Employee_inventory_controller extends Employee_controller
                     'sku' => $sku,
                     'from_store' => $from_store,
                     'from_location' => $from_location,
+                    'sale_person_id' => $this->session->userdata('user_id'),
                     'to_store' => $to_store,
                     'quantity' => $from_quantity,
                     'status' => '1' //pending

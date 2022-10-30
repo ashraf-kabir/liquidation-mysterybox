@@ -12,8 +12,8 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
             <li class="breadcrumb-item active" aria-current="page">
                 <?php if ($this->session->userdata('role') == 2) { ?>
                     <a href="/admin/inventory/0" class="breadcrumb-link"><?php echo $heading; ?></a>
-                <?php } elseif ($this->session->userdata('role') == 4) { ?>
-                    <a href="/manager/inventory/0" class="breadcrumb-link"><?php echo $heading; ?></a>
+                <?php } elseif ($this->session->userdata('role') == 5) { ?>
+                    <a href="/employee/inventory/0" class="breadcrumb-link"><?php echo $heading; ?></a>
                 <?php } ?>
             </li>
             <li class="breadcrumb-item active" aria-current="page">

@@ -96,11 +96,11 @@ if ($layout_clean_mode) {
                         <span id="feature_image_complete" class="image_complete_uppload"></span>
                     </div> -->
                     <div class="form-group col-md-5 col-sm-12">
-                        <label for="Inventory Note">Inventory Note </label>
+                        <label for="Inventory Note">Product Note </label>
                         <textarea id='subeditor_inventory_note' name='inventory_note' class='form-control subeditor_inventory_note data-input' rows='5'><?php echo set_value('inventory_note'); ?></textarea>
                     </div>
                     <div class="form-group col-md-5 col-sm-12">
-                        <label for="Admin Inventory Note">Admin Inventory Note </label>
+                        <label for="Admin Inventory Note">Admin Product Note </label>
                         <textarea id='form_admin_inventory_note' name='admin_inventory_note' class='form-control data-input' rows='5'><?php echo set_value('admin_inventory_note'); ?></textarea>
                     </div>
 

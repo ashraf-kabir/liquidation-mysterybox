@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
-include_once 'Admin_controller.php';
+include_once 'Employee_controller.php';
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
 /**
  * InventoryReport Controller
@@ -9,7 +9,7 @@ include_once 'Admin_controller.php';
  * @author Ryan Wong
  *
  */
-class Admin_inventory_report_controller extends Admin_controller
+class Employee_inventory_report_controller extends Employee_controller
 {
     protected $_model_file = 'inventory_model';
     public $_page_name = 'Inventory Report';
@@ -26,16 +26,16 @@ class Admin_inventory_report_controller extends Admin_controller
     public function index($page)
     {
         $this->load->library('pagination');
-        include_once __DIR__ . '/../../view_models/InventoryReport_admin_list_paginate_view_model.php';
+        include_once __DIR__ . '/../../view_models/InventoryReport_employee_list_paginate_view_model.php';
         $session = $this->get_session();
         $format = $this->input->get('format', TRUE) ?? 'view';
         $order_by = $this->input->get('order_by', TRUE) ?? '';
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
 
-        $this->_data['view_model'] = new InventoryReport_admin_list_paginate_view_model(
+        $this->_data['view_model'] = new InventoryReport_employee_list_paginate_view_model(
             $this->inventory_model,
             $this->pagination,
-            '/admin/inventory_report/0'
+            '/employee/inventory_report/0'
         );
         $this->_data['view_model']->set_heading('Inventory Report');
         $this->_data['view_model']->set_category_id(($this->input->get('category_id', TRUE) != NULL) ? $this->input->get('category_id', TRUE) : NULL);
@@ -55,7 +55,7 @@ class Admin_inventory_report_controller extends Admin_controller
         $this->_data['view_model']->set_per_page(25);
         $this->_data['view_model']->set_order_by($order_by);
         $this->_data['view_model']->set_sort($direction);
-        $this->_data['view_model']->set_sort_base_url('/admin/inventory_report/0');
+        $this->_data['view_model']->set_sort_base_url('/employee/inventory_report/0');
         $this->_data['view_model']->set_page($page);
         $this->_data['view_model']->set_list($this->inventory_model->get_paginated(
             $this->_data['view_model']->get_page(),
@@ -89,7 +89,7 @@ class Admin_inventory_report_controller extends Admin_controller
 
         $this->_data['categories'] = $this->category_model->get_all();
 
-        return $this->render('Admin/InventoryReport', $this->_data);
+        return $this->render('Employee/InventoryReport', $this->_data);
     }
 
 
