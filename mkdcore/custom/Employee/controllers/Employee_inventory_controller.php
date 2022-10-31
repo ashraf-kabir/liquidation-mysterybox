@@ -619,9 +619,9 @@ class Employee_inventory_controller extends Employee_controller
                 if (empty($product)) {
                     continue;
                 }
-                if ($from_store == $to_store) {
-                    continue;
-                }
+                // if ($from_store == $to_store) {
+                //     continue;
+                // }
 
                 $result = $this->inventory_transfer_model->create([
                     'product_name' => $product->product_name,

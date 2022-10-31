@@ -205,11 +205,11 @@ class Admin_inventory_transfer_controller extends Admin_controller
         $from_location = $model->from_location;
         $from_quantity = $model->quantity;
         $to_store = $model->to_store;
-        if ($from_store == $to_store) {
-            // error cant transfer to the same store
-            $this->error('Error, Cannot transfer to the same store.');
-            return redirect($_SERVER['HTTP_REFERER']);
-        }
+        // if ($from_store == $to_store) {
+        //     // error cant transfer to the same store
+        //     $this->error('Error, Cannot transfer to the same store.');
+        //     return redirect($_SERVER['HTTP_REFERER']);
+        // }
         $inventory = $this->inventory_model->get_by_field('sku', $model->sku);
         $store_inventory = json_decode($inventory->store_inventory);
 
@@ -252,7 +252,7 @@ class Admin_inventory_transfer_controller extends Admin_controller
 
         if ($result) {
             $this->success('Inventory Transfer Request Accepted.');
-            return $this->redirect('/manager/inventory_transfer/0', 'refresh');
+            return $this->redirect('/admin/inventory_transfer/0', 'refresh');
         }
 
         $this->error('Error');
