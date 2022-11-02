@@ -161,34 +161,45 @@ class Admin_inventory_controller extends Admin_controller
         $parent_inventory_id = $this->input->post('parent_inventory_id', TRUE);
         // $physical_location = $this->input->post('physical_location', TRUE) ?? NULL;
         // $location_description = $this->input->post('location_description', TRUE);
-        $weight = $this->input->post('weight', TRUE);
-        $length = $this->input->post('length', TRUE);
-        $height = $this->input->post('height', TRUE);
-        $width = $this->input->post('width', TRUE);
-        $feature_image = $this->input->post('feature_image', TRUE);
-        $feature_image_id = $this->input->post('feature_image_id', TRUE);
-        $selling_price = $this->input->post('selling_price', TRUE);
+        // $weight = $this->input->post('weight', TRUE);
+        // $length = $this->input->post('length', TRUE);
+        // $height = $this->input->post('height', TRUE);
+        // $width = $this->input->post('width', TRUE);
+        // $feature_image = $this->input->post('feature_image', TRUE);
+        // $feature_image_id = $this->input->post('feature_image_id', TRUE);
+        // $selling_price = $this->input->post('selling_price', TRUE);
         $quantity = $this->input->post('quantity', TRUE);
-        $inventory_note = $this->input->post('inventory_note', TRUE);
-        $cost_price = $this->input->post('cost_price', TRUE);
-        $admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
+        // $inventory_note = $this->input->post('inventory_note', TRUE);
+        // $cost_price = $this->input->post('cost_price', TRUE);
+        // $admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
 
         $status = $this->input->post('status', TRUE);
         // $store_location_id = $this->input->post('store_location_id', TRUE);
         $location_stores = $this->input->post('stores', TRUE);
         $locations = $this->input->post('locations', TRUE);
-        $quantity = $this->input->post('quantity', TRUE);
 
-        $can_ship = $this->input->post('can_ship', TRUE) ?? 2;
-        $can_ship_approval = $this->input->post('can_ship_approval', TRUE) ?? 2;
-        $free_ship = $this->input->post('free_ship', TRUE);
+        // $can_ship = $this->input->post('can_ship', TRUE) ?? 2;
+        // $can_ship_approval = $this->input->post('can_ship_approval', TRUE) ?? 2;
+        // $free_ship = $this->input->post('free_ship', TRUE);
         $product_type = $this->input->post('product_type', TRUE);
-        $pin_item_top = $this->input->post('pin_item_top', TRUE);
-        $video_url = json_encode($this->input->post('video_url', TRUE));
-        $youtube_thumbnail_1 = json_encode($this->input->post('youtube_thumbnail_1', TRUE));
+        // $pin_item_top = $this->input->post('pin_item_top', TRUE);
+        // $video_url = json_encode($this->input->post('video_url', TRUE));
+        // $youtube_thumbnail_1 = json_encode($this->input->post('youtube_thumbnail_1', TRUE));
 
+        //$parent_inventory_id
 
+        $product_data = $this->inventory_model->get($parent_inventory_id);
 
+        // echo '<pre>';
+        // var_dump($locations);
+        // echo '</pre>';
+        // echo '<pre>';
+        // var_dump($location_stores);
+        // echo '</pre>';
+        // echo '<pre>';
+        // var_dump($quantity);
+        // echo '</pre>';
+        // exit;
         //SKU for category
         $category_data = $this->category_model->get($category_id);
 
@@ -198,12 +209,7 @@ class Admin_inventory_controller extends Admin_controller
 
 
 
-        $barcode_image_name = $this->barcode_service->generate_png_barcode($sku, "inventory");
-        /**
-         *  Upload Image to S3
-         * 
-         */
-        $barcode_image  = $this->upload_image_with_s3($barcode_image_name);
+
 
         if ($product_type == 2) {
             $sku = '';
@@ -237,63 +243,90 @@ class Admin_inventory_controller extends Admin_controller
 
         $store_inventory = json_encode($store_inventory);
 
-        $result = $this->inventory_model->create([
-            'sale_person_id' => $sale_person_id,
-            'product_name' => $product_name,
-            'sku' => $sku,
-            'barcode_image' => $barcode_image,
-            'parent_inventory_id' => $parent_inventory_id,
-            'category_id' => $category_id,
-            'manifest_id' => $manifest_id,
-            'physical_location' => '',
-            'location_description' => '',
-            'weight' => $weight,
-            'length' => $length,
-            'height' => $height,
-            'width' => $width,
-            'feature_image' => $feature_image,
-            'feature_image_id' => $feature_image_id,
-            'selling_price' => $selling_price,
-            'quantity' => $total_quantity,
-            'inventory_note' => $inventory_note,
-            'cost_price' => $cost_price,
-            'admin_inventory_note' => $admin_inventory_note,
-            'status' => $status,
-            'store_location_id' => '',
-            'can_ship' => $can_ship,
-            'can_ship_approval' => $can_ship_approval,
-            'free_ship' => $free_ship,
-            'product_type' => $product_type,
-            'pin_item_top' => $pin_item_top,
-            'video_url' => $video_url,
-            'youtube_thumbnail_1' => $youtube_thumbnail_1,
-            'store_inventory' => $store_inventory
-        ]);
+
+        $sku_count = $product_data->last_sku;
+        $sku_count = intval($sku_count);
+        for ($i = 0; $i < count($quantity); $i++) {
+
+            for ($j = 1; $j <= $quantity[$i]; $j++) {
+
+                $sku_count++;
+                $sku           =  $product_data->sku . "" . sprintf("%05d", $sku_count);
+
+                $barcode_image_name = $this->barcode_service->generate_png_barcode($sku, "inventory");
+                /**
+                 *  Upload Image to S3
+                 * 
+                 */
+                $barcode_image  = $this->upload_image_with_s3($barcode_image_name);
+                $result = $this->inventory_model->create([
+                    'sale_person_id' => $sale_person_id,
+                    'product_name' => $product_name,
+                    'sku' => $sku,
+                    'barcode_image' => $barcode_image,
+                    'parent_inventory_id' => $parent_inventory_id,
+                    'category_id' => $category_id,
+                    'manifest_id' => $manifest_id,
+                    'physical_location' => $locations[$i],
+                    'location_description' => '',
+                    'store_location_id' => $location_stores[$i],
+                    'weight' => $product_data->weight,
+                    'length' => $product_data->length,
+                    'height' => $product_data->height,
+                    'width' => $product_data->width,
+                    'feature_image' => $product_data->feature_image,
+                    'selling_price' => $product_data->selling_price,
+                    'quantity' => 1,
+                    'cost_price' => $product_data->cost_price,
+                    'inventory_note' => $product_data->admin_inventory_note,
+                    'status' => $status,
+                    'can_ship' => $product_data->can_ship,
+                    'can_ship_approval' => $product_data->can_ship_approval,
+                    'free_ship' => $product_data->free_ship,
+                    'product_type' => $product_type,
+                    'pin_item_top' => $product_data->pin_item_top,
+                    'video_url' => $product_data->video_url,
+                    'youtube_thumbnail_1' => $product_data->youtube_thumbnail_1,
+                    'store_inventory' => $store_inventory
+                ]);
+            }
+        }
+
+        $product_quantity = intval($product_data->quantity);
+
+        $result =  $this->inventory_model->edit([
+            'last_sku' => intval($sku_count),
+            'quantity' => $product_quantity + $total_quantity,
+        ], $parent_inventory_id);
+
 
         if ($result) {
-            $inventory_id = $result;
+            // $inventory_id = $result;
             /**
              * Get all images that are uploaded
              * save them one by one
              */
-            $gallery_list = $this->input->post('gallery_image', TRUE);
-            foreach ($gallery_list as $gallery_key => $gallery_value) {
-                $image_name       = $this->input->post('gallery_image', TRUE)[$gallery_key];
-                $gallery_image_id = $this->input->post('gallery_image_id', TRUE)[$gallery_key];
-                if (!empty($image_name)) {
-                    $data_add_gallery = array(
-                        'image_name'     => $image_name,
-                        'image_id'       => $gallery_image_id,
-                        'inventory_id'   => $inventory_id,
-                    );
-                    $this->inventory_gallery_list_model->create($data_add_gallery);
-                }
-            }
+            // $gallery_list = $this->input->post('gallery_image', TRUE);
+            // foreach ($gallery_list as $gallery_key => $gallery_value) {
+            //     $image_name       = $this->input->post('gallery_image', TRUE)[$gallery_key];
+            //     $gallery_image_id = $this->input->post('gallery_image_id', TRUE)[$gallery_key];
+            //     if (!empty($image_name)) {
+            //         $data_add_gallery = array(
+            //             'image_name'     => $image_name,
+            //             'image_id'       => $gallery_image_id,
+            //             'inventory_id'   => $inventory_id,
+            //         );
+            //         $this->inventory_gallery_list_model->create($data_add_gallery);
+            //     }
+            // }
 
+            // var_dump($result);
+            // exit;
 
             $this->success('Inventory has been added successfully.');
 
-            return $this->redirect('/admin/inventory/view/' . $inventory_id . '?print=1');
+            //return $this->redirect('/admin/inventory/view/' . $inventory_id . '?print=1');
+            return $this->redirect('/admin/inventory/add');
         }
 
         $this->_data['error'] = 'Error';

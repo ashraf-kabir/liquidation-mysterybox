@@ -72,7 +72,8 @@ class Home_controller extends Manaknight_Controller
             'product_type'       => $this->_data['type'],
             'product_name'       => $this->_data['search_query'],
             'sku'                => $this->_data['search_query'],
-            'status'             => 1
+            'status'             => 1,
+            'is_product'         => 1
         ];
 
         $where2 = [];

@@ -131,6 +131,29 @@ class Admin_product_controller extends Admin_controller
         $inventory_note = $this->input->post('inventory_note', TRUE);
         $locations = $this->input->post('locations', TRUE);
         $status = $this->input->post('status', TRUE);
+        $weight = $this->input->post('weight', TRUE);
+        $length = $this->input->post('length', TRUE);
+        $height = $this->input->post('height', TRUE);
+        $width = $this->input->post('width', TRUE);
+
+        $selling_price = $this->input->post('selling_price', TRUE);
+        $quantity = $this->input->post('quantity', TRUE);
+        $cost_price = $this->input->post('cost_price', TRUE);
+        //$admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
+
+        $status = $this->input->post('status', TRUE);
+        // $store_location_id = $this->input->post('store_location_id', TRUE);
+        $location_stores = $this->input->post('stores', TRUE);
+        $locations = $this->input->post('locations', TRUE);
+        //$quantity = $this->input->post('quantity', TRUE);
+
+        $can_ship = $this->input->post('can_ship', TRUE) ?? 2;
+        $can_ship_approval = $this->input->post('can_ship_approval', TRUE) ?? 2;
+        $free_ship = $this->input->post('free_ship', TRUE);
+        $product_type = $this->input->post('product_type', TRUE);
+        $pin_item_top = $this->input->post('pin_item_top', TRUE);
+        $video_url = json_encode($this->input->post('video_url', TRUE));
+        $youtube_thumbnail_1 = json_encode($this->input->post('youtube_thumbnail_1', TRUE));
         $admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
 
         $result = $this->inventory_model->create([
@@ -138,16 +161,58 @@ class Admin_product_controller extends Admin_controller
             'sale_person_id' => $sale_person_id,
             'is_product' => $is_product,
             'sku' => $sku,
+            'last_sku_num' => 1,
             'category_id' => $category_id,
             'locations' => $locations,
             'feature_image' => "/uploads/placeholder.jpg",
             'feature_image_id' => $feature_image_id,
-            'inventory_note' => $inventory_note,
             'admin_inventory_note' => $admin_inventory_note,
-            'status' => $status
+            'physical_location' => '',
+            'location_description' => '',
+            'weight' => $weight,
+            'length' => $length,
+            'height' => $height,
+            'width' => $width,
+            'feature_image' => $feature_image,
+            'feature_image_id' => $feature_image_id,
+            'selling_price' => $selling_price,
+            //'quantity' => $total_quantity,
+            //'inventory_note' => $inventory_note,
+            'cost_price' => $cost_price,
+            'admin_inventory_note' => $admin_inventory_note,
+            'status' => $status,
+            'store_location_id' => '',
+            'can_ship' => $can_ship,
+            'can_ship_approval' => $can_ship_approval,
+            'free_ship' => $free_ship,
+            'product_type' => $product_type,
+            'pin_item_top' => $pin_item_top,
+            'video_url' => $video_url,
+            'youtube_thumbnail_1' => $youtube_thumbnail_1,
+            'store_inventory' => $store_inventory
         ]);
 
         if ($result) {
+
+            $inventory_id = $result;
+            /**
+             * Get all images that are uploaded
+             * save them one by one
+             */
+            $gallery_list = $this->input->post('gallery_image', TRUE);
+            foreach ($gallery_list as $gallery_key => $gallery_value) {
+                $image_name       = $this->input->post('gallery_image', TRUE)[$gallery_key];
+                $gallery_image_id = $this->input->post('gallery_image_id', TRUE)[$gallery_key];
+                if (!empty($image_name)) {
+                    $data_add_gallery = array(
+                        'image_name'     => $image_name,
+                        'image_id'       => $gallery_image_id,
+                        'inventory_id'   => $inventory_id,
+                    );
+                    $this->inventory_gallery_list_model->create($data_add_gallery);
+                }
+            }
+
             $this->success('Product has been added successfully.');
 
             return $this->redirect('/admin/product/0', 'refresh');
