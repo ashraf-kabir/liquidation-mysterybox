@@ -164,8 +164,8 @@ class Admin_product_controller extends Admin_controller
             'last_sku_num' => 1,
             'category_id' => $category_id,
             'locations' => $locations,
-            'feature_image' => "/uploads/placeholder.jpg",
-            'feature_image_id' => $feature_image_id,
+            'feature_image' => $feature_image,
+            // 'feature_image_id' => $feature_image_id,
             'admin_inventory_note' => $admin_inventory_note,
             'physical_location' => '',
             'location_description' => '',
@@ -189,7 +189,7 @@ class Admin_product_controller extends Admin_controller
             'pin_item_top' => $pin_item_top,
             'video_url' => $video_url,
             'youtube_thumbnail_1' => $youtube_thumbnail_1,
-            'store_inventory' => $store_inventory
+            //'store_inventory' => $store_inventory
         ]);
 
         if ($result) {
@@ -236,6 +236,7 @@ class Admin_product_controller extends Admin_controller
             $this->form_validation,
             $this->inventory_model->get_all_edit_validation_rule()
         );
+        $this->_data['gallery_lists']       =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
         $this->_data['categories'] = $this->category_model->get_all();
         $this->_data['parent_categories']   =  $this->_get_grouped_categories();
         $this->_data['encoded_parent_categories']   =  base64_encode(json_encode($this->_get_grouped_categories()));
@@ -260,22 +261,89 @@ class Admin_product_controller extends Admin_controller
         $status = $this->input->post('status', TRUE);
         $admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
 
+        $product_name = $this->input->post('product_name', TRUE);
+        $is_product = $this->input->post('is_product', TRUE);
+        $sale_person_id = $this->input->post('sale_person_id', TRUE);
+        $sku = $this->input->post('sku', TRUE);
+        $category_id = $this->input->post('category_id', TRUE);
+        $feature_image = $this->input->post('feature_image', TRUE);
+        $feature_image_id = $this->input->post('feature_image_id', TRUE);
+        $inventory_note = $this->input->post('inventory_note', TRUE);
+        $locations = $this->input->post('locations', TRUE);
+        $status = $this->input->post('status', TRUE);
+        $weight = $this->input->post('weight', TRUE);
+        $length = $this->input->post('length', TRUE);
+        $height = $this->input->post('height', TRUE);
+        $width = $this->input->post('width', TRUE);
+        $selling_price = $this->input->post('selling_price', TRUE);
+        $quantity = $this->input->post('quantity', TRUE);
+        $cost_price = $this->input->post('cost_price', TRUE);
+        $status = $this->input->post('status', TRUE);
+        $location_stores = $this->input->post('stores', TRUE);
+        $can_ship = $this->input->post('can_ship', TRUE) ?? 2;
+        $can_ship_approval = $this->input->post('can_ship_approval', TRUE) ?? 2;
+        $free_ship = $this->input->post('free_ship', TRUE);
+        $product_type = $this->input->post('product_type', TRUE);
+        $pin_item_top = $this->input->post('pin_item_top', TRUE);
+        $video_url = json_encode($this->input->post('video_url', TRUE));
+        $youtube_thumbnail_1 = json_encode($this->input->post('youtube_thumbnail_1', TRUE));
+        $admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
+
         $result = $this->inventory_model->edit([
-            'product_name' => $product_name,
             'product_name' => $product_name,
             'sale_person_id' => $sale_person_id,
             'is_product' => $is_product,
             'sku' => $sku,
+            'last_sku_num' => 1,
             'category_id' => $category_id,
-            'locations' => $locations,
-            'feature_image' => "/uploads/placeholder.jpg",
-            'feature_image_id' => $feature_image_id,
-            'inventory_note' => $inventory_note,
+            'feature_image' => $feature_image,
+            // 'feature_image_id' => $feature_image_id,
             'admin_inventory_note' => $admin_inventory_note,
-
+            'location_description' => '',
+            'weight' => $weight,
+            'length' => $length,
+            'height' => $height,
+            'width' => $width,
+            'feature_image' => $feature_image,
+            'feature_image_id' => $feature_image_id,
+            'selling_price' => $selling_price,
+            //'quantity' => $total_quantity,
+            //'inventory_note' => $inventory_note,
+            'cost_price' => $cost_price,
+            'admin_inventory_note' => $admin_inventory_note,
+            'status' => $status,
+            'can_ship' => $can_ship,
+            'can_ship_approval' => $can_ship_approval,
+            'free_ship' => $free_ship,
+            'product_type' => $product_type,
+            'pin_item_top' => $pin_item_top,
+            'video_url' => $video_url,
+            'youtube_thumbnail_1' => $youtube_thumbnail_1,
         ], $id);
 
         if ($result) {
+
+            $inventory_id = $id;
+
+
+            /**
+             * Get all images that are uploaded
+             * save them one by one
+             */
+            $gallery_list = $this->input->post('gallery_image', TRUE);
+            foreach ($gallery_list as $gallery_key => $gallery_value) {
+                $image_name       = $this->input->post('gallery_image', TRUE)[$gallery_key];
+                $gallery_image_id = $this->input->post('gallery_image_id', TRUE)[$gallery_key];
+                if (!empty($image_name)) {
+                    $data_add_gallery = array(
+                        'image_name'   => $image_name,
+                        'image_id'     => $gallery_image_id,
+                        'inventory_id' => $inventory_id,
+                    );
+                    $this->inventory_gallery_list_model->create($data_add_gallery);
+                }
+            }
+
             $this->success('Product has been updated successfully.');
 
             return $this->redirect('/admin/product/0', 'refresh');

@@ -353,6 +353,9 @@ class Admin_inventory_controller extends Admin_controller
 
 
         $this->_data['gallery_lists']       =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
+        if (empty($this->_data['gallery_lists'])) {
+            $this->_data['gallery_lists']       =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $model->parent_inventory_id]);
+        }
         $this->_data['parent_categories']   =   $this->_get_grouped_categories();
         $this->_data['encoded_parent_categories']   =  base64_encode(json_encode($this->_get_grouped_categories()));
         // $this->_data['parent_categories']   =   $this->category_model->get_all(['status' => 1]);
@@ -381,8 +384,10 @@ class Admin_inventory_controller extends Admin_controller
             $this->form_validation->set_rules('length', 'Length', 'required|greater_than_equal_to[1]');
             $this->form_validation->set_rules('height', 'Height', 'required|greater_than_equal_to[1]');
             $this->form_validation->set_rules('width', 'Width', 'required|greater_than_equal_to[1]');
+            $this->form_validation->set_rules('locations', 'Store', 'required');
+            $this->form_validation->set_rules('stores', 'Store', 'required');
         }
-        $this->form_validation->set_rules('locations[]', 'Store', 'callback_validate_store_inventory');
+        //$this->form_validation->set_rules('locations[]', 'Store', 'callback_validate_store_inventory');
 
 
 
@@ -405,7 +410,6 @@ class Admin_inventory_controller extends Admin_controller
         $feature_image_id = $this->input->post('feature_image_id', TRUE);
         $parent_inventory_id = $this->input->post('parent_inventory_id', TRUE);
         $selling_price = $this->input->post('selling_price', TRUE);
-        $quantity = $this->input->post('quantity', TRUE);
         $inventory_note = $this->input->post('inventory_note', TRUE);
         $cost_price = $this->input->post('cost_price', TRUE);
         $admin_inventory_note = $this->input->post('admin_inventory_note', TRUE);
@@ -415,7 +419,7 @@ class Admin_inventory_controller extends Admin_controller
         $location_stores = $this->input->post('stores', TRUE);
         $locations = $this->input->post('locations', TRUE);
         $quantity = $this->input->post('quantity', TRUE);
-
+        $stores = $this->input->post('stores', TRUE);
         $sale_person_id = $this->input->post('sale_person_id', TRUE);
         $can_ship = $this->input->post('can_ship', TRUE) ?? 2;
         $can_ship_approval = $this->input->post('can_ship_approval', TRUE) ?? 2;
@@ -432,31 +436,31 @@ class Admin_inventory_controller extends Admin_controller
         }
 
         $store_inventory = [];
-        $total_quantity = 0;
-        $unique_stores = array_unique($location_stores);
-        foreach ($unique_stores as $key => $store_id) {
-            $store_location_data = [];
-            foreach ($locations as $key2 => $location_id) {
-                if ($store_id == $location_stores[$key2]) {
-                    $store_location_data[$location_id] = $quantity[$key2];
-                }
-            }
+        $total_quantity = 1;
+        // $unique_stores = array_unique($location_stores);
+        // foreach ($unique_stores as $key => $store_id) {
+        //     $store_location_data = [];
+        //     foreach ($locations as $key2 => $location_id) {
+        //         if ($store_id == $location_stores[$key2]) {
+        //             $store_location_data[$location_id] = $quantity[$key2];
+        //         }
+        //     }
 
-            $store_inventory_item['store_id'] = $store_id;
-            $store_locations = $this->input->post("store_{$store_id}_location");
+        //     $store_inventory_item['store_id'] = $store_id;
+        //     $store_locations = $this->input->post("store_{$store_id}_location");
 
-            $store_quantity = array_reduce($store_location_data, function ($sum, $location_quantity) {
-                return $sum + $location_quantity;
-            }, 0);
+        //     $store_quantity = array_reduce($store_location_data, function ($sum, $location_quantity) {
+        //         return $sum + $location_quantity;
+        //     }, 0);
 
-            $store_inventory_item['quantity'] = $store_quantity;
-            $store_inventory_item['locations'] = $store_location_data; //id as key
+        //     $store_inventory_item['quantity'] = $store_quantity;
+        //     $store_inventory_item['locations'] = $store_location_data; //id as key
 
-            array_push($store_inventory, $store_inventory_item);
-            $total_quantity += $store_quantity;
-        }
+        //     array_push($store_inventory, $store_inventory_item);
+        //     $total_quantity += $store_quantity;
+        // }
 
-        $store_inventory = json_encode($store_inventory);
+        // $store_inventory = json_encode($store_inventory);
 
 
         $result = $this->inventory_model->edit([
@@ -465,7 +469,7 @@ class Admin_inventory_controller extends Admin_controller
             'sku' => $sku,
             'category_id' => $category_id,
             'manifest_id' => $manifest_id,
-            'physical_location' => '',
+            'physical_location' => $locations,
             'location_description' => '',
             'weight' => $weight,
             'length' => $length,
@@ -480,7 +484,7 @@ class Admin_inventory_controller extends Admin_controller
             'cost_price' => $cost_price,
             'admin_inventory_note' => $admin_inventory_note,
             'status' => $status,
-            'store_location_id' => '',
+            'store_location_id' => $stores,
             'can_ship' => $can_ship,
             'can_ship_approval' => $can_ship_approval,
             'free_ship' => $free_ship,
@@ -488,7 +492,7 @@ class Admin_inventory_controller extends Admin_controller
             'pin_item_top' => $pin_item_top,
             'video_url' => $video_url,
             'youtube_thumbnail_1' => $youtube_thumbnail_1,
-            'store_inventory' => $store_inventory
+            //'store_inventory' => $store_inventory
 
         ], $id);
 
@@ -527,6 +531,7 @@ class Admin_inventory_controller extends Admin_controller
                     $this->inventory_gallery_list_model->create($data_add_gallery);
                 }
             }
+
 
             $this->_data['products'] = $this->inventory_model->get_by_fields(['is_product' => 1]);
             $this->success('Inventory has been updated successfully.');

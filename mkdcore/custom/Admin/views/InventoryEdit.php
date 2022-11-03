@@ -97,14 +97,14 @@ if ($this->session->userdata('role') == 1) {
                         Edit <?php echo $view_model->get_heading(); ?>
                     </h5>
                     <?= form_open() ?>
-                    <div class="form-group col-md-5 col-sm-12">
+                    <!-- <div class="form-group col-md-5 col-sm-12">
                         <label for="Product Name">Product Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control data-input" id="form_product_name" name="product_name" value="<?php echo set_value('product_name', $this->_data['view_model']->get_product_name()); ?>" />
-                    </div>
+                    </div> -->
 
                     <div class="form-group col-md-5 col-sm-12">
                         <label for="SKU">SKU </label>
-                        <input type="text" class="form-control data-input" name="sku" id="form_sku" readonly value="<?php echo set_value('sku', $this->_data['view_model']->get_sku()); ?>" />
+                        <input type="text" class="form-control data-input" name="sku" id="form_sku" readonly value="<?php echo set_value('sku', $this->_data['view_model']->get_sku()); ?>" readonly />
                     </div>
                     <div class="form-group col-md-5 col-sm-12">
                         <label for="Product Type">Inventory Type </label>
@@ -148,6 +148,7 @@ if ($this->session->userdata('role') == 1) {
 
                         <input type="hidden" name="sale_person_id" value="<?= $this->session->userdata('user_id') ?>">
                         <input type="hidden" id="encoded_parent_categories" value="<?= $encoded_parent_categories ?>">
+                        <input type="hidden" class="form-control data-input" id="form_product_name" name="product_name" value="<?php echo set_value('product_name', $this->_data['view_model']->get_product_name()); ?>" />
                     </div>
 
 
@@ -169,21 +170,22 @@ if ($this->session->userdata('role') == 1) {
                                 <div class="store shadow-sm my-2 p-2">
                                     <div class="form-group">
                                         <label for="">Store <span class="text-danger">*</span></label>
-                                        <select required name="stores[]" id="" role='store' class="form-control" onchange="listStoreLocations(this)">
+                                        <select required name="stores" id="" role='store' class="form-control" onchange="listStoreLocations(this)">
                                             <option value=""></option>
-                                            <?php foreach ($stores as $store) : ?>
-                                                <option <?php echo $value['store_id'] == $store->id ? 'selected' : '' ?> value="<?php echo $store->id ?>"> <?php echo $store->name; ?></option>
-                                            <?php endforeach; ?>
+                                            <?php foreach ($stores as $store) : ?>store_location_id
+                                            <option <?php echo $this->_data['view_model']->get_store_location_id() == $store->id ? 'selected' : '' ?> value="<?php echo $store->id ?>"> <?php echo $store->name; ?></option>
+
+                                        <?php endforeach; ?>
                                         </select>
 
                                     </div>
                                     <div class="form-group">
                                         <label for="">Physical Location <span class="text-danger">*</span></label>
                                         <div class="d-flex">
-                                            <select required name="locations[]" class="form-control location-dropdown" role="physical-location" onchange="updateLocationState(this)">
+                                            <select required name="locations" class="form-control location-dropdown" role="physical-location" onchange="updateLocationState(this)">
                                                 <?php foreach ($physical_locations as $key => $location) {
-                                                    if ($value['store_id'] == $location->store_id) {
-                                                        $selected = $value['location_id'] == $location->id ? 'selected' : '';
+                                                    if ($this->_data['view_model']->get_store_location_id() == $location->store_id) {
+                                                        $selected = $this->_data['view_model']->get_physical_location() == $location->id ? 'selected' : '';
                                                         echo "<option {$selected} value='{$location->id}'> {$location->name} </option>";
                                                     }
                                                 } ?>
@@ -198,17 +200,17 @@ if ($this->session->userdata('role') == 1) {
                                     </div>
                                     <div class="form-group">
                                         <label for="">Quantity <span class="text-danger">*</span></label>
-                                        <input required class="form-control" type="number" name="quantity[]" id="" value="<?php echo $value['quantity'] ?>">
+                                        <input required class="form-control" type="number" name="quantity" id="" value="<?= 1 ?>" max='1'>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
 
 
                         </div>
-                        <div class="d-inline-flex flex-row-reverse mb-3 ">
+                        <!-- <div class="d-inline-flex flex-row-reverse mb-3 ">
                             <span role="button" class="rounded-sm btn btn-primary  shadow p-1 text-sm" title="Add new location" onclick="addStoreLocation()"><i class="fas fa-plus-circle"></i> Add Inventory Location</span>
                             <span role="button" class="rounded-sm btn btn-danger mx-1  shadow p-1 text-sm" id="remove-store-btn" style="display:<?php echo count($item_inventory_locations) > 1 ? 'inline' : 'none'; ?>;" onclick="removeLastStoreLocation()"><i class="fas fa-times-circle"></i> Remove Inventory Location</span>
-                        </div>
+                        </div> -->
 
                     </fieldset>
 
@@ -522,13 +524,16 @@ if ($this->session->userdata('role') == 1) {
         function updateSKU(event) {
             const categories = getCategories();
             let category_value = event.options[event.selectedIndex].dataset.category
+            let category_name = event.options[event.selectedIndex].innerHTML;
             //console.log(category_value);
             let sku_value = categories.filter(category => category.id === category_value)
             let skuElement = document.querySelector("#form_category_id");
             let skuDisplayElement = document.querySelector("#form_display_category_id");
+            let product_name = document.querySelector("#form_product_name")
             //console.log(sku_value);
             skuElement.value = sku_value[0].id;
             skuDisplayElement.value = sku_value[0].name;
+            product_name.value = category_name;;
         }
 
         function getCategories() {
