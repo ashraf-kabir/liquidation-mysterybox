@@ -94,23 +94,32 @@ if ($layout_clean_mode) {
 						</div>
 					</div>
 
-					<!-- <div class='row mb-4'>
-					<div class='col'>
-						Inventory Location
+					<div class='row mb-4'>
+						<div class='col'>
+							Inventory Location
+						</div>
+						<div class='col'>
+							<?php echo $view_model->get_physical_location(); ?>
+						</div>
 					</div>
-					<div class='col'>
-						<?php echo $view_model->get_physical_location(); ?>
-					</div>
-				</div>
 
-				<div class='row mb-4'>
+					<div class='row mb-4'>
+						<div class='col'>
+							Store
+						</div>
+						<div class='col'>
+							<?php echo $view_model->get_store_location_id(); ?>
+						</div>
+					</div>
+
+					<!-- <div class='row mb-4'>
 					<div class='col'>
 						Inventory Location Description
 					</div>
 					<div class='col'>
 						<?php echo $view_model->get_location_description(); ?>
 					</div>
-				</div> -->
+				</div>  -->
 
 					<div class='row mb-4'>
 						<div class='col'>
@@ -179,6 +188,20 @@ if ($layout_clean_mode) {
 
 					<div class='row mb-4'>
 						<div class='col'>
+							Available in shelf
+						</div>
+						<div class='col'>
+							<?php
+							if (!empty($view_model->get_available_in_shelf())) {
+								echo $view_model->available_in_shelf_mapping()[$view_model->get_available_in_shelf()];
+							}
+
+							?>
+						</div>
+					</div>
+
+					<div class='row mb-4'>
+						<div class='col'>
 							Description
 						</div>
 						<div class='col'>
@@ -221,7 +244,7 @@ if ($layout_clean_mode) {
 						<?php echo $view_model->get_store_location_id(); ?>
 					</div>
 				</div> -->
-					<div class='row mb-4'>
+					<!-- <div class='row mb-4'>
 						<div class='col'>
 							Store Data
 						</div>
@@ -242,7 +265,7 @@ if ($layout_clean_mode) {
 
 							<?php endforeach; ?>
 						</div>
-					</div>
+					</div> -->
 
 					<div class='row mb-4'>
 						<div class='col'>

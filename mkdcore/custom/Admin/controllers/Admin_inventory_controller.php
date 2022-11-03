@@ -274,6 +274,7 @@ class Admin_inventory_controller extends Admin_controller
                     'length' => $product_data->length,
                     'height' => $product_data->height,
                     'width' => $product_data->width,
+                    'available_in_shelf' => 2,
                     'feature_image' => $product_data->feature_image,
                     'selling_price' => $product_data->selling_price,
                     'quantity' => 1,

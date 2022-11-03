@@ -25,6 +25,7 @@ class Inventory_model extends Manaknight_Model
 		'store_location_id',
 		'physical_location',
 		'location_description',
+		'available_in_shelf',
 		'weight',
 		'length',
 		'height',
@@ -223,6 +224,14 @@ class Inventory_model extends Manaknight_Model
 	}
 
 	public function pin_item_top_mapping()
+	{
+		return [
+			1 => 'No',
+			2 => 'Yes',
+		];
+	}
+
+	public function available_in_shelf_mapping()
 	{
 		return [
 			1 => 'No',

@@ -3390,6 +3390,7 @@
         "video_url",
         "sku",
         "category_id",
+        "available_in_shelf",
         "manifest_id",
         "physical_location",
         "location_description",
