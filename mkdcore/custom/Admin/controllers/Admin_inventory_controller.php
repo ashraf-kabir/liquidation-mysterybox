@@ -294,10 +294,17 @@ class Admin_inventory_controller extends Admin_controller
         }
 
         $product_quantity = intval($product_data->quantity);
+        if (empty($product_data->store_inventory)) {
+            $store_inventory = $store_inventory;
+        } else {
+            // update the store_inventory here
+
+        }
 
         $result =  $this->inventory_model->edit([
             'last_sku' => intval($sku_count),
             'quantity' => $product_quantity + $total_quantity,
+            'store_inventory' => $store_inventory,
         ], $parent_inventory_id);
 
 
