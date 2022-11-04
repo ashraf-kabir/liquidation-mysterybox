@@ -546,9 +546,11 @@ if (!empty($product->feature_image)) {
 
 
     $jkl = 0;
-    foreach ($videos_data as $key => $video) {
-        if (!empty($video)) {
-            $jkl = 2;
+    if (!empty($videos_data)) {
+        foreach ($videos_data as $key => $video) {
+            if (!empty($video)) {
+                $jkl = 2;
+            }
         }
     }
 
