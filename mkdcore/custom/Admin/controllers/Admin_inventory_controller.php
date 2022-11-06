@@ -298,7 +298,108 @@ class Admin_inventory_controller extends Admin_controller
             $store_inventory = $store_inventory;
         } else {
             // update the store_inventory here
+            $store_data = json_decode($product_data->store_inventory);
+            #$store_data_array = (array) $store_data;
 
+            // echo '<pre>';
+            // var_dump($store_data);
+            // echo '</pre>';
+            // exit;
+
+            // Steps
+            // Check if store already exists, if yes then manipulate the store
+            // if it doesn't exist then create a new store
+
+            // Add new item to store_inventory
+
+            foreach ($unique_stores as $key => $store_id) {
+                $store_location_data = [];
+                foreach ($locations as $key2 => $location_id) {
+                    if ($store_id == $location_stores[$key2]) {
+                        // check if store already exists
+                        $result = $this->check_existing_store($store_data, $store_id);
+
+                        $store_locations =  $store_data[$result]->locations;
+                        if (is_int($result) != false) {
+
+                            $store_quantity = (int)$store_data[$result]->quantity + (int)$quantity[$key2];
+                            $store_data[$result]->quantity = (int)$store_quantity;
+
+                            $location_result = $this->check_existing_location($store_data, $store_id, $location_id);
+
+                            if ($location_result != false) {
+
+                                // echo $location_result;
+                                // echo '<pre>';
+                                // var_dump($store_locations->{$location_result});
+                                // echo '</pre>';
+                                // exit;
+                                $store_locations->{$location_result} += $quantity[$key2];
+                                continue (1);
+                            } else {
+
+                                $store_data[$result]->locations->{$location_id} = $quantity[$key2];
+                                continue (1);
+                            }
+                            continue (1);
+                        } else {
+                            $store_location_data[$location_id] = $quantity[$key2];
+                        }
+                    }
+                }
+
+                $store_inventory_item['store_id'] = $store_id;
+                #$store_locations = $this->input->post("store_{$store_id}_location");
+
+                $store_quantity = array_reduce($store_location_data, function ($sum, $location_quantity) {
+                    return $sum + $location_quantity;
+                }, 0);
+
+                $store_inventory_item['quantity'] = $store_quantity;
+                $store_inventory_item['locations'] = $store_location_data; //id as key
+
+                if (!empty($store_inventory_item['locations'])) {
+                    array_push($store_data, $store_inventory_item);
+                }
+
+                $total_quantity += $store_quantity;
+            }
+
+            // for ($i = 0; $i <= count($quantity); $i++) {
+
+            //     if (isset($store_data[$i]) and ($i <= count($store_data))) {
+            //         if ($store_data[$i]->store_id == $location_stores[$i]) {
+
+            //             $store_locations = isset($store_data[$i]->locations) ? (array) $store_data[$i]->locations : [];
+
+            //             $store_locations_keys = array_keys((array)$store_data[$i]->locations);
+
+            //             for ($j = 0; $j <= count($store_locations); $j++) {
+
+            //                 if (isset($store_locations_keys[$j]) and ($j <= count($store_data))) {
+            //                     if ($store_locations_keys[$j] == $locations[$j]) {
+            //                         //When we 
+
+
+            //                         $store_quantity = (int)$store_data[$i]->quantity + (int)$quantity[$i];
+            //                         $store_data[$i]->quantity = (int)$store_quantity;
+            //                         $store_data[$i]->locations->{$store_locations_keys[$j]} += $quantity[$j];
+            //                     }
+            //                 } else {
+            //                     // 
+            //                     echo "I am here 2";
+            //                     exit;
+            //                 }
+            //             }
+            //         }
+            //     } else {
+            //         // 
+            //         echo "I am here 1";
+            //         exit;
+            //     }
+            // }
+
+            $store_inventory = json_encode($store_data);
         }
 
         $result =  $this->inventory_model->edit([
@@ -876,6 +977,52 @@ class Admin_inventory_controller extends Admin_controller
             $stores[] = $store_data->store_id;
         }
         return $stores;
+    }
+
+    private function check_existing_store($store_inventory = [], $store_id)
+    {
+        #$stores = [];
+        $result = false;
+
+        foreach ($store_inventory as $key => $store_data) {
+            #$stores[] = $store_data->store_id;
+            //echo $store_data->store_id . " - " . $store_id;
+            //exit;
+            $new_key = &$key;
+
+            if ($store_data->store_id == $store_id) {
+                $result = $key;
+            }
+        }
+
+
+        return $result;
+    }
+
+    private function check_existing_location($store_inventory = [], $store_id, $location_id)
+    {
+        $result = false;
+        // echo '<pre>';
+        // var_dump($store_inventory);
+        // echo '</pre>';
+        // exit;
+        foreach ($store_inventory as $key => $store_data) {
+            #$stores[] = $store_data->store_id;
+
+            if ($store_data->store_id != $store_id) {
+                continue;
+            }
+
+            $store_locations =  $store_data->locations;
+            foreach ($store_locations as $key2 => $value) {
+                $new_key2 = &$key2;
+                if ($new_key2 ==  $location_id) {
+
+                    $result = $key2;
+                }
+            }
+        }
+        return $result;
     }
 
     public function create_physical_location()
