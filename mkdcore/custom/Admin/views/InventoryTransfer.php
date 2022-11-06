@@ -89,6 +89,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
 
                             <div class="form-group">
                                 <label for="">Transfer From Store <span class="text-danger">*</span></label>
+                                <input type="hidden" name="" id="product_id">
                                 <select name="from_store" id="from_store" class="form-control" store-data="">
                                     <option value="">--Select Store--</option>
 
@@ -98,7 +99,7 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
 
                             <div class="form-group">
                                 <label for="">Store Physical Location <span class="text-danger">*</span></label>
-                                <select name="from_location" id="from_location" class="form-control" location-data="">
+                                <select name="from_location" id="from_location" class="form-control data-input select_two_store" location-data="">
                                     <option value="">--Select Store Physical Location--</option>
 
 
@@ -205,7 +206,7 @@ if ($layout_clean_mode) {
         let locations = store.locations;
         document.querySelector("#from_location").setAttribute('location-data', locations);
 
-        let location_options_template = '<option value=""> </option>';
+        let location_options_template = '<option value=""> -- Select Physical Location -- </option>';
         Object.entries(locations).forEach((location) => {
             location_options_template += `<option value="${location[0]}">${getLocationName(location[0])}</option>`;
         });
@@ -270,6 +271,7 @@ if ($layout_clean_mode) {
                     setMessage(''); //clear message
                     setProductForTransfer(data.product);
                 } else {
+                    alert("Item Not Found.");
                     setMessage('Item Not Found.');
                     clearStoreInfo();
                 }
@@ -321,6 +323,8 @@ if ($layout_clean_mode) {
             to_store_options += `<option value="${element.store_id}">${getStoreName(element.store_id)}</option>`;
         });
         document.querySelector('#to_store').innerHTML = to_store_options;
+        let product_id = product.id;
+        document.querySelector('#product_id').value = product_id;
         // show product section
 
     }
@@ -349,12 +353,14 @@ if ($layout_clean_mode) {
         let from_location = document.querySelector('#from_location').value.trim();
         let to = document.querySelector('#to_store').value.trim();
         let quantity = document.querySelector('#from_quantity').value;
+        let id = document.querySelector('#product_id').value;
         if (sku === '' || from === '' || to === '' || quantity < 1 || from_location === '') {
             alert('Select all required fields.');
             return;
         }
         document.querySelector('#transfer-list-table-body')
             .innerHTML += TransferItemsRow({
+                id,
                 sku,
                 from,
                 to,
@@ -366,7 +372,7 @@ if ($layout_clean_mode) {
     function TransferItemsRow(data) {
         return `
             <tr>
-                <td><input type="hidden" name="_sku[]" id="" value="${data.sku}" > ${data.sku} </td>
+                <td><input type="hidden" name="_sku[]" id="" value="${data.sku}" > <input type="hidden" name="_product_id[]" id="" value="${data.id}" > ${data.sku} </td>
                 <td><input type="hidden" name="_from[]" id="" value="${data.from}" > ${getStoreName(data.from)}</td>
                 <td><input type="hidden" name="_from_location[]" id="" value="${data.from_location}" > ${getLocationName(data.from_location)}</td>
                 <td><input type="hidden" name="_to[]" id="" value="${data.to}" > ${getStoreName(data.to)}</td>

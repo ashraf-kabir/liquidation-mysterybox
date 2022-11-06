@@ -66,7 +66,7 @@ class Admin_inventory_transfer_controller extends Admin_controller
             $direction
         ));
 
-        $this->_data['inventory_items_list']  = $this->inventory_model->get_all(['status' => 1]);
+        $this->_data['inventory_items_list']  = $this->inventory_model->get_all(['status' => 1, 'is_product' => 0]);
         $this->_data['encoded_physical_locations']  =   base64_encode(json_encode($this->physical_location_model->get_all()));
 
         if ($format == 'csv') {
@@ -211,7 +211,8 @@ class Admin_inventory_transfer_controller extends Admin_controller
         //     return redirect($_SERVER['HTTP_REFERER']);
         // }
         $inventory = $this->inventory_model->get_by_field('sku', $model->sku);
-        $store_inventory = json_decode($inventory->store_inventory);
+        $product = $this->inventory_model->get($inventory->parent_inventory_id);
+        $store_inventory = json_decode($product->store_inventory);
 
         // remove items;
         foreach ($store_inventory as $key => &$value) {
@@ -242,8 +243,12 @@ class Admin_inventory_transfer_controller extends Admin_controller
 
         $this->inventory_model->edit([
             'store_inventory' => json_encode($store_inventory)
-        ], $inventory->id);
+        ], $product->id);
 
+        $this->inventory_model->edit([
+            'store_location_id' => $to_store,
+            'physical_location' => $to_location,
+        ], $inventory->id);
         $result = $this->inventory_transfer_model->edit([
             'status' => 2 //Completed
         ], $id);

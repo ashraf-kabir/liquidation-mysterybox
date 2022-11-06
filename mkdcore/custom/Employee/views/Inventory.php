@@ -83,8 +83,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
         <?php if ($this->session->userdata('role') == 2) { ?>
             <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/admin/inventory/add"><i class="fas fa-plus-circle"></i></a></span>
-        <?php } elseif ($this->session->userdata('role') == 4) { ?>
-            <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/admin/inventory/add"><i class="fas fa-plus-circle"></i></a></span>
+        <?php } elseif ($this->session->userdata('role') == 5) { ?>
+            <span class="add-part d-flex justify-content-md-end"><a class="btn btn-primary btn-sm" target="_blank" href="/employee/inventory/add"><i class="fas fa-plus-circle"></i></a></span>
         <?php } ?>
 
     </h5>

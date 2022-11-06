@@ -164,7 +164,7 @@
                     ?>
                 </tbody>
                 <?php if ($kounter > 0) { ?>
-                    <!-- <tfoot class='thead-light'>
+                    <tfoot class='thead-light'>
                         <tr>
                             <th></th>
                             <th></th>
@@ -189,10 +189,12 @@
                             <th> Tax = $<?php echo number_format($total_tax - $total_refunded_tax, 2) ?></th>
                             <th> Grand Total = $<?php echo number_format($sales_grand_total - ($total_refunded + $total_refunded_tax), 2) ?></th>
                         </tr>
-                    </tfoot> -->
+                    </tfoot>
                 <?php } ?>
             </table>
-            <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
+            <?php if ($kounter > 0) : ?>
+                <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
+            <?php endif; ?>
         </div>
     </section>
 </div>

@@ -205,7 +205,7 @@ if ($layout_clean_mode) {
         let locations = store.locations;
         document.querySelector("#from_location").setAttribute('location-data', locations);
 
-        let location_options_template = '<option value=""> </option>';
+        let location_options_template = '<option value=""> -- Select Physical Location -- </option>';
         Object.entries(locations).forEach((location) => {
             location_options_template += `<option value="${location[0]}">${getLocationName(location[0])}</option>`;
         });

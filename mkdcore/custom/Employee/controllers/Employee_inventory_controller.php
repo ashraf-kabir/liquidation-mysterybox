@@ -109,6 +109,7 @@ class Employee_inventory_controller extends Employee_controller
 
     public function add()
     {
+        $this->_page_name = 'Add Inventory';
         include_once __DIR__ . '/../../view_models/Inventory_employee_add_view_model.php';
         $session = $this->get_session();
         $this->form_validation = $this->inventory_model->set_form_validation(
@@ -594,10 +595,11 @@ class Employee_inventory_controller extends Employee_controller
 
         $this->_data['encoded_stores'] = base64_encode(json_encode($this->store_model->get_all()));
         $this->_data['encoded_locations'] = base64_encode(json_encode($this->physical_location_model->get_all()));
-        $this->_data['inventory_items'] = $this->inventory_model->get_all(['quantity > 0']);
+        $this->_data['inventory_items'] = $this->inventory_model->get_all(['quantity > 0', 'is_product = 1']);
 
         if (isset($_POST['submit_inventory_transfer'])) {
             $_sku = $this->input->post('_sku[]');
+            $_product_id = $this->input->post('_product_id[]');
             $_from_store = $this->input->post('_from[]');
             $_from_location = $this->input->post('_from_location[]');
             $_from_quantity = $this->input->post('_quantity[]');
@@ -610,47 +612,62 @@ class Employee_inventory_controller extends Employee_controller
             }
             for ($i = 0; $i < count($_sku); $i++) {
                 // Start Inventory transfer
-                $sku = $_sku[$i];
-                $from_store = $_from_store[$i];
-                $from_location = $_from_location[$i];
-                $from_quantity = $_from_quantity[$i];
-                $to_store = $_to_store[$i];
-                $product = $this->inventory_model->get_by_field('sku', $sku);
-                if (empty($product)) {
-                    continue;
+
+                $product_data = $this->inventory_model->get_all_by_limit([
+                    "store_location_id = $_from_store[$i]",
+                    "physical_location = $_from_location[$i]",
+                    "available_in_shelf = 2",
+                    "parent_inventory_id = $_product_id[$i]",
+                ], $_from_quantity[$i]);
+
+                for ($j = 0; $j < $_from_quantity[$i]; $j++) {
+
+
+                    //$_sku[$i];
+                    $sku = $product_data[$j]->sku;
+                    $from_store = $_from_store[$i];
+                    $from_location = $_from_location[$i];
+                    $from_quantity = 1;
+                    $to_store = $_to_store[$i];
+                    $product = $this->inventory_model->get_by_field('sku', $sku);
+                    if (empty($product)) {
+                        continue;
+                    }
+
+                    /**
+                     * TODO
+                     * 1) come bakc to change this if it is not itented by client
+                     */
+
+                    // if ($from_store == $to_store) {
+                    //     continue;
+                    // }
+
+                    $result = $this->inventory_transfer_model->create([
+                        'product_name' => $product_data[$j]->product_name,
+                        'sku' => $sku,
+                        'from_store' => $from_store,
+                        'from_location' => $from_location,
+                        'to_store' => $to_store,
+                        'quantity' => $from_quantity,
+                        'status' => '1' //pending
+                    ]);
+
+                    if ($result) {
+                        $items_count++;
+                    }
+
+                    // Log
+                    $this->helpers_service->set_inventory_transfer_log_model($this->inventory_transfer_log_model);
+                    $this->helpers_service->set_inventory_transfer_model($this->inventory_transfer_model);
+                    $this->helpers_service->set_store_model($this->store_model);
+                    $this->helpers_service->log_inventory_transfer($result, 'Initiate transfer');
                 }
-                // if ($from_store == $to_store) {
-                //     continue;
-                // }
-
-                $result = $this->inventory_transfer_model->create([
-                    'product_name' => $product->product_name,
-                    'sku' => $sku,
-                    'from_store' => $from_store,
-                    'from_location' => $from_location,
-                    'sale_person_id' => $this->session->userdata('user_id'),
-                    'to_store' => $to_store,
-                    'quantity' => $from_quantity,
-                    'status' => '1' //pending
-                ]);
-
-                if ($result) {
-                    $items_count++;
-                }
-
-                // Log
-                $this->helpers_service->set_inventory_transfer_log_model($this->inventory_transfer_log_model);
-                $this->helpers_service->set_inventory_transfer_model($this->inventory_transfer_model);
-                $this->helpers_service->set_store_model($this->store_model);
-                $this->helpers_service->log_inventory_transfer($result, 'Initiate transfer');
             }
-
 
             $this->success('Inventory Transfer Request Pending');
             return redirect('/employee/transfer/transfer_inventory/');
         }
-
-
 
         return $this->render('Employee/InventoryTransfer', $this->_data);
     }

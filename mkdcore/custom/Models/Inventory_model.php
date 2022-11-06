@@ -240,7 +240,6 @@ class Inventory_model extends Manaknight_Model
 	}
 
 
-
 	/**
 	 * Get all using or like Model
 	 *

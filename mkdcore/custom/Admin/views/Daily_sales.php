@@ -226,7 +226,9 @@ $QUERY_STRING = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
                     </tfoot>
                 <?php } ?>
             </table>
-            <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
+            <?php if ($kounter > 0) : ?>
+                <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
+            <?php endif; ?>
         </div>
     </section>
 </div>

@@ -2575,9 +2575,8 @@
         "xyzDashboard": "/dashboard",
         "xyzProfile": "/profile",
         "xyzInventory": "/inventory/0?order_by=id&direction=DESC",
-        "xyzAdd Inventory": "/inventory/add",
-        "xyzInventory Transfer": "/inventory_transfer/0?order_by=id&direction=DESC",
-        "Inventory Transfer Requests": "/transfer/transfer_inventory",
+        "xyzInventory Transfer": "/transfer/transfer_inventory",
+        "Inventory Transfer Requests": "/inventory_transfer/0?order_by=id&direction=DESC",
         "Orders": "/orders/0?order_by=id&direction=DESC",
         "xyzReports": {
           "xyzInventory Report": "/inventory_report/0?order_by=id&direction=DESC"

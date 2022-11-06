@@ -168,6 +168,34 @@ class {{{subclass_prefix}}}Model extends CI_Model
 	}
 
 
+     /**
+     * Get all Model by limit
+     *
+     * @return array
+     */
+    public function get_all_by_limit($where = array(), $limit)
+    {
+        $this->db->from($this->_table);
+
+        foreach ($where as $field => $value) {
+            if (is_numeric($field) && strlen($value) > 0) {
+                $this->db->limit($limit)->where($value);
+                continue;
+            }
+
+            if ($field === NULL && $value === NULL) {
+                continue;
+            }
+
+            if ($value !== NULL) {
+                $this->db->limit($limit)->where($this->clean_alpha_field($field), $value, TRUE);
+            }
+        }
+
+        return $this->db->get()->result();
+    }
+
+
 
     /**
      * Get all Model
