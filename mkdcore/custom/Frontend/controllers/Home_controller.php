@@ -592,7 +592,7 @@ class Home_controller extends Manaknight_Controller
             $this->form_validation->set_rules('shipping_country', "Shipping Country", "required|max_length[255]");
             $this->form_validation->set_rules('shipping_state', "Shipping State", "required|max_length[255]");
             $this->form_validation->set_rules('shipping_address', "Shipping Address", "required|min_length[5]");
-            $this->form_validation->set_rules('customer_card', "Credit Card", "required", ["required" => "Credit Card is required for checkout. Add or change in Payment Method."]);
+            #$this->form_validation->set_rules('customer_card', "Credit Card", "required", ["required" => "Credit Card is required for checkout. Add or change in Payment Method."]);
 
 
 
@@ -625,9 +625,6 @@ class Home_controller extends Manaknight_Controller
                 echo json_encode($output);
                 exit();
             }
-
-
-
 
 
 
@@ -858,6 +855,8 @@ class Home_controller extends Manaknight_Controller
                     $inventory_data = $this->inventory_model->get($cart_item_value->product_id);
                     $total_amount   = $cart_item_value->unit_price  * $cart_item_value->product_qty;
 
+
+
                     $total_item_tax = $tax_amount * $total_amount;
 
 
@@ -930,22 +929,51 @@ class Home_controller extends Manaknight_Controller
                                         break;
                                     } //completed
                                     if ($location_quantity >= $quantity_to_pull) { //When we 
+
+                                        $product_data = $this->get_inventory_to_sell(
+                                            [
+                                                'store_location_id' => $value->store_id,
+                                                'physical_location' => $location_id,
+                                                'parent_inventory_id' => $cart_item_value->product_id,
+                                                'quantity' => $quantity_to_pull
+                                            ]
+                                        );
+
                                         $value->locations->{$location_id} -= $quantity_to_pull;
                                         $location_inventory_details[] = [
                                             'store' => $this->names_helper_service->get_store_name($value->store_id),
                                             'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
                                             'quantity' => $quantity_to_pull
                                         ];
+
+
+                                        $this->mark_inventory_as_sold($product_data);
+
                                         $quantity_to_pull = 0;
                                         break;
                                     } else {
+
+
                                         $quantity_to_pull -= $location_quantity;
                                         $value->locations->{$location_id} -= $location_quantity;
+
+                                        $product_data = $this->get_inventory_to_sell(
+                                            [
+                                                'store_location_id' => $value->store_id,
+                                                'physical_location' => $location_id,
+                                                'parent_inventory_id' => $cart_item_value->product_id,
+                                                'quantity' => $quantity_to_pull
+                                            ]
+                                        );
+
+
                                         $location_inventory_details[] = [
                                             'store' => $this->names_helper_service->get_store_name($value->store_id),
                                             'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
                                             'quantity' => $location_quantity
                                         ];
+
+                                        $this->mark_inventory_as_sold($product_data);
                                     }
                                 }
                                 // $total_quantity = $total_quantity + $store_quantity_left;
@@ -970,22 +998,46 @@ class Home_controller extends Manaknight_Controller
                                         break;
                                     } //completed
                                     if ($location_quantity >= $quantity_to_pull) { //When we 
+
+                                        $product_data = $this->get_inventory_to_sell(
+                                            [
+                                                'store_location_id' => $value->store_id,
+                                                'physical_location' => $location_id,
+                                                'parent_inventory_id' => $cart_item_value->product_id,
+                                                'quantity' => $quantity_to_pull
+                                            ]
+                                        );
+
                                         $value->locations->{$location_id} -= $quantity_to_pull;
                                         $location_inventory_details[] = [
                                             'store' => $this->names_helper_service->get_store_name($value->store_id),
                                             'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
                                             'quantity' => $quantity_to_pull
                                         ];
+
+                                        $this->mark_inventory_as_sold($product_data);
                                         $quantity_to_pull = 0;
                                         break;
                                     } else {
                                         $quantity_to_pull -= $location_quantity;
                                         $value->locations->{$location_id} -= $location_quantity;
+
+                                        $product_data = $this->get_inventory_to_sell(
+                                            [
+                                                'store_location_id' => $value->store_id,
+                                                'physical_location' => $location_id,
+                                                'parent_inventory_id' => $cart_item_value->product_id,
+                                                'quantity' => $quantity_to_pull
+                                            ]
+                                        );
+
                                         $location_inventory_details[] = [
                                             'store' => $this->names_helper_service->get_store_name($value->store_id),
                                             'location' => $this->names_helper_service->get_physical_location_real_name($location_id),
                                             'quantity' => $location_quantity
                                         ];
+
+                                        $this->mark_inventory_as_sold($product_data);
                                     }
 
                                     // if($value->quantity >= $qty ){
@@ -1669,6 +1721,37 @@ class Home_controller extends Manaknight_Controller
     {
         $this->destroy_session();
         return $this->redirect('');
+    }
+
+
+    /**
+     * 
+     * Get the inventory that matches the product details
+     */
+    public function get_inventory_to_sell($product_details)
+    {
+        $product_details = (object) $product_details;
+        $product_data = $this->inventory_model->get_all_by_limit([
+            "store_location_id = $product_details->store_location_id",
+            "physical_location = $product_details->physical_location",
+            "available_in_shelf = 2",
+            "parent_inventory_id = $product_details->parent_inventory_id",
+        ],  $product_details->quantity);
+
+        return $product_data;
+    }
+
+    /**
+     * 
+     * Mark the inventory as sold
+     */
+    public function mark_inventory_as_sold($product_data)
+    {
+        for ($j = 0; $j < count($product_data); $j++) {
+            $this->inventory_model->edit([
+                'available_in_shelf' => 1,
+            ], $product_data[$j]->id);
+        }
     }
 
 
