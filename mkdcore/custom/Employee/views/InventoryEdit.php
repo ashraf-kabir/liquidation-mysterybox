@@ -174,7 +174,7 @@ if ($this->session->userdata('role') == 1) {
                                     </div>
                                     <div class="form-group">
                                         <label for="">Quantity <span class="text-danger">*</span></label>
-                                        <input required class="form-control" type="number" name="quantity[]" id="" value="<?php echo $value['quantity'] ?>">
+                                        <input required class="form-control" type="number" name="quantity[]" id="" value="<?php echo $value['quantity'] ?>" min='1'>
                                     </div>
                                 </div>
                             <?php endforeach; ?>

@@ -83,10 +83,10 @@ if ($layout_clean_mode) {
                         Add <?php echo $view_model->get_heading(); ?>
                     </h5>
                     <?= form_open() ?>
-                    <div class="form-group col-md-5 col-sm-12 ">
+                    <!-- <div class="form-group col-md-5 col-sm-12 ">
                         <label for="Product Name">Inventory Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control data-input" id="form_product_name" name="product_name" value="<?php echo set_value('product_name'); ?>" />
-                    </div>
+                    </div> -->
 
 
 
@@ -127,6 +127,7 @@ if ($layout_clean_mode) {
                         </select> -->
                         <input type="hidden" name="sale_person_id" value="<?= $this->session->userdata('user_id') ?>">
                         <input type="hidden" id="encoded_parent_categories" value="<?= $encoded_parent_categories ?>">
+                        <input type="hidden" class="form-control data-input" id="form_product_name" name="product_name" value="<?php echo set_value('product_name'); ?>" />
                     </div>
 
 
@@ -164,7 +165,7 @@ if ($layout_clean_mode) {
                                     <label for="">Physical Location <span class="text-danger">*</span></label>
                                     <div class="d-flex">
                                         <select required name="locations[]" class="form-control location-dropdown" role="physical-location" onchange="updateLocationState(this)">
-                                            <option value=""></option>
+                                            <option value="">Select Physical Location</option>
                                         </select>
                                         <!-- Only admin can add new location -->
                                         <?php if ($this->session->userdata('role') == 2) : ?>
@@ -177,7 +178,7 @@ if ($layout_clean_mode) {
                                 </div>
                                 <div class="form-group">
                                     <label for="">Quantity <span class="text-danger">*</span></label>
-                                    <input required class="form-control" type="number" name="quantity[]" id="">
+                                    <input required class="form-control" type="number" name="quantity[]" id="" min='1'>
                                 </div>
                             </div>
 
@@ -209,7 +210,7 @@ if ($layout_clean_mode) {
 
 
 
-                    <div class="form-group col-md-5 col-sm-12 ">
+                    <!-- <div class="form-group col-md-5 col-sm-12 ">
                         <label for="Manifest">Manifest </label>
                         <input type="text" class="form-control data-input" id="form_manifest_id" name="manifest_id" value="<?php echo set_value('manifest_id'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)" />
                     </div>
@@ -289,7 +290,7 @@ if ($layout_clean_mode) {
                             <button class="mkd-upload-btn btn btn-primary d-block">Choose Image</button>
                             <input type="file" name="feature_image_upload" id="" class="" onchange="uploadFeatureImage(this)">
 
-                            <!-- <div class="btn uppload-button image_id_uppload_library btn-primary btn-sm  " data-image-url="feature_image" data-image-id="feature_image_id" data-image-preview="output_feature_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div> -->
+                            <div class="btn uppload-button image_id_uppload_library btn-primary btn-sm  " data-image-url="feature_image" data-image-id="feature_image_id" data-image-preview="output_feature_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div>
                             <input type="hidden" id="feature_image" data-srcid="output_feature_image" class="check_change_event" name="feature_image" value="" />
                             <input type="hidden" id="feature_image_id" name="feature_image_id" value="" />
                         </div>
@@ -371,7 +372,7 @@ if ($layout_clean_mode) {
                     <div class="form-group col-md-5 col-sm-12">
                         <label for="Admin Inventory Note">Admin Inventory Note </label>
                         <textarea id='form_admin_inventory_note' name='admin_inventory_note' class='form-control data-input' rows='5'><?php echo set_value('admin_inventory_note'); ?></textarea>
-                    </div>
+                    </div> -->
 
                     <div class="form-group col-md-5 col-sm-12 ">
                         <label for="Status">Status </label>
@@ -456,13 +457,18 @@ $this->load->view('Guest/ImagePortalModal');
     function updateSKU(event) {
         const categories = getCategories();
         let category_value = event.options[event.selectedIndex].dataset.category
+        let category_name = event.options[event.selectedIndex].innerHTML;
+        //alert(category_name);
         //console.log(category_value);
         let sku_value = categories.filter(category => category.id === category_value)
         let skuElement = document.querySelector("#form_category_id");
         let skuDisplayElement = document.querySelector("#form_display_category_id");
+        let product_name = document.querySelector("#form_product_name")
         //console.log(sku_value);
         skuElement.value = sku_value[0].id;
         skuDisplayElement.value = sku_value[0].name;
+        product_name.value = category_name;
+
     }
 
     function getCategories() {
@@ -702,7 +708,7 @@ $this->load->view('Guest/ImagePortalModal');
                 <label for="">Physical Location <span class="text-danger">*</span></label>
                 <div class="d-flex">
                     <select required name="locations[]" class="form-control location-dropdown" role="physical-location">
-                        <option value=""></option>
+                        <option value="">Select Physical Location</option>
                     </select>
 
                     <?php if ($this->session->userdata('role') == 2) : ?> 
@@ -718,7 +724,7 @@ $this->load->view('Guest/ImagePortalModal');
     function Quantity() {
         return `<div class="form-group">
                     <label for="">Quantity <span class="text-danger">*</span></label>
-                    <input required class="form-control" type="number" name="quantity[]" id="">
+                    <input required class="form-control" type="number" name="quantity[]" id="" min='1'>
                 </div>`;
     }
 

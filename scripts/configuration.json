@@ -501,6 +501,43 @@
       "override": ""
     },
     {
+      "name": "inventory_log",
+      "timestamp": true,
+      "migration": true,
+      "unique": [],
+      "seed": [],
+      "field": [
+        ["id", "integer", [], "ID", "", ""],
+        ["user_id", "integer", [], "User", "required|integer", ""],
+        [
+          "action",
+          "string",
+          [{ "limit": 50 }],
+          "Action",
+          "required|max[50]",
+          ""
+        ],
+        ["sku", "text", [], "SKU", "required", ""],
+        ["quantity", "integer", [], "Quantity", "required", ""],
+        ["detail", "text", [], "Detail", "required", ""],
+        [
+          "user_agent",
+          "string",
+          [{ "limit": 100 }],
+          "User Agent",
+          "required",
+          ""
+        ]
+      ],
+      "method": "\tfunction get_ip()\n \t{\n \t\tif(!empty($_SERVER['HTTP_CLIENT_IP']))\n \t\t{\n \t\t\t$ip = $_SERVER['HTTP_CLIENT_IP'];\n \t\t}\n \t\telseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))\n \t\t{\n \t\t\t$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];\n \t\t}\n \t\telse\n \t\t{\n \t\t\t$ip = $_SERVER['REMOTE_ADDR'];\n \t\t}\n \t\treturn $ip;\n \t}\n\n\tfunction get_user_agent()\n \t{\n \t\treturn $_SERVER['HTTP_USER_AGENT'];\n \t}\n",
+      "join": [{ "name": "user", "field": "user_id" }],
+      "mapping": {},
+      "pre": "$data['last_ip'] = $this->get_ip();\n\t\t$data['last_ip'] = $this->get_user_agent();\n",
+      "post": [],
+      "count": [],
+      "override": ""
+    },
+    {
       "name": "member_operation",
       "timestamp": true,
       "migration": true,
@@ -7062,6 +7099,7 @@
     "../mkdcore/custom/Employee/views/InventoryView.php": "../release/application/views/Employee/InventoryView.php",
     "../mkdcore/custom/Employee/views/InventoryTransfer.php": "../release/application/views/Employee/InventoryTransfer.php",
     "../mkdcore/custom/Employee/views/Inventory_transfer.php": "../release/application/views/Employee/Inventory_transfer.php",
+    "../mkdcore/custom/Employee/views/Inventory_transferView.php": "../release/application/views/Employee/Inventory_transferView.php",
     "../mkdcore/custom/Employee/views/InventoryReport.php": "../release/application/views/Employee/InventoryReport.php",
     "../mkdcore/custom/Employee/views/Dashboard.php": "../release/application/views/Employee/Dashboard.php",
 

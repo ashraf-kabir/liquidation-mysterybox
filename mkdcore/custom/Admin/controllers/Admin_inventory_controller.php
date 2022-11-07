@@ -23,6 +23,7 @@ class Admin_inventory_controller extends Admin_controller
         $this->load->model('store_model');
         $this->load->model('physical_location_model');
         $this->load->model('customer_model');
+        $this->load->model('inventory_log_model');
         $this->load->model('user_model');
         $this->load->model('inventory_transfer_model');
         $this->load->library('names_helper_service');
@@ -290,6 +291,8 @@ class Admin_inventory_controller extends Admin_controller
                     'youtube_thumbnail_1' => $product_data->youtube_thumbnail_1,
                     'store_inventory' => $store_inventory
                 ]);
+
+                $this->log_inventory($result, 'added inventory');
             }
         }
 
@@ -1046,5 +1049,15 @@ class Admin_inventory_controller extends Admin_controller
             ]);
             exit();
         }
+    }
+
+    private function log_inventory($inventory_id, $action = '')
+    {
+        $this->load->library('helpers_service');
+
+        $this->helpers_service->set_inventory_log_model($this->inventory_log_model);
+        $this->helpers_service->set_inventory_model($this->inventory_model);
+        $this->helpers_service->set_user_model($this->user_model);
+        $this->helpers_service->log_inventory($inventory_id, $action);
     }
 }

@@ -182,7 +182,7 @@ if ($layout_clean_mode) {
                                 </div>
                                 <div class="form-group">
                                     <label for="">Quantity <span class="text-danger">*</span></label>
-                                    <input required class="form-control" type="number" name="quantity[]" id="">
+                                    <input required class="form-control" type="number" name="quantity[]" id="" min='1'>
                                 </div>
                             </div>
 
@@ -714,7 +714,7 @@ $this->load->view('Guest/ImagePortalModal');
                 <label for="">Physical Location <span class="text-danger">*</span></label>
                 <div class="d-flex">
                     <select required name="locations[]" class="form-control location-dropdown" role="physical-location">
-                        <option value=""></option>
+                        <option value="">Select Physical Location</option>
                     </select>
 
                     <?php if ($this->session->userdata('role') == 2) : ?> 
@@ -730,7 +730,7 @@ $this->load->view('Guest/ImagePortalModal');
     function Quantity() {
         return `<div class="form-group">
                     <label for="">Quantity <span class="text-danger">*</span></label>
-                    <input required class="form-control" type="number" name="quantity[]" id="">
+                    <input required class="form-control" type="number" name="quantity[]" id="" min='1'>
                 </div>`;
     }
 

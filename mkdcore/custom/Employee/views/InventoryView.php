@@ -94,23 +94,23 @@ if ($layout_clean_mode) {
 						</div>
 					</div>
 
-					<!-- <div class='row mb-4'>
-					<div class='col'>
-						Inventory Location
+					<div class='row mb-4'>
+						<div class='col'>
+							Inventory Location
+						</div>
+						<div class='col'>
+							<?php echo $view_model->get_physical_location(); ?>
+						</div>
 					</div>
-					<div class='col'>
-						<?php echo $view_model->get_physical_location(); ?>
-					</div>
-				</div>
 
-				<div class='row mb-4'>
-					<div class='col'>
-						Inventory Location Description
+					<div class='row mb-4'>
+						<div class='col'>
+							Store
+						</div>
+						<div class='col'>
+							<?php echo $view_model->get_store_location_id(); ?>
+						</div>
 					</div>
-					<div class='col'>
-						<?php echo $view_model->get_location_description(); ?>
-					</div>
-				</div> -->
 
 					<div class='row mb-4'>
 						<div class='col'>
@@ -214,13 +214,13 @@ if ($layout_clean_mode) {
 					</div>
 
 					<!-- <div class='row mb-4'>
-					<div class='col'>
-						Store Location
+						<div class='col'>
+							Store Location
+						</div>
+						<div class='col'>
+							<?php echo $view_model->get_store_location_id(); ?>
+						</div>
 					</div>
-					<div class='col'>
-						<?php echo $view_model->get_store_location_id(); ?>
-					</div>
-				</div> -->
 					<div class='row mb-4'>
 						<div class='col'>
 							Store Data
@@ -242,7 +242,7 @@ if ($layout_clean_mode) {
 
 							<?php endforeach; ?>
 						</div>
-					</div>
+					</div> -->
 
 					<div class='row mb-4'>
 						<div class='col'>

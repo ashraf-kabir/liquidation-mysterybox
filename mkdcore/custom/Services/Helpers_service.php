@@ -5,17 +5,24 @@ class Helpers_service
     private $_pos_user_model;
     private $_customer_model;
     private $_inventory_model;
+    private $_inventory_log_model;
     private $_store_model;
     private $_inventory_transfer_log_model;
     private $_inventory_transfer_model;
     private $_notification_system_model;
     private $_mail_service;
     private $_config;
+    private $_user_model;
 
 
     public function set_pos_user_model($pos_user_model)
     {
         $this->_pos_user_model = $pos_user_model;
+    }
+
+    public function set_user_model($_user_model)
+    {
+        $this->_user_model = $_user_model;
     }
 
     public function set_customer_model($customer_model)
@@ -52,6 +59,12 @@ class Helpers_service
     {
         $this->_inventory_model = $inventory_model;
     }
+
+    public function set_inventory_log_model($inventory_log_model)
+    {
+        $this->_inventory_log_model = $inventory_log_model;
+    }
+
 
     public function set_store_model($store_model)
     {
@@ -273,6 +286,28 @@ class Helpers_service
                 'action'    => $action,
                 'last_ip'   => $this->_inventory_transfer_log_model->get_ip(),
                 'user_agent'   => $this->_inventory_transfer_log_model->get_user_agent(),
+                'detail'    => $detail
+            ]);
+        }
+    }
+
+    public function log_inventory($inventory_id, $action = '')
+    {
+        if (empty($inventory_id)) {
+            return;
+        }
+
+        $inventory_added = $this->_inventory_model->get($inventory_id);
+
+        if (!empty($inventory_added)) {
+            $user = $this->_user_model->get($_SESSION['user_id']);
+            $detail = "{$inventory_added->quantity} unit(s) of {$inventory_added->product_name} with SKU {$inventory_added->sku} was added by {$user->first_name} {$user->last_name}";
+            $this->_inventory_log_model->create([
+                'user_id'   => $_SESSION['user_id'],
+                'action'    => $action,
+                'sku'     => $inventory_added->sku,
+                'quantity' => 1,
+                'user_agent'   => $this->_inventory_log_model->get_user_agent(),
                 'detail'    => $detail
             ]);
         }
