@@ -592,7 +592,7 @@ class Home_controller extends Manaknight_Controller
             $this->form_validation->set_rules('shipping_country', "Shipping Country", "required|max_length[255]");
             $this->form_validation->set_rules('shipping_state', "Shipping State", "required|max_length[255]");
             $this->form_validation->set_rules('shipping_address', "Shipping Address", "required|min_length[5]");
-            #$this->form_validation->set_rules('customer_card', "Credit Card", "required", ["required" => "Credit Card is required for checkout. Add or change in Payment Method."]);
+            $this->form_validation->set_rules('customer_card', "Credit Card", "required", ["required" => "Credit Card is required for checkout. Add or change in Payment Method."]);
 
 
 
