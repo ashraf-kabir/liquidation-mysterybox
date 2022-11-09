@@ -244,7 +244,7 @@ class Admin_inventory_controller extends Admin_controller
 
         $store_inventory = json_encode($store_inventory);
 
-
+        $sku_ids = '';
         $sku_count = $product_data->last_sku;
         $sku_count = intval($sku_count);
         for ($i = 0; $i < count($quantity); $i++) {
@@ -292,9 +292,15 @@ class Admin_inventory_controller extends Admin_controller
                     'store_inventory' => $store_inventory
                 ]);
 
+                $sku_ids .= "$result-";
                 $this->log_inventory($result, 'added inventory');
             }
         }
+
+        // echo '<pre>';
+        // var_dump($sku_ids);
+        // echo '</pre>';
+        // exit;
 
         $product_quantity = intval($product_data->quantity);
         if (empty($product_data->store_inventory)) {
@@ -398,9 +404,9 @@ class Admin_inventory_controller extends Admin_controller
             // exit;
 
             $this->success('Inventory has been added successfully.');
-
-            //return $this->redirect('/admin/inventory/view/' . $inventory_id . '?print=1');
-            return $this->redirect('/admin/inventory/add');
+            #$sku_ids = urlencode($sku_ids);
+            return $this->redirect('/admin/inventory/skus/' . $sku_ids . '?print=1');
+            #return $this->redirect('/admin/inventory/add');
         }
 
         $this->_data['error'] = 'Error';
@@ -1059,5 +1065,21 @@ class Admin_inventory_controller extends Admin_controller
         $this->helpers_service->set_inventory_model($this->inventory_model);
         $this->helpers_service->set_user_model($this->user_model);
         $this->helpers_service->log_inventory($inventory_id, $action);
+    }
+
+    public function print_skus($item_ids)
+    {
+        #$item_ids = urldecode($item_ids);
+        $item_ids = explode('-', $item_ids);
+
+        $inventories = array();
+        foreach ($item_ids as $item_id) {
+            if (empty($item_id)) continue;
+            $inventories[] = $this->inventory_model->get($item_id);
+        }
+
+        $this->_data['inventories'] =  $inventories;
+
+        return $this->render('Admin/InventorySkus', $this->_data);
     }
 }

@@ -7071,6 +7071,7 @@
     "../mkdcore/custom/Admin/views/InventoryEdit.php": "../release/application/views/Admin/InventoryEdit.php",
     "../mkdcore/custom/Admin/views/InventoryView.php": "../release/application/views/Admin/InventoryView.php",
     "../mkdcore/custom/Admin/views/InventoryTransfer.php": "../release/application/views/Admin/InventoryTransfer.php",
+    "../mkdcore/custom/Admin/views/InventorySkus.php": "../release/application/views/Admin/InventorySkus.php",
     "../mkdcore/custom/Admin/views/Scan_Product_View.php": "../release/application/views/Admin/Scan_Product_View.php",
     "../mkdcore/custom/Admin/views/OrdersView.php": "../release/application/views/Admin/OrdersView.php",
     "../mkdcore/custom/Admin/views/Orders.php": "../release/application/views/Admin/Orders.php",
@@ -7208,6 +7209,7 @@
 
     "admin/scan/scan_product_view": "Admin/Admin_inventory_controller/scan_product_view",
     "admin/transfer/transfer_inventory": "Admin/Admin_inventory_controller/transfer_inventory",
+    "admin/inventory/skus/(:any)": "Admin/Admin_inventory_controller/print_skus/$1",
     "manager/transfer/transfer_inventory": "Manager/Manager_inventory_controller/transfer_inventory",
     "employee/transfer/transfer_inventory": "Employee/Employee_inventory_controller/transfer_inventory",
     "admin/terms_and_conditions/edit": "Admin/Admin_terms_and_conditions_controller/edit/$1",

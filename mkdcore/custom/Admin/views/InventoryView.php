@@ -284,7 +284,7 @@ if ($layout_clean_mode) {
 							Can Ship
 						</div>
 						<div class='col'>
-							<?php echo $view_model->can_ship_mapping()[$view_model->get_can_ship()]; ?>
+							<?php echo !empty($view_model->can_ship_mapping()[$view_model->get_can_ship()]) ? $view_model->can_ship_mapping()[$view_model->get_can_ship()] : ''; ?>
 						</div>
 					</div>
 
@@ -321,7 +321,7 @@ if ($layout_clean_mode) {
 							Pin Item
 						</div>
 						<div class='col'>
-							<?php echo $view_model->pin_item_top_mapping()[$view_model->get_pin_item_top()]; ?>
+							<?php echo !empty($view_model->pin_item_top_mapping()[$view_model->get_pin_item_top()]) ?  $view_model->pin_item_top_mapping()[$view_model->get_pin_item_top()] : ''; ?>
 						</div>
 					</div>
 
