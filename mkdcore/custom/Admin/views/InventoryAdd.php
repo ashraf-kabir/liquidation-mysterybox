@@ -195,7 +195,7 @@ if ($layout_clean_mode) {
                         <!-- <div id = "stores">
                     <?php foreach ($stores as $key => $store) : ?>
                         <div>
-                            <input class="" type="checkbox" name="stores_inventory[]" value="<?php echo $store->id; ?>" 
+                            <input class="" type="checkbox" name="stores_inventory[]" value="<?php echo $store->id; ?>"
                                 id="store_<?php echo $store->id; ?>" onchange="toggleStoreLocationsVisibility(this, <?php echo $store->id; ?>)">
                             <label id="store_<?php echo $store->id; ?>"><?php echo $store->name; ?></label>
                             <div id='<?php echo "store_{$store->id}_locations"; ?>' style="display:none">
@@ -213,7 +213,7 @@ if ($layout_clean_mode) {
 
 
 
-                    <!-- 
+                    <!--
                     <div class="form-group col-md-5 col-sm-12 ">
                         <label for="Manifest">Manifest </label>
                         <input type="text" class="form-control data-input" id="form_manifest_id" name="manifest_id" value="<?php echo set_value('manifest_id'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)" />
@@ -377,8 +377,8 @@ if ($layout_clean_mode) {
                         <label for="Admin Inventory Note">Admin Inventory Note </label>
                         <textarea id='form_admin_inventory_note' name='admin_inventory_note' class='form-control data-input' rows='5'><?php echo set_value('admin_inventory_note'); ?></textarea>
                     </div> -->
-
-                    <div class="form-group col-md-5 col-sm-12 ">
+                    <input type="hidden" name="status" value="2" class="d-none"/>
+                    <!--<div class="form-group col-md-5 col-sm-12 ">
                         <label for="Status">Status </label>
                         <select id="form_status" name="status" class="form-control data-input">
                             <?php foreach ($view_model->status_mapping() as $key => $value) {
@@ -386,7 +386,7 @@ if ($layout_clean_mode) {
                             } ?>
                         </select>
                     </div>
-
+                    -->
 
                     <div class="form-group  col-md-5 col-sm-12">
                         <input type="submit" class="btn btn-primary text-white mr-4 my-4 validate-videos" value="Submit">
@@ -703,7 +703,7 @@ $this->load->view('Guest/ImagePortalModal');
                     <option value="<?php echo $store->id ?>"> <?php echo $store->name; ?></option>
                     <?php endforeach; ?>
                 </select>
-            
+
             </div>
         `;
     }
@@ -717,7 +717,7 @@ $this->load->view('Guest/ImagePortalModal');
                         <option value="">Select Physical Location</option>
                     </select>
 
-                    <?php if ($this->session->userdata('role') == 2) : ?> 
+                    <?php if ($this->session->userdata('role') == 2) : ?>
                         <button type="button" class="btn btn-primary"  onclick="newPhysicalLocationToggle(this)" >
                         <i class="fas fa-plus-circle"></i>
                         </button>

@@ -826,6 +826,8 @@
       "join": [],
       "mapping": {
         "status": {
+          "3": "Waiting Approval",
+          "2": "Pending",
           "1": "Active",
           "0": "Inactive"
         },
@@ -7066,6 +7068,7 @@
     "../mkdcore/custom/Admin/views/Pos_userEdit.php": "../release/application/views/Admin/Pos_userEdit.php",
     "../mkdcore/custom/Admin/views/UserAdd.php": "../release/application/views/Admin/UserAdd.php",
     "../mkdcore/custom/Admin/views/UserEdit.php": "../release/application/views/Admin/UserEdit.php",
+    "../mkdcore/custom/Manager/views/Inventory.php": "../release/application/views/Manager/Inventory.php",
     "../mkdcore/custom/Admin/views/Inventory.php": "../release/application/views/Admin/Inventory.php",
     "../mkdcore/custom/Admin/views/InventoryAdd.php": "../release/application/views/Admin/InventoryAdd.php",
     "../mkdcore/custom/Admin/views/InventoryEdit.php": "../release/application/views/Admin/InventoryEdit.php",
@@ -7220,6 +7223,12 @@
     "admin/inventory_transfer/accept/(:num)": "Admin/Admin_inventory_transfer_controller/accept/$1",
     "admin/orders/refund/(:num)": "Admin/Admin_order_refund_controller/refund/$1",
 
+    "manager/inventory/approveall/(:any)": "Manager/Manager_inventory_controller/approveall/$1",
+    "manager/inventory/pending/(:num)": "Manager/Manager_inventory_controller/pending/$1",
+    "manager/inventory/approve/(:num)": "Manager/Manager_inventory_controller/approve/$1",
+    "admin/inventory/approveall/(:any)": "Admin/Admin_inventory_controller/approveall/$1",
+    "admin/inventory/pending/(:num)": "Admin/Admin_inventory_controller/pending/$1",
+    "admin/inventory/approve/(:num)": "Admin/Admin_inventory_controller/approve/$1",
     "admin/inventory/set_active/(:num)": "Admin/Admin_inventory_controller/set_active/$1",
     "admin/inventory/real_delete/(:num)": "Admin/Admin_inventory_controller/real_delete/$1",
     "admin/inventory/delete_gallery_image/(:num)": "Admin/Admin_inventory_controller/delete_gallery_image/$1",

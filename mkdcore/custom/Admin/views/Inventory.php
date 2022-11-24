@@ -64,6 +64,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                 </div>
                             </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <input type="checkbox" name="pending" value="1" <?php echo $pending ? 'checked' : ''; ?>/> Waiting on Approval Items
+                                </div>
+                            </div>
 
                             <div style="width:100%;height:10px;display:block;float:none;"></div>
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
@@ -92,7 +97,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <section class="table-placeholder bg-white mb-5 p-3 pl-4 pr-4 pt-4" style='height:auto;'>
         <div class="row">
             <div class="col p-2">
-                <div class="float-right mr-4"></div>
+                <div class="float-right mr-4">
+                    <?php if ($pending) { ?>
+                    <a href="/admin/inventory/approveall/<?php echo $hash;?>" class="btn btn-link  link-underline text-underline">Mark all as Approved</a>
+                    <?php } ?>
+                </div>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -145,12 +154,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         if ($this->session->userdata('role') == 2) {
                             echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/admin/inventory/edit/' . $data->id . '">Edit</a>';
                             echo '<a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/view/' . $data->id . '">View</a>';
-                            if ($data->status != 0 /* 0 = inactive  */) {
+                            if ($data->status == 2 /* 0 = pending  */) {
+                                echo '<a class="btn btn-link link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/pending/' . $data->id . '">Ask For Approval</a>';
+                            }
+                            if ($data->status == 3 /* 0 = pending  */) {
+                                echo '<a class="btn btn-link link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/approve/' . $data->id . '">Approve it</a>';
+                            }
+                            if ($data->status == 1 /* 0 = inactive  */) {
                                 echo '<a class="btn btn-link text-danger link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/delete/' . $data->id . '">Set Inactive</a>';
                             }
-                            if ($data->status == 0 /* 0 = inactive  */) {
-                                echo '<a class="btn btn-link text-success link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/set_active/' . $data->id . '">Set Active</a>';
-                            }
+                            // if ($data->status == 0 /* 0 = inactive  */) {
+                            //     echo '<a class="btn btn-link text-success link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/set_active/' . $data->id . '">Set Active</a>';
+                            // }
                             echo '<a class="btn btn-link text-danger link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/real_delete/' . $data->id . '">Delete</a>';
                         } elseif ($this->session->userdata('role') == 4) {
 

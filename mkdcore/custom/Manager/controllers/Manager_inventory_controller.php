@@ -41,6 +41,8 @@ class Manager_inventory_controller extends Manager_controller
         $format = $this->input->get('format', TRUE) ?? 'view';
         $order_by = $this->input->get('order_by', TRUE) ?? '';
         $direction = $this->input->get('direction', TRUE) ?? 'ASC';
+        $pending = $this->input->get('pending', TRUE) ?? '';
+        $this->_data['pending'] = $pending;
 
         $this->_data['view_model'] = new Inventory_manager_list_paginate_view_model(
             $this->inventory_model,
@@ -57,7 +59,20 @@ class Manager_inventory_controller extends Manager_controller
             'product_name' => $this->_data['view_model']->get_product_name(),
             'sku' => $this->_data['view_model']->get_sku(),
             'category_id' => $this->_data['view_model']->get_category_id(),
+            'is_product' => 0,
         ];
+
+        if ($pending)
+        {
+            $where['status'] = 2;
+        }
+
+        $this->_data['hash'] = bin2hex(json_encode([
+            'where' => $where,
+            'page' => $page,
+            'order_by' => $order_by,
+            'direction' => $direction
+        ]));
 
         $this->_data['view_model']->set_total_rows($this->inventory_model->count($where));
 
@@ -103,7 +118,70 @@ class Manager_inventory_controller extends Manager_controller
             }
         }
 
+        $this->_data['categories'] = $this->category_model->get_all();
         return $this->render('Manager/Inventory', $this->_data);
+    }
+
+    public function approveall($page)
+    {
+        $this->load->library('pagination');
+        include_once __DIR__ . '/../../view_models/Inventory_manager_list_paginate_view_model.php';
+        $session = $this->get_session();
+        $format = $this->input->get('format', TRUE) ?? 'view';
+        $order_by = $this->input->get('order_by', TRUE) ?? '';
+        $direction = $this->input->get('direction', TRUE) ?? 'ASC';
+        $pending = $this->input->get('pending', TRUE) ?? '';
+        $where = [];
+        $page = 0;
+        $order_by = 'id';
+        $direction = 'DESC';
+
+        $hash = $this->input->get('hash', TRUE) ?? '';
+        if (strlen($hash) > 0)
+        {
+            $unbase64 = hex2bin($hash);
+            $deserialize_list = json_decode($unbase64, TRUE);
+            $where = $deserialize_list['where'];
+            $page = $deserialize_list['page'];
+            $order_by = $deserialize_list['id'];
+            $direction = $deserialize_list['direction'];
+        }
+
+        $this->_data['view_model'] = new Inventory_manager_list_paginate_view_model(
+            $this->inventory_model,
+            $this->pagination,
+            '/manager/inventory/0'
+        );
+        $this->_data['view_model']->set_heading('Inventory');
+        $this->_data['view_model']->set_product_name(($this->input->get('product_name', TRUE) != NULL) ? $this->input->get('product_name', TRUE) : NULL);
+        $this->_data['view_model']->set_sku(($this->input->get('sku', TRUE) != NULL) ? $this->input->get('sku', TRUE) : NULL);
+        $this->_data['view_model']->set_category_id(($this->input->get('category_id', TRUE) != NULL) ? $this->input->get('category_id', TRUE) : NULL);
+
+        $this->_data['view_model']->set_total_rows($this->inventory_model->count($where));
+
+        $this->_data['view_model']->set_format_layout($this->_data['layout_clean_mode']);
+        $this->_data['view_model']->set_per_page(25);
+        $this->_data['view_model']->set_order_by($order_by);
+        $this->_data['view_model']->set_sort($direction);
+        $this->_data['view_model']->set_sort_base_url('/manager/inventory/0');
+        $this->_data['view_model']->set_page($page);
+        $this->_data['view_model']->set_list($this->inventory_model->get_paginated(
+            $this->_data['view_model']->get_page(),
+            $this->_data['view_model']->get_per_page(),
+            $where,
+            $order_by,
+            $direction
+        ));
+
+        foreach ($this->_data['view_model']->get_list() as $key => $value)
+        {
+            $this->inventory_model->edit([
+            'status' => 1
+            ], $value->id);
+        }
+
+        $this->success('Action completed successfully.');
+        return $this->redirect('/manager/inventory/0', 'refresh');
     }
 
     public function add()
@@ -196,7 +274,7 @@ class Manager_inventory_controller extends Manager_controller
         $barcode_image_name = $this->barcode_service->generate_png_barcode($sku, "inventory");
         /**
          *  Upload Image to S3
-         * 
+         *
          */
         $barcode_image  = $this->upload_image_with_s3($barcode_image_name);
 
@@ -327,7 +405,7 @@ class Manager_inventory_controller extends Manager_controller
         $this->_data['encoded_physical_locations']  =   base64_encode(json_encode($this->_data['physical_locations']));
 
 
-        // $this->_data['parent_categories'] 
+        // $this->_data['parent_categories']
 
         if ($this->input->post('can_ship') == 1) {
             $this->form_validation->set_rules('weight', 'Weight', 'required|greater_than_equal_to[1]');
@@ -701,7 +779,7 @@ class Manager_inventory_controller extends Manager_controller
             $barcode_image_name = $this->barcode_service->generate_png_barcode($code, "location");
             /**
              *  Upload Image to S3
-             * 
+             *
              */
             $barcode_image  = $this->upload_image_with_s3($barcode_image_name);
 
