@@ -1196,6 +1196,6 @@ class Admin_inventory_controller extends Admin_controller
 
         $this->_data['inventories'] =  $inventories;
 
-        return $this->render('Admin/InventorySkus', $this->_data);
+        return $this->render('Manager/InventorySkus', $this->_data);
     }
 }

@@ -32,11 +32,11 @@ if ($layout_clean_mode) {
     <div aria-label="breadcrumb">
         <ol class="breadcrumb pl-0 mb-4 bg-background d-flex justify-content-center justify-content-md-start">
             <!-- <li class="breadcrumb-item active" aria-current="page">
-            <a href="/admin/dashboard" class="breadcrumb-link">Dashboard</a>
+            <a href="/manager/dashboard" class="breadcrumb-link">Dashboard</a>
         </li> -->
             <li class="breadcrumb-item active" aria-current="page">
                 <?php if ($this->session->userdata('role') == 2) { ?>
-                    <a href="/admin/inventory/0" class="breadcrumb-link"><?php echo $view_model->get_heading(); ?></a>
+                    <a href="/manager/inventory/0" class="breadcrumb-link"><?php echo $view_model->get_heading(); ?></a>
                 <?php } elseif ($this->session->userdata('role') == 4) { ?>
                     <a href="/manager/inventory/0" class="breadcrumb-link"><?php echo $view_model->get_heading(); ?></a>
                 <?php } ?>
@@ -83,15 +83,15 @@ if ($layout_clean_mode) {
                         Add <?php echo $view_model->get_heading(); ?>
                     </h5>
                     <?= form_open() ?>
-                    <div class="form-group col-md-5 col-sm-12 ">
-                        <label for="Product Name">Product Name <span class="text-danger">*</span></label>
+                    <!-- <div class="form-group col-md-5 col-sm-12 ">
+                        <label for="Product Name">Inventory Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control data-input" id="form_product_name" name="product_name" value="<?php echo set_value('product_name'); ?>" />
-                    </div>
+                    </div> -->
 
 
 
                     <div class="form-group col-md-5 col-sm-12 ">
-                        <label for="Product Type">Product Type </label>
+                        <label for="Product Type">Inventory Type </label>
                         <select id="form_product_type" name="product_type" class="form-control data-input">
                             <?php foreach ($view_model->product_type_mapping() as $key => $value) {
 
@@ -100,34 +100,56 @@ if ($layout_clean_mode) {
                         </select>
                     </div>
 
+                    <div class="form-group col-md-5 col-sm-12 ">
+                        <label for="Product Type">Product Type </label>
+                        <select id="form_parent_inventory" name="parent_inventory_id" class="form-control data-input" onchange="updateSKU(this)">
+                            <option value="">Select</option>
+                            <?php if (isset($products)) {
+                                foreach ($products as $key => $value) {
 
+                                    echo "<option value='{$value->id}' data-category='{$value->category_id}'> {$value->product_name} </option>";
+                                }
+                            } ?>
+                        </select>
+                    </div>
 
+                    <?php
+                    // echo '<pre>';
+                    // var_dump($products);
+                    // echo '</pre>';
+                    ?>
                     <div class="form-group col-md-5 col-sm-12 ">
                         <label for="Parent Category"> Category <span class="text-danger">*</span> </label>
-                        <select required class="form-control data-input" id="form_category_id" name="category_id">
+                        <input type="text" name="" id="form_display_category_id" class="form-control data-input" required readonly>
+                        <input type="hidden" name="category_id" id="form_category_id" class="form-control data-input" required>
+                        <!-- <select required class="form-control data-input" id="form_category_id" name="category_id" readonly>
                             <option value="">Select</option>
                             <?php foreach ($parent_categories as $key => $value) {
                                 $child_category_tab = $value->parent_category_id == 0 || $value->parent_category_id == null ? '' : '&nbsp;&nbsp;&nbsp;&nbsp;';
                                 echo "<option value='{$value->id}'> {$child_category_tab} {$value->name} </option>";
                             } ?>
-                        </select>
+                        </select> -->
+                        <input type="hidden" id="encoded_parent_categories" value="<?= $encoded_parent_categories ?>">
+                        <input type="hidden" name="sale_person_id" value="<?= $this->session->userdata('user_id') ?>">
+                        <input type="hidden" class="form-control data-input" id="form_product_name" name="product_name" value="<?php echo set_value('product_name'); ?>" />
                     </div>
 
 
-                    <div class="form-group col-md-5 col-sm-12 ">
+                    <!-- <div class="form-group col-md-5 col-sm-12 ">
                         <label for="sale_person_id"> Sale Person <span class="text-danger">*</span></label>
-                        <select required class="form-control data-input" id="sale_person_id" name="sale_person_id" readonly>
+                        <select required class="form-control data-input" id="sale_person_id" name="sale_person_id">
                             <option value="">Select</option>
                             <?php foreach ($sale_persons as $key => $value) {
 
                                 $selected = "";
                                 if ($this->session->userdata('role') != 2 && $value->id == $this->session->userdata('user_id')) {
                                     $selected = " selected ";
-                                    echo "<option  " . $selected . " value='{$value->id}'> {$value->first_name}  {$value->last_name} </option>";
                                 }
+                                echo "<option  " . $selected . " value='{$value->id}'> {$value->first_name}  {$value->last_name} </option>";
                             } ?>
                         </select>
-                    </div>
+                    </div> -->
+
                     <fieldset class="col-md-5 ml-3 form-group border-bottom">
                         <hr>
                         <legend>Item Store Management</legend>
@@ -136,7 +158,7 @@ if ($layout_clean_mode) {
                                 <div class="form-group">
                                     <label for="">Store <span class="text-danger">*</span></label>
                                     <select required name="stores[]" id="" role='store' class="form-control" onchange="listStoreLocations(this)">
-                                        <option value=""></option>
+                                        <option value="">Select Store</option>
                                         <?php foreach ($stores as $store) : ?>
                                             <option value="<?php echo $store->id ?>"> <?php echo $store->name; ?></option>
                                         <?php endforeach; ?>
@@ -160,7 +182,7 @@ if ($layout_clean_mode) {
                                 </div>
                                 <div class="form-group">
                                     <label for="">Quantity <span class="text-danger">*</span></label>
-                                    <input required class="form-control" type="number" name="quantity[]" id="">
+                                    <input required class="form-control" type="number" name="quantity[]" id="" min='1'>
                                 </div>
                             </div>
 
@@ -191,7 +213,7 @@ if ($layout_clean_mode) {
 
 
 
-
+                    <!--
                     <div class="form-group col-md-5 col-sm-12 ">
                         <label for="Manifest">Manifest </label>
                         <input type="text" class="form-control data-input" id="form_manifest_id" name="manifest_id" value="<?php echo set_value('manifest_id'); ?>" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45)" />
@@ -259,10 +281,10 @@ if ($layout_clean_mode) {
                                 echo "<option value='{$key}'> {$value} </option>";
                             } ?>
                         </select>
-                    </div>
+                    </div> -->
 
 
-                    <div class="form-group col-md-5 col-sm-12">
+                    <!-- <div class="form-group col-md-5 col-sm-12">
                         <label for="Image" style="display: block;">Feature Image </label>
 
                         <span class="img-delete-close " style="display:none"><i class="fa fa-trash img-wrapper-delete-close"></i></span>
@@ -270,19 +292,19 @@ if ($layout_clean_mode) {
 
                         <div class="mkd-upload-form-btn-wrapper gallery_image_add_inputs">
                             <button class="mkd-upload-btn btn btn-primary d-block">Choose Image</button>
-                            <input type="file" name="feature_image_upload" id="" class="" onchange="uploadFeatureImage(this)">
+                            <input type="file" name="feature_image_upload" id="" class="" onchange="uploadFeatureImage(this)" accept=".jpg,.jpeg,.png">
 
-                            <!-- <div class="btn uppload-button image_id_uppload_library btn-primary btn-sm  " data-image-url="feature_image" data-image-id="feature_image_id" data-image-preview="output_feature_image" data-view-width="250" data-view-height="250" data-boundary-width="500" data-boundary-height="500">Choose Image</div> -->
+
                             <input type="hidden" id="feature_image" data-srcid="output_feature_image" class="check_change_event" name="feature_image" value="" />
                             <input type="hidden" id="feature_image_id" name="feature_image_id" value="" />
                         </div>
                         <button type="button" data-preview="output_feature_image" data-url="feature_image" data-id="feature_image_id" class="btn btn-primary btn-sm add-image-form-portal create-image-portal-modal pt5" style="margin-bottom: 20px;">+</button>
                         <span id="feature_image_complete" style="display: block;"></span>
 
-                    </div>
+                    </div> -->
 
 
-                    <div class="form-group col-md-12 col-sm-12 ">
+                    <!-- <div class="form-group col-md-12 col-sm-12 ">
                         <div class="mkd-upload-form-btn-wrapper ">
                             <label for="Barcode Image">Gallery Images</label>
                         </div>
@@ -342,11 +364,11 @@ if ($layout_clean_mode) {
 
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
 
 
-                    <div class="form-group col-md-12 col-sm-12">
+                    <!-- <div class="form-group col-md-12 col-sm-12">
                         <label for="Inventory Note">Description </label>
                         <textarea id='subeditor_inventory_note' name='inventory_note' class='form-control subeditor_inventory_note data-input' rows='5'><?php echo set_value('inventory_note'); ?></textarea>
                     </div>
@@ -354,8 +376,18 @@ if ($layout_clean_mode) {
                     <div class="form-group col-md-5 col-sm-12">
                         <label for="Admin Inventory Note">Admin Inventory Note </label>
                         <textarea id='form_admin_inventory_note' name='admin_inventory_note' class='form-control data-input' rows='5'><?php echo set_value('admin_inventory_note'); ?></textarea>
+                    </div> -->
+                    <input type="hidden" name="status" value="2" class="d-none"/>
+                    <!--<div class="form-group col-md-5 col-sm-12 ">
+                        <label for="Status">Status </label>
+                        <select id="form_status" name="status" class="form-control data-input">
+                            <?php foreach ($view_model->status_mapping() as $key => $value) {
+                                echo "<option value='{$key}'> {$value} </option>";
+                            } ?>
+                        </select>
                     </div>
-                    <input type="hidden" name="status" value="2"/>
+                    -->
+
                     <div class="form-group  col-md-5 col-sm-12">
                         <input type="submit" class="btn btn-primary text-white mr-4 my-4 validate-videos" value="Submit">
                     </div>
@@ -426,7 +458,30 @@ $this->load->view('Guest/ImagePortalModal');
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/video_image_script.js"></script>
 <script type="text/javascript">
+    function updateSKU(event) {
+        const categories = getCategories();
+        let category_value = event.options[event.selectedIndex].dataset.category
+        let category_name = event.options[event.selectedIndex].innerHTML;
+        //alert(category_name);
+        //console.log(category_value);
+        let sku_value = categories.filter(category => category.id === category_value)
+        let skuElement = document.querySelector("#form_category_id");
+        let skuDisplayElement = document.querySelector("#form_display_category_id");
+        let product_name = document.querySelector("#form_product_name")
+        //console.log(sku_value);
+        skuElement.value = sku_value[0].id;
+        skuDisplayElement.value = sku_value[0].name;
+        product_name.value = category_name;
+
+    }
+
+    function getCategories() {
+        let categories = JSON.parse(atob(document.querySelector('#encoded_parent_categories').value));
+        return categories;
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
+
         number_counter = 2;
         $(document).on('click', '.add_more_link', function() {
             var row_th = $('.thumbnail_video_row').eq(0).clone();
@@ -659,7 +714,7 @@ $this->load->view('Guest/ImagePortalModal');
                 <label for="">Physical Location <span class="text-danger">*</span></label>
                 <div class="d-flex">
                     <select required name="locations[]" class="form-control location-dropdown" role="physical-location">
-                        <option value=""></option>
+                        <option value="">Select Physical Location</option>
                     </select>
 
                     <?php if ($this->session->userdata('role') == 2) : ?>
@@ -675,7 +730,7 @@ $this->load->view('Guest/ImagePortalModal');
     function Quantity() {
         return `<div class="form-group">
                     <label for="">Quantity <span class="text-danger">*</span></label>
-                    <input required class="form-control" type="number" name="quantity[]" id="">
+                    <input required class="form-control" type="number" name="quantity[]" id="" min='1'>
                 </div>`;
     }
 

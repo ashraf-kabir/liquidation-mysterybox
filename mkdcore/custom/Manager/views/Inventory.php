@@ -86,7 +86,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="col p-2">
             <div class="float-right mr-4">
                 <?php if ($pending) { ?>
-                    <a href="/admin/inventory/approveall/<?php echo $hash;?>" class="btn btn-link  link-underline text-underline">Mark all as Approved</a>
+                    <a href="/manager/inventory/approveall/<?php echo $hash;?>" class="btn btn-link  link-underline text-underline">Mark all as Approved</a>
                 <?php } ?>
             </div>
         </div>
@@ -145,6 +145,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							echo "<td>{$data->quantity}</td>";
 							echo "<td>" . ucfirst($view_model->status_mapping()[$data->status]) ."</td>";
 							echo '<td>';
+                            if ($data->status != 0 /* 0 = inactive  */) {
+                                echo '<a class="btn btn-link text-success link-underline text-underline btn-sm" target="_blank" href="/admin/inventory/set_active/' . $data->id . '">Set Active</a>';
+                            }
 							echo '<a class="btn btn-link  link-underline text-underline  btn-sm" target="_blank" href="/manager/inventory/edit/' . $data->id . '">Edit</a>';
 							echo ' <a class="btn btn-link  link-underline text-underline btn-sm" target="_blank" href="/manager/inventory/view/' . $data->id . '">View</a>';
 							echo '</td>';
