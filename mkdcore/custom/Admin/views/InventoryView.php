@@ -383,7 +383,7 @@ if ($layout_clean_mode) {
 
 						<div class='row' style="text-align: center;">
 							<div class="col-sm-12">
-								<img style="width: 300px;height: 200px" src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode">
+								<img style="width: 1200px;height: 200px" src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode">
 							</div>
 						</div>
 					</div>
@@ -430,7 +430,7 @@ if ($layout_clean_mode) {
 
 						<div class='row' style="text-align: center;">
 							<div class="col-sm-12">
-								<img style="width: 300px;height: 200px" src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode">
+								<img style="width: 1200px;height: 200px" src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode">
 							</div>
 						</div>
 
