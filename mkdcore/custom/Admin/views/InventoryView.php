@@ -408,7 +408,7 @@ if ($layout_clean_mode) {
 
 						<div class='row '>
 							<div class="col-sm-12">
-								<h1 style="text-overflow: hidden;" class="make_font_big"> <?php echo $view_model->get_product_name(); ?></h1>
+								<h1 class="make_font_big"> <?php echo $view_model->get_product_name(); ?></h1>
 							</div>
 						</div>
 
