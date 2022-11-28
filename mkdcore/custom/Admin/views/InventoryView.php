@@ -383,7 +383,7 @@ if ($layout_clean_mode) {
 
 						<div class='row' style="text-align: center;">
 							<div class="col-sm-12">
-								<img style="width: 100%;height: 150px" src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode">
+								<img style="width: 300px;height: 200px" src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode">
 							</div>
 						</div>
 					</div>
@@ -430,7 +430,7 @@ if ($layout_clean_mode) {
 
 						<div class='row' style="text-align: center;">
 							<div class="col-sm-12">
-								<img style="width: 100%;height: 150px" src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode">
+								<img style="width: 300px;height: 200px" src="<?php echo $view_model->get_barcode_image(); ?>" alt="Barcode">
 							</div>
 						</div>
 
@@ -449,7 +449,7 @@ if ($layout_clean_mode) {
 		function printdiv(printpage) {
 
 			$('.print-modal').modal('hide');
-			var headstr = "<html><head><title></title><style type='text/css'>@media print {.make_font_big{font-size: 135px !important;padding:0px !important;word-spacing: 50px !important;width : 100% !important;}@page{width:256px !important;height: 170px !important;margin: 0px !important;padding: 0px !important;}}</style></head><body>";
+			var headstr = "<html><head><title></title><style type='text/css'>@media print {.make_font_big{font-size: 135px !important;padding:0px !important;word-spacing: 50px !important;width : 100% !important;}}</style></head><body>";
 			//var headstr = '<html><head><title></title></head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" crossorigin="anonymous"><style type="text/css">  body  { margin: 0px !important;  } @media print {  .make_font_big{font-size: 7rem !important;padding:0px !important; word-spacing: 50px !important; width : 100% !important;transform:translateY(-20px); } .col-sm-12{ text-align: justify !important;text-justify: inter-word !important;} @page{ width:256px !important; height: 170px !important; margin: 0px !important; padding: 0px !important; }   .printable{padding:0px!important;margin:0px!important;} .printable{width:100%!important;float:left!important;} .printable{padding:0px!important;margin:0px!important;}  } </style><body>';
 
 			var footstr = "</body>";
