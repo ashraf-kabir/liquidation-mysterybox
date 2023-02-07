@@ -356,111 +356,114 @@
                     </p>
                </div>
                <div class="third-box">
-                    <button type="button" class="dropdown-btn btn btn-secondary">change/add <br>Credit Card</br></button>
+                    <button type="button" class="dropdown-btn btn btn-danger">change/add <br>Credit Card</br></button>
                     <div class="dropdown-box" style="overflow-y: auto;">
                          <div class="modal-container">
-                              <div class="payments-details">
-                                   <div class="account-details">
-                                        <div class="heading"><strong>Add Payment Details</strong></div>
-                                        <div class="inputs-container">
+                              <form>
+                                   <div class="payments-details">
+                                        <div class="account-details">
+                                             <div class="heading"><strong>Add Payment Details</strong></div>
+                                             <div class="inputs-container">
 
-                                             <div class="add_card_div">
-                                                  <label for="account-no">credit-card-no <span class="required-must">*</span></label>
-                                                  <input name="number" id="account_no" type="text" placeholder="your account-no" />
-                                             </div>
-                                             <div class="add_card_div">
-                                                  <label for="month">month <span class="required-must">*</span></label>
-                                                  <select style="height: 60px;" name="exp_month" id="exp_month" class="form-control">
-                                                       <option value="">Select Month</option>
-                                                       <option value="01">01 - January</option>
-                                                       <option value="02">02 - February</option>
-                                                       <option value="03">03 - March</option>
-                                                       <option value="04">04 - April</option>
-                                                       <option value="05">05 - May</option>
-                                                       <option value="06">06 - June</option>
-                                                       <option value="07">07 - July</option>
-                                                       <option value="08">08 - August</option>
-                                                       <option value="09">09 - September</option>
-                                                       <option value="10">10 - October</option>
-                                                       <option value="11">11 - November</option>
-                                                       <option value="12">12 - December</option>
-                                                  </select>
-                                             </div>
-                                             <div class="add_card_div">
-                                                  <label for="year">year <span class="required-must">*</span></label>
-                                                  <?php
-                                                  $year  = Date('Y');
-                                                  $limit = $year + 25;
-                                                  ?>
-                                                  <select style="height: 60px;" name="exp_year" id="exp_year" class="form-control">
-                                                       <option value="">Select Year</option>
-                                                       <?php for ($i = $year; $i <= $limit; $i++) {
-                                                            echo "<option value='" . $i . "' > " . $i . " </option>";
-                                                       } ?>
-                                                  </select>
-                                             </div>
-                                             <div class="add_card_div">
-                                                  <label for="CVC">CVC <span class="required-must">*</span></label>
-                                                  <input pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" id="cvc_numb" name="cvc" min-length="3" type="text" placeholder="your CVC" />
-                                             </div>
-
-
-                                             <div class="add_card_div">
-                                                  <label for="card_default">Default </label>
-
-                                                  <select style="height: 60px;" name="card_default" id="card_default" class="form-control">
-                                                       <option value="1">Yes</option>
-                                                       <option value="0">No</option>
-                                                  </select>
-                                             </div>
-
-                                             <div class="add_card_div" style="float: right;">
-                                                  <button type="button" style="margin-right: 39.5%;" class="hide_modal_button add_new_card btn btn-primary ">Save</button>
-                                             </div>
+                                                  <div class="add_card_div">
+                                                       <label for="account-no">credit-card-no <span class="required-must">*</span></label>
+                                                       <input name="number" id="account_no" type="text" placeholder="your account-no" />
+                                                  </div>
+                                                  <div class="add_card_div">
+                                                       <label for="month">month <span class="required-must">*</span></label>
+                                                       <select style="height: 60px;" name="exp_month" id="exp_month" class="form-control">
+                                                            <option value="">Select Month</option>
+                                                            <option value="01">01 - January</option>
+                                                            <option value="02">02 - February</option>
+                                                            <option value="03">03 - March</option>
+                                                            <option value="04">04 - April</option>
+                                                            <option value="05">05 - May</option>
+                                                            <option value="06">06 - June</option>
+                                                            <option value="07">07 - July</option>
+                                                            <option value="08">08 - August</option>
+                                                            <option value="09">09 - September</option>
+                                                            <option value="10">10 - October</option>
+                                                            <option value="11">11 - November</option>
+                                                            <option value="12">12 - December</option>
+                                                       </select>
+                                                  </div>
+                                                  <div class="add_card_div">
+                                                       <label for="year">year <span class="required-must">*</span></label>
+                                                       <?php
+                                                       $year  = Date('Y');
+                                                       $limit = $year + 25;
+                                                       ?>
+                                                       <select style="height: 60px;" name="exp_year" id="exp_year" class="form-control">
+                                                            <option value="">Select Year</option>
+                                                            <?php for ($i = $year; $i <= $limit; $i++) {
+                                                                 echo "<option value='" . $i . "' > " . $i . " </option>";
+                                                            } ?>
+                                                       </select>
+                                                  </div>
+                                                  <div class="add_card_div">
+                                                       <label for="CVC">CVC <span class="required-must">*</span></label>
+                                                       <input pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==4) return false;" id="cvc_numb" name="cvc" min-length="3" type="text" placeholder="your CVC" />
+                                                  </div>
 
 
-                                        </div>
-                                   </div>
+                                                  <div class="add_card_div">
+                                                       <label for="card_default">Default </label>
 
-                                   <div class="billing-address">
-                                        <div class="heading"><strong>Billing Address</strong></div>
-                                        <div class="inputs-container">
-                                             <div>
-                                                  <label for="address">Address <span class="required-must">*</span></label>
-                                                  <input id="billing_address" name="billing_address" value="<?php echo set_value('address_1', $customer->billing_address); ?>" type="search" placeholder="your address" />
-                                             </div>
-                                             <div>
-                                                  <label for="country">Country <span class="required-must">*</span></label>
-                                                  <input readonly="" style="background: #e9ecef" id="billing_country" name="billing_country" type="text" value="<?php echo set_value('country', "US"); ?>" placeholder="your country" />
-                                             </div>
+                                                       <select style="height: 60px;" name="card_default" id="card_default" class="form-control">
+                                                            <option value="1">Yes</option>
+                                                            <option value="0">No</option>
+                                                       </select>
+                                                  </div>
 
-                                             <div>
-                                                  <label for="state">State </label>
-                                                  <input id="billing_state" name="billing_state" value="<?php echo set_value('state', $customer->billing_state); ?>" type="text" placeholder="your state" />
-                                             </div>
-
-                                             <div>
-                                                  <label for="city">City </label>
-                                                  <input id="billing_city" name="billing_city" value="<?php echo set_value('city', $customer->billing_city); ?>" type="text" placeholder="your city" />
-                                             </div>
+                                                  <!-- <div class="add_card_div" style="float: right;">
+                                                       <button type="button" style="margin-right: 39.5%;" class="hide_modal_button add_new_card btn btn-primary ">Save</button>
+                                                  </div> -->
 
 
-                                             <div>
-                                                  <label for="zip-code">Zip-Code <span class="required-must">*</span></label>
-                                                  <input name="billing_zip" id="billing_zip" value="<?php echo set_value('postal_code', $customer->billing_zip); ?>" type="text" placeholder="your zip-code" />
                                              </div>
                                         </div>
-                                   </div>
-                              </div>
-                              <div class="checkout-info-add-btn">
-                                   <div style="float: left;margin-left: 40.5%;">
+
+                                        <div class="billing-address">
+                                             <div class="heading"><strong>Billing Address</strong></div>
+                                             <div class="inputs-container">
+                                                  <div>
+                                                       <label for="address">Address <span class="required-must">*</span></label>
+                                                       <input id="billing_address" name="billing_address" value="<?php echo set_value('address_1', $customer->billing_address); ?>" type="search" placeholder="your address" />
+                                                  </div>
+                                                  <div>
+                                                       <label for="country">Country <span class="required-must">*</span></label>
+                                                       <input readonly="" style="background: #e9ecef" id="billing_country" name="billing_country" type="text" value="<?php echo set_value('country', "US"); ?>" placeholder="your country" />
+                                                  </div>
+
+                                                  <div>
+                                                       <label for="state">State </label>
+                                                       <input id="billing_state" name="billing_state" value="<?php echo set_value('state', $customer->billing_state); ?>" type="text" placeholder="your state" />
+                                                  </div>
+
+                                                  <div>
+                                                       <label for="city">City </label>
+                                                       <input id="billing_city" name="billing_city" value="<?php echo set_value('city', $customer->billing_city); ?>" type="text" placeholder="your city" />
+                                                  </div>
+
+
+                                                  <div>
+                                                       <label for="zip-code">Zip-Code <span class="required-must">*</span></label>
+                                                       <input name="billing_zip" id="billing_zip" value="<?php echo set_value('postal_code', $customer->billing_zip); ?>" type="text" placeholder="your zip-code" />
+                                                  </div>
+                                             </div>
+                                        </div>
+                                        <div class="checkout-info-add-btn">
+                                             <!-- <div style="float: left;margin-left: 40.5%;">
                                         <button type="button" class="save_modal_button add_new_card btn btn-primary ">Save</button>
+                                        
+                                   </div> -->
+                                             <button type="button" class="close-btn btn btn-secondary on_click_billing_modal">Close</button>
+                                             <button type="button" id="add_billing_and_card" class="btn btn-primary add_new_card">Save</button>
+                                             <!-- add-billing-address -->
+                                        </div>
                                    </div>
+                              </form>
 
-
-                                   <button type="button" class="close-btn btn btn-secondary on_click_billing_modal">Close</button>
-                                   <button type="button" class="btn btn-primary  add-billing-address">Save</button>
-                              </div>
                          </div>
                     </div>
                </div>
@@ -490,7 +493,7 @@
                     <p>Order summary</p>
                     <div class="details">
                          <div>
-                              <p>Items(<?php echo count($checkout_data) ?>):</p>
+                              <p>Line Items(<?php echo count($checkout_data) ?>):</p>
                               <p>$<span class="sub_total_value"><?php echo number_format($sub_total, 2); ?></span></p>
                          </div>
                          <div>

@@ -380,10 +380,12 @@ class Home_controller extends Manaknight_Controller
 
     public function profile()
     {
-
         if ($this->session->userdata('customer_login') && $this->session->userdata('user_id')) {
             $this->load->model('customer_model');
+
             $customer = $this->customer_model->get($this->session->userdata('user_id'));
+            $customer_card = $this->inventory_model->get_by_table('customer_cards', 'user_id', intval($customer->id));
+
 
             if ($this->input->post('name', TRUE)  || $this->input->post('address_fill_form', TRUE)) {
 
@@ -404,6 +406,13 @@ class Home_controller extends Manaknight_Controller
                 $this->form_validation->set_rules('shipping_city', "Shipping City", "required|max_length[255]");
                 $this->form_validation->set_rules('shipping_country', "Shipping Country", "required|max_length[255]");
                 $this->form_validation->set_rules('shipping_state', "Shipping State", "required|max_length[255]");
+
+                $this->form_validation->set_rules('account_no', "Account Number", "required|integer");
+                $this->form_validation->set_rules('exp_month', "Expiry Month", "required");
+                $this->form_validation->set_rules('exp_year', "Expiry Year", "required");
+                $this->form_validation->set_rules('cvc', "CVC", "required");
+                $this->form_validation->set_rules('card_default', "Default", "required");
+
 
 
                 if ($this->form_validation->run() === FALSE) {
@@ -427,6 +436,12 @@ class Home_controller extends Manaknight_Controller
                 $shipping_zip           =  $this->input->post('shipping_zip', TRUE);
                 $shipping_address       =  $this->input->post('shipping_address', TRUE);
                 $address_type           =  $this->input->post('address_type', TRUE);
+
+                $account_no           =  $this->input->post('account_no', TRUE);
+                $month           =  $this->input->post('exp_month', TRUE);
+                $year           =  $this->input->post('exp_year', TRUE);
+                $cvc           =  $this->input->post('cvc', TRUE);
+                $is_default           =  $this->input->post('card_default', TRUE);
 
 
 
@@ -460,14 +475,28 @@ class Home_controller extends Manaknight_Controller
                     'shipping_country' => $shipping_country,
                 ];
 
+                $payload2 = [
+                    'account_no' => $account_no,
+                    'month' => $month,
+                    'year' => $year,
+                    'cvc' => $cvc,
+                    'is_default' => $is_default
+                ];
+
                 if (!$this->input->post('address_fill_form', TRUE)) {
                     $payload['name']  =  $name;
                     $payload['phone'] =  $phone;
                 }
 
                 $response = $this->customer_model->edit($payload, $this->session->userdata('user_id'));
+                $response2 = $this->inventory_model->update_by_table('customer_cards', 'user_id', $customer_card->user_id, $payload2);
 
 
+                if ($response && $response2) {
+                    $val = 'success';
+                } else {
+                    $val = 'error';
+                }
                 if ($response) {
                     $output['status'] = 0;
                     $output['success']  = 'Profile has been updated successfully.';
@@ -489,6 +518,7 @@ class Home_controller extends Manaknight_Controller
             }
 
             $data['customer'] = $customer;
+            $data['customer_card'] = $customer_card;
             $data['active'] = 'profile';
             $data['layout_clean_mode'] = FALSE;
             $this->_render('Guest/Profile', $data);

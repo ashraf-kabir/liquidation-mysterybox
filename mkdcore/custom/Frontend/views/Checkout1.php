@@ -230,7 +230,7 @@
                          <div class="product border shadow p-2">
 
                               <div class="image">
-                                   <p>Item: <?php echo $key + 1; ?></p>
+                                   <p>Line Items: <?php echo $key + 1; ?></p>
 
                                    <?php if (!empty($value->feature_image)) {   ?>
 
@@ -517,7 +517,7 @@
 
                          <?php foreach ($cart_items as $key => $value) : ?>
                               <div class="justify-content-between" style="display:none" id="shipping_item_price_label_<?php echo $key; ?>">
-                                   <span> Item <?php echo $key + 1 ?> Shipping:</span>
+                                   <span> Line Items <?php echo $key + 1 ?> Shipping:</span>
                                    <span>$<span id="shipping_cost_label_<?php echo $key; ?>">0.00</span></span>
 
                                    <input type="hidden" class="shipping_cost_input" name="shipping_costs[]" id="shipping_cost_<?php echo $key; ?>">

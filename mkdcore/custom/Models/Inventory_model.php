@@ -278,6 +278,29 @@ class Inventory_model extends Manaknight_Model
 
 
 	/**
+	 * Get Model using table and field
+	 *
+	 * @param integer $id
+	 * @return mixed
+	 */
+	public function get_by_table($table, $field, $value)
+	{
+		$this->db->from($table);
+		$this->db->where($field, $value, TRUE);
+		return $this->db->get()->row();
+	}
+
+
+	public function update_by_table($table, $field, $value, $data)
+	{
+		$this->db->where($field, $value, TRUE);
+		$updateResult = $this->db->update($table, $data);
+		return $updateResult ? true : false;
+	}
+
+
+
+	/**
 	 * Count number of model
 	 *
 	 * @access public

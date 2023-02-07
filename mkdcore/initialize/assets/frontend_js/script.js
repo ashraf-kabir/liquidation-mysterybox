@@ -759,114 +759,131 @@ $(document).on('click', '.add-shipping-address', function (e) {
 });
 
 
-$(document).on('click', '.add-billing-address', function (e) {
+
+// function update_billing_details(billing_address,billing_country,billing_city,billing_state,billing_zip){
+
+//   if (error_for_updating_billing == 0) {
+//     $.ajax({
+//       url: '../v1/api/update_customer_address',
+//       timeout: 30000,
+//       method: 'POST',
+//       dataType: 'JSON',
+//       data: { billing_address, billing_country, billing_city, billing_state, billing_zip },
+//       success: function (response) {
+//         if (response.success) {
+//           $('.on_click_billing_modal').trigger('click');
+//           toastr.success(response.success);
+
+//           $('#msg_billing_address').text(billing_address);
+
+//           $('#msg_billing_zip').text(billing_zip);
+//           $('#msg_billing_state').text(billing_state);
+//           $('#msg_billing_city').text(billing_city);
+
+//           if (billing_state != "") {
+//             $('#billing_coma').show();
+//           } else {
+//             $('#billing_coma').hide();
+//           }
+//         }
+
+
+//         if (response.error) {
+//           toastr.error(response.error);
+//         }
+//       },
+//       error: function () {
+//         toastr.error('Error! Connection timeout.');
+//       }
+//     });
+//   }
+
+// }
+
+
+// function update_card_details(exp_month,card_number,exp_year,cvc,card_default) {
+
+//   $.ajax({
+//     url: '../v1/api/nmi/add_new_card',
+//     timeout: 30000,
+//     method: 'POST',
+//     dataType: 'JSON',
+//     data: { exp_month, card_number, exp_year, cvc, card_default },
+//     success: function (response) {
+//       if (response.success) {
+//         toastr.success(response.success);
+//         load_customer_cards();
+//         $('.close-btn').trigger('click');
+//       }
+
+//       if (response.error) {
+//         toastr.error(response.error);
+//       }
+//     },
+//     error: function () {
+//       toastr.error('Error! Something went wrong.');
+//     }
+//   });
+
+// }
+
+
+
+$(document).on('click', '#add_billing_and_card', function (e) {
   e.preventDefault();
 
-  var error_for_updating_billing = 0;
-  var billing_address = $('#billing_address').val();
-  var billing_country = $('#billing_country').val();
-  var billing_zip = $('#billing_zip').val();
-  var billing_state = $('#billing_state').val();
-  var billing_city = $('#billing_city').val();
+  console.log('i work')
+  
+
+  // var error_for_updating_billing = 0;
+
+  // var billing_address = $('#billing_address').val();
+  // var billing_country = $('#billing_country').val();
+  // var billing_zip = $('#billing_zip').val();
+  // var billing_state = $('#billing_state').val();
+  // var billing_city = $('#billing_city').val();
 
 
+  // var exp_month = $('#exp_month').val();
+  // var card_number = $('#account_no').val();
+  // var exp_year = $('#exp_year').val();
+  // var cvc = $('#cvc_numb').val();
+  // var card_default = $('#card_default').val();
 
 
+  // if (billing_address == '' || billing_address == 0) {
+  //   toastr.error('Address is required.');
+  //   error_for_updating_billing = 1;
+  //   return false;
+  //   exit;
+  // }
 
 
-  if (billing_address == '' || billing_address == 0) {
-    toastr.error('Address is required.');
-    error_for_updating_billing = 1;
-    return false;
-    exit;
-  }
+  // if (billing_zip == '' || billing_zip == 0) {
+  //   toastr.error('Zip Code is required.');
+  //   error_for_updating_billing = 1;
+  //   return false;
+  //   exit;
+  // }
 
 
-  if (billing_zip == '' || billing_zip == 0) {
-    toastr.error('Zip Code is required.');
-    error_for_updating_billing = 1;
-    return false;
-    exit;
-  }
+  // update_card_details(exp_month,card_number,exp_year,cvc,card_default)
+  // update_billing_details(billing_address,billing_country,billing_city,billing_state,billing_zip)
 
-
-  if (error_for_updating_billing == 0) {
-    $.ajax({
-      url: '../v1/api/update_customer_address',
-      timeout: 30000,
-      method: 'POST',
-      dataType: 'JSON',
-      data: { billing_address, billing_country, billing_city, billing_state, billing_zip },
-      success: function (response) {
-        if (response.success) {
-          $('.on_click_billing_modal').trigger('click');
-          toastr.success(response.success);
-
-          $('#msg_billing_address').text(billing_address);
-
-          $('#msg_billing_zip').text(billing_zip);
-          $('#msg_billing_state').text(billing_state);
-          $('#msg_billing_city').text(billing_city);
-
-          if (billing_state != "") {
-            $('#billing_coma').show();
-          } else {
-            $('#billing_coma').hide();
-          }
-        }
-
-
-        if (response.error) {
-          toastr.error(response.error);
-        }
-      },
-      error: function () {
-        toastr.error('Error! Connection timeout.');
-      }
-    });
-  }
+  
+  
 });
+// $(document).on('click', '.add_new_card', function (e) {
+//   e.preventDefault();
+// console.log('it is clicked')
+  
+// });
 
 
 
 
 
 
-
-
-
-$(document).on('click', '.add_new_card', function (e) {
-  e.preventDefault();
-
-  var exp_month = $('#exp_month').val();
-  var card_number = $('#account_no').val();
-  var exp_year = $('#exp_year').val();
-  var cvc = $('#cvc_numb').val();
-  var card_default = $('#card_default').val();
-
-  $.ajax({
-    url: '../v1/api/nmi/add_new_card',
-    timeout: 30000,
-    method: 'POST',
-    dataType: 'JSON',
-    data: { exp_month, card_number, exp_year, cvc, card_default },
-    success: function (response) {
-      if (response.success) {
-        toastr.success(response.success);
-        load_customer_cards();
-        $('.close-btn').trigger('click');
-      }
-
-
-      if (response.error) {
-        toastr.error(response.error);
-      }
-    },
-    error: function () {
-      toastr.error('Error! Something went wrong.');
-    }
-  });
-});
 
 
 // $(document).on('click','.add_new_card',function(e){

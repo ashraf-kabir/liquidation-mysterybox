@@ -30,10 +30,42 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "ID", "", ""],
-        ["key", "string", [{ "limit": 50 }], "Setting Field", "required", ""],
-        ["type", "integer", [], "Setting Type", "required", ""],
-        ["value", "text", [], "Setting Value", "required", "required"]
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
+        [
+          "key",
+          "string",
+          [
+            {
+              "limit": 50
+            }
+          ],
+          "Setting Field",
+          "required",
+          ""
+        ],
+        [
+          "type",
+          "integer",
+          [],
+          "Setting Type",
+          "required",
+          ""
+        ],
+        [
+          "value",
+          "text",
+          [],
+          "Setting Value",
+          "required",
+          "required"
+        ]
       ],
       "method": "\tpublic function get_config_settings()\n\t{\n\t\t$this->db->from('setting');\n\t\t$results = $this->db->get()->result();\n\t\t$data = [];\n\t\tforeach ($results as $key => $value)\n\t\t{\n\t\t\t$data[$value->key] = $value->value;\n\t\t}\n\t\treturn $data;\n\t}\n",
       "join": [],
@@ -45,21 +77,38 @@
           "3": "image",
           "4": "read_only"
         },
-        "maintenance": { "0": "No", "1": "Yes" }
+        "maintenance": {
+          "0": "No",
+          "1": "Yes"
+        }
       },
       "pre": [],
       "post": "if(isset($data['key']))\n\t\t{\n\t\t\tunset($data['key']);\n\t\t}\n",
       "count": [],
-      "unique": ["key"],
+      "unique": [
+        "key"
+      ],
       "seed": [
-        { "key": "site_name", "type": 0, "value": "Manaknight Inc" },
+        {
+          "key": "site_name",
+          "type": 0,
+          "value": "Manaknight Inc"
+        },
         {
           "key": "site_logo",
           "type": 0,
           "value": "https://manaknightdigital.com/assets/img/logo.png"
         },
-        { "key": "maintenance", "type": 1, "value": "0" },
-        { "key": "version", "type": 0, "value": "1.0.0" },
+        {
+          "key": "maintenance",
+          "type": 1,
+          "value": "0"
+        },
+        {
+          "key": "version",
+          "type": 0,
+          "value": "1.0.0"
+        },
         {
           "key": "copyright",
           "type": 0,
@@ -77,11 +126,22 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "ID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
         [
           "name",
           "string",
-          [{ "limit": 16 }],
+          [
+            {
+              "limit": 16
+            }
+          ],
           "xyzRole Name",
           "required",
           "required"
@@ -93,16 +153,42 @@
       "pre": [],
       "post": [],
       "count": [],
-      "unique": ["name"],
-      "seed": [{ "name": "member" }, { "name": "admin" }, { "name": "pos" }]
+      "unique": [
+        "name"
+      ],
+      "seed": [
+        {
+          "name": "member"
+        },
+        {
+          "name": "admin"
+        },
+        {
+          "name": "pos"
+        }
+      ]
     },
     {
       "name": "refer_log",
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "ID", "", ""],
-        ["user_id", "integer", [], "xyzReferree User", "required|integer", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
+        [
+          "user_id",
+          "integer",
+          [],
+          "xyzReferree User",
+          "required|integer",
+          ""
+        ],
         [
           "referrer_user_id",
           "integer",
@@ -119,16 +205,35 @@
           "required|integer",
           "required|integer"
         ],
-        ["status", "integer", [], "xyzStatus", "required|integer", ""]
+        [
+          "status",
+          "integer",
+          [],
+          "xyzStatus",
+          "required|integer",
+          ""
+        ]
       ],
       "method": [],
       "join": [
-        { "name": "user", "field": "user_id" },
-        { "name": "referrer", "field": "referrer_user_id" }
+        {
+          "name": "user",
+          "field": "user_id"
+        },
+        {
+          "name": "referrer",
+          "field": "referrer_user_id"
+        }
       ],
       "mapping": {
-        "status": { "0": "xyzPending", "1": "xyzConfirmed", "2": "xyzPaid" },
-        "type": { "0": "user" }
+        "status": {
+          "0": "xyzPending",
+          "1": "xyzConfirmed",
+          "2": "xyzPaid"
+        },
+        "type": {
+          "0": "user"
+        }
       },
       "pre": "$data['status'] = 0;\n",
       "post": [],
@@ -142,11 +247,22 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "ID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
         [
           "email",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzEmail",
           "trim|required|valid_email",
           "trim|required|valid_email"
@@ -154,23 +270,73 @@
         [
           "password",
           "password",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzPassword",
           "required",
           ""
         ],
-        ["type", "string", [{ "limit": 2 }], "xyzType", "", ""],
-        ["verify", "integer", [], "xyzVerified", "", ""],
-        ["role_id", "integer", [], "xyzRole", "", ""],
-        ["status", "integer", [], "xyzStatus", "", "required|in_list[0,1,2]"]
+        [
+          "type",
+          "string",
+          [
+            {
+              "limit": 2
+            }
+          ],
+          "xyzType",
+          "",
+          ""
+        ],
+        [
+          "verify",
+          "integer",
+          [],
+          "xyzVerified",
+          "",
+          ""
+        ],
+        [
+          "role_id",
+          "integer",
+          [],
+          "xyzRole",
+          "",
+          ""
+        ],
+        [
+          "status",
+          "integer",
+          [],
+          "xyzStatus",
+          "",
+          "required|in_list[0,1,2]"
+        ]
       ],
       "method": [],
       "join": [],
       "mapping": {
-        "verify": { "0": "xyzNot verified", "1": "xyzVerified" },
-        "status": { "0": "xyzInactive", "1": "Active", "2": "xyzSuspend" },
-        "role_id": { "1": "xyzMember", "2": "xyzAdmin" },
-        "type": { "n": "Normal", "f": "Facebook", "g": "Google" }
+        "verify": {
+          "0": "xyzNot verified",
+          "1": "xyzVerified"
+        },
+        "status": {
+          "0": "xyzInactive",
+          "1": "Active",
+          "2": "xyzSuspend"
+        },
+        "role_id": {
+          "1": "xyzMember",
+          "2": "xyzAdmin"
+        },
+        "type": {
+          "n": "Normal",
+          "f": "Facebook",
+          "g": "Google"
+        }
       },
       "pre": "$data['status'] = 1;\n",
       "post": [],
@@ -207,18 +373,110 @@
       "name": "user",
       "timestamp": true,
       "migration": true,
-      "unique": ["credential_id"],
+      "unique": [
+        "credential_id"
+      ],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
-        ["first_name", "string", [{ "limit": 255 }], "xyzFirst Name", "", ""],
-        ["last_name", "string", [{ "limit": 255 }], "xyzLast Name", "", ""],
-        ["phone", "string", [{ "limit": 50 }], "xyzPhone #", "", ""],
-        ["image", "image|250|250|500|500", [], "xyzImage", "", ""],
-        ["image_id", "integer", [], "xyzImage ID", "", ""],
-        ["credential_id", "integer", [], "xyzCredential ID", "", ""],
-        ["refer", "string", [{ "limit": 50 }], "xyzRefer Code", "", ""],
-        ["profile_id", "integer", [], "xyzProfile", "", ""],
-        ["stripe_id", "string", [{ "limit": 255 }], "xyzStripe Id", "", ""]
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
+        [
+          "first_name",
+          "string",
+          [
+            {
+              "limit": 255
+            }
+          ],
+          "xyzFirst Name",
+          "",
+          ""
+        ],
+        [
+          "last_name",
+          "string",
+          [
+            {
+              "limit": 255
+            }
+          ],
+          "xyzLast Name",
+          "",
+          ""
+        ],
+        [
+          "phone",
+          "string",
+          [
+            {
+              "limit": 50
+            }
+          ],
+          "xyzPhone #",
+          "",
+          ""
+        ],
+        [
+          "image",
+          "image|250|250|500|500",
+          [],
+          "xyzImage",
+          "",
+          ""
+        ],
+        [
+          "image_id",
+          "integer",
+          [],
+          "xyzImage ID",
+          "",
+          ""
+        ],
+        [
+          "credential_id",
+          "integer",
+          [],
+          "xyzCredential ID",
+          "",
+          ""
+        ],
+        [
+          "refer",
+          "string",
+          [
+            {
+              "limit": 50
+            }
+          ],
+          "xyzRefer Code",
+          "",
+          ""
+        ],
+        [
+          "profile_id",
+          "integer",
+          [],
+          "xyzProfile",
+          "",
+          ""
+        ],
+        [
+          "stripe_id",
+          "string",
+          [
+            {
+              "limit": 255
+            }
+          ],
+          "xyzStripe Id",
+          "",
+          ""
+        ]
       ],
       "join": [
         {
@@ -228,7 +486,11 @@
       ],
       "method": "\n\t public function get_all_users($where = array())\n\t { \n\t \n\t $this->db->select('user.*');\n\t  \n\t $this->db->from($this->_table); \n\t \n\t $this->db->join('credential', ' user.credential_id = credential.id ', 'left'); \n\t \n\t $this->db->where('credential.role_id != 2'); \n\t \n\t return $this->db->get()->result();\n\t \n\t }  \n\tpublic function get_user_by_credential_id($credential_id)\n\t{\n\t\t$this->db->where('credential_id', $credential_id);\n\t\treturn $this->db->get($this->_table)->row();\n\t}\n",
       "mapping": {
-        "status": { "0": "xyzInactive", "1": "Active", "2": "xyzSuspend" }
+        "status": {
+          "0": "xyzInactive",
+          "1": "Active",
+          "2": "xyzSuspend"
+        }
       },
       "pre": "$data['image'] = 'https://i.imgur.com/AzJ7DRw.png';\n\t\t$data['refer'] = uniqid();\n\t\t$data['status'] = 1;\n\t\t$data['verify'] = 0;\n\t\t$data['stripe_id'] = '';\n\n\t\tif(!isset($data['profile_id']))\n\t\t{\n\t\t\t$data['profile_id'] = 0;\n\t\t}\n\n\t\tif(!isset($data['type']))\n\t\t{\n\t\t\t$data['type'] = 'n';\n\t\t}\n\t\tif (strpos($data['phone'], '1') != 0)\n\t\t{\n\t\t\t$data['phone'] = '1' + $data['phone'];\n\t\t}\n",
       "post": "\n\n\t\tif(isset($data['image']) && strlen($data['image']) < 1)\n\t\t{\n\t\t\tunset($data['image']);\n\t\t}\n",
@@ -274,9 +536,30 @@
       "timestamp": false,
       "migration": true,
       "field": [
-        ["id", "integer", [], "ID", "", ""],
-        ["token", "text", [], "xyzToken", "required", "required"],
-        ["data", "text", [], "xyzData", "required", "required"],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
+        [
+          "token",
+          "text",
+          [],
+          "xyzToken",
+          "required",
+          "required"
+        ],
+        [
+          "data",
+          "text",
+          [],
+          "xyzData",
+          "required",
+          "required"
+        ],
         [
           "type",
           "integer",
@@ -301,8 +584,22 @@
           "required|integer",
           "required|integer"
         ],
-        ["issue_at", "datetime", [], "xyzIssue at", "required", "required"],
-        ["expire_at", "datetime", [], "xyzExpire at", "required", "required"],
+        [
+          "issue_at",
+          "datetime",
+          [],
+          "xyzIssue at",
+          "required",
+          "required"
+        ],
+        [
+          "expire_at",
+          "datetime",
+          [],
+          "xyzExpire at",
+          "required",
+          "required"
+        ],
         [
           "status",
           "integer",
@@ -320,7 +617,10 @@
       ],
       "method": "\tconst NOT_FOUND = 0;\n\n\tconst EXPIRED = 1;\n\n\tconst FOUND = 2;\n\n\tpublic function create_verify_token ($user_id, $phone)\n\t{\n\t\t$code = rand(100000,999999);\n\t\t$expire_at = date('Y-m-j H:i:s', time() + 60 * 5);\n\t\t$token = $this->create([\n\t\t\t'token' => $code,\n\t\t\t'data' => json_encode([\n\t\t\t\t'code' => $code,\n\t\t\t\t'phone' => $phone\n\t\t\t]),\n\t\t\t'type' => 6,\n\t\t\t'user_id' => $user_id,\n\t\t\t'ttl' => 5 * 60,\n\t\t\t'issue_at' => date('Y-m-j H:i:s'),\n\t\t\t'expire_at' => $expire_at,\n\t\t\t'status' => 1\n\t\t]);\n\t\treturn $code;\n\t}\n\n\tpublic function check_verify_token ($code)\n\t{\n\t\t$exist = $this->get_by_field('token', $code);\n\t\tif (!$exist)\n\t\t{\n\t\t\treturn NOT_FOUND;\n\t\t}\n\t\t$expire_at = strtotime($exist->expire_at);\n\n\t\tif ($expire_at < time())\n\t\t{\n\t\t\treturn EXPIRED;\n\t\t}\n\t\treturn json_decode($exist->data, TRUE);\n\t}\n",
       "mapping": {
-        "status": { "0": "xyzInactive", "1": "xyzActive" },
+        "status": {
+          "0": "xyzInactive",
+          "1": "xyzActive"
+        },
         "type": {
           "0": "xyzForgot_token",
           "1": "xyzAccess_token",
@@ -342,20 +642,54 @@
       "name": "email",
       "timestamp": true,
       "migration": true,
-      "unique": ["slug"],
+      "unique": [
+        "slug"
+      ],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
         [
           "slug",
           "string",
-          [{ "limit": 50 }],
+          [
+            {
+              "limit": 50
+            }
+          ],
           "xyzEmail Type",
           "required|is_unique[email.slug]",
           ""
         ],
-        ["subject", "text", [], "xyzSubject", "required", "required"],
-        ["tag", "text", [], "xyzReplacement Tags", "required", ""],
-        ["html", "text", [], "xyzEmail Body", "required", "required"]
+        [
+          "subject",
+          "text",
+          [],
+          "xyzSubject",
+          "required",
+          "required"
+        ],
+        [
+          "tag",
+          "text",
+          [],
+          "xyzReplacement Tags",
+          "required",
+          ""
+        ],
+        [
+          "html",
+          "text",
+          [],
+          "xyzEmail Body",
+          "required",
+          "required"
+        ]
       ],
       "join": [],
       "method": "\tpublic function get_template($slug,$data)\n\t{\n\t\t$this->db->from('email');\n\t\t$this->db->where('slug',$slug,TRUE);\n\t\t$template=$this->db->get()->row();\n\t\tif(!$template)\n\t\t{\n\t\t\treturn FALSE;\n\t\t}\n\t\t$tags_raw=$template->tag;\n\t\t$tags=explode(',',$tags_raw);\n\t\t$template->subject=$this->inject_substitute($template->subject,$tags,$data);\n\t\t$template->html=$this->inject_substitute($template->html,$tags,$data);\n\t\treturn $template;\n\t}\n\n\tpublic function inject_substitute($raw, $tags, $data) \n\t{\n\t\tforeach ($data as $key => $value) \n\t\t{\n\t\t\tif (in_array($key, $tags))\n\t\t\t{\n\t\t\t\t$raw = str_replace('{{{' . $key . '}}}', $value, $raw);\n\t\t\t}\n\t\t}\n\t\treturn $raw;\n\t}\n",
@@ -400,19 +734,46 @@
       "name": "sms",
       "timestamp": true,
       "migration": true,
-      "unique": ["slug"],
+      "unique": [
+        "slug"
+      ],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
         [
           "slug",
           "string",
-          [{ "limit": 50 }],
+          [
+            {
+              "limit": 50
+            }
+          ],
           "xyzSMS Slug",
           "required|is_unique[sms.slug]",
           ""
         ],
-        ["tag", "text", [], "xyzReplacement Tags", "required", ""],
-        ["content", "text", [], "xyzSMS Body", "required", "required"]
+        [
+          "tag",
+          "text",
+          [],
+          "xyzReplacement Tags",
+          "required",
+          ""
+        ],
+        [
+          "content",
+          "text",
+          [],
+          "xyzSMS Body",
+          "required",
+          "required"
+        ]
       ],
       "join": [],
       "method": "\tpublic function get_template($slug,$data)\n\t{\n\t\t$this->db->from('sms');\n\t\t$this->db->where('slug',$slug,TRUE);\n\t\t$template=$this->db->get()->row();\n\t\tif(!$template)\n\t\t{\n\t\t\treturn FALSE;\n\t\t}\n\t\t$tags_raw=$template->tags;\n\t\t$tags=explode(',',$tags_raw);\n\t\t$template->content=$this->inject_substitute($template->content,$tags,$data);\n\t\treturn $template;\n\t}\n\n\tpublic function inject_substitute($raw, $tags, $data) \n\t{\n\t\tforeach ($data as $key => $value) \n\t\t{\n\t\t\tif (in_array($key, $tags))\n\t\t\t{\n\t\t\t\t$raw = str_replace('{{{' . $key . '}}}', $value, $raw);\n\t\t\t}\n\t\t}\n\t\treturn $raw;\n\t}\n",
@@ -435,29 +796,74 @@
       "unique": [],
       "seed": [],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
-        ["user_id", "integer", [], "User", "required|integer", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
+        [
+          "user_id",
+          "integer",
+          [],
+          "User",
+          "required|integer",
+          ""
+        ],
         [
           "action",
           "string",
-          [{ "limit": 50 }],
+          [
+            {
+              "limit": 50
+            }
+          ],
           "Action",
           "required|max[50]",
           ""
         ],
-        ["detail", "text", [], "Detail", "required", ""],
-        ["last_ip", "string", [{ "limit": 25 }], "Last IP", "required", ""],
+        [
+          "detail",
+          "text",
+          [],
+          "Detail",
+          "required",
+          ""
+        ],
+        [
+          "last_ip",
+          "string",
+          [
+            {
+              "limit": 25
+            }
+          ],
+          "Last IP",
+          "required",
+          ""
+        ],
         [
           "user_agent",
           "string",
-          [{ "limit": 100 }],
+          [
+            {
+              "limit": 100
+            }
+          ],
           "User Agent",
           "required",
           ""
         ]
       ],
       "method": "\tfunction get_ip()\n \t{\n \t\tif(!empty($_SERVER['HTTP_CLIENT_IP']))\n \t\t{\n \t\t\t$ip = $_SERVER['HTTP_CLIENT_IP'];\n \t\t}\n \t\telseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))\n \t\t{\n \t\t\t$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];\n \t\t}\n \t\telse\n \t\t{\n \t\t\t$ip = $_SERVER['REMOTE_ADDR'];\n \t\t}\n \t\treturn $ip;\n \t}\n\n\tfunction get_user_agent()\n \t{\n \t\treturn $_SERVER['HTTP_USER_AGENT'];\n \t}\n",
-      "join": [{ "name": "user", "field": "user_id" }],
+      "join": [
+        {
+          "name": "user",
+          "field": "user_id"
+        }
+      ],
       "mapping": {},
       "pre": "$data['last_ip'] = $this->get_ip();\n\t\t$data['last_ip'] = $this->get_user_agent();\n",
       "post": [],
@@ -471,29 +877,74 @@
       "unique": [],
       "seed": [],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
-        ["user_id", "integer", [], "User", "required|integer", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
+        [
+          "user_id",
+          "integer",
+          [],
+          "User",
+          "required|integer",
+          ""
+        ],
         [
           "action",
           "string",
-          [{ "limit": 50 }],
+          [
+            {
+              "limit": 50
+            }
+          ],
           "Action",
           "required|max[50]",
           ""
         ],
-        ["detail", "text", [], "Detail", "required", ""],
-        ["last_ip", "string", [{ "limit": 25 }], "Last IP", "required", ""],
+        [
+          "detail",
+          "text",
+          [],
+          "Detail",
+          "required",
+          ""
+        ],
+        [
+          "last_ip",
+          "string",
+          [
+            {
+              "limit": 25
+            }
+          ],
+          "Last IP",
+          "required",
+          ""
+        ],
         [
           "user_agent",
           "string",
-          [{ "limit": 100 }],
+          [
+            {
+              "limit": 100
+            }
+          ],
           "User Agent",
           "required",
           ""
         ]
       ],
       "method": "\tfunction get_ip()\n \t{\n \t\tif(!empty($_SERVER['HTTP_CLIENT_IP']))\n \t\t{\n \t\t\t$ip = $_SERVER['HTTP_CLIENT_IP'];\n \t\t}\n \t\telseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))\n \t\t{\n \t\t\t$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];\n \t\t}\n \t\telse\n \t\t{\n \t\t\t$ip = $_SERVER['REMOTE_ADDR'];\n \t\t}\n \t\treturn $ip;\n \t}\n\n\tfunction get_user_agent()\n \t{\n \t\treturn $_SERVER['HTTP_USER_AGENT'];\n \t}\n",
-      "join": [{ "name": "user", "field": "user_id" }],
+      "join": [
+        {
+          "name": "user",
+          "field": "user_id"
+        }
+      ],
       "mapping": {},
       "pre": "$data['last_ip'] = $this->get_ip();\n\t\t$data['last_ip'] = $this->get_user_agent();\n",
       "post": [],
@@ -507,30 +958,78 @@
       "unique": [],
       "seed": [],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
-        ["user_id", "integer", [], "User", "required|integer", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
+        [
+          "user_id",
+          "integer",
+          [],
+          "User",
+          "required|integer",
+          ""
+        ],
         [
           "action",
           "string",
-          [{ "limit": 50 }],
+          [
+            {
+              "limit": 50
+            }
+          ],
           "Action",
           "required|max[50]",
           ""
         ],
-        ["sku", "text", [], "SKU", "required", ""],
-        ["quantity", "integer", [], "Quantity", "required", ""],
-        ["detail", "text", [], "Detail", "required", ""],
+        [
+          "sku",
+          "text",
+          [],
+          "SKU",
+          "required",
+          ""
+        ],
+        [
+          "quantity",
+          "integer",
+          [],
+          "Quantity",
+          "required",
+          ""
+        ],
+        [
+          "detail",
+          "text",
+          [],
+          "Detail",
+          "required",
+          ""
+        ],
         [
           "user_agent",
           "string",
-          [{ "limit": 100 }],
+          [
+            {
+              "limit": 100
+            }
+          ],
           "User Agent",
           "required",
           ""
         ]
       ],
       "method": "\tfunction get_ip()\n \t{\n \t\tif(!empty($_SERVER['HTTP_CLIENT_IP']))\n \t\t{\n \t\t\t$ip = $_SERVER['HTTP_CLIENT_IP'];\n \t\t}\n \t\telseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))\n \t\t{\n \t\t\t$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];\n \t\t}\n \t\telse\n \t\t{\n \t\t\t$ip = $_SERVER['REMOTE_ADDR'];\n \t\t}\n \t\treturn $ip;\n \t}\n\n\tfunction get_user_agent()\n \t{\n \t\treturn $_SERVER['HTTP_USER_AGENT'];\n \t}\n",
-      "join": [{ "name": "user", "field": "user_id" }],
+      "join": [
+        {
+          "name": "user",
+          "field": "user_id"
+        }
+      ],
       "mapping": {},
       "pre": "$data['last_ip'] = $this->get_ip();\n\t\t$data['last_ip'] = $this->get_user_agent();\n",
       "post": [],
@@ -544,29 +1043,74 @@
       "unique": [],
       "seed": [],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
-        ["user_id", "integer", [], "User", "required|integer", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
+        [
+          "user_id",
+          "integer",
+          [],
+          "User",
+          "required|integer",
+          ""
+        ],
         [
           "action",
           "string",
-          [{ "limit": 50 }],
+          [
+            {
+              "limit": 50
+            }
+          ],
           "Action",
           "required|max[50]",
           ""
         ],
-        ["detail", "text", [], "Detail", "required", ""],
-        ["last_ip", "string", [{ "limit": 25 }], "Last IP", "required", ""],
+        [
+          "detail",
+          "text",
+          [],
+          "Detail",
+          "required",
+          ""
+        ],
+        [
+          "last_ip",
+          "string",
+          [
+            {
+              "limit": 25
+            }
+          ],
+          "Last IP",
+          "required",
+          ""
+        ],
         [
           "user_agent",
           "string",
-          [{ "limit": 100 }],
+          [
+            {
+              "limit": 100
+            }
+          ],
           "User Agent",
           "required",
           ""
         ]
       ],
       "method": "\tfunction get_ip()\n \t{\n \t\tif(!empty($_SERVER['HTTP_CLIENT_IP']))\n \t\t{\n \t\t\t$ip = $_SERVER['HTTP_CLIENT_IP'];\n \t\t}\n \t\telseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))\n \t\t{\n \t\t\t$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];\n \t\t}\n \t\telse\n \t\t{\n \t\t\t$ip = $_SERVER['REMOTE_ADDR'];\n \t\t}\n \t\treturn $ip;\n \t}\n\n\tfunction get_user_agent()\n \t{\n \t\treturn $_SERVER['HTTP_USER_AGENT'];\n \t}\n",
-      "join": [{ "name": "user", "field": "user_id" }],
+      "join": [
+        {
+          "name": "user",
+          "field": "user_id"
+        }
+      ],
       "mapping": {},
       "pre": "$data['last_ip'] = $this->get_ip();\n\t\t$data['last_ip'] = $this->get_user_agent();\n",
       "post": [],
@@ -589,9 +1133,30 @@
         }
       ],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
-        ["url", "image|250|250|500|500", [], "xyzURL", "required", "required"],
-        ["caption", "text", [], "xyzCaption", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
+        [
+          "url",
+          "image|250|250|500|500",
+          [],
+          "xyzURL",
+          "required",
+          "required"
+        ],
+        [
+          "caption",
+          "text",
+          [],
+          "xyzCaption",
+          "",
+          ""
+        ],
         [
           "user_id",
           "integer",
@@ -600,12 +1165,38 @@
           "required|integer",
           "required|integer"
         ],
-        ["width", "integer", [], "xyzWidth", "", ""],
-        ["height", "integer", [], "xyzHeight", "", ""],
-        ["type", "integer", [], "xyzImage Type", "", ""]
+        [
+          "width",
+          "integer",
+          [],
+          "xyzWidth",
+          "",
+          ""
+        ],
+        [
+          "height",
+          "integer",
+          [],
+          "xyzHeight",
+          "",
+          ""
+        ],
+        [
+          "type",
+          "integer",
+          [],
+          "xyzImage Type",
+          "",
+          ""
+        ]
       ],
       "method": [],
-      "join": [{ "name": "user", "field": "user_id" }],
+      "join": [
+        {
+          "name": "user",
+          "field": "user_id"
+        }
+      ],
       "mapping": {
         "type": {
           "0": "Server Hosted",
@@ -628,12 +1219,36 @@
       "unique": [],
       "seed": [],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
-        ["file", "file", [], "File", "required", "required"],
-        ["file_id", "integer", [], "File ID", "", ""]
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
+        [
+          "file",
+          "file",
+          [],
+          "File",
+          "required",
+          "required"
+        ],
+        [
+          "file_id",
+          "integer",
+          [],
+          "File ID",
+          "",
+          ""
+        ]
       ],
       "method": [],
-      "import_fields": ["file", "file_id"],
+      "import_fields": [
+        "file",
+        "file_id"
+      ],
       "join": [],
       "mapping": {},
       "pre": [],
@@ -646,7 +1261,14 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
         [
           "url",
           "text",
@@ -678,7 +1300,14 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
         [
           "product_name",
           "string",
@@ -703,9 +1332,30 @@
           "",
           ""
         ],
-        ["category_id", "integer", [], "xyzCategory", "", ""],
-        ["manifest_id", "integer", [], "xyzManifest", "", ""],
-        ["is_product", "integer", [], "xyzProduct", "", ""],
+        [
+          "category_id",
+          "integer",
+          [],
+          "xyzCategory",
+          "",
+          ""
+        ],
+        [
+          "manifest_id",
+          "integer",
+          [],
+          "xyzManifest",
+          "",
+          ""
+        ],
+        [
+          "is_product",
+          "integer",
+          [],
+          "xyzProduct",
+          "",
+          ""
+        ],
         [
           "parent_inventory_id",
           "integer",
@@ -722,7 +1372,14 @@
           "required",
           "required"
         ],
-        ["physical_location", "integer", [], "xyzInventory Location", "", ""],
+        [
+          "physical_location",
+          "integer",
+          [],
+          "xyzInventory Location",
+          "",
+          ""
+        ],
         [
           "location_description",
           "string",
@@ -735,10 +1392,38 @@
           "",
           ""
         ],
-        ["weight", "float", [], "xyzWeight", "", ""],
-        ["length", "float", [], "xyzLength", "", ""],
-        ["height", "float", [], "xyzHeight", "", ""],
-        ["width", "float", [], "xyzWidth", "", ""],
+        [
+          "weight",
+          "float",
+          [],
+          "xyzWeight",
+          "",
+          ""
+        ],
+        [
+          "length",
+          "float",
+          [],
+          "xyzLength",
+          "",
+          ""
+        ],
+        [
+          "height",
+          "float",
+          [],
+          "xyzHeight",
+          "",
+          ""
+        ],
+        [
+          "width",
+          "float",
+          [],
+          "xyzWidth",
+          "",
+          ""
+        ],
         [
           "feature_image",
           "image|250|250|500|500",
@@ -751,7 +1436,14 @@
           "",
           ""
         ],
-        ["selling_price", "float", [], "xyzSelling Price", "", ""],
+        [
+          "selling_price",
+          "float",
+          [],
+          "xyzSelling Price",
+          "",
+          ""
+        ],
         [
           "quantity",
           "integer",
@@ -760,26 +1452,110 @@
           "greater_than_equal_to[1]",
           ""
         ],
-        ["inventory_note", "text", [], "xyzInventory Note", "", ""],
-        ["barcode_image", "text", [], "xyzBarcode Image", "", ""],
-        ["cost_price", "float", [], "xyzCost Price", "", ""],
-        ["admin_inventory_note", "text", [], "xyzAdmin Inventory Note", "", ""],
-        ["can_ship", "integer", [], "xyzCan Ship", "", ""],
-        ["can_ship_approval", "integer", [], "Can Ship Approval", "", ""],
-        ["free_ship", "integer", [], "xyzFree Shipping", "", ""],
-        ["pin_item_top", "integer", [{ "default": 1 }], "xyzPin Item", "", ""],
+        [
+          "inventory_note",
+          "text",
+          [],
+          "xyzInventory Note",
+          "",
+          ""
+        ],
+        [
+          "barcode_image",
+          "text",
+          [],
+          "xyzBarcode Image",
+          "",
+          ""
+        ],
+        [
+          "cost_price",
+          "float",
+          [],
+          "xyzCost Price",
+          "",
+          ""
+        ],
+        [
+          "admin_inventory_note",
+          "text",
+          [],
+          "xyzAdmin Inventory Note",
+          "",
+          ""
+        ],
+        [
+          "can_ship",
+          "integer",
+          [],
+          "xyzCan Ship",
+          "",
+          ""
+        ],
+        [
+          "can_ship_approval",
+          "integer",
+          [],
+          "Can Ship Approval",
+          "",
+          ""
+        ],
+        [
+          "free_ship",
+          "integer",
+          [],
+          "xyzFree Shipping",
+          "",
+          ""
+        ],
+        [
+          "pin_item_top",
+          "integer",
+          [
+            {
+              "default": 1
+            }
+          ],
+          "xyzPin Item",
+          "",
+          ""
+        ],
         [
           "available_in_shelf",
           "integer",
-          [{ "default": 1 }],
+          [
+            {
+              "default": 1
+            }
+          ],
           "xyzAvailable In Shelf",
           "",
           ""
         ],
-        ["product_type", "integer", [], "xyzProduct Type", "", ""],
-        ["video_url", "text", [], "xyzVideo URL", "", ""],
-        ["youtube_thumbnail_1", "text", [], "Youtube Thumbnail 1", "", ""],
-
+        [
+          "product_type",
+          "integer",
+          [],
+          "xyzProduct Type",
+          "",
+          ""
+        ],
+        [
+          "video_url",
+          "text",
+          [],
+          "xyzVideo URL",
+          "",
+          ""
+        ],
+        [
+          "youtube_thumbnail_1",
+          "text",
+          [],
+          "Youtube Thumbnail 1",
+          "",
+          ""
+        ],
         [
           "youtube_thumbnail_2",
           "image|250|250|500|500",
@@ -792,7 +1568,6 @@
           "",
           ""
         ],
-
         [
           "youtube_thumbnail_3",
           "image|250|250|500|500",
@@ -805,7 +1580,6 @@
           "",
           ""
         ],
-
         [
           "youtube_thumbnail_4",
           "image|250|250|500|500",
@@ -818,9 +1592,22 @@
           "",
           ""
         ],
-        ["store_inventory", "text", [], "Store Inventory", "", ""],
-
-        ["status", "integer", [], "xyzStatus", "", ""]
+        [
+          "store_inventory",
+          "text",
+          [],
+          "Store Inventory",
+          "",
+          ""
+        ],
+        [
+          "status",
+          "integer",
+          [],
+          "xyzStatus",
+          "",
+          ""
+        ]
       ],
       "method": [],
       "join": [],
@@ -836,12 +1623,10 @@
           "2": "Pickup only",
           "3": "Shipping only"
         },
-
         "can_ship_approval": {
           "1": "Yes",
           "2": "No"
         },
-
         "free_ship": {
           "1": "Yes",
           "2": "No"
@@ -870,7 +1655,14 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
         [
           "product_name",
           "string",
@@ -895,8 +1687,22 @@
           "",
           ""
         ],
-        ["from_store", "integer", [], "From Store", "required", "required"],
-        ["sale_person_id", "integer", [], "", "", ""],
+        [
+          "from_store",
+          "integer",
+          [],
+          "From Store",
+          "required",
+          "required"
+        ],
+        [
+          "sale_person_id",
+          "integer",
+          [],
+          "",
+          "",
+          ""
+        ],
         [
           "from_location",
           "integer",
@@ -905,10 +1711,38 @@
           "required",
           "required"
         ],
-        ["to_store", "integer", [], "To Store", "required", "required"],
-        ["to_location", "integer", [], "To Location", "", ""],
-        ["quantity", "integer", [], "Quantity", "required", "required"],
-        ["status", "integer", [], "xyzStatus", "", ""]
+        [
+          "to_store",
+          "integer",
+          [],
+          "To Store",
+          "required",
+          "required"
+        ],
+        [
+          "to_location",
+          "integer",
+          [],
+          "To Location",
+          "",
+          ""
+        ],
+        [
+          "quantity",
+          "integer",
+          [],
+          "Quantity",
+          "required",
+          "required"
+        ],
+        [
+          "status",
+          "integer",
+          [],
+          "xyzStatus",
+          "",
+          ""
+        ]
       ],
       "method": [],
       "join": [],
@@ -930,10 +1764,42 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
-        ["inventory_id", "integer", [], "xyzInventory ID", "", ""],
-        ["image_id", "integer", [], "xyzImage ID", "", ""],
-        ["image_name", "string", [{ "limit": 255 }], "xyzName", "", ""]
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
+        [
+          "inventory_id",
+          "integer",
+          [],
+          "xyzInventory ID",
+          "",
+          ""
+        ],
+        [
+          "image_id",
+          "integer",
+          [],
+          "xyzImage ID",
+          "",
+          ""
+        ],
+        [
+          "image_name",
+          "string",
+          [
+            {
+              "limit": 255
+            }
+          ],
+          "xyzName",
+          "",
+          ""
+        ]
       ],
       "method": [],
       "join": [],
@@ -949,7 +1815,14 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
         [
           "feature_image",
           "image|250|250|500|500",
@@ -965,7 +1838,11 @@
         [
           "name",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzName",
           "required|max_length[255]",
           "required|max_length[255]"
@@ -973,13 +1850,31 @@
         [
           "sku_prefix",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "SKU Prefix",
           "max_length[255]",
           "max_length[255]"
         ],
-        ["parent_category_id", "integer", [], "Parent Category", "", ""],
-        ["is_from_parent_page", "integer", [], "Parent Category", "", ""],
+        [
+          "parent_category_id",
+          "integer",
+          [],
+          "Parent Category",
+          "",
+          ""
+        ],
+        [
+          "is_from_parent_page",
+          "integer",
+          [],
+          "Parent Category",
+          "",
+          ""
+        ],
         [
           "status",
           "integer",
@@ -1012,7 +1907,14 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
         [
           "name",
           "string",
@@ -1117,7 +2019,6 @@
           "",
           ""
         ],
-
         [
           "shipping_address",
           "string",
@@ -1130,7 +2031,6 @@
           "",
           ""
         ],
-
         [
           "shipping_zip",
           "string",
@@ -1143,7 +2043,6 @@
           "",
           ""
         ],
-
         [
           "shipping_city",
           "string",
@@ -1156,7 +2055,6 @@
           "",
           ""
         ],
-
         [
           "shipping_country",
           "string",
@@ -1169,7 +2067,6 @@
           "",
           ""
         ],
-
         [
           "shipping_state",
           "string",
@@ -1182,8 +2079,14 @@
           "",
           ""
         ],
-
-        ["customer_since", "date", [], "xyzCustomer Since", "required", ""],
+        [
+          "customer_since",
+          "date",
+          [],
+          "xyzCustomer Since",
+          "required",
+          ""
+        ],
         [
           "last_order",
           "string",
@@ -1196,7 +2099,6 @@
           "",
           ""
         ],
-
         [
           "stripe_id",
           "string",
@@ -1209,10 +2111,30 @@
           "",
           ""
         ],
-
-        ["num_orders", "integer", [], "xyzNum Orders", "", ""],
-        ["address_type", "integer", [], "Shipping Address Type", "", ""],
-        ["customer_type", "integer", [], "xyzCustomer Type", "", ""],
+        [
+          "num_orders",
+          "integer",
+          [],
+          "xyzNum Orders",
+          "",
+          ""
+        ],
+        [
+          "address_type",
+          "integer",
+          [],
+          "Shipping Address Type",
+          "",
+          ""
+        ],
+        [
+          "customer_type",
+          "integer",
+          [],
+          "xyzCustomer Type",
+          "",
+          ""
+        ],
         [
           "company_name",
           "string",
@@ -1225,7 +2147,6 @@
           "",
           ""
         ],
-
         [
           "token",
           "string",
@@ -1238,7 +2159,6 @@
           "",
           ""
         ],
-
         [
           "token_expiry",
           "string",
@@ -1251,7 +2171,6 @@
           "",
           ""
         ],
-
         [
           "status",
           "integer",
@@ -1268,7 +2187,6 @@
           "0": "Inactive",
           "1": "Active"
         },
-
         "customer_type": {
           "1": "Business",
           "2": "Individual"
@@ -1290,9 +2208,30 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
-        ["store_id", "integer", [], "Store ID", "", ""],
-        ["barcode_image", "text", [], "xyzBarcode", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
+        [
+          "store_id",
+          "integer",
+          [],
+          "Store ID",
+          "",
+          ""
+        ],
+        [
+          "barcode_image",
+          "text",
+          [],
+          "xyzBarcode",
+          "",
+          ""
+        ],
         [
           "name",
           "string",
@@ -1320,7 +2259,14 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
         [
           "name",
           "string",
@@ -1333,7 +2279,14 @@
           "required|max_length[255]",
           "required|max_length[255]"
         ],
-        ["address", "text", [], "xyzAddress", "required", "required"],
+        [
+          "address",
+          "text",
+          [],
+          "xyzAddress",
+          "required",
+          "required"
+        ],
         [
           "state",
           "string",
@@ -1370,8 +2323,22 @@
           "required|max_length[25]",
           "required|max_length[25]"
         ],
-        ["city", "string", [], "xyzCity", "", ""],
-        ["can_ship", "integer", [], "xyzCan Ship", "", ""]
+        [
+          "city",
+          "string",
+          [],
+          "xyzCity",
+          "",
+          ""
+        ],
+        [
+          "can_ship",
+          "integer",
+          [],
+          "xyzCan Ship",
+          "",
+          ""
+        ]
       ],
       "method": "",
       "join": [],
@@ -1393,24 +2360,106 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzProduct ID", "", ""],
-        ["product_id", "integer", [], "xyzProduct ID", "", ""],
-        ["user_id", "integer", [], "xyzUser ID", "", ""],
-        ["customer_id", "integer", [], "xyzCustomer ID", "", ""],
-        ["product_qty", "integer", [], "xyzQuantity", "", ""],
-        ["unit_price", "float", [], "xyzUnit Price", "", ""],
-        ["total_price", "float", [], "xyzTotal Price", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzProduct ID",
+          "",
+          ""
+        ],
+        [
+          "product_id",
+          "integer",
+          [],
+          "xyzProduct ID",
+          "",
+          ""
+        ],
+        [
+          "user_id",
+          "integer",
+          [],
+          "xyzUser ID",
+          "",
+          ""
+        ],
+        [
+          "customer_id",
+          "integer",
+          [],
+          "xyzCustomer ID",
+          "",
+          ""
+        ],
+        [
+          "product_qty",
+          "integer",
+          [],
+          "xyzQuantity",
+          "",
+          ""
+        ],
+        [
+          "unit_price",
+          "float",
+          [],
+          "xyzUnit Price",
+          "",
+          ""
+        ],
+        [
+          "total_price",
+          "float",
+          [],
+          "xyzTotal Price",
+          "",
+          ""
+        ],
         [
           "product_name",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzProduct Name",
           "",
           ""
         ],
-        ["secret_key", "string", [{ "limit": 255 }], "xyzKey", "", ""],
-        ["expiry", "integer", [], "xyzExpiry", "", ""],
-        ["store_id", "integer", [{ "default": null }], "Store ID", "", ""]
+        [
+          "secret_key",
+          "string",
+          [
+            {
+              "limit": 255
+            }
+          ],
+          "xyzKey",
+          "",
+          ""
+        ],
+        [
+          "expiry",
+          "integer",
+          [],
+          "xyzExpiry",
+          "",
+          ""
+        ],
+        [
+          "store_id",
+          "integer",
+          [
+            {
+              "default": null
+            }
+          ],
+          "Store ID",
+          "",
+          ""
+        ]
       ],
       "method": [],
       "join": [],
@@ -1426,21 +2475,102 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "ID", "", ""],
-        ["product_id", "integer", [], "xyzProduct ID", "", ""],
-        ["user_id", "integer", [], "xyzUser ID", "", ""],
-        ["customer_id", "integer", [], "xyzCustomer ID", "", ""],
-        ["pos_order_id", "integer", [], "xyzOrder ID", "", ""],
-        ["product_qty", "integer", [], "xyzQuantity", "", ""],
-        ["is_pickup", "integer", [], "is Pickup", "", ""],
-        ["is_done", "integer", [], "is Done", "", ""],
-        ["unit_price", "float", [], "xyzUnit Price", "", ""],
-        ["total_price", "float", [], "xyzTotal Price", "", ""],
-        ["shipping_cost", "float", [], "Shipping Cost", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
+        [
+          "product_id",
+          "integer",
+          [],
+          "xyzProduct ID",
+          "",
+          ""
+        ],
+        [
+          "user_id",
+          "integer",
+          [],
+          "xyzUser ID",
+          "",
+          ""
+        ],
+        [
+          "customer_id",
+          "integer",
+          [],
+          "xyzCustomer ID",
+          "",
+          ""
+        ],
+        [
+          "pos_order_id",
+          "integer",
+          [],
+          "xyzOrder ID",
+          "",
+          ""
+        ],
+        [
+          "product_qty",
+          "integer",
+          [],
+          "xyzQuantity",
+          "",
+          ""
+        ],
+        [
+          "is_pickup",
+          "integer",
+          [],
+          "is Pickup",
+          "",
+          ""
+        ],
+        [
+          "is_done",
+          "integer",
+          [],
+          "is Done",
+          "",
+          ""
+        ],
+        [
+          "unit_price",
+          "float",
+          [],
+          "xyzUnit Price",
+          "",
+          ""
+        ],
+        [
+          "total_price",
+          "float",
+          [],
+          "xyzTotal Price",
+          "",
+          ""
+        ],
+        [
+          "shipping_cost",
+          "float",
+          [],
+          "Shipping Cost",
+          "",
+          ""
+        ],
         [
           "product_name",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzProduct Name",
           "",
           ""
@@ -1448,7 +2578,11 @@
         [
           "shipping_service",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Shipping Service",
           "",
           ""
@@ -1456,12 +2590,23 @@
         [
           "shipping_service_name",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzShipping Service Name",
           "",
           ""
         ],
-        ["store_id", "integer", [], "Store ID", "", ""]
+        [
+          "store_id",
+          "integer",
+          [],
+          "Store ID",
+          "",
+          ""
+        ]
       ],
       "method": [],
       "join": [],
@@ -1486,7 +2631,14 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
         [
           "store_id",
           "integer",
@@ -1495,14 +2647,54 @@
           "required|integer",
           "required|integer"
         ],
-        ["is_picked", "integer", [{ "default": 0 }], "xyzPicked", "", ""],
-        ["is_shipped", "integer", [{ "default": 0 }], "xyzShipped", "", ""],
-        ["pick_up_id", "integer", [], "xyzPickup", "", ""],
-        ["referrer", "integer", [], "xyzReferrer", "", ""],
+        [
+          "is_picked",
+          "integer",
+          [
+            {
+              "default": 0
+            }
+          ],
+          "xyzPicked",
+          "",
+          ""
+        ],
+        [
+          "is_shipped",
+          "integer",
+          [
+            {
+              "default": 0
+            }
+          ],
+          "xyzShipped",
+          "",
+          ""
+        ],
+        [
+          "pick_up_id",
+          "integer",
+          [],
+          "xyzPickup",
+          "",
+          ""
+        ],
+        [
+          "referrer",
+          "integer",
+          [],
+          "xyzReferrer",
+          "",
+          ""
+        ],
         [
           "customer_email",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzCustomer Email",
           "",
           ""
@@ -1510,7 +2702,11 @@
         [
           "customer_phone",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Phone",
           "max_length[255]",
           "max_length[255]"
@@ -1518,7 +2714,11 @@
         [
           "billing_name",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzBilling Name",
           "required|max_length[255]",
           "required|max_length[255]"
@@ -1534,7 +2734,11 @@
         [
           "billing_country",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzBilling Country",
           "required|max_length[255]",
           "required|max_length[255]"
@@ -1542,7 +2746,11 @@
         [
           "billing_state",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzBilling State",
           "required|max_length[255]",
           "required|max_length[255]"
@@ -1550,7 +2758,11 @@
         [
           "billing_city",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzBilling City",
           "required|max_length[255]",
           "required|max_length[255]"
@@ -1558,7 +2770,11 @@
         [
           "billing_zip",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzBilling Zip",
           "required|max_length[255]",
           "required|max_length[255]"
@@ -1566,7 +2782,11 @@
         [
           "shipping_name",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzShipping Name",
           "required|max_length[255]",
           "required|max_length[255]"
@@ -1574,7 +2794,11 @@
         [
           "coupon_log_id",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzCoupon Log",
           "",
           ""
@@ -1587,21 +2811,54 @@
           "required",
           "required"
         ],
-        ["intent_data", "text", [], "Stripe Data", "", ""],
-        ["order_date_time", "datetime", [], "Order DateTime", "", ""],
+        [
+          "intent_data",
+          "text",
+          [],
+          "Stripe Data",
+          "",
+          ""
+        ],
+        [
+          "order_date_time",
+          "datetime",
+          [],
+          "Order DateTime",
+          "",
+          ""
+        ],
         [
           "ship_station_tracking_no",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzTracking No",
           "",
           ""
         ],
-        ["tracking_no", "string", [{ "limit": 255 }], "xyzTracking No", "", ""],
+        [
+          "tracking_no",
+          "string",
+          [
+            {
+              "limit": 255
+            }
+          ],
+          "xyzTracking No",
+          "",
+          ""
+        ],
         [
           "shipping_country",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzShipping Country",
           "",
           ""
@@ -1609,7 +2866,11 @@
         [
           "shipping_state",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzShipping State",
           "",
           ""
@@ -1617,7 +2878,11 @@
         [
           "shipping_city",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzShipping City",
           "",
           ""
@@ -1625,7 +2890,11 @@
         [
           "shipping_cost_service_name",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzShipping Service",
           "",
           ""
@@ -1633,7 +2902,11 @@
         [
           "shipping_cost_service_code",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzShipping Service Code",
           "",
           ""
@@ -1641,21 +2914,95 @@
         [
           "shipping_zip",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzShipping Zip",
           "",
           ""
         ],
-        ["subtotal", "float", [], "xyzSubtotal", "required", "required"],
-        ["cash_amount", "float", [], "xyzSubtotal", "", ""],
-        ["credit_amount", "float", [], "xyzSubtotal", "", ""],
-        ["is_split", "integer", [], "xyzSplit Payment", "", ""],
-        ["shipping_cost", "float", [], "xyzShipping Cost", "", ""],
-        ["tax", "float", [], "xyzTax", "", ""],
-        ["total", "float", [], "xyzTotal", "required", "required"],
-        ["discount", "float", [], "xyzDiscount", "", ""],
-        ["refunded_amount", "float", [], "Refunded Amount", "", ""],
-        ["refund_response", "text", [], "Refund Response", "", ""],
+        [
+          "subtotal",
+          "float",
+          [],
+          "xyzSubtotal",
+          "required",
+          "required"
+        ],
+        [
+          "cash_amount",
+          "float",
+          [],
+          "xyzSubtotal",
+          "",
+          ""
+        ],
+        [
+          "credit_amount",
+          "float",
+          [],
+          "xyzSubtotal",
+          "",
+          ""
+        ],
+        [
+          "is_split",
+          "integer",
+          [],
+          "xyzSplit Payment",
+          "",
+          ""
+        ],
+        [
+          "shipping_cost",
+          "float",
+          [],
+          "xyzShipping Cost",
+          "",
+          ""
+        ],
+        [
+          "tax",
+          "float",
+          [],
+          "xyzTax",
+          "",
+          ""
+        ],
+        [
+          "total",
+          "float",
+          [],
+          "xyzTotal",
+          "required",
+          "required"
+        ],
+        [
+          "discount",
+          "float",
+          [],
+          "xyzDiscount",
+          "",
+          ""
+        ],
+        [
+          "refunded_amount",
+          "float",
+          [],
+          "Refunded Amount",
+          "",
+          ""
+        ],
+        [
+          "refund_response",
+          "text",
+          [],
+          "Refund Response",
+          "",
+          ""
+        ],
         [
           "order_type",
           "integer",
@@ -1716,15 +3063,46 @@
       "method": "",
       "join": [],
       "mapping": {
-        "status": { "0": "Canceled", "1": "Purchased", "2": "Refunded" },
-        "status_color": { "0": "danger", "1": "success", "2": "warning" },
-        "order_type": { "1": "Online", "2": "POS" },
-        "pos_pickup_status": { "1": "Pending", "2": "Picked" },
-        "checkout_type": { "1": "Pickup", "2": "Delivery" },
-        "is_picked": { "1": "Yes", "0": "No" },
-        "is_shipped": { "1": "Yes", "0": "No" },
-        "is_split": { "1": "Yes", "0": "No" },
-        "payment_method": { "1": "Cash", "2": "Card", "3": "ACH", "4": "Bank" },
+        "status": {
+          "0": "Canceled",
+          "1": "Purchased",
+          "2": "Refunded"
+        },
+        "status_color": {
+          "0": "danger",
+          "1": "success",
+          "2": "warning"
+        },
+        "order_type": {
+          "1": "Online",
+          "2": "POS"
+        },
+        "pos_pickup_status": {
+          "1": "Pending",
+          "2": "Picked"
+        },
+        "checkout_type": {
+          "1": "Pickup",
+          "2": "Delivery"
+        },
+        "is_picked": {
+          "1": "Yes",
+          "0": "No"
+        },
+        "is_shipped": {
+          "1": "Yes",
+          "0": "No"
+        },
+        "is_split": {
+          "1": "Yes",
+          "0": "No"
+        },
+        "payment_method": {
+          "1": "Cash",
+          "2": "Card",
+          "3": "ACH",
+          "4": "Bank"
+        },
         "referrer": {
           "1": "None",
           "2": "Facebook",
@@ -1743,11 +3121,50 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzid", "", ""],
-        ["employee_name", "string", [{ "limit": 255 }], "xyzName", "", ""],
-        ["message_note", "text", [], "xyzMessage Note", "", ""],
-        ["order_id", "integer", [], "xyzOrder ID", "", ""],
-        ["msg_type", "integer", [], "xyzMessage Type", "", ""]
+        [
+          "id",
+          "integer",
+          [],
+          "xyzid",
+          "",
+          ""
+        ],
+        [
+          "employee_name",
+          "string",
+          [
+            {
+              "limit": 255
+            }
+          ],
+          "xyzName",
+          "",
+          ""
+        ],
+        [
+          "message_note",
+          "text",
+          [],
+          "xyzMessage Note",
+          "",
+          ""
+        ],
+        [
+          "order_id",
+          "integer",
+          [],
+          "xyzOrder ID",
+          "",
+          ""
+        ],
+        [
+          "msg_type",
+          "integer",
+          [],
+          "xyzMessage Type",
+          "",
+          ""
+        ]
       ],
       "method": [],
       "join": [],
@@ -1768,7 +3185,14 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
         [
           "product_id",
           "integer",
@@ -1785,11 +3209,26 @@
           "required|integer",
           "required|integer"
         ],
-        ["product_name", "string", [{ "limit": 255 }], "xyzProduct", "", ""],
+        [
+          "product_name",
+          "string",
+          [
+            {
+              "limit": 255
+            }
+          ],
+          "xyzProduct",
+          "",
+          ""
+        ],
         [
           "ship_station_tracking_no",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Ship Station Tracking",
           "",
           ""
@@ -1797,7 +3236,11 @@
         [
           "ship_station_shipping_date",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Ship Station Shipping Date",
           "",
           ""
@@ -1805,7 +3248,11 @@
         [
           "shipping_service_name",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzShipping Service Name",
           "",
           ""
@@ -1813,7 +3260,11 @@
         [
           "shipping_service_code",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzShipping Service Code",
           "",
           ""
@@ -1821,23 +3272,59 @@
         [
           "shipping_cost_name",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Shipping Cost Name",
           "",
           ""
         ],
-        ["shipping_cost_value", "float", [], "Shipping Cost Value", "", ""],
+        [
+          "shipping_cost_value",
+          "float",
+          [],
+          "Shipping Cost Value",
+          "",
+          ""
+        ],
         [
           "shipping_service_id",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Shipping Service ID",
           "",
           ""
         ],
-        ["amount", "float", [], "xyzAmount", "required", "required"],
-        ["item_tax", "float", [], "xyzAmount", "required", "required"],
-        ["product_unit_price", "float", [], "xyzPrice", "required", "required"],
+        [
+          "amount",
+          "float",
+          [],
+          "xyzAmount",
+          "required",
+          "required"
+        ],
+        [
+          "item_tax",
+          "float",
+          [],
+          "xyzAmount",
+          "required",
+          "required"
+        ],
+        [
+          "product_unit_price",
+          "float",
+          [],
+          "xyzPrice",
+          "required",
+          "required"
+        ],
         [
           "quantity",
           "integer",
@@ -1886,13 +3373,30 @@
           "required|integer",
           "required|integer"
         ],
-        ["is_pickup", "integer", [], "Pick up", "required|integer", ""],
-        ["inventory_details", "text", [], "Inventory Details", "", ""]
+        [
+          "is_pickup",
+          "integer",
+          [],
+          "Pick up",
+          "required|integer",
+          ""
+        ],
+        [
+          "inventory_details",
+          "text",
+          [],
+          "Inventory Details",
+          "",
+          ""
+        ]
       ],
       "method": "",
       "join": [],
       "mapping": {
-        "is_pickuo": { "0": "Delivery", "1": "Pickup" }
+        "is_pickuo": {
+          "0": "Delivery",
+          "1": "Pickup"
+        }
       },
       "pre": "",
       "post": "",
@@ -1905,7 +3409,14 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
         [
           "code",
           "string",
@@ -1926,7 +3437,14 @@
           "required|integer",
           "required|integer"
         ],
-        ["data", "text", [], "xyzData", "required", "required"],
+        [
+          "data",
+          "text",
+          [],
+          "xyzData",
+          "required",
+          "required"
+        ],
         [
           "amount",
           "float",
@@ -1954,7 +3472,11 @@
         [
           "status",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzStatus",
           "required|max_length[255]",
           "required|max_length[255]"
@@ -1963,7 +3485,10 @@
       "method": "",
       "join": [],
       "mapping": {
-        "status": { "0": "Active", "1": "Inactive" },
+        "status": {
+          "0": "Active",
+          "1": "Inactive"
+        },
         "type": {
           "0": "Fixed Amount",
           "1": "Percentage",
@@ -1982,11 +3507,22 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
         [
           "code",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzCode",
           "required|max_length[255]",
           "required|max_length[255]"
@@ -2010,12 +3546,23 @@
         [
           "user_ip",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzCode",
           "required|max_length[255]",
           "required|max_length[255]"
         ],
-        ["amount", "float", [], "xyzAmount", "required", "required"]
+        [
+          "amount",
+          "float",
+          [],
+          "xyzAmount",
+          "required",
+          "required"
+        ]
       ],
       "method": "",
       "join": [],
@@ -2031,8 +3578,22 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
-        ["payment_type", "integer", [], "xyzPayment Type", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
+        [
+          "payment_type",
+          "integer",
+          [],
+          "xyzPayment Type",
+          "",
+          ""
+        ],
         [
           "pos_order_id",
           "integer",
@@ -2041,19 +3602,98 @@
           "required|integer",
           "required|integer"
         ],
-        ["transaction_date", "date", [], "xyzTransaction Date", "", ""],
-        ["transaction_time", "text", [], "xyzTransaction Time", "", ""],
-        ["pos_user_id", "integer", [], "xyzPOS User", "", ""],
-        ["customer_id", "integer", [], "xyzCustomer", "", ""],
-        ["tax", "float", [{ "default": 0 }], "xyzTax", "", ""],
-        ["discount", "float", [{ "default": 0 }], "xyzDiscount", "", ""],
-        ["subtotal", "float", [], "xyzSubtotal", "", ""],
-        ["total", "float", [], "xyzTotal", "", ""],
-        ["status", "integer", [{ "default": 2 }], "xyzStatus", "", ""],
+        [
+          "transaction_date",
+          "date",
+          [],
+          "xyzTransaction Date",
+          "",
+          ""
+        ],
+        [
+          "transaction_time",
+          "text",
+          [],
+          "xyzTransaction Time",
+          "",
+          ""
+        ],
+        [
+          "pos_user_id",
+          "integer",
+          [],
+          "xyzPOS User",
+          "",
+          ""
+        ],
+        [
+          "customer_id",
+          "integer",
+          [],
+          "xyzCustomer",
+          "",
+          ""
+        ],
+        [
+          "tax",
+          "float",
+          [
+            {
+              "default": 0
+            }
+          ],
+          "xyzTax",
+          "",
+          ""
+        ],
+        [
+          "discount",
+          "float",
+          [
+            {
+              "default": 0
+            }
+          ],
+          "xyzDiscount",
+          "",
+          ""
+        ],
+        [
+          "subtotal",
+          "float",
+          [],
+          "xyzSubtotal",
+          "",
+          ""
+        ],
+        [
+          "total",
+          "float",
+          [],
+          "xyzTotal",
+          "",
+          ""
+        ],
+        [
+          "status",
+          "integer",
+          [
+            {
+              "default": 2
+            }
+          ],
+          "xyzStatus",
+          "",
+          ""
+        ],
         [
           "transaction_type",
           "integer",
-          [{ "default": 1 }],
+          [
+            {
+              "default": 1
+            }
+          ],
           "Transaction Type",
           "",
           ""
@@ -2062,9 +3702,21 @@
       "method": "",
       "join": [],
       "mapping": {
-        "status": { "0": "Failed", "1": "Paid", "2": "Pending" },
-        "payment_type": { "1": "Cash", "2": "Card", "3": "ACH", "4": "Bank" },
-        "transaction_type": { "1": "Sales", "2": "Refund" }
+        "status": {
+          "0": "Failed",
+          "1": "Paid",
+          "2": "Pending"
+        },
+        "payment_type": {
+          "1": "Cash",
+          "2": "Card",
+          "3": "ACH",
+          "4": "Bank"
+        },
+        "transaction_type": {
+          "1": "Sales",
+          "2": "Refund"
+        }
       },
       "pre": "",
       "post": "",
@@ -2077,11 +3729,22 @@
       "timestamp": true,
       "migration": true,
       "field": [
-        ["id", "integer", [], "xyzID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "xyzID",
+          "",
+          ""
+        ],
         [
           "department_name",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzDepartment Name",
           "required|max_length[255]",
           "required|max_length[255]"
@@ -2102,7 +3765,14 @@
       "migration": true,
       "unique": [],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
         [
           "tax",
           "float",
@@ -2119,7 +3789,11 @@
       "post": "",
       "count": "",
       "override": "",
-      "seed": [{ "tax": 8 }]
+      "seed": [
+        {
+          "tax": 8
+        }
+      ]
     },
     {
       "name": "notification_system",
@@ -2127,7 +3801,14 @@
       "migration": true,
       "unique": [],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
         [
           "product_id",
           "id",
@@ -2139,7 +3820,11 @@
         [
           "email",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Email",
           "required|valid_email",
           "required|valid_email"
@@ -2155,7 +3840,11 @@
         [
           "product_name",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Product Name",
           "required",
           "required"
@@ -2163,17 +3852,35 @@
         [
           "product_sku",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Product Sku",
           "required",
           "required"
         ],
-        ["product_upc", "string", [{ "limit": 255 }], "Product UPC", "", ""]
+        [
+          "product_upc",
+          "string",
+          [
+            {
+              "limit": 255
+            }
+          ],
+          "Product UPC",
+          "",
+          ""
+        ]
       ],
       "join": [],
       "method": "",
       "mapping": {
-        "is_notified": { "1": "Yes", "0": "No" }
+        "is_notified": {
+          "1": "Yes",
+          "0": "No"
+        }
       },
       "pre": "if(!isset($data['is_notified']))\n\t\t{\n\t\t\t $data['is_notified'] = 0; \n\t\t}\n\t\t\t",
       "post": "",
@@ -2187,7 +3894,14 @@
       "migration": true,
       "unique": [],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
         [
           "user_id",
           "id",
@@ -2199,14 +3913,39 @@
         [
           "account_no",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Account#",
           "required|numeric",
           "required|numeric"
         ],
-        ["cvc", "id", [], "CVC", "required|numeric", "required|numeric"],
-        ["month", "id", [], "Month", "required|numeric", "required|numeric"],
-        ["year", "id", [], "Year", "required|numeric", "required|numeric"],
+        [
+          "cvc",
+          "id",
+          [],
+          "CVC",
+          "required|numeric",
+          "required|numeric"
+        ],
+        [
+          "month",
+          "id",
+          [],
+          "Month",
+          "required|numeric",
+          "required|numeric"
+        ],
+        [
+          "year",
+          "id",
+          [],
+          "Year",
+          "required|numeric",
+          "required|numeric"
+        ],
         [
           "is_default",
           "id",
@@ -2215,12 +3954,30 @@
           "required|numeric",
           "required|numeric"
         ],
-        ["status", "id", [], "Status", "required|numeric", "required|numeric"],
-        ["last4", "id", [], "last4", "required|numeric", "required|numeric"],
+        [
+          "status",
+          "id",
+          [],
+          "Status",
+          "required|numeric",
+          "required|numeric"
+        ],
+        [
+          "last4",
+          "id",
+          [],
+          "last4",
+          "required|numeric",
+          "required|numeric"
+        ],
         [
           "brand",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Product Name",
           "required",
           "required"
@@ -2228,12 +3985,27 @@
         [
           "customer_id",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Customer ID",
           "required",
           "required"
         ],
-        ["card_token", "string", [{ "limit": 255 }], "Card Token", "", ""]
+        [
+          "card_token",
+          "string",
+          [
+            {
+              "limit": 255
+            }
+          ],
+          "Card Token",
+          "",
+          ""
+        ]
       ],
       "join": [],
       "method": "",
@@ -2250,11 +4022,22 @@
       "migration": true,
       "unique": [],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
         [
           "referrer_key",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Referrer Key",
           "required|max_length[255]|is_unique[traffic_referrer.referrer_key]",
           "required|max_length[255]"
@@ -2262,7 +4045,11 @@
         [
           "referrer_name",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Referrer Name",
           "required|max_length[255]",
           "required|max_length[255]"
@@ -2275,7 +4062,12 @@
       "post": "",
       "count": "",
       "override": "",
-      "seed": [{ "referrer_name": "None", "referrer_key": "none" }]
+      "seed": [
+        {
+          "referrer_name": "None",
+          "referrer_key": "none"
+        }
+      ]
     },
     {
       "name": "terms_and_conditions",
@@ -2283,7 +4075,14 @@
       "migration": true,
       "unique": [],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
         [
           "terms_and_condition_text",
           "text",
@@ -2292,8 +4091,22 @@
           "required",
           ""
         ],
-        ["privacy_policy", "text", [], "Privacy Policy", "required", ""],
-        ["about_us_page", "text", [], "About", "", ""]
+        [
+          "privacy_policy",
+          "text",
+          [],
+          "Privacy Policy",
+          "required",
+          ""
+        ],
+        [
+          "about_us_page",
+          "text",
+          [],
+          "About",
+          "",
+          ""
+        ]
       ],
       "join": [],
       "method": "",
@@ -2302,7 +4115,12 @@
       "post": "",
       "count": "",
       "override": "",
-      "seed": [{ "terms_and_condition_text": "Test", "about_us_page": "Test" }]
+      "seed": [
+        {
+          "terms_and_condition_text": "Test",
+          "about_us_page": "Test"
+        }
+      ]
     },
     {
       "name": "carousel_slider",
@@ -2310,11 +4128,22 @@
       "migration": true,
       "unique": [],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
         [
           "feature_image",
           "image|250|250|500|500",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "xyzImage",
           "required",
           "required"
@@ -2335,11 +4164,22 @@
       "migration": true,
       "unique": [],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
         [
           "home_page_top_text",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Top Bar Text",
           "max_length[255]",
           "max_length[255]"
@@ -2347,7 +4187,11 @@
         [
           "home_page_top_color",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Top Bar Color",
           "max_length[255]",
           "max_length[255]"
@@ -2355,7 +4199,11 @@
         [
           "home_page_top_bg",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Top Bar Background Color",
           "max_length[255]",
           "max_length[255]"
@@ -2363,7 +4211,11 @@
         [
           "home_page_address",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Address",
           "max_length[255]",
           "max_length[255]"
@@ -2371,7 +4223,11 @@
         [
           "home_page_phone_no",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Phone#",
           "max_length[255]",
           "max_length[255]"
@@ -2379,7 +4235,11 @@
         [
           "home_page_time",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Office Timing",
           "max_length[255]",
           "max_length[255]"
@@ -2387,7 +4247,11 @@
         [
           "home_page_support_email",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Support Email",
           "max_length[255]|valid_email",
           "max_length[255]|valid_email"
@@ -2395,7 +4259,11 @@
         [
           "home_page_fb_link",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Facebook Link",
           "max_length[255]|valid_url",
           "max_length[255]|valid_url"
@@ -2403,7 +4271,11 @@
         [
           "home_page_tiktok_link",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Tiktok Link",
           "max_length[255]|valid_url",
           "max_length[255]|valid_url"
@@ -2411,7 +4283,11 @@
         [
           "home_page_insta_link",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Instagram Link",
           "max_length[255]|valid_url",
           "max_length[255]|valid_url"
@@ -2419,7 +4295,11 @@
         [
           "home_page_pintrest_link",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Pinterest Link",
           "max_length[255]|valid_url",
           "max_length[255]|valid_url"
@@ -2427,7 +4307,11 @@
         [
           "product_text_note",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Text about how to buy item",
           "max_length[255]",
           "max_length[255]"
@@ -2435,7 +4319,11 @@
         [
           "home_page_twitter_link",
           "string",
-          [{ "limit": 255 }],
+          [
+            {
+              "limit": 255
+            }
+          ],
           "Twitter Link",
           "max_length[255]|valid_url",
           "max_length[255]|valid_url"
@@ -2456,14 +4344,38 @@
       "migration": true,
       "unique": [],
       "field": [
-        ["id", "integer", [], "ID", "", ""],
-        ["description", "text", [], "Description", "required", "required"],
-        ["status", "integer", [], "Status", "required", "required"]
+        [
+          "id",
+          "integer",
+          [],
+          "ID",
+          "",
+          ""
+        ],
+        [
+          "description",
+          "text",
+          [],
+          "Description",
+          "required",
+          "required"
+        ],
+        [
+          "status",
+          "integer",
+          [],
+          "Status",
+          "required",
+          "required"
+        ]
       ],
       "join": [],
       "method": "",
       "mapping": {
-        "status": { "1": "Active", "2": "Inactive" }
+        "status": {
+          "1": "Active",
+          "2": "Inactive"
+        }
       },
       "pre": "",
       "post": "",
@@ -2484,7 +4396,10 @@
       "api_auth": true,
       "api": true,
       "profile_page_fields": [],
-      "middleware": ["auth", "acl"],
+      "middleware": [
+        "auth",
+        "acl"
+      ],
       "js": [
         "/assets/js/media.js",
         "/assets/js/core.js",
@@ -2526,7 +4441,6 @@
           "About Us": "/about_us/edit",
           "Privacy Policy": "/privacy_policy/edit"
         },
-
         "Orders": "/orders/0?order_by=id&direction=DESC",
         "xyzReports": {
           "xyzTransactions": "/transactions/0?order_by=id&direction=DESC",
@@ -2556,7 +4470,10 @@
       "api_auth": true,
       "api": true,
       "profile_page_fields": [],
-      "middleware": ["auth", "acl"],
+      "middleware": [
+        "auth",
+        "acl"
+      ],
       "js": [
         "/assets/js/media.js",
         "/assets/js/core.js",
@@ -2595,7 +4512,10 @@
       "api_auth": true,
       "api": true,
       "profile_page_fields": [],
-      "middleware": ["auth", "acl"],
+      "middleware": [
+        "auth",
+        "acl"
+      ],
       "js": [
         "/assets/js/media.js",
         "/assets/js/core.js",
@@ -2666,8 +4586,18 @@
       "custom_view_edit": [],
       "custom_view_list": [],
       "custom_view_view": [],
-      "listing_fields_api": ["id", "email", "first_name", "last_name"],
-      "listing_headers": ["ID", "Photo", "Personal Information", "Status"],
+      "listing_fields_api": [
+        "id",
+        "email",
+        "first_name",
+        "last_name"
+      ],
+      "listing_headers": [
+        "ID",
+        "Photo",
+        "Personal Information",
+        "Status"
+      ],
       "listing_rows": [
         "id|integer",
         "image|image",
@@ -2677,8 +4607,19 @@
       "listing_actions": [
         "Credential|/admin/credentials/edit/{$data->credential_id}|(1==1)?TRUE:FALSE"
       ],
-      "filter_fields": ["id", "email", "first_name", "last_name"],
-      "add_fields": ["email", "first_name", "last_name", "phone", "image"],
+      "filter_fields": [
+        "id",
+        "email",
+        "first_name",
+        "last_name"
+      ],
+      "add_fields": [
+        "email",
+        "first_name",
+        "last_name",
+        "phone",
+        "image"
+      ],
       "edit_fields": [
         "email",
         "first_name",
@@ -2688,7 +4629,13 @@
         "status",
         "image"
       ],
-      "view_fields": ["id", "first_name", "last_name", "image", "phone"],
+      "view_fields": [
+        "id",
+        "first_name",
+        "last_name",
+        "image",
+        "phone"
+      ],
       "autocomplete": "",
       "dynamic_mapping": {},
       "dynamic_mapping_add": {},
@@ -2736,8 +4683,18 @@
       "custom_view_edit": [],
       "custom_view_list": [],
       "custom_view_view": [],
-      "listing_fields_api": ["id", "email", "role_id", "status"],
-      "listing_headers": ["xyzID", "xyzEmail", "xyzRole", "xyzStatus"],
+      "listing_fields_api": [
+        "id",
+        "email",
+        "role_id",
+        "status"
+      ],
+      "listing_headers": [
+        "xyzID",
+        "xyzEmail",
+        "xyzRole",
+        "xyzStatus"
+      ],
       "listing_rows": [
         "id|integer",
         "email|string",
@@ -2745,14 +4702,34 @@
         "status|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["id", "role", "status"],
-      "add_fields": ["email", "password", "role_id", "status"],
-      "edit_fields": ["email", "password", "status"],
-      "view_fields": ["id", "email", "role_id", "status"],
+      "filter_fields": [
+        "id",
+        "role",
+        "status"
+      ],
+      "add_fields": [
+        "email",
+        "password",
+        "role_id",
+        "status"
+      ],
+      "edit_fields": [
+        "email",
+        "password",
+        "status"
+      ],
+      "view_fields": [
+        "id",
+        "email",
+        "role_id",
+        "status"
+      ],
       "autocomplete": "",
       "dynamic_mapping": {},
       "dynamic_mapping_add": {},
-      "load_libraries": ["\n\t\t$this->load->model('admin_operation_model');"]
+      "load_libraries": [
+        "\n\t\t$this->load->model('admin_operation_model');"
+      ]
     },
     {
       "route": "/emails",
@@ -2794,14 +4771,47 @@
       "custom_view_edit": [],
       "custom_view_list": [],
       "custom_view_view": [],
-      "listing_fields_api": ["id", "slug", "subject", "tag"],
-      "listing_headers": ["Slug", "Subject", "Tags"],
-      "listing_rows": ["slug|string", "subject|string", "tag|string"],
+      "listing_fields_api": [
+        "id",
+        "slug",
+        "subject",
+        "tag"
+      ],
+      "listing_headers": [
+        "Slug",
+        "Subject",
+        "Tags"
+      ],
+      "listing_rows": [
+        "slug|string",
+        "subject|string",
+        "tag|string"
+      ],
       "listing_actions": [],
-      "filter_fields": ["slug", "subject", "tag", "html"],
-      "add_fields": ["slug", "subject", "tag", "html"],
-      "edit_fields": ["subject", "html", "tag"],
-      "view_fields": ["id", "slug", "subject", "tag", "html"],
+      "filter_fields": [
+        "slug",
+        "subject",
+        "tag",
+        "html"
+      ],
+      "add_fields": [
+        "slug",
+        "subject",
+        "tag",
+        "html"
+      ],
+      "edit_fields": [
+        "subject",
+        "html",
+        "tag"
+      ],
+      "view_fields": [
+        "id",
+        "slug",
+        "subject",
+        "tag",
+        "html"
+      ],
       "autocomplete": "",
       "dynamic_mapping": {},
       "dynamic_mapping_add": {},
@@ -2847,14 +4857,42 @@
       "custom_view_edit": [],
       "custom_view_list": [],
       "custom_view_view": [],
-      "listing_fields_api": ["id", "slug", "tag", "content"],
-      "listing_headers": ["Slug", "content", "Tags"],
-      "listing_rows": ["slug|string", "content|string", "tag|string"],
+      "listing_fields_api": [
+        "id",
+        "slug",
+        "tag",
+        "content"
+      ],
+      "listing_headers": [
+        "Slug",
+        "content",
+        "Tags"
+      ],
+      "listing_rows": [
+        "slug|string",
+        "content|string",
+        "tag|string"
+      ],
       "listing_actions": [],
-      "filter_fields": ["tag"],
-      "add_fields": ["slug|email", "content", "tag"],
-      "edit_fields": ["content", "tag", "slug"],
-      "view_fields": ["id", "slug", "tag", "content"],
+      "filter_fields": [
+        "tag"
+      ],
+      "add_fields": [
+        "slug|email",
+        "content",
+        "tag"
+      ],
+      "edit_fields": [
+        "content",
+        "tag",
+        "slug"
+      ],
+      "view_fields": [
+        "id",
+        "slug",
+        "tag",
+        "content"
+      ],
       "autocomplete": "",
       "dynamic_mapping": {},
       "dynamic_mapping_add": {},
@@ -2900,14 +4938,33 @@
       "custom_view_edit": [],
       "custom_view_list": [],
       "custom_view_view": [],
-      "listing_fields_api": ["id", "url"],
-      "listing_headers": ["ID", "URL"],
-      "listing_rows": ["id|integer", "url|image"],
+      "listing_fields_api": [
+        "id",
+        "url"
+      ],
+      "listing_headers": [
+        "ID",
+        "URL"
+      ],
+      "listing_rows": [
+        "id|integer",
+        "url|image"
+      ],
       "listing_actions": [],
       "filter_fields": [],
-      "add_fields": ["url", "type", "type_2"],
-      "edit_fields": ["url", "type"],
-      "view_fields": ["url", "type"],
+      "add_fields": [
+        "url",
+        "type",
+        "type_2"
+      ],
+      "edit_fields": [
+        "url",
+        "type"
+      ],
+      "view_fields": [
+        "url",
+        "type"
+      ],
       "autocomplete": "",
       "dynamic_mapping": {},
       "dynamic_mapping_add": {},
@@ -2954,14 +5011,29 @@
       "custom_view_edit": [],
       "custom_view_list": [],
       "custom_view_view": [],
-      "listing_fields_api": ["id", "file"],
-      "listing_headers": ["ID", "File"],
-      "listing_rows": ["id|integer", "file|string"],
+      "listing_fields_api": [
+        "id",
+        "file"
+      ],
+      "listing_headers": [
+        "ID",
+        "File"
+      ],
+      "listing_rows": [
+        "id|integer",
+        "file|string"
+      ],
       "listing_actions": [],
       "filter_fields": [],
-      "add_fields": ["file"],
-      "edit_fields": ["file"],
-      "view_fields": ["file"],
+      "add_fields": [
+        "file"
+      ],
+      "edit_fields": [
+        "file"
+      ],
+      "view_fields": [
+        "file"
+      ],
       "autocomplete": "",
       "load_libraries": [],
       "dynamic_mapping_add": {},
@@ -2995,7 +5067,9 @@
       "is_filter": false,
       "all_records": true,
       "active_only": false,
-      "middleware": ["subscription"],
+      "middleware": [
+        "subscription"
+      ],
       "method": [],
       "method_add": [],
       "method_edit": [],
@@ -3010,14 +5084,29 @@
       "custom_view_edit": [],
       "custom_view_list": [],
       "custom_view_view": [],
-      "listing_fields_api": ["id", "file"],
-      "listing_headers": ["ID", "File"],
-      "listing_rows": ["id|integer", "file|string"],
+      "listing_fields_api": [
+        "id",
+        "file"
+      ],
+      "listing_headers": [
+        "ID",
+        "File"
+      ],
+      "listing_rows": [
+        "id|integer",
+        "file|string"
+      ],
       "listing_actions": [],
       "filter_fields": [],
-      "add_fields": ["file"],
-      "edit_fields": ["file"],
-      "view_fields": ["file"],
+      "add_fields": [
+        "file"
+      ],
+      "edit_fields": [
+        "file"
+      ],
+      "view_fields": [
+        "file"
+      ],
       "autocomplete": "",
       "load_libraries": [],
       "dynamic_mapping_add": {},
@@ -3069,14 +5158,38 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "url", "rewrite_url"],
-      "listing_headers": ["xyzID", "xyzURL", "xyzRewrite URL"],
-      "listing_rows": ["id|integer", "url|string", "rewrite_url|string"],
+      "listing_fields_api": [
+        "id",
+        "url",
+        "rewrite_url"
+      ],
+      "listing_headers": [
+        "xyzID",
+        "xyzURL",
+        "xyzRewrite URL"
+      ],
+      "listing_rows": [
+        "id|integer",
+        "url|string",
+        "rewrite_url|string"
+      ],
       "listing_actions": [],
-      "filter_fields": ["url", "rewrite_url"],
-      "add_fields": ["url", "rewrite_url"],
-      "edit_fields": ["url", "rewrite_url"],
-      "view_fields": ["url", "rewrite_url"],
+      "filter_fields": [
+        "url",
+        "rewrite_url"
+      ],
+      "add_fields": [
+        "url",
+        "rewrite_url"
+      ],
+      "edit_fields": [
+        "url",
+        "rewrite_url"
+      ],
+      "view_fields": [
+        "url",
+        "rewrite_url"
+      ],
       "autocomplete": "",
       "dynamic_mapping_add": {},
       "dynamic_mapping_edit": {},
@@ -3168,7 +5281,11 @@
         "status|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["product_name", "sku", "category_id"],
+      "filter_fields": [
+        "product_name",
+        "sku",
+        "category_id"
+      ],
       "add_fields": [
         "product_name",
         "video_url",
@@ -3357,7 +5474,11 @@
         "status|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["product_name", "sku", "category_id"],
+      "filter_fields": [
+        "product_name",
+        "sku",
+        "category_id"
+      ],
       "add_fields": [
         "product_name",
         "video_url",
@@ -3542,7 +5663,10 @@
         "status|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["sku", "status"],
+      "filter_fields": [
+        "sku",
+        "status"
+      ],
       "add_fields": [],
       "edit_fields": [],
       "view_fields": [
@@ -3613,7 +5737,12 @@
       "custom_view_list": "",
       "custom_view_view": "",
       "listing_fields_api": [],
-      "listing_headers": ["xyzID", "First Name", "Last Name", "Actions"],
+      "listing_headers": [
+        "xyzID",
+        "First Name",
+        "Last Name",
+        "Actions"
+      ],
       "listing_rows": [
         "a_id|integer",
         "first_name|string",
@@ -3621,10 +5750,17 @@
         "action|string"
       ],
       "listing_actions": [],
-      "filter_fields": ["id"],
+      "filter_fields": [
+        "id"
+      ],
       "add_fields": [],
       "edit_fields": [],
-      "view_fields": ["id", "action", "detail", "created_at"],
+      "view_fields": [
+        "id",
+        "action",
+        "detail",
+        "created_at"
+      ],
       "autocomplete": "",
       "dynamic_mapping_add": {},
       "dynamic_mapping_edit": {},
@@ -3726,7 +5862,11 @@
         "status|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["product_name", "sku", "category_id"],
+      "filter_fields": [
+        "product_name",
+        "sku",
+        "category_id"
+      ],
       "add_fields": [
         "product_name",
         "sku",
@@ -3910,7 +6050,10 @@
         "status|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["sku", "status"],
+      "filter_fields": [
+        "sku",
+        "status"
+      ],
       "add_fields": [],
       "edit_fields": [],
       "view_fields": [
@@ -4018,7 +6161,11 @@
         "status|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["product_name", "sku", "category_id"],
+      "filter_fields": [
+        "product_name",
+        "sku",
+        "category_id"
+      ],
       "add_fields": [
         "product_name",
         "video_url",
@@ -4202,7 +6349,10 @@
         "status|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["sku", "status"],
+      "filter_fields": [
+        "sku",
+        "status"
+      ],
       "add_fields": [],
       "edit_fields": [],
       "view_fields": [
@@ -4299,7 +6449,10 @@
         "total|float"
       ],
       "listing_actions": [],
-      "filter_fields": ["transaction_date", "transaction_type"],
+      "filter_fields": [
+        "transaction_date",
+        "transaction_type"
+      ],
       "add_fields": [],
       "edit_fields": [],
       "view_fields": [
@@ -4399,7 +6552,13 @@
         "status|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["name", "email", "phone", "customer_since", "status"],
+      "filter_fields": [
+        "name",
+        "email",
+        "phone",
+        "customer_since",
+        "status"
+      ],
       "add_fields": [
         "name",
         "email",
@@ -4545,7 +6704,13 @@
         "status|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["name", "email", "phone", "customer_since", "status"],
+      "filter_fields": [
+        "name",
+        "email",
+        "phone",
+        "customer_since",
+        "status"
+      ],
       "add_fields": [
         "name",
         "email",
@@ -4661,7 +6826,10 @@
         "status|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["name", "status"],
+      "filter_fields": [
+        "name",
+        "status"
+      ],
       "add_fields": [
         "name",
         "feature_image",
@@ -4676,7 +6844,13 @@
         "sku_prefix",
         "status"
       ],
-      "view_fields": ["id", "name", "feature_image", "sku_prefix", "status"],
+      "view_fields": [
+        "id",
+        "name",
+        "feature_image",
+        "sku_prefix",
+        "status"
+      ],
       "autocomplete": "",
       "dynamic_mapping_add": {},
       "dynamic_mapping_edit": {},
@@ -4752,7 +6926,10 @@
         "status|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["name", "status"],
+      "filter_fields": [
+        "name",
+        "status"
+      ],
       "add_fields": [
         "name",
         "feature_image",
@@ -4832,14 +7009,40 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "name", "store_id", "barcode_image"],
-      "listing_headers": ["xyzID", "xyzName", "Store"],
-      "listing_rows": ["id|integer", "name|string", "store_id|integer"],
+      "listing_fields_api": [
+        "id",
+        "name",
+        "store_id",
+        "barcode_image"
+      ],
+      "listing_headers": [
+        "xyzID",
+        "xyzName",
+        "Store"
+      ],
+      "listing_rows": [
+        "id|integer",
+        "name|string",
+        "store_id|integer"
+      ],
       "listing_actions": [],
-      "filter_fields": ["name"],
-      "add_fields": ["name", "store_id"],
-      "edit_fields": ["name", "store_id"],
-      "view_fields": ["id", "name", "store_id", "barcode_image"],
+      "filter_fields": [
+        "name"
+      ],
+      "add_fields": [
+        "name",
+        "store_id"
+      ],
+      "edit_fields": [
+        "name",
+        "store_id"
+      ],
+      "view_fields": [
+        "id",
+        "name",
+        "store_id",
+        "barcode_image"
+      ],
       "autocomplete": "",
       "dynamic_mapping_add": {},
       "dynamic_mapping_edit": {},
@@ -4919,7 +7122,13 @@
         "city|string"
       ],
       "listing_actions": [],
-      "filter_fields": ["name", "state", "zip", "phone", "city"],
+      "filter_fields": [
+        "name",
+        "state",
+        "zip",
+        "phone",
+        "city"
+      ],
       "add_fields": [
         "name",
         "address",
@@ -5030,7 +7239,13 @@
         "status|string"
       ],
       "listing_actions": [],
-      "filter_fields": ["code", "type", "amount", "expire_at", "status"],
+      "filter_fields": [
+        "code",
+        "type",
+        "amount",
+        "expire_at",
+        "status"
+      ],
       "add_fields": [
         "code",
         "type",
@@ -5143,7 +7358,10 @@
         "total|float"
       ],
       "listing_actions": [],
-      "filter_fields": ["transaction_date", "transaction_type"],
+      "filter_fields": [
+        "transaction_date",
+        "transaction_type"
+      ],
       "add_fields": [],
       "edit_fields": [],
       "view_fields": [
@@ -5207,7 +7425,10 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "name"],
+      "listing_fields_api": [
+        "id",
+        "name"
+      ],
       "listing_headers": [
         "xyzID",
         "xyzName",
@@ -5223,10 +7444,15 @@
         "name|string"
       ],
       "listing_actions": [],
-      "filter_fields": ["name"],
+      "filter_fields": [
+        "name"
+      ],
       "add_fields": [],
       "edit_fields": [],
-      "view_fields": ["id", "name"],
+      "view_fields": [
+        "id",
+        "name"
+      ],
       "autocomplete": "",
       "dynamic_mapping_add": {},
       "dynamic_mapping_edit": {},
@@ -5278,7 +7504,10 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "name"],
+      "listing_fields_api": [
+        "id",
+        "name"
+      ],
       "listing_headers": [
         "xyzID",
         "xyzName",
@@ -5296,10 +7525,15 @@
         "name|string"
       ],
       "listing_actions": [],
-      "filter_fields": ["name"],
+      "filter_fields": [
+        "name"
+      ],
       "add_fields": [],
       "edit_fields": [],
-      "view_fields": ["id", "name"],
+      "view_fields": [
+        "id",
+        "name"
+      ],
       "autocomplete": "",
       "dynamic_mapping_add": {},
       "dynamic_mapping_edit": {},
@@ -5351,7 +7585,10 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "name"],
+      "listing_fields_api": [
+        "id",
+        "name"
+      ],
       "listing_headers": [
         "xyzID",
         "xyzName",
@@ -5369,10 +7606,15 @@
         "name|string"
       ],
       "listing_actions": [],
-      "filter_fields": ["name"],
+      "filter_fields": [
+        "name"
+      ],
       "add_fields": [],
       "edit_fields": [],
-      "view_fields": ["id", "name"],
+      "view_fields": [
+        "id",
+        "name"
+      ],
       "autocomplete": "",
       "dynamic_mapping_add": {},
       "dynamic_mapping_edit": {},
@@ -5424,14 +7666,32 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "name"],
-      "listing_headers": ["xyzID", "xyzDepartment Name"],
-      "listing_rows": ["id|integer", "department_name|string"],
+      "listing_fields_api": [
+        "id",
+        "name"
+      ],
+      "listing_headers": [
+        "xyzID",
+        "xyzDepartment Name"
+      ],
+      "listing_rows": [
+        "id|integer",
+        "department_name|string"
+      ],
       "listing_actions": [],
-      "filter_fields": ["department_name"],
-      "add_fields": ["department_name"],
-      "edit_fields": ["department_name"],
-      "view_fields": ["id", "department_name"],
+      "filter_fields": [
+        "department_name"
+      ],
+      "add_fields": [
+        "department_name"
+      ],
+      "edit_fields": [
+        "department_name"
+      ],
+      "view_fields": [
+        "id",
+        "department_name"
+      ],
       "autocomplete": "",
       "dynamic_mapping_add": {},
       "dynamic_mapping_edit": {},
@@ -5489,14 +7749,30 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "tax"],
-      "listing_headers": ["xyzID", "Tax %"],
-      "listing_rows": ["id|integer", "tax|integer"],
+      "listing_fields_api": [
+        "id",
+        "tax"
+      ],
+      "listing_headers": [
+        "xyzID",
+        "Tax %"
+      ],
+      "listing_rows": [
+        "id|integer",
+        "tax|integer"
+      ],
       "listing_actions": [],
       "filter_fields": [],
-      "add_fields": ["tax"],
-      "edit_fields": ["tax"],
-      "view_fields": ["id", "tax"],
+      "add_fields": [
+        "tax"
+      ],
+      "edit_fields": [
+        "tax"
+      ],
+      "view_fields": [
+        "id",
+        "tax"
+      ],
       "autocomplete": "",
       "dynamic_mapping_add": {},
       "dynamic_mapping_edit": {},
@@ -5554,7 +7830,10 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "tax"],
+      "listing_fields_api": [
+        "id",
+        "tax"
+      ],
       "listing_headers": [
         "xyzID",
         "xyzBilling Name",
@@ -5580,7 +7859,11 @@
         "total|float"
       ],
       "listing_actions": [],
-      "filter_fields": ["billing_name", "is_picked", "is_shipped"],
+      "filter_fields": [
+        "billing_name",
+        "is_picked",
+        "is_shipped"
+      ],
       "add_fields": [],
       "edit_fields": [],
       "view_fields": [
@@ -5671,7 +7954,10 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "tax"],
+      "listing_fields_api": [
+        "id",
+        "tax"
+      ],
       "listing_headers": [
         "xyzID",
         "xyzBilling Name",
@@ -5697,7 +7983,11 @@
         "total|float"
       ],
       "listing_actions": [],
-      "filter_fields": ["billing_name", "is_picked", "is_shipped"],
+      "filter_fields": [
+        "billing_name",
+        "is_picked",
+        "is_shipped"
+      ],
       "add_fields": [],
       "edit_fields": [],
       "view_fields": [
@@ -5788,7 +8078,10 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "tax"],
+      "listing_fields_api": [
+        "id",
+        "tax"
+      ],
       "listing_headers": [
         "xyzID",
         "xyzName",
@@ -5804,7 +8097,11 @@
         "quantity|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["category_id", "product_name", "sku"],
+      "filter_fields": [
+        "category_id",
+        "product_name",
+        "sku"
+      ],
       "add_fields": [],
       "edit_fields": [],
       "view_fields": [],
@@ -5865,7 +8162,10 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "tax"],
+      "listing_fields_api": [
+        "id",
+        "tax"
+      ],
       "listing_headers": [
         "xyzID",
         "xyzName",
@@ -5881,7 +8181,11 @@
         "quantity|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["category_id", "product_name", "sku"],
+      "filter_fields": [
+        "category_id",
+        "product_name",
+        "sku"
+      ],
       "add_fields": [],
       "edit_fields": [],
       "view_fields": [],
@@ -5942,7 +8246,10 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "tax"],
+      "listing_fields_api": [
+        "id",
+        "tax"
+      ],
       "listing_headers": [
         "xyzID",
         "xyzName",
@@ -5960,7 +8267,10 @@
         "phone|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["name", "email"],
+      "filter_fields": [
+        "name",
+        "email"
+      ],
       "add_fields": [],
       "edit_fields": [],
       "view_fields": [],
@@ -6021,7 +8331,10 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "tax"],
+      "listing_fields_api": [
+        "id",
+        "tax"
+      ],
       "listing_headers": [
         "xyzID",
         "xyzState",
@@ -6037,7 +8350,10 @@
         "shipping_state|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["name", "email"],
+      "filter_fields": [
+        "name",
+        "email"
+      ],
       "add_fields": [],
       "edit_fields": [],
       "view_fields": [],
@@ -6098,7 +8414,10 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "tax"],
+      "listing_fields_api": [
+        "id",
+        "tax"
+      ],
       "listing_headers": [
         "xyzID",
         "Order ID",
@@ -6114,7 +8433,9 @@
         "referrer|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["referrer"],
+      "filter_fields": [
+        "referrer"
+      ],
       "add_fields": [],
       "edit_fields": [],
       "view_fields": [],
@@ -6175,18 +8496,39 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "referrer_name", "referrer_key"],
-      "listing_headers": ["xyzID", "Referrer Name", "Referrer Key"],
+      "listing_fields_api": [
+        "id",
+        "referrer_name",
+        "referrer_key"
+      ],
+      "listing_headers": [
+        "xyzID",
+        "Referrer Name",
+        "Referrer Key"
+      ],
       "listing_rows": [
         "id|integer",
         "referrer_name|string",
         "referrer_key|string"
       ],
       "listing_actions": [],
-      "filter_fields": ["referrer_name", "referrer_key"],
-      "add_fields": ["referrer_name", "referrer_key"],
-      "edit_fields": ["referrer_name", "referrer_key"],
-      "view_fields": ["id", "referrer_name", "referrer_key"],
+      "filter_fields": [
+        "referrer_name",
+        "referrer_key"
+      ],
+      "add_fields": [
+        "referrer_name",
+        "referrer_key"
+      ],
+      "edit_fields": [
+        "referrer_name",
+        "referrer_key"
+      ],
+      "view_fields": [
+        "id",
+        "referrer_name",
+        "referrer_key"
+      ],
       "autocomplete": "",
       "dynamic_mapping_add": {},
       "dynamic_mapping_edit": {},
@@ -6244,7 +8586,10 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "tax"],
+      "listing_fields_api": [
+        "id",
+        "tax"
+      ],
       "listing_headers": [
         "xyzID",
         "Sale Person",
@@ -6258,7 +8603,10 @@
         "amount|integer"
       ],
       "listing_actions": [],
-      "filter_fields": ["sale_person_id", "product_name"],
+      "filter_fields": [
+        "sale_person_id",
+        "product_name"
+      ],
       "add_fields": [],
       "edit_fields": [],
       "view_fields": [],
@@ -6319,13 +8667,22 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "terms_and_condition_text"],
-      "listing_headers": ["xyzID"],
-      "listing_rows": ["id|integer"],
+      "listing_fields_api": [
+        "id",
+        "terms_and_condition_text"
+      ],
+      "listing_headers": [
+        "xyzID"
+      ],
+      "listing_rows": [
+        "id|integer"
+      ],
       "listing_actions": [],
       "filter_fields": [],
       "add_fields": [],
-      "edit_fields": ["terms_and_condition_text"],
+      "edit_fields": [
+        "terms_and_condition_text"
+      ],
       "view_fields": [],
       "autocomplete": "",
       "dynamic_mapping_add": {},
@@ -6384,13 +8741,22 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "about_us_page"],
-      "listing_headers": ["xyzID"],
-      "listing_rows": ["id|integer"],
+      "listing_fields_api": [
+        "id",
+        "about_us_page"
+      ],
+      "listing_headers": [
+        "xyzID"
+      ],
+      "listing_rows": [
+        "id|integer"
+      ],
       "listing_actions": [],
       "filter_fields": [],
       "add_fields": [],
-      "edit_fields": ["about_us_page"],
+      "edit_fields": [
+        "about_us_page"
+      ],
       "view_fields": [],
       "autocomplete": "",
       "dynamic_mapping_add": {},
@@ -6449,13 +8815,22 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "privacy_policy"],
-      "listing_headers": ["xyzID"],
-      "listing_rows": ["id|integer"],
+      "listing_fields_api": [
+        "id",
+        "privacy_policy"
+      ],
+      "listing_headers": [
+        "xyzID"
+      ],
+      "listing_rows": [
+        "id|integer"
+      ],
       "listing_actions": [],
       "filter_fields": [],
       "add_fields": [],
-      "edit_fields": ["privacy_policy"],
+      "edit_fields": [
+        "privacy_policy"
+      ],
       "view_fields": [],
       "autocomplete": "",
       "dynamic_mapping_add": {},
@@ -6514,14 +8889,29 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "feature_image"],
-      "listing_headers": ["xyzID", "Image"],
-      "listing_rows": ["id|integer", "feature_image|image"],
+      "listing_fields_api": [
+        "id",
+        "feature_image"
+      ],
+      "listing_headers": [
+        "xyzID",
+        "Image"
+      ],
+      "listing_rows": [
+        "id|integer",
+        "feature_image|image"
+      ],
       "listing_actions": [],
       "filter_fields": [],
-      "add_fields": ["feature_image"],
-      "edit_fields": ["feature_image"],
-      "view_fields": ["feature_image"],
+      "add_fields": [
+        "feature_image"
+      ],
+      "edit_fields": [
+        "feature_image"
+      ],
+      "view_fields": [
+        "feature_image"
+      ],
       "autocomplete": "",
       "dynamic_mapping_add": {},
       "dynamic_mapping_edit": {},
@@ -6579,14 +8969,34 @@
       "custom_view_edit": "",
       "custom_view_list": "",
       "custom_view_view": "",
-      "listing_fields_api": ["id", "description"],
-      "listing_headers": ["xyzID", "Description", "Status"],
-      "listing_rows": ["id|integer", "description|string", "status|integer"],
+      "listing_fields_api": [
+        "id",
+        "description"
+      ],
+      "listing_headers": [
+        "xyzID",
+        "Description",
+        "Status"
+      ],
+      "listing_rows": [
+        "id|integer",
+        "description|string",
+        "status|integer"
+      ],
       "listing_actions": [],
       "filter_fields": [],
-      "add_fields": ["description", "status"],
-      "edit_fields": ["description", "status"],
-      "view_fields": ["description", "status"],
+      "add_fields": [
+        "description",
+        "status"
+      ],
+      "edit_fields": [
+        "description",
+        "status"
+      ],
+      "view_fields": [
+        "description",
+        "status"
+      ],
       "autocomplete": "",
       "dynamic_mapping_add": {},
       "dynamic_mapping_edit": {},
@@ -6624,8 +9034,12 @@
     },
     "footer": "../mkdcore/custom/GuestFooter.php",
     "header": "../mkdcore/custom/GuestHeader.php",
-    "js": ["/assets/js/guest.js"],
-    "css": ["/assets/css/guest.css"]
+    "js": [
+      "/assets/js/guest.js"
+    ],
+    "css": [
+      "/assets/css/guest.css"
+    ]
   },
   "translations": {
     "xyzSubject": "Subject",
@@ -6859,8 +9273,22 @@
       "route": "/report/users",
       "model": "user",
       "filter_field": [
-        ["start_date", "date", [], "Start Date", "required|date", ""],
-        ["end_date", "date", [], "End Date", "required|date", ""]
+        [
+          "start_date",
+          "date",
+          [],
+          "Start Date",
+          "required|date",
+          ""
+        ],
+        [
+          "end_date",
+          "date",
+          [],
+          "End Date",
+          "required|date",
+          ""
+        ]
       ],
       "pre_controller": "",
       "parameter": "[]",
@@ -6869,8 +9297,14 @@
       "post": [],
       "display": "table",
       "filename": "report_users",
-      "header": ["Date", "Number of Users"],
-      "field": ["created_at", "num"]
+      "header": [
+        "Date",
+        "Number of Users"
+      ],
+      "field": [
+        "created_at",
+        "num"
+      ]
     }
   ],
   "config": {
@@ -6975,8 +9409,8 @@
     "dsn": "",
     "hostname": "localhost",
     "username": "root",
-    "password": "",
-    "database": "mystery",
+    "password": "0123596793",
+    "database": "mysterybox",
     "dbdriver": "mysqli",
     "dbprefix": "",
     "pconnect": false,
@@ -7004,20 +9438,17 @@
     "../mkdcore/custom/styles.css": "../release/assets/css/styles.css",
     "../mkdcore/custom/app.js": "../release/assets/js/app.js",
     "../mkdcore/custom/auth.css": "../release/assets/css/auth.css",
-
     "../mkdcore/custom/assets/images/shop_pallet.jpg": "../release/uploads/shop_pallet.jpg",
     "../mkdcore/custom/assets/images/truckload.jpg": "../release/uploads/truckload.jpg",
     "../mkdcore/custom/assets/images/vegas-liquidation.png": "../release/uploads/vegas-liquidation.png",
     "../mkdcore/custom/assets/images/play_circle.png": "../release/assets/image/play_circle.png",
     "../mkdcore/custom/assets/css/frontend_style.css": "../release/assets/css/frontend_style.css",
-
     "../mkdcore/custom/assets/js/admin-actions.js": "../release/assets/js/admin-actions.js",
     "../mkdcore/custom/assets/js/address_form.js": "../release/assets/js/address_form.js",
     "../mkdcore/custom/assets/js/swiper-bundle.min.js": "../release/assets/frontend_js/swiper-bundle.min.js",
     "../mkdcore/custom/assets/js/video_image_script.js": "../release/assets/js/video_image_script.js",
     "../mkdcore/custom/assets/css/swiper-bundle.min.css": "../release/assets/frontend_css/swiper-bundle.min.css",
     "../mkdcore/custom/assets/css/checkout.css": "../release/assets/css/checkout.css",
-
     "../mkdcore/custom/Services/Api_service.php": "../release/application/libraries/Api_service.php",
     "../mkdcore/custom/Services/Barcode_service.php": "../release/application/libraries/Barcode_service.php",
     "../mkdcore/custom/Services/Redirect_custom_service.php": "../release/application/libraries/Redirect_custom_service.php",
@@ -7029,10 +9460,8 @@
     "../mkdcore/custom/Services/Accounting_api_service.php": "../release/application/libraries/Accounting_api_service.php",
     "../mkdcore/custom/Services/Helpers_service.php": "../release/application/libraries/Helpers_service.php",
     "../mkdcore/custom/Custom404.php": "../release/application/controllers/Custom404.php",
-
     "../mkdcore/custom/Api/Ecom_api_controller.php": "../release/application/controllers/Guest/Ecom_api_controller.php",
     "../mkdcore/custom/Api/Item.php": "../release/application/controllers/Guest/Item.php",
-
     "../mkdcore/custom/Admin/controllers/Admin_subcategory_controller.php": "../release/application/controllers/Admin/Admin_subcategory_controller.php",
     "../mkdcore/custom/Admin/controllers/Admin_shipping_cost_report_controller.php": "../release/application/controllers/Admin/Admin_shipping_cost_report_controller.php",
     "../mkdcore/custom/Admin/controllers/Admin_customer_report_controller.php": "../release/application/controllers/Admin/Admin_customer_report_controller.php",
@@ -7054,7 +9483,6 @@
     "../mkdcore/custom/Employee/controllers/Employee_inventory_transfer_controller.php": "../release/application/controllers/Employee/Employee_inventory_transfer_controller.php",
     "../mkdcore/custom/Employee/controllers/Employee_inventory_report_controller.php": "../release/application/controllers/Employee/Employee_inventory_report_controller.php",
     "../mkdcore/custom/Employee/controllers/Employee_dashboard_controller.php": "../release/application/controllers/Employee/Employee_dashboard_controller.php",
-
     "../mkdcore/custom/Admin/views/Subcategory.php": "../release/application/views/Admin/Subcategory.php",
     "../mkdcore/custom/Admin/views/SubcategoryAdd.php": "../release/application/views/Admin/SubcategoryAdd.php",
     "../mkdcore/custom/Admin/views/SubcategoryEdit.php": "../release/application/views/Admin/SubcategoryEdit.php",
@@ -7107,47 +9535,36 @@
     "../mkdcore/custom/Employee/views/Inventory_transferView.php": "../release/application/views/Employee/Inventory_transferView.php",
     "../mkdcore/custom/Employee/views/InventoryReport.php": "../release/application/views/Employee/InventoryReport.php",
     "../mkdcore/custom/Employee/views/Dashboard.php": "../release/application/views/Employee/Dashboard.php",
-
     "../mkdcore/custom/Admin/views/Customer.php": "../release/application/views/Admin/Customer.php",
     "../mkdcore/custom/Admin/views/CustomerAdd.php": "../release/application/views/Admin/CustomerAdd.php",
     "../mkdcore/custom/Admin/views/CustomerEdit.php": "../release/application/views/Admin/CustomerEdit.php",
     "../mkdcore/custom/Admin/views/CustomerView.php": "../release/application/views/Admin/CustomerView.php",
-
     "../mkdcore/custom/Models/Inventory_model.php": "../release/application/models/Inventory_model.php",
     "../mkdcore/custom/Models/Pos_order_items_report_model.php": "../release/application/models/Pos_order_items_report_model.php",
-
     "../mkdcore/custom/Admin/controllers/Admin_category_controller.php": "../release/application/controllers/Admin/Admin_category_controller.php",
     "../mkdcore/custom/Admin/views/CategoryAdd.php": "../release/application/views/Admin/CategoryAdd.php",
     "../mkdcore/custom/Admin/views/CategoryEdit.php": "../release/application/views/Admin/CategoryEdit.php",
-
     "../mkdcore/custom/Admin/views/Inventory_transfer.php": "../release/application/views/Admin/Inventory_transfer.php",
     "../mkdcore/custom/Admin/views/Inventory_transferAdd.php": "../release/application/views/Admin/Inventory_transferAdd.php",
     "../mkdcore/custom/Admin/views/Inventory_transferView.php": "../release/application/views/Admin/Inventory_transferView.php",
-
     "../mkdcore/custom/Manager/views/Inventory_transfer.php": "../release/application/views/Manager/Inventory_transfer.php",
     "../mkdcore/custom/Manager/views/Inventory_transferAdd.php": "../release/application/views/Manager/Inventory_transferAdd.php",
     "../mkdcore/custom/Manager/views/Inventory_transferView.php": "../release/application/views/Manager/Inventory_transferView.php",
     "../mkdcore/custom/Manager/views/InventoryAdd.php": "../release/application/views/Manager/InventoryAdd.php",
     "../mkdcore/custom/Manager/views/InventoryEdit.php": "../release/application/views/Manager/InventoryEdit.php",
     "../mkdcore/custom/Manager/views/InventoryTransfer.php": "../release/application/views/Manager/InventoryTransfer.php",
-
     "../mkdcore/custom/Admin/views/Inventory_Location.php": "../release/application/views/Admin/Inventory_Location.php",
     "../mkdcore/custom/Admin/views/Inventory_LocationAdd.php": "../release/application/views/Admin/Inventory_LocationAdd.php",
     "../mkdcore/custom/Admin/views/Inventory_LocationEdit.php": "../release/application/views/Admin/Inventory_LocationEdit.php",
     "../mkdcore/custom/Admin/views/Inventory_LocationView.php": "../release/application/views/Admin/Inventory_LocationView.php",
-
     "../mkdcore/custom/Admin/controllers/Admin_inventory_location_controller.php": "../release/application/controllers/Admin/Admin_inventory_location_controller.php",
-
     "../mkdcore/custom/Admin/views/OrdersRefund.php": "../release/application/views/Admin/OrdersRefund.php",
     "../mkdcore/custom/Admin/controllers/Admin_order_refund_controller.php": "../release/application/controllers/Admin/Admin_order_refund_controller.php",
-
     "../mkdcore/custom/Admin/controllers/Admin_transactions_controller.php": "../release/application/controllers/Admin/Admin_transactions_controller.php",
     "../mkdcore/custom/Admin/controllers/Admin_category_wise_controller.php": "../release/application/controllers/Admin/Admin_category_wise_controller.php",
     "../mkdcore/custom/Admin/views/Category_wise.php": "../release/application/views/Admin/Category_wise.php",
     "../mkdcore/custom/Admin/views/Category_wiseDetail.php": "../release/application/views/Admin/Category_wiseDetail.php",
-
     "../mkdcore/custom/Pos/Custom_api_controller.php": "../release/application/controllers/Guest/Custom_api_controller.php",
-
     "../mkdcore/custom/Frontend/controllers/Home_controller.php": "../release/application/controllers/Guest/Home_controller.php",
     "../mkdcore/custom/Frontend/views/Header.php": "../release/application/views/Guest/Header.php",
     "../mkdcore/custom/Frontend/views/Footer.php": "../release/application/views/Guest/Footer.php",
@@ -7170,26 +9587,21 @@
     "../mkdcore/custom/Frontend/views/TermsAndConditions.php": "../release/application/views/Guest/TermsAndConditions.php",
     "../mkdcore/custom/Frontend/views/ImageThumbnailModel.php": "../release/application/views/Guest/ImageThumbnailModel.php",
     "../mkdcore/custom/Frontend/views/CustomerOrders.php": "../release/application/views/Guest/CustomerOrders.php",
-
     "../mkdcore/custom/Services/Stripe_terminal_service.php": "../release/application/libraries/Stripe_terminal_service.php",
-
     "../mkdcore/custom/Shipstation_controller.php": "../release/application/controllers/Guest/Shipstation_controller.php",
     "../mkdcore/custom/Manager/controllers/Manager_customer_controller.php": "../release/application/controllers/Manager/Manager_customer_controller.php",
     "../mkdcore/custom/Manager/controllers/Manager_inventory_controller.php": "../release/application/controllers/Manager/Manager_inventory_controller.php",
     "../mkdcore/custom/Manager/controllers/Manager_transactions_controller.php": "../release/application/controllers/Manager/Manager_transactions_controller.php",
     "../mkdcore/custom/Manager/controllers/Manager_inventory_transfer_controller.php": "../release/application/controllers/Manager/Manager_inventory_transfer_controller.php",
-
     "../mkdcore/custom/assets/js/image-portal.js": "../release/assets/js/image-portal.js",
     "../mkdcore/custom/Api/Image_portal_controller.php": "../release/application/controllers/Guest/Image_portal_controller.php",
     "../mkdcore/custom/Guest/views/ImagePortalModal.php": "../release/application/views/Guest/ImagePortalModal.php",
-
     "./mysql.php": "../release/mysql.php"
   },
   "routes": {
     "v1/api/images/get_thumbnails_list": "Guest/Ecom_api_controller/get_thumbnails_list",
     "v1/api/get_images": "Guest/Image_portal_controller/get_images",
     "v1/api/upload_image_portal_image_to_s3": "Guest/Image_portal_controller/upload_image_portal_image_to_s3",
-
     "migrate": "Migrate",
     "v1/api/product/add_product": "Guest/Ecom_api_controller/add_product",
     "v1/api/product/get_stores": "Guest/Ecom_api_controller/get_stores",
@@ -7201,7 +9613,6 @@
     "v1/api/add_alert_notification": "Guest/Home_controller/add_alert_notification",
     "v1/api/update_customer_address": "Guest/Home_controller/update_customer_address",
     "v1/api/load_checkout_calculations": "Guest/Home_controller/load_checkout_calculations",
-
     "admin/sales_report/to_csv": "Admin/Admin_category_wise_controller/to_csv",
     "admin/inventory_report/to_csv": "Admin/Admin_inventory_report_controller/to_csv",
     "admin/customer_report/to_csv": "Admin/Admin_customer_report_controller/to_csv",
@@ -7210,7 +9621,6 @@
     "admin/traffic_link_report/to_csv": "Admin/Admin_traffic_link_report_controller/to_csv",
     "admin/sale_person_report/to_csv": "Admin/Admin_person_sale_report_controller/to_csv",
     "admin/category/set_category/(:num)": "Admin/Admin_category_controller/set_category/$1",
-
     "admin/scan/scan_product_view": "Admin/Admin_inventory_controller/scan_product_view",
     "admin/transfer/transfer_inventory": "Admin/Admin_inventory_controller/transfer_inventory",
     "admin/inventory/skus/(:any)": "Admin/Admin_inventory_controller/print_skus/$1",
@@ -7224,7 +9634,6 @@
     "admin/home_page_setting": "Admin/Admin_carousel_slider_controller/home_page_setting",
     "admin/inventory_transfer/accept/(:num)": "Admin/Admin_inventory_transfer_controller/accept/$1",
     "admin/orders/refund/(:num)": "Admin/Admin_order_refund_controller/refund/$1",
-
     "manager/inventory/approveall/(:any)": "Manager/Manager_inventory_controller/approveall/$1",
     "manager/inventory/pending/(:num)": "Manager/Manager_inventory_controller/pending/$1",
     "manager/inventory/approve/(:num)": "Manager/Manager_inventory_controller/approve/$1",
@@ -7236,7 +9645,6 @@
     "admin/inventory/delete_gallery_image/(:num)": "Admin/Admin_inventory_controller/delete_gallery_image/$1",
     "manager/inventory/delete_gallery_image/(:num)": "Manager/Manager_inventory_controller/delete_gallery_image/$1",
     "employee/dashboard/(:num)": "Employee/Employee_dashboard_controller/index/$1",
-
     "admin/category_wise/view/(:num)": "Admin/Admin_category_wise_controller/view/$1",
     "v1/api/preview_csv": "Guest/Image_controller/preview_csv",
     "v1/api/pos_get_all_inventory_items": "Guest/Custom_api_controller/pos_get_all_inventory_items",
@@ -7262,11 +9670,8 @@
     "v1/api/pos_invoice_data": "Guest/Custom_api_controller/pos_invoice_data",
     "v1/api/apply_coupon": "Guest/Custom_api_controller/apply_coupon",
     "v1/api/load_tax_value": "Guest/Custom_api_controller/load_tax_value",
-
     "v1/api/get_shipping_cost": "Guest/Custom_api_controller/get_shipping_cost",
-
     "v1/api/ship_station_endpoint": "Guest/Shipstation_controller/ship_station_endpoint",
-
     "v1/api/stripe_terminal_connection_token": "Guest/Custom_api_controller/stripe_terminal_connection_token",
     "v1/api/stripe_collect_payment": "Guest/Custom_api_controller/stripe_collect_payment",
     "v1/api/stripe_capture_payment": "Guest/Custom_api_controller/stripe_capture_payment",
@@ -7276,10 +9681,8 @@
     "v1/api/nmi/add_new_card": "Guest/Home_controller/add_new_card_nmi",
     "v1/api/load_customer_cards": "Guest/Home_controller/load_customer_cards",
     "v1/api/physical_location/create": "Admin/Admin_inventory_controller/create_physical_location",
-
     "/(:num)": "Guest/Home_controller/categories/$1",
     "/": "Guest/Home_controller/categories/0",
-
     "home": "Guest/Home_controller/home",
     "checkout": "Guest/Home_controller/checkout_step_1",
     "checkout/step_2": "Guest/Home_controller/checkout_step_2",
