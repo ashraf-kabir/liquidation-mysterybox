@@ -458,7 +458,8 @@
                                         
                                    </div> -->
                                              <button type="button" class="close-btn btn btn-secondary on_click_billing_modal">Close</button>
-                                             <button type="button" id="add_billing_and_card" class="btn btn-primary add_new_card">Save</button>
+                                             <!-- <button type="button" class="close-btn btn billing_and_card">Save</button> -->
+                                             <button type="button" class="btn btn-primary add_billing_and_card">Save</button>
                                              <!-- add-billing-address -->
                                         </div>
                                    </div>

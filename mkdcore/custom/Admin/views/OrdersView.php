@@ -174,6 +174,8 @@ if ($layout_clean_mode) {
 						</div>
 					</div>
 
+
+
 					<div class='row mb-4'>
 						<div class='col'>
 							Payment Transaction ID

@@ -254,4 +254,121 @@ function reset_shipping_address()
      document.getElementById('shipping_state').value = "";
      document.getElementById('shipping_zip').value = "";
 }
-  
+
+
+
+
+
+function update_card_details(exp_month,card_number,exp_year,cvc,card_default) {
+
+     $.ajax({
+       url: '../v1/api/nmi/add_new_card',
+       timeout: 30000,
+       method: 'POST',
+       dataType: 'JSON',
+       data: { exp_month, card_number, exp_year, cvc, card_default },
+       success: function (response) {
+         if (response.success) {
+           toastr.success(response.success);
+           load_customer_cards();
+           $('.close-btn').trigger('click');
+         }
+   
+         if (response.error) {
+           toastr.error(response.error);
+         }
+       },
+       error: function () {
+         toastr.error('Error! Something went wrong.');
+       }
+     });
+   
+}
+
+
+function update_billing_details(billing_address,billing_country,billing_city,billing_state,billing_zip){
+
+     var error_for_updating_billing = 0;
+     
+     if (error_for_updating_billing == 0) {
+       $.ajax({
+         url: '../v1/api/update_customer_address',
+         timeout: 30000,
+         method: 'POST',
+         dataType: 'JSON',
+         data: { billing_address, billing_country, billing_city, billing_state, billing_zip },
+         success: function (response) {
+           if (response.success) {
+             $('.on_click_billing_modal').trigger('click');
+             toastr.success(response.success);
+   
+             $('#msg_billing_address').text(billing_address);
+   
+             $('#msg_billing_zip').text(billing_zip);
+             $('#msg_billing_state').text(billing_state);
+             $('#msg_billing_city').text(billing_city);
+   
+             if (billing_state != "") {
+               $('#billing_coma').show();
+             } else {
+               $('#billing_coma').hide();
+             }
+           }
+   
+   
+           if (response.error) {
+             toastr.error(response.error);
+           }
+         },
+         error: function () {
+           toastr.error('Error! Connection timeout.');
+         }
+       });
+     }
+   
+}
+
+
+
+function get_billing_nd_card(){
+   
+     var billing_address = document.getElementById("billing_address").value;
+     var billing_country = document.getElementById("billing_country").value;
+     var billing_zip = document.getElementById("billing_zip").value;
+     var billing_state = document.getElementById("billing_state").value;
+     var billing_city = document.getElementById("billing_city").value;
+   
+   
+     var exp_month = document.getElementById("exp_month").value;
+     var card_number = document.getElementById("account_no").value;
+     var exp_year = document.getElementById("exp_year").value;
+     var cvc = document.getElementById("cvc_numb").value;
+     var card_default = document.getElementById("card_default").value;
+
+     if (billing_address == '' || billing_address == 0) {
+          toastr.error('Address is required.');
+          error_for_updating_billing = 1;
+          return false;
+          exit;
+        }
+      
+      
+     if (billing_zip == '' || billing_zip == 0) {
+          toastr.error('Zip Code is required.');
+          error_for_updating_billing = 1;
+          return false;
+          exit;
+     }
+
+     
+     // console.log(exp_month,card_number,exp_year,cvc,card_default)
+     // console.log(billing_address,billing_country,billing_city,billing_state,billing_zip)
+
+     update_card_details(exp_month,card_number,exp_year,cvc,card_default)
+     update_billing_details(billing_address,billing_country,billing_city,billing_state,billing_zip)
+
+}
+
+document.querySelectorAll(".add_billing_and_card").forEach(function(element) {
+     element.addEventListener("click", get_billing_nd_card);     
+ });

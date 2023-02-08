@@ -1707,7 +1707,7 @@ class Home_controller extends Manaknight_Controller
                 }
             } else {
                 $output['status'] = 0;
-                $output['error'] = 'Error! Invalid password or email.';
+                $output['error'] = 'Error! No Account associated with such email address.';
                 echo json_encode($output);
                 exit();
             }
@@ -2290,6 +2290,7 @@ class Home_controller extends Manaknight_Controller
     {
         $user_id = $this->session->userdata('user_id');
 
+
         if (empty($user_id)) {
             $output['error'] = 'Error! Login to continue.';
             echo json_encode($output);
@@ -2304,6 +2305,8 @@ class Home_controller extends Manaknight_Controller
 
         $this->load->model('customer_model');
         $this->load->model('customer_cards_model');
+        $this->load->model('inventory_model');
+
 
         $card_number  = $this->input->post('card_number', TRUE);
         $exp_month    = $this->input->post('exp_month', TRUE);
@@ -2320,8 +2323,10 @@ class Home_controller extends Manaknight_Controller
         }
 
         // check card already added or not
-        $prev_card = $this->customer_cards_model->get_by_fields(['user_id' => $user_id, 'account_no' => $card_number, 'cvc' => $cvc]);
-        if (empty($prev_card)) {
+        $prev_card = $this->inventory_model->get_by_table('customer_cards', 'user_id', $user_id);
+        // $prev_card = $this->customer_cards_model->get_by_fields(['user_id' => $user_id, 'account_no' => $card_number]);
+
+        if (!$prev_card) {
             // add new entry
             $check_new_card = $this->customer_cards_model->create([
                 'is_default'     => $card_default,
