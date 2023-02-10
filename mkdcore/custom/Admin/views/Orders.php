@@ -102,7 +102,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     if ($clean_mode) {
                         $format_mode = '&layout_clean_mode=1';
                     }
-                    foreach ($view_model->get_column() as $key => $data) {
+                    $titles = $view_model->get_column();
+                    foreach ($titles as $key => $data) {
                         $data_field = $field_column[$key];
                         if (strlen($order_by) < 1 || $data_field == '') {
                             echo "<th scope='col' class='paragraphText text-left'>{$data}</th>";
@@ -117,9 +118,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 echo "<th  scope='col' class='paragraphText text-left'><a href='{$model_base_url}?order_by={$data_field}{$format_mode}&direction=ASC'>{$data} <i class='fas fa-sort-down'  style='margin-bottom:3px;color:#e2e2e2;'></i></a></th>";
                             }
                         }
-                    } ?>
+                    }
+                    ?>
                 </thead>
                 <tbody class="tbody-light">
+
                     <?php foreach ($view_model->get_list() as $data) { ?>
                         <?php
                         echo '<tr>';
@@ -128,6 +131,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         echo "<td>" . ucfirst($view_model->order_type_mapping()[$data->order_type]) . "</td>";
                         echo "<td>" . ucfirst($view_model->payment_method_mapping()[$data->payment_method]) . "</td>";
                         echo "<td><a class='text-primary' target='_blank' href='https://www.google.com/search?q={$data->ship_station_tracking_no}'>{$data->ship_station_tracking_no}</a></td>";
+
                         echo "<td>" . ucfirst($view_model->is_picked_mapping()[$data->is_picked]) . "</td>";
                         echo "<td>" . ucfirst($view_model->is_shipped_mapping()[$data->is_shipped]) . "</td>";
                         echo "<td>$" . number_format($data->subtotal, 2) . "</td>";

@@ -256,17 +256,21 @@ if ($layout_clean_mode) {
 											<th style="width:20%">Item Name</th>
 											<th style="width:10%">Quantity</th>
 											<th style="width:10%">Rate</th>
+											<th style="width:10%">Sku</th>
 											<th style="width:10%">Amount</th>
 											<th style="width:10%">Delivery Type</th>
 											<th style="width:10%">Shipping Service/Store</th>
 										</tr>
 									</thead>
 									<tbody>
+										<?php //echo json_encode($orders_details) 
+										?>
 										<?php foreach ($orders_details as $key => $detail) {  ?>
 											<tr>
 												<td><?php echo  $detail->product_name; ?> </td>
 												<td><?php echo  $detail->quantity; ?></td>
 												<td>$<?php echo  number_format($detail->product_unit_price, 2); ?></td>
+												<td><?php echo  "sku sku" ?></td>
 												<td>$<?php echo  number_format($detail->amount, 2); ?></td>
 												<td><?php echo $detail->is_pickup == "0" ? 'Delivery' : 'Pick up'; ?></td>
 												<?php if (empty($detail->store_id)) : ?>

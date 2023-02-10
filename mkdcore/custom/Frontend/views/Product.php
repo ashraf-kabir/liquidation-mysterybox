@@ -339,7 +339,7 @@ $gallery_image_count = count($gallery_lists) + 1;
 
 
 $feature_image = "/assets/frontend_images/noun_pallet_box_1675914.png";
-
+// echo json_encode($product);
 if (!empty($product->feature_image)) {
     $feature_image = $product->feature_image;
 }
@@ -438,13 +438,16 @@ if (!empty($product->feature_image)) {
             <?php if ($product->quantity > 0) { ?>
                 <?php if ($product->can_ship != 3) /* 3 - shipping only */ : ?>
                     <div class="bg-white w-100 p-2 px-md-4 d-flex my-3 justify-content-center">
+
+                        <input type="hidden" data-main_quantity="<?php echo $product->quantity ?>" name="<?php echo $product->quantity ?>" id="prod_id_hid" value="<?php echo $product->id ?>">
+
                         <?php if ($product->can_ship != 2 || ($product->can_ship == 2 && $product->can_ship_approval == 1))  /* can_ship 2 - pickup only, can_ship_approval 1 - Yes */ : ?>
-                            <div button-type="delivery" role="button" class="mr-2 btn btn-primary" total-quantity='<?php echo $product->quantity ?>' onclick="deliverySelected()">
+                            <div button-type="delivery" role="button" class="mr-2 btn btn-primary pick_itm" total-quantity='<?php echo $product->quantity ?>' onclick="deliverySelected()">
                                 <span> Delivery </span>
                             </div>
                         <?php endif; ?>
                         <?php if (count($store_inventory) > 0) : ?>
-                            <div button-type="pickup" role="button" class=" btn" onclick="pickupSelected()">
+                            <div button-type="pickup" role="button" class=" btn pick_itm" onclick="pickupSelected()">
                                 <span> Pick Up </span>
                             </div>
                         <?php endif; ?>
@@ -460,8 +463,8 @@ if (!empty($product->feature_image)) {
                                 $stock_info = $store_data->quantity > 0 ? "{$store_data->quantity} in stock" : "Out of stock";
                                 echo "<div class='col-md-5 border w-50 mx-2 p-2 shadow d-flex flex-row' role='button'>
                                         <span>
-                                        <input name='store'  type='radio' onchange='updateQuantity({$store_data->quantity})' input-name='store' 
-                                            store-quantity='{$store_data->quantity}'id='store_{$key}' value='{$store_data->store_id}' class='right ' {$checked} />
+                                        <input name='store'  type='radio' onchange='updateQuantity()' input-name='store' 
+                                            store-quantity='{$store_data->quantity}'id='store_{$key}' value='{$store_data->store_id}' class='store_radio right ' {$checked} />
                                         </span>
 
                                         <label for='store_{$key}' class='text-center ml-1' role='button'>
@@ -471,7 +474,7 @@ if (!empty($product->feature_image)) {
                                         {$store_data->store->state}
                                         {$store_data->store->zip} </br>
                                         <a href='tel:{$store_data->store->phone}'>{$store_data->store->phone}</a> </br>
-                                        <span class='font-italic text-muted'>({$stock_info})</span>
+                                        <span class='font-italic text-muted store_stock'>({$stock_info})</span>
                                         </label>
 
                                     </div> ";
@@ -696,7 +699,7 @@ if (!empty($product->feature_image)) {
         let deliveryBtn = document.querySelector('[button-type="delivery"]')
 
         // Update btn UI
-        console.log('pickup clicked');
+        // console.log('pickup clicked');
         pickupBtn.classList.add('btn-primary');
         if (deliveryBtn) {
             deliveryBtn.classList.remove('btn-primary');
@@ -767,9 +770,10 @@ if (!empty($product->feature_image)) {
         storeComponent.style.display = 'none';
     }
 
-    function updateQuantity(maxQuantity = 0) {
+    function updateQuantity() {
         let quantityDropdown = document.querySelector('#quantity');
         let optionsTemplate = '<option value="">Select</option>';
+        var maxQuantity = document.getElementById("prod_id_hid").name;
 
         for (let i = 1; i <= maxQuantity; i++) {
             if (i > 10) break;
@@ -875,4 +879,86 @@ if (!empty($product->feature_image)) {
         dots[thumbnail].classList.add('bordered');
 
     }
+
+    function update_qty() {
+        var product_id = document.getElementById("prod_id_hid").value;
+        var main_qty = document.getElementById("prod_id_hid").dataset.main_quantity;
+
+
+
+        // Send the POST request using AJAX
+        $.ajax({
+            type: "POST",
+            url: "../v1/api/product/product_count",
+            data: JSON.stringify({
+                product_id: product_id
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                // console.log('i am main qty' + main_qty);
+                // console.log('i am remain qty' + remain_qty);
+                // console.log(typeof data['res']);
+                if (parseInt(data['res']) >= 0) {
+                    var remain_qty = main_qty - parseInt(data['res']);
+
+                } else {
+                    var remain_qty = main_qty - 0;
+                }
+
+
+
+
+
+                // console.log('main: ' + main_qty)
+                // console.log('remain: ' + remain_qty)
+                document.getElementById("prod_id_hid").name = remain_qty;
+
+
+                const stockInfo = `${remain_qty} in stock`;
+                const storeStock = document.querySelector('.store_stock');
+                storeStock.innerHTML = `(${stockInfo})`;
+
+                var newOptions = [{
+                    value: '',
+                    text: 'select'
+                }];
+                for (var i = 1; i <= remain_qty; i++) {
+                    newOptions.push({
+                        value: i,
+                        text: i
+                    });
+                }
+
+                document.querySelectorAll("#quantity").forEach(function(select) {
+                    // Clear existing options
+                    select.options.length = 0;
+
+                    // Add new options to the select element
+                    newOptions.forEach(function(option) {
+                        var opt = document.createElement('option');
+                        opt.value = option.value;
+                        opt.text = option.text;
+                        select.add(opt);
+                    });
+                });
+
+            },
+            error: function(error) {
+                console.log('there is an error: ', error);
+            }
+        });
+
+
+        // console.log(product_id)
+    }
+
+
+    document.querySelectorAll(".pick_itm").forEach(function(element) {
+        element.addEventListener("click", update_qty);
+        // console.log(element)
+    });
+    document.querySelectorAll("#quantity").forEach(function(element) {
+        element.addEventListener("focus", update_qty);
+    });
 </script>

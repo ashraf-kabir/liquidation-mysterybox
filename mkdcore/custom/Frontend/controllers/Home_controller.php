@@ -909,6 +909,7 @@ class Home_controller extends Manaknight_Controller
                         'product_name'       => $cart_item_value->product_name,
                         'amount'             => $total_amount,
                         'item_tax'           => $total_item_tax,
+                        // 'item_id'           => $this->inventory_model->get(),
                         'sale_person_id'     => $inventory_data->sale_person_id,
                         'store_id'           => $inventory_data->store_location_id,
                         'quantity'           => $cart_item_value->product_qty,
@@ -1516,6 +1517,7 @@ class Home_controller extends Manaknight_Controller
 
         $data['stores']             =   $this->store_model->get_all();
         $data['product']            =   $model;
+        $data['product']->boys            =   'gurls';
         $data['store_inventory']    =   $store_inventory;
         $data['gallery_lists']      =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
         $data['terms_and_con']      =   $this->product_terms_and_condition_model->get_all(['status' => 1]);
@@ -1524,6 +1526,39 @@ class Home_controller extends Manaknight_Controller
 
         $this->_render('Guest/Product', $data);
     }
+
+    public function get_updated_product_count()
+    {
+        // Load the database library
+        $this->load->database();
+
+        // Get the product_id value from the input
+        $product_id = $this->input->post('product_id');
+
+        // Get all the quantity values for the given product_id from the database field (pos_cart)
+        $this->db->select_sum('product_qty');
+        $this->db->from('pos_cart');
+        $this->db->where('product_id', $product_id);
+        $query = $this->db->get();
+
+        // Check if the product_id exists in the database field (pos_cart)
+        if ($query->num_rows() > 0) {
+            // Get the sum of the quantity field
+            $row = $query->row();
+            $qty = $row->product_qty;
+        } else {
+            $qty = 0;
+        }
+
+        $result = ['res' => $qty];
+
+        // Return the result as a JSON response
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
+    }
+
+
 
 
     public function about_us()
