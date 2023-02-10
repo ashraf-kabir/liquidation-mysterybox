@@ -222,7 +222,6 @@ class Admin_daily_sales_controller extends Admin_controller
             "a.created_at" => $from_date,
         ];
         $this->_data['orders_details'] = $this->pos_order_items_model->_join("pos_order", "order_id", $where, ['created_at', 'updated_at']);
-
         $this->load->model('store_model');
         $this->_data['inventory_details'] = $this->inventory_model->get($id);
         $this->_data['status_mapping'] = $this->inventory_model->status_mapping();

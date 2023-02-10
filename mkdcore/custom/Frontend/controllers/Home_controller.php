@@ -904,12 +904,17 @@ class Home_controller extends Manaknight_Controller
                     $shipping_service_name        =  $this->input->post('shipping_service_name_' . $cart_item_value->id, TRUE);
 
                     $shipping_cost_total += (float) $shipping_cost_value;
+                    $itms = $this->inventory_model->get_itm_by_product($cart_item_value->product_id);
+                    if (isset($itms->id)) {
+                        $this->inventory_model->update_itm_status($itms->id);
+                    }
+
+
                     $data_order_detail = array(
-                        'product_id'         => $cart_item_value->product_id,
+                        'product_id'         => $itms->id,
                         'product_name'       => $cart_item_value->product_name,
                         'amount'             => $total_amount,
                         'item_tax'           => $total_item_tax,
-                        // 'item_id'           => $this->inventory_model->get(),
                         'sale_person_id'     => $inventory_data->sale_person_id,
                         'store_id'           => $inventory_data->store_location_id,
                         'quantity'           => $cart_item_value->product_qty,

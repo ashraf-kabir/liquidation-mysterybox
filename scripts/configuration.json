@@ -9463,6 +9463,7 @@
     "../mkdcore/custom/Api/Ecom_api_controller.php": "../release/application/controllers/Guest/Ecom_api_controller.php",
     "../mkdcore/custom/Api/Item.php": "../release/application/controllers/Guest/Item.php",
     "../mkdcore/custom/Admin/controllers/Admin_subcategory_controller.php": "../release/application/controllers/Admin/Admin_subcategory_controller.php",
+    "../mkdcore/custom/Admin/controllers/Admin_orders_controller.php": "../release/application/controllers/Admin/Admin_orders_controller.php",
     "../mkdcore/custom/Admin/controllers/Admin_shipping_cost_report_controller.php": "../release/application/controllers/Admin/Admin_shipping_cost_report_controller.php",
     "../mkdcore/custom/Admin/controllers/Admin_customer_report_controller.php": "../release/application/controllers/Admin/Admin_customer_report_controller.php",
     "../mkdcore/custom/Admin/controllers/Admin_inventory_report_controller.php": "../release/application/controllers/Admin/Admin_inventory_report_controller.php",

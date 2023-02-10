@@ -298,6 +298,35 @@ class Inventory_model extends Manaknight_Model
 		return $updateResult ? true : false;
 	}
 
+	public function get_itm_by_product($product_id)
+	{
+		$this->db->select('*');
+		$this->db->from('inventory');
+		$this->db->where(array('parent_inventory_id' => $product_id, 'status' => 1));
+		$this->db->order_by('id', 'ASC');
+		$this->db->limit(1);
+		$query = $this->db->get();
+		$result = $query->row();
+
+
+
+		return $result;
+	}
+
+	public function update_itm_status($itm_id)
+	{
+		// update the status of retrieved items
+		$data = array(
+			'status' => 0
+		);
+
+		$this->db->from('inventory');
+		$this->db->where(array('id' => $itm_id));
+		$this->db->update('inventory', $data);
+	}
+
+
+
 
 
 	/**
