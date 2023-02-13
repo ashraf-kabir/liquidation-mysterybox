@@ -433,7 +433,10 @@ if (!empty($product->feature_image)) {
             </div>
 
 
-
+            <?php
+            // echo json_encode($product_bought);
+            // echo json_encode($boys2);
+            ?>
 
             <?php if ($product->quantity > 0) { ?>
                 <?php if ($product->can_ship != 3) /* 3 - shipping only */ : ?>
@@ -498,6 +501,7 @@ if (!empty($product->feature_image)) {
                         <select type="number" name="quantity" id="quantity" class="form-control d-inline product_quantity mx-3" style="font-size: 13px; padding: 0px; width: 75px; height: 38px;">
                             <option value="">Select</option>
                             <?php
+
                             for ($i = 1; $i <= $product->quantity; $i++) {
                                 if ($i <= 10) {
                                     echo '<option value="' . $i . '" >' . $i . '</option>';
@@ -880,85 +884,85 @@ if (!empty($product->feature_image)) {
 
     }
 
-    function update_qty() {
-        var product_id = document.getElementById("prod_id_hid").value;
-        var main_qty = document.getElementById("prod_id_hid").dataset.main_quantity;
+    // function update_qty() {
+    //     var product_id = document.getElementById("prod_id_hid").value;
+    //     var main_qty = document.getElementById("prod_id_hid").dataset.main_quantity;
 
 
 
-        // Send the POST request using AJAX
-        $.ajax({
-            type: "POST",
-            url: "../v1/api/product/product_count",
-            data: JSON.stringify({
-                product_id: product_id
-            }),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(data) {
-                // console.log('i am main qty' + main_qty);
-                // console.log('i am remain qty' + remain_qty);
-                // console.log(typeof data['res']);
-                if (parseInt(data['res']) >= 0) {
-                    var remain_qty = main_qty - parseInt(data['res']);
+    //     // Send the POST request using AJAX
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "../v1/api/product/product_count",
+    //         data: JSON.stringify({
+    //             product_id: product_id
+    //         }),
+    //         contentType: "application/json; charset=utf-8",
+    //         dataType: "json",
+    //         success: function(data) {
+    //             // console.log('i am main qty' + main_qty);
+    //             // console.log('i am remain qty' + remain_qty);
+    //             // console.log(typeof data['res']);
+    //             if (parseInt(data['res']) >= 0) {
+    //                 var remain_qty = main_qty - parseInt(data['res']);
 
-                } else {
-                    var remain_qty = main_qty - 0;
-                }
-
-
+    //             } else {
+    //                 var remain_qty = main_qty - 0;
+    //             }
 
 
 
-                // console.log('main: ' + main_qty)
-                // console.log('remain: ' + remain_qty)
-                document.getElementById("prod_id_hid").name = remain_qty;
 
 
-                const stockInfo = `${remain_qty} in stock`;
-                const storeStock = document.querySelector('.store_stock');
-                storeStock.innerHTML = `(${stockInfo})`;
-
-                var newOptions = [{
-                    value: '',
-                    text: 'select'
-                }];
-                for (var i = 1; i <= remain_qty; i++) {
-                    newOptions.push({
-                        value: i,
-                        text: i
-                    });
-                }
-
-                document.querySelectorAll("#quantity").forEach(function(select) {
-                    // Clear existing options
-                    select.options.length = 0;
-
-                    // Add new options to the select element
-                    newOptions.forEach(function(option) {
-                        var opt = document.createElement('option');
-                        opt.value = option.value;
-                        opt.text = option.text;
-                        select.add(opt);
-                    });
-                });
-
-            },
-            error: function(error) {
-                console.log('there is an error: ', error);
-            }
-        });
+    //             // console.log('main: ' + main_qty)
+    //             // console.log('remain: ' + remain_qty)
+    //             document.getElementById("prod_id_hid").name = remain_qty;
 
 
-        // console.log(product_id)
-    }
+    //             const stockInfo = `${remain_qty} in stock`;
+    //             const storeStock = document.querySelector('.store_stock');
+    //             storeStock.innerHTML = `(${stockInfo})`;
+
+    //             var newOptions = [{
+    //                 value: '',
+    //                 text: 'select'
+    //             }];
+    //             for (var i = 1; i <= remain_qty; i++) {
+    //                 newOptions.push({
+    //                     value: i,
+    //                     text: i
+    //                 });
+    //             }
+
+    //             // document.querySelectorAll("#quantity").forEach(function(select) {
+    //             //     // Clear existing options
+    //             //     select.options.length = 0;
+
+    //             //     // Add new options to the select element
+    //             //     newOptions.forEach(function(option) {
+    //             //         var opt = document.createElement('option');
+    //             //         opt.value = option.value;
+    //             //         opt.text = option.text;
+    //             //         select.add(opt);
+    //             //     });
+    //             // });
+
+    //         },
+    //         error: function(error) {
+    //             console.log('there is an error: ', error);
+    //         }
+    //     });
 
 
-    document.querySelectorAll(".pick_itm").forEach(function(element) {
-        element.addEventListener("click", update_qty);
-        // console.log(element)
-    });
-    document.querySelectorAll("#quantity").forEach(function(element) {
-        element.addEventListener("focus", update_qty);
-    });
+    //     // console.log(product_id)
+    // }
+
+
+    // document.querySelectorAll(".pick_itm").forEach(function(element) {
+    //     element.addEventListener("click", update_qty);
+    //     // console.log(element)
+    // });
+    // document.querySelectorAll("#quantity").forEach(function(element) {
+    //     element.addEventListener("focus", update_qty);
+    // });
 </script>

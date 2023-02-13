@@ -1495,6 +1495,7 @@ class Home_controller extends Manaknight_Controller
         $this->load->library('names_helper_service');
         $this->load->model('category_model');
         $this->load->model('store_model');
+        $this->load->model('inventory_model');
         $this->load->model('physical_location_model');
         $this->load->model('product_terms_and_condition_model');
 
@@ -1517,12 +1518,12 @@ class Home_controller extends Manaknight_Controller
             $store_inventory[$key]->store = $store_data;
             // remove warehouse store (can_ship - shipping only --> 3)
         }
+
         // echo '<pre>';
         // print_r($store_inventory); die();
 
         $data['stores']             =   $this->store_model->get_all();
         $data['product']            =   $model;
-        $data['product']->boys            =   'gurls';
         $data['store_inventory']    =   $store_inventory;
         $data['gallery_lists']      =   $this->inventory_gallery_list_model->get_all(['inventory_id' => $id]);
         $data['terms_and_con']      =   $this->product_terms_and_condition_model->get_all(['status' => 1]);
@@ -2641,5 +2642,39 @@ class Home_controller extends Manaknight_Controller
             ->validate_address_upsp($shipping_address, $city, $state, $zip, $country);
 
         return $response;
+    }
+
+    public function get_product_available_itms()
+    {
+        $this->load->model('inventory_model');
+        $product_id       = $this->input->post('product_id', TRUE);
+        $user_cart_qty = $this->input->post('user_cart_qty', TRUE);
+        $customer_id = $this->session->userdata('user_id');
+
+
+        $checks = $this->inventory_model->get_product_details_by_id($product_id);
+        $checks_user_cart = $this->inventory_model->get_cart_total($customer_id, $product_id);
+
+        $response['itm'] = $checks;
+
+        if ($checks->quantity > 0) {
+            if ($checks_user_cart > $checks->quantity) {
+                $response['error'] = $checks->product_name . ' Item quantity exceeds available store quantity.';
+            } else {
+                if ($user_cart_qty > $checks->quantity) {
+                    $response['error'] = $checks->product_name . ' Item quantity exceeds available store quantity.';
+                } else {
+                    $response['success'] = true;
+                    $response['customer'] = $checks_user_cart;
+                }
+            }
+        } else {
+            $response['error'] = $checks->product_name . ' Item quantity exceeds available store quantity.';
+        }
+
+        // return $response;
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($response));
     }
 }

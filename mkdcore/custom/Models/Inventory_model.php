@@ -313,6 +313,30 @@ class Inventory_model extends Manaknight_Model
 		return $result;
 	}
 
+
+	public function get_product_details_by_id($product_id)
+	{
+		$this->db->select('*');
+		$this->db->from('inventory');
+		$this->db->where('id', $product_id);
+		$query = $this->db->get();
+		return $query->row();
+	}
+
+	public function get_cart_total($user_id, $product_id)
+	{
+		$this->db->select_sum('product_qty');
+		$this->db->where('customer_id', $user_id);
+		$this->db->where('product_id', $product_id);
+		$query = $this->db->get('pos_cart');
+		return $query->row()->product_qty;
+	}
+
+
+
+
+
+
 	public function update_itm_status($itm_id)
 	{
 		// update the status of retrieved items

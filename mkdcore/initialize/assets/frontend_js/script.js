@@ -338,6 +338,44 @@ $(document).on('click', '.edit_to_cart_button', function (e) {
 
 
 
+$(document).on('click', '.check_out_1', function (e) {
+  e.preventDefault();
+  var targetURL = this.getAttribute("href");
+  var checkItems = document.getElementsByClassName("quantity_value");
+
+  for (var i = 0; i < checkItems.length; i++) {
+    var itemValue = checkItems[i].value;
+    var product_id = checkItems[i].getAttribute("data-itm-pid");
+    // products_counts[product_id] = parseInt(products_counts[product_id]) + parseInt(itemValue);
+    
+    $.ajax({
+      type: 'POST',
+      url: '../v1/api/check_itm_count',
+      // timeout: 15000,
+      data: { 'product_id': product_id, 'user_cart_qty': itemValue },
+      dataType: 'JSON',
+      success: function (response) {
+        if (response.error) {
+          toastr.error(response.error);
+        }
+        if (response.success) {
+          toastr.success(response.success);
+          window.location.href = targetURL;
+        }
+        max_prod_count.push(raw_resp);
+      },
+      error: function () {
+        toastr.error('Error! Connection timeout.');
+      }
+    });
+    
+   
+  }
+
+});
+
+
+
 
 
 
@@ -580,6 +618,7 @@ $(document).on('submit', '.send_checkout', function (e) {
           $('.image-on-submit').remove();
           $('.place-order-btn').show();
           toastr.error('Error! Connection timeout.');
+          console.log(dataForm)
         }
       });
     }
