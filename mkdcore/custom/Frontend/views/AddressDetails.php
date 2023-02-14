@@ -81,7 +81,8 @@
                                    <input type="hidden" id="address_fill_form" name="address_fill_form" value="true">
 
 
-
+                                   <?php //echo json_encode($customer_card) 
+                                   ?>
                                    <div class="col-md-12 col-12 my-2  mt-5">
 
                                         <label for="account_no">Credit Card No. <span class="required-must">*</span></label>

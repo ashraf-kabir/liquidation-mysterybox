@@ -1456,6 +1456,14 @@ class Home_controller extends Manaknight_Controller
 
             $customer = $this->customer_model->get($this->session->userdata('user_id'));
             $customer_card = $this->inventory_model->get_by_table('customer_cards', 'user_id', intval($customer->id));
+            if (empty($customer_card)) {
+                $customer_card = new stdClass();
+                $customer_card->account_no = "0";
+                $customer_card->month = "0";
+                $customer_card->year = "0";
+                $customer_card->cvc = "0";
+                $customer_card->is_default = "0";
+            }
 
             $user_id = $this->session->userdata('user_id');
             $data['customer']     =  $this->customer_model->get($user_id);
