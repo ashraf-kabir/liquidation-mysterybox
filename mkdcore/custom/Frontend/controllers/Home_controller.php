@@ -1454,8 +1454,12 @@ class Home_controller extends Manaknight_Controller
         if ($this->session->userdata('customer_login') && $this->session->userdata('user_id')) {
             $this->load->model('customer_model');
 
+            $customer = $this->customer_model->get($this->session->userdata('user_id'));
+            $customer_card = $this->inventory_model->get_by_table('customer_cards', 'user_id', intval($customer->id));
+
             $user_id = $this->session->userdata('user_id');
             $data['customer']     =  $this->customer_model->get($user_id);
+            $data['customer_card'] = $customer_card;
             $data['active'] = 'checkout';
             $data['layout_clean_mode'] = FALSE;
 
