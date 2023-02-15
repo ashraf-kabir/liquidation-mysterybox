@@ -317,14 +317,15 @@ class Inventory_model extends Manaknight_Model
 	{
 		$this->db->select('*');
 		$this->db->from('inventory');
-		$this->db->where(array('parent_inventory_id' => $product_id, 'status' => array(1, 2)));
+		$this->db->where('parent_inventory_id', $product_id);
+		$this->db->where_in('status', array(1, 2));
 		$this->db->order_by('id', 'ASC');
 		$this->db->limit(1);
 		$query = $this->db->get();
 		$result = $query->row();
-
 		return $result;
 	}
+
 
 
 
