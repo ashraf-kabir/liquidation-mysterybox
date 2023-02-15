@@ -502,7 +502,7 @@
                     <p>Order Summary</p>
                     <div class="order-details">
                          <div class="d-flex justify-content-between">
-                              <p>Items(<?php echo count($cart_items) ?>):</p>
+                              <p>Line Items(<?php echo count($cart_items) ?>):</p>
                               <p>$<span class="sub_total_value"><?php echo number_format($sub_total, 2); ?></span></p>
                          </div>
                          <div class="mt-1">
