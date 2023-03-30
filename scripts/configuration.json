@@ -9481,6 +9481,7 @@
     "../mkdcore/custom/Admin/controllers/Admin_inventory_transfer_controller.php": "../release/application/controllers/Admin/Admin_inventory_transfer_controller.php",
     "../mkdcore/custom/Admin/controllers/Admin_daily_sales_controller.php": "../release/application/controllers/Admin/Admin_daily_sales_controller.php",
     "../mkdcore/custom/Admin/controllers/Admin_product_controller.php": "../release/application/controllers/Admin/Admin_product_controller.php",
+    "../mkdcore/custom/Admin/controllers/Admin_manifest_controller.php": "../release/application/controllers/Admin/Admin_manifest_controller.php",
     "../mkdcore/custom/Employee/controllers/Employee_inventory_controller.php": "../release/application/controllers/Employee/Employee_inventory_controller.php",
     "../mkdcore/custom/Employee/controllers/Employee_inventory_transfer_controller.php": "../release/application/controllers/Employee/Employee_inventory_transfer_controller.php",
     "../mkdcore/custom/Employee/controllers/Employee_inventory_report_controller.php": "../release/application/controllers/Employee/Employee_inventory_report_controller.php",
@@ -9710,7 +9711,8 @@
     "terms_and_conditions": "Guest/Home_controller/terms_and_conditions",
     "profile": "Guest/Home_controller/profile",
     "customer/orders": "Guest/Home_controller/customer_orders/0",
-    "customer/orders/(:num)": "Guest/Home_controller/customer_orders/$1"
+    "customer/orders/(:num)": "Guest/Home_controller/customer_orders/$1",
+    "v1/api/manifest_item": "Admin/Admin_manifest_controller/index"
   },
   "reverse_copy": {},
   "cron": [

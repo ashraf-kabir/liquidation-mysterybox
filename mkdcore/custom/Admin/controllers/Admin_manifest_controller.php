@@ -1,0 +1,187 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed');
+include_once 'Admin_controller.php';
+/*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
+/**
+ * Inventory_transfer Controller
+ * @copyright 2019 Manaknightdigital Inc.
+ * @link https://manaknightdigital.com
+ * @license Proprietary Software licensing
+ * @author Ryan Wong
+ *
+ */
+
+
+class Admin_manifest_controller extends Admin_controller
+{
+
+    public function index()
+    {
+        // Set the endpoint URL and sales channel ID
+        $endpoint = 'https://mkdlabs.com/v3/api/custom/liquidationproductrecommendation/sales_channel/get_palettes?sales_channel_id=3';
+
+        // Set the header data
+        $headers = array(
+            'x-project: bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt',
+            'Content-Type: application/json',
+        );
+
+        // Create a new cURL resource and set the necessary options
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $endpoint,
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+
+        ));
+
+        // Execute the cURL request
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        // Close the cURL resource
+        curl_close($curl);
+
+        // Check for errors and return null if there is an error
+        if ($err) {
+            $data = ['cURL Error' => $err];
+            return $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($data));
+        }
+
+        // Parse the response data
+        $response_data = json_decode($response, true);
+
+        // Extracting names from manifests
+        $manifest_names = array_reduce($response_data['list'], function ($carry, $item) {
+            $names = array_column($item['manifests'], 'name');
+            return array_merge($carry, $names);
+        }, []);
+
+        // Extracting IDs from manifests
+        $manifest_ids = array_reduce($response_data['list'], function ($carry, $item) {
+            $ids = array_column($item['manifests'], 'id');
+            return array_merge($carry, $ids);
+        }, []);
+
+        // Extracting statuses from manifests
+        $manifest_statuses = array_reduce($response_data['list'], function ($carry, $item) {
+            $statuses = array_column($item['manifests'], 'status');
+            return array_merge($carry, $statuses);
+        }, []);
+
+        $manifest_data = [
+            'names' => $manifest_names,
+            'ids' => $manifest_ids,
+            'status' => $manifest_statuses
+        ];
+
+        $manifest_items = $this->get_manifest_items(implode(",", $manifest_ids));
+
+        $query_items[] = array_map(function ($items) {
+            return $this->save_manifest_items($items);
+        }, $manifest_items['list']);
+
+
+        return $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($query_items));
+    }
+
+    public function get_manifest_items($manifest_ids)
+    {
+
+        $url = 'https://mkdlabs.com/v3/api/custom/liquidationproductrecommendation/sales_channel/get_manifest_items?manifest_ids=' . $manifest_ids;
+        $headers = array(
+            'x-project: bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt',
+            'Content-Type: application/json'
+        );
+
+        // initialize cURL session
+        $ch = curl_init($url);
+
+        // set cURL options
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_ENCODING, 'gzip');
+
+        // execute cURL request
+        $response = curl_exec($ch);
+
+        // check for cURL errors
+        if (curl_error($ch)) {
+            $error_msg = curl_error($ch);
+            curl_close($ch);
+            return $error_msg;
+        }
+
+        // close cURL session
+        curl_close($ch);
+
+        // decode JSON response
+        $data = json_decode($response, true);
+
+        // return extracted data
+        return $data;
+    }
+
+    public function save_manifest_items($data)
+    {
+        // return $data['items'][0];
+        $exist_array = array();
+        $save_array = array();
+        $id_array = array();
+        $sku_array = array();
+        foreach ($data['items'] as $item) {
+            $id = $item['id'];
+            $sku = $item['sku'];
+            $manifest_item = $this->db->get_where('manifest_item', array('id' => $id, 'sku' => $sku))->row_array();
+            if ($manifest_item) {
+                $exist_array[] = true;
+                $save_array[] = false;
+                $id_array[] = $id;
+                $sku_array[] = $sku;
+            } else {
+                $exist_array[] = false;
+                $save_array[] = true;
+                $id_array[] = $id;
+                $sku_array[] = $sku;
+
+                // Save the new manifest_item to the database
+                $data = array(
+                    'id' => $id,
+                    'sku' => $sku,
+                    'name' => $item['name'],
+                    'description' => $item['description'],
+                    'category' => $item['category'],
+                    'upc' => $item['upc'],
+                    'asin' => $item['asin'],
+                    'qty' => $item['quantity'],
+                    'manifest_price' => $item['manifest_price'],
+                    'manifest_id' => $data['manifest_id'],
+                    'retail_price' => $item['retail_price'],
+                    'sale_price' => $item['sale_price'],
+                    'list_date' => $item['list_date'],
+                    'duration' => $item['duration'],
+                    'sales_person' => $item['sales_person'],
+                    'upload_type' => $item['upload_type'],
+                    'process_status' => $item['process_status'],
+                    'status' => $item['status']
+                );
+                $this->db->insert('manifest_item', $data);
+            }
+        }
+
+        return [
+            'exist' => $exist_array,
+            'save' => $save_array,
+            'ids' => $id_array,
+            'sku' => $sku_array
+        ];
+    }
+}
