@@ -83,9 +83,12 @@ class Admin_manifest_controller extends Admin_controller
 
         $manifest_items = $this->get_manifest_items(implode(",", $manifest_ids));
 
-        $query_items[] = array_map(function ($items) {
+        $query_items['sale_channel_id'] = 3;
+        $query_items['data'] = array_map(function ($items) {
             return $this->save_manifest_items($items);
         }, $manifest_items['list']);
+
+        // $postResponse = $this->send_processed_data($query_items);
 
 
         return $this->output
@@ -108,7 +111,7 @@ class Admin_manifest_controller extends Admin_controller
         // set cURL options
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_ENCODING, 'gzip');
+        // curl_setopt($ch, CURLOPT_ENCODING, 'gzip');
 
         // execute cURL request
         $response = curl_exec($ch);
@@ -132,28 +135,32 @@ class Admin_manifest_controller extends Admin_controller
 
     public function save_manifest_items($data)
     {
-        // return $data['items'][0];
-        $exist_array = array();
-        $save_array = array();
-        $id_array = array();
-        $sku_array = array();
+        $processedItem = [
+            'manifest_id' => $data['manifest_id'],
+        ];
         foreach ($data['items'] as $item) {
             $id = $item['id'];
             $sku = $item['sku'];
             $manifest_item = $this->db->get_where('manifest_item', array('id' => $id, 'sku' => $sku))->row_array();
             if ($manifest_item) {
-                $exist_array[] = true;
-                $save_array[] = false;
-                $id_array[] = $id;
-                $sku_array[] = $sku;
+
+                $ItemResult = [
+                    'exist' => true,
+                    'save' => false,
+                    'id' => $id,
+                    'sku' => $sku
+                ];
             } else {
-                $exist_array[] = false;
-                $save_array[] = true;
-                $id_array[] = $id;
-                $sku_array[] = $sku;
+
+                $ItemResult = [
+                    'exist' => false,
+                    'save' => true,
+                    'id' => $id,
+                    'sku' => $sku
+                ];
 
                 // Save the new manifest_item to the database
-                $data = array(
+                $savedata = array(
                     'id' => $id,
                     'sku' => $sku,
                     'name' => $item['name'],
@@ -173,15 +180,31 @@ class Admin_manifest_controller extends Admin_controller
                     'process_status' => $item['process_status'],
                     'status' => $item['status']
                 );
-                $this->db->insert('manifest_item', $data);
+                $this->db->insert('manifest_item', $savedata);
             }
+
+            $processedItem['items'][] = $ItemResult;
         }
 
-        return [
-            'exist' => $exist_array,
-            'save' => $save_array,
-            'ids' => $id_array,
-            'sku' => $sku_array
-        ];
+        return $processedItem;
+    }
+
+    public function send_processed_data($processedData)
+    {
+        $url = 'http://example.com/endpoint';
+        $data = $processedData;
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if ($response === false) {
+            return ['success' => false, 'result' => curl_error($ch)];
+        } else {
+            return ['success' => true, 'result' => $response];
+        }
     }
 }
