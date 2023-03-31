@@ -88,12 +88,12 @@ class Admin_manifest_controller extends Admin_controller
             return $this->save_manifest_items($items);
         }, $manifest_items['list']);
 
-        // $postResponse = $this->send_processed_data($query_items);
+        $postResponse = $this->send_processed_data($query_items);
 
 
         return $this->output
             ->set_content_type('application/json')
-            ->set_output(json_encode($query_items));
+            ->set_output(json_encode($postResponse));
     }
 
     public function get_manifest_items($manifest_ids)
@@ -105,31 +105,22 @@ class Admin_manifest_controller extends Admin_controller
             'Content-Type: application/json'
         );
 
-        // initialize cURL session
         $ch = curl_init($url);
-
-        // set cURL options
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        // curl_setopt($ch, CURLOPT_ENCODING, 'gzip');
 
-        // execute cURL request
         $response = curl_exec($ch);
 
-        // check for cURL errors
         if (curl_error($ch)) {
             $error_msg = curl_error($ch);
             curl_close($ch);
             return $error_msg;
         }
 
-        // close cURL session
         curl_close($ch);
 
         // decode JSON response
         $data = json_decode($response, true);
-
-        // return extracted data
         return $data;
     }
 
@@ -191,13 +182,18 @@ class Admin_manifest_controller extends Admin_controller
 
     public function send_processed_data($processedData)
     {
-        $url = 'http://example.com/endpoint';
-        $data = $processedData;
+        $url = 'https://mkdlabs.com/v3/api/custom/liquidationproductrecommendation/sales_channel/start_process';
+        $headers = array(
+            'x-project: bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt',
+            'Content-Type: application/json'
+        );
 
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(['req_body' => $processedData]));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
         $response = curl_exec($ch);
         curl_close($ch);
 
