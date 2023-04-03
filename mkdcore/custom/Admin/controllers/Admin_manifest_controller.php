@@ -90,7 +90,6 @@ class Admin_manifest_controller extends Admin_controller
 
         $postResponse = $this->send_processed_data($query_items);
 
-
         return $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($postResponse));
@@ -190,9 +189,10 @@ class Admin_manifest_controller extends Admin_controller
 
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(['req_body' => $processedData]));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($processedData));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
         $response = curl_exec($ch);
         curl_close($ch);
