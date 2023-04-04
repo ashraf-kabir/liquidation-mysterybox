@@ -9712,7 +9712,8 @@
     "profile": "Guest/Home_controller/profile",
     "customer/orders": "Guest/Home_controller/customer_orders/0",
     "customer/orders/(:num)": "Guest/Home_controller/customer_orders/$1",
-    "v1/api/manifest_item": "Admin/Admin_manifest_controller/index"
+    "v1/api/manifest_item": "Admin/Admin_manifest_controller/index",
+    "v1/api/manifest/categories": "Admin/Admin_manifest_controller/get_categories"
   },
   "reverse_copy": {},
   "cron": [

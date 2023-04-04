@@ -203,4 +203,12 @@ class Admin_manifest_controller extends Admin_controller
             return ['success' => true, 'result' => $response];
         }
     }
+
+    public function get_categories()
+    {
+        $query = $this->db->get('category');
+        return $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(['category' => $query->result_array()]));
+    }
 }
