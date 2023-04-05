@@ -1,5 +1,4 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
-include_once 'Admin_controller.php';
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
 /**
  * Inventory_transfer Controller
@@ -11,7 +10,7 @@ include_once 'Admin_controller.php';
  */
 
 
-class Admin_manifest_controller extends Admin_controller
+class Manifest_controller extends Manaknight_Controller
 {
 
     public function index()
@@ -206,9 +205,21 @@ class Admin_manifest_controller extends Admin_controller
 
     public function get_categories()
     {
+        // Check if the request includes a valid token
+        $token = $this->input->get_request_header('x-project');
+        if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
+            $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(401)
+                ->set_output(json_encode(['error' => 'Unauthorized']));
+            return;
+        }
+
+        // If the token is valid, fetch the category data and return it as JSON
         $query = $this->db->get('category');
-        return $this->output
+        $json = json_encode(['category' => $query->result_array()]);
+        $this->output
             ->set_content_type('application/json')
-            ->set_output(json_encode(['category' => $query->result_array()]));
+            ->set_output($json);
     }
 }
