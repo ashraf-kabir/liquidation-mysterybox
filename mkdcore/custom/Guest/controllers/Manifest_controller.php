@@ -15,6 +15,17 @@ class Manifest_controller extends Manaknight_Controller
 
     public function index()
     {
+
+        $token = $this->input->get_request_header('x-project');
+        if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
+            $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(401)
+                ->set_output(json_encode(['error' => 'Unauthorized']));
+            return;
+        }
+
+
         // Set the endpoint URL and sales channel ID
         $endpoint = 'https://mkdlabs.com/v3/api/custom/liquidationproductrecommendation/sales_channel/get_palettes?sales_channel_id=3';
 
@@ -180,7 +191,7 @@ class Manifest_controller extends Manaknight_Controller
 
     public function send_processed_data($processedData)
     {
-        $url = 'https://mkdlabs.com/v3/api/custom/liquidationproductrecommendation/sales_channel/start_process';
+        $url = 'https://mkdlabs.com/v3/api/custom/liquidationproductrecommendation/sales_channel/manage_process';
         $headers = array(
             'x-project: bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt',
             'Content-Type: application/json'
