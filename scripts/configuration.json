@@ -9713,6 +9713,7 @@
     "customer/orders": "Guest/Home_controller/customer_orders/0",
     "customer/orders/(:num)": "Guest/Home_controller/customer_orders/$1",
     "v1/api/manifest_item": "Guest/Manifest_controller/index",
+    "v1/api/manifest_item/single": "Guest/Manifest_controller/post_single_manifest_items",
     "v1/api/manifest/categories": "Guest/Manifest_controller/get_categories"
   },
   "reverse_copy": {},

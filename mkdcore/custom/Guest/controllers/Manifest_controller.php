@@ -249,4 +249,59 @@ class Manifest_controller extends Manaknight_Controller
         // ->set_header('Access-Control-Allow-Methods: GET, OPTIONS')
         // ->set_header('Access-Control-Allow-Headers: x-project');
     }
+
+    public function post_single_manifest_items()
+    {
+        // Get the post data
+        $data = $this->input->post();
+
+        // Map the post data keys to the database column names
+        $data_map = [
+            'product_name' => $data['product'],
+            'sku' => $data['sku_number'],
+            'is_product' => $data['is_product'],
+            'last_sku' => $data['last_sku'],
+            'parent_inventory_id' => $data['parent_inventory_id'],
+            'category_id' => $data['category_id'],
+            'manifest_id' => $data['manifest_id'],
+            'store_location_id' => $data['store_location_id'],
+            'sale_person_id' => $data['sale_person_id'],
+            'physical_location' => $data['physical_location'],
+            'location_description' => $data['location_description'],
+            'weight' => $data['weight'],
+            'length' => $data['length'],
+            'height' => $data['height'],
+            'width' => $data['width'],
+            'feature_image' => $data['feature_image'],
+            'selling_price' => $data['price'],
+            'quantity' => $data['quantity'],
+            'inventory_note' => $data['inventory_note'],
+            'barcode_image' => $data['barcode_image'],
+            'cost_price' => $data['cost_price'],
+            'admin_inventory_note' => $data['admin_inventory_note'],
+            'can_ship' => $data['can_ship'],
+            'can_ship_approval' => $data['can_ship_approval'],
+            'free_ship' => $data['free_ship'],
+            'pin_item_top' => $data['pin_item_top'],
+            'available_in_shelf' => $data['available_in_shelf'],
+            'product_type' => $data['product_type'],
+            'status' => $data['status'],
+            'store_inventory' => $data['store_inventory']
+        ];
+
+        // Remove any null or undefined values from the data map
+        $data_map = array_filter($data_map, function ($value) {
+            return $value !== null && $value !== '';
+        });
+
+        // Update the database
+        $this->db->where('id', $data['id']);
+        $this->db->update('inventory', $data_map);
+
+        // Return success message
+        $response = array('status' => true, 'message' => 'Record updated successfully');
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($response));
+    }
 }
