@@ -9,7 +9,7 @@
  *
  */
 
-
+header("Access-Control-Allow-Headers: x-project");
 class Manifest_controller extends Manaknight_Controller
 {
 
@@ -33,6 +33,7 @@ class Manifest_controller extends Manaknight_Controller
         $headers = array(
             'x-project: bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt',
             'Content-Type: application/json',
+            'Access-Control-Allow-Headers: x-project'
         );
 
         // Create a new cURL resource and set the necessary options
