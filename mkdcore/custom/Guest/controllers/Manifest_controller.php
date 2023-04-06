@@ -12,13 +12,13 @@ class Manifest_controller extends Manaknight_Controller
 {
 
 
-    public function __construct()
-    {
-        parent::__construct();
-        header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Methods: GET, OPTIONS");
-        header("Access-Control-Allow-Headers: x-project");
-    }
+    // public function __construct()
+    // {
+    //     parent::__construct();
+    //     header('Access-Control-Allow-Origin: *');
+    //     header("Access-Control-Allow-Methods: GET, OPTIONS");
+    //     header("Access-Control-Allow-Headers: x-project");
+    // }
 
     public function index()
     {
@@ -68,7 +68,10 @@ class Manifest_controller extends Manaknight_Controller
             $data = ['cURL Error' => $err];
             return $this->output
                 ->set_content_type('application/json')
-                ->set_output(json_encode($data));
+                ->set_output(json_encode($data))
+                ->set_header('Access-Control-Allow-Origin: *')
+                ->set_header('Access-Control-Allow-Methods: GET, OPTIONS')
+                ->set_header('Access-Control-Allow-Headers: x-project');
         }
 
         // Parse the response data
@@ -109,7 +112,10 @@ class Manifest_controller extends Manaknight_Controller
 
         return $this->output
             ->set_content_type('application/json')
-            ->set_output(json_encode($postResponse));
+            ->set_output(json_encode($postResponse))
+            ->set_header('Access-Control-Allow-Origin: *')
+            ->set_header('Access-Control-Allow-Methods: GET, OPTIONS')
+            ->set_header('Access-Control-Allow-Headers: x-project');
     }
 
     public function get_manifest_items($manifest_ids)
@@ -238,6 +244,9 @@ class Manifest_controller extends Manaknight_Controller
         $json = json_encode(['category' => $query->result_array()]);
         $this->output
             ->set_content_type('application/json')
-            ->set_output($json);
+            ->set_output($json)
+            ->set_header('Access-Control-Allow-Origin: *')
+            ->set_header('Access-Control-Allow-Methods: GET, OPTIONS')
+            ->set_header('Access-Control-Allow-Headers: x-project');
     }
 }
