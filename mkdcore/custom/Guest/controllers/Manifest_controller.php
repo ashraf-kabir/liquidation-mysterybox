@@ -257,6 +257,16 @@ class Manifest_controller extends Manaknight_Controller
 
     public function post_single_manifest_items()
     {
+
+        $token = $this->input->get_request_header('x-project');
+        if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
+            $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(401)
+                ->set_output(json_encode(['error' => 'Unauthorized']));
+            return;
+        }
+
         // Get the post data
         $data = $this->input->post();
 
@@ -264,34 +274,28 @@ class Manifest_controller extends Manaknight_Controller
         $data_map = [
             'product_name' => $data['product'],
             'sku' => $data['sku_number'],
-            'is_product' => $data['is_product'],
-            'last_sku' => $data['last_sku'],
-            'parent_inventory_id' => $data['parent_inventory_id'],
-            'category_id' => $data['category_id'],
-            'manifest_id' => $data['manifest_id'],
-            'store_location_id' => $data['store_location_id'],
-            'sale_person_id' => $data['sale_person_id'],
-            'physical_location' => $data['physical_location'],
-            'location_description' => $data['location_description'],
             'weight' => $data['weight'],
             'length' => $data['length'],
             'height' => $data['height'],
             'width' => $data['width'],
-            'feature_image' => $data['feature_image'],
-            'selling_price' => $data['price'],
-            'quantity' => $data['quantity'],
-            'inventory_note' => $data['inventory_note'],
-            'barcode_image' => $data['barcode_image'],
+            'pin_item_top' => $data['pin_item'],
+            'category_id' => $data['category'],
             'cost_price' => $data['cost_price'],
-            'admin_inventory_note' => $data['admin_inventory_note'],
+            'selling_price' => $data['price'],
             'can_ship' => $data['can_ship'],
             'can_ship_approval' => $data['can_ship_approval'],
-            'free_ship' => $data['free_ship'],
-            'pin_item_top' => $data['pin_item_top'],
-            'available_in_shelf' => $data['available_in_shelf'],
-            'product_type' => $data['product_type'],
+            'free_shipping' => $data['free_ship'],
+            'quantity' => $data['quantity'],
+            'feature_image' => $data['feature_image'],
+            'inventory_note' => $data['product_note'],
+            'admin_inventory_note' => $data['admin_product_note'],
             'status' => $data['status'],
-            'store_inventory' => $data['store_inventory']
+            'manifest_id' => $data['manifest_id'],
+            'store_location_id' => 1,
+            'sale_person_id' => 1,
+            'physical_location' => 1,
+            'parent_inventory_id' => 0,
+            'store_inventory' => json_encode(['store_id' => 1, 'quantity' => $data['quantity'], 'locations' => ['1' => $data['quantity']]])
         ];
 
         // Remove any null or undefined values from the data map
@@ -299,12 +303,18 @@ class Manifest_controller extends Manaknight_Controller
             return $value !== null && $value !== '';
         });
 
-        // Update the database
-        $this->db->where('id', $data['id']);
-        $this->db->update('inventory', $data_map);
+        // Insert the data into the database
+        if (!$this->db->insert('inventory', $data_map)) {
+            // Return error message if insert failed
+            $response = array('status' => false, 'message' => 'Error inserting record');
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($response));
+            return;
+        }
 
         // Return success message
-        $response = array('status' => true, 'message' => 'Record updated successfully');
+        $response = array('status' => true, 'message' => 'Record inserted successfully');
         $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($response));
