@@ -18,6 +18,11 @@ class Manifest_controller extends Manaknight_Controller
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Methods: GET, OPTIONS");
         header("Access-Control-Allow-Headers: x-project");
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method == "OPTIONS") {
+            header("HTTP/1.1 200 OK");
+            die();
+        }
     }
 
     public function index()
