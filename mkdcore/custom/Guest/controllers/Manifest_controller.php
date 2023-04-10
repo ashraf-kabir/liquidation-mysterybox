@@ -319,4 +319,76 @@ class Manifest_controller extends Manaknight_Controller
             ->set_content_type('application/json')
             ->set_output(json_encode($response));
     }
+
+    public function get_products()
+    {
+
+        $token = $this->input->get_request_header('x-project');
+        if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
+            $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(401)
+                ->set_output(json_encode(['error' => 'Unauthorized']));
+            return;
+        }
+
+        $this->db->select('id, product_name, sku, category_id');
+        $this->db->from('inventory');
+        $this->db->where('is_product', 1);
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $result_array = $query->result_array();
+            $result = $result_array;
+        } else {
+            $result = [false];
+        }
+
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($result));
+    }
+
+    public function create_products()
+    {
+
+        $token = $this->input->get_request_header('x-project');
+        if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
+            $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(401)
+                ->set_output(json_encode(['error' => 'Unauthorized']));
+            return;
+        }
+
+        $data = $this->input->post();
+
+        $query = "UPDATE inventory SET 
+                    product_name = '{$data['product_name']}', 
+                    category_id = '{$data['category_id']}', 
+                    weight = '{$data['weight']}', 
+                    length = '{$data['length']}', 
+                    height = '{$data['height']}', 
+                    width = '{$data['width']}', 
+                    selling_price = '{$data['selling_price']}', 
+                    cost_price = '{$data['cost_price']}', 
+                    can_ship = '{$data['can_ship']}', 
+                    free_ship = '{$data['free_ship']}', 
+                    status = '{$data['status']}', 
+                    is_product = '{$data['is_product']}', 
+                    product_type = '{$data['product_type']}'
+                 WHERE id = '{$data['product_id']}'";
+
+        if ($this->db->query($query)) {
+            $response = ['status' => 200, 'message' => 'Product updated successfully.'];
+            header('Content-Type: application/json');
+            header('HTTP/1.1 200 OK');
+            echo json_encode($response);
+        } else {
+            $response = ['status' => 400, 'message' => 'Error updating product.'];
+            header('Content-Type: application/json');
+            header('HTTP/1.1 400 Bad Request');
+            echo json_encode($response);
+        }
+    }
 }

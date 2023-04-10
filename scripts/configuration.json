@@ -9714,7 +9714,9 @@
     "customer/orders/(:num)": "Guest/Home_controller/customer_orders/$1",
     "v1/api/manifest_item": "Guest/Manifest_controller/index",
     "v1/api/manifest_item/single": "Guest/Manifest_controller/post_single_manifest_items",
-    "v1/api/manifest/categories": "Guest/Manifest_controller/get_categories"
+    "v1/api/manifest/categories": "Guest/Manifest_controller/get_categories",
+    "v1/api/manifest/products": "Guest/Manifest_controller/get_products",
+    "v1/api/manifest/create_products": "Guest/Manifest_controller/create_products"
   },
   "reverse_copy": {},
   "cron": [
