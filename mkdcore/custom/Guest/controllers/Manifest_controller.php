@@ -232,7 +232,7 @@ class Manifest_controller extends Manaknight_Controller
         }
     }
 
-    public function get_categories()
+    public function get_store_nd_categories()
     {
         // Check if the request includes a valid token
         $token = $this->input->get_request_header('x-project');
@@ -257,7 +257,7 @@ class Manifest_controller extends Manaknight_Controller
 
     public function get_store_nd_locations()
     {
-        $this->db->select('physical_location.id, physical_location.location_name, physical_location.address, store.id as store_id, store.store_name, store.store_address');
+        $this->db->select('physical_location.id, physical_location.name as location_name, store.id as store_id, store.name as store_name, store.address');
         $this->db->from('physical_location');
         $this->db->join('store', 'physical_location.store_id = store.id');
         $this->db->order_by('store.id', 'asc');
@@ -271,14 +271,14 @@ class Manifest_controller extends Manaknight_Controller
                     $result_array[$store_id] = array(
                         'store_id' => $store_id,
                         'store_name' => $row->store_name,
-                        'store_address' => $row->store_address,
+                        'store_address' => $row->address,
                         'locations' => array()
                     );
                 }
                 $result_array[$store_id]['locations'][] = array(
                     'id' => $row->id,
                     'location_name' => $row->location_name,
-                    'address' => $row->address
+
                 );
             }
             return $result_array;
@@ -286,6 +286,7 @@ class Manifest_controller extends Manaknight_Controller
             return false;
         }
     }
+
 
     public function post_single_manifest_items()
     {
