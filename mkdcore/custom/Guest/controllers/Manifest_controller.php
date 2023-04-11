@@ -275,19 +275,16 @@ class Manifest_controller extends Manaknight_Controller
                         'locations' => array()
                     );
                 }
-                $result_array[$store_id]['locations'][] = array(
+                $result_array[$store_id]['locations'][] = (object) array(
                     'id' => $row->id,
                     'location_name' => $row->location_name,
-
                 );
             }
-            return $result_array;
+            return array_values($result_array); // convert associative array to indexed array
         } else {
             return false;
         }
     }
-
-
     public function post_single_manifest_items()
     {
 
@@ -369,17 +366,17 @@ class Manifest_controller extends Manaknight_Controller
             $this->output
                 ->set_content_type('application/json')
                 ->set_output(json_encode($response));
-            return;
+            // return;
         } else {
             // Return ID of inserted record
             $response = array('status' => true, 'id' => $this->db->insert_id());
             $inventory_data['product_id'] = $response['id'];
-            $this->db->insert('inventory', $inventory_data)
+            $this->db->insert('inventory', $inventory_data);
 
             $this->output
                 ->set_content_type('application/json')
                 ->set_output(json_encode($response));
-            return;
+            // return;
         }
 
 
