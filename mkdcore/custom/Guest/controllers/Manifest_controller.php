@@ -303,8 +303,33 @@ class Manifest_controller extends Manaknight_Controller
         // Get the post data
         $data = $this->input->post();
 
-        // Map the post data keys to the database column names
-        $data_map = [
+        #----------Begin Add products----------------#
+        $product_data = [
+            'product_name' => $data['$product'],
+            'sale_person_id' => 1,
+            'is_product' => 1,
+            'sku' => $data['sku_number'],
+            'last_sku_num' => 1,
+            'category_id' => $data['category_id'],
+            'locations' => 1,
+            'physical_location' => 1,
+            'weight' => $data['weight'],
+            'length' => $data['length'],
+            'height' => $data['height'],
+            'width' => $data['width'],
+            'selling_price' => $data['selling_price'],
+            'cost_price' => $data['cost_price'],
+            'status' => $data['status'],
+            'store_location_id' => '',
+            'can_ship' => $data['can_ship'],
+            'can_ship_approval' => $data['can_ship_approval'],
+            'free_ship' => $data['free_ship'],
+            'product_type' => $data['product_type']
+        ];
+        #----------End Add products----------------#
+
+        #------------Begin Add inventory-----------------#
+        $inventory_data = [
             'product_name' => $data['product'],
             'sku' => $data['sku_number'],
             'weight' => $data['weight'],
@@ -318,33 +343,45 @@ class Manifest_controller extends Manaknight_Controller
             'can_ship' => $data['can_ship'],
             'can_ship_approval' => $data['can_ship_approval'],
             'free_shipping' => $data['free_ship'],
-            'quantity' => $data['quantity'],
-            'feature_image' => $data['feature_image'],
+            'quantity' => 1,
             'inventory_note' => $data['product_note'],
             'admin_inventory_note' => $data['admin_product_note'],
             'status' => $data['status'],
             'manifest_id' => $data['manifest_id'],
-            'store_location_id' => 1,
+            'store_id' => $data['store_id'],
+            'physical_location' => $data['physical_location'],
+            'product_id' => '',
             'sale_person_id' => 1,
-            'physical_location' => 1,
             'parent_inventory_id' => 0,
-            'store_inventory' => json_encode(['store_id' => 1, 'quantity' => $data['quantity'], 'locations' => ['1' => $data['quantity']]])
+            'store_inventory' => json_encode(['store_id' => $data['store_id'], 'quantity' => $data['quantity'], 'locations' => ['1' => $data['quantity']]])
         ];
+        #------------End Add inventory-----------------#
 
         // Remove any null or undefined values from the data map
-        $data_map = array_filter($data_map, function ($value) {
+        $product_data = array_filter($product_data, function ($value) {
             return $value !== null && $value !== '';
         });
 
         // Insert the data into the database
-        if (!$this->db->insert('inventory', $data_map)) {
+        if (!$this->db->insert('inventory', $product_data)) {
             // Return error message if insert failed
             $response = array('status' => false, 'message' => 'Error inserting record');
             $this->output
                 ->set_content_type('application/json')
                 ->set_output(json_encode($response));
             return;
+        } else {
+            // Return ID of inserted record
+            $response = array('status' => true, 'id' => $this->db->insert_id());
+            $inventory_data['product_id'] = $response['id'];
+            $this->db->insert('inventory', $inventory_data)
+
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($response));
+            return;
         }
+
 
         // Return success message
         $response = array('status' => true, 'message' => 'Record inserted successfully');
