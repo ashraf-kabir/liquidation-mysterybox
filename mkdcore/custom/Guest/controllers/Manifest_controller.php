@@ -246,13 +246,45 @@ class Manifest_controller extends Manaknight_Controller
 
         // If the token is valid, fetch the category data and return it as JSON
         $query = $this->db->get('category');
-        $json = json_encode(['category' => $query->result_array()]);
+        $json = json_encode(['category' => $query->result_array(), 'stores' => $this->get_store_nd_locations()]);
         $this->output
             ->set_content_type('application/json')
             ->set_output($json);
         // ->set_header('Access-Control-Allow-Origin: *')
         // ->set_header('Access-Control-Allow-Methods: GET, OPTIONS')
         // ->set_header('Access-Control-Allow-Headers: x-project');
+    }
+
+    public function get_store_nd_locations()
+    {
+        $this->db->select('physical_location.id, physical_location.location_name, physical_location.address, store.id as store_id, store.store_name, store.store_address');
+        $this->db->from('physical_location');
+        $this->db->join('store', 'physical_location.store_id = store.id');
+        $this->db->order_by('store.id', 'asc');
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            $result_array = array();
+            foreach ($query->result() as $row) {
+                $store_id = $row->store_id;
+                if (!isset($result_array[$store_id])) {
+                    $result_array[$store_id] = array(
+                        'store_id' => $store_id,
+                        'store_name' => $row->store_name,
+                        'store_address' => $row->store_address,
+                        'locations' => array()
+                    );
+                }
+                $result_array[$store_id]['locations'][] = array(
+                    'id' => $row->id,
+                    'location_name' => $row->location_name,
+                    'address' => $row->address
+                );
+            }
+            return $result_array;
+        } else {
+            return false;
+        }
     }
 
     public function post_single_manifest_items()
@@ -349,9 +381,10 @@ class Manifest_controller extends Manaknight_Controller
             ->set_output(json_encode($result));
     }
 
+
+
     public function create_products()
     {
-
         $token = $this->input->get_request_header('x-project');
         if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
             $this->output
@@ -363,32 +396,37 @@ class Manifest_controller extends Manaknight_Controller
 
         $data = $this->input->post();
 
-        $query = "UPDATE inventory SET 
-                    product_name = '{$data['product_name']}', 
-                    category_id = '{$data['category_id']}', 
-                    weight = '{$data['weight']}', 
-                    length = '{$data['length']}', 
-                    height = '{$data['height']}', 
-                    width = '{$data['width']}', 
-                    selling_price = '{$data['selling_price']}', 
-                    cost_price = '{$data['cost_price']}', 
-                    can_ship = '{$data['can_ship']}', 
-                    free_ship = '{$data['free_ship']}', 
-                    status = '{$data['status']}', 
-                    is_product = '{$data['is_product']}', 
-                    product_type = '{$data['product_type']}'
-                 WHERE id = '{$data['product_id']}'";
+        $data_map = array(
+            'product_name' => $data['product_name'],
+            'category_id' => $data['category_id'],
+            'weight' => $data['weight'],
+            'length' => $data['length'],
+            'height' => $data['height'],
+            'width' => $data['width'],
+            'selling_price' => $data['selling_price'],
+            'cost_price' => $data['cost_price'],
+            'can_ship' => $data['can_ship'],
+            'free_ship' => $data['free_ship'],
+            'status' => $data['status'],
+            'is_product' => $data['is_product'],
+            'product_type' => $data['product_type'],
+            'physical_location' => 1,
+            'store_location_id' => 1,
+            'sale_person_id' => 1
+        );
 
-        if ($this->db->query($query)) {
-            $response = ['status' => 200, 'message' => 'Product updated successfully.'];
-            header('Content-Type: application/json');
-            header('HTTP/1.1 200 OK');
-            echo json_encode($response);
+        if ($this->db->insert('inventory', $data_map)) {
+            $response = ['status' => 200, 'message' => 'Product created successfully.'];
+            $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(200)
+                ->set_output(json_encode($response));
         } else {
-            $response = ['status' => 400, 'message' => 'Error updating product.'];
-            header('Content-Type: application/json');
-            header('HTTP/1.1 400 Bad Request');
-            echo json_encode($response);
+            $response = ['status' => 400, 'message' => 'Error creating product.'];
+            $this->output
+                ->set_content_type('application/json')
+                ->set_status_header(400)
+                ->set_output(json_encode($response));
         }
     }
 }
