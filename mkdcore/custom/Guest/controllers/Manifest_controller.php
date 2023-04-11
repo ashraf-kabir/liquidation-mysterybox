@@ -280,7 +280,7 @@ class Manifest_controller extends Manaknight_Controller
                     'location_name' => $row->location_name,
                 );
             }
-            return array_values($result_array); // convert associative array to indexed array
+            return array_values($result_array);
         } else {
             return false;
         }
@@ -363,9 +363,9 @@ class Manifest_controller extends Manaknight_Controller
         if (!$this->db->insert('inventory', $product_data)) {
             // Return error message if insert failed
             $response = array('status' => false, 'message' => 'Error inserting record');
-            $this->output
-                ->set_content_type('application/json')
-                ->set_output(json_encode($response));
+            // $this->output
+            //     ->set_content_type('application/json')
+            //     ->set_output(json_encode($response));
             // return;
         } else {
             // Return ID of inserted record
@@ -373,9 +373,9 @@ class Manifest_controller extends Manaknight_Controller
             $inventory_data['product_id'] = $response['id'];
             $this->db->insert('inventory', $inventory_data);
 
-            $this->output
-                ->set_content_type('application/json')
-                ->set_output(json_encode($response));
+            // $this->output
+            //     ->set_content_type('application/json')
+            //     ->set_output(json_encode($response));
             // return;
         }
 
