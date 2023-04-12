@@ -7,6 +7,8 @@
  * @license Proprietary Software licensing
  * @author Ryan Wong
  *
+ * @property Inventory_model $inventory_model
+ *
  */
 class Manifest_controller extends Manaknight_Controller
 {
@@ -22,6 +24,8 @@ class Manifest_controller extends Manaknight_Controller
       header("HTTP/1.1 200 OK");
       die();
     }
+
+    $this->load->model('inventory_model');
   }
 
   /**
@@ -314,10 +318,8 @@ class Manifest_controller extends Manaknight_Controller
       return;
     }
 
-    // Get the post data
     $data = $this->input->post();
 
-    #----------Begin Add products----------------#
     $product_data = [
       'product_name'      => $data['product_name'],
       'sale_person_id'    => 1,
@@ -340,9 +342,7 @@ class Manifest_controller extends Manaknight_Controller
       'free_ship'         => $data['free_ship'],
       'product_type'      => null
     ];
-    #----------End Add products----------------#
 
-    #------------Begin Add inventory-----------------#
     $inventory_data = [
       'product_name'         => $data['product_name'],
       'sku'                  => $data['sku'],
@@ -362,45 +362,48 @@ class Manifest_controller extends Manaknight_Controller
       'admin_inventory_note' => $data['admin_inventory_note'],
       'status'               => $data['status'],
       'manifest_id'          => $data['manifest_id'],
-      // 'store_id' => $data['store_id'],
       'physical_location'    => $data['physical_location_id'],
-      // 'product_id' => '',
       'sale_person_id'       => 1,
       'parent_inventory_id'  => 0,
       'store_inventory'      => json_encode(['store_id' => $data['store_id'], 'quantity' => $data['quantity'], 'locations' => ['1' => $data['quantity']]])
     ];
-    #------------End Add inventory-----------------#
 
     // Remove any null or undefined values from the data map
     $product_data = array_filter($product_data, function ($value) {
       return $value !== null && $value !== '';
     });
 
-    // Insert the data into the database
-    if (!$this->db->insert('inventory', $product_data)) {
-      // Return error message if insert failed
-      $response = ['status' => false, 'message' => 'Error inserting record'];
-      // $this->output
-      //     ->set_content_type('application/json')
-      //     ->set_output(json_encode($response));
-      // return;
+    $this->db->trans_start();
+    $result1 = $this->inventory_model->create($product_data);
+
+    if ($result1) {
+      $inventory_data['product_id'] = $result1;
+      $result2                      = $this->inventory_model->create($inventory_data);
+      if ($result2) {
+        $this->db->trans_complete();
+        $response = ['status' => true, 'message' => 'Record inserted successfully'];
+        $this->output
+             ->set_content_type('application/json')
+             ->set_status_header(201)
+             ->set_output(json_encode($response));
+        return;
+      } else {
+        $this->db->trans_rollback();
+        $response = ['status' => false, 'message' => 'Error inserting record'];
+        $this->output
+             ->set_content_type('application/json')
+             ->set_status_header(500)
+             ->set_output(json_encode($response));
+        return;
+      }
     } else {
-      // Return ID of inserted record
-      $response                       = ['status' => true, 'id' => $this->db->insert_id()];
-      $inventory_data['product_type'] = $response['id'];
-      $this->db->insert('inventory', $inventory_data);
-
-      // $this->output
-      //     ->set_content_type('application/json')
-      //     ->set_output(json_encode($response));
-      // return;
+      $this->db->rollback();
+      $response = ['status' => false, 'message' => 'Error inserting record'];
+      $this->output
+           ->set_content_type('application/json')
+           ->set_status_header(500)
+           ->set_output(json_encode($response));
     }
-
-    // Return success message
-    $response = ['status' => true, 'message' => 'Record inserted successfully'];
-    $this->output
-         ->set_content_type('application/json')
-         ->set_output(json_encode($response));
   }
 
   /**
