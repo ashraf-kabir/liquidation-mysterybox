@@ -338,7 +338,7 @@ class Manifest_controller extends Manaknight_Controller
             'selling_price' => $data['selling_price'],
             'can_ship' => $data['can_ship'],
             'can_ship_approval' => $data['can_ship_approval'],
-            'free_shipping' => $data['free_ship'],
+            'free_ship' => $data['free_ship'],
             'quantity' => 1,
             'inventory_note' => $data['inventory_note'],
             'admin_inventory_note' => $data['admin_inventory_note'],
