@@ -307,7 +307,7 @@ class Manifest_controller extends Manaknight_Controller
             'sku' => $data['sku'],
             'last_sku' => null,
             'category_id' => $data['category_id'],
-            'locations' => 1,
+            // 'locations' => 1,
             'physical_location' => 1,
             'weight' => $data['weight'],
             'length' => $data['length'],
