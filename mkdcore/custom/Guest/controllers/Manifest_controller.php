@@ -17,7 +17,7 @@ class Manifest_controller extends Manaknight_Controller
         parent::__construct();
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Methods: GET, OPTIONS");
-        header("Access-Control-Allow-Headers: x-project");
+        header("Access-Control-Allow-Headers: x-project, Content-Type");
         $method = $_SERVER['REQUEST_METHOD'];
         if ($method == "OPTIONS") {
             header("HTTP/1.1 200 OK");
@@ -287,7 +287,6 @@ class Manifest_controller extends Manaknight_Controller
     }
     public function post_single_manifest_items()
     {
-
         $token = $this->input->get_request_header('x-project');
         if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
             $this->output
@@ -302,11 +301,11 @@ class Manifest_controller extends Manaknight_Controller
 
         #----------Begin Add products----------------#
         $product_data = [
-            'product_name' => $data['$product'],
+            'product_name' => $data['product_name'],
             'sale_person_id' => 1,
             'is_product' => 1,
-            'sku' => $data['sku_number'],
-            'last_sku_num' => 1,
+            'sku' => $data['sku'],
+            'last_sku' => null,
             'category_id' => $data['category_id'],
             'locations' => 1,
             'physical_location' => 1,
@@ -321,32 +320,32 @@ class Manifest_controller extends Manaknight_Controller
             'can_ship' => $data['can_ship'],
             'can_ship_approval' => $data['can_ship_approval'],
             'free_ship' => $data['free_ship'],
-            'product_type' => $data['product_type']
+            'product_type' => 1
         ];
         #----------End Add products----------------#
 
         #------------Begin Add inventory-----------------#
         $inventory_data = [
-            'product_name' => $data['product'],
-            'sku' => $data['sku_number'],
+            'product_name' => $data['product_name'],
+            'sku' => $data['sku'],
             'weight' => $data['weight'],
             'length' => $data['length'],
             'height' => $data['height'],
             'width' => $data['width'],
             'pin_item_top' => $data['pin_item'],
-            'category_id' => $data['category'],
+            'category_id' => $data['category_id'],
             'cost_price' => $data['cost_price'],
-            'selling_price' => $data['price'],
+            'selling_price' => $data['selling_price'],
             'can_ship' => $data['can_ship'],
             'can_ship_approval' => $data['can_ship_approval'],
             'free_shipping' => $data['free_ship'],
             'quantity' => 1,
-            'inventory_note' => $data['product_note'],
-            'admin_inventory_note' => $data['admin_product_note'],
+            'inventory_note' => $data['inventory_note'],
+            'admin_inventory_note' => $data['admin_inventory_note'],
             'status' => $data['status'],
             'manifest_id' => $data['manifest_id'],
             'store_id' => $data['store_id'],
-            'physical_location' => $data['physical_location'],
+            'physical_location' => $data['physical_location_id'],
             'product_id' => '',
             'sale_person_id' => 1,
             'parent_inventory_id' => 0,
