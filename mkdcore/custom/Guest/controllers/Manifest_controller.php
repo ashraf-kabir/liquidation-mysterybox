@@ -346,7 +346,7 @@ class Manifest_controller extends Manaknight_Controller
             'manifest_id' => $data['manifest_id'],
             // 'store_id' => $data['store_id'],
             'physical_location' => $data['physical_location_id'],
-            'product_id' => '',
+            // 'product_id' => '',
             'sale_person_id' => 1,
             'parent_inventory_id' => 0,
             'store_inventory' => json_encode(['store_id' => $data['store_id'], 'quantity' => $data['quantity'], 'locations' => ['1' => $data['quantity']]])
