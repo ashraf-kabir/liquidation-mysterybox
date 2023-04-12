@@ -344,7 +344,7 @@ class Manifest_controller extends Manaknight_Controller
             'admin_inventory_note' => $data['admin_inventory_note'],
             'status' => $data['status'],
             'manifest_id' => $data['manifest_id'],
-            'store_id' => $data['store_id'],
+            // 'store_id' => $data['store_id'],
             'physical_location' => $data['physical_location_id'],
             'product_id' => '',
             'sale_person_id' => 1,
