@@ -1860,6 +1860,30 @@
           "max_length[255]"
         ],
         [
+          "slug",
+          "string",
+          [
+            {
+              "limit": 255
+            }
+          ],
+          "slug",
+          "max_length[255]",
+          "max_length[255]"
+        ],
+        [
+          "type",
+          "string",
+          [
+            {
+              "limit": 255
+            }
+          ],
+          "type",
+          "max_length[255]",
+          "max_length[255]"
+        ],
+        [
           "parent_category_id",
           "integer",
           [],
