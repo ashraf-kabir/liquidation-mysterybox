@@ -365,7 +365,8 @@ class Manifest_controller extends Manaknight_Controller
       'physical_location'    => $data['physical_location_id'],
       'sale_person_id'       => 1,
       'parent_inventory_id'  => 0,
-      'store_inventory'      => json_encode(['store_id' => $data['store_id'], 'quantity' => $data['quantity'], 'locations' => ['1' => $data['quantity']]])
+      'store_inventory'      => json_encode(['store_id' => $data['store_id'], 'quantity' => $data['quantity'], 'locations' => ['1' => $data['quantity']]]),
+      'product_type'         => $data['product_type'] ?? 1
     ];
 
     // Remove any null or undefined values from the data map
