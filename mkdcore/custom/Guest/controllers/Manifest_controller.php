@@ -37,9 +37,9 @@ class Manifest_controller extends Manaknight_Controller
     $token = $this->input->get_request_header('x-project');
     if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-           ->set_content_type('application/json')
-           ->set_status_header(401)
-           ->set_output(json_encode(['error' => 'Unauthorized']));
+        ->set_content_type('application/json')
+        ->set_status_header(401)
+        ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
@@ -77,8 +77,8 @@ class Manifest_controller extends Manaknight_Controller
     if ($err) {
       $data = ['cURL Error' => $err];
       return $this->output
-                  ->set_content_type('application/json')
-                  ->set_output(json_encode($data));
+        ->set_content_type('application/json')
+        ->set_output(json_encode($data));
       // ->set_header('Access-Control-Allow-Origin: *')
       // ->set_header('Access-Control-Allow-Methods: GET, OPTIONS')
       // ->set_header('Access-Control-Allow-Headers: x-project');
@@ -121,8 +121,8 @@ class Manifest_controller extends Manaknight_Controller
     $postResponse = $this->send_processed_data($query_items);
 
     return $this->output
-                ->set_content_type('application/json')
-                ->set_output(json_encode($postResponse));
+      ->set_content_type('application/json')
+      ->set_output(json_encode($postResponse));
     // ->set_header('Access-Control-Allow-Origin: *')
     // ->set_header('Access-Control-Allow-Methods: GET, OPTIONS')
     // ->set_header('Access-Control-Allow-Headers: x-project');
@@ -172,7 +172,7 @@ class Manifest_controller extends Manaknight_Controller
     foreach ($data['items'] as $item) {
       $id            = $item['id'];
       $sku           = $item['sku'];
-      $manifest_item = $this->db->get_where('manifest_item', ['id' => $id, 'sku' => $sku])->row_array();
+      $manifest_item = $this->db->get_where('manifest_item', ['sku' => $sku])->row_array();
       if ($manifest_item) {
 
         $ItemResult = [
@@ -257,18 +257,22 @@ class Manifest_controller extends Manaknight_Controller
     $token = $this->input->get_request_header('x-project');
     if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-           ->set_content_type('application/json')
-           ->set_status_header(401)
-           ->set_output(json_encode(['error' => 'Unauthorized']));
+        ->set_content_type('application/json')
+        ->set_status_header(401)
+        ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
     // If the token is valid, fetch the category data and return it as JSON
     $query = $this->db->get('category');
-    $json  = json_encode(['category' => $query->result_array(), 'stores' => $this->get_store_nd_locations()]);
+    $json  = json_encode([
+      'category' => $query->result_array(),
+      'stores' => $this->get_store_nd_locations(),
+      'products' => $this->get_products_main($token, 0)
+    ]);
     $this->output
-         ->set_content_type('application/json')
-         ->set_output($json);
+      ->set_content_type('application/json')
+      ->set_output($json);
     // ->set_header('Access-Control-Allow-Origin: *')
     // ->set_header('Access-Control-Allow-Methods: GET, OPTIONS')
     // ->set_header('Access-Control-Allow-Headers: x-project');
@@ -312,9 +316,9 @@ class Manifest_controller extends Manaknight_Controller
     $token = $this->input->get_request_header('x-project');
     if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-           ->set_content_type('application/json')
-           ->set_status_header(401)
-           ->set_output(json_encode(['error' => 'Unauthorized']));
+        ->set_content_type('application/json')
+        ->set_status_header(401)
+        ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
@@ -384,47 +388,57 @@ class Manifest_controller extends Manaknight_Controller
         $this->db->trans_complete();
         $response = ['status' => true, 'message' => 'Record inserted successfully'];
         $this->output
-             ->set_content_type('application/json')
-             ->set_status_header(201)
-             ->set_output(json_encode($response));
+          ->set_content_type('application/json')
+          ->set_status_header(201)
+          ->set_output(json_encode($response));
         return;
       } else {
         $this->db->trans_rollback();
         $response = ['status' => false, 'message' => 'Error inserting record'];
         $this->output
-             ->set_content_type('application/json')
-             ->set_status_header(500)
-             ->set_output(json_encode($response));
+          ->set_content_type('application/json')
+          ->set_status_header(500)
+          ->set_output(json_encode($response));
         return;
       }
     } else {
       $this->db->rollback();
       $response = ['status' => false, 'message' => 'Error inserting record'];
       $this->output
-           ->set_content_type('application/json')
-           ->set_status_header(500)
-           ->set_output(json_encode($response));
+        ->set_content_type('application/json')
+        ->set_status_header(500)
+        ->set_output(json_encode($response));
     }
   }
 
   /**
    * @return null
    */
-  public function get_products()
+  public function get_products_api()
   {
 
     $token = $this->input->get_request_header('x-project');
-    if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
+    $result = $this->get_products_main($token, 1);
+
+    $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode($result));
+  }
+
+  public function get_products_main($get_token = null, $is_product)
+  {
+
+    if (!$get_token || $get_token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-           ->set_content_type('application/json')
-           ->set_status_header(401)
-           ->set_output(json_encode(['error' => 'Unauthorized']));
+        ->set_content_type('application/json')
+        ->set_status_header(401)
+        ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
     $this->db->select('id, product_name, sku, category_id');
     $this->db->from('inventory');
-    $this->db->where('is_product', 1);
+    $this->db->where('is_product', $is_product);
     $query = $this->db->get();
 
     if ($query->num_rows() > 0) {
@@ -434,10 +448,9 @@ class Manifest_controller extends Manaknight_Controller
       $result = [false];
     }
 
-    $this->output
-         ->set_content_type('application/json')
-         ->set_output(json_encode($result));
+    return $result;
   }
+
 
   /**
    * @return null
@@ -447,9 +460,9 @@ class Manifest_controller extends Manaknight_Controller
     $token = $this->input->get_request_header('x-project');
     if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-           ->set_content_type('application/json')
-           ->set_status_header(401)
-           ->set_output(json_encode(['error' => 'Unauthorized']));
+        ->set_content_type('application/json')
+        ->set_status_header(401)
+        ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
@@ -477,15 +490,15 @@ class Manifest_controller extends Manaknight_Controller
     if ($this->db->insert('inventory', $data_map)) {
       $response = ['status' => 200, 'message' => 'Product created successfully.'];
       $this->output
-           ->set_content_type('application/json')
-           ->set_status_header(200)
-           ->set_output(json_encode($response));
+        ->set_content_type('application/json')
+        ->set_status_header(200)
+        ->set_output(json_encode($response));
     } else {
       $response = ['status' => 400, 'message' => 'Error creating product.'];
       $this->output
-           ->set_content_type('application/json')
-           ->set_status_header(400)
-           ->set_output(json_encode($response));
+        ->set_content_type('application/json')
+        ->set_status_header(400)
+        ->set_output(json_encode($response));
     }
   }
 }
