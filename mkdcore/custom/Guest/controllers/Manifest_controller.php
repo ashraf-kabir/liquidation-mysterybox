@@ -427,7 +427,6 @@ class Manifest_controller extends Manaknight_Controller
 
   public function get_products_main($get_token = null, $is_product)
   {
-
     if (!$get_token || $get_token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
         ->set_content_type('application/json')
@@ -436,9 +435,10 @@ class Manifest_controller extends Manaknight_Controller
       return;
     }
 
-    $this->db->select('id, product_name, sku, category_id');
+    $this->db->select('inventory.id, inventory.product_name, inventory.sku, inventory.category_id, category.name as category_name');
     $this->db->from('inventory');
-    $this->db->where('is_product', $is_product);
+    $this->db->join('category', 'inventory.category_id = category.id', 'left');
+    $this->db->where('inventory.is_product', $is_product);
     $query = $this->db->get();
 
     if ($query->num_rows() > 0) {
@@ -450,6 +450,7 @@ class Manifest_controller extends Manaknight_Controller
 
     return $result;
   }
+
 
 
   /**
