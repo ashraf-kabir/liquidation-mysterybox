@@ -268,7 +268,7 @@ class Manifest_controller extends Manaknight_Controller
     $json  = json_encode([
       'category' => $query->result_array(),
       'stores' => $this->get_store_nd_locations(),
-      'products' => $this->get_products_main($token, 0)
+      'inventories' => $this->get_products_main($token, 0)
     ]);
     $this->output
       ->set_content_type('application/json')
