@@ -9746,7 +9746,8 @@
   "cron": [
     "* 23 * * * php index.php cli backup_code_cronjob_controller index",
     "* 23 * * * php index.php cli backup_db_cronjob_controller index",
-    "30 23 * * * php index.php cli token_cronjob_controller index"
+    "30 23 * * * php index.php cli Cronjob_controller index",
+    "5 * * * * php index.php cli Cronjob_controller bulk_manifest"
   ],
   "graphql": {
     "role": "user",

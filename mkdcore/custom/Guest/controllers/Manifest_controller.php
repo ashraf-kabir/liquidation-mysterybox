@@ -12,6 +12,8 @@
  */
 class Manifest_controller extends Manaknight_Controller
 {
+  protected $sale_channel_id = 1;
+
 
   public function __construct()
   {
@@ -44,7 +46,8 @@ class Manifest_controller extends Manaknight_Controller
     }
 
     // Set the endpoint URL and sales channel ID
-    $endpoint = 'https://mkdlabs.com/v3/api/custom/liquidationproductrecommendation/sales_channel/get_palettes?sales_channel_id=3';
+    $channelId = $this->sale_channel_id;
+    $endpoint = "https://mkdlabs.com/v3/api/custom/liquidationproductrecommendation/sales_channel/get_pallets?sales_channel_id=$channelId";
 
     // Set the header data
     $headers = [
@@ -113,8 +116,9 @@ class Manifest_controller extends Manaknight_Controller
 
     $manifest_items = $this->get_manifest_items(implode(",", $manifest_ids));
 
-    $query_items['sale_channel_id'] = 3;
-    $query_items['data']            = array_map(function ($items) {
+    $channelId = $this->sale_channel_id;
+    $query_items['sale_channel_id'] = $channelId;
+    $query_items['data'] = array_map(function ($items) {
       return $this->save_manifest_items($items);
     }, $manifest_items['list']);
 
@@ -123,6 +127,8 @@ class Manifest_controller extends Manaknight_Controller
     return $this->output
       ->set_content_type('application/json')
       ->set_output(json_encode($postResponse));
+    // ->set_output(json_encode($query_items));
+
     // ->set_header('Access-Control-Allow-Origin: *')
     // ->set_header('Access-Control-Allow-Methods: GET, OPTIONS')
     // ->set_header('Access-Control-Allow-Headers: x-project');
@@ -170,9 +176,10 @@ class Manifest_controller extends Manaknight_Controller
       'manifest_id' => $data['manifest_id']
     ];
     foreach ($data['items'] as $item) {
+
       $id            = $item['id'];
-      $sku           = $item['sku'];
-      $manifest_item = $this->db->get_where('manifest_item', ['sku' => $sku])->row_array();
+      $sku           = $item['sku'] ?? 0;
+      $manifest_item = $this->db->get_where('inventory', ['sku' => $sku, 'product_name' => $item['name']])->row_array();
       if ($manifest_item) {
 
         $ItemResult = [
@@ -183,35 +190,198 @@ class Manifest_controller extends Manaknight_Controller
         ];
       } else {
 
-        $ItemResult = [
-          'exist' => false,
-          'save'  => true,
-          'id'    => $id,
-          'sku'   => $sku
-        ];
+
+        if ($item['item_api_data']) {
+
+          if ($item['api_type'] == 'home_depot' and $item['item_api_data'] != null) {
+            $home_depot_data = json_decode($item['item_api_data']);
+            $image = $home_depot_data->media->images[0]->url;
+            $ItemResult = [
+              'exist' => false,
+              'save'  => true,
+              'type' => 'amazon',
+              'image' => $image
+            ];
+          } elseif ($item['api_type'] == 'amazon' and $item['item_api_data'] != null) {
+            $amazon_data = json_decode($item['item_api_data']);
+            $image = $amazon_data->images[0]->images[0]->link;
+
+
+            $item_dimensions = "";
+
+            if (isset($amazon_data->dimensions[0]->package)) {
+              $item_length = $amazon_data->dimensions[0]->package->length->value;
+              $item_width = $amazon_data->dimensions[0]->package->width->value;
+              $item_height = $amazon_data->dimensions[0]->package->height->value;
+            } else if (isset($amazon_data->attributes->item_package_dimensions)) {
+              $item_length = $amazon_data->attributes->item_package_dimensions[0]->length->value / 2.54;
+              $item_width = $amazon_data->attributes->item_package_dimensions[0]->width->value / 2.54;
+              $item_height = $amazon_data->attributes->item_package_dimensions[0]->height->value / 2.54;
+            } else if (isset($amazon_data->attributes->size)) {
+              $item_dimensions = $amazon_data->attributes->size[0]->value;
+
+              if (strlen($item_dimensions) > 12) {
+                // Example: $item_dimensions = '5.2 x 0.69 x 8 inches';
+                $item_dimensions = str_replace(' ', '', $item_dimensions);
+                $split_item_dimensions = explode('x', $item_dimensions);
+
+                if (is_numeric($split_item_dimensions[0])) {
+                  $item_length = (float) $split_item_dimensions[0];
+                }
+
+                $item_width = (float) $split_item_dimensions[1];
+                $item_height = (float) $split_item_dimensions[2];
+              } else if (strlen($item_dimensions) > 7 && strlen($item_dimensions) < 11) {
+                // Example: $item_dimensions = '6.5 Inches';
+                $item_dimensions = substr($item_dimensions, 0, strlen($item_dimensions) - 7);
+                $item_height = (float) $item_dimensions;
+              }
+            }
+
+            if ($amazon_data->attributes->item_weight) {
+              $item_weight_x = $amazon_data->attributes->item_weight[0]->value;
+            } else if ($amazon_data->attributes->item_package_weight) {
+              $item_weight_x = $amazon_data->attributes->item_package_weight[0]->value * 2.20462;
+            }
+
+            $ItemResult = [
+              'exist' => false,
+              'save'  => true,
+              'type' => 'amazon',
+              'image' => $image,
+              'length' => $item_length,
+              'width' => $item_width,
+              'height' => $item_height,
+              'weight' => $item_weight_x
+            ];
+          }
+        } else {
+          $ItemResult = [
+            'exist' => false,
+            'save'  => true,
+            'id'    => $id,
+            'sku'   => $sku,
+            'api_data' => $item
+          ];
+        }
 
         // Save the new manifest_item to the database
-        $savedata = [
-          'id'             => $id,
-          'sku'            => $sku,
-          'name'           => $item['name'],
-          'description'    => $item['description'],
-          'category'       => $item['category'],
-          'upc'            => $item['upc'],
-          'asin'           => $item['asin'],
-          'qty'            => $item['quantity'],
-          'manifest_price' => $item['manifest_price'],
-          'manifest_id'    => $data['manifest_id'],
-          'retail_price'   => $item['retail_price'],
-          'sale_price'     => $item['sale_price'],
-          'list_date'      => $item['list_date'],
-          'duration'       => $item['duration'],
-          'sales_person'   => $item['sales_person'],
-          'upload_type'    => $item['upload_type'],
-          'process_status' => $item['process_status'],
-          'status'         => $item['status']
+        // $savedata = [
+        //     'id'             => $id,
+        //     'sku'            => $sku,
+        //     'name'           => $item['name'],
+        //     'description'    => $item['description'],
+        //     'category'       => $item['category'],
+        //     'upc'            => $item['upc'],
+        //     'asin'           => $item['asin'],
+        //     'qty'            => $item['quantity'],
+        //     'manifest_price' => $item['manifest_price'],
+        //     'manifest_id'    => $data['manifest_id'],
+        //     'retail_price'   => $item['retail_price'],
+        //     'sale_price'     => $item['sale_price'],
+        //     'list_date'      => $item['list_date'],
+        //     'duration'       => $item['duration'],
+        //     'sales_person'   => $item['sales_person'],
+        //     'upload_type'    => $item['upload_type'],
+        //     'process_status' => $item['process_status'],
+        //     'status'         => $item['status'] ?? 1,
+        //     'feature_image' => $ItemResult['image'] ?? '',
+        //     'weight' => $ItemResult['weight'] ?? '',
+        //     'height' => $ItemResult['height'] ?? '',
+        //     'length' => $ItemResult['length'] ?? '',
+        //     'width' => $ItemResult['width'] ?? '',
+        // ];
+
+
+        $product_data = [
+          'product_name'      => $item['name'],
+          'sale_person_id'    => 1,
+          'is_product'        => 1,
+          'sku'               => $sku ?? 0,
+          'last_sku'          => null,
+          'category_id'       => $item['category'],
+          'physical_location' => 0,
+          'weight'            => $ItemResult['weight'] ?? '',
+          'length'            => $ItemResult['length'] ?? '',
+          'height'            => $ItemResult['height'] ?? '',
+          'width'             => $ItemResult['width'] ?? '',
+          'selling_price'     => $item['sale_price'],
+          'cost_price'        => $item['sale_price'],
+          'status'            => $item['status'] ?? 1,
+          'store_location_id' => '',
+          'can_ship'          => $item['can_ship'],
+          'can_ship_approval' => $item['can_ship_approval'],
+          'free_ship'         => $item['free_ship'] ?? 1,
+          'product_type'      => null
         ];
-        $this->db->insert('manifest_item', $savedata);
+
+        $inventory_data = [
+          'product_name'         => $item['name'],
+          'sku'                  => $sku ?? 0,
+          'weight'            => $ItemResult['weight'] ?? '',
+          'length'            => $ItemResult['length'] ?? '',
+          'height'            => $ItemResult['height'] ?? '',
+          'width'             => $ItemResult['width'] ?? '',
+          'pin_item_top'         => $item['pin_item'] ?? 1,
+          'category_id'          => $item['category'],
+          'cost_price'           => $item['sale_price'],
+          'selling_price'        => $item['sale_price'],
+          'can_ship'             => $item['can_ship'],
+          'can_ship_approval'    => $item['can_ship_approval'],
+          'free_ship'            => $item['free_ship'] ?? 1,
+          'quantity'             => 1,
+          'inventory_note'       => $item['inventory_note'] ?? '',
+          'admin_inventory_note' => $item['admin_inventory_note'] ?? '',
+          'status'               => $item['status'] ?? 1,
+          'manifest_id'          => $data['manifest_id'],
+          'physical_location'    => $item['physical_location_id'],
+          'sale_person_id'       => 1,
+          'parent_inventory_id'  => 0,
+          'store_inventory'      => json_encode(['store_id' => $item['store_id'] ?? 1, 'quantity' => 1, 'locations' => ['1' => 1]]),
+          'product_type'         => $item['product_type'] ?? 1
+        ];
+
+
+        // Remove any null or undefined values from the data map
+        $product_data = array_filter($product_data, function ($value) {
+          return $value !== null && $value !== '';
+        });
+
+        $this->db->trans_start();
+        $result1 = $this->inventory_model->create($product_data);
+
+        if ($result1) {
+          $inventory_data['product_id'] = $result1;
+          $result2                      = $this->inventory_model->create($inventory_data);
+          if ($result2) {
+            $this->db->trans_complete();
+            $ItemResult['response'] = ['status' => true, 'message' => 'Record inserted successfully'];
+            // $this->output
+            //     ->set_content_type('application/json')
+            //     ->set_status_header(201)
+            //     ->set_output(json_encode($response));
+            // return $response;
+          } else {
+            $this->db->trans_rollback();
+            $ItemResult['response'] = ['status' => false, 'message' => 'Error inserting record'];
+            // $this->output
+            //     ->set_content_type('application/json')
+            //     ->set_status_header(500)
+            //     ->set_output(json_encode($response));
+            // return $response;
+          }
+        } else {
+          $this->db->rollback();
+          $ItemResult['response'] = ['status' => false, 'message' => 'Error inserting record'];
+          // $this->output
+          //     ->set_content_type('application/json')
+          //     ->set_status_header(500)
+          //     ->set_output(json_encode($response));
+          // return $response;
+        }
+
+
+        // $this->db->insert('inventory', $savedata);
       }
 
       $processedItem['items'][] = $ItemResult;
