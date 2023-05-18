@@ -672,4 +672,29 @@ class Manifest_controller extends Manaknight_Controller
         ->set_output(json_encode($response));
     }
   }
+
+  public function recommendation_endpoint($page)
+  {
+    $this->load->database();
+
+    $limit = 10;
+    $offset = ($page - 1) * $limit;
+
+    $auction_items = $this->db->get('inventory', $limit, $offset)->result();
+    $total_count = $this->db->count_all('inventory');
+
+    $response = [
+      'data' => $auction_items,
+      'pagination' => [
+        'total_count' => $total_count,
+        'total_pages' => ceil($total_count / $limit),
+        'current_page' => $page,
+        'items_per_page' => $limit
+      ]
+    ];
+
+    $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode($response));
+  }
 }
