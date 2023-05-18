@@ -677,7 +677,7 @@ class Manifest_controller extends Manaknight_Controller
   {
     $this->load->database();
 
-    $limit = 10;
+    $limit = 20;
     $offset = ($page - 1) * $limit;
 
     $auction_items = $this->db->get('inventory', $limit, $offset)->result();
