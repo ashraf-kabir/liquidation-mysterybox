@@ -12,8 +12,10 @@
  */
 class Manifest_controller extends Manaknight_Controller
 {
+  /**
+   * @var int
+   */
   protected $sale_channel_id = 1;
-
 
   public function __construct()
   {
@@ -39,15 +41,15 @@ class Manifest_controller extends Manaknight_Controller
     $token = $this->input->get_request_header('x-project');
     if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(401)
-        ->set_output(json_encode(['error' => 'Unauthorized']));
+           ->set_content_type('application/json')
+           ->set_status_header(401)
+           ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
     // Set the endpoint URL and sales channel ID
     $channelId = $this->sale_channel_id;
-    $endpoint = "https://mkdlabs.com/v3/api/custom/liquidationproductrecommendation/sales_channel/get_pallets?sales_channel_id=$channelId";
+    $endpoint  = "https://mkdlabs.com/v3/api/custom/liquidationproductrecommendation/sales_channel/get_pallets?sales_channel_id=$channelId";
 
     // Set the header data
     $headers = [
@@ -80,8 +82,8 @@ class Manifest_controller extends Manaknight_Controller
     if ($err) {
       $data = ['cURL Error' => $err];
       return $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode($data));
+                  ->set_content_type('application/json')
+                  ->set_output(json_encode($data));
       // ->set_header('Access-Control-Allow-Origin: *')
       // ->set_header('Access-Control-Allow-Methods: GET, OPTIONS')
       // ->set_header('Access-Control-Allow-Headers: x-project');
@@ -116,17 +118,17 @@ class Manifest_controller extends Manaknight_Controller
 
     $manifest_items = $this->get_manifest_items(implode(",", $manifest_ids));
 
-    $channelId = $this->sale_channel_id;
+    $channelId                      = $this->sale_channel_id;
     $query_items['sale_channel_id'] = $channelId;
-    $query_items['data'] = array_map(function ($items) {
+    $query_items['data']            = array_map(function ($items) {
       return $this->save_manifest_items($items);
     }, $manifest_items['list']);
 
     $postResponse = $this->send_processed_data($query_items);
 
     return $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($postResponse));
+                ->set_content_type('application/json')
+                ->set_output(json_encode($postResponse));
     // ->set_output(json_encode($query_items));
 
     // ->set_header('Access-Control-Allow-Origin: *')
@@ -190,77 +192,75 @@ class Manifest_controller extends Manaknight_Controller
         ];
       } else {
 
-
         if ($item['item_api_data']) {
 
-          if ($item['api_type'] == 'home_depot' and $item['item_api_data'] != null) {
+          if ($item['api_type'] == 'home_depot' && $item['item_api_data'] != null) {
             $home_depot_data = json_decode($item['item_api_data']);
-            $image = $home_depot_data->media->images[0]->url;
-            $ItemResult = [
+            $image           = $home_depot_data->media->images[0]->url;
+            $ItemResult      = [
               'exist' => false,
               'save'  => true,
-              'type' => 'amazon',
+              'type'  => 'amazon',
               'image' => $image
             ];
-          } elseif ($item['api_type'] == 'amazon' and $item['item_api_data'] != null) {
+          } elseif ($item['api_type'] == 'amazon' && $item['item_api_data'] != null) {
             $amazon_data = json_decode($item['item_api_data']);
-            $image = $amazon_data->images[0]->images[0]->link;
-
+            $image       = $amazon_data->images[0]->images[0]->link;
 
             $item_dimensions = "";
 
             if (isset($amazon_data->dimensions[0]->package)) {
               $item_length = $amazon_data->dimensions[0]->package->length->value;
-              $item_width = $amazon_data->dimensions[0]->package->width->value;
+              $item_width  = $amazon_data->dimensions[0]->package->width->value;
               $item_height = $amazon_data->dimensions[0]->package->height->value;
-            } else if (isset($amazon_data->attributes->item_package_dimensions)) {
+            } elseif (isset($amazon_data->attributes->item_package_dimensions)) {
               $item_length = $amazon_data->attributes->item_package_dimensions[0]->length->value / 2.54;
-              $item_width = $amazon_data->attributes->item_package_dimensions[0]->width->value / 2.54;
+              $item_width  = $amazon_data->attributes->item_package_dimensions[0]->width->value / 2.54;
               $item_height = $amazon_data->attributes->item_package_dimensions[0]->height->value / 2.54;
-            } else if (isset($amazon_data->attributes->size)) {
+            } elseif (isset($amazon_data->attributes->size)) {
               $item_dimensions = $amazon_data->attributes->size[0]->value;
 
               if (strlen($item_dimensions) > 12) {
                 // Example: $item_dimensions = '5.2 x 0.69 x 8 inches';
-                $item_dimensions = str_replace(' ', '', $item_dimensions);
+                $item_dimensions       = str_replace(' ', '', $item_dimensions);
                 $split_item_dimensions = explode('x', $item_dimensions);
 
                 if (is_numeric($split_item_dimensions[0])) {
                   $item_length = (float) $split_item_dimensions[0];
                 }
 
-                $item_width = (float) $split_item_dimensions[1];
+                $item_width  = (float) $split_item_dimensions[1];
                 $item_height = (float) $split_item_dimensions[2];
-              } else if (strlen($item_dimensions) > 7 && strlen($item_dimensions) < 11) {
+              } elseif (strlen($item_dimensions) > 7 && strlen($item_dimensions) < 11) {
                 // Example: $item_dimensions = '6.5 Inches';
                 $item_dimensions = substr($item_dimensions, 0, strlen($item_dimensions) - 7);
-                $item_height = (float) $item_dimensions;
+                $item_height     = (float) $item_dimensions;
               }
             }
 
             if ($amazon_data->attributes->item_weight) {
               $item_weight_x = $amazon_data->attributes->item_weight[0]->value;
-            } else if ($amazon_data->attributes->item_package_weight) {
+            } elseif ($amazon_data->attributes->item_package_weight) {
               $item_weight_x = $amazon_data->attributes->item_package_weight[0]->value * 2.20462;
             }
 
             $ItemResult = [
-              'exist' => false,
-              'save'  => true,
-              'type' => 'amazon',
-              'image' => $image,
+              'exist'  => false,
+              'save'   => true,
+              'type'   => 'amazon',
+              'image'  => $image,
               'length' => $item_length,
-              'width' => $item_width,
+              'width'  => $item_width,
               'height' => $item_height,
               'weight' => $item_weight_x
             ];
           }
         } else {
           $ItemResult = [
-            'exist' => false,
-            'save'  => true,
-            'id'    => $id,
-            'sku'   => $sku,
+            'exist'    => false,
+            'save'     => true,
+            'id'       => $id,
+            'sku'      => $sku,
             'api_data' => $item
           ];
         }
@@ -292,7 +292,6 @@ class Manifest_controller extends Manaknight_Controller
         //     'width' => $ItemResult['width'] ?? '',
         // ];
 
-
         $product_data = [
           'product_name'      => $item['name'],
           'sale_person_id'    => 1,
@@ -318,10 +317,10 @@ class Manifest_controller extends Manaknight_Controller
         $inventory_data = [
           'product_name'         => $item['name'],
           'sku'                  => $sku ?? 0,
-          'weight'            => $ItemResult['weight'] ?? '',
-          'length'            => $ItemResult['length'] ?? '',
-          'height'            => $ItemResult['height'] ?? '',
-          'width'             => $ItemResult['width'] ?? '',
+          'weight'               => $ItemResult['weight'] ?? '',
+          'length'               => $ItemResult['length'] ?? '',
+          'height'               => $ItemResult['height'] ?? '',
+          'width'                => $ItemResult['width'] ?? '',
           'pin_item_top'         => $item['pin_item'] ?? 1,
           'category_id'          => $item['category'],
           'cost_price'           => $item['sale_price'],
@@ -340,7 +339,6 @@ class Manifest_controller extends Manaknight_Controller
           'store_inventory'      => json_encode(['store_id' => $item['store_id'] ?? 1, 'quantity' => 1, 'locations' => ['1' => 1]]),
           'product_type'         => $item['product_type'] ?? 1
         ];
-
 
         // Remove any null or undefined values from the data map
         $product_data = array_filter($product_data, function ($value) {
@@ -379,7 +377,6 @@ class Manifest_controller extends Manaknight_Controller
           //     ->set_output(json_encode($response));
           // return $response;
         }
-
 
         // $this->db->insert('inventory', $savedata);
       }
@@ -427,22 +424,22 @@ class Manifest_controller extends Manaknight_Controller
     $token = $this->input->get_request_header('x-project');
     if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(401)
-        ->set_output(json_encode(['error' => 'Unauthorized']));
+           ->set_content_type('application/json')
+           ->set_status_header(401)
+           ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
     // If the token is valid, fetch the category data and return it as JSON
     $query = $this->db->get('category');
     $json  = json_encode([
-      'category' => $query->result_array(),
-      'stores' => $this->get_store_nd_locations(),
+      'category'    => $query->result_array(),
+      'stores'      => $this->get_store_nd_locations(),
       'inventories' => $this->get_products_main($token, 0)
     ]);
     $this->output
-      ->set_content_type('application/json')
-      ->set_output($json);
+         ->set_content_type('application/json')
+         ->set_output($json);
     // ->set_header('Access-Control-Allow-Origin: *')
     // ->set_header('Access-Control-Allow-Methods: GET, OPTIONS')
     // ->set_header('Access-Control-Allow-Headers: x-project');
@@ -486,9 +483,9 @@ class Manifest_controller extends Manaknight_Controller
     $token = $this->input->get_request_header('x-project');
     if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(401)
-        ->set_output(json_encode(['error' => 'Unauthorized']));
+           ->set_content_type('application/json')
+           ->set_status_header(401)
+           ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
@@ -558,26 +555,26 @@ class Manifest_controller extends Manaknight_Controller
         $this->db->trans_complete();
         $response = ['status' => true, 'message' => 'Record inserted successfully'];
         $this->output
-          ->set_content_type('application/json')
-          ->set_status_header(201)
-          ->set_output(json_encode($response));
+             ->set_content_type('application/json')
+             ->set_status_header(201)
+             ->set_output(json_encode($response));
         return;
       } else {
         $this->db->trans_rollback();
         $response = ['status' => false, 'message' => 'Error inserting record'];
         $this->output
-          ->set_content_type('application/json')
-          ->set_status_header(500)
-          ->set_output(json_encode($response));
+             ->set_content_type('application/json')
+             ->set_status_header(500)
+             ->set_output(json_encode($response));
         return;
       }
     } else {
       $this->db->rollback();
       $response = ['status' => false, 'message' => 'Error inserting record'];
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(500)
-        ->set_output(json_encode($response));
+           ->set_content_type('application/json')
+           ->set_status_header(500)
+           ->set_output(json_encode($response));
     }
   }
 
@@ -587,21 +584,26 @@ class Manifest_controller extends Manaknight_Controller
   public function get_products_api()
   {
 
-    $token = $this->input->get_request_header('x-project');
+    $token  = $this->input->get_request_header('x-project');
     $result = $this->get_products_main($token, 1);
 
     $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($result));
+         ->set_content_type('application/json')
+         ->set_output(json_encode($result));
   }
 
+  /**
+   * @param $get_token
+   * @param null $is_product
+   * @return mixed
+   */
   public function get_products_main($get_token = null, $is_product)
   {
     if (!$get_token || $get_token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(401)
-        ->set_output(json_encode(['error' => 'Unauthorized']));
+           ->set_content_type('application/json')
+           ->set_status_header(401)
+           ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
@@ -621,8 +623,6 @@ class Manifest_controller extends Manaknight_Controller
     return $result;
   }
 
-
-
   /**
    * @return null
    */
@@ -631,9 +631,9 @@ class Manifest_controller extends Manaknight_Controller
     $token = $this->input->get_request_header('x-project');
     if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(401)
-        ->set_output(json_encode(['error' => 'Unauthorized']));
+           ->set_content_type('application/json')
+           ->set_status_header(401)
+           ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
@@ -661,40 +661,51 @@ class Manifest_controller extends Manaknight_Controller
     if ($this->db->insert('inventory', $data_map)) {
       $response = ['status' => 200, 'message' => 'Product created successfully.'];
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(200)
-        ->set_output(json_encode($response));
+           ->set_content_type('application/json')
+           ->set_status_header(200)
+           ->set_output(json_encode($response));
     } else {
       $response = ['status' => 400, 'message' => 'Error creating product.'];
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(400)
-        ->set_output(json_encode($response));
+           ->set_content_type('application/json')
+           ->set_status_header(400)
+           ->set_output(json_encode($response));
     }
   }
 
+  /**
+   * @param $page
+   * @return mixed
+   */
   public function recommendation_endpoint($page)
   {
     $this->load->database();
 
-    $limit = 20;
+    $limit  = 20;
     $offset = ($page - 1) * $limit;
 
-    $auction_items = $this->db->get('inventory', $limit, $offset)->result();
+    // $items = $this->db->get('inventory', $limit, $offset)->result();
+
+    $this->db->select('inventory.*, category.name as category_name');
+    $this->db->from('inventory');
+    $this->db->join('category', 'inventory.category_id = category.id', 'left');
+    $this->db->where('inventory.is_product', 0);
+    $this->db->limit($limit, $offset);
+    $items       = $this->db->get()->result();
     $total_count = $this->db->count_all('inventory');
 
     $response = [
-      'data' => $auction_items,
+      'data'       => $items,
       'pagination' => [
-        'total_count' => $total_count,
-        'total_pages' => ceil($total_count / $limit),
-        'current_page' => $page,
+        'total_count'    => $total_count,
+        'total_pages'    => ceil(($total_count) / $limit),
+        'current_page'   => (int) $page,
         'items_per_page' => $limit
       ]
     ];
 
     $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($response));
+         ->set_content_type('application/json')
+         ->set_output(json_encode($response));
   }
 }
