@@ -686,12 +686,13 @@ class Manifest_controller extends Manaknight_Controller
     $limit  = 10;
     $offset = ($page - 1) * $limit;
 
-    $this->db->select('inventory.*, category.name as category_name');
+    $this->db->select('inventory.*, category.name as category_name, physical_location.name as location');
     if ($q != '') {
       $query = $this->db->like('inventory.product_name ', $q);
     }
     $this->db->from('inventory');
     $this->db->join('category', 'inventory.category_id = category.id', 'left');
+    $this->db->join('physical_location', 'inventory.physical_location = physical_location.id', 'left');
     $this->db->where('inventory.is_product', 0);
 
     $this->db->limit($limit, $offset);
