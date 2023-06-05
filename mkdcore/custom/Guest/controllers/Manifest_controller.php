@@ -679,31 +679,26 @@ class Manifest_controller extends Manaknight_Controller
    */
   public function recommendation_endpoint($page)
   {
-    $q = $this->input->get('q', TRUE);
-
-    $this->load->database();
+    $q      = $this->input->get('q', TRUE);
+    $status = $this->input->get('status', TRUE);
 
     $limit  = 10;
     $offset = ($page - 1) * $limit;
 
-    $this->db->select('inventory.*, category.name as category_name, physical_location.name as location');
-    if ($q != '') {
-      $query = $this->db->like('inventory.product_name ', $q);
-    }
-    $this->db->from('inventory');
-    $this->db->join('category', 'inventory.category_id = category.id', 'left');
-    $this->db->join('physical_location', 'inventory.physical_location = physical_location.id', 'left');
-    $this->db->where('inventory.is_product', 0);
+    $rows = $this->inventory_model->get_all_inventory_items_for_manifest($q, $status);
 
-    $this->db->limit($limit, $offset);
-    $query       = $this->db->get();
-    $total_count = $query->num_rows();
+    $total_rows = 0;
+    if (!empty($rows)) {
+      $total_rows = count($rows);
+    }
+
+    $items = $this->inventory_model->get_all_inventory_items_for_manifest($q, $status, $offset, $limit);
 
     $response = [
-      'data'       => $query->result(),
+      'data'       => $items,
       'pagination' => [
-        'total_count'    => $total_count,
-        'total_pages'    => ceil(($total_count) / $limit),
+        'total_count'    => $total_rows,
+        'total_pages'    => ceil(($total_rows) / $limit),
         'current_page'   => (int) $page,
         'items_per_page' => $limit
       ]
