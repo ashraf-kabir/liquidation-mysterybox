@@ -679,23 +679,27 @@ class Manifest_controller extends Manaknight_Controller
    */
   public function recommendation_endpoint($page)
   {
+    $q = $this->input->get('q', TRUE);
+
     $this->load->database();
 
-    $limit  = 20;
+    $limit  = 10;
     $offset = ($page - 1) * $limit;
 
-    // $items = $this->db->get('inventory', $limit, $offset)->result();
-
     $this->db->select('inventory.*, category.name as category_name');
+    if ($q != '') {
+      $query = $this->db->like('inventory.product_name ', $q);
+    }
     $this->db->from('inventory');
     $this->db->join('category', 'inventory.category_id = category.id', 'left');
     $this->db->where('inventory.is_product', 0);
+
     $this->db->limit($limit, $offset);
-    $items       = $this->db->get()->result();
-    $total_count = $this->db->count_all('inventory');
+    $query       = $this->db->get();
+    $total_count = $query->num_rows();
 
     $response = [
-      'data'       => $items,
+      'data'       => $query->result(),
       'pagination' => [
         'total_count'    => $total_count,
         'total_pages'    => ceil(($total_count) / $limit),
