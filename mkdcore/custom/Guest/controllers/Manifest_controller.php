@@ -494,6 +494,16 @@ class Manifest_controller extends Manaknight_Controller
 
     $data = $this->input->post();
 
+    if ($data['is_relist']) {
+
+      $prev_sale_channel_data = [];
+
+      $prev_sale_channel_data['prev_sale_channel_id'] = $data['prev_sale_channel_id'];
+      $prev_sale_channel_data['prev_sale_channel_name'] = $data['prev_sale_channel_name'];
+      $prev_sale_channel_data = json_encode($prev_sale_channel_data);
+    }
+
+
     $product_data = [
       'product_name'      => $data['product_name'],
       'sale_person_id'    => 1,
@@ -514,7 +524,8 @@ class Manifest_controller extends Manaknight_Controller
       'can_ship'          => $data['can_ship'],
       'can_ship_approval' => $data['can_ship_approval'],
       'free_ship'         => $data['free_ship'],
-      'product_type'      => null
+      'product_type'      => null,
+      'prev_sale_channel_data' => $prev_sale_channel_data
     ];
 
     $inventory_data = [
@@ -548,36 +559,70 @@ class Manifest_controller extends Manaknight_Controller
       return $value !== null && $value !== '';
     });
 
-    $this->db->trans_start();
-    $result1 = $this->inventory_model->create($product_data);
+    $exist_product = $this->inventory_model->get(['sku' => $data['sku'], 'is_product' => 0]);
 
-    if ($result1) {
-      $inventory_data['product_id'] = $result1;
-      $result2                      = $this->inventory_model->create($inventory_data);
-      if ($result2) {
-        $this->db->trans_complete();
-        $response = ['status' => true, 'message' => 'Record inserted successfully'];
-        $this->output
-          ->set_content_type('application/json')
-          ->set_status_header(201)
-          ->set_output(json_encode($response));
-        return;
-      } else {
+    if ($exist_product) {
+      // Update inventory & product
+      $this->db->trans_start();
+
+      $this->db->where('sku', $data['sku']);
+      $this->db->where('is_product', 0);
+      $this->db->update('inventory_table', $inventory_data);
+
+      $this->db->where('sku', $data['sku']);
+      $this->db->where('is_product', 1);
+      $this->db->update('inventory_table', $product_data);
+
+      if ($this->db->trans_status() === FALSE) {
         $this->db->trans_rollback();
-        $response = ['status' => false, 'message' => 'Error inserting record'];
+        $response = ['status' => false, 'message' => 'Error updating record'];
         $this->output
           ->set_content_type('application/json')
           ->set_status_header(500)
           ->set_output(json_encode($response));
         return;
+      } else {
+        $this->db->trans_complete();
+        $response = ['status' => true, 'message' => 'Record updated successfully'];
+        $this->output
+          ->set_content_type('application/json')
+          ->set_status_header(200)
+          ->set_output(json_encode($response));
+        return;
       }
     } else {
-      $this->db->rollback();
-      $response = ['status' => false, 'message' => 'Error inserting record'];
-      $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(500)
-        ->set_output(json_encode($response));
+      // insert inventory & product
+      $this->db->trans_start();
+      $result1 = $this->inventory_model->create($product_data);
+
+      if ($result1) {
+        $inventory_data['product_id'] = $result1;
+        $result2                      = $this->inventory_model->create($inventory_data);
+        if ($result2) {
+          $this->db->trans_complete();
+          $response = ['status' => true, 'message' => 'Record inserted successfully'];
+          $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(201)
+            ->set_output(json_encode($response));
+          return;
+        } else {
+          $this->db->trans_rollback();
+          $response = ['status' => false, 'message' => 'Error inserting record'];
+          $this->output
+            ->set_content_type('application/json')
+            ->set_status_header(500)
+            ->set_output(json_encode($response));
+          return;
+        }
+      } else {
+        $this->db->rollback();
+        $response = ['status' => false, 'message' => 'Error inserting record'];
+        $this->output
+          ->set_content_type('application/json')
+          ->set_status_header(500)
+          ->set_output(json_encode($response));
+      }
     }
   }
 

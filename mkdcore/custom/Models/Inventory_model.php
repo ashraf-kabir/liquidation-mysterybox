@@ -51,6 +51,7 @@ class Inventory_model extends Manaknight_Model
 		'youtube_thumbnail_4',
 		'available_in_shelf',
 		'store_inventory',
+		'prev_sale_channel_data'
 	];
 	protected $_label_fields = [
 		'ID', 'Product Name', 'SKU', 'Category', 'Manifest', 'Store', 'Inventory Location', 'Inventory Location Description', 'Weight', 'Length', 'Height', 'Width', 'Image', 'Selling Price', 'Quantity', 'Description', 'Barcode Image', 'Cost Price', 'Admin Inventory Note', 'Can Ship', 'Pin Item', 'Product Type', 'Status',
@@ -94,6 +95,7 @@ class Inventory_model extends Manaknight_Model
 		['youtube_thumbnail_3', 'Youtube Thumbnail 3', ''],
 		['youtube_thumbnail_4', 'Youtube Thumbnail 4', ''],
 		['available_in_shelf', 'Available In Shelf', ''],
+		['prev_sale_channel_data', 'Prev Sale Channel Data', ''],
 
 	];
 	protected $_validation_edit_rules = [
