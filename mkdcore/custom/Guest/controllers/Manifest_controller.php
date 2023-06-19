@@ -753,4 +753,29 @@ class Manifest_controller extends Manaknight_Controller
       ->set_content_type('application/json')
       ->set_output(json_encode($response));
   }
+
+  public function update_relist_item_status()
+  {
+
+    $data = $this->input->post();
+
+    if (!isset($_SERVER['HTTP_X_PROJECT']) || $_SERVER['HTTP_X_PROJECT'] != "bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt") {
+      $res = ['error' => 'Not authorised'];
+      return $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($res));
+    }
+
+    $item_id = $data['item_id'];
+
+    $this->load->model('inventory_model');
+
+    $result = $this->inventory_model->edit([
+      'status' => 4
+    ], $item_id);
+
+    return $this->output
+      ->set_content_type('application/json')
+      ->set_output(json_encode($result));
+  }
 }
