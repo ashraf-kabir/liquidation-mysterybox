@@ -41,9 +41,9 @@ class Manifest_controller extends Manaknight_Controller
     $token = $this->input->get_request_header('x-project');
     if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(401)
-        ->set_output(json_encode(['error' => 'Unauthorized']));
+           ->set_content_type('application/json')
+           ->set_status_header(401)
+           ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
@@ -82,8 +82,8 @@ class Manifest_controller extends Manaknight_Controller
     if ($err) {
       $data = ['cURL Error' => $err];
       return $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode($data));
+                  ->set_content_type('application/json')
+                  ->set_output(json_encode($data));
       // ->set_header('Access-Control-Allow-Origin: *')
       // ->set_header('Access-Control-Allow-Methods: GET, OPTIONS')
       // ->set_header('Access-Control-Allow-Headers: x-project');
@@ -127,8 +127,8 @@ class Manifest_controller extends Manaknight_Controller
     $postResponse = $this->send_processed_data($query_items);
 
     return $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($postResponse));
+                ->set_content_type('application/json')
+                ->set_output(json_encode($postResponse));
     // ->set_output(json_encode($query_items));
 
     // ->set_header('Access-Control-Allow-Origin: *')
@@ -424,9 +424,9 @@ class Manifest_controller extends Manaknight_Controller
     $token = $this->input->get_request_header('x-project');
     if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(401)
-        ->set_output(json_encode(['error' => 'Unauthorized']));
+           ->set_content_type('application/json')
+           ->set_status_header(401)
+           ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
@@ -438,8 +438,8 @@ class Manifest_controller extends Manaknight_Controller
       'inventories' => $this->get_products_main($token, 0)
     ]);
     $this->output
-      ->set_content_type('application/json')
-      ->set_output($json);
+         ->set_content_type('application/json')
+         ->set_output($json);
     // ->set_header('Access-Control-Allow-Origin: *')
     // ->set_header('Access-Control-Allow-Methods: GET, OPTIONS')
     // ->set_header('Access-Control-Allow-Headers: x-project');
@@ -483,45 +483,43 @@ class Manifest_controller extends Manaknight_Controller
     $token = $this->input->get_request_header('x-project');
     if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(401)
-        ->set_output(json_encode(['error' => 'Unauthorized']));
+           ->set_content_type('application/json')
+           ->set_status_header(401)
+           ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
     $data = $this->input->post();
 
     if ($data['is_relist']) {
-
       $prev_sale_channel_data = [];
 
-      $prev_sale_channel_data['prev_sale_channel_id'] = $data['prev_sale_channel_id'];
+      $prev_sale_channel_data['prev_sale_channel_id']   = $data['prev_sale_channel_id'];
       $prev_sale_channel_data['prev_sale_channel_name'] = $data['prev_sale_channel_name'];
-      $prev_sale_channel_data = json_encode($prev_sale_channel_data);
+      $prev_sale_channel_data                           = json_encode($prev_sale_channel_data);
     }
 
-
     $product_data = [
-      'product_name'      => $data['product_name'],
-      'sale_person_id'    => 1,
-      'is_product'        => 1,
-      'sku'               => $data['sku'],
-      'last_sku'          => null,
-      'category_id'       => $data['category_id'],
+      'product_name'           => $data['product_name'],
+      'sale_person_id'         => 1,
+      'is_product'             => 1,
+      'sku'                    => $data['sku'],
+      'last_sku'               => null,
+      'category_id'            => $data['category_id'],
       // 'locations' => 1,
-      'physical_location' => 0,
-      'weight'            => $data['weight'],
-      'length'            => $data['length'],
-      'height'            => $data['height'],
-      'width'             => $data['width'],
-      'selling_price'     => $data['selling_price'],
-      'cost_price'        => $data['cost_price'],
-      'status'            => $data['status'],
-      'store_location_id' => '',
-      'can_ship'          => $data['can_ship'],
-      'can_ship_approval' => $data['can_ship_approval'],
-      'free_ship'         => $data['free_ship'],
-      'product_type'      => null,
+      'physical_location'      => 0,
+      'weight'                 => $data['weight'],
+      'length'                 => $data['length'],
+      'height'                 => $data['height'],
+      'width'                  => $data['width'],
+      'selling_price'          => $data['selling_price'],
+      'cost_price'             => $data['cost_price'],
+      'status'                 => $data['status'],
+      'store_location_id'      => '',
+      'can_ship'               => $data['can_ship'],
+      'can_ship_approval'      => $data['can_ship_approval'],
+      'free_ship'              => $data['free_ship'],
+      'product_type'           => null,
       'prev_sale_channel_data' => $prev_sale_channel_data
     ];
 
@@ -572,19 +570,19 @@ class Manifest_controller extends Manaknight_Controller
 
       if ($this->db->trans_status() === FALSE) {
         $this->db->trans_rollback();
-        $response = ['status' => false, 'message' => 'Error updating record'];
+        $response = ['error' => true, 'message' => 'Error updating record'];
         $this->output
-          ->set_content_type('application/json')
-          ->set_status_header(500)
-          ->set_output(json_encode($response));
+             ->set_content_type('application/json')
+             ->set_status_header(500)
+             ->set_output(json_encode($response));
         return;
       } else {
         $this->db->trans_complete();
-        $response = ['status' => true, 'message' => 'Record updated successfully'];
+        $response = ['error' => false, 'message' => 'Record updated successfully'];
         $this->output
-          ->set_content_type('application/json')
-          ->set_status_header(201)
-          ->set_output(json_encode($response));
+             ->set_content_type('application/json')
+             ->set_status_header(200)
+             ->set_output(json_encode($response));
         return;
       }
     } else {
@@ -597,28 +595,28 @@ class Manifest_controller extends Manaknight_Controller
         $result2                      = $this->inventory_model->create($inventory_data);
         if ($result2) {
           $this->db->trans_complete();
-          $response = ['status' => true, 'message' => 'Record inserted successfully'];
+          $response = ['error' => false, 'message' => 'Record inserted successfully'];
           $this->output
-            ->set_content_type('application/json')
-            ->set_status_header(201)
-            ->set_output(json_encode($response));
+               ->set_content_type('application/json')
+               ->set_status_header(200)
+               ->set_output(json_encode($response));
           return;
         } else {
           $this->db->trans_rollback();
-          $response = ['status' => false, 'message' => 'Error inserting record'];
+          $response = ['error' => true, 'message' => 'Error inserting record'];
           $this->output
-            ->set_content_type('application/json')
-            ->set_status_header(500)
-            ->set_output(json_encode($response));
+               ->set_content_type('application/json')
+               ->set_status_header(500)
+               ->set_output(json_encode($response));
           return;
         }
       } else {
         $this->db->rollback();
-        $response = ['status' => false, 'message' => 'Error inserting record'];
+        $response = ['error' => true, 'message' => 'Error inserting record'];
         $this->output
-          ->set_content_type('application/json')
-          ->set_status_header(500)
-          ->set_output(json_encode($response));
+             ->set_content_type('application/json')
+             ->set_status_header(500)
+             ->set_output(json_encode($response));
       }
     }
   }
@@ -633,8 +631,8 @@ class Manifest_controller extends Manaknight_Controller
     $result = $this->get_products_main($token, 1);
 
     $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($result));
+         ->set_content_type('application/json')
+         ->set_output(json_encode($result));
   }
 
   /**
@@ -646,9 +644,9 @@ class Manifest_controller extends Manaknight_Controller
   {
     if (!$get_token || $get_token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(401)
-        ->set_output(json_encode(['error' => 'Unauthorized']));
+           ->set_content_type('application/json')
+           ->set_status_header(401)
+           ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
@@ -676,9 +674,9 @@ class Manifest_controller extends Manaknight_Controller
     $token = $this->input->get_request_header('x-project');
     if (!$token || $token !== 'bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt') {
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(401)
-        ->set_output(json_encode(['error' => 'Unauthorized']));
+           ->set_content_type('application/json')
+           ->set_status_header(401)
+           ->set_output(json_encode(['error' => 'Unauthorized']));
       return;
     }
 
@@ -706,15 +704,15 @@ class Manifest_controller extends Manaknight_Controller
     if ($this->db->insert('inventory', $data_map)) {
       $response = ['status' => 200, 'message' => 'Product created successfully.'];
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(200)
-        ->set_output(json_encode($response));
+           ->set_content_type('application/json')
+           ->set_status_header(200)
+           ->set_output(json_encode($response));
     } else {
       $response = ['status' => 400, 'message' => 'Error creating product.'];
       $this->output
-        ->set_content_type('application/json')
-        ->set_status_header(400)
-        ->set_output(json_encode($response));
+           ->set_content_type('application/json')
+           ->set_status_header(400)
+           ->set_output(json_encode($response));
     }
   }
 
@@ -750,10 +748,13 @@ class Manifest_controller extends Manaknight_Controller
     ];
 
     $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($response));
+         ->set_content_type('application/json')
+         ->set_output(json_encode($response));
   }
 
+  /**
+   * @return mixed
+   */
   public function update_relist_item_status()
   {
 
@@ -762,8 +763,8 @@ class Manifest_controller extends Manaknight_Controller
     if (!isset($_SERVER['HTTP_X_PROJECT']) || $_SERVER['HTTP_X_PROJECT'] != "bGlxdWlkYXRpb25wcm9kdWN0cmVjb21tZW5kYXRpb246aTlqYnNvaTh6aW56djJ3b29nYWVzZGtuNmRwaGE5bGlt") {
       $res = ['error' => 'Not authorised'];
       return $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode($res));
+                  ->set_content_type('application/json')
+                  ->set_output(json_encode($res));
     }
 
     $item_id = $data['item_id'];
@@ -774,8 +775,14 @@ class Manifest_controller extends Manaknight_Controller
       'status' => 4
     ], $item_id);
 
+    if ($result) {
+      $result = ['error' => false, 'message' => 'Item updated successfully.'];
+    } else {
+      $result = ['error' => true, 'message' => 'Error updating item.'];
+    }
+
     return $this->output
-      ->set_content_type('application/json')
-      ->set_output(json_encode($result));
+                ->set_content_type('application/json')
+                ->set_output(json_encode($result));
   }
 }
