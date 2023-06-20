@@ -554,31 +554,26 @@ class Manifest_controller extends Manaknight_Controller
       return $value !== null && $value !== '';
     });
 
-    $exist_product = $this->inventory_model->get_by_fields(['sku' => $data['sku'], 'is_product' => 0]);
+    $exist_product   = $this->inventory_model->get_by_fields(['sku' => $data['sku'], 'is_product' => 1]);
+    $exist_inventory = $this->inventory_model->get_by_fields(['sku' => $data['sku'], 'is_product' => 0]);
 
-    if ($exist_product) {
+    if ($exist_product && $exist_inventory) {
       // Update inventory & product
       $this->db->trans_start();
+      $inventory_updated = $this->inventory_model->edit($inventory_data, $exist_inventory->id);
+      $product_updated   = $this->inventory_model->edit($product_data, $exist_product->id);
 
-      $this->db->where('sku', $data['sku']);
-      $this->db->where('is_product', 0);
-      $this->db->update('inventory_table', $inventory_data);
-
-      $this->db->where('sku', $data['sku']);
-      $this->db->where('is_product', 1);
-      $this->db->update('inventory_table', $product_data);
-
-      if ($this->db->trans_status() === FALSE) {
+      if (!$inventory_updated && !$product_updated) {
         $this->db->trans_rollback();
-        $response = ['error' => true, 'inventory_id' => $exist_product->id, 'message' => 'Error updating record'];
+        $response = ['error' => true, 'message' => 'Error updating record'];
         $this->output
              ->set_content_type('application/json')
-             ->set_status_header(500)
+             ->set_status_header(400)
              ->set_output(json_encode($response));
         return;
       } else {
         $this->db->trans_complete();
-        $response = ['error' => false, 'message' => 'Record updated successfully'];
+        $response = ['error' => false, 'inventory_id' => $inventory_updated, 'message' => 'Record updated successfully'];
         $this->output
              ->set_content_type('application/json')
              ->set_status_header(200)
