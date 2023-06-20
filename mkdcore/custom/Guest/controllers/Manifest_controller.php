@@ -554,7 +554,7 @@ class Manifest_controller extends Manaknight_Controller
       return $value !== null && $value !== '';
     });
 
-    $exist_product = $this->inventory_model->get(['sku' => $data['sku'], 'is_product' => 0]);
+    $exist_product = $this->inventory_model->get_all(['sku' => $data['sku'], 'is_product' => 0]);
 
     if ($exist_product) {
       // Update inventory & product
