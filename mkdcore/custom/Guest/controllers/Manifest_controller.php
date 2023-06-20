@@ -491,7 +491,7 @@ class Manifest_controller extends Manaknight_Controller
 
     $data = $this->input->post();
 
-    if ($data['is_relist']) {
+    if (isset($data['is_relist'])) {
       $prev_sale_channel_data = [];
 
       $prev_sale_channel_data['prev_sale_channel_id']   = $data['prev_sale_channel_id'];
