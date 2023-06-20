@@ -496,7 +496,7 @@ class Manifest_controller extends Manaknight_Controller
 
       $prev_sale_channel_data['prev_sale_channel_id']   = $data['prev_sale_channel_id'];
       $prev_sale_channel_data['prev_sale_channel_name'] = $data['prev_sale_channel_name'];
-      $prev_sale_channel_data                           = json_encode($prev_sale_channel_data);
+      $prev_sale_channel_data                           = $prev_sale_channel_data ? json_encode($prev_sale_channel_data) : null;
     }
 
     $product_data = [
