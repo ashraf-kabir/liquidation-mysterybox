@@ -763,11 +763,12 @@ class Manifest_controller extends Manaknight_Controller
     }
 
     $item_id = $data['item_id'];
+    $status  = $data['status'];
 
     $this->load->model('inventory_model');
 
     $result = $this->inventory_model->edit([
-      'status' => 4
+      'status' => $status
     ], $item_id);
 
     if ($result) {

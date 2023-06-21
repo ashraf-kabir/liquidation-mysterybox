@@ -216,7 +216,7 @@ class Inventory_model extends Manaknight_Model
 	public function status_mapping()
 	{
 		return [
-			4 => 'Relisted Out',
+			4 => 'Relisted',
 			3 => 'Waiting Approval',
 			2 => 'Pending',
 			1 => 'Active',
