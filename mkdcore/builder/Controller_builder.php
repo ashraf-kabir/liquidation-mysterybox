@@ -2081,7 +2081,7 @@ class Controller_builder extends Builder
       }
 
       if ($controller['is_delete'] || $controller['is_real_delete']) {
-        $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-danger btn-sm\" target=\"_self" href=\"/{$controller['portal']}{$controller['route']}/delete/' . \$data->id . '\">xyzRemove</a>';\n";
+        $result .= "\t\t\t\t\t\t\techo ' <a class=\"btn btn-danger btn-sm\" target=\"_self\" href=\"/{$controller['portal']}{$controller['route']}/delete/' . \$data->id . '\">xyzRemove</a>';\n";
       }
 
       $result .= "\t\t\t\t\t\t\techo '</td>';";
