@@ -9,6 +9,7 @@ class Package_builder extends Builder
     protected $_file_path = '';
     protected $_template = '';
     protected $_locale = null;
+    protected $_packages = [];
 
     public function __construct($config, $locale)
     {

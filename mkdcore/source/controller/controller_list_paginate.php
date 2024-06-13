@@ -1,5 +1,5 @@
-	public function index($page)
-	{
+    public function index($page)
+    {
         $this->load->library('pagination');
         include_once __DIR__ . '/../../view_models/{{{uc_name}}}_{{{portal}}}_list_paginate_view_model.php';
         $format = $this->input->get('format', TRUE) ?? 'view';
@@ -19,7 +19,7 @@
         $this->_data['view_model']->set_order_by($order_by);
         $this->_data['view_model']->set_sort($direction);
         $this->_data['view_model']->set_sort_base_url('/{{{portal}}}{{{route}}}');
-		$this->_data['view_model']->set_list($this->{{{model}}}_model->{{{paginate}}}(
+        $this->_data['view_model']->set_list($this->{{{model}}}_model->{{{paginate}}}(
             $this->_data['view_model']->get_page(),
             $this->_data['view_model']->get_per_page(),
             $where,
@@ -43,4 +43,4 @@
         }
 
         return $this->render('{{{uc_portal}}}/{{{uc_name}}}', $this->_data);
-	}
+    }

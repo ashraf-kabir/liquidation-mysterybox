@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php defined('BASEPATH') || exit('No direct script access allowed');
 /*Powered By: Manaknightdigital Inc. https://manaknightdigital.com/ Year: 2019*/
 /**
  * View Daily Sales View Model
@@ -10,77 +10,76 @@
  */
 class Daily_sales_admin_view_view_model
 {
-	protected $_entity;
-	protected $_model;
+  protected $_entity;
+  protected $_heading;
+  protected $_model;
 
+  public function __construct($entity)
+  {
+    $this->_entity = $entity;
+  }
 
+  public function get_entity()
+  {
+    return $this->_entity;
+  }
 
-	public function __construct($entity)
-	{
-		$this->_entity = $entity;
-	}
+  /**
+   * set_heading function
+   *
+   * @param string $heading
+   * @return void
+   */
+  public function set_heading($heading)
+  {
+    $this->_heading = $heading;
+  }
 
-	public function get_entity()
-	{
-		return $this->_entity;
-	}
+  /**
+   * get_heading function
+   *
+   * @return string
+   */
+  public function get_heading()
+  {
+    return $this->_heading;
+  }
 
-	/**
-	 * set_heading function
-	 *
-	 * @param string $heading
-	 * @return void
-	 */
-	public function set_heading($heading)
-	{
-		$this->_heading = $heading;
-	}
+  public function set_model($model)
+  {
+    $this->_model = $model;
+  }
 
-	/**
-	 * get_heading function
-	 *
-	 * @return string
-	 */
-	public function get_heading()
-	{
-		return $this->_heading;
-	}
+  public function timeago($date)
+  {
+    $timestamp = strtotime($date);
 
-	public function set_model($model)
-	{
-		$this->_model = $model;
-	}
+    $strTime = ['second', 'minute', 'hour', 'day', 'month', 'year'];
+    $length  = ['60', '60', '24', '30', '12', '10'];
 
-	public function timeago($date)
-	{
-		$timestamp = strtotime($date);
+    $currentTime = time();
+    if ($currentTime >= $timestamp) {
+      $diff = time() - $timestamp;
 
-		$strTime = array('second', 'minute', 'hour', 'day', 'month', 'year');
-		$length = array('60', '60', '24', '30', '12', '10');
+      for ($i = 0; $diff >= $length[$i] && $i < count($length) - 1; $i++) {
+        $diff = $diff / $length[$i];
+      }
 
-		$currentTime = time();
-		if ($currentTime >= $timestamp) {
-			$diff  = time() - $timestamp;
+      $diff = round($diff);
+      return $diff . ' ' . $strTime[$i] . '(s) ago ';
+    }
+  }
 
-			for ($i = 0; $diff >= $length[$i] && $i < count($length) - 1; $i++) {
-				$diff = $diff / $length[$i];
-			}
-
-			$diff = round($diff);
-			return $diff . ' ' . $strTime[$i] . '(s) ago ';
-		}
-	}
-
-	public function time_default_mapping()
-	{
-		$results = [];
-		for ($i = 0; $i < 24; $i++) {
-			for ($j = 0; $j < 60; $j++) {
-				$hour = ($i < 10) ? '0' . $i : $i;
-				$min = ($j < 10) ? '0' . $j : $j;
-				$results[($i * 60) + $j] = "$hour:$min";
-			}
-		}
-		return $results;
-	}
+  public function time_default_mapping()
+  {
+    $results = [];
+    for ($i = 0; $i < 24; $i++) {
+      for ($j = 0; $j < 60; $j++) {
+        $hour                    = ($i < 10) ? '0' . $i : $i;
+        $min                     = ($j < 10) ? '0' . $j : $j;
+        $results[($i * 60) + $j] = "$hour:$min";
+      }
+    }
+    return $results;
+  }
 }

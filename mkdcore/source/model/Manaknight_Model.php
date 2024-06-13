@@ -39,15 +39,15 @@ class {{{subclass_prefix}}}Model extends CI_Model
         return $this->_mapping;
     }
 
-	/**
-	 * Raw Mysql query
-	 *
-	 * @param string $sql
-	 * @return mixed
-	 */
-	public function raw_query($sql)
-	{
-		return $this->db->query($sql);
+    /**
+     * Raw Mysql query
+     *
+     * @param string $sql
+     * @return mixed
+     */
+    public function raw_query($sql)
+    {
+        return $this->db->query($sql);
     }
 
     /**
@@ -62,51 +62,51 @@ class {{{subclass_prefix}}}Model extends CI_Model
     }
 
     /**
-	 * Raw Mysql query
-	 *
-	 * @param string $sql
-	 * @return mixed
-	 */
-	public function raw_prepare_query($sql, $parameters)
-	{
-		return $this->db->query($sql, $parameters);
+     * Raw Mysql query
+     *
+     * @param string $sql
+     * @return mixed
+     */
+    public function raw_prepare_query($sql, $parameters)
+    {
+        return $this->db->query($sql, $parameters);
     }
 
     /**
-	 * Get Model
-	 *
-	 * @param integer $id
-	 * @return mixed
-	 */
-	public function get($id)
+     * Get Model
+     *
+     * @param integer $id
+     * @return mixed
+     */
+    public function get($id)
     {
-		$this->db->from($this->_table);
+        $this->db->from($this->_table);
         $this->db->where($this->_primary_key, $id, TRUE);
         return $this->db->get()->row();
-	}
+    }
 
     /**
-	 * Get Model by field
-	 *
-	 * @param string $field
-	 * @param mixed $value
-	 * @return mixed
-	 */
-	public function get_by_field($field, $value)
+     * Get Model by field
+     *
+     * @param string $field
+     * @param mixed $value
+     * @return mixed
+     */
+    public function get_by_field($field, $value)
     {
-		$this->db->from($this->_table);
+        $this->db->from($this->_table);
         $this->db->where($this->clean_alpha_field($field), $value, TRUE);
         return $this->db->get()->row();
-	}
+    }
 
     /**
-	 * Get Model by fields
-	 *
-	 * @param string $field
-	 * @param mixed $value
-	 * @return mixed
-	 */
-	public function get_by_fields($where)
+     * Get Model by fields
+     *
+     * @param string $field
+     * @param mixed $value
+     * @return mixed
+     */
+    public function get_by_fields($where)
     {
         $this->db->from($this->_table);
 
@@ -121,27 +121,27 @@ class {{{subclass_prefix}}}Model extends CI_Model
                 }
 
                 if ($value === NULL)
-				{
-					continue;
-				}
+                {
+                  continue;
+                }
 
                 if ($value !== NULL)
                 {
                     $this->db->where($this->clean_alpha_field($field), $value, TRUE);
-				}
+                }
 
             }
         }
 
         return $this->db->get()->row();
-	}
+    }
 
-	/**
-	 * Get all Model
-	 *
-	 * @return array
-	 */
-	public function get_all($where = array())
+    /**
+     * Get all Model
+     *
+     * @return array
+     */
+    public function get_all($where = array())
     {
         $this->db->from($this->_table);
 
@@ -165,25 +165,28 @@ class {{{subclass_prefix}}}Model extends CI_Model
         }
 
         return $this->db->get()->result();
-	}
+    }
 
 
-     /**
+    /**
      * Get all Model by limit
      *
      * @return array
      */
-    public function get_all_by_limit($where = array(), $limit)
+    public function get_all_by_limit($where, $limit)
     {
         $this->db->from($this->_table);
 
-        foreach ($where as $field => $value) {
-            if (is_numeric($field) && strlen($value) > 0) {
+        foreach ($where as $field => $value)
+        {
+            if (is_numeric($field) && strlen($value) > 0)
+            {
                 $this->db->limit($limit)->where($value);
                 continue;
             }
 
-            if ($field === NULL && $value === NULL) {
+            if ($field === NULL && $value === NULL)
+            {
                 continue;
             }
 
@@ -238,16 +241,15 @@ class {{{subclass_prefix}}}Model extends CI_Model
     
 
     /**
-	 * Get all custom pagination Model
-	 *
-	 * @return array
+     * Get all custom pagination Model
+     *
+     * @return array
     */
-	public function get_all_custom_pagination($where = array(), $page = 0, $limit=10)
+    public function get_all_custom_pagination($where = array(), $page = 0, $limit=10)
     {
         $this->db->from($this->_table);
-
-
         $this->db->limit($limit, $page);
+
         foreach($where as $field => $value)
         {
             if (is_numeric($field) && strlen($value) > 0)
@@ -268,22 +270,20 @@ class {{{subclass_prefix}}}Model extends CI_Model
         }
 
         return $this->db->get()->result();
-	}
+    }
 
 
 
 
 
     /**
-	 * Get all custom pagination Model
-	 *
-	 * @return array
+     * Get all custom pagination Model
+     *
+     * @return array
     */
     public function get_all_custom_where($custom_where = null, $page = 0, $limit=10 ,$where = array())
     {
         $this->db->from($this->_table);
-
-
         $this->db->limit($limit, $page);
 
         foreach($where as $field => $value)
@@ -316,7 +316,7 @@ class {{{subclass_prefix}}}Model extends CI_Model
 
 
     public function count_custom_pagination_with_search($custom_where = null, $parameters = array())
-	{
+    {
         if (!empty($parameters))
         {
             foreach ($parameters as $key => $value)
@@ -328,8 +328,8 @@ class {{{subclass_prefix}}}Model extends CI_Model
                 }
 
                 if ($key === NULL && $value === NULL)
-				{
-					continue;
+                {
+                    continue;
                 }
 
                 if (!is_null($value))
@@ -351,20 +351,21 @@ class {{{subclass_prefix}}}Model extends CI_Model
             }
         }
 
-        if($custom_where !=null){
-			$this->db->where($custom_where);
+        if($custom_where !=null)
+        {
+            $this->db->where($custom_where);
         }
         
 
         $this->_custom_counting_conditions($this->db);
-		$this->db->from($this->_table);
-		return $this->db->count_all_results();
-	}
+        $this->db->from($this->_table);
+        return $this->db->count_all_results();
+    }
 
 
 
     public function count_custom_pagination($parameters)
-	{
+    {
         if (!empty($parameters))
         {
             foreach ($parameters as $key => $value)
@@ -376,8 +377,8 @@ class {{{subclass_prefix}}}Model extends CI_Model
                 }
 
                 if ($key === NULL && $value === NULL)
-				{
-					continue;
+                {
+                    continue;
                 }
 
                 if (!is_null($value))
@@ -400,17 +401,17 @@ class {{{subclass_prefix}}}Model extends CI_Model
         }
 
         $this->_custom_counting_conditions($this->db);
-		$this->db->from($this->_table);
-		return $this->db->count_all_results();
-	}
+        $this->db->from($this->_table);
+        return $this->db->count_all_results();
+    }
 
 
     /**
-	 * Get all using or like Model
-	 *
-	 * @return array
-	 */
-	public function get_all_where_or_like($where = array())
+     * Get all using or like Model
+     *
+     * @return array
+     */
+    public function get_all_where_or_like($where = array())
     {
         $this->db->from($this->_table);
 
@@ -439,11 +440,11 @@ class {{{subclass_prefix}}}Model extends CI_Model
 
 
     /**
-	 * Get all using like Model
-	 *
-	 * @return array
-	 */
-	public function get_all_where_like($where = array())
+     * Get all using like Model
+     *
+     * @return array
+     */
+    public function get_all_where_like($where = array())
     {
         $this->db->from($this->_table);
 
@@ -470,23 +471,23 @@ class {{{subclass_prefix}}}Model extends CI_Model
     }
 
     /**
-	 * Get all Model
-	 *
-	 * @return array
-	 */
-	public function get_all_by_status($status)
+     * Get all Model
+     *
+     * @return array
+     */
+    public function get_all_by_status($status)
     {
         $this->db->from($this->_table);
         $this->db->where('status', $status, TRUE);
         return $this->db->get()->result();
-	}
+    }
 
     /**
-	 * Get all Model key value
-	 *
-	 * @return array
-	 */
-	public function get_all_by_key_value($field, $status)
+     * Get all Model key value
+     *
+     * @return array
+     */
+    public function get_all_by_key_value($field, $status)
     {
         $this->db->from($this->_table);
         $this->db->where('status', $status, TRUE);
@@ -500,16 +501,16 @@ class {{{subclass_prefix}}}Model extends CI_Model
         }
 
         return $data;
-	}
+    }
 
-	/**
-	 * Create
-	 *
-	 * @param array $data
-	 * @return mixed
-	 */
-	public function create($data)
-	{
+    /**
+     * Create
+     *
+     * @param array $data
+     * @return mixed
+     */
+    public function create($data)
+    {
         if ($this->_use_timestamps)
         {
             if (!isset($data[$this->_created_field]))
@@ -532,7 +533,7 @@ class {{{subclass_prefix}}}Model extends CI_Model
         }
 
         return FALSE;
-	}
+    }
 
     /**
      * Bulk Create
@@ -541,7 +542,7 @@ class {{{subclass_prefix}}}Model extends CI_Model
      * @return void
      */
     public function batch_insert($params)
-	{
+    {
         if ($this->_use_timestamps)
         {
             foreach ($params as $key => $value)
@@ -554,14 +555,14 @@ class {{{subclass_prefix}}}Model extends CI_Model
         return $this->db->insert_batch($this->_table, $params);
     }
 
-	/**
-	 * Edit {{{upper_case_model}}}
-	 * @param array $data
-	 * @param integer $id
-	 * @return bool
-	 */
-	public function edit($data, $id)
-	{
+    /**
+     * Edit {{{upper_case_model}}}
+     * @param array $data
+     * @param integer $id
+     * @return bool
+     */
+    public function edit($data, $id)
+    {
         if ($this->_use_timestamps)
         {
             if (!isset($data[$this->_updated_field]))
@@ -573,36 +574,34 @@ class {{{subclass_prefix}}}Model extends CI_Model
         $data = $this->_post_edit_processing($data);
 
         $this->db->where($this->_primary_key, $id, TRUE);
-
-		return $this->db->update($this->_table, $this->_filter_allow_keys($data));
+        return $this->db->update($this->_table, $this->_filter_allow_keys($data));
     }
 
     /**
-	 * Edit {{{upper_case_model}}}
-	 * @param array $data
-	 * @param integer $id
-	 * @return bool
-	 */
-	public function edit_raw($data, $id)
-	{
+     * Edit {{{upper_case_model}}}
+     * @param array $data
+     * @param integer $id
+     * @return bool
+     */
+    public function edit_raw($data, $id)
+    {
         if ($this->_use_timestamps)
         {
             $data[$this->_updated_field] = date('Y-m-j H:i:s');
         }
 
         $this->db->where($this->_primary_key, $id, TRUE);
-
-		return $this->db->update($this->_table, $this->_filter_allow_keys($data));
+        return $this->db->update($this->_table, $this->_filter_allow_keys($data));
     }
 
     /**
-	 * Soft Delete Model
-	 * @param array $data
-	 * @param integer $id
-	 * @return bool
-	 */
-	public function delete($id)
-	{
+     * Soft Delete Model
+     * @param array $data
+     * @param integer $id
+     * @return bool
+     */
+    public function delete($id)
+    {
         $data = [];
 
         if ($this->_use_timestamps)
@@ -612,27 +611,26 @@ class {{{subclass_prefix}}}Model extends CI_Model
         }
 
         $this->db->where($this->_primary_key, $id, TRUE);
-
-		return $this->db->update($this->_table, $this->_filter_allow_keys($data));
+        return $this->db->update($this->_table, $this->_filter_allow_keys($data));
     }
 
     /**
-	 * Real Delete Model
-	 * @param integer $id
-	 * @return bool
-	 */
-	public function real_delete($id)
-	{
-		return $this->db->delete($this->_table, ['id' => $id]);
+     * Real Delete Model
+     * @param integer $id
+     * @return bool
+     */
+    public function real_delete($id)
+    {
+        return $this->db->delete($this->_table, ['id' => $id]);
     }
 
     /**
-	 * Real Delete Model
-	 * @param integer $id
-	 * @return bool
-	 */
-	public function real_delete_by_fields($where=[])
-	{
+     * Real Delete Model
+     * @param integer $id
+     * @return bool
+     */
+    public function real_delete_by_fields($where=[])
+    {
         $payload = [];
 
         if (!empty($where))
@@ -646,28 +644,28 @@ class {{{subclass_prefix}}}Model extends CI_Model
                 }
 
                 if ($value === null)
-				{
-					continue;
-				}
+                {
+                  continue;
+                }
 
                 if ($value !== NULL)
                 {
                     $payload[$field] = $value;
-				}
+                }
 
             }
         }
-		return $this->db->delete($this->_table, $payload);
+        return $this->db->delete($this->_table, $payload);
     }
 
     /**
-	 * Real Delete Model
-	 * @param integer $id
-	 * @return bool
-	 */
-	public function real_delete_all()
-	{
-		return $this->db->truncate($this->_table);
+     * Real Delete Model
+     * @param integer $id
+     * @return bool
+     */
+    public function real_delete_all()
+    {
+        return $this->db->truncate($this->_table);
     }
 
     /**
@@ -747,14 +745,14 @@ class {{{subclass_prefix}}}Model extends CI_Model
     }
 
     /**
-	 * Count number of model
-	 *
-	 * @access public
+     * Count number of model
+     *
+     * @access public
      * @param mixed $parameters
-	 * @return integer $result
-	 */
-	public function count($parameters)
-	{
+     * @return integer $result
+    */
+    public function count($parameters)
+    {
         if (!empty($parameters))
         {
             foreach ($parameters as $key => $value)
@@ -766,8 +764,8 @@ class {{{subclass_prefix}}}Model extends CI_Model
                 }
 
                 if ($key === NULL && $value === NULL)
-				{
-					continue;
+                {
+                    continue;
                 }
 
                 if (!is_null($value))
@@ -790,19 +788,19 @@ class {{{subclass_prefix}}}Model extends CI_Model
         }
 
         $this->_custom_counting_conditions($this->db);
-		$this->db->from($this->_table);
-		return $this->db->count_all_results();
-	}
+        $this->db->from($this->_table);
+        return $this->db->count_all_results();
+    }
 
-	/**
-	 * Get paginated model
-	 *
-	 * @access public
-	 * @param integer $page default 0
-	 * @param integer $limit default 10
-	 * @return array
-	 */
-	public function get_paginated($page = 0, $limit=10, $where=[], $order_by='', $direction='ASC')
+    /**
+     * Get paginated model
+     *
+     * @access public
+     * @param integer $page default 0
+     * @param integer $limit default 10
+     * @return array
+     */
+    public function get_paginated($page = 0, $limit=10, $where=[], $order_by='', $direction='ASC')
     {
         $this->db->limit($limit, $page);
 
@@ -824,9 +822,9 @@ class {{{subclass_prefix}}}Model extends CI_Model
                 }
 
                 if ($field === NULL && $value === NULL)
-				{
-					continue;
-				}
+                {
+                  continue;
+                }
 
                 if ($value !== NULL)
                 {
@@ -843,12 +841,12 @@ class {{{subclass_prefix}}}Model extends CI_Model
                     }
 
                     $this->db->where($field, $value);
-				}
+                }
             }
         }
 
         $query = $this->db->get($this->_table);
-		$result = [];
+        $result = [];
 
         if ($query->num_rows() > 0)
         {
@@ -856,8 +854,7 @@ class {{{subclass_prefix}}}Model extends CI_Model
             {
                 $result[] = $row;
             }
-		}
-
+        }
         return $result;
     }
 
@@ -1281,8 +1278,8 @@ class {{{subclass_prefix}}}Model extends CI_Model
     }
 
     public function batch_update($params)
-	{
-		return $this->db->update_batch($this->_table, $params, 'id');
+    {
+        return $this->db->update_batch($this->_table, $params, 'id');
     }
 
     public function time_default_mapping ()
@@ -1312,7 +1309,7 @@ class {{{subclass_prefix}}}Model extends CI_Model
 
 
     
-     /**
+    /**
      * Get Model by fields
      *
      * @param string $field
@@ -1322,14 +1319,10 @@ class {{{subclass_prefix}}}Model extends CI_Model
     public function get_by_fields_custom($user_id,$last4)
     {
         $this->db->from($this->_table);
-
-         
         $this->db->where('user_id', $user_id, TRUE);
         $this->db->where('last4', $last4, TRUE);
-              
-
         return $this->db->get()->row();
     }
 
-    
+
 }

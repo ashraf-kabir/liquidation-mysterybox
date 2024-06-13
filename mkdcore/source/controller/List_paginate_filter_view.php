@@ -110,9 +110,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php } ?>
         </tbody>
     </table>
-     <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
+    <p class="pagination_custom"><?php echo $view_model->get_links(); ?></p>
     </div>
-   </section>
+  </section>
 </div>
 <?php
 if ($layout_clean_mode) {

@@ -1,11 +1,11 @@
-	public function edit($id)
-	{
+    public function edit($id)
+    {
         $model = $this->{{{model}}}_model->get($id);
         $session = $this->get_session();
-		if (!$model)
-		{
-			$this->error('xyzError');
-			return redirect('/{{{portal}}}{{{route}}}');
+        if (!$model)
+        {
+            $this->error('xyzError');
+            return redirect('/{{{portal}}}{{{route}}}');
         }
 
         include_once __DIR__ . '/../../view_models/{{{uc_name}}}_{{{portal}}}_edit_view_model.php';
@@ -16,9 +16,9 @@
         $this->_data['view_model']->set_heading('{{{page_name}}}');
         {{{dynamic_mapping_edit}}}
         {{{method_edit_pre}}}
-		if ($this->form_validation->run() === FALSE)
-		{
-			return $this->render('{{{uc_portal}}}/{{{uc_name}}}Edit', $this->_data);
+        if ($this->form_validation->run() === FALSE)
+        {
+            return $this->render('{{{uc_portal}}}/{{{uc_name}}}Edit', $this->_data);
         }
 
         {{{input_post_edit}}}
@@ -35,4 +35,4 @@
 
         $this->_data['error'] = 'xyzError';
         return $this->render('{{{uc_portal}}}/{{{uc_name}}}Edit', $this->_data);
-	}
+    }

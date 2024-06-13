@@ -20,7 +20,7 @@ class {{{uc_portal}}}_me_controller extends {{{uc_portal}}}_controller
     }
 
     public function me()
-	{
+    {
         $session = $this->get_session();
         $model = $this->credential_model->get($session['credential_id']);
         $this->_data['email'] = $model->email;
@@ -29,13 +29,13 @@ class {{{uc_portal}}}_me_controller extends {{{uc_portal}}}_controller
         $this->form_validation->set_rules('email', 'xyzEmail', 'trim|required|valid_email');
         $this->form_validation->set_rules('password', 'xyzPassword', '');
 
-		if ($this->form_validation->run() === FALSE)
-		{
-			return $this->render('{{{uc_portal}}}/Mes', $this->_data);
+        if ($this->form_validation->run() === FALSE)
+        {
+            return $this->render('{{{uc_portal}}}/Mes', $this->_data);
         }
 
         $email = $this->input->post('email');
-		$password = $this->input->post('password');
+        $password = $this->input->post('password');
 
         $payload = [
             'email' => $email,
@@ -56,5 +56,5 @@ class {{{uc_portal}}}_me_controller extends {{{uc_portal}}}_controller
 
         $this->_data['error'] = 'xyzError';
         return $this->render('{{{uc_portal}}}/Mes', $this->_data);
-	}
+    }
 }

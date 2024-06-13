@@ -1,6 +1,6 @@
 	public function view($id)
 	{
-        $model = $this->{{{model}}}_model->get($id);
+    $model = $this->{{{model}}}_model->get($id);
 
 		if (!$model)
 		{
@@ -8,7 +8,7 @@
 			return redirect('/{{{portal}}}{{{route}}}');
 		}
 
-{{{all_records}}}
+    {{{all_records}}}
         include_once __DIR__ . '/../../view_models/{{{uc_name}}}_{{{portal}}}_view_view_model.php';
 		$this->_data['view_model'] = new {{{uc_name}}}_{{{portal}}}_view_view_model($this->{{{model}}}_model);
 		$this->_data['view_model']->set_heading('{{{page_name}}}');

@@ -35,7 +35,7 @@ class Admin_inventory_location_controller extends Admin_controller
   public function index($page)
   {
     $this->load->library('pagination');
-    include_once __DIR__ . '/../../view_models/Inventory_Location_admin_list_paginate_view_model.php';
+    include_once __DIR__ . '/../../view_models/Inventory_location_admin_list_paginate_view_model.php';
     $session   = $this->get_session();
     $format    = $this->input->get('format', TRUE) ?? 'view';
     $order_by  = $this->input->get('order_by', TRUE) ?? '';
@@ -43,7 +43,7 @@ class Admin_inventory_location_controller extends Admin_controller
 
     $this->load->model('store_model');
 
-    $this->_data['view_model'] = new Inventory_Location_admin_list_paginate_view_model(
+    $this->_data['view_model'] = new Inventory_location_admin_list_paginate_view_model(
       $this->physical_location_model,
       $this->pagination,
       '/admin/inventory_location/0');
@@ -52,7 +52,6 @@ class Admin_inventory_location_controller extends Admin_controller
 
     $where = [
       'name' => $this->_data['view_model']->get_name()
-
     ];
 
     $this->_data['view_model']->set_total_rows($this->physical_location_model->count($where));
@@ -88,7 +87,7 @@ class Admin_inventory_location_controller extends Admin_controller
                   ->set_output(json_encode($this->_data['view_model']->to_json()));
     }
 
-    return $this->render('Admin/Inventory_Location', $this->_data);
+    return $this->render('Admin/Inventory_location', $this->_data);
   }
 
   /**
@@ -140,7 +139,7 @@ class Admin_inventory_location_controller extends Admin_controller
     }
 
     $this->_data['error'] = 'Error';
-    return $this->render('Admin/Inventory_LocationAdd', $this->_data);
+    return $this->render('Admin/Inventory_locationAdd', $this->_data);
   }
 
   /**
@@ -159,7 +158,7 @@ class Admin_inventory_location_controller extends Admin_controller
     include_once __DIR__ . '/../../view_models/Inventory_Location_admin_edit_view_model.php';
     $this->form_validation = $this->physical_location_model->set_form_validation(
       $this->form_validation, $this->physical_location_model->get_all_edit_validation_rule());
-    $this->_data['view_model'] = new Inventory_Location_admin_edit_view_model($this->physical_location_model);
+    $this->_data['view_model'] = new Inventory_location_admin_edit_view_model($this->physical_location_model);
     $this->_data['view_model']->set_model($model);
     $this->_data['view_model']->set_heading('Inventory Physical Location');
 
@@ -168,7 +167,7 @@ class Admin_inventory_location_controller extends Admin_controller
     $this->_data['stores'] = $this->store_model->get_all();
 
     if ($this->form_validation->run() === FALSE) {
-      return $this->render('Admin/Inventory_LocationEdit', $this->_data);
+      return $this->render('Admin/Inventory_locationEdit', $this->_data);
     }
 
     $name     = $this->input->post('name', TRUE);
@@ -187,7 +186,7 @@ class Admin_inventory_location_controller extends Admin_controller
     }
 
     $this->_data['error'] = 'Error';
-    return $this->render('Admin/Inventory_LocationEdit', $this->_data);
+    return $this->render('Admin/Inventory_locationEdit', $this->_data);
   }
 
   /**
@@ -211,7 +210,7 @@ class Admin_inventory_location_controller extends Admin_controller
     $this->load->model('store_model');
     $this->_data['store'] = $this->store_model->get($model->store_id);
 
-    return $this->render('Admin/Inventory_LocationView', $this->_data);
+    return $this->render('Admin/Inventory_locationView', $this->_data);
   }
 
   /**

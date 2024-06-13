@@ -11,6 +11,8 @@
 class {{{uc_portal}}}_profile_view_model
 {
     protected $_entity;
+    protected $_heading;
+    protected $_model;
     protected $_credential_id;
     
     {{{fields}}}

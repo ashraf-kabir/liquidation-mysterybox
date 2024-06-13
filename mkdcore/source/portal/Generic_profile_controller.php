@@ -19,34 +19,34 @@ class {{{uc_portal}}}_profile_controller extends {{{uc_portal}}}_controller
         parent::__construct();
     }
 
-	public function index()
-	{
+    public function index()
+    {
         $session = $this->get_session();
         $model = $this->{{{model}}}->get($session['user_id']);
         $this->load->model('credential_model');
         $id = $session['user_id'];
 
-		if (!$model)
-		{
-			$this->error('xyzError');
-			return redirect('/{{{portal}}}/dashboard');
+        if (!$model)
+        {
+            $this->error('xyzError');
+            return redirect('/{{{portal}}}/dashboard');
         }
 
         include_once __DIR__ . '/../../view_models/{{{uc_portal}}}_profile_view_model.php';
         $email_validation_rules = 'required|valid_email';
 
-		if ($this->input->post('email') != $session['email'])
-		{
-			$email_validation_rules .= '|is_unique[user.email]';
-		}
+        if ($this->input->post('email') != $session['email'])
+        {
+          $email_validation_rules .= '|is_unique[user.email]';
+        }
 
         $this->_data['view_model'] = new {{{uc_portal}}}_profile_view_model($this->{{{model}}});
         $this->_data['view_model']->set_model($model);
         $this->_data['view_model']->set_heading('{{{uc_portal}}}');
 
-		if ($this->form_validation->run() === FALSE)
-		{
-			return $this->render('{{{uc_portal}}}/Profile', $this->_data);
+        if ($this->form_validation->run() === FALSE)
+        {
+            return $this->render('{{{uc_portal}}}/Profile', $this->_data);
         }
 
         {{{input_fields}}}
@@ -71,5 +71,5 @@ class {{{uc_portal}}}_profile_controller extends {{{uc_portal}}}_controller
 
         $this->_data['error'] = 'xyzError';
         return $this->render('{{{uc_portal}}}/Profile', $this->_data);
-	}
+    }
 }

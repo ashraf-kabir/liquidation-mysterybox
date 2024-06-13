@@ -11,7 +11,9 @@
 class {{{uc_name}}}_{{{portal}}}_edit_view_model
 {
     protected $_entity;
-{{{define_field}}}
+    protected $_heading;
+    protected $_model;
+    {{{define_field}}}
 
     public function __construct($entity)
     {
@@ -47,7 +49,7 @@ class {{{uc_name}}}_{{{portal}}}_edit_view_model
     public function set_model ($model)
     {
         $this->_model = $model;
-{{{set_model}}}
+        {{{set_model}}}
     }
 
     public function timeago($date)
@@ -60,15 +62,15 @@ class {{{uc_name}}}_{{{portal}}}_edit_view_model
         $currentTime = time();
         if($currentTime >= $timestamp)
         {
-             $diff  = time() - $timestamp;
+            $diff  = time() - $timestamp;
 
-             for($i = 0; $diff >= $length[$i] && $i < count($length)-1; $i++)
-             {
-                $diff = $diff / $length[$i];
-             }
+            for($i = 0; $diff >= $length[$i] && $i < count($length)-1; $i++)
+            {
+              $diff = $diff / $length[$i];
+            }
 
-             $diff = round($diff);
-             return $diff . ' ' . $strTime[$i] . '(s) ago ';
+            $diff = round($diff);
+            return $diff . ' ' . $strTime[$i] . '(s) ago ';
         }
     }
 
@@ -87,5 +89,6 @@ class {{{uc_name}}}_{{{portal}}}_edit_view_model
         return $results;
     }
 
-{{{mapping}}}{{{setter_getter_edit}}}
+    {{{mapping}}}
+    {{{setter_getter_edit}}}
 }

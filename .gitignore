@@ -33,3 +33,4 @@ notes/
 scripts/database.php
 scripts/config.php
 scripts/notes.txt
+composer.lock

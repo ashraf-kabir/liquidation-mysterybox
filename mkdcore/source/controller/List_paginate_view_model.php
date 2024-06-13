@@ -227,7 +227,7 @@ class {{{uc_name}}}_{{{portal}}}_list_paginate_view_model
             return "<div class='mkd-image-container'><img class='img-fluid' src='{$file}' onerror=\"if (this.src != '/uploads/placeholder.jpg') this.src = '/uploads/placeholder.jpg';\"/></div>";
         }
 
-        return "<a href='{$file}' target='__blank'>{$file}</a>";
+        return "<a href='{$file}' target='_self'>{$file}</a>";
     }
 
     /**
@@ -337,15 +337,15 @@ class {{{uc_name}}}_{{{portal}}}_list_paginate_view_model
         $currentTime = time();
         if($currentTime >= $timestamp)
         {
-             $diff  = time() - $timestamp;
+            $diff  = time() - $timestamp;
 
-             for($i = 0; $diff >= $length[$i] && $i < count($length)-1; $i++)
-             {
-                $diff = $diff / $length[$i];
-             }
+            for($i = 0; $diff >= $length[$i] && $i < count($length)-1; $i++)
+            {
+              $diff = $diff / $length[$i];
+            }
 
-             $diff = round($diff);
-             return $diff . ' ' . $strTime[$i] . '(s) ago ';
+            $diff = round($diff);
+            return $diff . ' ' . $strTime[$i] . '(s) ago ';
         }
     }
 
@@ -364,5 +364,7 @@ class {{{uc_name}}}_{{{portal}}}_list_paginate_view_model
         return $results;
     }
 
-{{{filter_fields}}}{{{mapping}}}{{{to_json}}}
+    {{{filter_fields}}}
+    {{{mapping}}}
+    {{{to_json}}}
 }

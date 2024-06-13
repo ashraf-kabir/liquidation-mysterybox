@@ -12,7 +12,8 @@ class {{{uc_name}}}_{{{portal}}}_view_view_model
 {
     protected $_entity;
     protected $_model;
-{{{define_field}}}
+    protected $_heading;
+    {{{define_field}}}
 
     public function __construct($entity)
     {

@@ -1,11 +1,11 @@
-	public function delete($id)
-	{
+    public function delete($id)
+    {
         $model = $this->{{{model}}}_model->get($id);
 
-		if (!$model)
-		{
-			$this->error('xyzError');
-			return redirect('/{{{portal}}}{{{route}}}');
+        if (!$model)
+        {
+            $this->error('xyzError');
+            return redirect('/{{{portal}}}{{{route}}}');
         }
 
         $result = $this->{{{model}}}_model->real_delete($id);
@@ -18,4 +18,4 @@
 
         $this->error('xyzError');
         return redirect('/{{{portal}}}{{{route}}}');
-	}
+    }

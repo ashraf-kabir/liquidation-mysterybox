@@ -10,6 +10,8 @@ class Model_builder extends Builder
     protected $_migration_template;
     protected $_seed_template;
     protected $_file_path = '';
+    protected $_seed_template_window;
+    protected $_migration_template_window;
 
     public function __construct($config, $locale)
     {

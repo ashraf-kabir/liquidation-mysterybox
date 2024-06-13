@@ -167,7 +167,7 @@ class {{{ucname}}}_api_controller extends CI_Controller
      * @return string
      */
     protected function _render_custom_error ($errors)
-	{
+    {
         $data = [];
         $data['code'] = 403;
         $data['success'] = FALSE;
@@ -280,8 +280,8 @@ class {{{ucname}}}_api_controller extends CI_Controller
      */
     protected function _send_email_notification($slug, $payload, $email)
     {
-		$this->load->model('email_model');
-		$this->load->library('mail_service');
+        $this->load->model('email_model');
+        $this->load->library('mail_service');
         $this->mail_service->set_adapter('smtp');
         $email_template = $this->email_model->get_template($slug, $payload);
 
@@ -302,10 +302,10 @@ class {{{ucname}}}_api_controller extends CI_Controller
      * @param string $to
      * @return void
      */
-	protected function _send_sms_notification($slug, $payload, $to)
+    protected function _send_sms_notification($slug, $payload, $to)
     {
-		$this->load->model('sms_model');
-		$this->load->library('sms_service');
+        $this->load->model('sms_model');
+        $this->load->library('sms_service');
         $this->sms_service->set_adapter('sms');
         $sms_template = $this->sms_model->get_template($slug, $payload);
 
@@ -325,7 +325,7 @@ class {{{ucname}}}_api_controller extends CI_Controller
      * @param string $to
      * @return void
      */
-	protected function _send_push_notification($device_type, $device_id, $title, $message, $image)
+    protected function _send_push_notification($device_type, $device_id, $title, $message, $image)
     {
         $this->load->library('push_notification_service');
         $this->push_notification_service->init();

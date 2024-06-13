@@ -11,8 +11,10 @@
 class {{{uc_portal}}}_profile_view_model
 {
     protected $_entity;
+    protected $_heading;
+    protected $_model;
     protected $_id;
-	protected $_first_name;
+    protected $_first_name;
     protected $_last_name;
     protected $_credential_id;
 
@@ -56,8 +58,8 @@ class {{{uc_portal}}}_profile_view_model
         $this->_credential_id = $model->credential_id;
     }
 
-    public function get_credential_id ()
-	{
+    public function get_credential_id()
+    {
 		return $this->_credential_id;
     }
 
@@ -66,23 +68,23 @@ class {{{uc_portal}}}_profile_view_model
         $this->_credential_id = $credential_id;
     }
 
-	public function get_first_name ()
-	{
-		return $this->_first_name;
-	}
+    public function get_first_name()
+    {
+        return $this->_first_name;
+    }
 
-	public function set_first_name ($first_name)
-	{
-		$this->_first_name = $first_name;
-	}
+    public function set_first_name($first_name)
+    {
+        $this->_first_name = $first_name;
+    }
 
-	public function get_last_name ()
-	{
-		return $this->_last_name;
-	}
+    public function get_last_name()
+    {
+        return $this->_last_name;
+    }
 
-	public function set_last_name ($last_name)
-	{
-		$this->_last_name = $last_name;
-	}
+    public function set_last_name($last_name)
+    {
+        $this->_last_name = $last_name;
+    }
 }
