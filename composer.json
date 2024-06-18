@@ -8,7 +8,7 @@
 	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"require": {
-		"php": "^7.3",
+		"php": ">=7.3",
 		"stripe/stripe-php": "^7.25",
 		"mailgun/mailgun-php": "^2.8",
 		"php-http/curl-client": "^1.7",
