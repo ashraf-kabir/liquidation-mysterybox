@@ -31,5 +31,4 @@ function adminer_object()
 }
 
 // include original Adminer or Adminer Editor
-// include "./adminer/adminer.php";
 include "./adminer/adminer-mysql-en.php";
