@@ -195,7 +195,8 @@ class User_service
 	 * @access public
 	 * @param mixed $email
 	 * @param mixed $password
-	 * @return bool true on success, false on failure
+   * @param mixed $role_id
+	 * @return mixed
 	 */
     public function login_by_role($email, $password, $role_id)
     {
